@@ -35,6 +35,7 @@ You find the app useful and want to contribute to make it even better? Here are 
 When I started programming this app I decided that it should be completely free and open-source. This also means that there will be no income for me from ads or paid features. So if you enjoy the app and want to support my work you are able to do so:
 
 * BTC: 3BSbGRbJaiSxVg3D6nVRK5C1SZEezhjtK5
+* Bank transfer: You can [Email](mailto:jannis@tadris.de) me or join the [Telegram Group](https://t.me/fitotrack) to get in touch with me.
 
 ## License
 
