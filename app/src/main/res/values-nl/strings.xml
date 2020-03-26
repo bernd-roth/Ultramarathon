@@ -49,9 +49,16 @@
 
     <string name="timeMinuteSingular">Minuut</string>
     <string name="timeMinutePlural">Minuten</string>
+	<string name="timeMinuteShort">min</string>
     <string name="timeHourSingular">Uur</string>
     <string name="timeHourPlural">Uren</string>
+	<string name="timeHourShort">h</string>
+    <string name="timeSecondsShort">s</string>
     <string name="and">en</string>
+
+    <string name="errorEnterValidNumber">Voer een juist nummer in</string>
+    <string name="errorWorkoutAddFuture">De training kan niet in de toekomst zijn</string>
+    <string name="errorEnterValidDuration">Voer een geldige duur in</string>
 
     <string name="announcementGPSStatus">GPS status</string>
 
@@ -83,6 +90,7 @@
     <string name="workoutBurnedEnergy">Energieverbranding</string>
     <string name="workoutTotalEnergy">Totale Energie</string>
     <string name="workoutEnergyConsumption">Energieverbruik</string>
+    <string name="workoutEdited">Deze training is gewijzigd.</string>
     <string name="uploading">Uploaden</string>
     <string name="enterVerificationCode">Verificatiecode invoeren</string>
     <string name="authenticationFailed">Authenticatie mislukt.</string>
@@ -102,7 +110,14 @@
     <string name="workoutTypeJogging">Joggen</string>
     <string name="workoutTypeCycling">Fietsen</string>
     <string name="workoutTypeHiking">Bergwandelen</string>
+    <string name="workoutTypeOther">Anders</string>
     <string name="workoutTypeUnknown">Onbekend</string>
+    <string name="type">Type</string>
+
+    <string name="enterWorkout">Training invoeren</string>
+	
+	<string name="setDuration">Tijdsduur instellen</string>
+
 
     <string name="recordWorkout">Training opnemen</string>
 
@@ -155,4 +170,9 @@
     <string name="share">Delen</string>
     <string name="savedToDownloads">Opgeslagen in Downloads</string>
     <string name="savingFailed">Opslaan mislukt</string>
+    <string name="info">Info</string>
+    <string name="OpenStreetMapAttribution">© OpenStreetMap bijdragers</string>
+    <string name="theme">Thema</string>
+    <string name="hintRestart">Herstart de app om de wijzingen toe te passen</string>
+    <string name="noComment">Geen opmerking</string>								 
 </resources>
