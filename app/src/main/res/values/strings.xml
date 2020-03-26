@@ -175,4 +175,29 @@
     <string name="theme">Theme</string>
     <string name="hintRestart">Please restart the app to apply changes</string>
     <string name="noComment">No comment</string>
+
+    <string-array name="pref_announcement_mode">
+        <item>Always</item>
+        <item>Only on headphones</item>
+    </string-array>
+
+    <string-array name="pref_map_layers">
+        <item>Mapnik\nDefault OSM Mapstyle</item>
+        <item>Humanitarian\nClean map but sometimes not available</item>
+        <item>Outdoors\nLimited access</item>
+        <item>Cyclemap\nLimited access</item>
+    </string-array>
+
+    <string-array name="pref_theme_setting">
+        <item>Light</item>
+        <item>Dark</item>
+    </string-array>
+
+    <string-array name="pref_unit_systems">
+        <item>Metric</item>
+        <item>Metric with m/s</item>
+        <item>Imperial</item>
+        <item>Imperial with meters</item>
+    </string-array>
+
 </resources>

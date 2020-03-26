@@ -156,4 +156,30 @@
     <string name="share">Compartir</string>
     <string name="savedToDownloads">Guardado en Descargas</string>
     <string name="savingFailed">Error al guardar</string>
+
+    <string-array name="pref_announcement_mode">
+        <item>Siempre</item>
+        <item>Solo en auriculares</item>
+    </string-array>
+
+    <string-array name="pref_unit_systems">
+        <item>Métrico</item>
+        <item>Métrico con m/s</item>
+        <item>Imperial</item>
+        <item>Imperial con metros</item>
+    </string-array>
+
+    <string-array name="osm_track_visibility">
+        <item>Identificable</item>
+        <item>Rastreable</item>
+        <item>Privado</item>
+    </string-array>
+
+    <string-array name="pref_map_layers">
+        <item>Mapnik\nMapa OSM predeterminado</item>
+        <item>Humanitarian\nMapa limpio pero a veces no disponible</item>
+        <item>Outdoors\nAcceso limitado</item>
+        <item>Cyclemap\nAcceso limitado</item>
+    </string-array>
+
 </resources>

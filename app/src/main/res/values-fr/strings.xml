@@ -175,4 +175,36 @@
     <string name="theme">Thème</string>
     <string name="hintRestart">Redémarrer l\'application pour appliquer les modifications</string>
     <string name="noComment">Pas de commentaire</string>
+
+    <string-array name="pref_announcement_mode">
+        <item>Toujours</item>
+        <item>Seulement avec des écouteurs</item>
+    </string-array>
+
+    <string-array name="pref_unit_systems">
+        <item>Métrique</item>
+        <item>Métrique en m/s</item>
+        <item>Impérial</item>
+        <item>Impérial en mètre</item>
+    </string-array>
+
+    <string-array name="pref_theme_setting">
+        <item>Clair</item>
+        <item>Sombre</item>
+    </string-array>
+
+    <string-array name="osm_track_visibility">
+        <item>Identifiable</item>
+        <item>Traçable</item>
+        <item>Privé</item>
+    </string-array>
+
+    <string-array name="pref_map_layers">
+        <item>Mapnik\nStyle OSM par défaut</item>
+        <item>Humanitaire\nJolie carte mais parfois indisponible</item>
+        <item>Extérieur\nAccès limité</item>
+        <item>Cyclemap\nAccès limité</item>
+    </string-array>
+
+
 </resources>

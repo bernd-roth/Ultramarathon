@@ -145,4 +145,35 @@
     <string name="theme">Thema</string>
     <string name="hintRestart">Bitte die App neustarten, damit die Änderungen wirksam werden</string>
     <string name="noComment">Kein Kommentar</string>
+
+    <string-array name="pref_announcement_mode">
+        <item>Immer</item>
+        <item>Nur mit Kopfhörern</item>
+    </string-array>
+
+    <string-array name="pref_map_layers">
+        <item>Mapnik\nStandard OSM Kartenstil</item>
+        <item>Humanitarian\nSchöne Karte, aber manchmal nicht verfügbar</item>
+        <item>Outdoors\nLimitierter Zugriff</item>
+        <item>Cyclemap\nLimitierter Zugriff</item>
+    </string-array>
+
+    <string-array name="osm_track_visibility">
+        <item>Identifizierbar</item>
+        <item>Verfolgbar</item>
+        <item>Privat</item>
+    </string-array>
+
+    <string-array name="pref_theme_setting">
+        <item>Hell</item>
+        <item>Dunkel</item>
+    </string-array>
+
+    <string-array name="pref_unit_systems">
+        <item>Metrisch</item>
+        <item>Physikalische Größen (m/s)</item>
+        <item>Imperial</item>
+        <item>Imperial mit Metern</item>
+    </string-array>
+
 </resources>

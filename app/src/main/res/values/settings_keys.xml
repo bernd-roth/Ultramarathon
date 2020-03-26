@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
@@ -18,9 +19,35 @@
   -->
 
 <resources>
+
+    <string-array name="pref_announcement_mode_values">
+        <item>always</item>
+        <item>headphones</item>
+    </string-array>
+
+    <string-array name="pref_map_layers_values">
+        <item>osm.mapnik</item>
+        <item>osm.humanitarian</item>
+        <item>thunderforest.outdoors</item>
+        <item>thunderforest.cycle</item>
+    </string-array>
+
     <string-array name="osm_track_visibility">
         <item>Identifiable</item>
-        <item>Traçable</item>
-        <item>Privé</item>
+        <item>Trackable</item>
+        <item>Private</item>
     </string-array>
+
+    <string-array name="pref_theme_setting_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="pref_unit_system_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+
 </resources>

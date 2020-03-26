@@ -1,6 +1,5 @@
 <!--
   ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
-  ~ Copyright (c) 2020 Balázs Úr <balazs@urbalazs.hu>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -176,4 +175,35 @@
     <string name="theme">Téma</string>
     <string name="hintRestart">Indítsa újra az alkalmazást a változtatások alkalmazásához</string>
     <string name="noComment">Nincs megjegyzés</string>
+
+    <string-array name="pref_announcement_mode">
+        <item>Mindig</item>
+        <item>Csak fülhallgatón</item>
+    </string-array>
+
+    <string-array name="pref_unit_systems">
+        <item>Metrikus</item>
+        <item>Metrikus m/s értékkel</item>
+        <item>Birodalmi</item>
+        <item>Birodalmi méterrel</item>
+    </string-array>
+
+    <string-array name="pref_theme_setting">
+        <item>Világos</item>
+        <item>Sötét</item>
+    </string-array>
+
+    <string-array name="osm_track_visibility">
+        <item>Azonosítható</item>
+        <item>Követhető</item>
+        <item>Személyes</item>
+    </string-array>
+
+    <string-array name="pref_map_layers">
+        <item>Mapnik\nAlapértelmezett OSM térképstílus</item>
+        <item>Humanitarian\nTiszta térkép, de néha nem érhető el</item>
+        <item>Outdoors\nKorlátozott hozzáférés</item>
+        <item>Cyclemap\nKorlátozott hozzáférés</item>
+    </string-array>
+
 </resources>
