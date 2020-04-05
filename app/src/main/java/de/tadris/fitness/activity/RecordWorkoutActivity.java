@@ -21,6 +21,7 @@ package de.tadris.fitness.activity;
 
 import android.Manifest;
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -34,8 +35,11 @@ import android.os.PowerManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.AccelerateInterpolator;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -77,6 +81,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
     private TextView gpsStatusView;
     private TextView attribution;
     private View waitingForGPSOverlay;
+    private Button startButton;
     private boolean gpsFound = false;
     private boolean isResumed = false;
     private final Handler mHandler = new Handler();
@@ -102,11 +107,16 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
         waitingForGPSOverlay.setVisibility(View.VISIBLE);
 
         attribution = findViewById(R.id.recordMapAttribution);
+        startButton = findViewById(R.id.recordStart);
+        startButton.setEnabled(false);
+        startButton.setOnClickListener(v -> {
+            hideStartButton();
+            start();
+        });
 
         checkPermissions();
 
         recorder= new WorkoutRecorder(this, ACTIVITY, this);
-        recorder.start();
 
         voiceAnnouncements = new VoiceAnnouncements(this, this);
 
@@ -203,6 +213,32 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
         voiceAnnouncements.check(recorder);
 
+    }
+
+    private void hideStartButton() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            int cx = startButton.getWidth() / 2;
+            int cy = startButton.getHeight() / 2;
+            float initialRadius = (float) Math.hypot(cx, cy);
+            Animator anim = ViewAnimationUtils.createCircularReveal(startButton, cx, cy, initialRadius, 0f);
+            anim.setDuration(500);
+            anim.setInterpolator(new AccelerateInterpolator());
+            anim.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    startButton.setVisibility(View.INVISIBLE);
+                }
+            });
+
+            anim.start();
+        } else {
+            startButton.animate().alpha(0f).setDuration(500).start();
+        }
+    }
+
+    private void start() {
+        recorder.start();
     }
 
     private void stop(){
@@ -313,8 +349,11 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
     public void onLocationChange(Location location) {
         LatLong latLong= LocationListener.locationToLatLong(location);
         mapView.getModel().mapViewPosition.animateTo(latLong);
-        latLongList.add(latLong);
-        updateLine();
+
+        if (recorder.getState() == WorkoutRecorder.RecordingState.RUNNING) {
+            latLongList.add(latLong);
+            updateLine();
+        }
     }
 
     @Override
@@ -388,13 +427,24 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
     public void onGPSStateChanged(WorkoutRecorder.GpsState oldState, WorkoutRecorder.GpsState state) {
         mHandler.post(() -> {
             gpsStatusView.setTextColor(state.color);
-            if(!gpsFound && (state != WorkoutRecorder.GpsState.SIGNAL_LOST)){
-                gpsFound= true;
+
+            if (!gpsFound && (state != WorkoutRecorder.GpsState.SIGNAL_LOST)) {
+                gpsFound = true;
                 hideWaitOverlay();
             }
 
+            if (recorder.getState() == WorkoutRecorder.RecordingState.IDLE) {
+                if (state == WorkoutRecorder.GpsState.SIGNAL_OKAY) {
+                    startButton.setText(R.string.start);
+                    startButton.setEnabled(true);
+                } else {
+                    startButton.setText(R.string.cannotStart);
+                    startButton.setEnabled(false);
+                }
+            }
+
             AnnouncementGPSStatus announcement = new AnnouncementGPSStatus(RecordWorkoutActivity.this);
-            if (announcement.isEnabled()) {
+            if (recorder.isActive() && announcement.isEnabled()) {
                 if (oldState == WorkoutRecorder.GpsState.SIGNAL_LOST) { // GPS Signal found
                     voiceAnnouncements.speak(announcement.getSpokenGPSFound());
                 } else if (state == WorkoutRecorder.GpsState.SIGNAL_LOST) {

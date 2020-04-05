@@ -175,6 +175,8 @@
     <string name="theme">Theme</string>
     <string name="hintRestart">Please restart the app to apply changes</string>
     <string name="noComment">No comment</string>
+    <string name="start">Start</string>
+    <string name="cannotStart">Cannot start</string>
 
     <string-array name="pref_announcement_mode">
         <item>Always</item>
