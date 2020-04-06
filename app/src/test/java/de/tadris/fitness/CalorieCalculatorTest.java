@@ -36,7 +36,7 @@ public class CalorieCalculatorTest {
         workout.duration = 1000L * 60 * 10;
         int calorie = CalorieCalculator.calculateCalories(workout, 80);
         System.out.println("Calories: " + calorie);
-        Assert.assertEquals(120, calorie, 50);
+        Assert.assertEquals(130, calorie, 50);
     }
 
 }

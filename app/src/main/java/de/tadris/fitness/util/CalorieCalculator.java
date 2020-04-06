@@ -20,7 +20,6 @@
 package de.tadris.fitness.util;
 
 import de.tadris.fitness.data.Workout;
-import de.tadris.fitness.data.WorkoutType;
 
 public class CalorieCalculator {
 
@@ -39,23 +38,24 @@ public class CalorieCalculator {
     }
 
     /**
-     * calorie calculation based on @link { https://www.topendsports.com/weight-loss/energy-met.htm }
+     * calorie calculation based on @link { https://sites.google.com/site/compendiumofphysicalactivities/Activity-Categories }
      *
      * workoutType and avgSpeed of workout have to be set
      *
-     * Calculation currently ignores height.
      * @return MET
      */
     private static double getMET(Workout workout) {
         double speedInKmh= workout.avgSpeed * 3.6;
-        WorkoutType type = workout.getWorkoutType();
-        if (type == WorkoutType.RUNNING || type == WorkoutType.HIKING) {
-            return Math.max(1.5, speedInKmh*1.117 - 2.1906);
+
+        switch (workout.getWorkoutType()){
+            case RUNNING:
+            case HIKING:
+                return Math.max(3, speedInKmh*0.97);
+            case CYCLING:
+                return Math.max(3.5, 0.00818*Math.pow(speedInKmh, 2) + 0.1925*speedInKmh + 1.13);
+            default:
+                return 0;
         }
-        if (type == WorkoutType.CYCLING) {
-            return Math.max(3, (speedInKmh-10) / 1.5);
-        }
-        return 0;
     }
 
 }
