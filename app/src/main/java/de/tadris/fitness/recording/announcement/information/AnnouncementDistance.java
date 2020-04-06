@@ -17,16 +17,33 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.data;
+package de.tadris.fitness.recording.announcement.information;
 
-import androidx.room.Database;
-import androidx.room.RoomDatabase;
+import android.content.Context;
 
-@Database(version = 3, entities = {Workout.class, WorkoutSample.class, Interval.class, IntervalQueue.class})
-public abstract class AppDatabase extends RoomDatabase {
+import de.tadris.fitness.R;
+import de.tadris.fitness.recording.WorkoutRecorder;
+import de.tadris.fitness.util.unit.UnitUtils;
 
-    public abstract WorkoutDao workoutDao();
+public class AnnouncementDistance extends InformationAnnouncement {
 
-    public abstract IntervalDao intervalDao();
+    public AnnouncementDistance(Context context) {
+        super(context);
+    }
 
+    @Override
+    public String getId() {
+        return "distance";
+    }
+
+    @Override
+    boolean isEnabledByDefault() {
+        return true;
+    }
+
+    @Override
+    public String getSpokenText(WorkoutRecorder recorder) {
+        final String distance = UnitUtils.getDistance(recorder.getDistanceInMeters());
+        return getString(R.string.workoutDistance) + ": " + distance + ".";
+    }
 }

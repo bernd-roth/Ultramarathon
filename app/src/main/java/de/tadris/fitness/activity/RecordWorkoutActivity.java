@@ -63,11 +63,13 @@ import de.tadris.fitness.map.MapManager;
 import de.tadris.fitness.recording.LocationListener;
 import de.tadris.fitness.recording.PressureService;
 import de.tadris.fitness.recording.WorkoutRecorder;
-import de.tadris.fitness.recording.announcement.AnnouncementGPSStatus;
+import de.tadris.fitness.recording.announcement.InformationAnnouncements;
 import de.tadris.fitness.recording.announcement.VoiceAnnouncements;
+import de.tadris.fitness.recording.announcement.information.AnnouncementGPSStatus;
+import de.tadris.fitness.recording.announcement.TTSController;
 import de.tadris.fitness.util.unit.UnitUtils;
 
-public class RecordWorkoutActivity extends FitoTrackActivity implements LocationListener.LocationChangeListener, WorkoutRecorder.WorkoutRecorderListener, VoiceAnnouncements.VoiceAnnouncementCallback {
+public class RecordWorkoutActivity extends FitoTrackActivity implements LocationListener.LocationChangeListener, WorkoutRecorder.WorkoutRecorderListener, TTSController.VoiceAnnouncementCallback {
 
     public static WorkoutType ACTIVITY = WorkoutType.OTHER;
 
@@ -90,7 +92,8 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
     private Intent pressureService;
     private boolean saved= false;
 
-    private VoiceAnnouncements voiceAnnouncements;
+    private TTSController TTSController;
+    private VoiceAnnouncements announcements;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +121,8 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
         recorder= new WorkoutRecorder(this, ACTIVITY, this);
 
-        voiceAnnouncements = new VoiceAnnouncements(this, this);
+        TTSController = new TTSController(this, this);
+        announcements= new VoiceAnnouncements(this, recorder, TTSController, new ArrayList<>()); // TODO: intervals
 
         infoViews[0]= new InfoViewHolder(findViewById(R.id.recordInfo1Title), findViewById(R.id.recordInfo1Value));
         infoViews[1]= new InfoViewHolder(findViewById(R.id.recordInfo2Title), findViewById(R.id.recordInfo2Value));
@@ -211,7 +215,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
             infoViews[3].setText(getString(R.string.workoutPauseDuration), UnitUtils.getHourMinuteSecondTime(recorder.getPauseDuration()));
         }
 
-        voiceAnnouncements.check(recorder);
+        announcements.check();
 
     }
 
@@ -366,7 +370,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
         AndroidGraphicFactory.clearResourceMemoryCache();
 
         // Shutdown TTS
-        voiceAnnouncements.destroy();
+        TTSController.destroy();
 
         super.onDestroy();
         if(wakeLock.isHeld()){
@@ -446,9 +450,9 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
             AnnouncementGPSStatus announcement = new AnnouncementGPSStatus(RecordWorkoutActivity.this);
             if (recorder.isActive() && announcement.isEnabled()) {
                 if (oldState == WorkoutRecorder.GpsState.SIGNAL_LOST) { // GPS Signal found
-                    voiceAnnouncements.speak(announcement.getSpokenGPSFound());
+                    TTSController.speak(announcement.getSpokenGPSFound());
                 } else if (state == WorkoutRecorder.GpsState.SIGNAL_LOST) {
-                    voiceAnnouncements.speak(announcement.getSpokenGPSLost());
+                    TTSController.speak(announcement.getSpokenGPSLost());
                 }
             }
         });

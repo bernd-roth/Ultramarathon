@@ -42,7 +42,7 @@ import java.io.IOException;
 import de.tadris.fitness.R;
 import de.tadris.fitness.export.BackupController;
 import de.tadris.fitness.export.RestoreController;
-import de.tadris.fitness.recording.announcement.VoiceAnnouncements;
+import de.tadris.fitness.recording.announcement.TTSController;
 import de.tadris.fitness.util.FileUtils;
 import de.tadris.fitness.util.unit.UnitUtils;
 import de.tadris.fitness.view.ProgressDialogController;
@@ -88,18 +88,18 @@ public class SettingsActivity extends FitoTrackSettingsActivity {
 
     }
 
-    private VoiceAnnouncements voiceAnnouncements;
+    private TTSController TTSController;
 
     private void checkTTSandShowConfig() {
-        voiceAnnouncements = new VoiceAnnouncements(this, available -> {
+        TTSController = new TTSController(this, available -> {
             if (available) {
                 showSpeechConfig();
             } else {
                 // TextToSpeech is not available
                 Toast.makeText(SettingsActivity.this, R.string.ttsNotAvailable, Toast.LENGTH_LONG).show();
             }
-            if (voiceAnnouncements != null) {
-                voiceAnnouncements.destroy();
+            if (TTSController != null) {
+                TTSController.destroy();
             }
         });
     }

@@ -24,10 +24,16 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.tadris.fitness.recording.announcement.information.AnnouncementAverageSpeed;
+import de.tadris.fitness.recording.announcement.information.AnnouncementDistance;
+import de.tadris.fitness.recording.announcement.information.AnnouncementDuration;
+import de.tadris.fitness.recording.announcement.information.AnnouncementGPSStatus;
+import de.tadris.fitness.recording.announcement.information.InformationAnnouncement;
+
 public class AnnouncementManager {
 
     private Context context;
-    private List<Announcement> announcements = new ArrayList<>();
+    private List<InformationAnnouncement> announcements = new ArrayList<>();
 
     public AnnouncementManager(Context context) {
         this.context = context;
@@ -41,7 +47,7 @@ public class AnnouncementManager {
         announcements.add(new AnnouncementAverageSpeed(context));
     }
 
-    public List<Announcement> getAnnouncements() {
+    public List<InformationAnnouncement> getAnnouncements() {
         return announcements;
     }
 }

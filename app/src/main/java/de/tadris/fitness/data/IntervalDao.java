@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2019 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -19,14 +19,19 @@
 
 package de.tadris.fitness.data;
 
-import androidx.room.Database;
-import androidx.room.RoomDatabase;
+import androidx.room.Dao;
+import androidx.room.Delete;
+import androidx.room.Insert;
+import androidx.room.Query;
+import androidx.room.Update;
 
-@Database(version = 3, entities = {Workout.class, WorkoutSample.class, Interval.class, IntervalQueue.class})
-public abstract class AppDatabase extends RoomDatabase {
+@Dao
+public interface IntervalDao {
 
-    public abstract WorkoutDao workoutDao();
+    @Query("SELECT * FROM interval WHERE queue_id = :queueId")
+    Interval[] getAllIntervalsOfQueue(long queueId);
 
-    public abstract IntervalDao intervalDao();
+    @Query("SELECT * FROM interval_queue where state = 0")
+    IntervalQueue[] getVisibleQueues();
 
 }
