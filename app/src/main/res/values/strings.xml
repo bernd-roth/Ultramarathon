@@ -175,6 +175,7 @@
     <string name="theme">Theme</string>
     <string name="hintRestart">Please restart the app to apply changes</string>
     <string name="noComment">No comment</string>
+    <string name="hintAddWorkout">Click on the plus icon to record or enter a workout.</string>
 
     <string-array name="pref_announcement_mode">
         <item>Always</item>

@@ -27,6 +27,8 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,7 +49,7 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
     private RecyclerView.LayoutManager layoutManager;
     private FloatingActionMenu menu;
     private Workout[] workouts;
-
+    private TextView hintText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,8 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
                 return false;
             }
         });
+
+        hintText= findViewById(R.id.hintAddWorkout);
 
         findViewById(R.id.workoutListRecordRunning).setOnClickListener(v -> startRecording(WorkoutType.RUNNING));
         findViewById(R.id.workoutListRecordHiking).setOnClickListener(v -> startRecording(WorkoutType.HIKING));
@@ -134,6 +138,7 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
 
     private void loadData(){
         workouts= Instance.getInstance(this).db.workoutDao().getWorkouts();
+        hintText.setVisibility(workouts.length == 0 ? View.VISIBLE : View.INVISIBLE);
     }
 
     private void refreshAdapter(){
