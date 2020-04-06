@@ -170,6 +170,8 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.show_workout_menu, menu);
+        menu.findItem(R.id.actionUploadOSM).setVisible(hasSamples());
+        menu.findItem(R.id.actionExportGpx).setVisible(hasSamples());
         return true;
     }
 
