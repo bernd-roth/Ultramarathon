@@ -25,6 +25,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -235,22 +236,34 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
         dialog= new AlertDialog.Builder(this)
                 .setTitle(R.string.actionUploadToOSM)
                 .setView(R.layout.dialog_upload_osm)
-                .setPositiveButton(R.string.upload, (dialogInterface, i) -> {
-                    CheckBox checkBox= dialog.findViewById(R.id.uploadCutting);
-                    Spinner spinner= dialog.findViewById(R.id.uploadVisibility);
-                    EditText descriptionEdit= dialog.findViewById(R.id.uploadDescription);
-                    String description= descriptionEdit.getText().toString().trim();
-                    GpsTraceDetails.Visibility visibility;
-                    switch (spinner.getSelectedItemPosition()){
-                        case 0: visibility= GpsTraceDetails.Visibility.IDENTIFIABLE; break;
-                        default:
-                        case 1: visibility= GpsTraceDetails.Visibility.TRACKABLE; break;
-                        case 2: visibility= GpsTraceDetails.Visibility.PRIVATE; break;
-                    }
-                    uploadToOsm(checkBox.isChecked(), visibility, description);
-                })
+                .setPositiveButton(R.string.upload, null) // Listener added later so that we can control if the dialog is dismissed on click
                 .setNegativeButton(R.string.cancel, null)
                 .show();
+
+        dialog.setOnShowListener(dialogInterface -> {
+            Button button = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            button.setOnClickListener(view -> {
+                CheckBox checkBox= dialog.findViewById(R.id.uploadCutting);
+                Spinner spinner= dialog.findViewById(R.id.uploadVisibility);
+                EditText descriptionEdit= dialog.findViewById(R.id.uploadDescription);
+                String description= descriptionEdit.getText().toString().trim();
+                if(description.length() <= 2){
+                    descriptionEdit.setError(getString(R.string.enterDescription));
+                    return;
+                }
+                GpsTraceDetails.Visibility visibility;
+                switch (spinner.getSelectedItemPosition()){
+                    case 0: visibility= GpsTraceDetails.Visibility.IDENTIFIABLE; break;
+                    default:
+                    case 1: visibility= GpsTraceDetails.Visibility.TRACKABLE; break;
+                    case 2: visibility= GpsTraceDetails.Visibility.PRIVATE; break;
+                }
+                dialog.dismiss();
+                uploadToOsm(checkBox.isChecked(), visibility, description);
+            });
+        });
+        dialog.show();
+
     }
 
     private void uploadToOsm(boolean cut, GpsTraceDetails.Visibility visibility, String description){
