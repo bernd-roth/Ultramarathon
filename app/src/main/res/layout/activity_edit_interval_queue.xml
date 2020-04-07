@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
@@ -23,15 +22,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ManageIntervalQueuesActivity">
+    android:orientation="vertical"
+    tools:context=".activity.EditIntervalQueueActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/intervalQueuesList"
+        android:id="@+id/intervalsList"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <TextView
+        android:id="@+id/intervalQueueHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:text="@string/hintEditIntervalQueue"
+        android:textAlignment="center"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+        android:visibility="invisible" />
+
     <com.github.clans.fab.FloatingActionButton
-        android:id="@+id/intervalQueuesAdd"
+        android:id="@+id/intervalAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
@@ -39,16 +50,5 @@
         android:src="@drawable/ic_add_white"
         app:fab_colorNormal="@color/colorPrimary"
         app:fab_colorPressed="@color/colorPrimaryDark" />
-
-    <TextView
-        android:id="@+id/intervalQueuesHint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="20dp"
-        android:text="@string/hintManageIntervalQueues"
-        android:textAlignment="center"
-        android:textAppearance="@android:style/TextAppearance.Material.Medium"
-        android:visibility="invisible" />
 
 </FrameLayout>

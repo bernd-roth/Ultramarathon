@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -23,15 +23,29 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
-import androidx.room.Update;
 
 @Dao
 public interface IntervalDao {
+
+    @Query("SELECT * FROM interval_queue WHERE id = :id")
+    IntervalQueue getQueue(long id);
 
     @Query("SELECT * FROM interval WHERE queue_id = :queueId")
     Interval[] getAllIntervalsOfQueue(long queueId);
 
     @Query("SELECT * FROM interval_queue where state = 0")
     IntervalQueue[] getVisibleQueues();
+
+    @Insert
+    void insertIntervalQueue(IntervalQueue queue);
+
+    @Insert
+    void insertInterval(Interval interval);
+
+    @Delete
+    void deleteIntervalQueue(IntervalQueue queue);
+
+    @Delete
+    void deleteInterval(Interval interval);
 
 }

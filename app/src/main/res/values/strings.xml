@@ -178,6 +178,21 @@
     <string name="start">Start</string>
     <string name="cannotStart">Cannot start</string>
 
+    <string name="add">Add</string>
+    <string name="add_interval">Add Interval</string>
+    <string name="manageIntervals">Manage Interval Sets</string>
+    <string name="manageIntervalsSummary">Edit the interval sets you will be able to use during the workout using voice feedback.</string>
+    <string name="workoutRecording">Workout Recording</string>
+    <string name="createIntervalSet">Create New Interval Set</string>
+    <string name="create">Create</string>
+    <string name="hintManageIntervalQueues">Add an interval set to use it in your workouts.</string>
+    <string name="hintEditIntervalQueue">Add intervals that will be spoken.</string>
+    <string name="interval_name">Name:</string>
+    <string name="length_in_minutes">Duration (minutes):</string>
+    <string name="enterName">Enter a name</string>
+    <string name="deleteIntervalQueue">Delete Interval Set</string>
+    <string name="deleteIntervalQueueMessage">Do you want to delete the interval set?</string>
+
     <string-array name="pref_announcement_mode">
         <item>Always</item>
         <item>Only on headphones</item>

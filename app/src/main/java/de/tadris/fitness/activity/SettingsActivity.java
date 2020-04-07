@@ -74,7 +74,12 @@ public class SettingsActivity extends FitoTrackSettingsActivity {
             return true;
         });
         findPreference("speech").setOnPreferenceClickListener(preference -> {
-            checkTTSandShowConfig();
+            checkTTS(this::showSpeechConfig);
+            return true;
+        });
+        findPreference("intervals").setOnPreferenceClickListener(preference -> {
+            showIntervalQueuesManagement();
+            // TODO: checkTTS(this::showIntervalQueuesManagement);
             return true;
         });
         findPreference("import").setOnPreferenceClickListener(preference -> {
@@ -90,10 +95,10 @@ public class SettingsActivity extends FitoTrackSettingsActivity {
 
     private TTSController TTSController;
 
-    private void checkTTSandShowConfig() {
+    private void checkTTS(Runnable onTTSAvailable) {
         TTSController = new TTSController(this, available -> {
             if (available) {
-                showSpeechConfig();
+                onTTSAvailable.run();
             } else {
                 // TextToSpeech is not available
                 Toast.makeText(SettingsActivity.this, R.string.ttsNotAvailable, Toast.LENGTH_LONG).show();
@@ -106,6 +111,10 @@ public class SettingsActivity extends FitoTrackSettingsActivity {
 
     private void showSpeechConfig() {
         startActivity(new Intent(this, VoiceAnnouncementsSettingsActivity.class));
+    }
+
+    private void showIntervalQueuesManagement() {
+        startActivity(new Intent(this, ManageIntervalQueuesActivity.class));
     }
 
     private void showExportDialog() {

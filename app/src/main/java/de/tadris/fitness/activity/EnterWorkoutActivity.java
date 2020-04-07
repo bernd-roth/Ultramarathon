@@ -201,17 +201,8 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
             case R.id.actionEnterWorkoutAdd:
                 saveWorkout();
                 return true;
-            case android.R.id.home:
-                finish();
-                return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void setupActionBar() {
-        if (getActionBar() != null) {
-            getActionBar().setDisplayHomeAsUpEnabled(true);
-        }
     }
 
     @Override

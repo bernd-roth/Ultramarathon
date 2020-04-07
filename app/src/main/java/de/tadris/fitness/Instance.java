@@ -105,6 +105,34 @@ public class Instance {
                             database.endTransaction();
                         }
                     }
+                }, new Migration(3, 4) {
+                    @Override
+                    public void migrate(@NonNull SupportSQLiteDatabase database) {
+                        try {
+                            database.beginTransaction();
+
+                            database.execSQL("CREATE TABLE interval (\n" +
+                                    "    id integer NOT NULL primary key,\n" +
+                                    "    name text,\n" +
+                                    "    delay_millis integer NOT NULL,\n" +
+                                    "    queue_id integer NOT NULL,\n" +
+                                    "   FOREIGN KEY (queue_id) \n" +
+                                    "      REFERENCES interval_queue (id) \n" +
+                                    "         ON DELETE CASCADE \n" +
+                                    "         ON UPDATE NO ACTION" +
+                                    ");");
+
+                            database.execSQL("CREATE TABLE interval_queue (\n" +
+                                    "    id integer NOT NULL primary key,\n" +
+                                    "    name text,\n" +
+                                    "    state integer not null\n" +
+                                    ");");
+
+                            database.setTransactionSuccessful();
+                        } finally {
+                            database.endTransaction();
+                        }
+                    }
                 })
                 .allowMainThreadQueries()
                 .build();

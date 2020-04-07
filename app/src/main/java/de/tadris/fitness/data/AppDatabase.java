@@ -22,7 +22,7 @@ package de.tadris.fitness.data;
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
 
-@Database(version = 3, entities = {Workout.class, WorkoutSample.class, Interval.class, IntervalQueue.class})
+@Database(version = 4, entities = {Workout.class, WorkoutSample.class, Interval.class, IntervalQueue.class})
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract WorkoutDao workoutDao();
