@@ -37,6 +37,9 @@ public interface IntervalDao {
     @Query("SELECT * FROM interval_set where state = 0")
     IntervalSet[] getVisibleSets();
 
+    @Query("SELECT * FROM interval_set")
+    IntervalSet[] getAllSets();
+
     @Insert
     void insertIntervalSet(IntervalSet set);
 

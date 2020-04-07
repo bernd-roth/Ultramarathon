@@ -34,7 +34,7 @@ public class VoiceAnnouncements {
 
     public VoiceAnnouncements(Context context, WorkoutRecorder recorder, TTSController ttsController, List<Interval> intervals) {
         this.informationAnnouncements= new InformationAnnouncements(context, recorder, ttsController);
-        this.intervalAnnouncements= new IntervalAnnouncements(recorder, ttsController, intervals);
+        this.intervalAnnouncements = new IntervalAnnouncements(context, recorder, ttsController, intervals);
     }
 
     public void check(){

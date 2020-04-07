@@ -25,17 +25,19 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.AppDatabase;
+import de.tadris.fitness.data.Interval;
+import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.util.unit.UnitUtils;
 
 public class BackupController {
 
-    private static final int VERSION = 1;
+    static final int VERSION = 1;
 
     private final Context context;
     private final File output;
@@ -53,10 +55,12 @@ public class BackupController {
     public void exportData() throws IOException {
         listener.onStatusChanged(0, context.getString(R.string.initialising));
         init();
-        listener.onStatusChanged(20, context.getString(R.string.workouts));
+        listener.onStatusChanged(5, context.getString(R.string.workouts));
         saveWorkoutsToContainer();
-        listener.onStatusChanged(40, context.getString(R.string.locationData));
+        listener.onStatusChanged(20, context.getString(R.string.locationData));
         saveSamplesToContainer();
+        listener.onStatusChanged(55, context.getString(R.string.intervalSets));
+        saveIntervalsToContainer();
         listener.onStatusChanged(60, context.getString(R.string.converting));
         writeContainerToOutputFile();
         listener.onStatusChanged(100, context.getString(R.string.finished));
@@ -71,8 +75,6 @@ public class BackupController {
     private void newContainer(){
         dataContainer= new FitoTrackDataContainer();
         dataContainer.setVersion(VERSION);
-        dataContainer.setWorkouts(new ArrayList<>());
-        dataContainer.setSamples(new ArrayList<>());
     }
 
     private void saveWorkoutsToContainer(){
@@ -81,6 +83,17 @@ public class BackupController {
 
     private void saveSamplesToContainer(){
         dataContainer.getSamples().addAll(Arrays.asList(database.workoutDao().getSamples()));
+    }
+
+    private void saveIntervalsToContainer() {
+        for (IntervalSet set : database.intervalDao().getAllSets()) {
+            saveIntervalToContainer(set);
+        }
+    }
+
+    private void saveIntervalToContainer(IntervalSet set) {
+        List<Interval> intervals = Arrays.asList(database.intervalDao().getAllIntervalsOfSet(set.id));
+        dataContainer.getIntervalSets().add(new IntervalSetContainer(set, intervals));
     }
 
     private void writeContainerToOutputFile() throws IOException {

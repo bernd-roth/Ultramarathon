@@ -22,6 +22,7 @@ package de.tadris.fitness.export;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.tadris.fitness.data.Workout;
@@ -32,16 +33,11 @@ import de.tadris.fitness.data.WorkoutSample;
 class FitoTrackDataContainer {
 
     private int version;
-    private List<Workout> workouts;
-    private List<WorkoutSample> samples;
+    private List<Workout> workouts = new ArrayList<>();
+    private List<WorkoutSample> samples = new ArrayList<>();
+    private List<IntervalSetContainer> intervalSets = new ArrayList<>();
 
     public FitoTrackDataContainer(){}
-
-    public FitoTrackDataContainer(int version, List<Workout> workouts, List<WorkoutSample> samples) {
-        this.version = version;
-        this.workouts = workouts;
-        this.samples = samples;
-    }
 
     public int getVersion() {
         return version;
@@ -67,5 +63,11 @@ class FitoTrackDataContainer {
         this.samples = samples;
     }
 
+    public List<IntervalSetContainer> getIntervalSets() {
+        return intervalSets;
+    }
 
+    public void setIntervalSets(List<IntervalSetContainer> intervalSets) {
+        this.intervalSets = intervalSets;
+    }
 }

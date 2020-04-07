@@ -30,6 +30,7 @@ import java.io.IOException;
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.AppDatabase;
+import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutSample;
 
@@ -63,7 +64,7 @@ public class RestoreController {
     }
 
     private void checkVersion() throws UnsupportedVersionException {
-        if (dataContainer.getVersion() != 1) {
+        if (dataContainer.getVersion() > BackupController.VERSION) {
             throw new UnsupportedVersionException("Version Code" + dataContainer.getVersion() + " is unsupported!");
         }
     }
@@ -73,6 +74,7 @@ public class RestoreController {
             resetDatabase();
             restoreWorkouts();
             restoreSamples();
+            restoreIntervalSets();
         });
     }
 
@@ -97,6 +99,25 @@ public class RestoreController {
             }
         }
     }
+
+    private void restoreIntervalSets() {
+        listener.onStatusChanged(95, context.getString(R.string.intervalSets));
+        if (dataContainer.getIntervalSets() != null) {
+            for (IntervalSetContainer container : dataContainer.getIntervalSets()) {
+                restoreIntervalSet(container);
+            }
+        }
+    }
+
+    private void restoreIntervalSet(IntervalSetContainer container) {
+        database.intervalDao().insertIntervalSet(container.getSet());
+        if (container.getIntervals() != null) {
+            for (Interval interval : container.getIntervals()) {
+                database.intervalDao().insertInterval(interval);
+            }
+        }
+    }
+
 
     public interface ImportStatusListener{
         void onStatusChanged(int progress, String action);
