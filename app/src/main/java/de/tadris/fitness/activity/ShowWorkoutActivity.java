@@ -23,6 +23,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -132,6 +133,7 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
         final EditText editText= new EditText(this);
         editText.setText(workout.comment);
         editText.setSingleLine(true);
+        editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         new AlertDialog.Builder(this)
                 .setTitle(R.string.enterComment)
                 .setPositiveButton(R.string.okay, (dialog, which) -> changeComment(editText.getText().toString()))

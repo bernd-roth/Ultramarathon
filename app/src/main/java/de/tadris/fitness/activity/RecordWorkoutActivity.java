@@ -31,6 +31,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -235,6 +236,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
     private void showEnterDescriptionDialog(){
         final EditText editText= new EditText(this);
         editText.setSingleLine(true);
+        editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         new AlertDialog.Builder(this).setTitle(R.string.enterComment).setPositiveButton(R.string.okay, (dialog, which) -> {
             dialog.dismiss();
             recorder.setComment(editText.getText().toString());
