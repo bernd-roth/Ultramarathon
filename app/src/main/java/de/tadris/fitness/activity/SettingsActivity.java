@@ -78,8 +78,8 @@ public class SettingsActivity extends FitoTrackSettingsActivity {
             return true;
         });
         findPreference("intervals").setOnPreferenceClickListener(preference -> {
-            showIntervalQueuesManagement();
-            // TODO: checkTTS(this::showIntervalQueuesManagement);
+            showIntervalSetManagement();
+            // TODO: checkTTS(this::showIntervalSetManagement);
             return true;
         });
         findPreference("import").setOnPreferenceClickListener(preference -> {
@@ -113,8 +113,8 @@ public class SettingsActivity extends FitoTrackSettingsActivity {
         startActivity(new Intent(this, VoiceAnnouncementsSettingsActivity.class));
     }
 
-    private void showIntervalQueuesManagement() {
-        startActivity(new Intent(this, ManageIntervalQueuesActivity.class));
+    private void showIntervalSetManagement() {
+        startActivity(new Intent(this, ManageIntervalSetsActivity.class));
     }
 
     private void showExportDialog() {

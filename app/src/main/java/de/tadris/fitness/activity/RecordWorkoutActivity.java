@@ -42,6 +42,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 
@@ -54,22 +55,25 @@ import org.mapsforge.map.layer.download.TileDownloadLayer;
 import org.mapsforge.map.layer.overlay.Polyline;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
+import de.tadris.fitness.data.Interval;
+import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.dialog.SelectIntervalSetDialog;
 import de.tadris.fitness.map.MapManager;
 import de.tadris.fitness.recording.LocationListener;
 import de.tadris.fitness.recording.PressureService;
 import de.tadris.fitness.recording.WorkoutRecorder;
-import de.tadris.fitness.recording.announcement.InformationAnnouncements;
+import de.tadris.fitness.recording.announcement.TTSController;
 import de.tadris.fitness.recording.announcement.VoiceAnnouncements;
 import de.tadris.fitness.recording.announcement.information.AnnouncementGPSStatus;
-import de.tadris.fitness.recording.announcement.TTSController;
 import de.tadris.fitness.util.unit.UnitUtils;
 
-public class RecordWorkoutActivity extends FitoTrackActivity implements LocationListener.LocationChangeListener, WorkoutRecorder.WorkoutRecorderListener, TTSController.VoiceAnnouncementCallback {
+public class RecordWorkoutActivity extends FitoTrackActivity implements LocationListener.LocationChangeListener, WorkoutRecorder.WorkoutRecorderListener, TTSController.VoiceAnnouncementCallback, SelectIntervalSetDialog.IntervalSetSelectListener {
 
     public static WorkoutType ACTIVITY = WorkoutType.OTHER;
 
@@ -92,6 +96,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
     private Intent pressureService;
     private boolean saved= false;
 
+    private boolean voiceFeedbackAvailable = false;
     private TTSController TTSController;
     private VoiceAnnouncements announcements;
 
@@ -122,7 +127,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
         recorder= new WorkoutRecorder(this, ACTIVITY, this);
 
         TTSController = new TTSController(this, this);
-        announcements= new VoiceAnnouncements(this, recorder, TTSController, new ArrayList<>()); // TODO: intervals
+        announcements = new VoiceAnnouncements(this, recorder, TTSController, new ArrayList<>());
 
         infoViews[0]= new InfoViewHolder(findViewById(R.id.recordInfo1Title), findViewById(R.id.recordInfo1Value));
         infoViews[1]= new InfoViewHolder(findViewById(R.id.recordInfo2Title), findViewById(R.id.recordInfo2Value));
@@ -243,6 +248,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
     private void start() {
         recorder.start();
+        invalidateOptionsMenu();
     }
 
     private void stop(){
@@ -410,12 +416,22 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if(id == R.id.actionRecordingStop){
-            stop();
-            return true;
+        switch (item.getItemId()) {
+            case R.id.actionRecordingStop:
+                stop();
+                return true;
+            case R.id.actionSelectIntervalSet:
+                showIntervalSelection();
+                return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        boolean preparationPhase = recorder.getState() == WorkoutRecorder.RecordingState.IDLE;
+        menu.findItem(R.id.actionSelectIntervalSet).setVisible(preparationPhase && voiceFeedbackAvailable);
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -458,8 +474,22 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
         });
     }
 
+    void showIntervalSelection() {
+        new SelectIntervalSetDialog(this, this).show();
+    }
+
+    @Override
+    public void onIntervalSetSelect(IntervalSet set) {
+        Interval[] intervals = Instance.getInstance(this).db.intervalDao().getAllIntervalsOfSet(set.id);
+        List<Interval> intervalList = new ArrayList<>(Arrays.asList(intervals));
+        announcements.applyIntervals(intervalList);
+        Toast.makeText(this, R.string.intervalSetSelected, Toast.LENGTH_LONG).show();
+    }
+
     @Override
     public void onVoiceAnnouncementIsReady(boolean available) {
+        this.voiceFeedbackAvailable = available;
+        invalidateOptionsMenu();
     }
 
     static class InfoViewHolder {

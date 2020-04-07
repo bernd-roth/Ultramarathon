@@ -23,15 +23,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ManageIntervalQueuesActivity">
+    tools:context=".activity.ManageIntervalSetsActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/intervalQueuesList"
+        android:id="@+id/intervalSetsList"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <com.github.clans.fab.FloatingActionButton
-        android:id="@+id/intervalQueuesAdd"
+        android:id="@+id/intervalSetsAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
@@ -41,12 +41,12 @@
         app:fab_colorPressed="@color/colorPrimaryDark" />
 
     <TextView
-        android:id="@+id/intervalQueuesHint"
+        android:id="@+id/intervalSetsHint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="20dp"
-        android:text="@string/hintManageIntervalQueues"
+        android:text="@string/hintManageIntervalSets"
         android:textAlignment="center"
         android:textAppearance="@android:style/TextAppearance.Material.Medium"
         android:visibility="invisible" />

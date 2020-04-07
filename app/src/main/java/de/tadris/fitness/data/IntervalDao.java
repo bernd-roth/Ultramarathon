@@ -23,27 +23,28 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 @Dao
 public interface IntervalDao {
 
-    @Query("SELECT * FROM interval_queue WHERE id = :id")
-    IntervalQueue getQueue(long id);
+    @Query("SELECT * FROM interval_set WHERE id = :id")
+    IntervalSet getSet(long id);
 
-    @Query("SELECT * FROM interval WHERE queue_id = :queueId")
-    Interval[] getAllIntervalsOfQueue(long queueId);
+    @Query("SELECT * FROM interval WHERE set_id = :setId")
+    Interval[] getAllIntervalsOfSet(long setId);
 
-    @Query("SELECT * FROM interval_queue where state = 0")
-    IntervalQueue[] getVisibleQueues();
+    @Query("SELECT * FROM interval_set where state = 0")
+    IntervalSet[] getVisibleSets();
 
     @Insert
-    void insertIntervalQueue(IntervalQueue queue);
+    void insertIntervalSet(IntervalSet set);
 
     @Insert
     void insertInterval(Interval interval);
 
-    @Delete
-    void deleteIntervalQueue(IntervalQueue queue);
+    @Update
+    void updateIntervalSet(IntervalSet set);
 
     @Delete
     void deleteInterval(Interval interval);

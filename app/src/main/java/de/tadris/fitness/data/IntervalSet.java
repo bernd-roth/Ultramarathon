@@ -22,8 +22,8 @@ package de.tadris.fitness.data;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "interval_queue")
-public class IntervalQueue {
+@Entity(tableName = "interval_set")
+public class IntervalSet {
 
     public static final int STATE_VISIBLE = 0;
     public static final int STATE_DELETED = 1;

@@ -38,31 +38,31 @@ import java.util.concurrent.TimeUnit;
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.Interval;
-import de.tadris.fitness.data.IntervalQueue;
+import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.view.IntervalAdapter;
 
-public class EditIntervalQueueActivity extends FitoTrackActivity implements IntervalAdapter.IntervalAdapterListener {
+public class EditIntervalSetActivity extends FitoTrackActivity implements IntervalAdapter.IntervalAdapterListener {
 
     private RecyclerView recyclerView;
     private IntervalAdapter adapter;
-    private IntervalQueue queue;
-    private long queueId;
-    private TextView intervalQueueHint;
+    private IntervalSet intervalSet;
+    private long intervalSetId;
+    private TextView intervalSetsHint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_interval_queue);
+        setContentView(R.layout.activity_edit_interval_set);
 
-        queueId = getIntent().getExtras().getLong("queueId", -1);
-        if (queueId == -1) {
+        intervalSetId = getIntent().getExtras().getLong("setId", -1);
+        if (intervalSetId == -1) {
             finish();
             return;
         }
 
-        queue = Instance.getInstance(this).db.intervalDao().getQueue(queueId);
+        intervalSet = Instance.getInstance(this).db.intervalDao().getSet(intervalSetId);
 
-        setTitle(queue.name);
+        setTitle(intervalSet.name);
         setupActionBar();
 
         recyclerView = findViewById(R.id.intervalsList);
@@ -72,7 +72,7 @@ public class EditIntervalQueueActivity extends FitoTrackActivity implements Inte
         recyclerView.setLayoutManager(layoutManager);
 
         findViewById(R.id.intervalAdd).setOnClickListener(v -> showAddDialog());
-        intervalQueueHint = findViewById(R.id.intervalQueueHint);
+        intervalSetsHint = findViewById(R.id.intervalSetsHint);
     }
 
     @Override
@@ -84,24 +84,24 @@ public class EditIntervalQueueActivity extends FitoTrackActivity implements Inte
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.edit_interval_queue_menu, menu);
+        getMenuInflater().inflate(R.menu.edit_interval_set_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.actionDeleteIntervalQueue) {
-            showDeleteQueueDialog();
+        if (item.getItemId() == R.id.actionDeleteIntervalSet) {
+            showDeleteSetDialog();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void loadData() {
-        Interval[] intervals = Instance.getInstance(this).db.intervalDao().getAllIntervalsOfQueue(queueId);
+        Interval[] intervals = Instance.getInstance(this).db.intervalDao().getAllIntervalsOfSet(intervalSetId);
         adapter = new IntervalAdapter(new ArrayList<>(Arrays.asList(intervals)), this);
         recyclerView.setAdapter(adapter);
-        intervalQueueHint.setVisibility(intervals.length == 0 ? View.VISIBLE : View.INVISIBLE);
+        intervalSetsHint.setVisibility(intervals.length == 0 ? View.VISIBLE : View.INVISIBLE);
     }
 
     @Override
@@ -110,7 +110,7 @@ public class EditIntervalQueueActivity extends FitoTrackActivity implements Inte
         adapter.intervals.remove(interval);
         adapter.notifyItemRemoved(pos);
         if (adapter.intervals.size() == 0) {
-            intervalQueueHint.setVisibility(View.VISIBLE);
+            intervalSetsHint.setVisibility(View.VISIBLE);
         }
     }
 
@@ -151,7 +151,7 @@ public class EditIntervalQueueActivity extends FitoTrackActivity implements Inte
                 interval.id = System.currentTimeMillis();
                 interval.name = name;
                 interval.delayMillis = TimeUnit.MINUTES.toMillis(1) * lengthInMinutes;
-                interval.queueId = queueId;
+                interval.setId = intervalSetId;
                 addInterval(interval);
 
                 dialog.dismiss();
@@ -165,20 +165,21 @@ public class EditIntervalQueueActivity extends FitoTrackActivity implements Inte
         Instance.getInstance(this).db.intervalDao().insertInterval(interval);
         adapter.intervals.add(interval);
         adapter.notifyItemInserted(adapter.intervals.size() - 1);
-        intervalQueueHint.setVisibility(View.INVISIBLE);
+        intervalSetsHint.setVisibility(View.INVISIBLE);
     }
 
-    private void showDeleteQueueDialog() {
+    private void showDeleteSetDialog() {
         new AlertDialog.Builder(this)
-                .setTitle(R.string.deleteIntervalQueue)
-                .setMessage(R.string.deleteIntervalQueueMessage)
-                .setPositiveButton(R.string.delete, (dialogInterface, which) -> deleteQueue())
+                .setTitle(R.string.deleteIntervalSet)
+                .setMessage(R.string.deleteIntervalSetMessage)
+                .setPositiveButton(R.string.delete, (dialogInterface, which) -> deleteSet())
                 .setNegativeButton(R.string.cancel, null)
                 .create().show();
     }
 
-    private void deleteQueue() {
-        Instance.getInstance(this).db.intervalDao().deleteIntervalQueue(queue);
+    private void deleteSet() {
+        intervalSet.state = IntervalSet.STATE_DELETED;
+        Instance.getInstance(this).db.intervalDao().updateIntervalSet(intervalSet);
         finish();
     }
 

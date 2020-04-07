@@ -28,17 +28,17 @@ import static androidx.room.ForeignKey.CASCADE;
 
 @Entity(tableName = "interval",
         foreignKeys = @ForeignKey(
-        entity = IntervalQueue.class,
+                entity = IntervalSet.class,
         parentColumns = "id",
-        childColumns = "queue_id",
+                childColumns = "set_id",
         onDelete = CASCADE))
 public class Interval {
 
     @PrimaryKey
     public long id;
 
-    @ColumnInfo(name = "queue_id")
-    public long queueId;
+    @ColumnInfo(name = "set_id")
+    public long setId;
 
     public String name;
 

@@ -28,54 +28,55 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import de.tadris.fitness.R;
-import de.tadris.fitness.data.IntervalQueue;
+import de.tadris.fitness.data.IntervalSet;
 
-public class IntervalQueueAdapter extends RecyclerView.Adapter<IntervalQueueAdapter.IntervalQueueViewHolder> {
+public class IntervalSetAdapter extends RecyclerView.Adapter<IntervalSetAdapter.IntervalSetViewHolder> {
 
-    public static class IntervalQueueViewHolder extends RecyclerView.ViewHolder{
+    public static class IntervalSetViewHolder extends RecyclerView.ViewHolder {
 
         final View root;
         final TextView nameText;
 
-        IntervalQueueViewHolder(@NonNull View itemView) {
+        IntervalSetViewHolder(@NonNull View itemView) {
             super(itemView);
             this.root= itemView;
-            nameText= itemView.findViewById(R.id.intervalQueueName);
+            nameText = itemView.findViewById(R.id.intervalSetName);
         }
     }
 
-    private final IntervalQueue[] queues;
-    private final IntervalQueueAdapter.IntervalQueueAdapterListener listener;
+    private final IntervalSet[] intervalSets;
+    private final IntervalSetAdapterListener listener;
 
-    public IntervalQueueAdapter(IntervalQueue[] queues, IntervalQueueAdapterListener listener) {
-        this.queues = queues;
+    public IntervalSetAdapter(IntervalSet[] intervalSets, IntervalSetAdapterListener listener) {
+        this.intervalSets = intervalSets;
         this.listener = listener;
     }
 
     @Override
-    public IntervalQueueAdapter.IntervalQueueViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public IntervalSetViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_interval_queue, parent, false);
-        return new IntervalQueueAdapter.IntervalQueueViewHolder(v);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_interval_set, parent, false);
+        return new IntervalSetViewHolder(v);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(IntervalQueueAdapter.IntervalQueueViewHolder holder, final int position) {
-        IntervalQueue intervalQueue= queues[position];
-        holder.nameText.setText(intervalQueue.name);
-        holder.root.setOnClickListener(view -> listener.onItemSelect(position, intervalQueue));
+    public void onBindViewHolder(IntervalSetViewHolder holder, final int position) {
+        IntervalSet intervalSet = intervalSets[position];
+        holder.nameText.setText(intervalSet.name);
+        holder.root.setOnClickListener(view -> listener.onItemSelect(position, intervalSet));
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return queues.length;
+        return intervalSets.length;
     }
 
-    public interface IntervalQueueAdapterListener{
-        void onItemSelect(int pos, IntervalQueue queue);
-        void onItemDelete(int pos, IntervalQueue queue);
+    public interface IntervalSetAdapterListener {
+        void onItemSelect(int pos, IntervalSet set);
+
+        void onItemDelete(int pos, IntervalSet set);
     }
 
 }

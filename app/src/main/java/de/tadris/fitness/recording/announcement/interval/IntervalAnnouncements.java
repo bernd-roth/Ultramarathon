@@ -64,4 +64,7 @@ public class IntervalAnnouncements {
         ttsController.speak(recorder, announcement);
     }
 
+    public void setIntervals(List<Interval> intervals) {
+        this.intervals = intervals;
+    }
 }

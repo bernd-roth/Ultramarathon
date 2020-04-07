@@ -32,10 +32,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
-import de.tadris.fitness.data.IntervalQueue;
-import de.tadris.fitness.view.IntervalQueueAdapter;
+import de.tadris.fitness.data.IntervalSet;
+import de.tadris.fitness.view.IntervalSetAdapter;
 
-public class ManageIntervalQueuesActivity extends FitoTrackActivity implements IntervalQueueAdapter.IntervalQueueAdapterListener {
+public class ManageIntervalSetsActivity extends FitoTrackActivity implements IntervalSetAdapter.IntervalSetAdapterListener {
 
     private RecyclerView recyclerView;
     private TextView hint;
@@ -43,19 +43,19 @@ public class ManageIntervalQueuesActivity extends FitoTrackActivity implements I
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_manage_interval_queues);
+        setContentView(R.layout.activity_manage_interval_sets);
 
-        setTitle(R.string.manageIntervals);
+        setTitle(R.string.manageIntervalSets);
         setupActionBar();
 
-        recyclerView= findViewById(R.id.intervalQueuesList);
+        recyclerView = findViewById(R.id.intervalSetsList);
         recyclerView.setHasFixedSize(true);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        findViewById(R.id.intervalQueuesAdd).setOnClickListener(v -> showCreateDialog());
-        hint = findViewById(R.id.intervalQueuesHint);
+        findViewById(R.id.intervalSetsAdd).setOnClickListener(v -> showCreateDialog());
+        hint = findViewById(R.id.intervalSetsHint);
     }
 
     @Override
@@ -65,10 +65,10 @@ public class ManageIntervalQueuesActivity extends FitoTrackActivity implements I
     }
 
     private void refresh() {
-        IntervalQueue[] queues = Instance.getInstance(this).db.intervalDao().getVisibleQueues();
-        RecyclerView.Adapter adapter = new IntervalQueueAdapter(queues, this);
+        IntervalSet[] sets = Instance.getInstance(this).db.intervalDao().getVisibleSets();
+        RecyclerView.Adapter adapter = new IntervalSetAdapter(sets, this);
         recyclerView.setAdapter(adapter);
-        hint.setVisibility(queues.length == 0 ? View.VISIBLE : View.INVISIBLE);
+        hint.setVisibility(sets.length == 0 ? View.VISIBLE : View.INVISIBLE);
     }
 
     void showCreateDialog() {
@@ -78,34 +78,34 @@ public class ManageIntervalQueuesActivity extends FitoTrackActivity implements I
         AlertDialog.Builder db = new AlertDialog.Builder(this);
         db.setTitle(R.string.createIntervalSet);
         db.setView(text);
-        db.setPositiveButton(R.string.create, (dialog, which) -> createIntervalQueue(text.getText().toString()));
+        db.setPositiveButton(R.string.create, (dialog, which) -> createIntervalSet(text.getText().toString()));
         db.create().show();
 
         requestKeyboard(text);
     }
 
-    void createIntervalQueue(String name) {
-        IntervalQueue queue = new IntervalQueue();
-        queue.id = System.currentTimeMillis();
-        queue.name = name;
-        queue.state = IntervalQueue.STATE_VISIBLE;
-        Instance.getInstance(this).db.intervalDao().insertIntervalQueue(queue);
-        startEditQueueActivity(queue);
+    void createIntervalSet(String name) {
+        IntervalSet set = new IntervalSet();
+        set.id = System.currentTimeMillis();
+        set.name = name;
+        set.state = IntervalSet.STATE_VISIBLE;
+        Instance.getInstance(this).db.intervalDao().insertIntervalSet(set);
+        startEditSetActivity(set);
     }
 
-    public void startEditQueueActivity(IntervalQueue queue) {
-        Intent intent = new Intent(this, EditIntervalQueueActivity.class);
-        intent.putExtra("queueId", queue.id);
+    public void startEditSetActivity(IntervalSet set) {
+        Intent intent = new Intent(this, EditIntervalSetActivity.class);
+        intent.putExtra("setId", set.id);
         startActivity(intent);
     }
 
     @Override
-    public void onItemSelect(int pos, IntervalQueue queue) {
-        startEditQueueActivity(queue);
+    public void onItemSelect(int pos, IntervalSet set) {
+        startEditSetActivity(set);
     }
 
     @Override
-    public void onItemDelete(int pos, IntervalQueue queue) {
+    public void onItemDelete(int pos, IntervalSet set) {
 
     }
 }

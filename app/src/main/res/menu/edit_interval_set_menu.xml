@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
@@ -18,21 +17,11 @@
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?android:selectableItemBackground"
-    android:orientation="vertical">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/intervalQueueName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:textAppearance="@android:style/TextAppearance.Material.Medium" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray" />
-</LinearLayout>
+    <item
+        android:id="@+id/actionDeleteIntervalSet"
+        android:icon="@drawable/ic_delete"
+        android:showAsAction="always"
+        android:title="@string/deleteIntervalSet" />
+</menu>

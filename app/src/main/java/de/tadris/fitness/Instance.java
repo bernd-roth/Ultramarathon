@@ -133,6 +133,38 @@ public class Instance {
                             database.endTransaction();
                         }
                     }
+                }, new Migration(4, 5) {
+                    @Override
+                    public void migrate(@NonNull SupportSQLiteDatabase database) {
+                        try {
+                            database.beginTransaction();
+
+                            database.execSQL("drop table interval");
+
+                            database.execSQL("drop table interval_queue");
+
+                            database.execSQL("CREATE TABLE interval (\n" +
+                                    "    id integer NOT NULL primary key,\n" +
+                                    "    name text,\n" +
+                                    "    delay_millis integer NOT NULL,\n" +
+                                    "    set_id integer NOT NULL,\n" +
+                                    "   FOREIGN KEY (set_id) \n" +
+                                    "      REFERENCES interval_set (id) \n" +
+                                    "         ON DELETE CASCADE \n" +
+                                    "         ON UPDATE NO ACTION" +
+                                    ");");
+
+                            database.execSQL("CREATE TABLE interval_set (\n" +
+                                    "    id integer NOT NULL primary key,\n" +
+                                    "    name text,\n" +
+                                    "    state integer not null\n" +
+                                    ");");
+
+                            database.setTransactionSuccessful();
+                        } finally {
+                            database.endTransaction();
+                        }
+                    }
                 })
                 .allowMainThreadQueries()
                 .build();

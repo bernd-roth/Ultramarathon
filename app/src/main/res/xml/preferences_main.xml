@@ -59,7 +59,7 @@
         <Preference
             android:key="intervals"
             android:summary="@string/manageIntervalsSummary"
-            android:title="@string/manageIntervals" />
+            android:title="@string/manageIntervalSets" />
 
     </PreferenceCategory>
 

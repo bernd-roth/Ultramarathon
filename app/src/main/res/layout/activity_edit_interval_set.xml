@@ -23,7 +23,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.EditIntervalQueueActivity">
+    tools:context=".activity.EditIntervalSetActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/intervalsList"
@@ -31,12 +31,12 @@
         android:layout_height="match_parent" />
 
     <TextView
-        android:id="@+id/intervalQueueHint"
+        android:id="@+id/intervalSetsHint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="20dp"
-        android:text="@string/hintEditIntervalQueue"
+        android:text="@string/hintEditIntervalSet"
         android:textAlignment="center"
         android:textAppearance="@android:style/TextAppearance.Material.Medium"
         android:visibility="invisible" />
