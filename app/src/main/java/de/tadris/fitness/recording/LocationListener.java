@@ -115,10 +115,18 @@ public class LocationListener extends Service {
         initializeLocationManager();
         try {
             mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_INTERVAL, 0, gpsListener);
+            checkLastKnownLocation();
         } catch (java.lang.SecurityException ex) {
             Log.i(TAG, "fail to request location update, ignore", ex);
         } catch (IllegalArgumentException ex) {
             Log.d(TAG, "gps provider does not exist " + ex.getMessage());
+        }
+    }
+
+    private void checkLastKnownLocation() throws SecurityException {
+        Location location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        if (location != null) {
+            gpsListener.onLocationChanged(location);
         }
     }
 

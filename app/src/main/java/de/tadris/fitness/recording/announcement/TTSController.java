@@ -29,11 +29,7 @@ import android.util.Log;
 
 import java.util.Locale;
 
-import de.tadris.fitness.Instance;
-import de.tadris.fitness.data.UserPreferences;
 import de.tadris.fitness.recording.WorkoutRecorder;
-import de.tadris.fitness.recording.announcement.information.InformationAnnouncement;
-import de.tadris.fitness.util.unit.UnitUtils;
 
 public class TTSController {
 
@@ -61,7 +57,7 @@ public class TTSController {
     }
 
     public void speak(WorkoutRecorder recorder, Announcement announcement) {
-        if (!announcement.isEnabled()) {
+        if (!announcement.isAnnouncementEnabled()) {
             return;
         }
         String text = announcement.getSpokenText(recorder);

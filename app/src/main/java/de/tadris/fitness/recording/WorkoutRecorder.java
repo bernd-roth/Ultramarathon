@@ -98,6 +98,10 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
         return state == RecordingState.IDLE || state == RecordingState.RUNNING || state == RecordingState.PAUSED;
     }
 
+    public boolean isResumed() {
+        return state == RecordingState.RUNNING;
+    }
+
     private void startWatchdog(){
         new Thread(() -> {
             try {
@@ -253,6 +257,20 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
             maxCalories= calories;
         }
         return maxCalories;
+    }
+
+    public int getAscent() {
+        double lastElevation = samples.get(0).elevation;
+        double ascent = 0;
+        synchronized (samples) {
+            for (WorkoutSample sample : samples) {
+                if (sample.elevation > lastElevation) {
+                    ascent += sample.elevation - lastElevation;
+                }
+                lastElevation = sample.elevation;
+            }
+        }
+        return (int) ascent;
     }
 
     /**

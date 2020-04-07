@@ -17,7 +17,7 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.recording.announcement.information;
+package de.tadris.fitness.recording.information;
 
 import android.content.Context;
 
@@ -25,9 +25,9 @@ import de.tadris.fitness.R;
 import de.tadris.fitness.recording.WorkoutRecorder;
 import de.tadris.fitness.util.unit.UnitUtils;
 
-public class AnnouncementAverageSpeed extends InformationAnnouncement {
+public class AverageSpeed extends WorkoutInformation {
 
-    public AnnouncementAverageSpeed(Context context) {
+    public AverageSpeed(Context context) {
         super(context);
     }
 
@@ -39,6 +39,21 @@ public class AnnouncementAverageSpeed extends InformationAnnouncement {
     @Override
     boolean isEnabledByDefault() {
         return true;
+    }
+
+    @Override
+    boolean canBeDisplayed() {
+        return true;
+    }
+
+    @Override
+    public String getTitle() {
+        return getString(R.string.workoutAvgSpeedShort);
+    }
+
+    @Override
+    String getDisplayedText(WorkoutRecorder recorder) {
+        return UnitUtils.getSpeed(recorder.getAvgSpeed());
     }
 
     @Override

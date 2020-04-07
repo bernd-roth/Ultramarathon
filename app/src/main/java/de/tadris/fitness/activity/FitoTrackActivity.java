@@ -46,7 +46,7 @@ abstract public class FitoTrackActivity extends Activity {
         setTheme(Instance.getInstance(this).themes.getDefaultTheme());
     }
 
-    int getThemePrimaryColor() {
+    protected int getThemePrimaryColor() {
         final TypedValue value = new TypedValue ();
         getTheme().resolveAttribute (android.R.attr.colorPrimary, value, true);
         return value.data;

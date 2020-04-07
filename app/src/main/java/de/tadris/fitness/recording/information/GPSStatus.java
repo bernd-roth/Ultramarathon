@@ -17,34 +17,54 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.recording.announcement.information;
+package de.tadris.fitness.recording.information;
 
 import android.content.Context;
-import android.preference.PreferenceManager;
 
-import androidx.annotation.StringRes;
-
+import de.tadris.fitness.R;
 import de.tadris.fitness.recording.WorkoutRecorder;
-import de.tadris.fitness.recording.announcement.Announcement;
 
-public abstract class InformationAnnouncement implements Announcement {
+public class GPSStatus extends WorkoutInformation {
 
-    private Context context;
-
-    InformationAnnouncement(Context context) {
-        this.context = context;
+    public GPSStatus(Context context) {
+        super(context);
     }
 
-    public boolean isEnabled() {
-        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("announcement_" + getId(), isEnabledByDefault());
+    @Override
+    public String getId() {
+        return "gps-lost";
     }
 
-    protected String getString(@StringRes int resId) {
-        return context.getString(resId);
+    @Override
+    boolean isEnabledByDefault() {
+        return true;
     }
 
-    public abstract String getId();
+    @Override
+    public String getSpokenText(WorkoutRecorder recorder) {
+        return "";
+    }
 
-    abstract boolean isEnabledByDefault();
+    public String getSpokenGPSLost() {
+        return getString(R.string.gpsLost);
+    }
 
+    public String getSpokenGPSFound() {
+        return getString(R.string.gpsFound);
+    }
+
+    @Override
+    boolean canBeDisplayed() {
+        return false;
+    }
+
+    @Override
+    public String getTitle() {
+        return null;
+    }
+
+    @Override
+    String getDisplayedText(WorkoutRecorder recorder) {
+        return null;
+    }
 }

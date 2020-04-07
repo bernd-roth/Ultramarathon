@@ -51,4 +51,27 @@ public class UserPreferences {
         return preferences.getBoolean("intervalsIncludePause", true);
     }
 
+    public String getIdOfDisplayedInformation(int slot) {
+        String defValue = "";
+        switch (slot) {
+            case 0:
+                defValue = "distance";
+                break;
+            case 1:
+                defValue = "energy_burned";
+                break;
+            case 2:
+                defValue = "avgSpeed";
+                break;
+            case 3:
+                defValue = "pause_duration";
+                break;
+        }
+        return preferences.getString("information_display_" + slot, defValue);
+    }
+
+    public void setIdOfDisplayedInformation(int slot, String id) {
+        preferences.edit().putString("information_display_" + slot, id).apply();
+    }
+
 }
