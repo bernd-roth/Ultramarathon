@@ -245,6 +245,12 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
         }
     }
 
+    private WorkoutSample getLastSample() {
+        synchronized (samples) {
+            return samples.get(samples.size() - 1);
+        }
+    }
+
     public int getDistanceInMeters() {
         return (int)distance;
     }
@@ -282,6 +288,10 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
      */
     public double getAvgSpeed(){
         return distance / (double)(getDuration() / 1000);
+    }
+
+    public double getCurrentSpeed() {
+        return getLastSample().speed;
     }
 
     public long getTimeSinceStart() {

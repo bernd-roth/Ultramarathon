@@ -38,7 +38,7 @@ public class AverageSpeed extends WorkoutInformation {
 
     @Override
     boolean isEnabledByDefault() {
-        return true;
+        return false;
     }
 
     @Override

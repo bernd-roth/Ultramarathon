@@ -198,6 +198,7 @@
     <string name="intervalsIncludePauseSummary">If true, the intervals will continue even if you do pauses in your workout.</string>
     <string name="intervalTraining">Interval Training</string>
     <string name="intervalSets">Interval Sets</string>
+    <string name="currentSpeed">Current Speed</string>
 
     <string-array name="pref_announcement_mode">
         <item>Always</item>

@@ -41,6 +41,8 @@ public class InformationManager {
         information.add(new BurnedEnergy(context));
         information.add(new PauseDuration(context));
         information.add(new AverageSpeed(context));
+        information.add(new CurrentSpeed(context));
+        information.add(new Ascent(context));
     }
 
     public WorkoutInformation getInformationById(String id) {
