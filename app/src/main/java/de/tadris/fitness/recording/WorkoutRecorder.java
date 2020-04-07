@@ -21,6 +21,7 @@ package de.tadris.fitness.recording;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.hardware.SensorManager;
 import android.location.Location;
 import android.util.Log;
 
@@ -264,8 +265,10 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
         double ascent = 0;
         synchronized (samples) {
             for (WorkoutSample sample : samples) {
-                if (sample.elevation > lastElevation) {
-                    ascent += sample.elevation - lastElevation;
+                double elevation = SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, sample.tmpPressure);
+                elevation = (elevation + lastElevation * 6) / 7; // Slow floating average 1/7
+                if (elevation > lastElevation) {
+                    ascent += elevation - lastElevation;
                 }
                 lastElevation = sample.elevation;
             }
