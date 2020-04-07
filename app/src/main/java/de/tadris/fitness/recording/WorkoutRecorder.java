@@ -263,6 +263,14 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
         return distance / (double)(getDuration() / 1000);
     }
 
+    public long getTimeSinceStart() {
+        if (workout.start != 0) {
+            return System.currentTimeMillis() - workout.start;
+        } else {
+            return 0;
+        }
+    }
+
     public long getPauseDuration(){
         if(state == RecordingState.PAUSED){
             return pauseTime + (System.currentTimeMillis() - lastPause);

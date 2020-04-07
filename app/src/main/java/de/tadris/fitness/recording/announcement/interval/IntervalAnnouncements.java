@@ -19,9 +19,13 @@
 
 package de.tadris.fitness.recording.announcement.interval;
 
+import android.content.Context;
+
 import java.util.List;
 
+import de.tadris.fitness.Instance;
 import de.tadris.fitness.data.Interval;
+import de.tadris.fitness.data.UserPreferences;
 import de.tadris.fitness.recording.WorkoutRecorder;
 import de.tadris.fitness.recording.announcement.TTSController;
 
@@ -30,19 +34,29 @@ public class IntervalAnnouncements {
     private WorkoutRecorder recorder;
     private TTSController ttsController;
     private List<Interval> intervals;
+    private UserPreferences preferences;
 
     private int index= -1; // Last spoken interval
     private long speakNextAt= 0;
 
-    public IntervalAnnouncements(WorkoutRecorder recorder, TTSController ttsController, List<Interval> intervals) {
+    public IntervalAnnouncements(Context context, WorkoutRecorder recorder, TTSController ttsController, List<Interval> intervals) {
+        this.preferences = Instance.getInstance(context).userPreferences;
         this.recorder = recorder;
         this.ttsController = ttsController;
         this.intervals = intervals;
     }
 
     public void check(){
-        if(recorder.getDuration() > speakNextAt){
+        if (getWorkoutDuration() > speakNextAt) {
             speakNextInterval();
+        }
+    }
+
+    private long getWorkoutDuration() {
+        if (preferences.intervalsIncludePauses()) {
+            return recorder.getTimeSinceStart();
+        } else {
+            return recorder.getDuration();
         }
     }
 

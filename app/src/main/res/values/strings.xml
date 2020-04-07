@@ -194,6 +194,9 @@
     <string name="deleteIntervalSetMessage">Do you want to delete the interval set?</string>
     <string name="selectIntervalSet">Select Interval Set</string>
     <string name="intervalSetSelected">Interval Set selected</string>
+    <string name="intervalsIncludePauseTitle">Include Pause Time in Interval Training</string>
+    <string name="intervalsIncludePauseSummary">If true, the intervals will continue even if you do pauses in your workout.</string>
+    <string name="intervalTraining">Interval Training</string>
 
     <string-array name="pref_announcement_mode">
         <item>Always</item>
