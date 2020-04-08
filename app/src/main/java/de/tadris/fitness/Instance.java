@@ -165,6 +165,19 @@ public class Instance {
                             database.endTransaction();
                         }
                     }
+                }, new Migration(5, 6) {
+                    @Override
+                    public void migrate(@NonNull SupportSQLiteDatabase database) {
+                        try {
+                            database.beginTransaction();
+
+                            database.execSQL("ALTER table workout add COLUMN interval_set_used_id INTEGER not null default 0");
+
+                            database.setTransactionSuccessful();
+                        } finally {
+                            database.endTransaction();
+                        }
+                    }
                 })
                 .allowMainThreadQueries()
                 .build();

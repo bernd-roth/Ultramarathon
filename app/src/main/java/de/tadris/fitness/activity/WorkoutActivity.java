@@ -26,8 +26,12 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.CombinedData;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -50,6 +54,8 @@ import java.util.List;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
+import de.tadris.fitness.data.Interval;
+import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutManager;
 import de.tadris.fitness.data.WorkoutSample;
@@ -68,13 +74,19 @@ public abstract class WorkoutActivity extends InformationActivity {
     private TileDownloadLayer downloadLayer;
     private FixedPixelCircle highlightingCircle;
     final Handler mHandler = new Handler();
+    protected IntervalSet usedIntervalSet;
+    protected Interval[] intervals;
 
-    LineChart speedDiagram;
-    LineChart heightDiagram;
+    CombinedChart speedDiagram;
+    CombinedChart heightDiagram;
 
     void initBeforeContent() {
         workout= selectedWorkout;
         samples= Arrays.asList(Instance.getInstance(this).db.workoutDao().getAllSamplesOfWorkout(workout.id));
+        if (workout.intervalSetUsedId != 0) {
+            usedIntervalSet = Instance.getInstance(this).db.intervalDao().getSet(workout.intervalSetUsedId);
+            intervals = Instance.getInstance(this).db.intervalDao().getAllIntervalsOfSet(usedIntervalSet.id);
+        }
         setTheme(Instance.getInstance(this).themes.getWorkoutTypeTheme(workout.getWorkoutType()));
     }
 
@@ -93,8 +105,9 @@ public abstract class WorkoutActivity extends InformationActivity {
 
     boolean diagramsInteractive = false;
 
-    private LineChart getDiagram(SampleConverter converter) {
-        LineChart chart= new LineChart(this);
+    private CombinedChart getDiagram(SampleConverter converter) {
+        CombinedChart chart = new CombinedChart(this);
+        CombinedData combinedData = new CombinedData();
 
         converter.onCreate();
 
@@ -117,7 +130,37 @@ public abstract class WorkoutActivity extends InformationActivity {
         description.setText(converter.getDescription());
 
         LineData lineData = new LineData(dataSet);
-        chart.setData(lineData);
+        combinedData.setData(lineData);
+
+        float yMax = lineData.getYMax() * 1.05f;
+        if (converter.isIntervalSetVisible() && intervals != null && intervals.length > 0) {
+            List<BarEntry> barEntries = new ArrayList<>();
+            int time = 0, index = 0;
+            while (time < workout.duration) {
+                if (index >= intervals.length) {
+                    index = 0;
+                }
+                Interval interval = intervals[index];
+
+                barEntries.add(new BarEntry((float) (time) / 1000f / 60f, yMax));
+
+                time += interval.delayMillis;
+                index++;
+            }
+
+            BarDataSet barDataSet = new BarDataSet(barEntries, getString(R.string.intervalSet));
+            barDataSet.setBarBorderWidth(4);
+            barDataSet.setBarBorderColor(getThemePrimaryColor());
+            barDataSet.setColor(getThemePrimaryColor());
+
+            BarData barData = new BarData(barDataSet);
+            barData.setBarWidth(0.0f);
+            barData.setDrawValues(false);
+
+            combinedData.setData(barData);
+        }
+
+        chart.setData(combinedData);
         chart.setScaleXEnabled(diagramsInteractive);
         chart.setScaleYEnabled(false);
         chart.setDescription(description);
@@ -161,8 +204,11 @@ public abstract class WorkoutActivity extends InformationActivity {
         void sampleGetsEntry(WorkoutSample sample, Entry entry);
         String getName();
         String getDescription();
+
+        boolean isIntervalSetVisible();
         boolean compare(WorkoutSample sample, Entry entry);
-        void afterAdd(LineChart chart);
+
+        void afterAdd(CombinedChart chart);
     }
 
     private WorkoutSample findSample(SampleConverter converter, Entry entry) {
@@ -200,12 +246,17 @@ public abstract class WorkoutActivity extends InformationActivity {
             }
 
             @Override
+            public boolean isIntervalSetVisible() {
+                return false;
+            }
+
+            @Override
             public boolean compare(WorkoutSample sample, Entry entry) {
                 return sample.tmpHeightEntry.equalTo(entry);
             }
 
             @Override
-            public void afterAdd(LineChart chart) {
+            public void afterAdd(CombinedChart chart) {
                 heightDiagram= chart;
             }
         });
@@ -239,12 +290,17 @@ public abstract class WorkoutActivity extends InformationActivity {
             }
 
             @Override
+            public boolean isIntervalSetVisible() {
+                return true;
+            }
+
+            @Override
             public boolean compare(WorkoutSample sample, Entry entry) {
                 return sample.tmpSpeedEntry.equalTo(entry);
             }
 
             @Override
-            public void afterAdd(LineChart chart) {
+            public void afterAdd(CombinedChart chart) {
                 speedDiagram= chart;
             }
         });

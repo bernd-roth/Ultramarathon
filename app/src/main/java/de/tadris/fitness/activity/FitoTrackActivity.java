@@ -31,6 +31,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.core.app.ActivityCompat;
@@ -47,8 +48,20 @@ abstract public class FitoTrackActivity extends Activity {
     }
 
     protected int getThemePrimaryColor() {
+        return getThemeColor(android.R.attr.colorPrimary);
+    }
+
+    protected int getThemePrimaryDarkColor() {
+        return getThemeColor(android.R.attr.colorPrimaryDark);
+    }
+
+    protected int getThemeTextColor() {
+        return getThemeColor(android.R.attr.textColorPrimary);
+    }
+
+    protected int getThemeColor(@AttrRes int colorRes) {
         final TypedValue value = new TypedValue ();
-        getTheme().resolveAttribute (android.R.attr.colorPrimary, value, true);
+        getTheme().resolveAttribute(colorRes, value, true);
         return value.data;
     }
 

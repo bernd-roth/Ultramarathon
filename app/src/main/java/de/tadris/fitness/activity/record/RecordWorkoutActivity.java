@@ -503,6 +503,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
         Interval[] intervals = Instance.getInstance(this).db.intervalDao().getAllIntervalsOfSet(set.id);
         List<Interval> intervalList = new ArrayList<>(Arrays.asList(intervals));
         announcements.applyIntervals(intervalList);
+        recorder.setUsedIntervalSet(set);
         Toast.makeText(this, R.string.intervalSetSelected, Toast.LENGTH_LONG).show();
     }
 

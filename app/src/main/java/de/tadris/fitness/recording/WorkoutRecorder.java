@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.tadris.fitness.Instance;
+import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.data.WorkoutType;
@@ -249,6 +250,10 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
         synchronized (samples) {
             return samples.get(samples.size() - 1);
         }
+    }
+
+    public void setUsedIntervalSet(IntervalSet set) {
+        workout.intervalSetUsedId = set.id;
     }
 
     public int getDistanceInMeters() {
