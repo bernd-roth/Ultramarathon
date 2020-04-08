@@ -249,7 +249,11 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
 
     private WorkoutSample getLastSample() {
         synchronized (samples) {
-            return samples.get(samples.size() - 1);
+            if (samples.size() > 0) {
+                return samples.get(samples.size() - 1);
+            } else {
+                return null;
+            }
         }
     }
 
@@ -273,18 +277,23 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
     }
 
     public int getAscent() {
-        double lastElevation = samples.get(0).elevation;
         double ascent = 0;
         synchronized (samples) {
+            if (samples.size() == 0) {
+                return 0;
+            }
+            double lastElevation = -1;
             for (WorkoutSample sample : samples) {
                 double elevation = SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, sample.tmpPressure);
-                elevation = (elevation + lastElevation * 6) / 7; // Slow floating average 1/7
+                if (lastElevation == -1) lastElevation = elevation;
+                elevation = (elevation + lastElevation * 3) / 4; // Slow floating average 1/7
                 if (elevation > lastElevation) {
                     ascent += elevation - lastElevation;
                 }
-                lastElevation = sample.elevation;
+                lastElevation = elevation;
             }
         }
+        System.out.println(ascent);
         return (int) ascent;
     }
 
@@ -297,7 +306,11 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
     }
 
     public double getCurrentSpeed() {
-        return getLastSample().speed;
+        if (samples.size() > 0) {
+            return getLastSample().speed;
+        } else {
+            return 0;
+        }
     }
 
     public long getTimeSinceStart() {

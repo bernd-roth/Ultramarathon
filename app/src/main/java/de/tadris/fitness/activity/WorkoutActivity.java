@@ -114,9 +114,8 @@ public abstract class WorkoutActivity extends InformationActivity {
         List<Entry> entries = new ArrayList<>();
         for (WorkoutSample sample : samples) {
             // turn your data into Entry objects
-            Entry e= new Entry((float)(sample.relativeTime) / 1000f / 60f, converter.getValue(sample));
+            Entry e = new Entry((float) (sample.relativeTime) / 1000f / 60f, converter.getValue(sample), sample);
             entries.add(e);
-            converter.sampleGetsEntry(sample, e);
         }
 
         LineDataSet dataSet = new LineDataSet(entries, converter.getName()); // add entries to dataset
@@ -188,7 +187,10 @@ public abstract class WorkoutActivity extends InformationActivity {
                 @Override
                 public void onValueSelected(Entry e, Highlight h) {
                     onNothingSelected();
-                    onDiagramValueSelected(findSample(converter, e).toLatLong());
+                    WorkoutSample sample = findSample(e);
+                    if (sample != null) {
+                        onDiagramValueSelected(sample.toLatLong());
+                    }
                 }
 
                 @Override
@@ -220,23 +222,18 @@ public abstract class WorkoutActivity extends InformationActivity {
     interface SampleConverter{
         void onCreate();
         float getValue(WorkoutSample sample);
-        void sampleGetsEntry(WorkoutSample sample, Entry entry);
         String getName();
         String getDescription();
-
         boolean isIntervalSetVisible();
-        boolean compare(WorkoutSample sample, Entry entry);
-
         void afterAdd(CombinedChart chart);
     }
 
-    private WorkoutSample findSample(SampleConverter converter, Entry entry) {
-        for(WorkoutSample sample : samples){
-            if(converter.compare(sample, entry)){
-                return sample;
-            }
+    private WorkoutSample findSample(Entry entry) {
+        if (entry.getData() instanceof WorkoutSample) {
+            return (WorkoutSample) entry.getData();
+        } else {
+            return null;
         }
-        return null;
     }
 
     void addHeightDiagram(){
@@ -247,11 +244,6 @@ public abstract class WorkoutActivity extends InformationActivity {
             @Override
             public float getValue(WorkoutSample sample) {
                 return (float) UnitUtils.CHOSEN_SYSTEM.getDistanceFromMeters(sample.elevation);
-            }
-
-            @Override
-            public void sampleGetsEntry(WorkoutSample sample, Entry entry) {
-                sample.tmpHeightEntry= entry;
             }
 
             @Override
@@ -267,11 +259,6 @@ public abstract class WorkoutActivity extends InformationActivity {
             @Override
             public boolean isIntervalSetVisible() {
                 return false;
-            }
-
-            @Override
-            public boolean compare(WorkoutSample sample, Entry entry) {
-                return sample.tmpHeightEntry.equalTo(entry);
             }
 
             @Override
@@ -294,11 +281,6 @@ public abstract class WorkoutActivity extends InformationActivity {
             }
 
             @Override
-            public void sampleGetsEntry(WorkoutSample sample, Entry entry) {
-                sample.tmpSpeedEntry= entry;
-            }
-
-            @Override
             public String getName() {
                 return getString(R.string.workoutSpeed);
             }
@@ -311,11 +293,6 @@ public abstract class WorkoutActivity extends InformationActivity {
             @Override
             public boolean isIntervalSetVisible() {
                 return true;
-            }
-
-            @Override
-            public boolean compare(WorkoutSample sample, Entry entry) {
-                return sample.tmpSpeedEntry.equalTo(entry);
             }
 
             @Override

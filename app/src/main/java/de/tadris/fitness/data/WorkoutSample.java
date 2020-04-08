@@ -27,7 +27,6 @@ import androidx.room.PrimaryKey;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.github.mikephil.charting.data.Entry;
 
 import org.mapsforge.core.model.LatLong;
 
@@ -59,14 +58,6 @@ public class WorkoutSample{
     public double elevation;
 
     public double speed;
-
-    @JsonIgnore
-    @Ignore
-    public Entry tmpHeightEntry;
-
-    @JsonIgnore
-    @Ignore
-    public Entry tmpSpeedEntry;
 
     @JsonIgnore
     @Ignore
