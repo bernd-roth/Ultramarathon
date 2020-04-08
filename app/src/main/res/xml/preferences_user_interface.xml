@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:defaultValue="1"
+        android:entries="@array/pref_unit_systems"
+        android:entryValues="@array/pref_unit_system_values"
+        android:key="unitSystem"
+        android:title="@string/pref_unit_system" />
+
+    <Preference
+        android:key="weight"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="@string/pref_weight_summary"
+        android:title="@string/pref_weight" />
+
+    <ListPreference
+        android:defaultValue="0"
+        android:entries="@array/pref_theme_setting"
+        android:entryValues="@array/pref_theme_setting_values"
+        android:key="themeSetting"
+        android:title="@string/theme" />
+
+    <ListPreference
+        android:defaultValue="osm.mapnik"
+        android:entries="@array/pref_map_layers"
+        android:entryValues="@array/pref_map_layers_values"
+        android:key="mapStyle"
+        android:title="@string/mapStyle" />
+
+</PreferenceScreen>

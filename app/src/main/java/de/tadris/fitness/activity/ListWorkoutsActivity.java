@@ -39,7 +39,7 @@ import com.github.clans.fab.FloatingActionMenu;
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.activity.record.RecordWorkoutActivity;
-import de.tadris.fitness.activity.settings.SettingsActivity;
+import de.tadris.fitness.activity.settings.MainSettingsActivity;
 import de.tadris.fitness.activity.workout.EnterWorkoutActivity;
 import de.tadris.fitness.activity.workout.ShowWorkoutActivity;
 import de.tadris.fitness.data.Workout;
@@ -96,7 +96,7 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
                     .setTitle(R.string.setPreferencesTitle)
                     .setMessage(R.string.setPreferencesMessage)
                     .setNegativeButton(R.string.cancel, null)
-                    .setPositiveButton(R.string.settings, (dialog, which) -> startActivity(new Intent(ListWorkoutsActivity.this, SettingsActivity.class)))
+                    .setPositiveButton(R.string.settings, (dialog, which) -> startActivity(new Intent(ListWorkoutsActivity.this, MainSettingsActivity.class)))
                     .create().show();
         }
     }
@@ -191,7 +191,7 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
         int id = item.getItemId();
 
         if (id == R.id.actionOpenSettings) {
-            startActivity(new Intent(this, SettingsActivity.class));
+            startActivity(new Intent(this, MainSettingsActivity.class));
             return true;
         }
 

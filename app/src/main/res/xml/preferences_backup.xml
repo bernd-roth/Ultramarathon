@@ -19,19 +19,18 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <Preference
-        android:key="userInterface"
-        android:summary="@string/preferencesUserInterfaceSummary"
-        android:title="@string/preferencesUserInterfaceTitle" />
 
-    <Preference
-        android:key="recordingSettings"
-        android:summary="@string/preferencesRecordingSummary"
-        android:title="@string/preferencesRecordingTitle" />
+    <PreferenceCategory android:title="@string/backup">
 
-    <Preference
-        android:key="backupSettings"
-        android:summary="@string/preferencesBackupSummary"
-        android:title="@string/preferencesBackupTitle" />
+        <Preference
+            android:key="import"
+            android:summary="@string/importBackupSummary"
+            android:title="@string/importBackup" />
+        <Preference
+            android:key="export"
+            android:summary="@string/exportDataSummary"
+            android:title="@string/exportData" />
+    </PreferenceCategory>
+
 
 </PreferenceScreen>

@@ -20,6 +20,8 @@
 
 <resources>
 
+    <!-- Theses keys are not supposed to be translated -->
+
     <string-array name="pref_announcement_mode_values">
         <item>always</item>
         <item>headphones</item>

@@ -19,7 +19,6 @@
 
 package de.tadris.fitness.activity.settings;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -86,17 +85,5 @@ public class VoiceAnnouncementsSettingsActivity extends FitoTrackSettingsActivit
 
         d.create().show();
     }
-
-    /**
-     * Set up the {@link android.app.ActionBar}, if the API is available.
-     */
-    private void setupActionBar() {
-        ActionBar actionBar = getActionBar();
-        if (actionBar != null) {
-            // Show the Up button in the action bar.
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-    }
-
 
 }

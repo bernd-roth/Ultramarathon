@@ -43,7 +43,7 @@
         <activity android:name=".activity.settings.EditIntervalSetActivity" />
         <activity android:name=".activity.settings.ManageIntervalSetsActivity" />
         <activity android:name=".activity.settings.VoiceAnnouncementsSettingsActivity" />
-        <activity android:name=".activity.settings.SettingsActivity" />
+        <activity android:name=".activity.settings.MainSettingsActivity" />
         <activity android:name=".activity.workout.EnterWorkoutActivity" />
         <activity
             android:name=".activity.workout.ShowWorkoutMapActivity"
@@ -71,6 +71,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.settings.InterfaceSettingsActivity" />
+        <activity android:name=".activity.settings.RecordingSettingsActivity" />
+        <activity android:name=".activity.settings.BackupSettingsActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

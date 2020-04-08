@@ -205,6 +205,13 @@
     <string name="avgSpeedInMotion">Avg. Speed (in Motion)</string>
     <string name="avgSpeedTotalShort">Avg. Speed (Total)</string>
     <string name="avgSpeedTotalLong">Average Speed in total</string>
+    <string name="preferencesUserInterfaceTitle">User Interface</string>
+    <string name="preferencesUserInterfaceSummary">Personalize the app</string>
+    <string name="preferencesRecordingTitle">Recording</string>
+    <string name="preferencesRecordingSummary">Manage the workout recording</string>
+    <string name="preferencesBackupTitle">Database</string>
+    <string name="preferencesBackupSummary">Backup/Restore your workout data</string>
+
 
     <string-array name="pref_announcement_mode">
         <item>Always</item>

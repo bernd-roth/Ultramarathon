@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:key="speech"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="@string/pref_voice_announcements_summary"
+        android:title="@string/voiceAnnouncementsTitle" />
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="intervalsIncludePause"
+        android:summary="@string/intervalsIncludePauseSummary"
+        android:title="@string/intervalsIncludePauseTitle" />
+
+    <Preference
+        android:key="intervals"
+        android:summary="@string/manageIntervalsSummary"
+        android:title="@string/intervalTraining" />
+
+</PreferenceScreen>
