@@ -515,7 +515,9 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
     @Override
     public void onInfoViewClick(int slot) {
-        new SelectWorkoutInformationDialog(this, slot, this).show();
+        if (recorder.getState() == WorkoutRecorder.RecordingState.IDLE) {
+            new SelectWorkoutInformationDialog(this, slot, this).show();
+        }
     }
 
     @Override

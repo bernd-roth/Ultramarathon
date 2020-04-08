@@ -49,6 +49,7 @@ public class SelectIntervalSetDialog {
             arrayAdapter.add(set.name);
         }
 
+        builderSingle.setTitle(R.string.selectIntervalSet);
         builderSingle.setAdapter(arrayAdapter, (dialog, which) -> listener.onIntervalSetSelect(sets[which]));
         builderSingle.setNeutralButton(R.string.manageIntervalSets, (dialog, which) -> openManageSetsActivity());
         builderSingle.show();
