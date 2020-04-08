@@ -292,6 +292,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
         final EditText editText= new EditText(this);
         editText.setSingleLine(true);
         editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+        requestKeyboard(editText);
         new AlertDialog.Builder(this).setTitle(R.string.enterComment).setPositiveButton(R.string.okay, (dialog, which) -> {
             dialog.dismiss();
             recorder.setComment(editText.getText().toString());

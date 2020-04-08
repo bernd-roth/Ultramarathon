@@ -27,8 +27,9 @@
     <color name="colorPrimaryBicycling">#523220</color>
     <color name="colorPrimaryDarkBicycling">#462A1D</color>
 
-    <color name="colorPrimaryBicyclingLighter">#6E422A</color>
-    <color name="colorPrimaryDarkBicyclingLighter">#5A3625</color>
+    <!-- For dark mode the normal cycling colors would be too dark -->
+    <color name="colorPrimaryBicyclingLighter">#77492F</color>
+    <color name="colorPrimaryDarkBicyclingLighter">#5E3827</color>
 
     <color name="colorAccent">#4CAF50</color>
     <color name="colorAccentDark">#2E7D32</color>

@@ -134,6 +134,7 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
         editText.setText(workout.comment);
         editText.setSingleLine(true);
         editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+        requestKeyboard(editText);
         new AlertDialog.Builder(this)
                 .setTitle(R.string.enterComment)
                 .setPositiveButton(R.string.okay, (dialog, which) -> changeComment(editText.getText().toString()))

@@ -60,8 +60,8 @@
     </style>
 
     <style name="BicyclingDark" parent="AppThemeDark">
-        <item name="android:colorPrimary">@color/colorPrimaryBicycling</item>
-        <item name="android:colorPrimaryDark">@color/colorPrimaryDarkBicycling</item>
+        <item name="android:colorPrimary">@color/colorPrimaryBicyclingLighter</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimaryDarkBicyclingLighter</item>
     </style>
 
     <style name="HikingDark" parent="AppThemeDark">

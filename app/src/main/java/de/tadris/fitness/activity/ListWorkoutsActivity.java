@@ -77,14 +77,6 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
 
         hintText= findViewById(R.id.hintAddWorkout);
 
-        FloatingActionButton lastFab = findViewById(R.id.workoutListRecordLast);
-        if (workouts.length > 0) {
-            WorkoutType lastType = workouts[0].getWorkoutType();
-            lastFab.setColorNormal(getResources().getColor(lastType.color));
-        } else {
-            lastFab.setVisibility(View.GONE);
-        }
-
         findViewById(R.id.workoutListRecord).setOnClickListener(v -> showWorkoutSelection());
         findViewById(R.id.workoutListEnter).setOnClickListener(v -> startEnterWorkoutActivity());
 
@@ -113,6 +105,7 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
     }
 
     private void showWorkoutSelection() {
+        menu.close(true);
         new SelectWorkoutTypeDialog(this, this::startRecording).show();
     }
 
@@ -120,7 +113,7 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
         menu.close(true);
         RecordWorkoutActivity.ACTIVITY= activity;
         final Intent intent= new Intent(this, RecordWorkoutActivity.class);
-        new Handler().postDelayed(() -> startActivity(intent), 300);
+        startActivity(intent);
     }
 
     @Override
@@ -128,6 +121,12 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
         super.onResume();
 
         refresh();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        menu.close(true);
     }
 
     @Override
@@ -157,6 +156,24 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
     private void refreshAdapter(){
         adapter= new WorkoutAdapter(workouts, this);
         listView.setAdapter(adapter);
+        refreshFABMenu();
+    }
+
+    private void refreshFABMenu() {
+        FloatingActionButton lastFab = findViewById(R.id.workoutListRecordLast);
+        if (workouts.length > 0) {
+            WorkoutType lastType = workouts[0].getWorkoutType();
+            lastFab.setLabelText(getString(lastType.title));
+            lastFab.setImageResource(lastType.icon);
+            lastFab.setColorNormal(getResources().getColor(lastType.color));
+            lastFab.setColorPressed(lastFab.getColorNormal());
+            lastFab.setOnClickListener(v -> {
+                menu.close(true);
+                new Handler().postDelayed(() -> startRecording(lastType), 300);
+            });
+        } else {
+            lastFab.setVisibility(View.GONE);
+        }
     }
 
     @Override
