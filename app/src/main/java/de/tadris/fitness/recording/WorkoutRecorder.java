@@ -73,6 +73,7 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
 
         // Default values
         this.workout.comment= "";
+        this.workout.intervalSetIncludesPauses = Instance.getInstance(context).userPreferences.intervalsIncludePauses();
 
         this.workout.setWorkoutType(workoutType);
 

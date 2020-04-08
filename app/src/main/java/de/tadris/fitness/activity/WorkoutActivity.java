@@ -135,17 +135,36 @@ public abstract class WorkoutActivity extends InformationActivity {
         float yMax = lineData.getYMax() * 1.05f;
         if (converter.isIntervalSetVisible() && intervals != null && intervals.length > 0) {
             List<BarEntry> barEntries = new ArrayList<>();
-            int time = 0, index = 0;
-            while (time < workout.duration) {
-                if (index >= intervals.length) {
-                    index = 0;
+            int index = 0;
+            if (workout.intervalSetIncludesPauses) {
+                long time = 0;
+                long lastTime = samples.get(0).absoluteTime;
+                for (WorkoutSample sample : samples) {
+                    if (index >= intervals.length) {
+                        index = 0;
+                    }
+                    Interval currentInterval = intervals[index];
+                    time += sample.absoluteTime - lastTime;
+                    if (time > currentInterval.delayMillis) {
+                        time = 0;
+                        index++;
+                        barEntries.add(new BarEntry((float) (sample.relativeTime) / 1000f / 60f, yMax));
+                    }
+                    lastTime = sample.absoluteTime;
                 }
-                Interval interval = intervals[index];
+            } else {
+                long time = 0;
+                while (time < workout.duration) {
+                    if (index >= intervals.length) {
+                        index = 0;
+                    }
+                    Interval interval = intervals[index];
 
-                barEntries.add(new BarEntry((float) (time) / 1000f / 60f, yMax));
+                    barEntries.add(new BarEntry((float) (time) / 1000f / 60f, yMax));
 
-                time += interval.delayMillis;
-                index++;
+                    time += interval.delayMillis;
+                    index++;
+                }
             }
 
             BarDataSet barDataSet = new BarDataSet(barEntries, getString(R.string.intervalSet));

@@ -82,6 +82,9 @@ public class Workout{
     @ColumnInfo(name = "interval_set_used_id")
     public long intervalSetUsedId = 0;
 
+    @ColumnInfo(name = "interval_set_include_pauses")
+    public boolean intervalSetIncludesPauses;
+
     public String toString(){
         if(comment.length() > 2){
             return comment;
