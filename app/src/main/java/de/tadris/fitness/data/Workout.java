@@ -52,9 +52,19 @@ public class Workout{
     public int length;
 
     /**
-     * Average speed of workout in m/s
+     * Average speed (moving) of workout in m/s
      */
     public double avgSpeed;
+
+    /**
+     * Average speed (total)
+     *
+     * @return speed in m/s
+     */
+    @JsonIgnore
+    public double getAvgSpeedTotal() {
+        return (double) length / ((double) (end - start) / 1000);
+    }
 
     /**
      * Top speed in m/s

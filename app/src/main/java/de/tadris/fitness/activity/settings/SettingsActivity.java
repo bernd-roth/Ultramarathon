@@ -17,7 +17,7 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.activity;
+package de.tadris.fitness.activity.settings;
 
 import android.Manifest;
 import android.app.ActionBar;

@@ -297,12 +297,14 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
         return (int) ascent;
     }
 
-    /**
-     *
-     * @return avgSpeed in m/s
-     */
+    // in m/s
     public double getAvgSpeed(){
         return distance / (double)(getDuration() / 1000);
+    }
+
+    // in m/s
+    public double getAvgSpeedTotal() {
+        return distance / (double) (getTimeSinceStart() / 1000);
     }
 
     public double getCurrentSpeed() {

@@ -17,7 +17,7 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.activity;
+package de.tadris.fitness.activity.workout;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -95,14 +95,17 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
 
         addTitle(getString(R.string.workoutSpeed));
 
-        addKeyValue(getString(R.string.workoutAvgSpeedShort), UnitUtils.getSpeed(workout.avgSpeed),
-                getString(R.string.workoutTopSpeed), UnitUtils.getSpeed(workout.topSpeed));
-
         if (hasSamples()) {
+            addKeyValue(getString(R.string.avgSpeedInMotion), UnitUtils.getSpeed(workout.avgSpeed),
+                    getString(R.string.avgSpeedTotalShort), UnitUtils.getSpeed(workout.getAvgSpeedTotal()));
+
+            addKeyValue(getString(R.string.workoutTopSpeed), UnitUtils.getSpeed(workout.topSpeed));
 
             addSpeedDiagram();
 
             speedDiagram.setOnClickListener(v -> startDiagramActivity(ShowWorkoutMapDiagramActivity.DIAGRAM_TYPE_SPEED));
+        } else {
+            addKeyValue(getString(R.string.workoutAvgSpeedShort), UnitUtils.getSpeed(workout.avgSpeed));
         }
 
         addTitle(getString(R.string.workoutBurnedEnergy));

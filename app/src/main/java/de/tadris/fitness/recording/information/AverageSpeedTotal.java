@@ -25,15 +25,15 @@ import de.tadris.fitness.R;
 import de.tadris.fitness.recording.WorkoutRecorder;
 import de.tadris.fitness.util.unit.UnitUtils;
 
-public class AverageSpeed extends WorkoutInformation {
+public class AverageSpeedTotal extends WorkoutInformation {
 
-    public AverageSpeed(Context context) {
+    public AverageSpeedTotal(Context context) {
         super(context);
     }
 
     @Override
     public String getId() {
-        return "avgSpeed";
+        return "avgSpeedTotal";
     }
 
     @Override
@@ -48,7 +48,7 @@ public class AverageSpeed extends WorkoutInformation {
 
     @Override
     public String getTitle() {
-        return getString(R.string.workoutAvgSpeedShort);
+        return getString(R.string.avgSpeedTotalShort);
     }
 
     @Override
@@ -59,6 +59,6 @@ public class AverageSpeed extends WorkoutInformation {
     @Override
     public String getSpokenText(WorkoutRecorder recorder) {
         String avgSpeed = UnitUtils.getSpeed(recorder.getAvgSpeed());
-        return getString(R.string.workoutAvgSpeedLong) + ": " + avgSpeed + ".";
+        return getString(R.string.avgSpeedTotalLong) + ": " + avgSpeed + ".";
     }
 }

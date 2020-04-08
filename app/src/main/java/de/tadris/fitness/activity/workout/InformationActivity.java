@@ -17,7 +17,7 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.activity;
+package de.tadris.fitness.activity.workout;
 
 import android.graphics.Typeface;
 import android.util.TypedValue;
@@ -29,6 +29,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import de.tadris.fitness.R;
+import de.tadris.fitness.activity.FitoTrackActivity;
 
 public abstract class InformationActivity extends FitoTrackActivity {
 

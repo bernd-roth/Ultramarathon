@@ -17,7 +17,7 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.activity;
+package de.tadris.fitness.activity.settings;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -32,6 +32,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
+import de.tadris.fitness.activity.FitoTrackActivity;
 import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.view.IntervalSetAdapter;
 

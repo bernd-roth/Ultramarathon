@@ -17,7 +17,7 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.activity;
+package de.tadris.fitness.activity.settings;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -37,6 +37,7 @@ import java.util.concurrent.TimeUnit;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
+import de.tadris.fitness.activity.FitoTrackActivity;
 import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.view.IntervalAdapter;

@@ -40,19 +40,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.EditIntervalSetActivity" />
-        <activity android:name=".activity.ManageIntervalSetsActivity" />
-        <activity android:name=".activity.VoiceAnnouncementsSettingsActivity" />
-        <activity android:name=".activity.SettingsActivity" />
-        <activity android:name=".activity.EnterWorkoutActivity" />
+        <activity android:name=".activity.settings.EditIntervalSetActivity" />
+        <activity android:name=".activity.settings.ManageIntervalSetsActivity" />
+        <activity android:name=".activity.settings.VoiceAnnouncementsSettingsActivity" />
+        <activity android:name=".activity.settings.SettingsActivity" />
+        <activity android:name=".activity.workout.EnterWorkoutActivity" />
         <activity
-            android:name=".activity.ShowWorkoutMapActivity"
+            android:name=".activity.workout.ShowWorkoutMapActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ShowWorkoutMapDiagramActivity"
+            android:name=".activity.workout.ShowWorkoutMapDiagramActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ShowWorkoutActivity"
+            android:name=".activity.workout.ShowWorkoutActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.record.RecordWorkoutActivity"

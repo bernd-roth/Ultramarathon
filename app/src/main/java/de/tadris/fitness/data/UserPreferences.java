@@ -61,7 +61,7 @@ public class UserPreferences {
                 defValue = "energy_burned";
                 break;
             case 2:
-                defValue = "avgSpeed";
+                defValue = "avgSpeedMotion";
                 break;
             case 3:
                 defValue = "pause_duration";

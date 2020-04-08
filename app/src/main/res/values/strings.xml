@@ -202,6 +202,9 @@
     <string name="currentSpeed">Current Speed</string>
     <string name="hintAddWorkout">Click on the plus icon to record or enter a workout.</string>
     <string name="enterDescription">Enter a description</string>
+    <string name="avgSpeedInMotion">Avg. Speed (in Motion)</string>
+    <string name="avgSpeedTotalShort">Avg. Speed (Total)</string>
+    <string name="avgSpeedTotalLong">Average Speed in total</string>
 
     <string-array name="pref_announcement_mode">
         <item>Always</item>

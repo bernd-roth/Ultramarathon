@@ -55,8 +55,13 @@
 
         <CheckBoxPreference
             android:defaultValue="false"
-            android:key="announcement_avgSpeed"
-            android:title="@string/workoutAvgSpeedLong" />
+            android:key="announcement_avgSpeedMotion"
+            android:title="@string/avgSpeedInMotion" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="announcement_avgSpeedTotal"
+            android:title="@string/avgSpeedTotalShort" />
 
         <CheckBoxPreference
             android:defaultValue="false"

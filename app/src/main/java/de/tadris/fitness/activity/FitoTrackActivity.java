@@ -65,7 +65,7 @@ abstract public class FitoTrackActivity extends Activity {
         return value.data;
     }
 
-    void showErrorDialog(Exception e, @StringRes int title, @StringRes int message) {
+    protected void showErrorDialog(Exception e, @StringRes int title, @StringRes int message) {
         new AlertDialog.Builder(this)
                 .setTitle(title)
                 .setMessage(getString(message) + "\n\n" + e.getMessage())
