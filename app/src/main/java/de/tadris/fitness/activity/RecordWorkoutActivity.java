@@ -21,6 +21,7 @@ package de.tadris.fitness.activity;
 
 import android.Manifest;
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -35,10 +36,14 @@ import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.AccelerateInterpolator;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 
@@ -51,20 +56,25 @@ import org.mapsforge.map.layer.download.TileDownloadLayer;
 import org.mapsforge.map.layer.overlay.Polyline;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
+import de.tadris.fitness.data.Interval;
+import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.dialog.SelectIntervalSetDialog;
 import de.tadris.fitness.map.MapManager;
 import de.tadris.fitness.recording.LocationListener;
 import de.tadris.fitness.recording.PressureService;
 import de.tadris.fitness.recording.WorkoutRecorder;
-import de.tadris.fitness.recording.announcement.AnnouncementGPSStatus;
+import de.tadris.fitness.recording.announcement.TTSController;
 import de.tadris.fitness.recording.announcement.VoiceAnnouncements;
+import de.tadris.fitness.recording.announcement.information.AnnouncementGPSStatus;
 import de.tadris.fitness.util.unit.UnitUtils;
 
-public class RecordWorkoutActivity extends FitoTrackActivity implements LocationListener.LocationChangeListener, WorkoutRecorder.WorkoutRecorderListener, VoiceAnnouncements.VoiceAnnouncementCallback {
+public class RecordWorkoutActivity extends FitoTrackActivity implements LocationListener.LocationChangeListener, WorkoutRecorder.WorkoutRecorderListener, TTSController.VoiceAnnouncementCallback, SelectIntervalSetDialog.IntervalSetSelectListener {
 
     public static WorkoutType ACTIVITY = WorkoutType.OTHER;
 
@@ -78,6 +88,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
     private TextView gpsStatusView;
     private TextView attribution;
     private View waitingForGPSOverlay;
+    private Button startButton;
     private boolean gpsFound = false;
     private boolean isResumed = false;
     private final Handler mHandler = new Handler();
@@ -86,7 +97,9 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
     private Intent pressureService;
     private boolean saved= false;
 
-    private VoiceAnnouncements voiceAnnouncements;
+    private boolean voiceFeedbackAvailable = false;
+    private TTSController TTSController;
+    private VoiceAnnouncements announcements;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,13 +116,19 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
         waitingForGPSOverlay.setVisibility(View.VISIBLE);
 
         attribution = findViewById(R.id.recordMapAttribution);
+        startButton = findViewById(R.id.recordStart);
+        startButton.setEnabled(false);
+        startButton.setOnClickListener(v -> {
+            hideStartButton();
+            start();
+        });
 
         checkPermissions();
 
         recorder= new WorkoutRecorder(this, ACTIVITY, this);
-        recorder.start();
 
-        voiceAnnouncements = new VoiceAnnouncements(this, this);
+        TTSController = new TTSController(this, this);
+        announcements = new VoiceAnnouncements(this, recorder, TTSController, new ArrayList<>());
 
         infoViews[0]= new InfoViewHolder(findViewById(R.id.recordInfo1Title), findViewById(R.id.recordInfo1Value));
         infoViews[1]= new InfoViewHolder(findViewById(R.id.recordInfo2Title), findViewById(R.id.recordInfo2Value));
@@ -202,8 +221,35 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
             infoViews[3].setText(getString(R.string.workoutPauseDuration), UnitUtils.getHourMinuteSecondTime(recorder.getPauseDuration()));
         }
 
-        voiceAnnouncements.check(recorder);
+        announcements.check();
 
+    }
+
+    private void hideStartButton() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            int cx = startButton.getWidth() / 2;
+            int cy = startButton.getHeight() / 2;
+            float initialRadius = (float) Math.hypot(cx, cy);
+            Animator anim = ViewAnimationUtils.createCircularReveal(startButton, cx, cy, initialRadius, 0f);
+            anim.setDuration(500);
+            anim.setInterpolator(new AccelerateInterpolator());
+            anim.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    startButton.setVisibility(View.INVISIBLE);
+                }
+            });
+
+            anim.start();
+        } else {
+            startButton.animate().alpha(0f).setDuration(500).start();
+        }
+    }
+
+    private void start() {
+        recorder.start();
+        invalidateOptionsMenu();
     }
 
     private void stop(){
@@ -315,8 +361,11 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
     public void onLocationChange(Location location) {
         LatLong latLong= LocationListener.locationToLatLong(location);
         mapView.getModel().mapViewPosition.animateTo(latLong);
-        latLongList.add(latLong);
-        updateLine();
+
+        if (recorder.getState() == WorkoutRecorder.RecordingState.RUNNING) {
+            latLongList.add(latLong);
+            updateLine();
+        }
     }
 
     @Override
@@ -329,7 +378,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
         AndroidGraphicFactory.clearResourceMemoryCache();
 
         // Shutdown TTS
-        voiceAnnouncements.destroy();
+        TTSController.destroy();
 
         super.onDestroy();
         if(wakeLock.isHeld()){
@@ -369,12 +418,22 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if(id == R.id.actionRecordingStop){
-            stop();
-            return true;
+        switch (item.getItemId()) {
+            case R.id.actionRecordingStop:
+                stop();
+                return true;
+            case R.id.actionSelectIntervalSet:
+                showIntervalSelection();
+                return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        boolean preparationPhase = recorder.getState() == WorkoutRecorder.RecordingState.IDLE;
+        menu.findItem(R.id.actionSelectIntervalSet).setVisible(preparationPhase && voiceFeedbackAvailable);
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -390,24 +449,49 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
     public void onGPSStateChanged(WorkoutRecorder.GpsState oldState, WorkoutRecorder.GpsState state) {
         mHandler.post(() -> {
             gpsStatusView.setTextColor(state.color);
-            if(!gpsFound && (state != WorkoutRecorder.GpsState.SIGNAL_LOST)){
-                gpsFound= true;
+
+            if (!gpsFound && (state != WorkoutRecorder.GpsState.SIGNAL_LOST)) {
+                gpsFound = true;
                 hideWaitOverlay();
             }
 
+            if (recorder.getState() == WorkoutRecorder.RecordingState.IDLE) {
+                if (state == WorkoutRecorder.GpsState.SIGNAL_OKAY) {
+                    startButton.setText(R.string.start);
+                    startButton.setEnabled(true);
+                } else {
+                    startButton.setText(R.string.cannotStart);
+                    startButton.setEnabled(false);
+                }
+            }
+
             AnnouncementGPSStatus announcement = new AnnouncementGPSStatus(RecordWorkoutActivity.this);
-            if (announcement.isEnabled()) {
+            if (recorder.isActive() && announcement.isEnabled()) {
                 if (oldState == WorkoutRecorder.GpsState.SIGNAL_LOST) { // GPS Signal found
-                    voiceAnnouncements.speak(announcement.getSpokenGPSFound());
+                    TTSController.speak(announcement.getSpokenGPSFound());
                 } else if (state == WorkoutRecorder.GpsState.SIGNAL_LOST) {
-                    voiceAnnouncements.speak(announcement.getSpokenGPSLost());
+                    TTSController.speak(announcement.getSpokenGPSLost());
                 }
             }
         });
     }
 
+    void showIntervalSelection() {
+        new SelectIntervalSetDialog(this, this).show();
+    }
+
+    @Override
+    public void onIntervalSetSelect(IntervalSet set) {
+        Interval[] intervals = Instance.getInstance(this).db.intervalDao().getAllIntervalsOfSet(set.id);
+        List<Interval> intervalList = new ArrayList<>(Arrays.asList(intervals));
+        announcements.applyIntervals(intervalList);
+        Toast.makeText(this, R.string.intervalSetSelected, Toast.LENGTH_LONG).show();
+    }
+
     @Override
     public void onVoiceAnnouncementIsReady(boolean available) {
+        this.voiceFeedbackAvailable = available;
+        invalidateOptionsMenu();
     }
 
     static class InfoViewHolder {

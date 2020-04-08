@@ -17,39 +17,33 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.recording.announcement;
+package de.tadris.fitness.data;
 
-import android.content.Context;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
 
-import de.tadris.fitness.R;
-import de.tadris.fitness.recording.WorkoutRecorder;
+import static androidx.room.ForeignKey.CASCADE;
 
-public class AnnouncementGPSStatus extends Announcement {
+@Entity(tableName = "interval",
+        foreignKeys = @ForeignKey(
+                entity = IntervalSet.class,
+        parentColumns = "id",
+                childColumns = "set_id",
+        onDelete = CASCADE))
+public class Interval {
 
-    public AnnouncementGPSStatus(Context context) {
-        super(context);
-    }
+    @PrimaryKey
+    public long id;
 
-    @Override
-    public String getId() {
-        return "gps-lost";
-    }
+    @ColumnInfo(name = "set_id")
+    public long setId;
 
-    @Override
-    boolean isEnabledByDefault() {
-        return true;
-    }
+    public String name;
 
-    @Override
-    String getSpoken(WorkoutRecorder recorder) {
-        return "";
-    }
+    // Delay AFTER the announcement/interval
+    @ColumnInfo(name = "delay_millis")
+    public long delayMillis;
 
-    public String getSpokenGPSLost() {
-        return getString(R.string.gpsLost);
-    }
-
-    public String getSpokenGPSFound() {
-        return getString(R.string.gpsFound);
-    }
 }

@@ -47,4 +47,8 @@ public class UserPreferences {
         return preferences.getString("mapStyle", "osm.mapnik");
     }
 
+    public boolean intervalsIncludePauses() {
+        return preferences.getBoolean("intervalsIncludePause", true);
+    }
+
 }

@@ -19,14 +19,19 @@
 
 package de.tadris.fitness.data;
 
-import androidx.room.Database;
-import androidx.room.RoomDatabase;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-@Database(version = 5, entities = {Workout.class, WorkoutSample.class, Interval.class, IntervalSet.class})
-public abstract class AppDatabase extends RoomDatabase {
+@Entity(tableName = "interval_set")
+public class IntervalSet {
 
-    public abstract WorkoutDao workoutDao();
+    public static final int STATE_VISIBLE = 0;
+    public static final int STATE_DELETED = 1;
 
-    public abstract IntervalDao intervalDao();
+    @PrimaryKey
+    public long id;
+    public String name;
+
+    public int state;
 
 }

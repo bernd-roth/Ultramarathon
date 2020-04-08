@@ -47,12 +47,27 @@
         android:key="mapStyle"
         android:title="@string/mapStyle" />
 
-    <Preference
-        android:key="speech"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:summary="@string/pref_voice_announcements_summary"
-        android:title="@string/voiceAnnouncementsTitle" />
+    <PreferenceCategory android:title="@string/workoutRecording">
+
+        <Preference
+            android:key="speech"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="@string/pref_voice_announcements_summary"
+            android:title="@string/voiceAnnouncementsTitle" />
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="intervalsIncludePause"
+            android:summary="@string/intervalsIncludePauseSummary"
+            android:title="@string/intervalsIncludePauseTitle" />
+
+        <Preference
+            android:key="intervals"
+            android:summary="@string/manageIntervalsSummary"
+            android:title="@string/intervalTraining" />
+
+    </PreferenceCategory>
 
 
     <PreferenceCategory android:title="@string/data">

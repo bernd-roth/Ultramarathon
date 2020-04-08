@@ -17,14 +17,14 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.recording.announcement;
+package de.tadris.fitness.recording.announcement.information;
 
 import android.content.Context;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.recording.WorkoutRecorder;
 
-public class AnnouncementDuration extends Announcement {
+public class AnnouncementDuration extends InformationAnnouncement {
 
     public AnnouncementDuration(Context context) {
         super(context);
@@ -41,7 +41,7 @@ public class AnnouncementDuration extends Announcement {
     }
 
     @Override
-    String getSpoken(WorkoutRecorder recorder) {
+    public String getSpokenText(WorkoutRecorder recorder) {
         return getString(R.string.workoutDuration) + ": " + getSpokenTime(recorder.getDuration()) + ".";
     }
 

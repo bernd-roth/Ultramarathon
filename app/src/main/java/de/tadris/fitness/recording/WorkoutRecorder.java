@@ -54,9 +54,8 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
     private long lastPause= 0;
     private long lastSampleTime= 0;
     private double distance= 0;
-    private boolean hasBegun = false;
 
-    private static final double SIGNAL_BAD_THRESHOLD= 20; // In meters
+    private static final double SIGNAL_BAD_THRESHOLD = 30; // In meters
     private static final int SIGNAL_LOST_THRESHOLD= 10000; // In milliseconds
     private Location lastFix= null;
     private final WorkoutRecorderListener workoutRecorderListener;
@@ -74,6 +73,13 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
         this.workout.comment= "";
 
         this.workout.setWorkoutType(workoutType);
+
+        init();
+    }
+
+    private void init() {
+        Instance.getInstance(context).locationChangeListeners.add(this);
+        startWatchdog();
     }
 
     public void start(){
@@ -81,8 +87,6 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
             Log.i("Recorder", "Start");
             workout.start= System.currentTimeMillis();
             resume();
-            Instance.getInstance(context).locationChangeListeners.add(this);
-            startWatchdog();
         }else if(state == RecordingState.PAUSED){
             resume();
         }else if(state != RecordingState.RUNNING){
@@ -91,7 +95,7 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
     }
 
     public boolean isActive(){
-        return state == RecordingState.RUNNING || state == RecordingState.PAUSED;
+        return state == RecordingState.IDLE || state == RecordingState.RUNNING || state == RecordingState.PAUSED;
     }
 
     private void startWatchdog(){
@@ -212,10 +216,6 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
             }
             lastSampleTime= System.currentTimeMillis();
             if(state == RecordingState.RUNNING && location.getTime() > workout.start){
-                if(samples.size() == 2 && !hasBegun){
-                    initialClearValues();
-                    hasBegun = true; // Do not clear a second time
-                }
                 this.distance+= distance;
                 addToSamples(location);
             }
@@ -240,16 +240,6 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
         }
     }
 
-    private void initialClearValues(){
-        lastResume= System.currentTimeMillis();
-        workout.start= System.currentTimeMillis();
-        lastPause= 0;
-        time= 0;
-        pauseTime= 0;
-        this.distance= 0;
-        samples.clear();
-    }
-
     public int getDistanceInMeters() {
         return (int)distance;
     }
@@ -271,6 +261,14 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
      */
     public double getAvgSpeed(){
         return distance / (double)(getDuration() / 1000);
+    }
+
+    public long getTimeSinceStart() {
+        if (workout.start != 0) {
+            return System.currentTimeMillis() - workout.start;
+        } else {
+            return 0;
+        }
     }
 
     public long getPauseDuration(){
@@ -297,8 +295,12 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
         return state == RecordingState.PAUSED;
     }
 
+    public RecordingState getState() {
+        return state;
+    }
 
-    enum RecordingState{
+
+    public enum RecordingState {
         IDLE, RUNNING, PAUSED, STOPPED
     }
 

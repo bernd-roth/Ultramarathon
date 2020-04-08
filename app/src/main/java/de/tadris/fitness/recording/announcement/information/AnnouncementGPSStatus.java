@@ -17,16 +17,39 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.data;
+package de.tadris.fitness.recording.announcement.information;
 
-import androidx.room.Database;
-import androidx.room.RoomDatabase;
+import android.content.Context;
 
-@Database(version = 5, entities = {Workout.class, WorkoutSample.class, Interval.class, IntervalSet.class})
-public abstract class AppDatabase extends RoomDatabase {
+import de.tadris.fitness.R;
+import de.tadris.fitness.recording.WorkoutRecorder;
 
-    public abstract WorkoutDao workoutDao();
+public class AnnouncementGPSStatus extends InformationAnnouncement {
 
-    public abstract IntervalDao intervalDao();
+    public AnnouncementGPSStatus(Context context) {
+        super(context);
+    }
 
+    @Override
+    public String getId() {
+        return "gps-lost";
+    }
+
+    @Override
+    boolean isEnabledByDefault() {
+        return true;
+    }
+
+    @Override
+    public String getSpokenText(WorkoutRecorder recorder) {
+        return "";
+    }
+
+    public String getSpokenGPSLost() {
+        return getString(R.string.gpsLost);
+    }
+
+    public String getSpokenGPSFound() {
+        return getString(R.string.gpsFound);
+    }
 }

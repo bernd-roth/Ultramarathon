@@ -19,14 +19,37 @@
 
 package de.tadris.fitness.data;
 
-import androidx.room.Database;
-import androidx.room.RoomDatabase;
+import androidx.room.Dao;
+import androidx.room.Delete;
+import androidx.room.Insert;
+import androidx.room.Query;
+import androidx.room.Update;
 
-@Database(version = 5, entities = {Workout.class, WorkoutSample.class, Interval.class, IntervalSet.class})
-public abstract class AppDatabase extends RoomDatabase {
+@Dao
+public interface IntervalDao {
 
-    public abstract WorkoutDao workoutDao();
+    @Query("SELECT * FROM interval_set WHERE id = :id")
+    IntervalSet getSet(long id);
 
-    public abstract IntervalDao intervalDao();
+    @Query("SELECT * FROM interval WHERE set_id = :setId")
+    Interval[] getAllIntervalsOfSet(long setId);
+
+    @Query("SELECT * FROM interval_set where state = 0")
+    IntervalSet[] getVisibleSets();
+
+    @Query("SELECT * FROM interval_set")
+    IntervalSet[] getAllSets();
+
+    @Insert
+    void insertIntervalSet(IntervalSet set);
+
+    @Insert
+    void insertInterval(Interval interval);
+
+    @Update
+    void updateIntervalSet(IntervalSet set);
+
+    @Delete
+    void deleteInterval(Interval interval);
 
 }

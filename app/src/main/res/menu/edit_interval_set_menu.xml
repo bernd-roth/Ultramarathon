@@ -20,12 +20,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/actionSelectIntervalSet"
-        android:icon="@drawable/ic_list"
+        android:id="@+id/actionDeleteIntervalSet"
+        android:icon="@drawable/ic_delete"
         android:showAsAction="always"
-        android:title="@string/selectIntervalSet" />
-    <item
-        android:id="@+id/actionRecordingStop"
-        android:showAsAction="ifRoom"
-        android:title="@string/stop" />
+        android:title="@string/deleteIntervalSet" />
 </menu>

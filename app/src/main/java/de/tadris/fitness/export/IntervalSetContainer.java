@@ -17,16 +17,39 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.data;
+package de.tadris.fitness.export;
 
-import androidx.room.Database;
-import androidx.room.RoomDatabase;
+import java.util.List;
 
-@Database(version = 5, entities = {Workout.class, WorkoutSample.class, Interval.class, IntervalSet.class})
-public abstract class AppDatabase extends RoomDatabase {
+import de.tadris.fitness.data.Interval;
+import de.tadris.fitness.data.IntervalSet;
 
-    public abstract WorkoutDao workoutDao();
+public class IntervalSetContainer {
 
-    public abstract IntervalDao intervalDao();
+    private IntervalSet set;
+    private List<Interval> intervals;
 
+    public IntervalSetContainer() {
+    }
+
+    public IntervalSetContainer(IntervalSet set, List<Interval> intervals) {
+        this.set = set;
+        this.intervals = intervals;
+    }
+
+    public IntervalSet getSet() {
+        return set;
+    }
+
+    public void setSet(IntervalSet set) {
+        this.set = set;
+    }
+
+    public List<Interval> getIntervals() {
+        return intervals;
+    }
+
+    public void setIntervals(List<Interval> intervals) {
+        this.intervals = intervals;
+    }
 }

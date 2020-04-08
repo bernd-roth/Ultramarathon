@@ -17,7 +17,7 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.recording.announcement;
+package de.tadris.fitness.recording.announcement.information;
 
 import android.content.Context;
 
@@ -25,15 +25,15 @@ import de.tadris.fitness.R;
 import de.tadris.fitness.recording.WorkoutRecorder;
 import de.tadris.fitness.util.unit.UnitUtils;
 
-public class AnnouncementDistance extends Announcement {
+public class AnnouncementAverageSpeed extends InformationAnnouncement {
 
-    public AnnouncementDistance(Context context) {
+    public AnnouncementAverageSpeed(Context context) {
         super(context);
     }
 
     @Override
     public String getId() {
-        return "distance";
+        return "avgSpeed";
     }
 
     @Override
@@ -42,8 +42,8 @@ public class AnnouncementDistance extends Announcement {
     }
 
     @Override
-    String getSpoken(WorkoutRecorder recorder) {
-        final String distance = UnitUtils.getDistance(recorder.getDistanceInMeters());
-        return getString(R.string.workoutDistance) + ": " + distance + ".";
+    public String getSpokenText(WorkoutRecorder recorder) {
+        String avgSpeed = UnitUtils.getSpeed(recorder.getAvgSpeed());
+        return getString(R.string.workoutAvgSpeedLong) + ": " + avgSpeed + ".";
     }
 }
