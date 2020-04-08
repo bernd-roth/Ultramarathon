@@ -33,6 +33,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
 import de.tadris.fitness.Instance;
@@ -40,6 +41,7 @@ import de.tadris.fitness.R;
 import de.tadris.fitness.activity.record.RecordWorkoutActivity;
 import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.dialog.SelectWorkoutTypeDialog;
 import de.tadris.fitness.util.DialogUtils;
 import de.tadris.fitness.view.WorkoutAdapter;
 
@@ -75,9 +77,15 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
 
         hintText= findViewById(R.id.hintAddWorkout);
 
-        findViewById(R.id.workoutListRecordRunning).setOnClickListener(v -> startRecording(WorkoutType.RUNNING));
-        findViewById(R.id.workoutListRecordHiking).setOnClickListener(v -> startRecording(WorkoutType.HIKING));
-        findViewById(R.id.workoutListRecordCycling).setOnClickListener(v -> startRecording(WorkoutType.CYCLING));
+        FloatingActionButton lastFab = findViewById(R.id.workoutListRecordLast);
+        if (workouts.length > 0) {
+            WorkoutType lastType = workouts[0].getWorkoutType();
+            lastFab.setColorNormal(getResources().getColor(lastType.color));
+        } else {
+            lastFab.setVisibility(View.GONE);
+        }
+
+        findViewById(R.id.workoutListRecord).setOnClickListener(v -> showWorkoutSelection());
         findViewById(R.id.workoutListEnter).setOnClickListener(v -> startEnterWorkoutActivity());
 
         checkFirstStart();
@@ -102,6 +110,10 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
         menu.close(true);
         final Intent intent = new Intent(this, EnterWorkoutActivity.class);
         new Handler().postDelayed(() -> startActivity(intent), 300);
+    }
+
+    private void showWorkoutSelection() {
+        new SelectWorkoutTypeDialog(this, this::startRecording).show();
     }
 
     private void startRecording(WorkoutType activity) {

@@ -21,16 +21,20 @@ package de.tadris.fitness.dialog;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.widget.ArrayAdapter;
+import android.app.Dialog;
 
-import de.tadris.fitness.R;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.view.WorkoutTypeAdapter;
 
-public class SelectWorkoutTypeDialog {
+public class SelectWorkoutTypeDialog implements WorkoutTypeAdapter.WorkoutTypeAdapterListener {
 
     private Activity context;
     private WorkoutTypeSelectListener listener;
     private WorkoutType[] options;
+    private Dialog dialog;
 
     public SelectWorkoutTypeDialog(Activity context, WorkoutTypeSelectListener listener) {
         this.context = context;
@@ -41,13 +45,20 @@ public class SelectWorkoutTypeDialog {
     public void show() {
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(context);
 
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, R.layout.select_dialog_singlechoice_material);
-        for (WorkoutType type : options) {
-            arrayAdapter.add(context.getString(type.title));
-        }
+        RecyclerView recyclerView = new RecyclerView(context);
+        WorkoutTypeAdapter adapter = new WorkoutTypeAdapter(options, this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setAdapter(adapter);
 
-        builderSingle.setAdapter(arrayAdapter, (dialog, which) -> listener.onSelectWorkoutType(options[which]));
-        builderSingle.show();
+        builderSingle.setView(recyclerView);
+        dialog = builderSingle.create();
+        dialog.show();
+    }
+
+    @Override
+    public void onItemSelect(int pos, WorkoutType type) {
+        dialog.dismiss();
+        listener.onSelectWorkoutType(type);
     }
 
     public interface WorkoutTypeSelectListener {

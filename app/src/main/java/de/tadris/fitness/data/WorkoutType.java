@@ -19,6 +19,8 @@
 
 package de.tadris.fitness.data;
 
+import androidx.annotation.ColorRes;
+import androidx.annotation.DrawableRes;
 import androidx.annotation.StringRes;
 import androidx.annotation.StyleRes;
 
@@ -26,10 +28,11 @@ import de.tadris.fitness.R;
 
 public enum WorkoutType {
 
-    RUNNING("running", R.string.workoutTypeRunning, 7, true, R.style.Running, R.style.RunningDark),
-    HIKING("hiking", R.string.workoutTypeHiking, 7, true, R.style.Hiking, R.style.HikingDark),
-    CYCLING("cycling", R.string.workoutTypeCycling, 12, true, R.style.Bicycling, R.style.BicyclingDark),
-    OTHER("other", R.string.workoutTypeOther, 7, true, R.style.AppTheme, R.style.AppThemeDark);
+    RUNNING("running", R.string.workoutTypeRunning, 5, true, R.drawable.ic_run, R.color.colorPrimaryRunning, R.style.Running, R.style.RunningDark),
+    WALKING("walking", R.string.workoutTypeWalking, 5, true, R.drawable.ic_walk, R.color.colorPrimaryRunning, R.style.Running, R.style.RunningDark),
+    HIKING("hiking", R.string.workoutTypeHiking, 5, true, R.drawable.ic_walk, R.color.colorPrimaryHiking, R.style.Hiking, R.style.HikingDark),
+    CYCLING("cycling", R.string.workoutTypeCycling, 10, true, R.drawable.ic_bike, R.color.colorPrimaryBicyclingLighter, R.style.Bicycling, R.style.BicyclingDark),
+    OTHER("other", R.string.workoutTypeOther, 7, true, R.drawable.ic_other, R.color.colorPrimary, R.style.AppTheme, R.style.AppThemeDark);
 
     public String id;
     @StringRes
@@ -38,12 +41,18 @@ public enum WorkoutType {
     public boolean hasGPS;
     @StyleRes
     public int lightTheme, darkTheme;
+    @DrawableRes
+    public int icon;
+    @ColorRes
+    public int color;
 
-    WorkoutType(String id, int title, int minDistance, boolean hasGPS, int lightTheme, int darkTheme) {
+    WorkoutType(String id, int title, int minDistance, boolean hasGPS, int icon, int color, int lightTheme, int darkTheme) {
         this.id = id;
         this.title = title;
         this.minDistance = minDistance;
         this.hasGPS = hasGPS;
+        this.icon = icon;
+        this.color = color;
         this.lightTheme = lightTheme;
         this.darkTheme = darkTheme;
     }
