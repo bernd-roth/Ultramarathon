@@ -22,6 +22,7 @@ package de.tadris.fitness.view;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -45,6 +46,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutV
         final TextView dateText;
         final TextView typeText;
         final TextView commentText;
+        final ImageView iconView;
 
         WorkoutViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -54,6 +56,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutV
             dateText=   itemView.findViewById(R.id.workoutDate);
             typeText=   itemView.findViewById(R.id.workoutType);
             commentText=itemView.findViewById(R.id.workoutComment);
+            iconView = itemView.findViewById(R.id.workoutImage);
         }
     }
 
@@ -89,6 +92,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutV
         }
         holder.lengthText.setText(UnitUtils.getDistance(workout.length));
         holder.timeText.setText(UnitUtils.getHourMinuteTime(workout.duration));
+        holder.iconView.setImageResource(workout.getWorkoutType().icon);
         holder.root.setOnClickListener(v -> listener.onItemClick(position, workout));
         holder.root.setOnLongClickListener(v -> {
             listener.onItemLongClick(position, workout);
