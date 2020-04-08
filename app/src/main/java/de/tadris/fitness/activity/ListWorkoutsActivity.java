@@ -37,6 +37,7 @@ import com.github.clans.fab.FloatingActionMenu;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
+import de.tadris.fitness.activity.record.RecordWorkoutActivity;
 import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.util.DialogUtils;

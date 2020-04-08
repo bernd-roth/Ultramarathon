@@ -4,7 +4,7 @@ import de.tadris.fitness.recording.WorkoutRecorder;
 
 public interface Announcement {
 
-    boolean isEnabled();
+    boolean isAnnouncementEnabled();
 
     String getSpokenText(WorkoutRecorder recorder);
 

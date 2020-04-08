@@ -50,8 +50,18 @@
 
         <CheckBoxPreference
             android:defaultValue="true"
+            android:key="announcement_current_speed"
+            android:title="@string/currentSpeed" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
             android:key="announcement_avgSpeed"
             android:title="@string/workoutAvgSpeedLong" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="announcement_ascent"
+            android:title="@string/workoutAscent" />
     </PreferenceCategory>
 
 </PreferenceScreen>

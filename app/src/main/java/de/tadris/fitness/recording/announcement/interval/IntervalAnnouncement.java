@@ -13,7 +13,7 @@ public class IntervalAnnouncement implements Announcement {
     }
 
     @Override
-    public boolean isEnabled() {
+    public boolean isAnnouncementEnabled() {
         return true;
     }
 

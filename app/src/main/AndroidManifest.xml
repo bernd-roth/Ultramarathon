@@ -55,7 +55,7 @@
             android:name=".activity.ShowWorkoutActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.RecordWorkoutActivity"
+            android:name=".activity.record.RecordWorkoutActivity"
             android:screenOrientation="portrait"
             android:showOnLockScreen="true" />
         <activity

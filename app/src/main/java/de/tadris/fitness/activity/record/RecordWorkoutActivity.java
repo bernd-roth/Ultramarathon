@@ -17,7 +17,7 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.activity;
+package de.tadris.fitness.activity.record;
 
 import android.Manifest;
 import android.animation.Animator;
@@ -61,20 +61,27 @@ import java.util.List;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
+import de.tadris.fitness.activity.FitoTrackActivity;
 import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.dialog.SelectIntervalSetDialog;
+import de.tadris.fitness.dialog.SelectWorkoutInformationDialog;
 import de.tadris.fitness.map.MapManager;
 import de.tadris.fitness.recording.LocationListener;
 import de.tadris.fitness.recording.PressureService;
 import de.tadris.fitness.recording.WorkoutRecorder;
 import de.tadris.fitness.recording.announcement.TTSController;
 import de.tadris.fitness.recording.announcement.VoiceAnnouncements;
-import de.tadris.fitness.recording.announcement.information.AnnouncementGPSStatus;
+import de.tadris.fitness.recording.information.GPSStatus;
+import de.tadris.fitness.recording.information.InformationDisplay;
+import de.tadris.fitness.recording.information.WorkoutInformation;
 import de.tadris.fitness.util.unit.UnitUtils;
 
-public class RecordWorkoutActivity extends FitoTrackActivity implements LocationListener.LocationChangeListener, WorkoutRecorder.WorkoutRecorderListener, TTSController.VoiceAnnouncementCallback, SelectIntervalSetDialog.IntervalSetSelectListener {
+public class RecordWorkoutActivity extends FitoTrackActivity implements LocationListener.LocationChangeListener,
+        WorkoutRecorder.WorkoutRecorderListener, TTSController.VoiceAnnouncementCallback,
+        SelectIntervalSetDialog.IntervalSetSelectListener, InfoViewHolder.InfoViewClickListener,
+        SelectWorkoutInformationDialog.WorkoutInformationSelectListener {
 
     public static WorkoutType ACTIVITY = WorkoutType.OTHER;
 
@@ -96,6 +103,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
     private Intent locationListener;
     private Intent pressureService;
     private boolean saved= false;
+    private InformationDisplay informationDisplay;
 
     private boolean voiceFeedbackAvailable = false;
     private TTSController TTSController;
@@ -129,11 +137,12 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
         TTSController = new TTSController(this, this);
         announcements = new VoiceAnnouncements(this, recorder, TTSController, new ArrayList<>());
+        informationDisplay = new InformationDisplay(this);
 
-        infoViews[0]= new InfoViewHolder(findViewById(R.id.recordInfo1Title), findViewById(R.id.recordInfo1Value));
-        infoViews[1]= new InfoViewHolder(findViewById(R.id.recordInfo2Title), findViewById(R.id.recordInfo2Value));
-        infoViews[2]= new InfoViewHolder(findViewById(R.id.recordInfo3Title), findViewById(R.id.recordInfo3Value));
-        infoViews[3]= new InfoViewHolder(findViewById(R.id.recordInfo4Title), findViewById(R.id.recordInfo4Value));
+        infoViews[0] = new InfoViewHolder(0, this, findViewById(R.id.recordInfo1Title), findViewById(R.id.recordInfo1Value));
+        infoViews[1] = new InfoViewHolder(1, this, findViewById(R.id.recordInfo2Title), findViewById(R.id.recordInfo2Value));
+        infoViews[2] = new InfoViewHolder(2, this, findViewById(R.id.recordInfo3Title), findViewById(R.id.recordInfo3Value));
+        infoViews[3] = new InfoViewHolder(3, this, findViewById(R.id.recordInfo4Title), findViewById(R.id.recordInfo4Value));
         timeView= findViewById(R.id.recordTime);
         gpsStatusView= findViewById(R.id.recordGpsStatus);
 
@@ -145,6 +154,8 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
         Instance.getInstance(this).locationChangeListeners.add(this);
 
         startListener();
+
+        onGPSStateChanged(WorkoutRecorder.GpsState.SIGNAL_LOST, WorkoutRecorder.GpsState.SIGNAL_LOST);
 
     }
 
@@ -208,21 +219,19 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
 
     private void updateDescription() {
-        long duration = recorder.getDuration();
-        int distanceInMeters = recorder.getDistanceInMeters();
-        final String distanceCaption = getString(R.string.workoutDistance);
-        final String distance = UnitUtils.getDistance(distanceInMeters);
-        final String avgSpeed = UnitUtils.getSpeed(Math.min(100d, recorder.getAvgSpeed()));
         if (isResumed) {
-            timeView.setText(UnitUtils.getHourMinuteSecondTime(duration));
-            infoViews[0].setText(distanceCaption, distance);
-            infoViews[1].setText(getString(R.string.workoutBurnedEnergy), recorder.getCalories() + " kcal");
-            infoViews[2].setText(getString(R.string.workoutAvgSpeedShort), avgSpeed);
-            infoViews[3].setText(getString(R.string.workoutPauseDuration), UnitUtils.getHourMinuteSecondTime(recorder.getPauseDuration()));
+            timeView.setText(UnitUtils.getHourMinuteSecondTime(recorder.getDuration()));
+            for (int i = 0; i < 4; i++) {
+                updateSlot(i);
+            }
         }
 
         announcements.check();
+    }
 
+    private void updateSlot(int slot) {
+        InformationDisplay.DisplaySlot data = informationDisplay.getDisplaySlot(recorder, slot);
+        infoViews[slot].setText(data.getTitle(), data.getValue());
     }
 
     private void hideStartButton() {
@@ -366,6 +375,8 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
             latLongList.add(latLong);
             updateLine();
         }
+
+        foundGPS();
     }
 
     @Override
@@ -450,9 +461,8 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
         mHandler.post(() -> {
             gpsStatusView.setTextColor(state.color);
 
-            if (!gpsFound && (state != WorkoutRecorder.GpsState.SIGNAL_LOST)) {
-                gpsFound = true;
-                hideWaitOverlay();
+            if (state != WorkoutRecorder.GpsState.SIGNAL_LOST) {
+                foundGPS();
             }
 
             if (recorder.getState() == WorkoutRecorder.RecordingState.IDLE) {
@@ -465,8 +475,8 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
                 }
             }
 
-            AnnouncementGPSStatus announcement = new AnnouncementGPSStatus(RecordWorkoutActivity.this);
-            if (recorder.isActive() && announcement.isEnabled()) {
+            GPSStatus announcement = new GPSStatus(RecordWorkoutActivity.this);
+            if (recorder.isResumed() && announcement.isAnnouncementEnabled()) {
                 if (oldState == WorkoutRecorder.GpsState.SIGNAL_LOST) { // GPS Signal found
                     TTSController.speak(announcement.getSpokenGPSFound());
                 } else if (state == WorkoutRecorder.GpsState.SIGNAL_LOST) {
@@ -474,6 +484,13 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
                 }
             }
         });
+    }
+
+    private void foundGPS() {
+        if (!gpsFound) {
+            gpsFound = true;
+            hideWaitOverlay();
+        }
     }
 
     void showIntervalSelection() {
@@ -494,23 +511,18 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
         invalidateOptionsMenu();
     }
 
-    static class InfoViewHolder {
-        final TextView titleView;
-        final TextView valueView;
-
-        InfoViewHolder(TextView titleView, TextView valueView) {
-            this.titleView = titleView;
-            this.valueView = valueView;
-        }
-
-        void setText(String title, String value){
-            this.titleView.setText(title);
-            this.valueView.setText(value);
-        }
+    @Override
+    public void onInfoViewClick(int slot) {
+        new SelectWorkoutInformationDialog(this, slot, this).show();
     }
 
     @Override
     public void onAutoStop() {
         finish();
+    }
+
+    @Override
+    public void onSelectWorkoutInformation(int slot, WorkoutInformation information) {
+        updateDescription();
     }
 }

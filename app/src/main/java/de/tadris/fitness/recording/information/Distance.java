@@ -17,22 +17,23 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.recording.announcement.information;
+package de.tadris.fitness.recording.information;
 
 import android.content.Context;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.recording.WorkoutRecorder;
+import de.tadris.fitness.util.unit.UnitUtils;
 
-public class AnnouncementDuration extends InformationAnnouncement {
+public class Distance extends WorkoutInformation {
 
-    public AnnouncementDuration(Context context) {
+    public Distance(Context context) {
         super(context);
     }
 
     @Override
     public String getId() {
-        return "duration";
+        return "distance";
     }
 
     @Override
@@ -42,26 +43,22 @@ public class AnnouncementDuration extends InformationAnnouncement {
 
     @Override
     public String getSpokenText(WorkoutRecorder recorder) {
-        return getString(R.string.workoutDuration) + ": " + getSpokenTime(recorder.getDuration()) + ".";
+        final String distance = UnitUtils.getDistance(recorder.getDistanceInMeters());
+        return getString(R.string.workoutDistance) + ": " + distance + ".";
     }
 
-    private String getSpokenTime(long duration) {
-        final long minute = 1000L * 60;
-        final long hour = minute * 60;
+    @Override
+    boolean canBeDisplayed() {
+        return true;
+    }
 
-        StringBuilder spokenTime = new StringBuilder();
+    @Override
+    public String getTitle() {
+        return getString(R.string.workoutDistance);
+    }
 
-        if (duration > hour) {
-            long hours = duration / hour;
-            duration = duration % hour; // Set duration to the rest
-            spokenTime.append(hours).append(" ");
-            spokenTime.append(getString(hours == 1 ? R.string.timeHourSingular : R.string.timeHourPlural)).append(" ")
-                    .append(getString(R.string.and)).append(" ");
-        }
-        long minutes = duration / minute;
-        spokenTime.append(minutes).append(" ");
-        spokenTime.append(getString(minutes == 1 ? R.string.timeMinuteSingular : R.string.timeMinutePlural));
-
-        return spokenTime.toString();
+    @Override
+    String getDisplayedText(WorkoutRecorder recorder) {
+        return UnitUtils.getDistance(recorder.getDistanceInMeters());
     }
 }

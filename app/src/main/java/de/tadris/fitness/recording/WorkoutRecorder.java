@@ -21,6 +21,7 @@ package de.tadris.fitness.recording;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.hardware.SensorManager;
 import android.location.Location;
 import android.util.Log;
 
@@ -96,6 +97,10 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
 
     public boolean isActive(){
         return state == RecordingState.IDLE || state == RecordingState.RUNNING || state == RecordingState.PAUSED;
+    }
+
+    public boolean isResumed() {
+        return state == RecordingState.RUNNING;
     }
 
     private void startWatchdog(){
@@ -240,6 +245,12 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
         }
     }
 
+    private WorkoutSample getLastSample() {
+        synchronized (samples) {
+            return samples.get(samples.size() - 1);
+        }
+    }
+
     public int getDistanceInMeters() {
         return (int)distance;
     }
@@ -255,12 +266,32 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
         return maxCalories;
     }
 
+    public int getAscent() {
+        double lastElevation = samples.get(0).elevation;
+        double ascent = 0;
+        synchronized (samples) {
+            for (WorkoutSample sample : samples) {
+                double elevation = SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, sample.tmpPressure);
+                elevation = (elevation + lastElevation * 6) / 7; // Slow floating average 1/7
+                if (elevation > lastElevation) {
+                    ascent += elevation - lastElevation;
+                }
+                lastElevation = sample.elevation;
+            }
+        }
+        return (int) ascent;
+    }
+
     /**
      *
      * @return avgSpeed in m/s
      */
     public double getAvgSpeed(){
         return distance / (double)(getDuration() / 1000);
+    }
+
+    public double getCurrentSpeed() {
+        return getLastSample().speed;
     }
 
     public long getTimeSinceStart() {

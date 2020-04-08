@@ -198,6 +198,7 @@
     <string name="intervalsIncludePauseSummary">If true, the intervals will continue even if you do pauses in your workout.</string>
     <string name="intervalTraining">Interval Training</string>
     <string name="intervalSets">Interval Sets</string>
+    <string name="currentSpeed">Current Speed</string>
     <string name="hintAddWorkout">Click on the plus icon to record or enter a workout.</string>
     <string name="enterDescription">Enter a description</string>
 
