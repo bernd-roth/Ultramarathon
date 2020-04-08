@@ -74,4 +74,12 @@ public class UserPreferences {
         preferences.edit().putString("information_display_" + slot, id).apply();
     }
 
+    public String getDateFormatSetting() {
+        return preferences.getString("dateFormat", "system");
+    }
+
+    public String getTimeFormatSetting() {
+        return preferences.getString("timeFormat", "system");
+    }
+
 }

@@ -52,4 +52,21 @@
         <item>4</item>
     </string-array>
 
+    <string-array name="pref_time_format_values">
+        <item>system</item>
+        <item>12</item>
+        <item>24</item>
+    </string-array>
+
+    <string-array name="pref_date_format_values">
+        <item>system</item>
+        <item>yyyy-MM-dd</item>
+        <item>yyyy.MM.dd</item>
+        <item>yyyy/MM/dd</item>
+        <item>dd-MM-yyyy</item>
+        <item>dd.MM.yyyy</item>
+        <item>dd/MM/yyyy</item>
+        <item>MM/dd/yyyy</item>
+    </string-array>
+
 </resources>

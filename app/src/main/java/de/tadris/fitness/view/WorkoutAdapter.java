@@ -19,6 +19,7 @@
 
 package de.tadris.fitness.view;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,9 +29,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.util.unit.UnitUtils;
@@ -78,8 +79,9 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutV
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(WorkoutViewHolder holder, final int position) {
+        Context context = holder.root.getContext();
         Workout workout= workouts[position];
-        holder.dateText.setText(SimpleDateFormat.getDateTimeInstance().format(new Date(workout.start)));
+        holder.dateText.setText(Instance.getInstance(context).dateTimeUtils.formatDateTime(new Date(workout.start)));
         holder.typeText.setText(workout.getWorkoutType().title);
         if(workout.comment != null){
             if(workout.comment.length() > 33){

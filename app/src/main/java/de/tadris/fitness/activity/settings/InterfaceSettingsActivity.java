@@ -44,6 +44,8 @@ public class InterfaceSettingsActivity extends FitoTrackSettingsActivity {
         bindPreferenceSummaryToValue(findPreference("unitSystem"));
         bindPreferenceSummaryToValue(findPreference("mapStyle"));
         bindPreferenceSummaryToValue(findPreference("themeSetting"));
+        bindPreferenceSummaryToValue(findPreference("dateFormat"));
+        bindPreferenceSummaryToValue(findPreference("timeFormat"));
         findPreference("themeSetting").setOnPreferenceChangeListener((preference, newValue) -> {
             sBindPreferenceSummaryToValueListener.onPreferenceChange(preference, newValue);
             Toast.makeText(InterfaceSettingsActivity.this, R.string.hintRestart, Toast.LENGTH_LONG).show();

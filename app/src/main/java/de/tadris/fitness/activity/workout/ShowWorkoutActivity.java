@@ -36,7 +36,6 @@ import androidx.core.content.FileProvider;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -77,8 +76,8 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
         addKeyValue(getString(R.string.workoutDate), getDate());
         addKeyValue(getString(R.string.workoutDuration), UnitUtils.getHourMinuteSecondTime(workout.duration),
                 getString(R.string.workoutPauseDuration), UnitUtils.getHourMinuteSecondTime(workout.pauseDuration));
-        addKeyValue(getString(R.string.workoutStartTime), SimpleDateFormat.getTimeInstance().format(new Date(workout.start)),
-                getString(R.string.workoutEndTime), SimpleDateFormat.getTimeInstance().format(new Date(workout.end)));
+        addKeyValue(getString(R.string.workoutStartTime), Instance.getInstance(this).dateTimeUtils.formatTime(new Date(workout.start)),
+                getString(R.string.workoutEndTime), Instance.getInstance(this).dateTimeUtils.formatTime(new Date(workout.end)));
 
         addKeyValue(getString(R.string.workoutDistance), UnitUtils.getDistance(workout.length), getString(R.string.workoutPace), UnitUtils.getPace(workout.avgPace));
 
@@ -168,7 +167,7 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
     }
 
     private String getDate() {
-        return SimpleDateFormat.getDateInstance().format(new Date(workout.start));
+        return Instance.getInstance(this).dateTimeUtils.formatDate(new Date(workout.start));
     }
 
 
