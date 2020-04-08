@@ -21,6 +21,7 @@
 package de.tadris.fitness.recording;
 
 import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -34,6 +35,7 @@ import org.mapsforge.core.model.LatLong;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
+import de.tadris.fitness.activity.record.RecordWorkoutActivity;
 import de.tadris.fitness.util.NotificationHelper;
 
 public class LocationListener extends Service {
@@ -103,6 +105,10 @@ public class LocationListener extends Service {
             NotificationHelper.createChannels(this);
             builder.setChannelId(NotificationHelper.CHANNEL_WORKOUT);
         }
+
+        Intent recorderActivityIntent = new Intent(this, RecordWorkoutActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, recorderActivityIntent, 0);
+        builder.setContentIntent(pendingIntent);
 
         startForeground(10, builder.build());
 
