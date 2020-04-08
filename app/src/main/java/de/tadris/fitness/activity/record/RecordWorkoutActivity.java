@@ -279,6 +279,9 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
         if(recorder.getSampleCount() > 3){
             recorder.save();
             saved= true;
+        } else {
+            // Inform the user about not saving the workout
+            Toast.makeText(this, R.string.workoutDiscarded, Toast.LENGTH_LONG).show();
         }
     }
 

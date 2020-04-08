@@ -214,6 +214,7 @@
     <string name="preferencesCategoryAppearance">Appearance</string>
     <string name="preferenceDateFormat">Date Format</string>
     <string name="preferenceTimeFormat">Time Format</string>
+    <string name="workoutDiscarded">Workout discarded</string>
 
     <string-array name="pref_announcement_mode">
         <item>Always</item>
