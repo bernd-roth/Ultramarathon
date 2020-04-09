@@ -32,6 +32,7 @@ public enum WorkoutType {
     WALKING("walking", R.string.workoutTypeWalking, 5, true, R.drawable.ic_walk, R.color.colorPrimaryRunning, R.style.Running, R.style.RunningDark),
     HIKING("hiking", R.string.workoutTypeHiking, 5, true, R.drawable.ic_walk, R.color.colorPrimaryHiking, R.style.Hiking, R.style.HikingDark),
     CYCLING("cycling", R.string.workoutTypeCycling, 10, true, R.drawable.ic_bike, R.color.colorPrimaryBicyclingLighter, R.style.Bicycling, R.style.BicyclingDark),
+    INLINE_SKATING("inline_skating", R.string.workoutTypeInlineSkating, 7, true, R.drawable.ic_inline_skating, R.color.colorPrimaryInlineSkating, R.style.InlineSkating, R.style.InlineSkatingDark),
     OTHER("other", R.string.workoutTypeOther, 7, true, R.drawable.ic_other, R.color.colorPrimary, R.style.AppTheme, R.style.AppThemeDark);
 
     public String id;

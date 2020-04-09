@@ -53,6 +53,8 @@ public class CalorieCalculator {
                 return Math.max(3, speedInKmh*0.97);
             case CYCLING:
                 return Math.max(3.5, 0.00818*Math.pow(speedInKmh, 2) + 0.1925*speedInKmh + 1.13);
+            case INLINE_SKATING:
+                return Math.max(3, 0.6747 * speedInKmh - 2.1893);
             default:
                 return 0;
         }

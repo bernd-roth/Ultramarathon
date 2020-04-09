@@ -46,6 +46,11 @@
         <item name="android:colorPrimaryDark">@color/colorPrimaryDarkHiking</item>
     </style>
 
+    <style name="InlineSkating" parent="AppTheme">
+        <item name="android:colorPrimary">@color/colorPrimaryInlineSkating</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimaryDarkInlineSkating</item>
+    </style>
+
 
     <style name="AppThemeDark" parent="android:Theme.Material">
         <item name="android:colorPrimary">@color/colorPrimary</item>
@@ -67,6 +72,11 @@
     <style name="HikingDark" parent="AppThemeDark">
         <item name="android:colorPrimary">@color/colorPrimaryHiking</item>
         <item name="android:colorPrimaryDark">@color/colorPrimaryDarkHiking</item>
+    </style>
+
+    <style name="InlineSkatingDark" parent="AppThemeDark">
+        <item name="android:colorPrimary">@color/colorPrimaryInlineSkating</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimaryDarkInlineSkating</item>
     </style>
 
 

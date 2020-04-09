@@ -232,6 +232,7 @@
     <string name="unitKcalLong">Calorie</string>
     <string name="unitKJoule">Kilojoule</string>
     <string name="pref_energy_unit">Energy unit</string>
+    <string name="workoutTypeInlineSkating">Inline Skating</string>
 
 
     <string-array name="pref_energy_units">
