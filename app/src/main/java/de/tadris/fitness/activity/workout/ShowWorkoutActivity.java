@@ -48,7 +48,6 @@ import de.tadris.fitness.osm.OsmTraceUploader;
 import de.tadris.fitness.util.DialogUtils;
 import de.tadris.fitness.util.FileUtils;
 import de.tadris.fitness.util.gpx.GpxExporter;
-import de.tadris.fitness.util.unit.UnitUtils;
 import de.tadris.fitness.view.ProgressDialogController;
 import de.westnordost.osmapi.traces.GpsTraceDetails;
 import oauth.signpost.OAuthConsumer;
@@ -74,12 +73,12 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
 
         addTitle(getString(R.string.workoutTime));
         addKeyValue(getString(R.string.workoutDate), getDate());
-        addKeyValue(getString(R.string.workoutDuration), UnitUtils.getHourMinuteSecondTime(workout.duration),
-                getString(R.string.workoutPauseDuration), UnitUtils.getHourMinuteSecondTime(workout.pauseDuration));
+        addKeyValue(getString(R.string.workoutDuration), distanceUnitUtils.getHourMinuteSecondTime(workout.duration),
+                getString(R.string.workoutPauseDuration), distanceUnitUtils.getHourMinuteSecondTime(workout.pauseDuration));
         addKeyValue(getString(R.string.workoutStartTime), Instance.getInstance(this).dateTimeUtils.formatTime(new Date(workout.start)),
                 getString(R.string.workoutEndTime), Instance.getInstance(this).dateTimeUtils.formatTime(new Date(workout.end)));
 
-        addKeyValue(getString(R.string.workoutDistance), UnitUtils.getDistance(workout.length), getString(R.string.workoutPace), UnitUtils.getPace(workout.avgPace));
+        addKeyValue(getString(R.string.workoutDistance), distanceUnitUtils.getDistance(workout.length), getString(R.string.workoutPace), distanceUnitUtils.getPace(workout.avgPace));
 
         if (hasSamples()) {
             addTitle(getString(R.string.workoutRoute));
@@ -95,27 +94,27 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
         addTitle(getString(R.string.workoutSpeed));
 
         if (hasSamples()) {
-            addKeyValue(getString(R.string.avgSpeedInMotion), UnitUtils.getSpeed(workout.avgSpeed),
-                    getString(R.string.avgSpeedTotalShort), UnitUtils.getSpeed(workout.getAvgSpeedTotal()));
+            addKeyValue(getString(R.string.avgSpeedInMotion), distanceUnitUtils.getSpeed(workout.avgSpeed),
+                    getString(R.string.avgSpeedTotalShort), distanceUnitUtils.getSpeed(workout.getAvgSpeedTotal()));
 
-            addKeyValue(getString(R.string.workoutTopSpeed), UnitUtils.getSpeed(workout.topSpeed));
+            addKeyValue(getString(R.string.workoutTopSpeed), distanceUnitUtils.getSpeed(workout.topSpeed));
 
             addSpeedDiagram();
 
             speedDiagram.setOnClickListener(v -> startDiagramActivity(ShowWorkoutMapDiagramActivity.DIAGRAM_TYPE_SPEED));
         } else {
-            addKeyValue(getString(R.string.workoutAvgSpeedShort), UnitUtils.getSpeed(workout.avgSpeed));
+            addKeyValue(getString(R.string.workoutAvgSpeedShort), distanceUnitUtils.getSpeed(workout.avgSpeed));
         }
 
         addTitle(getString(R.string.workoutBurnedEnergy));
-        addKeyValue(getString(R.string.workoutTotalEnergy), workout.calorie + " kcal",
-                getString(R.string.workoutEnergyConsumption), UnitUtils.getRelativeEnergyConsumption((double)workout.calorie / ((double)workout.length / 1000)));
+        addKeyValue(getString(R.string.workoutTotalEnergy), energyUnitUtils.getEnergy(workout.calorie),
+                getString(R.string.workoutEnergyConsumption), energyUnitUtils.getRelativeEnergy((double) workout.calorie / ((double) workout.duration / 1000 / 60)));
 
         if (hasSamples()) {
             addTitle(getString(R.string.height));
 
-            addKeyValue(getString(R.string.workoutAscent), UnitUtils.getDistance((int) workout.ascent),
-                    getString(R.string.workoutDescent), UnitUtils.getDistance((int) workout.descent));
+            addKeyValue(getString(R.string.workoutAscent), distanceUnitUtils.getDistance((int) workout.ascent),
+                    getString(R.string.workoutDescent), distanceUnitUtils.getDistance((int) workout.descent));
 
             addHeightDiagram();
 

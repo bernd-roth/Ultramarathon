@@ -82,4 +82,12 @@ public class UserPreferences {
         return preferences.getString("timeFormat", "system");
     }
 
+    public String getDistanceUnitSystemId() {
+        return preferences.getString("unitSystem", "1");
+    }
+
+    public String getEnergyUnit() {
+        return preferences.getString("energyUnit", "kcal");
+    }
+
 }

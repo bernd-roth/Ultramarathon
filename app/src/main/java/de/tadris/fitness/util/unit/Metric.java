@@ -19,12 +19,9 @@
 
 package de.tadris.fitness.util.unit;
 
-public class Metric implements Unit{
+import de.tadris.fitness.R;
 
-    @Override
-    public int getId() {
-        return 1;
-    }
+public class Metric implements DistanceUnitSystem {
 
     @Override
     public double getDistanceFromMeters(double meters) {
@@ -69,5 +66,20 @@ public class Metric implements Unit{
     @Override
     public String getSpeedUnit() {
         return "km/h";
+    }
+
+    @Override
+    public int getLongDistanceUnitTitle(boolean isPlural) {
+        return isPlural ? R.string.unitKilometersPlural : R.string.unitKilometersSingular;
+    }
+
+    @Override
+    public int getShortDistanceUnitTitle(boolean isPlural) {
+        return isPlural ? R.string.unitMetersPlural : R.string.unitMetersSingular;
+    }
+
+    @Override
+    public int getSpeedUnitTitle() {
+        return R.string.unitKilometersPerHour;
     }
 }

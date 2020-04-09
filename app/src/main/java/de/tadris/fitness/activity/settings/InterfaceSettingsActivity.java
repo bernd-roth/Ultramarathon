@@ -27,8 +27,9 @@ import android.view.View;
 import android.widget.NumberPicker;
 import android.widget.Toast;
 
+import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
-import de.tadris.fitness.util.unit.UnitUtils;
+import de.tadris.fitness.util.unit.DistanceUnitSystem;
 
 public class InterfaceSettingsActivity extends FitoTrackSettingsActivity {
 
@@ -46,6 +47,7 @@ public class InterfaceSettingsActivity extends FitoTrackSettingsActivity {
         bindPreferenceSummaryToValue(findPreference("themeSetting"));
         bindPreferenceSummaryToValue(findPreference("dateFormat"));
         bindPreferenceSummaryToValue(findPreference("timeFormat"));
+        bindPreferenceSummaryToValue(findPreference("energyUnit"));
         findPreference("themeSetting").setOnPreferenceChangeListener((preference, newValue) -> {
             sBindPreferenceSummaryToValueListener.onPreferenceChange(preference, newValue);
             Toast.makeText(InterfaceSettingsActivity.this, R.string.hintRestart, Toast.LENGTH_LONG).show();
@@ -60,18 +62,19 @@ public class InterfaceSettingsActivity extends FitoTrackSettingsActivity {
     }
 
     private void showWeightPicker() {
-        UnitUtils.setUnit(this); // Maybe the user changed unit system
+        Instance.getInstance(this).distanceUnitUtils.setUnit(); // Maybe the user changed unit system
+        DistanceUnitSystem unitSystem = Instance.getInstance(this).distanceUnitUtils.getDistanceUnitSystem();
 
         final AlertDialog.Builder d = new AlertDialog.Builder(this);
         final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         d.setTitle(getString(R.string.pref_weight));
         View v = getLayoutInflater().inflate(R.layout.dialog_weight_picker, null);
         NumberPicker np = v.findViewById(R.id.weightPicker);
-        np.setMaxValue((int) UnitUtils.CHOSEN_SYSTEM.getWeightFromKilogram(150));
-        np.setMinValue((int) UnitUtils.CHOSEN_SYSTEM.getWeightFromKilogram(20));
-        np.setFormatter(value -> value + " " + UnitUtils.CHOSEN_SYSTEM.getWeightUnit());
+        np.setMaxValue((int) unitSystem.getWeightFromKilogram(150));
+        np.setMinValue((int) unitSystem.getWeightFromKilogram(20));
+        np.setFormatter(value -> value + " " + unitSystem.getWeightUnit());
         final String preferenceVariable = "weight";
-        np.setValue((int) Math.round(UnitUtils.CHOSEN_SYSTEM.getWeightFromKilogram(preferences.getInt(preferenceVariable, 80))));
+        np.setValue((int) Math.round(unitSystem.getWeightFromKilogram(preferences.getInt(preferenceVariable, 80))));
         np.setWrapSelectorWheel(false);
 
         d.setView(v);
@@ -79,7 +82,7 @@ public class InterfaceSettingsActivity extends FitoTrackSettingsActivity {
         d.setNegativeButton(R.string.cancel, null);
         d.setPositiveButton(R.string.okay, (dialog, which) -> {
             int unitValue = np.getValue();
-            int kilograms = (int) Math.round(UnitUtils.CHOSEN_SYSTEM.getKilogramFromUnit(unitValue));
+            int kilograms = (int) Math.round(unitSystem.getKilogramFromUnit(unitValue));
             preferences.edit().putInt(preferenceVariable, kilograms).apply();
         });
 

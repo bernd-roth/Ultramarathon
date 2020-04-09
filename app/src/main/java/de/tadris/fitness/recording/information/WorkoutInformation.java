@@ -24,8 +24,11 @@ import android.preference.PreferenceManager;
 
 import androidx.annotation.StringRes;
 
+import de.tadris.fitness.Instance;
 import de.tadris.fitness.recording.WorkoutRecorder;
 import de.tadris.fitness.recording.announcement.Announcement;
+import de.tadris.fitness.util.unit.DistanceUnitUtils;
+import de.tadris.fitness.util.unit.EnergyUnitUtils;
 
 public abstract class WorkoutInformation implements Announcement {
 
@@ -41,6 +44,14 @@ public abstract class WorkoutInformation implements Announcement {
 
     protected String getString(@StringRes int resId) {
         return context.getString(resId);
+    }
+
+    protected DistanceUnitUtils getDistanceUnitUtils() {
+        return Instance.getInstance(context).distanceUnitUtils;
+    }
+
+    protected EnergyUnitUtils getEnergyUnitUtils() {
+        return Instance.getInstance(context).energyUnitUtils;
     }
 
     public abstract String getId();

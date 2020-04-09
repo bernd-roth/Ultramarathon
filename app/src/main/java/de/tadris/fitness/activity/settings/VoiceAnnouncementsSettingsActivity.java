@@ -26,8 +26,8 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.NumberPicker;
 
+import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
-import de.tadris.fitness.util.unit.UnitUtils;
 
 public class VoiceAnnouncementsSettingsActivity extends FitoTrackSettingsActivity {
 
@@ -50,11 +50,11 @@ public class VoiceAnnouncementsSettingsActivity extends FitoTrackSettingsActivit
     }
 
     private void showSpeechConfig() {
-        UnitUtils.setUnit(this); // Maybe the user changed unit system
+        Instance.getInstance(this).distanceUnitUtils.setUnit();
 
         final AlertDialog.Builder d = new AlertDialog.Builder(this);
         final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        d.setTitle(getString(R.string.pref_voice_announcements_summary));
+        d.setTitle(getString(R.string.pref_announcements_config_title));
         View v = getLayoutInflater().inflate(R.layout.dialog_spoken_updates_picker, null);
 
         NumberPicker npT = v.findViewById(R.id.spokenUpdatesTimePicker);
@@ -65,7 +65,7 @@ public class VoiceAnnouncementsSettingsActivity extends FitoTrackSettingsActivit
         npT.setValue(preferences.getInt(updateTimeVariable, 0));
         npT.setWrapSelectorWheel(false);
 
-        final String distanceUnit = " " + UnitUtils.CHOSEN_SYSTEM.getLongDistanceUnit();
+        final String distanceUnit = " " + Instance.getInstance(this).distanceUnitUtils.getDistanceUnitSystem().getLongDistanceUnit();
         NumberPicker npD = v.findViewById(R.id.spokenUpdatesDistancePicker);
         npD.setMaxValue(10);
         npD.setMinValue(0);

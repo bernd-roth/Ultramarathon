@@ -33,7 +33,7 @@ public class BurnedEnergy extends WorkoutInformation {
 
     @Override
     String getDisplayedText(WorkoutRecorder recorder) {
-        return recorder.getCalories() + " kcal";
+        return getEnergyUnitUtils().getEnergy(recorder.getCalories());
     }
 
     @Override

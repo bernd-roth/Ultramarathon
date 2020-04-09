@@ -4,7 +4,6 @@ import android.content.Context;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.recording.WorkoutRecorder;
-import de.tadris.fitness.util.unit.UnitUtils;
 
 public class CurrentSpeed extends WorkoutInformation {
 
@@ -34,11 +33,11 @@ public class CurrentSpeed extends WorkoutInformation {
 
     @Override
     String getDisplayedText(WorkoutRecorder recorder) {
-        return UnitUtils.getSpeed(recorder.getCurrentSpeed());
+        return getDistanceUnitUtils().getSpeed(recorder.getCurrentSpeed());
     }
 
     @Override
     public String getSpokenText(WorkoutRecorder recorder) {
-        return getString(R.string.currentSpeed) + ": " + UnitUtils.getSpeed(recorder.getCurrentSpeed()) + ".";
+        return getString(R.string.currentSpeed) + ": " + getDistanceUnitUtils().getSpeed(recorder.getCurrentSpeed(), true) + ".";
     }
 }

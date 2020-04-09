@@ -69,4 +69,9 @@
         <item>MM/dd/yyyy</item>
     </string-array>
 
+    <string-array name="pref_energy_unit_values">
+        <item>kcal</item>
+        <item>joule</item>
+    </string-array>
+
 </resources>

@@ -4,7 +4,6 @@ import android.content.Context;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.recording.WorkoutRecorder;
-import de.tadris.fitness.util.unit.UnitUtils;
 
 public class PauseDuration extends WorkoutInformation {
     public PauseDuration(Context context) {
@@ -33,7 +32,7 @@ public class PauseDuration extends WorkoutInformation {
 
     @Override
     String getDisplayedText(WorkoutRecorder recorder) {
-        return UnitUtils.getHourMinuteSecondTime(recorder.getPauseDuration());
+        return getDistanceUnitUtils().getHourMinuteSecondTime(recorder.getPauseDuration());
     }
 
     @Override

@@ -19,13 +19,9 @@
 
 package de.tadris.fitness.util.unit;
 
-public class Imperial implements Unit {
+import de.tadris.fitness.R;
 
-    @Override
-    public int getId() {
-        return 3;
-    }
-
+public class Imperial implements DistanceUnitSystem {
     @Override
     public double getDistanceFromMeters(double meters) {
         return meters * 1.093613d;
@@ -69,5 +65,20 @@ public class Imperial implements Unit {
     @Override
     public String getSpeedUnit() {
         return "mi/h";
+    }
+
+    @Override
+    public int getLongDistanceUnitTitle(boolean isPlural) {
+        return isPlural ? R.string.unitMilesPlural : R.string.unitMilesSingular;
+    }
+
+    @Override
+    public int getShortDistanceUnitTitle(boolean isPlural) {
+        return isPlural ? R.string.unitYardsPlural : R.string.unitYardsSingular;
+    }
+
+    @Override
+    public int getSpeedUnitTitle() {
+        return R.string.unitMilesPerHour;
     }
 }

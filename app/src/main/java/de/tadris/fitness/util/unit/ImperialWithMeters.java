@@ -19,12 +19,9 @@
 
 package de.tadris.fitness.util.unit;
 
-public class ImperialWithMeters extends Imperial {
+import de.tadris.fitness.R;
 
-    @Override
-    public int getId() {
-        return 4;
-    }
+public class ImperialWithMeters extends Imperial {
 
     @Override
     public double getDistanceFromMeters(double meters) {
@@ -34,5 +31,10 @@ public class ImperialWithMeters extends Imperial {
     @Override
     public String getShortDistanceUnit() {
         return "m";
+    }
+
+    @Override
+    public int getShortDistanceUnitTitle(boolean isPlural) {
+        return isPlural ? R.string.unitMetersPlural : R.string.unitMetersSingular;
     }
 }

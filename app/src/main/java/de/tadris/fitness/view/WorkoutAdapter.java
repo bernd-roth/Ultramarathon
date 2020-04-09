@@ -34,7 +34,6 @@ import java.util.Date;
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.Workout;
-import de.tadris.fitness.util.unit.UnitUtils;
 
 public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutViewHolder>{
 
@@ -92,8 +91,8 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutV
         }else{
             holder.commentText.setText("");
         }
-        holder.lengthText.setText(UnitUtils.getDistance(workout.length));
-        holder.timeText.setText(UnitUtils.getHourMinuteTime(workout.duration));
+        holder.lengthText.setText(Instance.getInstance(context).distanceUnitUtils.getDistance(workout.length));
+        holder.timeText.setText(Instance.getInstance(context).distanceUnitUtils.getHourMinuteTime(workout.duration));
         holder.iconView.setImageResource(workout.getWorkoutType().icon);
         holder.root.setOnClickListener(v -> listener.onItemClick(position, workout));
         holder.root.setOnLongClickListener(v -> {

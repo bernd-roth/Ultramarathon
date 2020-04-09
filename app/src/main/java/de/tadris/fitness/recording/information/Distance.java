@@ -23,7 +23,6 @@ import android.content.Context;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.recording.WorkoutRecorder;
-import de.tadris.fitness.util.unit.UnitUtils;
 
 public class Distance extends WorkoutInformation {
 
@@ -43,7 +42,7 @@ public class Distance extends WorkoutInformation {
 
     @Override
     public String getSpokenText(WorkoutRecorder recorder) {
-        final String distance = UnitUtils.getDistance(recorder.getDistanceInMeters());
+        final String distance = getDistanceUnitUtils().getDistance(recorder.getDistanceInMeters(), true);
         return getString(R.string.workoutDistance) + ": " + distance + ".";
     }
 
@@ -59,6 +58,6 @@ public class Distance extends WorkoutInformation {
 
     @Override
     String getDisplayedText(WorkoutRecorder recorder) {
-        return UnitUtils.getDistance(recorder.getDistanceInMeters());
+        return getDistanceUnitUtils().getDistance(recorder.getDistanceInMeters());
     }
 }

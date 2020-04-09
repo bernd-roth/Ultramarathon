@@ -38,7 +38,6 @@ import androidx.annotation.StringRes;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
-import de.tadris.fitness.util.unit.UnitUtils;
 
 public abstract class FitoTrackSettingsActivity extends PreferenceActivity {
 
@@ -120,7 +119,8 @@ public abstract class FitoTrackSettingsActivity extends PreferenceActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        UnitUtils.setUnit(this);
+        Instance.getInstance(this).distanceUnitUtils.setUnit();
+        Instance.getInstance(this).energyUnitUtils.setUnit();
     }
 
     @Override

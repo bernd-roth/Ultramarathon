@@ -34,6 +34,7 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.WorkoutBuilder;
 import de.tadris.fitness.data.WorkoutType;
@@ -41,7 +42,6 @@ import de.tadris.fitness.dialog.DatePickerFragment;
 import de.tadris.fitness.dialog.DurationPickerDialogFragment;
 import de.tadris.fitness.dialog.SelectWorkoutTypeDialog;
 import de.tadris.fitness.dialog.TimePickerFragment;
-import de.tadris.fitness.util.unit.UnitUtils;
 
 public class EnterWorkoutActivity extends InformationActivity implements SelectWorkoutTypeDialog.WorkoutTypeSelectListener, DatePickerFragment.DatePickerCallback, TimePickerFragment.TimePickerCallback, DurationPickerDialogFragment.DurationPickListener {
 
@@ -81,7 +81,7 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
             }
             return false;
         });
-        addKeyValueLine(getString(R.string.workoutDistance), distanceEditText, UnitUtils.CHOSEN_SYSTEM.getLongDistanceUnit());
+        addKeyValueLine(getString(R.string.workoutDistance), distanceEditText, Instance.getInstance(this).distanceUnitUtils.getDistanceUnitSystem().getLongDistanceUnit());
 
 
         KeyValueLine dateLine = addKeyValueLine(getString(R.string.workoutDate));
@@ -131,7 +131,7 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
         typeTextView.setText(getString(workoutBuilder.getWorkoutType().title));
         dateTextView.setText(SimpleDateFormat.getDateInstance().format(workoutBuilder.getStart().getTime()));
         timeTextView.setText(SimpleDateFormat.getTimeInstance().format(workoutBuilder.getStart().getTime()));
-        durationTextView.setText(UnitUtils.getHourMinuteSecondTime(workoutBuilder.getDuration()));
+        durationTextView.setText(Instance.getInstance(this).distanceUnitUtils.getHourMinuteSecondTime(workoutBuilder.getDuration()));
     }
 
     private void showTypeSelection() {

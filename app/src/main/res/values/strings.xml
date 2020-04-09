@@ -215,6 +215,29 @@
     <string name="preferenceDateFormat">Date Format</string>
     <string name="preferenceTimeFormat">Time Format</string>
     <string name="workoutDiscarded">Workout discarded</string>
+    <string name="timeSecondsSingular">Second</string>
+    <string name="timeSecondsPlural">Seconds</string>
+    <string name="per">per</string>
+    <string name="unitMilesSingular">Mile</string>
+    <string name="unitMilesPlural">Miles</string>
+    <string name="unitYardsSingular">Yard</string>
+    <string name="unitYardsPlural">Yards</string>
+    <string name="unitMilesPerHour">Miles per Hour</string>
+    <string name="unitMetersPlural">Meters</string>
+    <string name="unitMetersSingular">Meter</string>
+    <string name="unitKilometersPlural">Kilometers</string>
+    <string name="unitKilometersSingular">Kilometer</string>
+    <string name="unitKilometersPerHour">Kilometers per hour</string>
+    <string name="unitMetersPerSecond">Meters per second</string>
+    <string name="unitKcalLong">Calorie</string>
+    <string name="unitKJoule">Kilojoule</string>
+    <string name="pref_energy_unit">Energy unit</string>
+
+
+    <string-array name="pref_energy_units">
+        <item>kcal</item>
+        <item>Joule</item>
+    </string-array>
 
     <string-array name="pref_announcement_mode">
         <item>Always</item>

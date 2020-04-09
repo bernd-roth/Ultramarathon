@@ -19,17 +19,27 @@
 
 package de.tadris.fitness.util.unit;
 
-public interface Unit {
+import androidx.annotation.StringRes;
 
-    int getId();
+public interface DistanceUnitSystem {
+
     double getDistanceFromMeters(double meters);
     double getDistanceFromKilometers(double kilometers);
     double getWeightFromKilogram(double kilogram);
     double getKilogramFromUnit(double unit);
     double getSpeedFromMeterPerSecond(double meterPerSecond);
     String getLongDistanceUnit();
+
+    @StringRes
+    int getLongDistanceUnitTitle(boolean isPlural);
     String getShortDistanceUnit();
+
+    @StringRes
+    int getShortDistanceUnitTitle(boolean isPlural);
     String getWeightUnit();
     String getSpeedUnit();
+
+    @StringRes
+    int getSpeedUnitTitle();
 
 }

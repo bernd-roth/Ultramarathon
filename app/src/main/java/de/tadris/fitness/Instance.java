@@ -34,7 +34,8 @@ import de.tadris.fitness.data.UserPreferences;
 import de.tadris.fitness.recording.LocationListener;
 import de.tadris.fitness.util.DateTimeUtils;
 import de.tadris.fitness.util.FitoTrackThemes;
-import de.tadris.fitness.util.unit.UnitUtils;
+import de.tadris.fitness.util.unit.DistanceUnitUtils;
+import de.tadris.fitness.util.unit.EnergyUnitUtils;
 
 public class Instance {
 
@@ -54,14 +55,19 @@ public class Instance {
     public final UserPreferences userPreferences;
     public final FitoTrackThemes themes;
     public final DateTimeUtils dateTimeUtils;
+    public final DistanceUnitUtils distanceUnitUtils;
+    public final EnergyUnitUtils energyUnitUtils;
 
     public boolean pressureAvailable= false;
     public float lastPressure= 0;
 
     private Instance(Context context) {
+        instance = this;
         userPreferences= new UserPreferences(context);
         themes = new FitoTrackThemes(context);
         dateTimeUtils = new DateTimeUtils(userPreferences);
+        distanceUnitUtils = new DistanceUnitUtils(context);
+        energyUnitUtils = new EnergyUnitUtils(context);
         db = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, DATABASE_NAME)
                 .addMigrations(new Migration(1, 2) {
                     @Override
@@ -225,6 +231,5 @@ public class Instance {
                 })
                 .allowMainThreadQueries()
                 .build();
-        UnitUtils.setUnit(context);
     }
 }

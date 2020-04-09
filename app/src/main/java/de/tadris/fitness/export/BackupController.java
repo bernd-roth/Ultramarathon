@@ -33,7 +33,6 @@ import de.tadris.fitness.R;
 import de.tadris.fitness.data.AppDatabase;
 import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.IntervalSet;
-import de.tadris.fitness.util.unit.UnitUtils;
 
 public class BackupController {
 
@@ -68,7 +67,6 @@ public class BackupController {
 
     private void init(){
         database= Instance.getInstance(context).db;
-        UnitUtils.setUnit(context); // Ensure unit system is correct
         newContainer();
     }
 

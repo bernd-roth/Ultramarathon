@@ -4,7 +4,6 @@ import android.content.Context;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.recording.WorkoutRecorder;
-import de.tadris.fitness.util.unit.UnitUtils;
 
 public class Ascent extends WorkoutInformation {
 
@@ -34,11 +33,11 @@ public class Ascent extends WorkoutInformation {
 
     @Override
     String getDisplayedText(WorkoutRecorder recorder) {
-        return UnitUtils.getDistance(recorder.getAscent());
+        return getDistanceUnitUtils().getDistance(recorder.getAscent());
     }
 
     @Override
     public String getSpokenText(WorkoutRecorder recorder) {
-        return getString(R.string.workoutAscent) + ": " + UnitUtils.getDistance(recorder.getAscent()) + ".";
+        return getString(R.string.workoutAscent) + ": " + getDistanceUnitUtils().getDistance(recorder.getAscent(), true) + ".";
     }
 }

@@ -61,7 +61,8 @@ import de.tadris.fitness.data.WorkoutManager;
 import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.map.MapManager;
 import de.tadris.fitness.map.WorkoutLayer;
-import de.tadris.fitness.util.unit.UnitUtils;
+import de.tadris.fitness.util.unit.DistanceUnitUtils;
+import de.tadris.fitness.util.unit.EnergyUnitUtils;
 
 public abstract class WorkoutActivity extends InformationActivity {
 
@@ -76,6 +77,9 @@ public abstract class WorkoutActivity extends InformationActivity {
     final Handler mHandler = new Handler();
     protected IntervalSet usedIntervalSet;
     protected Interval[] intervals;
+
+    protected DistanceUnitUtils distanceUnitUtils = Instance.getInstance(this).distanceUnitUtils;
+    protected EnergyUnitUtils energyUnitUtils = Instance.getInstance(this).energyUnitUtils;
 
     CombinedChart speedDiagram;
     CombinedChart heightDiagram;
@@ -243,7 +247,7 @@ public abstract class WorkoutActivity extends InformationActivity {
 
             @Override
             public float getValue(WorkoutSample sample) {
-                return (float) UnitUtils.CHOSEN_SYSTEM.getDistanceFromMeters(sample.elevation);
+                return (float) distanceUnitUtils.getDistanceUnitSystem().getDistanceFromMeters(sample.elevation);
             }
 
             @Override
@@ -253,7 +257,7 @@ public abstract class WorkoutActivity extends InformationActivity {
 
             @Override
             public String getDescription() {
-                return "min - " + UnitUtils.CHOSEN_SYSTEM.getShortDistanceUnit();
+                return "min - " + distanceUnitUtils.getDistanceUnitSystem().getShortDistanceUnit();
             }
 
             @Override
@@ -277,7 +281,7 @@ public abstract class WorkoutActivity extends InformationActivity {
 
             @Override
             public float getValue(WorkoutSample sample) {
-                return (float)UnitUtils.CHOSEN_SYSTEM.getSpeedFromMeterPerSecond(sample.tmpRoundedSpeed);
+                return (float) distanceUnitUtils.getDistanceUnitSystem().getSpeedFromMeterPerSecond(sample.tmpRoundedSpeed);
             }
 
             @Override
@@ -287,7 +291,7 @@ public abstract class WorkoutActivity extends InformationActivity {
 
             @Override
             public String getDescription() {
-                return "min - " + UnitUtils.CHOSEN_SYSTEM.getSpeedUnit();
+                return "min - " + distanceUnitUtils.getDistanceUnitSystem().getSpeedUnit();
             }
 
             @Override

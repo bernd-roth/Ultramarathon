@@ -19,12 +19,9 @@
 
 package de.tadris.fitness.util.unit;
 
-public class MetricPhysical extends Metric{
+import de.tadris.fitness.R;
 
-    @Override
-    public int getId() {
-        return 2;
-    }
+public class MetricPhysical extends Metric{
 
     @Override
     public double getSpeedFromMeterPerSecond(double meterPerSecond) {
@@ -34,5 +31,10 @@ public class MetricPhysical extends Metric{
     @Override
     public String getSpeedUnit() {
         return "m/s";
+    }
+
+    @Override
+    public int getSpeedUnitTitle() {
+        return R.string.unitMetersPerSecond;
     }
 }

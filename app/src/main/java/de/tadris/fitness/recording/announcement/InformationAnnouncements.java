@@ -7,7 +7,6 @@ import de.tadris.fitness.data.UserPreferences;
 import de.tadris.fitness.recording.WorkoutRecorder;
 import de.tadris.fitness.recording.information.InformationManager;
 import de.tadris.fitness.recording.information.WorkoutInformation;
-import de.tadris.fitness.util.unit.UnitUtils;
 
 public class InformationAnnouncements {
 
@@ -27,7 +26,8 @@ public class InformationAnnouncements {
 
         UserPreferences prefs = Instance.getInstance(context).userPreferences;
         this.intervalTime = 60 * 1000 * prefs.getSpokenUpdateTimePeriod();
-        this.intervalInMeters = (int) (1000.0 / UnitUtils.CHOSEN_SYSTEM.getDistanceFromKilometers(1) * prefs.getSpokenUpdateDistancePeriod());
+        this.intervalInMeters = (int) (1000.0 / Instance.getInstance(context).distanceUnitUtils.getDistanceUnitSystem().getDistanceFromKilometers(1)
+                * prefs.getSpokenUpdateDistancePeriod());
     }
 
     public void check() {

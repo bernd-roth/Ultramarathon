@@ -76,7 +76,6 @@ import de.tadris.fitness.recording.announcement.VoiceAnnouncements;
 import de.tadris.fitness.recording.information.GPSStatus;
 import de.tadris.fitness.recording.information.InformationDisplay;
 import de.tadris.fitness.recording.information.WorkoutInformation;
-import de.tadris.fitness.util.unit.UnitUtils;
 
 public class RecordWorkoutActivity extends FitoTrackActivity implements LocationListener.LocationChangeListener,
         WorkoutRecorder.WorkoutRecorderListener, TTSController.VoiceAnnouncementCallback,
@@ -220,7 +219,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
     private void updateDescription() {
         if (isResumed) {
-            timeView.setText(UnitUtils.getHourMinuteSecondTime(recorder.getDuration()));
+            timeView.setText(Instance.getInstance(this).distanceUnitUtils.getHourMinuteSecondTime(recorder.getDuration()));
             for (int i = 0; i < 4; i++) {
                 updateSlot(i);
             }
