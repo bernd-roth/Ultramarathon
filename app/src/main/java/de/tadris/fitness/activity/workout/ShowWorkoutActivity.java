@@ -245,7 +245,7 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
                 .setView(R.layout.dialog_upload_osm)
                 .setPositiveButton(R.string.upload, null) // Listener added later so that we can control if the dialog is dismissed on click
                 .setNegativeButton(R.string.cancel, null)
-                .show();
+                .create();
 
         dialog.setOnShowListener(dialogInterface -> {
             Button button = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
@@ -256,6 +256,7 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
                 String description= descriptionEdit.getText().toString().trim();
                 if(description.length() <= 2){
                     descriptionEdit.setError(getString(R.string.enterDescription));
+                    requestKeyboard(descriptionEdit);
                     return;
                 }
                 GpsTraceDetails.Visibility visibility;
