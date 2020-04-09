@@ -73,7 +73,7 @@ public class IntervalAdapter extends RecyclerView.Adapter<IntervalAdapter.Interv
         Context context = holder.root.getContext();
 
         final long minute = 1000L * 60;
-        int minutes = (int) (interval.delayMillis / minute);
+        double minutes = (double) interval.delayMillis / minute;
 
         holder.nameText.setText(interval.name);
         holder.lengthText.setText(minutes + " " + context.getString(R.string.timeMinuteShort));

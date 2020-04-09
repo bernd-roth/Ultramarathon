@@ -134,15 +134,15 @@ public class EditIntervalSetActivity extends FitoTrackActivity implements Interv
                     nameEditText.requestFocus();
                     return;
                 }
-                int lengthInMinutes;
+                double lengthInMinutes;
                 try {
-                    lengthInMinutes = Integer.parseInt(lengthText.getText().toString());
+                    lengthInMinutes = Double.parseDouble(lengthText.getText().toString());
                 } catch (NumberFormatException e) {
                     lengthText.setError(getString(R.string.errorEnterValidNumber));
                     lengthText.requestFocus();
                     return;
                 }
-                if (lengthInMinutes < 1 || lengthInMinutes > 300) {
+                if (lengthInMinutes < 0.1 || lengthInMinutes > 300) {
                     lengthText.setError(getString(R.string.errorEnterValidDuration));
                     lengthText.requestFocus();
                     return;
@@ -151,7 +151,7 @@ public class EditIntervalSetActivity extends FitoTrackActivity implements Interv
                 Interval interval = new Interval();
                 interval.id = System.currentTimeMillis();
                 interval.name = name;
-                interval.delayMillis = TimeUnit.MINUTES.toMillis(1) * lengthInMinutes;
+                interval.delayMillis = (long) (TimeUnit.MINUTES.toMillis(1) * lengthInMinutes);
                 interval.setId = intervalSetId;
                 addInterval(interval);
 
