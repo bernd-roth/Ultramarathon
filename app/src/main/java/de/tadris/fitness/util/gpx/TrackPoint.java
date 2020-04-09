@@ -41,12 +41,11 @@ class TrackPoint {
 
     public TrackPoint(){}
 
-    public TrackPoint(double lat, double lon, double ele, String time, String fix, TrackPointExtension extensions) {
+    public TrackPoint(double lat, double lon, double ele, String time, TrackPointExtension extensions) {
         this.lat = lat;
         this.lon = lon;
         this.ele = ele;
         this.time = time;
-        this.fix = fix;
         this.extensions = extensions;
     }
 
@@ -80,14 +79,6 @@ class TrackPoint {
 
     public void setTime(String time) {
         this.time = time;
-    }
-
-    public String getFix() {
-        return fix;
-    }
-
-    public void setFix(String fix) {
-        this.fix = fix;
     }
 
     public TrackPointExtension getExtensions() {

@@ -69,8 +69,7 @@ public class GpxExporter {
 
         for(WorkoutSample sample : samples){
             segment.trkpt.add(new TrackPoint(sample.lat, sample.lon, sample.elevation,
-                    getDateTime(sample.absoluteTime), "gps",
-                    new TrackPointExtension(sample.speed)));
+                    getDateTime(sample.absoluteTime), new TrackPointExtension(sample.speed)));
         }
 
         track.trkseg.add(segment);
