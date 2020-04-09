@@ -1,4 +1,4 @@
-FitoTrack est une application mobile pour enregistrer et suivre vos entraînement. Durant la course, le vélo ou la randonnée, FitoTrack vous montrera les informations les plus importantes avec des graphiques et des statistiques. C'est open-source et sans publicité.
+FitoTrack est une application mobile pour enregistrer et suivre vos entraînements. Durant la course, le vélo ou la randonnée, FitoTrack vous montrera les informations les plus importantes avec des graphiques et des statistiques. C'est open-source et sans publicité.
 
 Fonctionnalités:
 * Suivre ses entraînements. Choisissez le type de sport que vous souhaitez enregistrer et commencez à courir, faire du vélo ou de la randonnée, par exemple. Vous pourrez voir des informations générales sous la carte.
