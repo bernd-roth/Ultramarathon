@@ -43,4 +43,8 @@
     <color name="textLighterBlack">#C8000000</color>
     <color name="textDarkerWhite">#C8FFFFFF</color>
     <color name="textColorLight">#C8414141</color>
+
+
+
+    <color name="lineHighlight">#399a9a9a</color>
 </resources>

@@ -49,8 +49,9 @@ import de.tadris.fitness.osm.OAuthAuthentication;
 import de.tadris.fitness.osm.OsmTraceUploader;
 import de.tadris.fitness.util.DialogUtils;
 import de.tadris.fitness.util.FileUtils;
+import de.tadris.fitness.util.LapStatistics;
+import de.tadris.fitness.util.LapStatisticsViewHelper;
 import de.tadris.fitness.util.gpx.GpxExporter;
-import de.tadris.fitness.util.unit.TimeFormatter;
 import de.tadris.fitness.view.ProgressDialogController;
 import de.westnordost.osmapi.traces.GpsTraceDetails;
 import oauth.signpost.OAuthConsumer;
@@ -129,78 +130,9 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
     }
 
     private void addLaptimeList() {
-        ViewGroup l = (ViewGroup) getLayoutInflater().inflate(R.layout.laptimes, root, false);
-        /*NumberPicker np = v.findViewById(R.id.laptime_distance_picker);
-        // Set up Number Picker
-        np.setMinValue(100);
-        np.setMaxValue(workout.length);
-        NumberPicker.OnValueChangeListener onValueChangeListener =
-                new 	NumberPicker.OnValueChangeListener(){
-                    @Override
-                    public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-                        UpdateLaptimesList(numberPicker.getValue());
-                    }
-                };
-        np.setOnValueChangedListener(onValueChangeListener);
-*/
-
-
-        double laplength = 1000;
-        WorkoutSample currentLapStart = samples.get(0);
-        WorkoutSample previous = currentLapStart;
-        double currentAccumulatedDistance = 0;
-        double curMetersUp=0;
-        double curMetersDown=0;
-        int i=0;
-        for (WorkoutSample sample : samples) {
-            currentAccumulatedDistance += sample.toLatLong().sphericalDistance(previous.toLatLong());
-            if(sample.elevation > previous.elevation)
-                curMetersDown += sample.elevation -previous.elevation;
-            if(sample.elevation < previous.elevation)
-                curMetersUp += previous.elevation -sample.elevation;
-
-            if (currentAccumulatedDistance > laplength) {
-                LaptimeInfo info = new LaptimeInfo();
-                info.dist = (++i)*laplength / 1000;
-                info.time = sample.relativeTime - currentLapStart.relativeTime;
-                info.metersDown = (int) curMetersDown;
-                info.metersUp = (int) curMetersUp;
-
-                laptimes.add(info);
-                currentAccumulatedDistance = 0;
-                curMetersDown=0;
-                curMetersUp=0;
-                currentLapStart = sample;
-            }
-            previous = sample;
-        }
-
-        for (LaptimeInfo laptime:laptimes)
-        {
-            View laptimeEntry = (View) getLayoutInflater().inflate(R.layout.laptime_entry, root, false);
-            TextView dist = laptimeEntry.findViewById(R.id.laptimeDist);
-            TextView text = laptimeEntry.findViewById(R.id.laptimeText);
-            TextView mDown = laptimeEntry.findViewById(R.id.laptimeMetersDown);
-            TextView mUp = laptimeEntry.findViewById(R.id.laptimeMetersUp);
-
-            dist.setText(laptime.dist+"");
-            text.setText(TimeFormatter.formatDuration(laptime.time));
-            mDown.setText(laptime.metersDown+"");
-            mUp.setText(laptime.metersUp+"");
-            l.addView(laptimeEntry);
-        }
-
-        root.addView(l);
+        LapStatisticsViewHelper helper = new LapStatisticsViewHelper();
+        root.addView(helper.CreateLapStatisticsView(this, root, samples));
     }
-
-    private class LaptimeInfo{
-        double dist;
-        int metersUp, metersDown;
-        long time;
-    }
-
-    ArrayList<LaptimeInfo> laptimes = new ArrayList<>();
-
 
     private void startDiagramActivity(String diagramType) {
         ShowWorkoutMapDiagramActivity.DIAGRAM_TYPE = diagramType;
