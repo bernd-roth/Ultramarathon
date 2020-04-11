@@ -17,7 +17,7 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.util.gpx;
+package de.tadris.fitness.util.io;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -29,10 +29,17 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutSample;
+import de.tadris.fitness.util.gpx.Gpx;
+import de.tadris.fitness.util.gpx.Metadata;
+import de.tadris.fitness.util.gpx.Track;
+import de.tadris.fitness.util.gpx.TrackPoint;
+import de.tadris.fitness.util.gpx.TrackPointExtension;
+import de.tadris.fitness.util.gpx.TrackSegment;
 
 public class GpxExporter {
 
@@ -42,37 +49,37 @@ public class GpxExporter {
     }
 
     private static Gpx getGpxFromWorkout(Context context, Workout workout) {
-        Gpx gpx= new Gpx();
-        gpx.name= workout.toString();
-        gpx.version= "1.1";
-        gpx.creator= "FitoTrack";
-        gpx.metadata= new Metadata(workout.toString(), workout.comment, getDateTime(workout.start));
-        gpx.trk= new ArrayList<>();
-        gpx.trk.add(getTrackFromWorkout(context, workout, 0));
-
+        Track track = getTrackFromWorkout(context, workout, 0);
+        ArrayList<Track> tracks = new ArrayList<>();
+        tracks.add(track);
+        Metadata meta = new Metadata(workout.toString(), workout.comment, getDateTime(workout.start));
+        Gpx gpx= new Gpx("1.1", "FitoTrack", meta, workout.toString(), workout.comment, tracks);
         return gpx;
     }
 
     private static Track getTrackFromWorkout(Context context, Workout workout, int number) {
         WorkoutSample[] samples= Instance.getInstance(context).db.workoutDao().getAllSamplesOfWorkout(workout.id);
         Track track= new Track();
-        track.number= number;
-        track.name= workout.toString();
-        track.cmt= workout.comment;
-        track.desc= workout.comment;
-        track.src= "FitoTrack";
-        track.type = workout.getWorkoutType().id;
-        track.trkseg= new ArrayList<>();
+        track.setNumber(number);
+        track.setName(workout.toString());
+        track.setCmt(workout.comment);
+        track.setDesc(workout.comment);
+        track.setSrc("FitoTrack");
+        track.setType(workout.getWorkoutType().id);
+        track.setTrkseg(new ArrayList<>());
 
         TrackSegment segment= new TrackSegment();
-        segment.trkpt= new ArrayList<>();
+        ArrayList<TrackPoint> trkpt = new ArrayList<>();
 
         for(WorkoutSample sample : samples){
-            segment.trkpt.add(new TrackPoint(sample.lat, sample.lon, sample.elevation,
+            trkpt.add(new TrackPoint(sample.lat, sample.lon, sample.elevation,
                     getDateTime(sample.absoluteTime), new TrackPointExtension(sample.speed)));
         }
+        segment.setTrkpt(trkpt);
 
-        track.trkseg.add(segment);
+        ArrayList<TrackSegment> segments = new ArrayList<>();
+        segments.add(segment);
+        track.setTrkseg(segments);
 
         return track;
     }
