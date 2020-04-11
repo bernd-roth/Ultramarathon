@@ -145,6 +145,8 @@
     <string name="theme">Thema</string>
     <string name="hintRestart">Bitte die App neustarten, damit die Änderungen wirksam werden</string>
     <string name="noComment">Kein Kommentar</string>
+    <string name="laptimes">Rundenzeiten</string>
+    <string name="lap_length_text">Distanz</string>
 
     <string-array name="pref_announcement_mode">
         <item>Immer</item>
