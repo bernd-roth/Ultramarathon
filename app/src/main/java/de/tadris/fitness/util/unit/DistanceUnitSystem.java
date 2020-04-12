@@ -24,6 +24,7 @@ import androidx.annotation.StringRes;
 public interface DistanceUnitSystem {
 
     double getDistanceFromMeters(double meters);
+    double getMetersFromUnit(double distanceInUnit);
     double getDistanceFromKilometers(double kilometers);
     double getWeightFromKilogram(double kilogram);
     double getKilogramFromUnit(double unit);

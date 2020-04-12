@@ -29,6 +29,11 @@ public class Metric implements DistanceUnitSystem {
     }
 
     @Override
+    public double getMetersFromUnit(double distanceInUnit) {
+        return distanceInUnit;
+    }
+
+    @Override
     public double getDistanceFromKilometers(double kilometers) {
         return kilometers;
     }

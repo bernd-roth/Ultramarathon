@@ -28,6 +28,11 @@ public class Imperial implements DistanceUnitSystem {
     }
 
     @Override
+    public double getMetersFromUnit(double distanceInUnit) {
+        return distanceInUnit / 1.093613d;
+    }
+
+    @Override
     public double getDistanceFromKilometers(double kilometers) {
         return kilometers * 0.62137d;
     }

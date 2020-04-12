@@ -131,7 +131,7 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
 
     private void addLaptimeList() {
         LapStatisticsViewHelper helper = new LapStatisticsViewHelper();
-        root.addView(helper.CreateLapStatisticsView(this, root, samples));
+        root.addView(helper.CreateLapStatisticsView(this, root, workout, samples));
     }
 
     private void startDiagramActivity(String diagramType) {
