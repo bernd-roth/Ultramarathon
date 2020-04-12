@@ -31,8 +31,7 @@ public class LapStatistics {
         DISTANCE,
         TIME,
         METERS_UP,
-        METERS_DOWN,
-        NUM_LAPS
+        METERS_DOWN
     }
 
     public static List<Integer> Distances() {
@@ -49,9 +48,6 @@ public class LapStatistics {
 
     public static ArrayList<LapInfo> CreateLapList(Workout workout, java.util.List<WorkoutSample> samples, LapCriterion criterion, double laplength) {
         ArrayList<LapInfo> laps = new ArrayList<>();
-
-        if(criterion == LapCriterion.NUM_LAPS)
-            laplength = workout.length/laplength; // Transform num laps to simple distance criterion
 
         LapInfo fastest = null, slowest = null;
 
@@ -93,8 +89,12 @@ public class LapStatistics {
                 currentLapStart = sample;
             }
         }
-        slowest.slowest = true;
-        fastest.fastest = true;
+
+        if(lapsCount > 0)
+        {
+            slowest.slowest = true;
+            fastest.fastest = true;
+        }
 
         if (currentInfo.dist != 0) {
             currentInfo.dist += lapsCount++ * laplength;
@@ -113,7 +113,6 @@ public class LapStatistics {
             case METERS_UP:
             case TIME:
             case DISTANCE:
-            case NUM_LAPS:
                 return lap.dist > laplength;
         }
         return true;

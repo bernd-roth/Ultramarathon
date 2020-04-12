@@ -25,9 +25,9 @@ import de.tadris.fitness.util.unit.TimeFormatter;
 
 public class LapStatisticsViewHelper {
 
-    protected DistanceUnitUtils distanceUnitUtils;
+    private DistanceUnitUtils distanceUnitUtils;
 
-    private static ArrayList<View> CreateLapViews(Activity activity, ViewGroup root, Workout workout, List<LapStatistics.LapInfo> laps) {
+    private ArrayList<View> CreateLapViews(Activity activity, ViewGroup root, Workout workout, List<LapStatistics.LapInfo> laps) {
 
         ArrayList<View> lapViews = new ArrayList<>();
         boolean switchRows = false;
@@ -50,7 +50,10 @@ public class LapStatisticsViewHelper {
             TextView mDown = laptimeEntry.findViewById(R.id.laptimeMetersDown);
             TextView mUp = laptimeEntry.findViewById(R.id.laptimeMetersUp);
 
-            dist.setText(Math.round(lapInfo.dist / 10) / 100.0 + "");
+
+            double distInKm = lapInfo.dist/(double)1000;
+            double roundedDist = Math.floor(distanceUnitUtils.getDistanceUnitSystem().getDistanceFromKilometers(distInKm)*100)/100.0;
+            dist.setText(roundedDist + "");
             text.setText(TimeFormatter.formatDuration(lapInfo.time));
             mDown.setText(Math.round(lapInfo.metersDown) + "");
             mUp.setText(Math.round(lapInfo.metersUp) + "");
@@ -59,12 +62,33 @@ public class LapStatisticsViewHelper {
         return lapViews;
     }
 
+    private ArrayAdapter<String> DistanceAdapter()
+    {
+        List<String> distUnits = new ArrayList<>();
+        distUnits.add(distanceUnitUtils.getDistanceUnitSystem().getLongDistanceUnit());
+        distUnits.add(distanceUnitUtils.getDistanceUnitSystem().getShortDistanceUnit());
+        distUnits.add("#");
+        return new ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, distUnits);
+    }
+
+    private ArrayAdapter<String> TimeAdapter()
+    {
+        List<String> distUnits = new ArrayList<>();
+        distUnits.add("h");
+        distUnits.add("min");
+        distUnits.add("s");
+        distUnits.add("#");
+        return new ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, distUnits);
+    }
+
     Activity activity;
     ViewGroup root;
     Workout workout;
     List<WorkoutSample> samples;
     ViewGroup listViews;
-    TextView unitView;
+    Spinner unitSpinner;
+    EditText lapLengthEdit;
+    Spinner typeSpinner;
 
     public ViewGroup CreateLapStatisticsView(Activity activity, ViewGroup root, Workout workout, List<WorkoutSample> samples) {
         this.activity = activity;
@@ -73,12 +97,46 @@ public class LapStatisticsViewHelper {
         this.samples = samples;
         ViewGroup l = (ViewGroup) activity.getLayoutInflater().inflate(R.layout.laptimes, root, false);
         listViews = l.findViewById(R.id.laplist);
-        unitView = l.findViewById(R.id.lapLengthUnit);
-        DistanceUnitUtils distanceUnitUtils = Instance.getInstance(activity).distanceUnitUtils;
-        unitView.setText(distanceUnitUtils.getDistanceUnitSystem().getShortDistanceUnit());
+        unitSpinner = l.findViewById(R.id.lapLengthUnit);
+        lapLengthEdit = l.findViewById(R.id.lapLengthEdit);
+        typeSpinner = l.findViewById(R.id.lapTypeSpinner);
+        distanceUnitUtils = Instance.getInstance(activity).distanceUnitUtils;
 
-        EditText lapLengthEdit = (EditText) l.findViewById(R.id.lapLengthEdit);
-        Spinner typeSpinner = (Spinner) l.findViewById(R.id.lapTypeSpinner);
+        unitSpinner.setAdapter(DistanceAdapter());
+        unitSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                LapStatistics.LapCriterion criterion = LapStatistics.LapCriterion.values()[typeSpinner.getSelectedItemPosition()];
+                switch (criterion)
+                {
+                    case TIME: // for time like units, use as standard seconds
+                        if(i==0) // hours
+                            lapLengthEdit.setText("1");
+                        else if(i==1) // minutes
+                            lapLengthEdit.setText("5");
+                        else if(i==2) // seconds
+                            lapLengthEdit.setText("30");
+                        else if(i==3) // #
+                            lapLengthEdit.setText("5");
+                        break;
+                    case DISTANCE: // For Distance (like) cases, transform to standard "meters"
+                    case METERS_UP:
+                    case METERS_DOWN:
+                        if(i==0) // km/miles/...
+                            lapLengthEdit.setText("1");
+                        else if(i==1) // m/yd/...
+                            lapLengthEdit.setText("100");
+                        else if(i==2) // #
+                            lapLengthEdit.setText("5");
+                        break;
+                }
+
+                LoadLaps();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) { }
+        });
 
         lapLengthEdit.setText("1000");
         lapLengthEdit.setOnEditorActionListener(new EditText.OnEditorActionListener() {
@@ -93,12 +151,10 @@ public class LapStatisticsViewHelper {
                 return false;
         }
         });
+
         lapLengthEdit.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
-                int lapLength = Integer.parseInt(lapLengthEdit.getText().toString());
-                int distInMeters = (int)distanceUnitUtils.getDistanceUnitSystem().getMetersFromUnit(lapLength);
-                LapStatistics.LapCriterion criterion = LapStatistics.LapCriterion.values()[typeSpinner.getSelectedItemPosition()];
-                LoadLaps(activity, root, listViews, workout, samples, criterion, distInMeters);
+                LoadLaps();
             }
         });
 
@@ -110,33 +166,27 @@ public class LapStatisticsViewHelper {
                 switch (criterion)
                 {
                     case TIME:
-                        unitView.setText(R.string.timeSecondsShort);
+                        unitSpinner.setAdapter(TimeAdapter());
+                        unitSpinner.setSelection(1);
                         lapLengthEdit.setText("1");
                         break;
                     case DISTANCE:
-                        unitView.setText(distanceUnitUtils.getDistanceUnitSystem().getShortDistanceUnit());
-                        lapLengthEdit.setText("1000");
-                        break;
-                    case NUM_LAPS:
-                        unitView.setText("#");
-                        lapLengthEdit.setText("5");
+                        unitSpinner.setAdapter(DistanceAdapter());
+                        unitSpinner.setSelection(0);
+                        lapLengthEdit.setText("1");
                         break;
                     case METERS_UP:
                     case METERS_DOWN:
-                        unitView.setText(distanceUnitUtils.getDistanceUnitSystem().getShortDistanceUnit());
+                        unitSpinner.setAdapter(DistanceAdapter());
                         lapLengthEdit.setText("100");
+                        unitSpinner.setSelection(1);
                         break;
                 }
-                int lapLength = Integer.parseInt(lapLengthEdit.getText().toString());
-                int distInMeters = (int)distanceUnitUtils.getDistanceUnitSystem().getMetersFromUnit(lapLength);
-                LoadLaps(activity, root, listViews, workout, samples, criterion, distInMeters);
-
+                LoadLaps();
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
+            public void onNothingSelected(AdapterView<?> adapterView) { }
         });
 
         LoadLaps(activity, root, listViews, workout, samples, LapStatistics.LapCriterion.DISTANCE, 1000);
@@ -144,7 +194,36 @@ public class LapStatisticsViewHelper {
         return l;
     }
 
-    private void LoadLaps(Activity activity, ViewGroup root, ViewGroup list, Workout workout, List<WorkoutSample> samples, LapStatistics.LapCriterion criterion, int lapLength) {
+    private void LoadLaps()
+    {
+        double lapLength = Integer.parseInt(lapLengthEdit.getText().toString());
+        int selectedUnit = unitSpinner.getSelectedItemPosition();
+        LapStatistics.LapCriterion criterion = LapStatistics.LapCriterion.values()[typeSpinner.getSelectedItemPosition()];
+        double actualDist = getNormalizedLapLength(criterion, selectedUnit, lapLength);
+        LoadLaps(activity, root, listViews, workout, samples, criterion, actualDist);
+    }
+
+    private double getNormalizedLapLength(LapStatistics.LapCriterion criterion, int selectedUnit, double lapLength)
+    {
+        switch (criterion)
+        {
+            case TIME: // for time like units, use as standard seconds
+                break;
+            case DISTANCE: // For Distance (like) cases, transform to standard "meters"
+            case METERS_UP:
+            case METERS_DOWN:
+                if(selectedUnit==0) // km/miles/...
+                    lapLength = distanceUnitUtils.getDistanceUnitSystem().getMetersFromLongUnit(lapLength);
+                else if(selectedUnit==1) // m/yd/...
+                    lapLength = distanceUnitUtils.getDistanceUnitSystem().getMetersFromShortUnit(lapLength);
+                else if(selectedUnit==2) // #
+                    lapLength = workout.length/lapLength; // Transform num laps to simple distance criterion
+                break;
+        }
+        return lapLength;
+    }
+
+    private void LoadLaps(Activity activity, ViewGroup root, ViewGroup list, Workout workout, List<WorkoutSample> samples, LapStatistics.LapCriterion criterion, double lapLength) {
         list.removeAllViews();
         ArrayList<LapStatistics.LapInfo> laps = LapStatistics.CreateLapList(workout, samples, criterion, lapLength);
         ArrayList<View> lapViews = CreateLapViews(activity, root, workout, laps);
