@@ -27,7 +27,7 @@ public class LapStatisticsViewHelper {
 
     private DistanceUnitUtils distanceUnitUtils;
 
-    private ArrayList<View> CreateLapViews(Activity activity, ViewGroup root, Workout workout, List<LapStatistics.LapInfo> laps) {
+    private ArrayList<View> CreateLapViews(Activity activity, ViewGroup root, List<LapStatistics.LapInfo> laps) {
 
         ArrayList<View> lapViews = new ArrayList<>();
         boolean switchRows = false;
@@ -55,8 +55,8 @@ public class LapStatisticsViewHelper {
             double roundedDist = Math.floor(distanceUnitUtils.getDistanceUnitSystem().getDistanceFromKilometers(distInKm)*100)/100.0;
             dist.setText(roundedDist + "");
             text.setText(TimeFormatter.formatDuration(lapInfo.time));
-            mDown.setText(Math.round(lapInfo.metersDown) + "");
-            mUp.setText(Math.round(lapInfo.metersUp) + "");
+            mDown.setText(Math.round(lapInfo.descent) + "");
+            mUp.setText(Math.round(lapInfo.ascent) + "");
             lapViews.add(laptimeEntry);
         }
         return lapViews;
@@ -120,8 +120,8 @@ public class LapStatisticsViewHelper {
                             lapLengthEdit.setText("5");
                         break;
                     case DISTANCE: // For Distance (like) cases, transform to standard "meters"
-                    case METERS_UP:
-                    case METERS_DOWN:
+                    case ASCENT:
+                    case DESCENT:
                         if(i==0) // km/miles/...
                             lapLengthEdit.setText("1");
                         else if(i==1) // m/yd/...
@@ -175,8 +175,8 @@ public class LapStatisticsViewHelper {
                         unitSpinner.setSelection(0);
                         lapLengthEdit.setText("1");
                         break;
-                    case METERS_UP:
-                    case METERS_DOWN:
+                    case ASCENT:
+                    case DESCENT:
                         unitSpinner.setAdapter(DistanceAdapter());
                         lapLengthEdit.setText("100");
                         unitSpinner.setSelection(1);
@@ -207,17 +207,30 @@ public class LapStatisticsViewHelper {
     {
         switch (criterion)
         {
-            case TIME: // for time like units, use as standard seconds
+            case TIME: // for time like units, use as standard microseconds
+                if(selectedUnit == 0) // h
+                    lapLength *= 3600000;
+                else if(selectedUnit == 1) // min
+                    lapLength *= 60000;
+                else if(selectedUnit == 2) // s
+                    lapLength *= 1000;
+                else if(selectedUnit == 3) // #
+                    lapLength = workout.duration / lapLength;
                 break;
             case DISTANCE: // For Distance (like) cases, transform to standard "meters"
-            case METERS_UP:
-            case METERS_DOWN:
+            case ASCENT:
+            case DESCENT:
                 if(selectedUnit==0) // km/miles/...
                     lapLength = distanceUnitUtils.getDistanceUnitSystem().getMetersFromLongUnit(lapLength);
                 else if(selectedUnit==1) // m/yd/...
                     lapLength = distanceUnitUtils.getDistanceUnitSystem().getMetersFromShortUnit(lapLength);
                 else if(selectedUnit==2) // #
-                    lapLength = workout.length/lapLength; // Transform num laps to simple distance criterion
+                    if(criterion == LapStatistics.LapCriterion.DISTANCE)
+                        lapLength = workout.length/lapLength; // Transform num laps to simple distance criterion
+                    else if(criterion == LapStatistics.LapCriterion.ASCENT)
+                        lapLength = workout.ascent / lapLength;
+                    else if(criterion == LapStatistics.LapCriterion.DESCENT)
+                        lapLength = workout.descent / lapLength;
                 break;
         }
         return lapLength;
@@ -226,7 +239,7 @@ public class LapStatisticsViewHelper {
     private void LoadLaps(Activity activity, ViewGroup root, ViewGroup list, Workout workout, List<WorkoutSample> samples, LapStatistics.LapCriterion criterion, double lapLength) {
         list.removeAllViews();
         ArrayList<LapStatistics.LapInfo> laps = LapStatistics.CreateLapList(workout, samples, criterion, lapLength);
-        ArrayList<View> lapViews = CreateLapViews(activity, root, workout, laps);
+        ArrayList<View> lapViews = CreateLapViews(activity, root, laps);
         for (View lapView : lapViews) {
             list.addView(lapView);
         }

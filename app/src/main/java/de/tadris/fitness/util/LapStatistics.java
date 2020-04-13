@@ -1,7 +1,6 @@
 package de.tadris.fitness.util;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutSample;
@@ -9,7 +8,7 @@ import de.tadris.fitness.data.WorkoutSample;
 public class LapStatistics {
 
     public static class LapInfo {
-        double dist=0, metersUp=0, metersDown=0;
+        double dist=0, ascent=0, descent=0;
         long time=0;
         boolean fastest=false;
         boolean slowest=false;
@@ -17,8 +16,8 @@ public class LapStatistics {
         public LapInfo copy() {
             LapInfo info = new LapInfo();
                 info.dist =dist;
-                info.metersUp =metersUp;
-                info.metersDown =metersDown;
+                info.ascent = ascent;
+                info.descent = descent;
                 info.time =time;
                 info.fastest =fastest;
                 info.slowest =slowest;
@@ -30,20 +29,8 @@ public class LapStatistics {
     {
         DISTANCE,
         TIME,
-        METERS_UP,
-        METERS_DOWN
-    }
-
-    public static List<Integer> Distances() {
-        List<Integer> dists = new ArrayList<>();
-        dists.add(100);
-        dists.add(500);
-        dists.add(1000);
-        dists.add(2000);
-        dists.add(5000);
-        dists.add(10000);
-        dists.add(21097);
-        return dists;
+        ASCENT,
+        DESCENT
     }
 
     public static ArrayList<LapInfo> CreateLapList(Workout workout, java.util.List<WorkoutSample> samples, LapCriterion criterion, double laplength) {
@@ -60,15 +47,14 @@ public class LapStatistics {
             WorkoutSample previous = samples.get(i - 1);
 
             currentInfo.dist += sample.toLatLong().sphericalDistance(previous.toLatLong());
+            currentInfo.time = sample.relativeTime - currentLapStart.relativeTime;
             if (sample.elevation < previous.elevation)
-                currentInfo.metersDown += sample.elevation - previous.elevation;
+                currentInfo.descent += sample.elevation - previous.elevation;
             if (sample.elevation > previous.elevation)
-                currentInfo.metersUp += sample.elevation - previous.elevation;
+                currentInfo.ascent += sample.elevation - previous.elevation;
 
-            if (CheckCriterion(workout, criterion, currentInfo, laplength)) {
+            if (CheckCriterion(criterion, currentInfo, laplength)) {
                 LapInfo saveInfo = currentInfo.copy();
-                saveInfo.time = sample.relativeTime - currentLapStart.relativeTime;
-                saveInfo.dist += lapsCount++ * laplength;
 
                 if (fastest == null) {
                     fastest = saveInfo;
@@ -82,10 +68,27 @@ public class LapStatistics {
                     slowest = saveInfo;
                 }
 
+                switch (criterion)
+                {
+                    case DISTANCE:
+                        saveInfo.dist += lapsCount++ * laplength;
+                        break;
+                    case ASCENT:
+                        saveInfo.ascent = laplength;
+                        break;
+                    case DESCENT:
+                        saveInfo.descent = -laplength;
+                        break;
+                    case TIME:
+                        //saveInfo.time = laplength;
+                        break;
+                }
+
                 laps.add(saveInfo);
                 double startDist = currentInfo.dist - laplength; // substract small overlap if distance can not be matche 100% (next lap starts a bit to late)
                 currentInfo = new LapInfo();
-                currentInfo.dist = startDist;
+                if(criterion == LapCriterion.DISTANCE)
+                    currentInfo.dist = startDist;
                 currentLapStart = sample;
             }
         }
@@ -105,13 +108,16 @@ public class LapStatistics {
         return laps;
     }
 
-    private static boolean CheckCriterion(Workout workout, LapCriterion criterion, LapInfo lap, double laplength)
+    private static boolean CheckCriterion(LapCriterion criterion, LapInfo lap, double laplength)
     {
         switch(criterion)
         {
-            case METERS_DOWN: // not yet implemented
-            case METERS_UP:
+            case ASCENT:
+                return lap.ascent > laplength;
+            case DESCENT:
+                return -lap.descent > laplength;
             case TIME:
+                return lap.time > laplength;
             case DISTANCE:
                 return lap.dist > laplength;
         }
