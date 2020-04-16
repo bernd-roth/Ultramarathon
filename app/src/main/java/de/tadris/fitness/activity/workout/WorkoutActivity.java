@@ -171,12 +171,12 @@ public abstract class WorkoutActivity extends InformationActivity {
             }
 
             BarDataSet barDataSet = new BarDataSet(barEntries, getString(R.string.intervalSet));
-            barDataSet.setBarBorderWidth(4);
+            barDataSet.setBarBorderWidth(3);
             barDataSet.setBarBorderColor(getThemePrimaryColor());
             barDataSet.setColor(getThemePrimaryColor());
 
             BarData barData = new BarData(barDataSet);
-            barData.setBarWidth(0.0f);
+            barData.setBarWidth(0.01f);
             barData.setDrawValues(false);
 
             combinedData.setData(barData);

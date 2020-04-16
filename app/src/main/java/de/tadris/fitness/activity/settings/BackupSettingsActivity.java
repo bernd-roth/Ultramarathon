@@ -39,25 +39,6 @@ import de.tadris.fitness.export.RestoreController;
 import de.tadris.fitness.util.FileUtils;
 import de.tadris.fitness.view.ProgressDialogController;
 
-/*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
- *
- * This file is part of FitoTrack
- *
- * FitoTrack is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *
- *     FitoTrack is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *
- *     You should have received a copy of the GNU General Public License
- *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 public class BackupSettingsActivity extends FitoTrackSettingsActivity {
 
     private final Handler mHandler = new Handler();
@@ -137,12 +118,14 @@ public class BackupSettingsActivity extends FitoTrackSettingsActivity {
 
     private void requestPermissions() {
         if (!hasPermission()) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 10);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE}, 10);
         }
     }
 
     private boolean hasPermission() {
-        return ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+        return ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
     }
 
     private static final int FILE_SELECT_CODE = 21;

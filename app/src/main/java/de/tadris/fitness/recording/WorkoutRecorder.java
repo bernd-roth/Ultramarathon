@@ -286,7 +286,7 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
             for (WorkoutSample sample : samples) {
                 double elevation = SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, sample.tmpPressure);
                 if (lastElevation == -1) lastElevation = elevation;
-                elevation = (elevation + lastElevation * 3) / 4; // Slow floating average 1/7
+                elevation = (elevation + lastElevation * 9) / 10; // Slow floating average
                 if (elevation > lastElevation) {
                     ascent += elevation - lastElevation;
                 }
