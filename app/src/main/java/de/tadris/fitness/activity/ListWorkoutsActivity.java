@@ -42,6 +42,7 @@ import de.tadris.fitness.activity.record.RecordWorkoutActivity;
 import de.tadris.fitness.activity.settings.MainSettingsActivity;
 import de.tadris.fitness.activity.workout.EnterWorkoutActivity;
 import de.tadris.fitness.activity.workout.ShowWorkoutActivity;
+import de.tadris.fitness.activity.workout.ShowWorkoutsAggregatedDiagramActivity;
 import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.dialog.SelectWorkoutTypeDialog;
@@ -82,6 +83,7 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
 
         findViewById(R.id.workoutListRecord).setOnClickListener(v -> showWorkoutSelection());
         findViewById(R.id.workoutListEnter).setOnClickListener(v -> startEnterWorkoutActivity());
+        findViewById(R.id.workoutListHistory).setOnClickListener(v -> startEnterHistogramActivity());
 
         checkFirstStart();
 
@@ -110,6 +112,12 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
     private void showWorkoutSelection() {
         menu.close(true);
         new SelectWorkoutTypeDialog(this, this::startRecording).show();
+    }
+
+    private void startEnterHistogramActivity() {
+        menu.close(true);
+        final Intent intent = new Intent(this, ShowWorkoutsAggregatedDiagramActivity.class);
+        new Handler().postDelayed(() -> startActivity(intent), 300);
     }
 
     private void startRecording(WorkoutType activity) {
