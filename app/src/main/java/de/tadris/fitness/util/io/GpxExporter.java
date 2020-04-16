@@ -20,18 +20,16 @@
 package de.tadris.fitness.util.io;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import de.tadris.fitness.Instance;
 import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.util.gpx.Gpx;
@@ -40,25 +38,25 @@ import de.tadris.fitness.util.gpx.Track;
 import de.tadris.fitness.util.gpx.TrackPoint;
 import de.tadris.fitness.util.gpx.TrackPointExtension;
 import de.tadris.fitness.util.gpx.TrackSegment;
+import de.tadris.fitness.util.io.general.IWorkoutExporter;
 
-public class GpxExporter {
+public class GpxExporter implements IWorkoutExporter {
 
-    public static void exportWorkout(Context context, Workout workout, File file) throws IOException {
+    @Override
+    public void exportWorkout(Workout workout, List<WorkoutSample> samples, OutputStream fileStream) throws IOException {
         XmlMapper mapper= new XmlMapper();
-        mapper.writeValue(file, getGpxFromWorkout(context, workout));
+        mapper.writeValue(fileStream, getGpxFromWorkout(workout, samples));
     }
 
-    private static Gpx getGpxFromWorkout(Context context, Workout workout) {
-        Track track = getTrackFromWorkout(context, workout, 0);
+    private static Gpx getGpxFromWorkout(Workout workout, List<WorkoutSample> samples) {
+        Track track = getTrackFromWorkout(workout, samples, 0);
         ArrayList<Track> tracks = new ArrayList<>();
         tracks.add(track);
         Metadata meta = new Metadata(workout.toString(), workout.comment, getDateTime(workout.start));
-        Gpx gpx= new Gpx("1.1", "FitoTrack", meta, workout.toString(), workout.comment, tracks);
-        return gpx;
+        return new Gpx("1.1", "FitoTrack", meta, workout.toString(), workout.comment, tracks);
     }
 
-    private static Track getTrackFromWorkout(Context context, Workout workout, int number) {
-        WorkoutSample[] samples= Instance.getInstance(context).db.workoutDao().getAllSamplesOfWorkout(workout.id);
+    private static Track getTrackFromWorkout(Workout workout, List<WorkoutSample> samples, int number) {
         Track track= new Track();
         track.setNumber(number);
         track.setName(workout.toString());
@@ -94,8 +92,4 @@ public class GpxExporter {
     private static String getDateTime(Date date) {
         return formatter.format(date);
     }
-
-
-
-
 }

@@ -17,23 +17,19 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.util.io;
+package de.tadris.fitness.util.io.general;
 
 import android.content.Context;
-import android.hardware.SensorManager;
-import android.util.Log;
 
-import java.io.IOException;
 import java.util.List;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.data.AppDatabase;
 import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutSample;
-import de.tadris.fitness.util.AltitudeCorrection;
 import de.tadris.fitness.util.CalorieCalculator;
 
-class ImportWorkoutSaver {
+public class ImportWorkoutSaver {
 
     private final Context context;
     private final Workout workout;
