@@ -6,17 +6,12 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IFillFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,11 +23,8 @@ import de.tadris.fitness.R;
 import de.tadris.fitness.activity.FitoTrackActivity;
 import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.util.unit.DistanceUnitUtils;
-import de.tadris.fitness.util.unit.Metric;
 
 public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
-
-    private LineChart chart;
 
     protected DistanceUnitUtils distanceUnitUtils = Instance.getInstance(this).distanceUnitUtils;
 
@@ -41,7 +33,7 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_workouts_aggregated);
 
-        ArrayList<Entry> values = new ArrayList<>();
+        ArrayList<Entry> averageSpeedValues = new ArrayList<>();
 
         Workout[] workouts = Instance.getInstance(this).db.workoutDao().getWorkoutsHistorically();
 
@@ -52,7 +44,7 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
             double averageSpeed = distanceUnitUtils.getDistanceUnitSystem().getSpeedFromMeterPerSecond((workout.getAvgSpeedTotal()));
             fastestAverage = Math.max(fastestAverage, averageSpeed);
             greatestDistance = Math.max(greatestDistance, workout.length);
-            values.add(new Entry((float) workout.end, (float) averageSpeed));
+            averageSpeedValues.add(new Entry((float) workout.end, (float) averageSpeed));
         }
 
         TextView fastestAverageTextView = findViewById(R.id.fastestAverage);
@@ -60,18 +52,24 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
         TextView greatestDistanceTextView = findViewById(R.id.greatestDistance);
         greatestDistanceTextView.setText(distanceUnitUtils.getDistance(greatestDistance));
 
-        LineDataSet set1;
-        set1 = new LineDataSet(values, "Average Speed");
-        set1.enableDashedLine(10f, 5f, 0f);
-        set1.setDrawFilled(true);
-        set1.setFillFormatter((dataSet, dataProvider) -> chart.getAxisLeft().getAxisMinimum());
+        LineDataSet lineDataSetAverageSpeed;
+        lineDataSetAverageSpeed = new LineDataSet(averageSpeedValues, "Average Speed");
+        lineDataSetAverageSpeed.enableDashedLine(10f, 5f, 0f);
+        lineDataSetAverageSpeed.setDrawFilled(true);
+
+        LineChart chart = createChart();;
+        lineDataSetAverageSpeed.setFillFormatter((dataSet, dataProvider) -> chart.getAxisLeft().getAxisMinimum());
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-        dataSets.add(set1); // add the data sets
+        dataSets.add(lineDataSetAverageSpeed);
 
         LineData data = new LineData(dataSets);
 
-        chart = findViewById(R.id.aggregatedWorkoutsAverageSpeed);
+        chart.setData(data);
+    }
+
+    private LineChart createChart() {
+        LineChart chart  = findViewById(R.id.aggregatedWorkoutsAverageSpeed);
 
         AxisBase xAxis = chart.getXAxis();
         xAxis.setValueFormatter(new ValueFormatter() {
@@ -87,9 +85,14 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
         });
 
         chart.getAxisLeft().setTextColor(Color.DKGRAY);
+        chart.getAxisLeft().setTextSize(15f);
         chart.getAxisRight().setTextColor(Color.DKGRAY);
+        chart.getAxisRight().setTextSize(15f);;
+
         chart.getXAxis().setTextColor(Color.DKGRAY);
-        chart.setData(data);
+        chart.getXAxis().setTextSize(15f);;
+
+        return chart;
     }
 
 }
