@@ -30,8 +30,6 @@ import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.util.unit.DistanceUnitUtils;
 import de.tadris.fitness.util.unit.Metric;
 
-import static java.time.LocalDate.now;
-
 public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
 
     private LineChart chart;
@@ -48,24 +46,22 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
         Workout[] workouts = Instance.getInstance(this).db.workoutDao().getWorkoutsHistorically();
 
         double fastestAverage = 0;
-        double greatestDistance = 0;
+        int greatestDistance = 0;
 
         for (Workout workout: workouts) {
-            double averageSpeedKmPerHour = distanceUnitUtils.getDistanceUnitSystem().getSpeedFromMeterPerSecond((workout.getAvgSpeedTotal()));
-            fastestAverage = Math.max(fastestAverage, averageSpeedKmPerHour);
+            double averageSpeed = distanceUnitUtils.getDistanceUnitSystem().getSpeedFromMeterPerSecond((workout.getAvgSpeedTotal()));
+            fastestAverage = Math.max(fastestAverage, averageSpeed);
             greatestDistance = Math.max(greatestDistance, workout.length);
-            values.add(new Entry((float) workout.end, (float) averageSpeedKmPerHour));
+            values.add(new Entry((float) workout.end, (float) averageSpeed));
         }
 
         TextView fastestAverageTextView = findViewById(R.id.fastestAverage);
-        DecimalFormat df = new DecimalFormat("###.#");
-        df.setRoundingMode(RoundingMode.CEILING);
-        fastestAverageTextView.setText(df.format(fastestAverage) + "km/h");
+        fastestAverageTextView.setText(Math.floor(fastestAverage) + " " + distanceUnitUtils.getDistanceUnitSystem().getSpeedUnit());
         TextView greatestDistanceTextView = findViewById(R.id.greatestDistance);
-        greatestDistanceTextView.setText(df.format(greatestDistance / 1000) + "km");
+        greatestDistanceTextView.setText(distanceUnitUtils.getDistance(greatestDistance));
 
         LineDataSet set1;
-        set1 = new LineDataSet(values, "Average Running Speed");
+        set1 = new LineDataSet(values, "Average Speed");
         set1.enableDashedLine(10f, 5f, 0f);
         set1.setDrawFilled(true);
         set1.setFillFormatter((dataSet, dataProvider) -> chart.getAxisLeft().getAxisMinimum());
@@ -90,8 +86,9 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
             }
         });
 
-        YAxis yAxis = chart.getAxisLeft();
-        yAxis.setTextColor(Color.DKGRAY);
+        chart.getAxisLeft().setTextColor(Color.DKGRAY);
+        chart.getAxisRight().setTextColor(Color.DKGRAY);
+        chart.getXAxis().setTextColor(Color.DKGRAY);
         chart.setData(data);
     }
 
