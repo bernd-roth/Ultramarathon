@@ -27,8 +27,6 @@ import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -49,8 +47,7 @@ import de.tadris.fitness.osm.OAuthAuthentication;
 import de.tadris.fitness.osm.OsmTraceUploader;
 import de.tadris.fitness.util.DialogUtils;
 import de.tadris.fitness.util.FileUtils;
-import de.tadris.fitness.util.LapStatistics;
-import de.tadris.fitness.util.LapStatisticsViewHelper;
+import de.tadris.fitness.util.SectionViewHelper;
 import de.tadris.fitness.util.gpx.GpxExporter;
 import de.tadris.fitness.view.ProgressDialogController;
 import de.westnordost.osmapi.traces.GpsTraceDetails;
@@ -124,14 +121,14 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
 
             heightDiagram.setOnClickListener(v -> startDiagramActivity(ShowWorkoutMapDiagramActivity.DIAGRAM_TYPE_HEIGHT));
 
-            addTitle(getString(R.string.laptimes));
-            addLaptimeList();
+            addTitle(getString(R.string.sections));
+            addSectionList();
         }
     }
 
-    private void addLaptimeList() {
-        LapStatisticsViewHelper helper = new LapStatisticsViewHelper();
-        root.addView(helper.CreateLapStatisticsView(this, root, workout, samples));
+    private void addSectionList() {
+        SectionViewHelper helper = new SectionViewHelper();
+        root.addView(helper.createSectionsView(this, root, workout, samples));
     }
 
     private void startDiagramActivity(String diagramType) {

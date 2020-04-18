@@ -239,8 +239,7 @@
         <item>kcal</item>
         <item>Joule</item>
     </string-array>
-    <string name="laptimes" >Laptimes</string>
-    <string name="lap_length_text">Lap Length</string>
+    <string name="sections">Sections</string>
 
     <string-array name="pref_announcement_mode">
         <item>Always</item>

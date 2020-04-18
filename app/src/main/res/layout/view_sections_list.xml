@@ -3,28 +3,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/laptimes_layout">
+    android:id="@+id/sections_layout">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <EditText
-            android:id="@+id/lapLengthEdit"
+            android:id="@+id/sectionLengthEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:inputType="number"
-            android:imeOptions="actionDone"/>
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no" />
         <Spinner
-            android:id="@+id/lapLengthUnit"
+            android:id="@+id/sectionLengthUnit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_gravity="center"
             android:text="km"
-            android:textAppearance="@android:style/TextAppearance.Material.Small"/>
+            android:textAppearance="@android:style/TextAppearance.Material.Small"
+            android:labelFor="@id/sectionLengthEdit"/>
         <Spinner
-            android:id="@+id/lapTypeSpinner"
+            android:id="@+id/sectionTypeSpinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@android:style/TextAppearance.Material.Medium"
@@ -51,7 +53,7 @@
             android:layout_gravity="center"
             android:text="@string/workoutDistance"/>
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textAppearance="@android:style/TextAppearance.Material.Small"
@@ -77,16 +79,11 @@
             android:layout_gravity="center"
             android:text = "▼"
             android:textColor="@color/colorPrimaryDark"/>
-
-        <!--<NumberPicker
-            android:id="@+id/laptime_distance_picker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></NumberPicker>-->
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/laplist"
+        android:id="@+id/section_list"
         android:orientation="vertical" />
 </LinearLayout>
