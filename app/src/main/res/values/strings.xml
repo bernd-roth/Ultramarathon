@@ -239,6 +239,8 @@
     <string name="currentTime">Current Time</string>
     <string name="oClock">o Clock</string>
     <string name="unlockPhoneStopWorkout">Please unlock your phone to stop the recording</string>
+    <string name="fastest_average">max average:</string>
+    <string name="greatest_distance">max distance:</string>
 
 
     <string-array name="pref_energy_units">

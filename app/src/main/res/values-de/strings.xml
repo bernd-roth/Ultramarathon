@@ -238,6 +238,8 @@
     <string name="currentTime">Aktuelle Uhrzeit</string>
     <string name="oClock">Uhr</string>
     <string name="unlockPhoneStopWorkout">Bitte das Telefon entsperren, um die Aufnahme zu beenden</string>
+    <string name="fastest_average">fastest average</string>
+    <string name="greatest_distance">greatest distance</string>
 
     <string-array name="pref_energy_units">
         <item>kcal</item>
