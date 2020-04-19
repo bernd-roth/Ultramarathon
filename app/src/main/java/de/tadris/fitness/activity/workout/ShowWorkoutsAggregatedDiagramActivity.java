@@ -36,7 +36,6 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
 
     protected DistanceUnitUtils distanceUnitUtils = Instance.getInstance(this).distanceUnitUtils;
 
-    ArrayList<Entry> averageSpeedValues;
     LineChart chart;
     String selectedWorkoutType = WorkoutType.RUNNING.id;
     double fastestAverage;
@@ -48,16 +47,11 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
         setContentView(R.layout.activity_show_workouts_aggregated);
 
         addWorkoutTypeSpinner();
-        Workout[] workouts = Instance.getInstance(this).db.workoutDao().getWorkoutsHistorically(selectedWorkoutType);
-        calculateValues(workouts);
-        setMaxValues();
-
-        LineData data = calculateLineData();
         chart = createChart();
-        chart.setData(data);
+
     }
 
-    private LineData calculateLineData() {
+    private LineData calculateLineData(ArrayList<Entry> averageSpeedValues) {
         LineDataSet lineDataSetAverageSpeed;
         lineDataSetAverageSpeed = new LineDataSet(averageSpeedValues, "Average Speed");
         lineDataSetAverageSpeed.setColor(getThemePrimaryColor());
@@ -79,15 +73,17 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
         greatestDistanceTextView.setText(distanceUnitUtils.getDistance(greatestDistance));
     }
 
-    private void calculateValues(Workout[] workouts) {
+    private ArrayList<Entry> calculateValues(Workout[] workouts) {
         fastestAverage = greatestDistance = 0;
-        averageSpeedValues = new ArrayList<>();
+        ArrayList<Entry> averageSpeedValues = new ArrayList<>();
         for (Workout workout: workouts) {
             double averageSpeed = distanceUnitUtils.getDistanceUnitSystem().getSpeedFromMeterPerSecond((workout.getAvgSpeedTotal()));
             fastestAverage = Math.max(fastestAverage, averageSpeed);
             greatestDistance = Math.max(greatestDistance, workout.length);
             averageSpeedValues.add(new Entry((float) workout.end, (float) averageSpeed));
         }
+
+        return averageSpeedValues;
     }
 
     private void addWorkoutTypeSpinner() {
@@ -116,10 +112,9 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 selectedWorkoutType = workoutTypes.get(position);
                 Workout[] workouts = Instance.getInstance(getBaseContext()).db.workoutDao().getWorkoutsHistorically(selectedWorkoutType);
-
-                calculateValues(workouts);
+                ArrayList<Entry> averageSpeedValues = calculateValues(workouts);
                 setMaxValues();
-                LineData data = calculateLineData();
+                LineData data = calculateLineData(averageSpeedValues);
                 chart.clear();
                 if (workouts.length == 0) {
                     return;
@@ -129,7 +124,6 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
 
 
