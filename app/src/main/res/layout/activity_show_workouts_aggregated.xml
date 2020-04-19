@@ -7,6 +7,14 @@
     android:orientation="vertical"
     tools:context=".activity.workout.ShowWorkoutsAggregatedDiagramActivity">
 
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:gravity="start"
+        android:layout_margin="10dp"
+        />
+
     <LinearLayout
         android:id="@+id/showWorkoutsAggregatedParent"
         android:layout_width="wrap_content"

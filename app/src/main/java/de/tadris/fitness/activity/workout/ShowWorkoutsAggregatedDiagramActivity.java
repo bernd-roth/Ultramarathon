@@ -2,6 +2,11 @@ package de.tadris.fitness.activity.workout;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -22,50 +27,127 @@ import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.activity.FitoTrackActivity;
 import de.tadris.fitness.data.Workout;
+import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.util.unit.DistanceUnitUtils;
+
+import static android.widget.AdapterView.*;
 
 public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
 
     protected DistanceUnitUtils distanceUnitUtils = Instance.getInstance(this).distanceUnitUtils;
+
+    ArrayList<Entry> averageSpeedValues;
+    LineChart chart;
+    String selectedWorkoutType = WorkoutType.RUNNING.id;
+    double fastestAverage;
+    int greatestDistance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_workouts_aggregated);
 
-        ArrayList<Entry> averageSpeedValues = new ArrayList<>();
+        addWorkoutTypeSpinner();
+        Workout[] workouts = Instance.getInstance(this).db.workoutDao().getWorkoutsHistorically(selectedWorkoutType);
+        calculateValues(workouts);
+        setMaxValues();
 
-        Workout[] workouts = Instance.getInstance(this).db.workoutDao().getWorkoutsHistorically();
+        LineData data = calculateLineData();
 
-        double fastestAverage = 0;
-        int greatestDistance = 0;
+        chart.setData(data);
+    }
 
+    private LineData calculateLineData() {
+        LineDataSet lineDataSetAverageSpeed;
+        lineDataSetAverageSpeed = new LineDataSet(averageSpeedValues, "Average Speed");
+        lineDataSetAverageSpeed.enableDashedLine(10f, 5f, 0f);
+        lineDataSetAverageSpeed.setDrawFilled(true);
+
+        chart = createChart();
+        lineDataSetAverageSpeed.setFillFormatter((dataSet, dataProvider) -> chart.getAxisLeft().getAxisMinimum());
+
+        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+        dataSets.add(lineDataSetAverageSpeed);
+
+        return new LineData(dataSets);
+    }
+
+    private void setMaxValues() {
+        TextView fastestAverageTextView = findViewById(R.id.fastestAverage);
+        fastestAverageTextView.setText(Math.floor(fastestAverage) + " " + distanceUnitUtils.getDistanceUnitSystem().getSpeedUnit());
+        TextView greatestDistanceTextView = findViewById(R.id.greatestDistance);
+        greatestDistanceTextView.setText(distanceUnitUtils.getDistance(greatestDistance));
+    }
+
+    private void calculateValues(Workout[] workouts) {
+        fastestAverage = greatestDistance = 0;
+        averageSpeedValues = new ArrayList<>();
         for (Workout workout: workouts) {
             double averageSpeed = distanceUnitUtils.getDistanceUnitSystem().getSpeedFromMeterPerSecond((workout.getAvgSpeedTotal()));
             fastestAverage = Math.max(fastestAverage, averageSpeed);
             greatestDistance = Math.max(greatestDistance, workout.length);
             averageSpeedValues.add(new Entry((float) workout.end, (float) averageSpeed));
         }
+    }
 
-        TextView fastestAverageTextView = findViewById(R.id.fastestAverage);
-        fastestAverageTextView.setText(Math.floor(fastestAverage) + " " + distanceUnitUtils.getDistanceUnitSystem().getSpeedUnit());
-        TextView greatestDistanceTextView = findViewById(R.id.greatestDistance);
-        greatestDistanceTextView.setText(distanceUnitUtils.getDistance(greatestDistance));
+    private void addWorkoutTypeSpinner() {
+        Spinner spinner = findViewById(R.id.spinner);
+        ArrayList<String> workoutTypes = createChoicesList();
 
-        LineDataSet lineDataSetAverageSpeed;
-        lineDataSetAverageSpeed = new LineDataSet(averageSpeedValues, "Average Speed");
-        lineDataSetAverageSpeed.enableDashedLine(10f, 5f, 0f);
-        lineDataSetAverageSpeed.setDrawFilled(true);
+        ArrayAdapter<String> SpinnerAdapter = new ArrayAdapter<String>
+                (this, android.R.layout.simple_spinner_item, workoutTypes){
+            public View getView(int position, View convertView,
+                                ViewGroup parent) {
+                View v = super.getView(position, convertView, parent);
+                ((TextView) v).setTextColor(Color.parseColor("#E30D81"));
+                return v;
+            }
+            public View getDropDownView(int position, View convertView,
+                                        ViewGroup parent) {
+                View v = super.getDropDownView(position, convertView,
+                        parent);
+                v.setBackgroundColor(Color.parseColor("#E30D81"));
+                ((TextView) v).setTextColor(Color.parseColor("#ffffff"));
+                return v;
+            }
+        };
+        spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                selectedWorkoutType = workoutTypes.get(position);
+                Workout[] workouts = Instance.getInstance(getBaseContext()).db.workoutDao().getWorkoutsHistorically(selectedWorkoutType);
 
-        LineChart chart = createChart();;
-        lineDataSetAverageSpeed.setFillFormatter((dataSet, dataProvider) -> chart.getAxisLeft().getAxisMinimum());
+                calculateValues(workouts);
+                setMaxValues();
+                LineData data = calculateLineData();
+                chart.clear();
+                if (workouts.length == 0) {
+                    return;
+                }
+                chart.setData(data);
+            }
 
-        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-        dataSets.add(lineDataSetAverageSpeed);
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
-        LineData data = new LineData(dataSets);
+            }
 
-        chart.setData(data);
+
+        });
+        SpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(SpinnerAdapter);
+    }
+
+    private ArrayList<String> createChoicesList() {
+        ArrayList<String> workoutTypes = new ArrayList<>();
+        workoutTypes.add(WorkoutType.RUNNING.id);
+        workoutTypes.add(WorkoutType.CYCLING.id);
+        workoutTypes.add(WorkoutType.HIKING.id);
+        workoutTypes.add(WorkoutType.INLINE_SKATING.id);
+        workoutTypes.add(WorkoutType.WALKING.id);
+        workoutTypes.add(WorkoutType.OTHER.id);
+
+        return workoutTypes;
     }
 
     private LineChart createChart() {
@@ -92,6 +174,8 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
         chart.getXAxis().setTextColor(Color.DKGRAY);
         chart.getXAxis().setTextSize(15f);;
 
+        chart.setNoDataText(getString(R.string.no_workouts_recorded_for_this_activity));
+        chart.setNoDataTextColor(Color.DKGRAY);
         return chart;
     }
 
