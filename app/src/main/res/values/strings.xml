@@ -242,6 +242,7 @@
     <string name="fastest_average">max average:</string>
     <string name="greatest_distance">max distance:</string>
     <string name="no_workouts_recorded_for_this_activity">no workouts for this activity</string>
+    <string name="maximum_average_speed">maximum average speed</string>
 
 
     <string-array name="pref_energy_units">

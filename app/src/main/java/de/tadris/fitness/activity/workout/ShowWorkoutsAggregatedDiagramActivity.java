@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -179,14 +180,17 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
         chart.getAxisLeft().setTextSize(15f);
         chart.getAxisRight().setTextColor(Color.DKGRAY);
         chart.getAxisRight().setTextSize(15f);
-        ;
 
         chart.getXAxis().setTextColor(Color.DKGRAY);
         chart.getXAxis().setTextSize(15f);
-        ;
 
         chart.setNoDataText(getString(R.string.no_workouts_recorded_for_this_activity));
         chart.setNoDataTextColor(Color.DKGRAY);
+
+        Description description = new Description();
+        description.setText(getString(R.string.maximum_average_speed));
+        description.setTextColor(Color.DKGRAY);
+        chart.setDescription(description);
         return chart;
     }
 
