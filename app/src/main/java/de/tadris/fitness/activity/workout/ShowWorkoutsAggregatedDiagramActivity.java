@@ -53,18 +53,18 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
         setMaxValues();
 
         LineData data = calculateLineData();
-
+        chart = createChart();
         chart.setData(data);
     }
 
     private LineData calculateLineData() {
         LineDataSet lineDataSetAverageSpeed;
         lineDataSetAverageSpeed = new LineDataSet(averageSpeedValues, "Average Speed");
-        lineDataSetAverageSpeed.enableDashedLine(10f, 5f, 0f);
-        lineDataSetAverageSpeed.setDrawFilled(true);
-
-        chart = createChart();
-        lineDataSetAverageSpeed.setFillFormatter((dataSet, dataProvider) -> chart.getAxisLeft().getAxisMinimum());
+        lineDataSetAverageSpeed.setColor(getThemePrimaryColor());
+        lineDataSetAverageSpeed.setValueTextColor(getThemePrimaryColor());
+        lineDataSetAverageSpeed.setDrawCircles(false);
+        lineDataSetAverageSpeed.setLineWidth(4);
+        lineDataSetAverageSpeed.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(lineDataSetAverageSpeed);
