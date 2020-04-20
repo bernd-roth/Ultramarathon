@@ -8,7 +8,7 @@ public class TimeFormatter {
 
         duration = duration /1000;
         // get Hours (unlikely, but hey)
-        if(duration / 3600 > 1)
+        if(duration / 3600.0 >= 1)
             return String.format(
                     "%d:%02d:%02d",
                     duration / 3600,

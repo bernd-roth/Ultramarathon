@@ -10,28 +10,29 @@
         android:orientation="horizontal">
         <EditText
             android:id="@+id/sectionLengthEdit"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:inputType="number"
             android:imeOptions="actionDone"
-            android:importantForAutofill="no" />
+            android:importantForAutofill="no"
+            android:textAlignment="textEnd"/>
         <Spinner
             android:id="@+id/sectionLengthUnit"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="4"
             android:layout_gravity="center"
             android:text="km"
             android:textAppearance="@android:style/TextAppearance.Material.Small"
             android:labelFor="@id/sectionLengthEdit"/>
         <Spinner
             android:id="@+id/sectionTypeSpinner"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textAppearance="@android:style/TextAppearance.Material.Medium"
             android:layout_gravity="center"
-            android:layout_weight="1"
+            android:layout_weight="5"
             android:text="@string/workoutDistance"/>
     </LinearLayout>
 
@@ -45,40 +46,29 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:layout_width="56dp"
+            android:id="@+id/selectedCriterion"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="3"
             android:textAppearance="@android:style/TextAppearance.Material.Small"
             android:layout_margin="1dp"
             android:textAlignment="center"
             android:layout_gravity="center"
             android:text="@string/workoutDistance"/>
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="6"
             android:textAppearance="@android:style/TextAppearance.Material.Small"
             android:layout_margin="1dp"
-            android:text = "@string/workoutTime"/>
+            android:text = "@string/workoutPace"/>
 
-        <TextView
-            android:layout_width="56dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="@android:style/TextAppearance.Material.Small"
-            android:layout_margin="1dp"
-            android:textAlignment="center"
-            android:layout_gravity="center"
-            android:text = "▲"
-            android:textColor="@color/colorAccent"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5" />
 
-        <TextView
-            android:layout_width="56dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="@android:style/TextAppearance.Material.Small"
-            android:layout_margin="1dp"
-            android:textAlignment="center"
-            android:layout_gravity="center"
-            android:text = "▼"
-            android:textColor="@color/colorPrimaryDark"/>
     </LinearLayout>
 
     <LinearLayout

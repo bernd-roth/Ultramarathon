@@ -13,98 +13,86 @@ class SectionCreator {
     static ArrayList<Section> createSectionList(java.util.List<WorkoutSample> samples, SectionCriterion criterion, double sectionLength) {
         ArrayList<Section> sections = new ArrayList<>();
 
-        Section bestSection = null, worstSection = null;
 
-        WorkoutSample currentSectionStart = samples.get(0);
         Section currentSection = new Section();
+        Section bestSection = currentSection, worstSection = currentSection;
 
-        int sectionsCount = 0;
         for (int i = 1; i < samples.size(); ++i) {
             WorkoutSample sample = samples.get(i);
             WorkoutSample previous = samples.get(i - 1);
 
             currentSection.dist += sample.toLatLong().sphericalDistance(previous.toLatLong());
-            currentSection.time = sample.relativeTime - currentSectionStart.relativeTime;
+            currentSection.time += sample.relativeTime - previous.relativeTime;
             if (sample.elevation < previous.elevation)
-                currentSection.descent += sample.elevation - previous.elevation;
+                currentSection.descent += previous.elevation - sample.elevation;
             if (sample.elevation > previous.elevation)
                 currentSection.ascent += sample.elevation - previous.elevation;
 
-            if (checkCriterion(criterion, currentSection, sectionLength)) {
+            double currentCriteriaLength;
+            switch (criterion) {
+                case ASCENT:
+                    currentCriteriaLength = currentSection.ascent;
+                    break;
+                case DESCENT:
+                    currentCriteriaLength = currentSection.descent;
+                    break;
+                case TIME:
+                    currentCriteriaLength = currentSection.time;
+                    break;
+                case DISTANCE:
+                default:
+                    currentCriteriaLength = currentSection.dist;
+                    break;
+            }
+
+            if (currentCriteriaLength >= sectionLength) {
+                // interpolate to find actual values
+                double interpolate = sectionLength/currentCriteriaLength;
                 Section saveSection = currentSection.copy();
+                saveSection.dist *= interpolate;
+                saveSection.time *= interpolate;
+                saveSection.descent *= interpolate;
+                saveSection.ascent *= interpolate;
 
-                if (bestSection == null) {
-                    bestSection = saveSection;
-                } else if (isSectionBetter(criterion, saveSection, bestSection)) {
+                // check for best / worst
+                if (isSectionBetter(saveSection, bestSection)) {
                     bestSection = saveSection;
                 }
-
-                if (worstSection == null) {
-                    worstSection = saveSection;
-                } else if (isSectionBetter(criterion, worstSection, saveSection)) {
+                else if (isSectionBetter(worstSection, saveSection)) {
                     worstSection = saveSection;
                 }
-
-                addLengthToSection(saveSection, criterion, sectionsCount++ * sectionLength);
 
                 sections.add(saveSection);
-                double startDist = currentSection.dist - sectionLength; // substract small overlap if distance can not be matche 100% (next section starts a bit to late)
-                currentSection = new Section();
-                if (criterion == SectionCriterion.DISTANCE)
-                    currentSection.dist = startDist;
-                currentSectionStart = sample;
+
+                // Set start values for new section considering inertpolated values
+                Section cSection = new Section();
+                cSection.dist = currentSection.dist - saveSection.dist;
+                cSection.time =  currentSection.time - saveSection.time;
+                cSection.ascent =  currentSection.ascent - saveSection.ascent;
+                cSection.descent =  currentSection.descent - saveSection.descent;
+                currentSection = cSection;
             }
         }
 
-        if (sectionsCount > 0) {
-            worstSection.worst = true;
-            bestSection.best = true;
-        }
 
-        if (currentSection.dist != 0) {
-            addLengthToSection(currentSection, criterion, sectionsCount * sectionLength);
+        if (currentSection.dist >0 && currentSection.time >0) {
             sections.add(currentSection);
         }
+        if (isSectionBetter(currentSection, bestSection)) {
+            bestSection = currentSection;
+        }
+        else if (isSectionBetter(worstSection, currentSection)) {
+            worstSection = currentSection;
+        }
+
+        worstSection.worst = true;
+        bestSection.best = true;
 
         return sections;
     }
 
-    private static void addLengthToSection(Section section, SectionCriterion criterion, double previousLength) {
-        switch (criterion) {
-            case DISTANCE:
-                section.dist += previousLength;
-                break;
-            case ASCENT:
-                section.ascent += previousLength;
-                break;
-            case DESCENT:
-                section.descent += -previousLength;
-                break;
-            case TIME:
-                section.time += (long) (previousLength);
-                break;
-        }
-    }
-
-    private static boolean isSectionBetter(SectionCriterion criterion, Section section, Section compareTo) {
-        if (criterion == SectionCriterion.TIME) {
-            return section.dist > compareTo.dist;
-        }
-        return section.time < compareTo.time;
-    }
-
-    private static boolean checkCriterion(SectionCriterion criterion, Section section, double length) {
-        switch (criterion) {
-            case ASCENT:
-                return section.ascent > length;
-            case DESCENT:
-                return -section.descent > length;
-            case TIME:
-                return section.time > length;
-            case DISTANCE:
-                return section.dist > length;
-        }
-        return true;
+    private static boolean isSectionBetter(Section section, Section compareTo) {
+        return section.getPace() < compareTo.getPace();
     }
 
     public enum SectionCriterion {
@@ -125,9 +113,13 @@ class SectionCreator {
 
     public static class Section {
         double dist = 0, ascent = 0, descent = 0;
-        long time = 0;
+        double time = 0;
         boolean best = false;
         boolean worst = false;
+
+        public long getPace(){
+            return (long) (time / dist * 1000);
+        }
 
         public Section copy() {
             Section section = new Section();
