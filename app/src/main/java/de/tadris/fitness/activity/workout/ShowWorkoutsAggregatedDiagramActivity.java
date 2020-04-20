@@ -9,10 +9,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.CombinedData;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
@@ -29,20 +34,21 @@ import de.tadris.fitness.R;
 import de.tadris.fitness.activity.FitoTrackActivity;
 import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.dto.AggregatedWorkoutValues;
+import de.tadris.fitness.dto.DataPointAverageSpeed;
+import de.tadris.fitness.dto.DataPointDistance;
 import de.tadris.fitness.util.unit.DistanceUnitUtils;
 
 import static android.widget.AdapterView.*;
+import static com.github.mikephil.charting.charts.CombinedChart.*;
 
 public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
 
     protected DistanceUnitUtils distanceUnitUtils = Instance.getInstance(this).distanceUnitUtils;
 
-    LineChart chart;
+    CombinedChart chart;
     String selectedWorkoutType = WorkoutType.RUNNING.id;
-    double fastestAverage;
-    int greatestDistance;
-    private String fastestAverageDate;
-    private String greatestDistanceDate;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +58,17 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
 
         addWorkoutTypeSpinner();
         chart = createChart();
-
     }
 
-    private LineData calculateLineData(ArrayList<Entry> averageSpeedValues) {
+    private LineData createAverageSpeedLineData(ArrayList<DataPointAverageSpeed> averageSpeedValues) {
+        final ArrayList<Entry> averageSpeedEntries = new ArrayList<>();
+        for (DataPointAverageSpeed averageSpeedDataPoint: averageSpeedValues ) {
+            float averageSpeed = (float) distanceUnitUtils.getDistanceUnitSystem().getSpeedFromMeterPerSecond((averageSpeedDataPoint.getAverageSpeed()));
+            averageSpeedEntries.add(new Entry( averageSpeedDataPoint.getTime(), averageSpeed));
+        }
+
         LineDataSet lineDataSetAverageSpeed;
-        lineDataSetAverageSpeed = new LineDataSet(averageSpeedValues, "Average Speed");
+        lineDataSetAverageSpeed = new LineDataSet(averageSpeedEntries, "Average Speed");
         lineDataSetAverageSpeed.setColor(getThemePrimaryColor());
         lineDataSetAverageSpeed.setValueTextColor(getThemePrimaryColor());
         lineDataSetAverageSpeed.setDrawCircles(false);
@@ -70,37 +81,36 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
         return new LineData(dataSets);
     }
 
-    private void setMaxValues() {
-        TextView fastestAverageTextView = findViewById(R.id.fastestAverage);
-        fastestAverageTextView.setText(Math.floor(fastestAverage) + " " + distanceUnitUtils.getDistanceUnitSystem().getSpeedUnit());
-        TextView fastestAverageDateTextView = findViewById(R.id.fastestAverageDate);
-        fastestAverageDateTextView.setText(fastestAverageDate);
-        TextView greatestDistanceTextView = findViewById(R.id.greatestDistance);
-        greatestDistanceTextView.setText(distanceUnitUtils.getDistance(greatestDistance));
-        TextView greatestDistanceDateTextView = findViewById(R.id.greatestDistanceDate);
-        greatestDistanceDateTextView.setText(greatestDistanceDate);
-    }
-
-    private ArrayList<Entry> calculateValues(Workout[] workouts) {
-        fastestAverage = greatestDistance = 0;
-        fastestAverageDate = greatestDistanceDate = "--";
-        ArrayList<Entry> averageSpeedValues = new ArrayList<>();
-        for (Workout workout : workouts) {
-            double averageSpeed = distanceUnitUtils.getDistanceUnitSystem().getSpeedFromMeterPerSecond((workout.getAvgSpeedTotal()));
-            if (fastestAverage < averageSpeed) {
-                fastestAverage = averageSpeed;
-                fastestAverageDate = workout.getDateString();
-            }
-
-            if (greatestDistance < workout.length) {
-                greatestDistance = workout.length;
-                greatestDistanceDate = workout.getDateString();
-            }
-            averageSpeedValues.add(new Entry((float) workout.end, (float) averageSpeed));
+    private BarData createDistanceBarData(ArrayList<DataPointDistance> distanceValues) {
+        ArrayList<BarEntry> distanceEntries = new ArrayList<>();
+        for(DataPointDistance dataPoint: distanceValues) {
+            float distance = (float) dataPoint.getDistance() / 1000;
+            distanceEntries.add(new BarEntry(dataPoint.getTime(), distance));
         }
 
-        return averageSpeedValues;
+        BarDataSet set1 = new BarDataSet(distanceEntries, "Distance");
+        set1.setColors(Color.MAGENTA);
+        set1.setValueTextColor(Color.rgb(60, 220, 78));
+        set1.setValueTextSize(15f);
+        set1.setAxisDependency(YAxis.AxisDependency.LEFT);
+
+        BarData barData = new BarData(set1);
+        return barData;
+
     }
+
+    private void setMaxValues(AggregatedWorkoutValues aggregatedWorkoutValues) {
+        TextView fastestAverageTextView = findViewById(R.id.fastestAverage);
+        fastestAverageTextView.setText(distanceUnitUtils.getSpeed(aggregatedWorkoutValues.getFastestAverage()));
+        TextView fastestAverageDateTextView = findViewById(R.id.fastestAverageDate);
+        fastestAverageDateTextView.setText(aggregatedWorkoutValues.getFastestAverageDate());
+        TextView greatestDistanceTextView = findViewById(R.id.greatestDistance);
+        greatestDistanceTextView.setText(distanceUnitUtils.getDistance(aggregatedWorkoutValues.getGreatestDistance()));
+        TextView greatestDistanceDateTextView = findViewById(R.id.greatestDistanceDate);
+        greatestDistanceDateTextView.setText(aggregatedWorkoutValues.getGreatestDistanceDate());
+    }
+
+
 
     private void addWorkoutTypeSpinner() {
         Spinner spinner = findViewById(R.id.spinner);
@@ -129,14 +139,20 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 selectedWorkoutType = workoutTypes.get(position);
                 Workout[] workouts = Instance.getInstance(getBaseContext()).db.workoutDao().getWorkoutsHistorically(selectedWorkoutType);
-                ArrayList<Entry> averageSpeedValues = calculateValues(workouts);
-                setMaxValues();
-                LineData data = calculateLineData(averageSpeedValues);
+
+                AggregatedWorkoutValues aggregatedWorkoutValues = new AggregatedWorkoutValues(workouts);
+                setMaxValues(aggregatedWorkoutValues);
+                LineData averageSpeedData = createAverageSpeedLineData(aggregatedWorkoutValues.getAverageSpeedData());
+                BarData distanceData = createDistanceBarData(aggregatedWorkoutValues.getDistanceData());
                 chart.clear();
                 if (workouts.length == 0) {
                     return;
                 }
-                chart.setData(data);
+
+                CombinedData combinedData = new CombinedData();
+                combinedData.setData(distanceData);
+                combinedData.setData(averageSpeedData);
+                chart.setData(combinedData);
             }
 
             @Override
@@ -161,8 +177,8 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
         return workoutTypes;
     }
 
-    private LineChart createChart() {
-        LineChart chart = findViewById(R.id.aggregatedWorkoutsAverageSpeed);
+    private CombinedChart createChart() {
+        CombinedChart chart = findViewById(R.id.combinedChartAggregatedWorkouts);
 
         AxisBase xAxis = chart.getXAxis();
         xAxis.setValueFormatter(new ValueFormatter() {
@@ -192,6 +208,11 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
         description.setText(getString(R.string.maximum_average_speed));
         description.setTextColor(Color.DKGRAY);
         chart.setDescription(description);
+
+        chart.setDrawOrder(new DrawOrder[]{
+                DrawOrder.BAR, DrawOrder.BUBBLE, DrawOrder.CANDLE, DrawOrder.LINE, DrawOrder.SCATTER
+        });
+
         return chart;
     }
 
