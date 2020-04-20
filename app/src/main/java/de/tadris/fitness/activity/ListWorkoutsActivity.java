@@ -83,7 +83,6 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
 
         findViewById(R.id.workoutListRecord).setOnClickListener(v -> showWorkoutSelection());
         findViewById(R.id.workoutListEnter).setOnClickListener(v -> startEnterWorkoutActivity());
-        findViewById(R.id.workoutListHistory).setOnClickListener(v -> startEnterHistogramActivity());
 
         checkFirstStart();
 
@@ -112,12 +111,6 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
     private void showWorkoutSelection() {
         menu.close(true);
         new SelectWorkoutTypeDialog(this, this::startRecording).show();
-    }
-
-    private void startEnterHistogramActivity() {
-        menu.close(true);
-        final Intent intent = new Intent(this, ShowWorkoutsAggregatedDiagramActivity.class);
-        new Handler().postDelayed(() -> startActivity(intent), 300);
     }
 
     private void startRecording(WorkoutType activity) {
@@ -201,6 +194,11 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
 
         if (id == R.id.actionOpenSettings) {
             startActivity(new Intent(this, MainSettingsActivity.class));
+            return true;
+        }
+
+        if (id == R.id.actionOpenStatisticss) {
+            startActivity(new Intent(this, ShowWorkoutsAggregatedDiagramActivity.class));
             return true;
         }
 
