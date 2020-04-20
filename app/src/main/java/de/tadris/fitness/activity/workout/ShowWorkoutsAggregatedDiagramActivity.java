@@ -167,12 +167,9 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
 
     private ArrayList<String> createChoicesList() {
         ArrayList<String> workoutTypes = new ArrayList<>();
-        workoutTypes.add(WorkoutType.RUNNING.id);
-        workoutTypes.add(WorkoutType.CYCLING.id);
-        workoutTypes.add(WorkoutType.HIKING.id);
-        workoutTypes.add(WorkoutType.INLINE_SKATING.id);
-        workoutTypes.add(WorkoutType.WALKING.id);
-        workoutTypes.add(WorkoutType.OTHER.id);
+        for (WorkoutType workoutType: WorkoutType.values()) {
+            workoutTypes.add(workoutType.id);
+        }
 
         return workoutTypes;
     }
