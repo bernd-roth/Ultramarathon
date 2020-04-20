@@ -48,6 +48,7 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_workouts_aggregated);
+        setTitle(getString(R.string.workout_statistics));
 
         addWorkoutTypeSpinner();
         chart = createChart();
