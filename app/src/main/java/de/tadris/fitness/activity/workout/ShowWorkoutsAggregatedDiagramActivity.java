@@ -88,12 +88,13 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
         }
 
         BarDataSet set1 = new BarDataSet(distanceEntries, "Distance");
-        set1.setColors(Color.MAGENTA);
-        set1.setValueTextColor(Color.rgb(60, 220, 78));
+        set1.setColors(Color.CYAN);
+        set1.setValueTextColor(Color.LTGRAY);
         set1.setValueTextSize(15f);
         set1.setAxisDependency(YAxis.AxisDependency.LEFT);
 
         BarData barData = new BarData(set1);
+        barData.setBarWidth(16f);
         return barData;
 
     }
@@ -184,7 +185,7 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
             @Override
             public String getFormattedValue(float value) {
 
-                long millis = TimeUnit.MILLISECONDS.toMillis((long) value);
+                long millis = TimeUnit.HOURS.toMillis((long) value);
                 return mFormat.format(new Date(millis));
             }
         });

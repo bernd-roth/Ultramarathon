@@ -1,6 +1,8 @@
 package de.tadris.fitness.dto;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+
 import de.tadris.fitness.data.Workout;
 
 public class AggregatedWorkoutValues {
@@ -28,8 +30,9 @@ public class AggregatedWorkoutValues {
                 greatestDistanceDate = workout.getDateString();
             }
 
-            averageSpeedValues.add(new DataPointAverageSpeed((float) workout.end, (float) workout.getAvgSpeedTotal()));
-            distanceValues.add(new DataPointDistance((float) workout.end, workout.length));
+            float timepoint = TimeUnit.MILLISECONDS.toHours(workout.end);
+            averageSpeedValues.add(new DataPointAverageSpeed(timepoint, (float) workout.getAvgSpeedTotal()));
+            distanceValues.add(new DataPointDistance(timepoint, workout.length));
         }
     }
 
