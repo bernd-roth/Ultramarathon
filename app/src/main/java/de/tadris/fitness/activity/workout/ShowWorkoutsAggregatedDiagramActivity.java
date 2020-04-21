@@ -55,7 +55,6 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_workouts_aggregated);
         setTitle(getString(R.string.workout_statistics));
-
         addWorkoutTypeSpinner();
         chart = createChart();
     }
@@ -121,7 +120,7 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
             public View getView(int position, View convertView,
                                 ViewGroup parent) {
                 View v = super.getView(position, convertView, parent);
-                ((TextView) v).setTextColor(Color.parseColor("#E30D81"));
+                ((TextView) v).setTextColor(Color.LTGRAY);
                 return v;
             }
 
@@ -129,7 +128,7 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
                                         ViewGroup parent) {
                 View v = super.getDropDownView(position, convertView,
                         parent);
-                v.setBackgroundColor(Color.parseColor("#E30D81"));
+                v.setBackgroundColor(Color.DKGRAY);
                 ((TextView) v).setTextColor(Color.parseColor("#ffffff"));
                 return v;
             }

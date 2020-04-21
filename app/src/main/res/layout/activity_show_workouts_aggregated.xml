@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/spinner"
         android:gravity="start"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         />
 
     <LinearLayout
