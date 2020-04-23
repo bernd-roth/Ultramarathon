@@ -247,7 +247,7 @@
   
     <string-array name="pref_map_layers">
         <item>Mapnik\nStandaard OSM kaartstijl</item>
-        <item>Humanitarian\nnMinimalistische kaart (soms niet beschikbaar)</item>
+        <item>Humanitarian\nMinimalistische kaart (soms niet beschikbaar)</item>
         <item>Outdoors\nBeperkte toegang</item>
         <item>Cyclemap\nBeperkte toegang</item>
     </string-array>
