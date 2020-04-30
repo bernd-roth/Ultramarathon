@@ -20,9 +20,11 @@
 package de.tadris.fitness.recording;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.hardware.SensorManager;
 import android.location.Location;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.mapsforge.core.model.LatLong;
@@ -45,10 +47,12 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
     /**
      * Time after which the workout is stopped and saved automatically because there is no activity anymore
      */
-    private static final int AUTO_STOP_TIMEOUT = 1_000 * 60 * 20; // 20 minutes
+    private static final int AUTO_TIMEOUT_MULTIPLYER = 1_000 * 60; // minutes to ms
+    private static final int DEFAULT_WORKOUT_AUTO_TIMEOUT = 20;
 
     private final Context context;
     private final Workout workout;
+    private final long autoTimeout;
     private RecordingState state;
     private final List<WorkoutSample> samples = new ArrayList<>();
     private long time = 0;
@@ -70,6 +74,9 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
     public WorkoutRecorder(Context context, WorkoutType workoutType) {
         this.context = context;
         this.state = RecordingState.IDLE;
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        this.autoTimeout = prefs.getInt("autoTimeoutPeriod", DEFAULT_WORKOUT_AUTO_TIMEOUT) * AUTO_TIMEOUT_MULTIPLYER;
 
         this.workout = new Workout();
         workout.edited = false;
@@ -128,13 +135,13 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
      * @return is still active workout
      */
     boolean handleWatchdog() {
-        Log.d("WorkoutRecorder", "handleWatchdog " + this.getState().toString() + " samples: " + samples.size() + " autoTout: " + AUTO_STOP_TIMEOUT + "inst: " + this.toString());
+        Log.d("WorkoutRecorder", "handleWatchdog " + this.getState().toString() + " samples: " + samples.size() + " autoTout: " + autoTimeout + "inst: " + this.toString());
         if (isActive()) {
             checkSignalState();
             synchronized (samples) {
                 if (samples.size() > 2) {
                     long timeDiff = System.currentTimeMillis() - lastSampleTime;
-                    if (timeDiff > AUTO_STOP_TIMEOUT) {
+                    if (autoTimeout > 0 && timeDiff > autoTimeout) {
                         if (isActive()) {
                             stop();
                             save();
