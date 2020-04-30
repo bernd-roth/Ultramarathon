@@ -232,6 +232,8 @@
     <string name="unitKJoule">Kilojoule</string>
     <string name="pref_energy_unit">Energieeinheit</string>
     <string name="workoutTypeInlineSkating">Inline Skating</string>
+    <string name="currentTime">Aktuelle Uhrzeit</string>
+    <string name="oClock">Uhr</string>
 
     <string-array name="pref_energy_units">
         <item>kcal</item>
