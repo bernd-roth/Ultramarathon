@@ -194,7 +194,7 @@
     <string name="selectIntervalSet">Intervallsatz auswählen</string>
     <string name="intervalSetSelected">Intervallsatz ausgewählt</string>
     <string name="intervalsIncludePauseTitle">Pausenzeit in das Intervalltraining einbeziehen</string>
-    <string name="intervalsIncludePauseSummary">Wenn wahr, werden die Intervalle auch dann fortgesetzt, wenn du Pausen einlegst.</string>
+    <string name="intervalsIncludePauseSummary">Wenn aktiv, werden die Intervalle auch dann fortgesetzt, wenn du Pausen einlegst.</string>
     <string name="intervalTraining">Intervalltraining</string>
     <string name="intervalSet">Intervallsatz</string>
     <string name="intervalSets">Intervallsätze</string>
