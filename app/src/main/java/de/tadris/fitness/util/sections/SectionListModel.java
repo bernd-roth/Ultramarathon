@@ -1,4 +1,4 @@
-package de.tadris.fitness.util;
+package de.tadris.fitness.util.sections;
 
 import android.content.Context;
 
@@ -6,13 +6,81 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.tadris.fitness.R;
+import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutSample;
 
-class SectionCreator {
+public class SectionListModel {
+    Workout workout;
+    List<WorkoutSample> samples;
+    List<String> units = new ArrayList<>();
+    SectionCriterion criterion = SectionCriterion.DISTANCE;
+    double sectionLength = 1;
+    int selectedUnitID = 1;
+    boolean paceToggle = true;
 
-    static ArrayList<Section> createSectionList(java.util.List<WorkoutSample> samples, SectionCriterion criterion, double sectionLength) {
+    public SectionListModel(Workout workout, List<WorkoutSample> samples) {
+        this.samples = samples;
+        this.workout = workout;
+    }
+
+    public void setCriterion(SectionCriterion criterion) {
+        this.criterion = criterion;
+        switch (criterion) {
+            case TIME:
+                setSelectedUnitID(1); // default: min
+                break;
+            case DISTANCE:
+                setSelectedUnitID(0); // default: km / miles
+                break;
+            case ASCENT:
+            case DESCENT:
+                setSelectedUnitID(1); // default : m
+                break;
+        }
+    }
+
+    public SectionCriterion getCriterion() {
+        return criterion;
+    }
+
+    public double getSectionLength() {
+        return sectionLength;
+    }
+
+    public void setSectionLength(double length) {
+        this.sectionLength = length;
+    }
+
+    public int getSelectedUnitID() {
+        return selectedUnitID;
+    }
+
+    public void setSelectedUnitID(int unitID) {
+        selectedUnitID = unitID;
+    }
+
+    public boolean getPaceToggle() {
+        return paceToggle;
+    }
+
+    public void setPaceToggle(boolean toggle) {
+        paceToggle = toggle;
+    }
+
+    public Workout getWorkout() {
+        return workout;
+    }
+
+    public void setUnits(List<String> units) {
+        this.units = units;
+    }
+
+    public List<String> getUnits() {
+        return units;
+    }
+
+    public ArrayList<Section> getSectionList() {
         ArrayList<Section> sections = new ArrayList<>();
-
 
         Section currentSection = new Section();
         Section bestSection = currentSection, worstSection = currentSection;
@@ -57,8 +125,7 @@ class SectionCreator {
                 // check for best / worst
                 if (isSectionBetter(saveSection, bestSection)) {
                     bestSection = saveSection;
-                }
-                else if (isSectionBetter(worstSection, saveSection)) {
+                } else if (isSectionBetter(worstSection, saveSection)) {
                     worstSection = saveSection;
                 }
 
@@ -75,14 +142,13 @@ class SectionCreator {
         }
 
 
-        if (currentSection.dist >0 && currentSection.time >0) {
+        if (currentSection.dist > 0 && currentSection.time > 0) {
             sections.add(currentSection);
-        }
-        if (isSectionBetter(currentSection, bestSection)) {
-            bestSection = currentSection;
-        }
-        else if (isSectionBetter(worstSection, currentSection)) {
-            worstSection = currentSection;
+            if (isSectionBetter(currentSection, bestSection)) {
+                bestSection = currentSection;
+            } else if (isSectionBetter(worstSection, currentSection)) {
+                worstSection = currentSection;
+            }
         }
 
         worstSection.worst = true;
@@ -92,14 +158,24 @@ class SectionCreator {
     }
 
     private static boolean isSectionBetter(Section section, Section compareTo) {
-        return section.getPace() < compareTo.getPace();
+        return section.getPace() <= compareTo.getPace();
     }
 
     public enum SectionCriterion {
-        DISTANCE,
-        TIME,
-        ASCENT,
-        DESCENT;
+        DISTANCE(0),
+        TIME(1),
+        ASCENT(2),
+        DESCENT(3);
+
+        private int id;
+
+        SectionCriterion(int id) {
+            this.id = id;
+        }
+
+        public int getId() {
+            return id;
+        }
 
         public static List<String> getStringRepresentations(Context context) {
             List<String> criteria = new ArrayList<>();
@@ -117,8 +193,8 @@ class SectionCreator {
         boolean best = false;
         boolean worst = false;
 
-        public long getPace(){
-            return (long) (time / dist * 1000);
+        public double getPace() {
+            return time / dist;
         }
 
         public Section copy() {

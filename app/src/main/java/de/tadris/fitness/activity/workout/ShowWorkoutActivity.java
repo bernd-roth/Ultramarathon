@@ -47,8 +47,10 @@ import de.tadris.fitness.osm.OAuthAuthentication;
 import de.tadris.fitness.osm.OsmTraceUploader;
 import de.tadris.fitness.util.DialogUtils;
 import de.tadris.fitness.util.FileUtils;
-import de.tadris.fitness.util.SectionViewHelper;
 import de.tadris.fitness.util.gpx.GpxExporter;
+import de.tadris.fitness.util.sections.SectionListModel;
+import de.tadris.fitness.util.sections.SectionListPresenter;
+import de.tadris.fitness.util.sections.SectionListView;
 import de.tadris.fitness.view.ProgressDialogController;
 import de.westnordost.osmapi.traces.GpsTraceDetails;
 import oauth.signpost.OAuthConsumer;
@@ -127,8 +129,10 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
     }
 
     private void addSectionList() {
-        SectionViewHelper helper = new SectionViewHelper();
-        root.addView(helper.createSectionsView(this, root, workout, samples));
+        SectionListView listView = new SectionListView(this);
+        SectionListModel listModel = new SectionListModel(workout, samples);
+        SectionListPresenter listPresenter = new SectionListPresenter(listView, listModel);
+        root.addView(listView);
     }
 
     private void startDiagramActivity(String diagramType) {

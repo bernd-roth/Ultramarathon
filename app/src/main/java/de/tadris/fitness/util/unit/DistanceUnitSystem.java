@@ -23,7 +23,6 @@ import androidx.annotation.StringRes;
 
 public interface DistanceUnitSystem {
 
-    double getDistanceFromMeters(double meters);
     double getDistanceFromKilometers(double kilometers);
     double getWeightFromKilogram(double kilogram);
     double getKilogramFromUnit(double unit);
@@ -32,6 +31,10 @@ public interface DistanceUnitSystem {
 
     double getMetersFromLongUnit(double distanceInUnit);
     double getMetersFromShortUnit(double distanceInUnit);
+
+    double getLongUnitFromMeters(double distanceInMeters);
+
+    double getShortUnitFromMeters(double distanceInMeters);
 
     @StringRes
     int getLongDistanceUnitTitle(boolean isPlural);

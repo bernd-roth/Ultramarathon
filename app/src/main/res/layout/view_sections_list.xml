@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -23,7 +24,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="4"
             android:layout_gravity="center"
-            android:text="km"
             android:textAppearance="@android:style/TextAppearance.Material.Small"
             android:labelFor="@id/sectionLengthEdit"/>
         <Spinner
@@ -32,13 +32,13 @@
             android:layout_height="wrap_content"
             android:textAppearance="@android:style/TextAppearance.Material.Medium"
             android:layout_gravity="center"
-            android:layout_weight="5"
-            android:text="@string/workoutDistance"/>
+            android:layout_weight="5" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginVertical="5dp"
         android:background="@android:color/darker_gray"/>
 
     <LinearLayout
@@ -54,20 +54,44 @@
             android:layout_margin="1dp"
             android:textAlignment="center"
             android:layout_gravity="center"
-            android:text="@string/workoutDistance"/>
+            tools:text="@string/workoutDistance" />
 
-        <TextView
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="6"
-            android:textAppearance="@android:style/TextAppearance.Material.Small"
-            android:layout_margin="1dp"
-            android:text = "@string/workoutPace"/>
+            android:layout_weight="11"
+            android:id="@+id/paceSpeedText"
+            android:clickable="true">
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="5" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@android:style/TextAppearance.Material.Small"
+                android:layout_margin="1dp"
+                android:text="@string/workoutPace"
+                android:id="@+id/selectedPaceSpeed"
+                android:clickable="false" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@android:style/TextAppearance.Material.Small"
+                android:textColor="@android:color/darker_gray"
+                android:layout_margin="1dp"
+                android:text="⇌"
+                android:clickable="false" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@android:style/TextAppearance.Material.Small"
+                android:textColor="@android:color/darker_gray"
+                android:layout_margin="1dp"
+                android:text="@string/workoutSpeed"
+                android:id="@+id/unselectedPaceSpeed"
+                android:clickable="false" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -24,7 +24,7 @@ import de.tadris.fitness.R;
 public class ImperialWithMeters extends Imperial {
 
     @Override
-    public double getDistanceFromMeters(double meters) {
+    public double getShortUnitFromMeters(double meters) {
         return meters;
     }
 
