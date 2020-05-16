@@ -374,6 +374,10 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (hasPermission()) {
+            // Restart LocationListener so it can retry to register for location updates now that is got permission
+            if (isServiceRunning(LocationListener.class)) {
+                stopListener();
+            }
             startListener();
         }
     }
@@ -441,9 +445,6 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
     @Override
     protected void onDestroy() {
-        //instance.recorder.stop(); // REALLY
-        //saveIfNotSaved(); // Important to save
-
         // Clear map
         mapView.destroyAll();
         AndroidGraphicFactory.clearResourceMemoryCache();
@@ -454,6 +455,12 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
         instance.locationChangeListeners.remove(this);
         instance.voiceAnnouncementCallbackListeners.remove(this);
+
+        if (instance.recorder.getState() == WorkoutRecorder.RecordingState.IDLE) {
+            // Stop recording/listener if not started yet
+            stop();
+        }
+
         // Kill Service on Finished Recording
         if (instance.recorder.getState() == WorkoutRecorder.RecordingState.STOPPED) {
             //ONLY SAVE WHEN STOPPED
