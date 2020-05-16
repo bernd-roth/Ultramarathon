@@ -22,8 +22,8 @@
 
     <Preference
         android:key="speechConfig"
-        android:title="@string/pref_announcements_config_title"
-        android:summary="@string/pref_announcements_config_summary" />
+        android:summary="@string/pref_announcements_config_summary"
+        android:title="@string/pref_announcements_config_title" />
 
     <ListPreference
         android:defaultValue="headphones"
@@ -67,6 +67,11 @@
             android:defaultValue="false"
             android:key="announcement_ascent"
             android:title="@string/workoutAscent" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="announcement_currentTime"
+            android:title="@string/currentTime" />
     </PreferenceCategory>
 
 </PreferenceScreen>

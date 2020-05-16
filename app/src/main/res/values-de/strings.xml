@@ -235,6 +235,8 @@
     <string name="manageAutoTimeoutSummary">Einstellung zum automatisch Stoppen des Workouts</string>
     <string name="intervalAutoTimeoutTraining">Workout Auto-Stop Timer</string>
     <string name="pref_auto_timeout_title">Zeitspanne bis Auto-Stop</string>
+    <string name="currentTime">Aktuelle Uhrzeit</string>
+    <string name="oClock">Uhr</string>
 
     <string-array name="pref_energy_units">
         <item>kcal</item>
