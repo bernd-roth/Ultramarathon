@@ -62,23 +62,23 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_workouts);
 
-        listView= findViewById(R.id.workoutList);
+        listView = findViewById(R.id.workoutList);
         listView.setHasFixedSize(true);
 
-        layoutManager= new LinearLayoutManager(this);
+        layoutManager = new LinearLayoutManager(this);
         listView.setLayoutManager(layoutManager);
 
-        menu= findViewById(R.id.workoutListMenu);
+        menu = findViewById(R.id.workoutListMenu);
         menu.setOnMenuButtonLongClickListener(v -> {
-            if(workouts.length > 0){
+            if (workouts.length > 0) {
                 startRecording(workouts[0].getWorkoutType());
                 return true;
-            }else{
+            } else {
                 return false;
             }
         });
 
-        hintText= findViewById(R.id.hintAddWorkout);
+        hintText = findViewById(R.id.hintAddWorkout);
 
         findViewById(R.id.workoutListRecord).setOnClickListener(v -> showWorkoutSelection());
         findViewById(R.id.workoutListEnter).setOnClickListener(v -> startEnterWorkoutActivity());
@@ -88,9 +88,9 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
         refresh();
     }
 
-    private void checkFirstStart(){
-        SharedPreferences preferences= PreferenceManager.getDefaultSharedPreferences(this);
-        if(preferences.getBoolean("firstStart", true)){
+    private void checkFirstStart() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (preferences.getBoolean("firstStart", true)) {
             preferences.edit().putBoolean("firstStart", false).apply();
             new AlertDialog.Builder(this)
                     .setTitle(R.string.setPreferencesTitle)
@@ -114,8 +114,9 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
 
     private void startRecording(WorkoutType activity) {
         menu.close(true);
-        RecordWorkoutActivity.ACTIVITY= activity;
-        final Intent intent= new Intent(this, RecordWorkoutActivity.class);
+        final Intent intent = new Intent(this, RecordWorkoutActivity.class);
+        intent.setAction(RecordWorkoutActivity.LAUNCH_ACTION);
+        intent.putExtra(RecordWorkoutActivity.WORKOUT_TYPE_EXTRA, activity);
         startActivity(intent);
     }
 
@@ -134,7 +135,7 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
 
     @Override
     public void onItemClick(int pos, Workout workout) {
-        ShowWorkoutActivity.selectedWorkout= workout;
+        ShowWorkoutActivity.selectedWorkout = workout;
         startActivity(new Intent(this, ShowWorkoutActivity.class));
     }
 
@@ -151,13 +152,13 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
         refreshAdapter();
     }
 
-    private void loadData(){
-        workouts= Instance.getInstance(this).db.workoutDao().getWorkouts();
+    private void loadData() {
+        workouts = Instance.getInstance(this).db.workoutDao().getWorkouts();
         hintText.setVisibility(workouts.length == 0 ? View.VISIBLE : View.INVISIBLE);
     }
 
-    private void refreshAdapter(){
-        adapter= new WorkoutAdapter(workouts, this);
+    private void refreshAdapter() {
+        adapter = new WorkoutAdapter(workouts, this);
         listView.setAdapter(adapter);
         refreshFABMenu();
     }

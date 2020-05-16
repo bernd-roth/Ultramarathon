@@ -233,6 +233,9 @@
     <string name="unitKJoule">Kilojoule</string>
     <string name="pref_energy_unit">Energy unit</string>
     <string name="workoutTypeInlineSkating">Inline Skating</string>
+    <string name="manageAutoTimeoutSummary">Edit the interval for automatic workout stop</string>
+    <string name="intervalAutoTimeoutTraining">Auto Workout Timeout</string>
+    <string name="pref_auto_timeout_title">Timespan for Auto-Stop</string>
     <string name="currentTime">Current Time</string>
     <string name="oClock">o Clock</string>
 

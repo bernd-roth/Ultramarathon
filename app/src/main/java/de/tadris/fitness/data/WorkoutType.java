@@ -24,9 +24,11 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.StringRes;
 import androidx.annotation.StyleRes;
 
+import java.io.Serializable;
+
 import de.tadris.fitness.R;
 
-public enum WorkoutType {
+public enum WorkoutType implements Serializable {
 
     RUNNING("running", R.string.workoutTypeRunning, 5, true, R.drawable.ic_run, R.color.colorPrimaryRunning, R.style.Running, R.style.RunningDark),
     WALKING("walking", R.string.workoutTypeWalking, 5, true, R.drawable.ic_walk, R.color.colorPrimaryRunning, R.style.Running, R.style.RunningDark),
