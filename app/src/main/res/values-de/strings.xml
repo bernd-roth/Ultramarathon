@@ -194,7 +194,7 @@
     <string name="selectIntervalSet">Intervallsatz auswählen</string>
     <string name="intervalSetSelected">Intervallsatz ausgewählt</string>
     <string name="intervalsIncludePauseTitle">Pausenzeit in das Intervalltraining einbeziehen</string>
-    <string name="intervalsIncludePauseSummary">Wenn wahr, werden die Intervalle auch dann fortgesetzt, wenn du Pausen einlegst.</string>
+    <string name="intervalsIncludePauseSummary">Wenn aktiv, werden die Intervalle auch dann fortgesetzt, wenn du Pausen einlegst.</string>
     <string name="intervalTraining">Intervalltraining</string>
     <string name="intervalSet">Intervallsatz</string>
     <string name="intervalSets">Intervallsätze</string>
@@ -232,6 +232,9 @@
     <string name="unitKJoule">Kilojoule</string>
     <string name="pref_energy_unit">Energieeinheit</string>
     <string name="workoutTypeInlineSkating">Inline Skating</string>
+    <string name="manageAutoTimeoutSummary">Einstellung zum automatisch Stoppen des Workouts</string>
+    <string name="intervalAutoTimeoutTraining">Workout Auto-Stop Timer</string>
+    <string name="pref_auto_timeout_title">Zeitspanne bis Auto-Stop</string>
 
     <string-array name="pref_energy_units">
         <item>kcal</item>
