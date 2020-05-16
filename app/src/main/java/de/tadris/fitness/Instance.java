@@ -20,6 +20,7 @@
 package de.tadris.fitness;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.room.Room;
@@ -29,9 +30,13 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.tadris.fitness.activity.record.RecordWorkoutActivity;
 import de.tadris.fitness.data.AppDatabase;
 import de.tadris.fitness.data.UserPreferences;
+import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.recording.LocationListener;
+import de.tadris.fitness.recording.WorkoutRecorder;
+import de.tadris.fitness.recording.announcement.TTSController;
 import de.tadris.fitness.util.DateTimeUtils;
 import de.tadris.fitness.util.FitoTrackThemes;
 import de.tadris.fitness.util.unit.DistanceUnitUtils;
@@ -42,16 +47,21 @@ public class Instance {
     private static final String DATABASE_NAME = "fito-track";
 
     private static Instance instance;
-
     public static Instance getInstance(Context context){
+        if(context == null){
+            Log.e("Instance", "no Context Provided");
+        }
         if(instance == null){
             instance= new Instance(context);
         }
         return instance;
     }
 
+
     public final AppDatabase db;
-    public final List<LocationListener.LocationChangeListener> locationChangeListeners = new ArrayList<>();
+    public WorkoutRecorder recorder;
+    public final List<LocationListener.LocationChangeListener> locationChangeListeners;
+    public final List<TTSController.VoiceAnnouncementCallback> voiceAnnouncementCallbackListeners;
     public final UserPreferences userPreferences;
     public final FitoTrackThemes themes;
     public final DateTimeUtils dateTimeUtils;
@@ -63,11 +73,15 @@ public class Instance {
 
     private Instance(Context context) {
         instance = this;
+        locationChangeListeners = new ArrayList<>();
+        voiceAnnouncementCallbackListeners = new ArrayList<>();
         userPreferences= new UserPreferences(context);
         themes = new FitoTrackThemes(context);
         dateTimeUtils = new DateTimeUtils(userPreferences);
         distanceUnitUtils = new DistanceUnitUtils(context);
         energyUnitUtils = new EnergyUnitUtils(context);
+        recorder = new WorkoutRecorder(context, WorkoutType.OTHER);
+
         db = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, DATABASE_NAME)
                 .addMigrations(new Migration(1, 2) {
                     @Override
