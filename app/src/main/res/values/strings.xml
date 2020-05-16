@@ -238,6 +238,7 @@
     <string name="pref_auto_timeout_title">Timespan for Auto-Stop</string>
     <string name="currentTime">Current Time</string>
     <string name="oClock">o Clock</string>
+    <string name="unlockPhoneStopWorkout">Please unlock your phone to stop the recording</string>
 
 
     <string-array name="pref_energy_units">

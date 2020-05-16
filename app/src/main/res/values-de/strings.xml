@@ -237,6 +237,7 @@
     <string name="pref_auto_timeout_title">Zeitspanne bis Auto-Stop</string>
     <string name="currentTime">Aktuelle Uhrzeit</string>
     <string name="oClock">Uhr</string>
+    <string name="unlockPhoneStopWorkout">Bitte das Telefon entsperren, um die Aufnahme zu beenden</string>
 
     <string-array name="pref_energy_units">
         <item>kcal</item>

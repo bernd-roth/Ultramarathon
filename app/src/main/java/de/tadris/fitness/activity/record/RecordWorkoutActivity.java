@@ -498,13 +498,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
     private boolean isRestrictedInput() {
         KeyguardManager myKM = (KeyguardManager) this.getSystemService(Context.KEYGUARD_SERVICE);
-        if (myKM.inKeyguardRestrictedInputMode()) {
-            //it is locked
-            return true;
-        } else {
-            //it is not locked
-            return false;
-        }
+        return myKM.inKeyguardRestrictedInputMode(); // return whether phone is in locked state
     }
 
     @Override
@@ -518,7 +512,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.actionRecordingStop:
-                stop();
+                onPressStopButton();
                 return true;
             case R.id.actionSelectIntervalSet:
                 showIntervalSelection();
@@ -527,11 +521,18 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
         return super.onOptionsItemSelected(item);
     }
 
+    private void onPressStopButton() {
+        if (isRestrictedInput()) {
+            Toast.makeText(this, R.string.unlockPhoneStopWorkout, Toast.LENGTH_LONG).show();
+        } else {
+            stop();
+        }
+    }
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         boolean preparationPhase = instance.recorder.getState() == WorkoutRecorder.RecordingState.IDLE;
         menu.findItem(R.id.actionSelectIntervalSet).setVisible(preparationPhase && voiceFeedbackAvailable);
-        menu.findItem(R.id.actionRecordingStop).setVisible(!isRestrictedInput());
         return super.onPrepareOptionsMenu(menu);
     }
 
