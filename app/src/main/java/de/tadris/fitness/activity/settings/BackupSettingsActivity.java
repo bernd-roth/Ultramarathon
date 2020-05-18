@@ -80,7 +80,7 @@ public class BackupSettingsActivity extends FitoTrackSettingsActivity {
         dialogController.show();
         new Thread(() -> {
             try {
-                String file = getFilesDir().getAbsolutePath() + "/shared/backup.ftb";
+                String file = getFilesDir().getAbsolutePath() + "/shared/backup"+System.currentTimeMillis()+".ftb";
                 File parent = new File(file).getParentFile();
                 if (!parent.exists() && !parent.mkdirs()) {
                     throw new IOException("Cannot write");
@@ -92,7 +92,7 @@ public class BackupSettingsActivity extends FitoTrackSettingsActivity {
 
                 mHandler.post(() -> {
                     dialogController.cancel();
-                    FileUtils.saveOrShareFile(this, uri, "ftb");
+                    FileUtils.saveOrShareFile(this, uri);
                 });
             } catch (Exception e) {
                 e.printStackTrace();
