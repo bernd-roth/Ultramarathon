@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.TimeZone;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.data.Workout;
@@ -37,6 +38,7 @@ import de.tadris.fitness.data.WorkoutSample;
 public class GpxExporter {
 
     public static void exportWorkout(Context context, Workout workout, File file) throws IOException {
+        formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
         XmlMapper mapper= new XmlMapper();
         mapper.writeValue(file, getGpxFromWorkout(context, workout));
     }
@@ -78,7 +80,7 @@ public class GpxExporter {
     }
 
     @SuppressLint("SimpleDateFormat")
-    private static final SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+    private static final SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
 
     private static String getDateTime(long time) {
         return getDateTime(new Date(time));
@@ -87,8 +89,5 @@ public class GpxExporter {
     private static String getDateTime(Date date) {
         return formatter.format(date);
     }
-
-
-
 
 }
