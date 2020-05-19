@@ -33,6 +33,7 @@ import androidx.core.content.FileProvider;
 import java.io.File;
 import java.io.IOException;
 
+import de.tadris.fitness.BuildConfig;
 import de.tadris.fitness.R;
 import de.tadris.fitness.export.BackupController;
 import de.tadris.fitness.export.RestoreController;
@@ -85,7 +86,7 @@ public class BackupSettingsActivity extends FitoTrackSettingsActivity {
                 if (!parent.exists() && !parent.mkdirs()) {
                     throw new IOException("Cannot write");
                 }
-                Uri uri = FileProvider.getUriForFile(getBaseContext(), "de.tadris.fitness.fileprovider", new File(file));
+                Uri uri = FileProvider.getUriForFile(getBaseContext(), BuildConfig.APPLICATION_ID + ".fileprovider", new File(file));
 
                 BackupController backupController = new BackupController(getBaseContext(), new File(file), (progress, action) -> mHandler.post(() -> dialogController.setProgress(progress, action)));
                 backupController.exportData();

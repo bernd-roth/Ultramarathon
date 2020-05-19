@@ -22,10 +22,10 @@ import de.tadris.fitness.R;
 public class FileUtils {
 
     public static void saveOrShareFile(Activity activity, Uri uri) {
-        String[] colors = {activity.getString(R.string.share), activity.getString(R.string.save)};
+        String[] options = {activity.getString(R.string.share), activity.getString(R.string.save)};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setItems(colors, (dialog, which) -> {
+        builder.setItems(options, (dialog, which) -> {
             if (which == 0) {
                 shareFile(activity, uri);
             } else {

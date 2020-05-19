@@ -86,7 +86,6 @@
         </provider>
 
         <service android:name=".recording.LocationListener" />
-        <service android:name=".recording.PressureService" />
     </application>
 
 </manifest>
