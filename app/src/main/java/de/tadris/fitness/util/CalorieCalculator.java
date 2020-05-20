@@ -49,6 +49,7 @@ public class CalorieCalculator {
 
         switch (workout.getWorkoutType()){
             case RUNNING:
+            case WALKING:
             case HIKING:
                 return Math.max(3, speedInKmh*0.97);
             case CYCLING:
