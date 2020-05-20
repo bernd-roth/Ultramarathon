@@ -25,8 +25,11 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import de.tadris.fitness.Instance;
@@ -47,7 +50,7 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
     protected DistanceUnitUtils distanceUnitUtils = Instance.getInstance(this).distanceUnitUtils;
 
     CombinedChart chart;
-    String selectedWorkoutType = WorkoutType.RUNNING.id;
+    WorkoutType selectedWorkoutType = WorkoutType.RUNNING;
 
 
     @Override
@@ -114,14 +117,16 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
 
     private void addWorkoutTypeSpinner() {
         Spinner spinner = findViewById(R.id.spinner);
-        ArrayList<String> workoutTypes = createChoicesList();
+        List<WorkoutType> workoutTypes = createChoicesList();
 
-        ArrayAdapter<String> SpinnerAdapter = new ArrayAdapter<String>
+        ArrayAdapter<WorkoutType> SpinnerAdapter = new ArrayAdapter<WorkoutType>
                 (this, android.R.layout.simple_spinner_item, workoutTypes) {
             public View getView(int position, View convertView,
                                 ViewGroup parent) {
                 View v = super.getView(position, convertView, parent);
                 ((TextView) v).setTextColor(getThemeTextColor());
+                ((TextView) v).setText(getString(Objects.requireNonNull(getItem(position)).title));
+
                 return v;
             }
 
@@ -129,8 +134,9 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
                                         ViewGroup parent) {
                 View v = super.getDropDownView(position, convertView,
                         parent);
-                v.setBackgroundColor(Color.DKGRAY);
-                ((TextView) v).setTextColor(Color.parseColor("#ffffff"));
+                v.setBackgroundColor(getThemePrimaryColor());
+                ((TextView) v).setTextColor(getThemeTextColor());
+                ((TextView) v).setText(getString(Objects.requireNonNull(getItem(position)).title));
                 return v;
             }
         };
@@ -138,7 +144,7 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 selectedWorkoutType = workoutTypes.get(position);
-                Workout[] workouts = Instance.getInstance(getBaseContext()).db.workoutDao().getWorkoutsHistorically(selectedWorkoutType);
+                Workout[] workouts = Instance.getInstance(getBaseContext()).db.workoutDao().getWorkoutsHistorically(selectedWorkoutType.id);
 
                 AggregatedWorkoutValues aggregatedWorkoutValues = new AggregatedWorkoutValues(workouts);
                 setMaxValues(aggregatedWorkoutValues);
@@ -165,13 +171,8 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
         spinner.setAdapter(SpinnerAdapter);
     }
 
-    private ArrayList<String> createChoicesList() {
-        ArrayList<String> workoutTypes = new ArrayList<>();
-        for (WorkoutType workoutType: WorkoutType.values()) {
-            workoutTypes.add(workoutType.id);
-        }
-
-        return workoutTypes;
+    private List<WorkoutType> createChoicesList() {
+        return Arrays.asList(WorkoutType.values());
     }
 
     private CombinedChart createChart() {
