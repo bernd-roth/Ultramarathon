@@ -77,7 +77,7 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(lineDataSetAverageSpeed);
 
-        return new LineData(dataSets);
+        return new LineData(dataSets);                                                                                                                                                                                          
     }
 
     private BarData createDistanceBarData(ArrayList<DataPointDistance> distanceValues) {
@@ -88,8 +88,8 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
         }
 
         BarDataSet set1 = new BarDataSet(distanceEntries, "Distance");
-        set1.setColors(Color.CYAN);
-        set1.setValueTextColor(Color.LTGRAY);
+        set1.setColors(getThemeTextColor());
+        set1.setValueTextColor(getThemeTextColor());
         set1.setValueTextSize(15f);
         set1.setAxisDependency(YAxis.AxisDependency.LEFT);
 
@@ -121,7 +121,7 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
             public View getView(int position, View convertView,
                                 ViewGroup parent) {
                 View v = super.getView(position, convertView, parent);
-                ((TextView) v).setTextColor(Color.LTGRAY);
+                ((TextView) v).setTextColor(getThemeTextColor());
                 return v;
             }
 
