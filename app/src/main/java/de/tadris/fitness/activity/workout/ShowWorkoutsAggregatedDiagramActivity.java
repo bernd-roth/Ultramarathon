@@ -210,6 +210,8 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity {
                 DrawOrder.BAR, DrawOrder.BUBBLE, DrawOrder.CANDLE, DrawOrder.LINE, DrawOrder.SCATTER
         });
 
+        chart.getLegend().setTextColor(getThemeTextColor());
+
         return chart;
     }
 
