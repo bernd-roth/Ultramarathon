@@ -20,6 +20,9 @@
 package de.tadris.fitness.recording.announcement;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.telephony.TelephonyManager;
 
 import java.util.List;
 
@@ -29,21 +32,34 @@ import de.tadris.fitness.recording.announcement.interval.IntervalAnnouncements;
 
 public class VoiceAnnouncements {
 
-    private InformationAnnouncements informationAnnouncements;
-    private IntervalAnnouncements intervalAnnouncements;
+    private final InformationAnnouncements informationAnnouncements;
+    private final IntervalAnnouncements intervalAnnouncements;
+    private final TelephonyManager telephonyManager;
+    private final boolean supressOnCall;
 
     public VoiceAnnouncements(Context context, WorkoutRecorder recorder, TTSController ttsController, List<Interval> intervals) {
-        this.informationAnnouncements= new InformationAnnouncements(context, recorder, ttsController);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        this.supressOnCall = prefs.getBoolean("announcementSuppressDuringCall", true);
+        this.telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        this.informationAnnouncements = new InformationAnnouncements(context, recorder, ttsController);
         this.intervalAnnouncements = new IntervalAnnouncements(context, recorder, ttsController, intervals);
     }
 
-    public void check(){
+    public void check() {
+        //Supress all anouncements when currently on Call
+        if (supressOnCall && isOnCall()) {
+            return;
+        }
         intervalAnnouncements.check();
         informationAnnouncements.check();
     }
 
     public void applyIntervals(List<Interval> intervals) {
         intervalAnnouncements.setIntervals(intervals);
+    }
+
+    private boolean isOnCall() {
+        return this.telephonyManager.getCallState() == TelephonyManager.CALL_STATE_IDLE;
     }
 
 }

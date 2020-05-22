@@ -239,6 +239,7 @@
     <string name="currentTime">Current Time</string>
     <string name="oClock">o Clock</string>
     <string name="unlockPhoneStopWorkout">Please unlock your phone to stop the recording</string>
+    <string name="announcementSuppressDuringCall">Suppress during call</string>
 
 
     <string-array name="pref_energy_units">
