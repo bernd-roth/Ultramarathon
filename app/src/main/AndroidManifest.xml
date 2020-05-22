@@ -77,7 +77,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="de.tadris.fitness.fileprovider"
+            android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -86,7 +86,6 @@
         </provider>
 
         <service android:name=".recording.LocationListener" />
-        <service android:name=".recording.PressureService" />
     </application>
 
 </manifest>

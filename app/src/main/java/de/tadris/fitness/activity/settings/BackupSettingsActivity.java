@@ -33,30 +33,12 @@ import androidx.core.content.FileProvider;
 import java.io.File;
 import java.io.IOException;
 
+import de.tadris.fitness.BuildConfig;
 import de.tadris.fitness.R;
 import de.tadris.fitness.export.BackupController;
 import de.tadris.fitness.export.RestoreController;
 import de.tadris.fitness.util.FileUtils;
 import de.tadris.fitness.view.ProgressDialogController;
-
-/*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
- *
- * This file is part of FitoTrack
- *
- * FitoTrack is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *
- *     FitoTrack is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *
- *     You should have received a copy of the GNU General Public License
- *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 
 public class BackupSettingsActivity extends FitoTrackSettingsActivity {
 
@@ -99,19 +81,19 @@ public class BackupSettingsActivity extends FitoTrackSettingsActivity {
         dialogController.show();
         new Thread(() -> {
             try {
-                String file = getFilesDir().getAbsolutePath() + "/shared/backup.ftb";
+                String file = getFilesDir().getAbsolutePath() + "/shared/backup" + System.currentTimeMillis() + ".ftb";
                 File parent = new File(file).getParentFile();
                 if (!parent.exists() && !parent.mkdirs()) {
                     throw new IOException("Cannot write");
                 }
-                Uri uri = FileProvider.getUriForFile(getBaseContext(), "de.tadris.fitness.fileprovider", new File(file));
+                Uri uri = FileProvider.getUriForFile(getBaseContext(), BuildConfig.APPLICATION_ID + ".fileprovider", new File(file));
 
                 BackupController backupController = new BackupController(getBaseContext(), new File(file), (progress, action) -> mHandler.post(() -> dialogController.setProgress(progress, action)));
                 backupController.exportData();
 
                 mHandler.post(() -> {
                     dialogController.cancel();
-                    FileUtils.saveOrShareFile(this, uri, "ftb");
+                    FileUtils.saveOrShareFile(this, uri);
                 });
             } catch (Exception e) {
                 e.printStackTrace();
@@ -137,12 +119,14 @@ public class BackupSettingsActivity extends FitoTrackSettingsActivity {
 
     private void requestPermissions() {
         if (!hasPermission()) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 10);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE}, 10);
         }
     }
 
     private boolean hasPermission() {
-        return ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+        return ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
     }
 
     private static final int FILE_SELECT_CODE = 21;

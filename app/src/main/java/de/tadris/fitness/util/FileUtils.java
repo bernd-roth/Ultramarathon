@@ -21,16 +21,16 @@ import de.tadris.fitness.R;
 
 public class FileUtils {
 
-    public static void saveOrShareFile(Activity activity, Uri uri, String suffix) {
-        String[] colors = {activity.getString(R.string.share), activity.getString(R.string.save)};
+    public static void saveOrShareFile(Activity activity, Uri uri) {
+        String[] options = {activity.getString(R.string.share), activity.getString(R.string.save)};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setItems(colors, (dialog, which) -> {
+        builder.setItems(options, (dialog, which) -> {
             if (which == 0) {
                 shareFile(activity, uri);
             } else {
                 try {
-                    saveFile(activity, uri, suffix);
+                    saveFile(activity, uri);
                     Toast.makeText(activity, R.string.savedToDownloads, Toast.LENGTH_LONG).show();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -41,8 +41,8 @@ public class FileUtils {
         builder.show();
     }
 
-    private static void saveFile(Activity activity, Uri fileUri, String suffix) throws IOException {
-        File target = new File(Environment.getExternalStorageDirectory(), "Download/fitotrack" + System.currentTimeMillis() + "." + suffix);
+    private static void saveFile(Activity activity, Uri fileUri) throws IOException {
+        File target = new File(Environment.getExternalStorageDirectory(), "Download/" + fileUri.getLastPathSegment());
         if (!target.createNewFile()) {
             throw new IOException("Cannot write to file " + target);
         }

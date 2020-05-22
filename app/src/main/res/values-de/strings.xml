@@ -35,7 +35,7 @@
     <string name="errorImportFailed">Der Datenimport ist fehlgeschlagen.</string>
     <string name="exportAsGpxFile">Als GPX-Datei exportieren</string>
     <string name="exportData">Daten exportieren</string>
-    <string name="exportDataSummary">Erstellt ein Backup von all deinern Workoutdaten</string>
+    <string name="exportDataSummary">Erstellt ein Backup aller Workouts</string>
     <string name="exporting">Exportieren</string>
     <string name="finished">Fertig</string>
     <string name="gps">GPS</string>
@@ -80,7 +80,7 @@
     <string name="workoutTime">Zeit</string>
     <string name="workoutTopSpeed">Max Geschw.</string>
     <string name="workoutTotalEnergy">Gesamte Energie</string>
-    <string name="workoutTypeCycling">Fahrad fahren</string>
+    <string name="workoutTypeCycling">Fahrrad fahren</string>
     <string name="workoutTypeHiking">Wandern</string>
     <string name="workoutTypeJogging">Laufen</string>
     <string name="workoutTypeRunning">Rennen</string>
@@ -107,7 +107,7 @@
     <string name="waiting_gps">Warte auf GPS</string>
     <string name="uploadFailed">Upload fehlgeschlagen</string>
     <string name="uploadSuccessful">Upload erfolgreich</string>
-    <string name="uploadFailedOsmNotAuthorized">Nicht autorisiert, nocheinmal versuchen</string>
+    <string name="uploadFailedOsmNotAuthorized">Nicht autorisiert, noch einmal versuchen</string>
     <string name="ttsNotAvailable">Sprachausgabe ist nicht verfügbar</string>
     <string name="workoutAvgSpeedLong">Durchschnittsgeschwindigkeit</string>
     <string name="and">und</string>
@@ -117,7 +117,7 @@
     <string name="pref_announcements_config_summary">Wähle die Zeit und Distanz zwischen den Sprachansagen</string>
     <string name="pref_announcements_config_title">Auslöser der Ansage</string>
     <string name="pref_announcements_content">Inhalt der Ansagen</string>
-    <string name="pref_voice_announcements_summary">Konfiguriere Sprachansagen, die dich während des Trainings informieren</string>
+    <string name="pref_voice_announcements_summary">Konfiguriere Sprachansagen, die dich während des Workouts informieren</string>
     <string name="timeHourPlural">Stunden</string>
     <string name="timeHourSingular">Stunde</string>
     <string name="timeMinutePlural">Minuten</string>
@@ -175,6 +175,91 @@
         <item>Physikalische Größen (m/s)</item>
         <item>Imperial</item>
         <item>Imperial mit Metern</item>
+    </string-array>
+    <string name="start">Start</string>
+    <string name="cannotStart">Starten unmöglich</string>
+    <string name="add">Hinzufügen</string>
+    <string name="add_interval">Interval Hinzufügen</string>
+    <string name="manageIntervalSets">Intervallsätze bearbeiten</string>
+    <string name="manageIntervalsSummary">Bearbeite die Intervalsätze, die du dann während des Workouts über Sprachansagen nutzen kannst.</string>
+    <string name="workoutRecording">Workout-Aufzeichnung</string>
+    <string name="createIntervalSet">Neuen Intervallsatz erstellen</string>
+    <string name="create">Erstellen</string>
+    <string name="hintManageIntervalSets">Füge ein Intervall-Set hinzu, um es in deinen Workouts zu verwenden.</string>
+    <string name="hintEditIntervalSet">Füge Intervalle hinzu, die gesprochen werden sollen.</string>
+    <string name="interval_name">Name:</string>
+    <string name="length_in_minutes">Länge (Minuten):</string>
+    <string name="enterName">Gebe einen Namen ein</string>
+    <string name="deleteIntervalSet">Intervallsatz löschen</string>
+    <string name="deleteIntervalSetMessage">Möchtest du den Intervallsatz löschen?</string>
+    <string name="selectIntervalSet">Intervallsatz auswählen</string>
+    <string name="intervalSetSelected">Intervallsatz ausgewählt</string>
+    <string name="intervalsIncludePauseTitle">Pausenzeit in das Intervalltraining einbeziehen</string>
+    <string name="intervalsIncludePauseSummary">Wenn aktiv, werden die Intervalle auch dann fortgesetzt, wenn du Pausen einlegst.</string>
+    <string name="intervalTraining">Intervalltraining</string>
+    <string name="intervalSet">Intervallsatz</string>
+    <string name="intervalSets">Intervallsätze</string>
+    <string name="currentSpeed">Aktuelle Geschwindigkeit</string>
+    <string name="hintAddWorkout">Klicke auf das Plus-Symbol, um ein Workout aufzuzeichnen oder einzugeben.</string>
+    <string name="enterDescription">Gebe eine Beschreibung ein</string>
+    <string name="avgSpeedInMotion">Durchschnittsgeschw. (in Bewegung)</string>
+    <string name="avgSpeedTotalShort">Durchschnittsgeschw. (Gesamt)</string>
+    <string name="avgSpeedTotalLong">Durchschnittsgeschwindigkeit im Gesamten</string>
+    <string name="preferencesUserInterfaceTitle">Benutzeroberfläche</string>
+    <string name="preferencesUserInterfaceSummary">Personalisiere die App</string>
+    <string name="preferencesRecordingTitle">Aufzeichnung</string>
+    <string name="preferencesRecordingSummary">Verwalten der Aufzeichnung von Workouts</string>
+    <string name="preferencesBackupTitle">Datenbank</string>
+    <string name="preferencesBackupSummary">Sichern/Wiederherstellen deiner Workouts</string>
+    <string name="preferencesCategoryAppearance">Erscheinungsbild</string>
+    <string name="preferenceDateFormat">Datumsformat</string>
+    <string name="preferenceTimeFormat">Zeitformat</string>
+    <string name="workoutDiscarded">Workout verworfen</string>
+    <string name="timeSecondsSingular">Sekunde</string>
+    <string name="timeSecondsPlural">Sekunden</string>
+    <string name="per">pro</string>
+    <string name="unitMilesSingular">Meile</string>
+    <string name="unitMilesPlural">Meilen</string>
+    <string name="unitYardsSingular">Yard</string>
+    <string name="unitYardsPlural">Yards</string>
+    <string name="unitMilesPerHour">Meilen pro Stunde</string>
+    <string name="unitMetersPlural">Meter</string>
+    <string name="unitMetersSingular">Meter</string>
+    <string name="unitKilometersSingular">Kilometer</string>
+    <string name="unitKilometersPlural">Kilometer</string>
+    <string name="unitKilometersPerHour">Kilometer pro Stunde</string>
+    <string name="unitMetersPerSecond">Meter pro Sekunde</string>
+    <string name="unitKcalLong">Kalorien</string>
+    <string name="unitKJoule">Kilojoule</string>
+    <string name="pref_energy_unit">Energieeinheit</string>
+    <string name="workoutTypeInlineSkating">Inline Skating</string>
+    <string name="manageAutoTimeoutSummary">Einstellung zum automatisch Stoppen des Workouts</string>
+    <string name="intervalAutoTimeoutTraining">Workout Auto-Stop Timer</string>
+    <string name="pref_auto_timeout_title">Zeitspanne bis Auto-Stop</string>
+    <string name="currentTime">Aktuelle Uhrzeit</string>
+    <string name="oClock">Uhr</string>
+    <string name="unlockPhoneStopWorkout">Bitte das Telefon entsperren, um die Aufnahme zu beenden</string>
+
+    <string-array name="pref_energy_units">
+        <item>kcal</item>
+        <item>Joule</item>
+    </string-array>
+
+    <string-array name="pref_time_format">
+        <item>System-Vorgabe</item>
+        <item>12:08 PM</item>
+        <item>15:23</item>
+    </string-array>
+
+    <string-array name="pref_date_format">
+        <item>System-Vorgabe</item>
+        <item>2001-07-24</item>
+        <item>2001.07.24</item>
+        <item>2001/07/24</item>
+        <item>24-07-2001</item>
+        <item>24.07.2001</item>
+        <item>24/07/2001</item>
+        <item>07/24/2001</item>
     </string-array>
 
 </resources>

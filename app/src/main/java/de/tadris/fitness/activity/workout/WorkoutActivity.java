@@ -172,12 +172,12 @@ public abstract class WorkoutActivity extends InformationActivity {
             }
 
             BarDataSet barDataSet = new BarDataSet(barEntries, getString(R.string.intervalSet));
-            barDataSet.setBarBorderWidth(4);
+            barDataSet.setBarBorderWidth(3);
             barDataSet.setBarBorderColor(getThemePrimaryColor());
             barDataSet.setColor(getThemePrimaryColor());
 
             BarData barData = new BarData(barDataSet);
-            barData.setBarWidth(0.0f);
+            barData.setBarWidth(0.01f);
             barData.setDrawValues(false);
 
             combinedData.setData(barData);
@@ -207,6 +207,13 @@ public abstract class WorkoutActivity extends InformationActivity {
             });
         }
         chart.invalidate();
+
+        chart.getAxisLeft().setTextColor(getThemeTextColor());
+        chart.getAxisRight().setTextColor(getThemeTextColor());
+        chart.getXAxis().setTextColor(getThemeTextColor());
+        chart.getLegend().setTextColor(getThemeTextColor());
+        chart.getDescription().setTextColor(getThemeTextColor());
+
 
         converter.afterAdd(chart);
 

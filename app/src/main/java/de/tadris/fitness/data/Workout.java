@@ -29,6 +29,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 @Entity(tableName = "workout")
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -106,6 +107,11 @@ public class Workout{
     @JsonIgnore
     public String getDateString(){
         return SimpleDateFormat.getDateTimeInstance().format(new Date(start));
+    }
+
+    @JsonIgnore
+    public String getPlainDateString() {
+        return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.getDefault()).format(new Date(start));
     }
 
     @JsonIgnore

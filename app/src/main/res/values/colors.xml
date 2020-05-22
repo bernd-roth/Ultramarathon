@@ -40,8 +40,8 @@
     <color name="colorPrimaryHiking">#009688</color>
     <color name="colorPrimaryDarkHiking">#007267</color>
 
-    <color name="textLighterBlack">#C8000000</color>
-    <color name="textDarkerWhite">#C8FFFFFF</color>
+    <color name="textLighterBlack">#E6000000</color>
+    <color name="textDarkerWhite">#E6FFFFFF</color>
     <color name="textColorLight">#C8414141</color>
 
 

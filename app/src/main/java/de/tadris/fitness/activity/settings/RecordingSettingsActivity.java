@@ -19,8 +19,13 @@
 
 package de.tadris.fitness.activity.settings;
 
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.view.View;
+import android.widget.NumberPicker;
 import android.widget.Toast;
 
 import de.tadris.fitness.R;
@@ -43,6 +48,11 @@ public class RecordingSettingsActivity extends FitoTrackSettingsActivity {
         });
         findPreference("intervals").setOnPreferenceClickListener(preference -> {
             checkTTS(this::showIntervalSetManagement);
+            return true;
+        });
+
+        findPreference("autoTimeoutConfig").setOnPreferenceClickListener(preference -> {
+            showAutoTimeoutConfig();
             return true;
         });
     }
@@ -69,6 +79,33 @@ public class RecordingSettingsActivity extends FitoTrackSettingsActivity {
 
     private void showIntervalSetManagement() {
         startActivity(new Intent(this, ManageIntervalSetsActivity.class));
+    }
+
+    private void showAutoTimeoutConfig() {
+        final AlertDialog.Builder d = new AlertDialog.Builder(this);
+        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        d.setTitle(getString(R.string.pref_auto_timeout_title));
+        View v = getLayoutInflater().inflate(R.layout.dialog_auto_timeout_picker, null);
+
+        int stepWidth = 5; // 5 Min Step Width
+
+        NumberPicker npT = v.findViewById(R.id.autoTimeoutPicker);
+        npT.setMaxValue(60 / stepWidth);
+        npT.setMinValue(0);
+        npT.setFormatter(value -> value == 0 ? "No Timeout" : value * stepWidth + " " + getText(R.string.timeMinuteShort));
+        final String autoTimeoutVariable = "autoTimeoutPeriod";
+        npT.setValue(preferences.getInt(autoTimeoutVariable, 20) / stepWidth);
+        npT.setWrapSelectorWheel(false);
+
+        d.setView(v);
+
+        d.setNegativeButton(R.string.cancel, null);
+        d.setPositiveButton(R.string.okay, (dialog, which) ->
+                preferences.edit()
+                        .putInt(autoTimeoutVariable, npT.getValue() * stepWidth)
+                        .apply());
+
+        d.create().show();
     }
 
 }

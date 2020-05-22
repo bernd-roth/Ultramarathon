@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -16,7 +17,6 @@
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
-
 <resources>
     <string name="app_name">FitoTrack</string>
     <string name="workout_add">Toevoegen</string>
@@ -49,10 +49,10 @@
 
     <string name="timeMinuteSingular">Minuut</string>
     <string name="timeMinutePlural">Minuten</string>
-	<string name="timeMinuteShort">min</string>
+    <string name="timeMinuteShort">min</string>
     <string name="timeHourSingular">Uur</string>
     <string name="timeHourPlural">Uren</string>
-	<string name="timeHourShort">h</string>
+    <string name="timeHourShort">h</string>
     <string name="timeSecondsShort">s</string>
     <string name="and">en</string>
 
@@ -115,8 +115,8 @@
     <string name="type">Type</string>
 
     <string name="enterWorkout">Training invoeren</string>
-	
-	<string name="setDuration">Tijdsduur instellen</string>
+
+    <string name="setDuration">Tijdsduur instellen</string>
 
 
     <string name="recordWorkout">Training opnemen</string>
@@ -175,30 +175,110 @@
     <string name="theme">Thema</string>
     <string name="hintRestart">Herstart de app om de wijzingen toe te passen</string>
     <string name="noComment">Geen opmerking</string>
+    <string name="start">Start</string>
+    <string name="cannotStart">Kan niet starten</string>
+
+    <string name="add">Toevoegen</string>
+    <string name="add_interval">Interval toevoegen</string>
+    <string name="manageIntervalSets">Interval reeksen beheren</string>
+    <string name="manageIntervalsSummary">Bewerk de interval reeksen die je tijdens de training kunt gebruiken met behulp van gesproken feedback.</string>
+    <string name="workoutRecording">Training opnemen</string>
+    <string name="createIntervalSet">Nieuwe interval reeks maken</string>
+    <string name="create">Maken</string>
+    <string name="hintManageIntervalSets">Voeg een interval reeks toe om deze in je trainingen te gebruiken.</string>
+    <string name="hintEditIntervalSet">Voeg intervallen toe die zullen worden uitgesproken.</string>
+    <string name="interval_name">Naam:</string>
+    <string name="length_in_minutes">Duur (minuten):</string>
+    <string name="enterName">Voer een naam in</string>
+    <string name="deleteIntervalSet">Interval reeks verwijderen</string>
+    <string name="deleteIntervalSetMessage">Wil je de ingestelde interval verwijderen?</string>
+    <string name="selectIntervalSet">Selecteer Interval Reeks</string>
+    <string name="intervalSetSelected">Interval Reeks geselecteerd</string>
+    <string name="intervalsIncludePauseTitle">Pauzetijd opnemen in intervaltraining</string>
+    <string name="intervalsIncludePauseSummary">Indien waar, zullen de intervallen doorgaan, zelfs als je pauzeert tijdens de training.</string>
+    <string name="intervalTraining">Intervaltraining</string>
+    <string name="intervalSet">Interval reeks</string>
+    <string name="intervalSets">Interval reeksen</string>
+    <string name="currentSpeed">Huidige snelheid</string>
+    <string name="hintAddWorkout">Klik op het pluspictogram om een ​​training op te nemen of in te voeren.</string>
+    <string name="enterDescription">Voer een beschrijving in</string>
+    <string name="avgSpeedInMotion">Gem. snelheid (tijdens beweging)</string>
+    <string name="avgSpeedTotalShort">Gem. snelheid (totaal)</string>
+    <string name="avgSpeedTotalLong">Totale gemiddelde snelheid</string>
+    <string name="preferencesUserInterfaceTitle">Gebruikersomgeving</string>
+    <string name="preferencesUserInterfaceSummary">Personaliseer de app</string>
+    <string name="preferencesRecordingTitle">Opname</string>
+    <string name="preferencesRecordingSummary">Beheer de trainings opname</string>
+    <string name="preferencesBackupTitle">Database</string>
+    <string name="preferencesBackupSummary">Back-up/herstel je trainingsgegevens</string>
+    <string name="preferencesCategoryAppearance">Uiterlijk</string>
+    <string name="preferenceDateFormat">Datumnotatie</string>
+    <string name="preferenceTimeFormat">Tijdnotatie</string>
+    <string name="workoutDiscarded">Workout weggegooid</string>
+    <string name="timeSecondsSingular">Seconde</string>
+    <string name="timeSecondsPlural">Seconden</string>
+    <string name="per">per</string>
+    <string name="unitMilesSingular">Mijl</string>
+    <string name="unitMilesPlural">Mijl</string>
+    <string name="unitYardsSingular">Yard</string>
+    <string name="unitYardsPlural">Yards</string>
+    <string name="unitMilesPerHour">Mijl per uur</string>
+    <string name="unitMetersPlural">Meter</string>
+    <string name="unitMetersSingular">Meter</string>
+    <string name="unitKilometersPlural">Kilometer</string>
+    <string name="unitKilometersSingular">Kilometer</string>
+    <string name="unitKilometersPerHour">Kilometer per uur</string>
+    <string name="unitMetersPerSecond">Meter per seconde</string>
+    <string name="unitKcalLong">Calorieën</string>
+    <string name="unitKJoule">Kilojoule</string>
+    <string name="pref_energy_unit">Energie eenheid</string>
+    <string name="workoutTypeInlineSkating">Inline Skating</string>
+
+
+    <string-array name="pref_energy_units">
+        <item>kcal</item>
+        <item>Joule</item>
+    </string-array>
 
     <string-array name="pref_announcement_mode">
         <item>Altijd</item>
         <item>Alleen met koptelefoon</item>
     </string-array>
 
+    <string-array name="pref_map_layers">
+        <item>Mapnik\nStandaard OSM kaartstijl</item>
+        <item>Humanitarian\nMinimalistische kaart (soms niet beschikbaar)</item>
+        <item>Outdoors\nBeperkte toegang</item>
+        <item>Cyclemap\nBeperkte toegang</item>
+    </string-array>
+
+    <string-array name="pref_theme_setting">
+        <item>Licht</item>
+        <item>Donker</item>
+    </string-array>
+
     <string-array name="pref_unit_systems">
         <item>Metrisch</item>
         <item>Metrisch in m/s</item>
         <item>Imperial</item>
-        <item>Imperial in meters</item>
+        <item>Imperial with meters</item>
     </string-array>
 
-    <string-array name="osm_track_visibility">
-        <item>Zichtbaar</item>
-        <item>Traceerbaar</item>
-        <item>Onzichtbaar</item>
+    <string-array name="pref_time_format">
+        <item>Systemstandaard</item>
+        <item>12:08 PM</item>
+        <item>15:23</item>
     </string-array>
 
-    <string-array name="pref_map_layers">
-        <item>Mapnik\nStandaard OSM Kaartweergave</item>
-        <item>Humanitarian\nMinimalistische kaart (soms niet beschikbaar)</item>
-        <item>Outdoors\nBeperkte toegang</item>
-        <item>Cyclemap\nBeperkte toegang</item>
+    <string-array name="pref_date_format">
+        <item>Systemstandaard</item>
+        <item>2001-07-24</item>
+        <item>2001.07.24</item>
+        <item>2001/07/24</item>
+        <item>24-07-2001</item>
+        <item>24.07.2001</item>
+        <item>24/07/2001</item>
+        <item>07/24/2001</item>
     </string-array>
 
 </resources>
