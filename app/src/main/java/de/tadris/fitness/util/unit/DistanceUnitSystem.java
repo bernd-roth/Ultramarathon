@@ -23,7 +23,7 @@ import androidx.annotation.StringRes;
 
 public interface DistanceUnitSystem {
 
-    double getShortDistanceInMeters(double distance);
+    double getMetersFromShortDistance(double shortdistance);
     double getShortDistanceFromLong(double longdistance);
     double getDistanceFromMeters(double meters);
     double getDistanceFromKilometers(double kilometers);

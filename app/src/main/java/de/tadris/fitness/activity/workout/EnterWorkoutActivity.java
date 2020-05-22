@@ -115,7 +115,7 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
             // uses LongDistance, needs to be converted to meters (long => short => meters)
             double longDistance = Double.parseDouble(distanceEditText.getText().toString());
             double shortDistance = unitSystem.getShortDistanceFromLong(longDistance);
-            workoutBuilder.setLength((int) unitSystem.getShortDistanceInMeters(shortDistance));
+            workoutBuilder.setLength((int) unitSystem.getMetersFromShortDistance(shortDistance));
         } catch (NumberFormatException ignored) {
             distanceEditText.requestFocus();
             distanceEditText.setError(getString(R.string.errorEnterValidNumber));
