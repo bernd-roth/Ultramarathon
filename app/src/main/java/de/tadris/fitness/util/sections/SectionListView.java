@@ -150,7 +150,8 @@ public class SectionListView extends LinearLayout implements SectionListContract
     }
 
     @Override
-    public void setSelectedUnitColumnHeader(String text) {
+    public void setSelectedUnitColumnHeader(SectionListModel.SectionCriterion criterion) {
+        String text = SectionListModel.SectionCriterion.getStringRepresentations(getContext()).get(criterion.getId());
         tableHeaderSelected.setText(text);
     }
 

@@ -101,12 +101,12 @@ public class SectionAdapter extends ArrayAdapter<SectionListModel.Section> {
             progress = (float) (bestPace / section.getPace());
         setProgress(sectionView, progress);
 
-        if (section.best) {
-            viewHolder.progressBg.setBackgroundColor(getContext().getResources().getColor(R.color.colorAccent));
-            viewHolder.progressBg.getBackground().setAlpha(63);
-        }
         if (section.worst) {
             viewHolder.progressBg.setBackgroundColor(getContext().getResources().getColor(R.color.colorPrimary));
+            viewHolder.progressBg.getBackground().setAlpha(63);
+        }
+        if (section.best) {
+            viewHolder.progressBg.setBackgroundColor(getContext().getResources().getColor(R.color.colorAccent));
             viewHolder.progressBg.getBackground().setAlpha(63);
         }
 

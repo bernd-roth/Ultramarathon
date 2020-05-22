@@ -61,7 +61,6 @@ public class SectionListPresenter implements SectionListContract.IListViewListen
                 break;
         }
         view.setSectionLengthEditText(translator.getDisplayLength(listModel.getCriterion(), listModel.getSelectedUnitID(), listModel.getSectionLength()));
-        view.setSelectedUnitColumnHeader(listModel.getUnits().get(listModel.getSelectedUnitID()));
     }
 
     @Override
@@ -84,5 +83,6 @@ public class SectionListPresenter implements SectionListContract.IListViewListen
         }
         view.setUnits(listModel.getUnits());
         view.setSelectedUnit(listModel.getSelectedUnitID());
+        view.setSelectedUnitColumnHeader(listModel.getCriterion());
     }
 }

@@ -34,7 +34,7 @@ public interface SectionListContract {
 
         void setSectionType(SectionListModel.SectionCriterion criterion);
 
-        void setSelectedUnitColumnHeader(String text);
+        void setSelectedUnitColumnHeader(SectionListModel.SectionCriterion criterion);
 
         void subscribe(IListViewListener listener);
     }

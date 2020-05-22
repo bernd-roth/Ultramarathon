@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"> <!--TODO: Proper height estimation -->
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/section_entry_root"
+        android:layout_alignBottom="@id/section_entry_root">
         <View
             android:id="@+id/progress1"
             android:layout_width="0dp"
@@ -177,4 +179,4 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</FrameLayout>
+</RelativeLayout>
