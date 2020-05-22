@@ -59,7 +59,7 @@ public class VoiceAnnouncements {
     }
 
     private boolean isOnCall() {
-        return this.telephonyManager.getCallState() == TelephonyManager.CALL_STATE_IDLE;
+        return this.telephonyManager.getCallState() != TelephonyManager.CALL_STATE_IDLE;
     }
 
 }
