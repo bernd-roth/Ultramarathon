@@ -10,13 +10,13 @@ import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutSample;
 
 public class SectionListModel {
-    Workout workout;
-    List<WorkoutSample> samples;
-    List<String> units = new ArrayList<>();
-    SectionCriterion criterion = SectionCriterion.DISTANCE;
-    double sectionLength = 1;
-    int selectedUnitID = 1;
-    boolean paceToggle = true;
+    private Workout workout;
+    private List<WorkoutSample> samples;
+    private List<String> units = new ArrayList<>();
+    private SectionCriterion criterion = SectionCriterion.DISTANCE;
+    private double sectionLength = 1;
+    private int selectedUnitID = 1;
+    private boolean paceToggle = true;
 
     public SectionListModel(Workout workout, List<WorkoutSample> samples) {
         this.samples = samples;
@@ -83,7 +83,9 @@ public class SectionListModel {
         ArrayList<Section> sections = new ArrayList<>();
 
         Section currentSection = new Section();
-        Section bestSection = currentSection, worstSection = currentSection;
+
+        int best = 0;
+        int worst = 0;
 
         for (int i = 1; i < samples.size(); ++i) {
             WorkoutSample sample = samples.get(i);
@@ -122,14 +124,14 @@ public class SectionListModel {
                 saveSection.descent *= interpolate;
                 saveSection.ascent *= interpolate;
 
+                sections.add(saveSection);
                 // check for best / worst
-                if (isSectionBetter(saveSection, bestSection)) {
-                    bestSection = saveSection;
-                } else if (isSectionBetter(worstSection, saveSection)) {
-                    worstSection = saveSection;
+                if (isSectionBetter(sections.get(worst), saveSection)) {
+                    worst = sections.size() - 1;
+                } else if (isSectionBetter(saveSection, sections.get(best))) {
+                    best = sections.size() - 1;
                 }
 
-                sections.add(saveSection);
 
                 // Set start values for new section considering inertpolated values
                 Section cSection = new Section();
@@ -142,17 +144,18 @@ public class SectionListModel {
         }
 
 
-        if (currentSection.dist > 0 && currentSection.time > 0) {
+        // Last Section should have a length of at least 1m and a time of at least 1 sec
+        if (currentSection.dist > 1 && currentSection.time > 1000) {
             sections.add(currentSection);
-            if (isSectionBetter(currentSection, bestSection)) {
-                bestSection = currentSection;
-            } else if (isSectionBetter(worstSection, currentSection)) {
-                worstSection = currentSection;
+            if (isSectionBetter(sections.get(worst), currentSection)) {
+                worst = sections.size() - 1;
+            } else if (isSectionBetter(currentSection, sections.get(best))) {
+                best = sections.size() - 1;
             }
         }
 
-        worstSection.worst = true;
-        bestSection.best = true;
+        sections.get(worst).worst = true;
+        sections.get(best).best = true;
 
         return sections;
     }

@@ -16,15 +16,16 @@ import de.tadris.fitness.util.unit.DistanceUnitUtils;
 import de.tadris.fitness.util.unit.TimeFormatter;
 
 public class SectionAdapter extends ArrayAdapter<SectionListModel.Section> {
-    boolean paceToggle;
+    private boolean paceToggle;
     private DistanceUnitUtils distanceUnitUtils;
-    SectionListModel.SectionCriterion criterion;
-    Context mContext;
+    private SectionListModel.SectionCriterion criterion;
+    private Context mContext;
+    private List<SectionListModel.Section> sections;
 
-    boolean switchRows = true;
-    double accumulatedCriterionValue = 0;
-    double worstPace = 0;
-    double bestPace = 0;
+    private boolean switchRows = true;
+    private double accumulatedCriterionValue = 0;
+    private double worstPace = 0;
+    private double bestPace = 0;
 
     // View lookup cache
     private static class ViewHolder {
@@ -94,6 +95,7 @@ public class SectionAdapter extends ArrayAdapter<SectionListModel.Section> {
             viewHolder = (ViewHolder) sectionView.getTag();
         }
 
+        assert section != null;
         float progress = (float) (section.getPace() / worstPace);
         if (!paceToggle)
             progress = (float) (bestPace / section.getPace());
