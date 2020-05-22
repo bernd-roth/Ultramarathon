@@ -25,7 +25,7 @@ public class Imperial implements DistanceUnitSystem {
 
     @Override
     public double getMetersFromShortDistance(double shortdistance) {
-        return shortdistance;
+        return shortdistance * 0.9144d;
     }
 
     @Override
