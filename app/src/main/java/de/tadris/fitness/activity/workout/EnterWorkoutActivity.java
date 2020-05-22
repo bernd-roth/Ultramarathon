@@ -61,7 +61,7 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
         addTitle(getString(R.string.info));
         setupActionBar();
 
-        unitSystem = Instance.getInstance(this).distanceUnitUtils.getDistanceUnitSystem()
+        unitSystem = Instance.getInstance(this).distanceUnitUtils.getDistanceUnitSystem();
 
         KeyValueLine typeLine = addKeyValueLine(getString(R.string.type));
         typeTextView = typeLine.value;
