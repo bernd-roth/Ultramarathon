@@ -56,6 +56,7 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
     private FloatingActionMenu menu;
     private Workout[] workouts;
     private TextView hintText;
+    private int listSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,7 +150,12 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
 
     private void refresh() {
         loadData();
-        refreshAdapter();
+        if (listSize != workouts.length) {
+            // Adapter refresh causes the view to scroll up
+            // That should only be done if the list has changed
+            refreshAdapter();
+        }
+        listSize = workouts.length;
     }
 
     private void loadData() {
