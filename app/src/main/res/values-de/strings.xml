@@ -139,6 +139,7 @@
     <string name="workoutTypeOther">Anderes</string>
     <string name="type">Typ</string>
     <string name="enterWorkout">Workout eingeben</string>
+    <string name="importWorkout">Workout importieren</string>
     <string name="setDuration">Dauer setzen</string>
     <string name="info">Info</string>
     <string name="OpenStreetMapAttribution">© OpenStreetMap Mitwirkende</string>

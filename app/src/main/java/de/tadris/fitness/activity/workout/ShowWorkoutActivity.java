@@ -47,7 +47,9 @@ import de.tadris.fitness.osm.OAuthAuthentication;
 import de.tadris.fitness.osm.OsmTraceUploader;
 import de.tadris.fitness.util.DialogUtils;
 import de.tadris.fitness.util.FileUtils;
-import de.tadris.fitness.util.gpx.GpxExporter;
+import de.tadris.fitness.util.io.GpxExporter;
+import de.tadris.fitness.util.io.general.IOHelper;
+import de.tadris.fitness.util.io.general.IWorkoutExporter;
 import de.tadris.fitness.view.ProgressDialogController;
 import de.westnordost.osmapi.traces.GpsTraceDetails;
 import oauth.signpost.OAuthConsumer;
@@ -205,7 +207,7 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
                 }
                 Uri uri= FileProvider.getUriForFile(getBaseContext(), "de.tadris.fitness.fileprovider", new File(file));
 
-                GpxExporter.exportWorkout(getBaseContext(), workout, new File(file));
+                IOHelper.GpxExporter.exportWorkout(workout, samples, new File(file));
                 dialogController.cancel();
                 mHandler.post(() -> FileUtils.saveOrShareFile(this, uri, "gpx"));
             }catch (Exception e){

@@ -19,12 +19,15 @@
 
 package de.tadris.fitness.util.gpx;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
+import java.util.HashMap;
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @JacksonXmlRootElement(localName = "gpx")
 public class Gpx {
 
@@ -41,6 +44,11 @@ public class Gpx {
 
     @JacksonXmlElementWrapper(useWrapping = false)
     List<Track> trk;
+
+    // newly added attributes
+    private HashMap<String, String> xmlns;
+//    private List<Route> rte;
+//    private List<Waypoint> wpt;
 
     public Gpx(){}
 
