@@ -34,6 +34,12 @@ public interface WorkoutDao {
     @Query("SELECT * FROM workout ORDER BY start DESC")
     Workout[] getWorkouts();
 
+    @Query("SELECT * FROM workout ORDER BY start ASC")
+    Workout[] getAllWorkoutsHistorically();
+
+    @Query("SELECT * FROM workout WHERE workoutType = :workout_type ORDER BY start ASC ")
+    Workout[] getWorkoutsHistorically(String workout_type);
+
     @Query("SELECT * FROM workout_sample")
     WorkoutSample[] getSamples();
 
