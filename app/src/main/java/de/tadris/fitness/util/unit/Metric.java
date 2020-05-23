@@ -24,23 +24,18 @@ import de.tadris.fitness.R;
 public class Metric implements DistanceUnitSystem {
 
     @Override
-    public double getMetersFromShortUnit(double distanceInUnit) {
-        return distanceInUnit;
+    public double getMetersFromShortDistance(double shortdistance) {
+        return shortdistance;
     }
 
     @Override
-    public double getLongUnitFromMeters(double distanceInMeters) {
-        return distanceInMeters / 1000;
+    public double getShortDistanceFromLong(double longdistance) {
+        return longdistance * 1000d;
     }
 
     @Override
-    public double getShortUnitFromMeters(double distanceInMeters) {
-        return distanceInMeters;
-    }
-
-    @Override
-    public double getMetersFromLongUnit(double distanceInUnit) {
-        return distanceInUnit*1000;
+    public double getDistanceFromMeters(double meters) {
+        return meters;
     }
 
     @Override

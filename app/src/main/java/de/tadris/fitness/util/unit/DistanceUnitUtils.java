@@ -120,11 +120,11 @@ public class DistanceUnitUtils extends UnitUtils {
                 return lengthInLongUnit + " " + distanceUnitSystem.getLongDistanceUnit();
             }
         } else {
-            int value = (int) distanceUnitSystem.getShortUnitFromMeters(distanceInMeters);
+            int value = (int) distanceUnitSystem.getDistanceFromMeters(distanceInMeters);
             if (useLongUnitNames) {
                 return value + " " + getString(distanceUnitSystem.getShortDistanceUnitTitle(value != 1));
             } else {
-                return (int) distanceUnitSystem.getShortUnitFromMeters(distanceInMeters) + " " + distanceUnitSystem.getShortDistanceUnit();
+                return (int) distanceUnitSystem.getDistanceFromMeters(distanceInMeters) + " " + distanceUnitSystem.getShortDistanceUnit();
             }
         }
     }

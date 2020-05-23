@@ -22,27 +22,20 @@ package de.tadris.fitness.util.unit;
 import de.tadris.fitness.R;
 
 public class Imperial implements DistanceUnitSystem {
-    private double shortFactor = 1.093613d;
-    private double longFactor = 0.62137d / 1000;
 
     @Override
-    public double getMetersFromShortUnit(double distanceInUnit) {
-        return distanceInUnit / shortFactor;
+    public double getMetersFromShortDistance(double shortdistance) {
+        return shortdistance * 0.9144d;
     }
 
     @Override
-    public double getLongUnitFromMeters(double distanceInMeters) {
-        return distanceInMeters * longFactor;
+    public double getShortDistanceFromLong(double longdistance) {
+        return longdistance * 1760d;
     }
 
     @Override
-    public double getShortUnitFromMeters(double distanceInMeters) {
-        return distanceInMeters * shortFactor;
-    }
-
-    @Override
-    public double getMetersFromLongUnit(double distanceInUnit) {
-        return distanceInUnit / longFactor;
+    public double getDistanceFromMeters(double meters) {
+        return meters * 1.093613d;
     }
 
     @Override

@@ -73,9 +73,9 @@ public class DistanceTranslator {
             case ASCENT:
             case DESCENT:
                 if (selectedUnit == 0) // km/miles/...
-                    length = distanceUnitUtils.getDistanceUnitSystem().getMetersFromLongUnit(length);
+                    length = distanceUnitUtils.getDistanceUnitSystem().getMetersFromLongDistance(length);
                 else if (selectedUnit == 1) // m/yd/...
-                    length = distanceUnitUtils.getDistanceUnitSystem().getMetersFromShortUnit(length);
+                    length = distanceUnitUtils.getDistanceUnitSystem().getMetersFromShortDistance(length);
                 else if (selectedUnit == 2) // #
                     if (criterion == SectionListModel.SectionCriterion.DISTANCE)
                         length = listModel.getWorkout().length / length; // Transform num sections to simple distance criterion
@@ -104,9 +104,9 @@ public class DistanceTranslator {
             case ASCENT:
             case DESCENT:
                 if (selectedUnit == 0) // km/miles/...
-                    length = distanceUnitUtils.getDistanceUnitSystem().getLongUnitFromMeters(length);
+                    length = distanceUnitUtils.getDistanceUnitSystem().getDistanceFromKilometers(length / 1000);
                 else if (selectedUnit == 1) // m/yd/...
-                    length = distanceUnitUtils.getDistanceUnitSystem().getShortUnitFromMeters(length);
+                    length = distanceUnitUtils.getDistanceUnitSystem().getDistanceFromMeters(length);
                 else if (selectedUnit == 2) // #
                     if (criterion == SectionListModel.SectionCriterion.DISTANCE)
                         length = listModel.getWorkout().length / length; // Transform num sections to simple distance criterion
