@@ -207,6 +207,13 @@ public abstract class WorkoutActivity extends InformationActivity {
         }
         chart.invalidate();
 
+        chart.getAxisLeft().setTextColor(getThemeTextColor());
+        chart.getAxisRight().setTextColor(getThemeTextColor());
+        chart.getXAxis().setTextColor(getThemeTextColor());
+        chart.getLegend().setTextColor(getThemeTextColor());
+        chart.getDescription().setTextColor(getThemeTextColor());
+
+
         converter.afterAdd(chart);
 
         return chart;

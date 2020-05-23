@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import de.tadris.fitness.BuildConfig;
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.WorkoutSample;
@@ -200,16 +201,16 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
         dialogController.show();
         new Thread(() -> {
             try{
-                String file= getFilesDir().getAbsolutePath() + "/shared/workout.gpx";
+                String file= getFilesDir().getAbsolutePath() + String.format("/shared/workout-%s-%s.gpx", workout.getPlainDateString(), workout.comment);
                 File parent = new File(file).getParentFile();
                 if (!parent.exists() && !parent.mkdirs()) {
                     throw new IOException("Cannot write to " + file);
                 }
-                Uri uri= FileProvider.getUriForFile(getBaseContext(), "de.tadris.fitness.fileprovider", new File(file));
+                Uri uri = FileProvider.getUriForFile(getBaseContext(), BuildConfig.APPLICATION_ID + ".fileprovider", new File(file));
 
                 IOHelper.GpxExporter.exportWorkout(workout, samples, new File(file));
                 dialogController.cancel();
-                mHandler.post(() -> FileUtils.saveOrShareFile(this, uri, "gpx"));
+                mHandler.post(() -> FileUtils.saveOrShareFile(this, uri));
             }catch (Exception e){
                 e.printStackTrace();
                 mHandler.post(() -> showErrorDialog(e, R.string.error, R.string.errorGpxExportFailed));

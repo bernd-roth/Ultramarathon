@@ -42,12 +42,14 @@ import de.tadris.fitness.dialog.DatePickerFragment;
 import de.tadris.fitness.dialog.DurationPickerDialogFragment;
 import de.tadris.fitness.dialog.SelectWorkoutTypeDialog;
 import de.tadris.fitness.dialog.TimePickerFragment;
+import de.tadris.fitness.util.unit.DistanceUnitSystem;
 
 public class EnterWorkoutActivity extends InformationActivity implements SelectWorkoutTypeDialog.WorkoutTypeSelectListener, DatePickerFragment.DatePickerCallback, TimePickerFragment.TimePickerCallback, DurationPickerDialogFragment.DurationPickListener {
 
     WorkoutBuilder workoutBuilder = new WorkoutBuilder();
     TextView typeTextView, dateTextView, timeTextView, durationTextView;
     EditText distanceEditText, commentEditText;
+    private DistanceUnitSystem unitSystem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,8 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
 
         addTitle(getString(R.string.info));
         setupActionBar();
+
+        unitSystem = Instance.getInstance(this).distanceUnitUtils.getDistanceUnitSystem();
 
         KeyValueLine typeLine = addKeyValueLine(getString(R.string.type));
         typeTextView = typeLine.value;
@@ -81,7 +85,7 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
             }
             return false;
         });
-        addKeyValueLine(getString(R.string.workoutDistance), distanceEditText, Instance.getInstance(this).distanceUnitUtils.getDistanceUnitSystem().getLongDistanceUnit());
+        addKeyValueLine(getString(R.string.workoutDistance), distanceEditText, unitSystem.getLongDistanceUnit());
 
 
         KeyValueLine dateLine = addKeyValueLine(getString(R.string.workoutDate));
@@ -108,7 +112,10 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
     private void saveWorkout() {
         workoutBuilder.setComment(commentEditText.getText().toString());
         try {
-            workoutBuilder.setLength((int) (Double.parseDouble(distanceEditText.getText().toString()) * 1000));
+            // uses LongDistance, needs to be converted to meters (long => short => meters)
+            double longDistance = Double.parseDouble(distanceEditText.getText().toString());
+            double shortDistance = unitSystem.getShortDistanceFromLong(longDistance);
+            workoutBuilder.setLength((int) unitSystem.getMetersFromShortDistance(shortDistance));
         } catch (NumberFormatException ignored) {
             distanceEditText.requestFocus();
             distanceEditText.setError(getString(R.string.errorEnterValidNumber));

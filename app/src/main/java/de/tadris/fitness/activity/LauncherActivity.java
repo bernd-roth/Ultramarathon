@@ -26,6 +26,8 @@ import android.os.Handler;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
+import de.tadris.fitness.activity.record.RecordWorkoutActivity;
+import de.tadris.fitness.recording.WorkoutRecorder;
 
 public class LauncherActivity extends Activity {
 
@@ -48,8 +50,20 @@ public class LauncherActivity extends Activity {
     }
 
     private void start() {
-        startActivity(new Intent(this, ListWorkoutsActivity.class));
-        finish();
-        overridePendingTransition(R.anim.fade_in, R.anim.stay);
+        WorkoutRecorder recorder = Instance.getInstance(this).recorder;
+        if (recorder.getState() == WorkoutRecorder.RecordingState.PAUSED ||
+                recorder.getState() == WorkoutRecorder.RecordingState.RUNNING){
+            // Resume to running Workout
+            Intent recorderActivityIntent = new Intent(this, RecordWorkoutActivity.class);
+            recorderActivityIntent.setAction(RecordWorkoutActivity.RESUME_ACTION);
+            startActivity(recorderActivityIntent);
+            finish();
+            overridePendingTransition(R.anim.fade_in, R.anim.stay);
+        }else {
+            // Go to Workout List
+            startActivity(new Intent(this, ListWorkoutsActivity.class));
+            finish();
+            overridePendingTransition(R.anim.fade_in, R.anim.stay);
+        }
     }
 }
