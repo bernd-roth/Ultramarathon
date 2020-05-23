@@ -19,17 +19,12 @@
 
 package de.tadris.fitness;
 
-import android.util.Pair;
-
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.List;
 
-import de.tadris.fitness.data.Workout;
-import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.util.io.GpxImporter;
 import de.tadris.fitness.util.io.general.IWorkoutImporter;
@@ -62,7 +57,6 @@ public class GpxImporterTest {
 
         // Main test is that above method runs without error, additionally perform some checks:
         Assert.assertEquals(importResult.workout.comment, "...");
-        Assert.assertEquals(importResult.workout.workoutTypeId, WorkoutType.RUNNING.id);
         Assert.assertEquals(importResult.samples.size(), 10);
         Assert.assertEquals(importResult.samples.get(0).elevation, 152.5, 0.001);
         Assert.assertEquals(importResult.samples.get(7).lat, 30.232106, 0.001);
@@ -81,7 +75,7 @@ public class GpxImporterTest {
 
     @Test
     public void testImportKomootGpx() throws IOException {
-        IWorkoutImporter.WorkoutImportResult importResult= importer.readWorkout(new ByteArrayInputStream(runtasticGpx.getBytes()));
+        IWorkoutImporter.WorkoutImportResult importResult = importer.readWorkout(new ByteArrayInputStream(komootGpx.getBytes()));
 
         Assert.assertEquals(importResult.workout.comment, "NameOfTrack");
         Assert.assertEquals(importResult.workout.workoutTypeId, WorkoutType.OTHER.id);
@@ -251,6 +245,7 @@ public class GpxImporterTest {
             "    </author>\n" +
             "  </metadata>"+
             "    <name>NameOfTrack</name>\n" +
+            "    <trk>\n" +
             "    <trkseg>\n" +
             "      <trkpt lat=\"56.854918\" lon=\"12.225131\">\n" +
             "        <ele>197.022936</ele>\n" +

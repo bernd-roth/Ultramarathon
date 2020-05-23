@@ -1,20 +1,37 @@
-package de.tadris.fitness.util.io;
+/*
+ * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ *
+ * This file is part of FitoTrack
+ *
+ * FitoTrack is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     FitoTrack is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
-import android.annotation.SuppressLint;
-import android.util.Pair;
+package de.tadris.fitness.util.io;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.github.sisyphsu.dateparser.DateParserUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutSample;
+import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.util.gpx.Gpx;
 import de.tadris.fitness.util.gpx.Track;
 import de.tadris.fitness.util.gpx.TrackPoint;
@@ -26,25 +43,40 @@ public class GpxImporter implements IWorkoutImporter {
     public WorkoutImportResult readWorkout(InputStream input) throws IOException {
         Gpx gpx = getGpx(input);
 
-        if(!gpx.getCreator().equals("FitoTrack"))
-        {
-            // TODO: Show warning
+        if (gpx.getTrk().size() == 0
+                || gpx.getTrk().get(0).getTrkseg().size() == 0
+                || gpx.getTrk().get(0).getTrkseg().get(0).getTrkpt().size() == 0) {
+            throw new IllegalArgumentException("given GPX file does not contain location data");
         }
-        Workout workout = new Workout();
-        workout.comment = gpx.getName();
-        String startTime;
-        if(gpx.getMetadata().getTime() != null)
-            startTime = gpx.getMetadata().getTime();
-        else
-            startTime = gpx.getTrk().get(0).getTrkseg().get(0).getTrkpt().get(0).getTime();
-        workout.start = formatter.parse(startTime, new ParsePosition(0)).getTime();
+        Track track = gpx.getTrk().get(0);
+        TrackSegment firstSegment = track.getTrkseg().get(0);
+        TrackPoint firstPoint = firstSegment.getTrkpt().get(0);
 
-        int index = gpx.getTrk().get(0).getTrkseg().get(0).getTrkpt().size();
-        String time = gpx.getTrk().get(0).getTrkseg().get(0).getTrkpt().get(index-1).getTime();
-        workout.end = formatter.parse(time, new ParsePosition(0)).getTime();
+        Workout workout = new Workout();
+        workout.comment = track.getName();
+        if (gpx.getMetadata() != null) {
+            if (workout.comment == null) {
+                workout.comment = gpx.getName();
+            }
+            if (workout.comment == null) {
+                workout.comment = gpx.getMetadata().getName();
+            }
+            if (workout.comment == null) {
+                workout.comment = gpx.getMetadata().getDesc();
+            }
+        }
+
+        String startTime = firstPoint.getTime();
+        ;
+        workout.start = parseDate(startTime).getTime();
+
+        int index = firstSegment.getTrkpt().size();
+        String lastTime = firstSegment.getTrkpt().get(index - 1).getTime();
+        workout.end = parseDate(lastTime).getTime();
         workout.duration = workout.end - workout.start;
-        workout.workoutTypeId = gpx.getTrk().get(0).getType();
-        List<WorkoutSample> samples = getSamplesFromTrack(gpx.getTrk().get(0));
+        workout.workoutTypeId = WorkoutType.getTypeById(gpx.getTrk().get(0).getType()).id;
+
+        List<WorkoutSample> samples = getSamplesFromTrack(workout.start, gpx.getTrk().get(0));
 
         return new WorkoutImportResult(workout, samples);
     }
@@ -55,19 +87,25 @@ public class GpxImporter implements IWorkoutImporter {
         return mapper.readValue(input, Gpx.class);
     }
 
-    private static List<WorkoutSample> getSamplesFromTrack(Track track) {
+    private static List<WorkoutSample> getSamplesFromTrack(long startTime, Track track) {
         List<WorkoutSample> samples = new ArrayList<>();
 
-        TrackSegment segment = track.getTrkseg().get(0);
+        for (TrackSegment segment : track.getTrkseg()) {
+            samples.addAll(getSamplesFromTrackSegment(startTime, segment));
+        }
 
-        for(TrackPoint point : segment.getTrkpt())
-        {
+        return samples;
+    }
+
+    private static List<WorkoutSample> getSamplesFromTrackSegment(long startTime, TrackSegment segment) {
+        List<WorkoutSample> samples = new ArrayList<>();
+        for (TrackPoint point : segment.getTrkpt()) {
             WorkoutSample sample = new WorkoutSample();
-            sample.absoluteTime = formatter.parse(point.getTime(), new ParsePosition(0)).getTime();
+            sample.absoluteTime = parseDate(point.getTime()).getTime();
             sample.elevation = point.getEle();
             sample.lat = point.getLat();
             sample.lon = point.getLon();
-            sample.relativeTime = sample.absoluteTime;
+            sample.relativeTime = sample.absoluteTime - startTime;
             if(point.getExtensions() != null)
                 sample.speed = point.getExtensions().getSpeed();
             samples.add(sample);
@@ -75,6 +113,7 @@ public class GpxImporter implements IWorkoutImporter {
         return samples;
     }
 
-    @SuppressLint("SimpleDateFormat")
-    private static final SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+    private static Date parseDate(String str) {
+        return DateParserUtils.parseDate(str);
+    }
 }

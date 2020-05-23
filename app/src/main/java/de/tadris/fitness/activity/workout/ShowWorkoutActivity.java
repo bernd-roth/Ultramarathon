@@ -48,9 +48,7 @@ import de.tadris.fitness.osm.OAuthAuthentication;
 import de.tadris.fitness.osm.OsmTraceUploader;
 import de.tadris.fitness.util.DialogUtils;
 import de.tadris.fitness.util.FileUtils;
-import de.tadris.fitness.util.io.GpxExporter;
 import de.tadris.fitness.util.io.general.IOHelper;
-import de.tadris.fitness.util.io.general.IWorkoutExporter;
 import de.tadris.fitness.view.ProgressDialogController;
 import de.westnordost.osmapi.traces.GpsTraceDetails;
 import oauth.signpost.OAuthConsumer;
@@ -78,8 +76,8 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
         addKeyValue(getString(R.string.workoutDate), getDate());
         addKeyValue(getString(R.string.workoutDuration), distanceUnitUtils.getHourMinuteSecondTime(workout.duration),
                 getString(R.string.workoutPauseDuration), distanceUnitUtils.getHourMinuteSecondTime(workout.pauseDuration));
-        addKeyValue(getString(R.string.workoutStartTime), Instance.getInstance(this).dateTimeUtils.formatTime(new Date(workout.start)),
-                getString(R.string.workoutEndTime), Instance.getInstance(this).dateTimeUtils.formatTime(new Date(workout.end)));
+        addKeyValue(getString(R.string.workoutStartTime), Instance.getInstance(this).userDateTimeUtils.formatTime(new Date(workout.start)),
+                getString(R.string.workoutEndTime), Instance.getInstance(this).userDateTimeUtils.formatTime(new Date(workout.end)));
 
         addKeyValue(getString(R.string.workoutDistance), distanceUnitUtils.getDistance(workout.length), getString(R.string.workoutPace), distanceUnitUtils.getPace(workout.avgPace));
 
@@ -169,7 +167,7 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
     }
 
     private String getDate() {
-        return Instance.getInstance(this).dateTimeUtils.formatDate(new Date(workout.start));
+        return Instance.getInstance(this).userDateTimeUtils.formatDate(new Date(workout.start));
     }
 
 

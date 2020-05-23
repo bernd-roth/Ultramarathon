@@ -52,9 +52,7 @@ import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.dialog.SelectWorkoutTypeDialog;
 import de.tadris.fitness.util.DialogUtils;
-import de.tadris.fitness.util.io.GpxImporter;
 import de.tadris.fitness.util.io.general.IOHelper;
-import de.tadris.fitness.util.io.general.IWorkoutImporter;
 import de.tadris.fitness.view.ProgressDialogController;
 import de.tadris.fitness.view.WorkoutAdapter;
 
@@ -154,8 +152,7 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
             mHandler.post(() -> {
                 dialogController.cancel();
                 showErrorDialog(e, R.string.error, R.string.errorImportFailed);
-            }
-            );
+            });
         }
     }
 

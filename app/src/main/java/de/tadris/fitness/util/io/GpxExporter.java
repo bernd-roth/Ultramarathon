@@ -19,16 +19,14 @@
 
 package de.tadris.fitness.util.io;
 
-import android.annotation.SuppressLint;
-
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutSample;
@@ -44,6 +42,7 @@ public class GpxExporter implements IWorkoutExporter {
 
     @Override
     public void exportWorkout(Workout workout, List<WorkoutSample> samples, OutputStream fileStream) throws IOException {
+        Gpx.formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
         XmlMapper mapper= new XmlMapper();
         mapper.writeValue(fileStream, getGpxFromWorkout(workout, samples));
     }
@@ -82,14 +81,11 @@ public class GpxExporter implements IWorkoutExporter {
         return track;
     }
 
-    @SuppressLint("SimpleDateFormat")
-    private static final SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-
     private static String getDateTime(long time) {
         return getDateTime(new Date(time));
     }
 
     private static String getDateTime(Date date) {
-        return formatter.format(date);
+        return Gpx.formatter.format(date);
     }
 }

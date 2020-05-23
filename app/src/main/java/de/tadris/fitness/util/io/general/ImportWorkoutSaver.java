@@ -23,29 +23,20 @@ import android.content.Context;
 
 import java.util.List;
 
-import de.tadris.fitness.Instance;
-import de.tadris.fitness.data.AppDatabase;
 import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutSample;
-import de.tadris.fitness.util.CalorieCalculator;
+import de.tadris.fitness.recording.WorkoutSaver;
 
-public class ImportWorkoutSaver {
-
-    private final Context context;
-    private final Workout workout;
-    private final List<WorkoutSample> samples;
-    private final AppDatabase db;
+public class ImportWorkoutSaver extends WorkoutSaver {
 
     public ImportWorkoutSaver(Context context, Workout workout, List<WorkoutSample> samples) {
-        this.context = context;
-        this.workout = workout;
-        this.samples = samples;
-        db= Instance.getInstance(context).db;
+        super(context, workout, samples);
     }
 
     public void saveWorkout(){
         setIds();
         setSimpleValues();
+        setSpeed();
         setTopSpeed();
 
         setAscentAndDescent();
@@ -55,65 +46,24 @@ public class ImportWorkoutSaver {
         storeInDatabase();
     }
 
-    private void setIds(){
-        workout.id= System.currentTimeMillis();
-        int i= 0;
-        for(WorkoutSample sample : samples) {
-            i++;
-            sample.id = workout.id + i;
-            sample.workoutId = workout.id;
+    private void setSpeed() {
+        setTopSpeed();
+        if (samples.size() == 0) {
+            return;
         }
-    }
-
-    private void setSimpleValues(){
-        double length= 0;
-        for(int i= 1; i < samples.size(); i++){
-            double sampleLength= samples.get(i - 1).toLatLong().sphericalDistance(samples.get(i).toLatLong());
-            length+= sampleLength;
+        if (workout.topSpeed != 0) {
+            // Speed values already present
+            return;
         }
-        workout.length= (int)length;
-        workout.avgSpeed= ((double) workout.length) / ((double) workout.duration / 1000);
-        workout.avgPace= ((double)workout.duration / 1000 / 60) / ((double) workout.length / 1000);
-    }
-
-    private void setTopSpeed(){
-        double topSpeed= 0;
+        WorkoutSample lastSample = samples.get(0);
         for(WorkoutSample sample : samples){
-            if(sample.speed > topSpeed){
-                topSpeed= sample.speed;
+            double distance = lastSample.toLatLong().sphericalDistance(sample.toLatLong());
+            long timeDiff = sample.absoluteTime - lastSample.absoluteTime;
+            if (timeDiff != 0) {
+                sample.speed = distance / ((double) timeDiff / 1000);
             }
+            lastSample = sample;
         }
-        workout.topSpeed= topSpeed;
     }
 
-    private void setAscentAndDescent(){
-        workout.ascent = 0;
-        workout.descent = 0;
-
-        // Now sum up the ascent/descent
-        for(int i= 0; i < samples.size(); i++) {
-            WorkoutSample sample = samples.get(i);
-            if(i >= 1){
-                WorkoutSample lastSample= samples.get(i-1);
-                double diff= sample.elevation - lastSample.elevation;
-                if(diff > 0){
-                    // If this sample is higher than the last one, add difference to ascent
-                    workout.ascent += diff;
-                }else{
-                    // If this sample is lower than the last one, add difference to descent
-                    workout.descent += Math.abs(diff);
-                }
-            }
-        }
-
-    }
-
-    private void setCalories() {
-        // Ascent has to be set previously
-        workout.calorie = CalorieCalculator.calculateCalories(workout, Instance.getInstance(context).userPreferences.getUserWeight());
-    }
-
-    private void storeInDatabase(){
-        db.workoutDao().insertWorkoutAndSamples(workout, samples.toArray(new WorkoutSample[0]));
-    }
 }
