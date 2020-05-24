@@ -110,8 +110,8 @@ public class Workout{
         return SimpleDateFormat.getDateTimeInstance().format(new Date(start));
     }
     @JsonIgnore
-    public String getPlainDateString(){
-        return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.getDefault()).format(new Date(start));
+    public String getSafeDateString(){
+        return new SimpleDateFormat("yyyy-MM-dd_HH-mm", Locale.getDefault()).format(new Date(start));
     }
 
     @JsonIgnore
