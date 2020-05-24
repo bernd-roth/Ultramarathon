@@ -17,37 +17,25 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.util.unit;
+package de.tadris.fitness.aggregation.information;
 
 import android.content.Context;
 
-import androidx.annotation.StringRes;
+import de.tadris.fitness.Instance;
+import de.tadris.fitness.aggregation.WorkoutInformation;
+import de.tadris.fitness.util.unit.DistanceUnitUtils;
+import de.tadris.fitness.util.unit.EnergyUnitUtils;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-
-public abstract class UnitUtils {
+public abstract class AbstractWorkoutInformation implements WorkoutInformation {
 
     protected Context context;
+    protected DistanceUnitUtils distanceUnitUtils;
+    protected EnergyUnitUtils energyUnitUtils;
 
-    public UnitUtils(Context context) {
+    AbstractWorkoutInformation(Context context) {
         this.context = context;
+        this.distanceUnitUtils = Instance.getInstance(context).distanceUnitUtils;
+        this.energyUnitUtils = Instance.getInstance(context).energyUnitUtils;
     }
-
-    protected String getString(@StringRes int stringRes) {
-        return context.getString(stringRes);
-    }
-
-    public static String round(double d, int count) {
-        double value = Math.round(d * Math.pow(10, count)) / Math.pow(10, count);
-        return String.valueOf(value).replaceAll("\\.", String.valueOf(getDecimalSeparator()));
-    }
-
-    protected static char getDecimalSeparator() {
-        DecimalFormat format = new DecimalFormat();
-        DecimalFormatSymbols symbols = format.getDecimalFormatSymbols();
-        return symbols.getDecimalSeparator();
-    }
-
 
 }

@@ -239,12 +239,24 @@
     <string name="currentTime">Current Time</string>
     <string name="oClock">o Clock</string>
     <string name="unlockPhoneStopWorkout">Please unlock your phone to stop the recording</string>
-    <string name="fastest_average">Max average:</string>
-    <string name="greatest_distance">Max distance:</string>
     <string name="no_workouts_recorded_for_this_activity">No workouts for this activity</string>
-    <string name="maximum_average_speed">Maximum average speed</string>
     <string name="workout_statistics">Workout Statistics</string>
-
+    <string name="day">Day</string>
+    <string name="week">Week</string>
+    <string name="month">Month</string>
+    <string name="year">Year</string>
+    <string name="min">Min</string>
+    <string name="max">Max</string>
+    <string name="avg">Avg</string>
+    <string name="sum">Sum</string>
+    <string name="workoutNumber">Number of workouts</string>
+    <string name="statsFilter">Filter:</string>
+    <string name="help">Help</string>
+    <string name="calendarWeekYear">Calendar Week / Year</string>
+    <string name="dayInMonth">Day in Month</string>
+    <string name="singleWorkout">Single Workout</string>
+    <string name="workoutStatsHelpText">This screen shows historical stats of the workouts. To use it you first need to specify the workout type by clicking on it. Then set the information you want to know about and the time span. \n\nE.g. if you select \"Week\" as time span, all workouts of each week will be merged into one data point either calculating the average or sum of each week.</string>
+    <string name="dataSamples">Samples</string>
 
     <string-array name="pref_energy_units">
         <item>kcal</item>

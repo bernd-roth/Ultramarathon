@@ -22,13 +22,12 @@ package de.tadris.fitness.recording.information;
 import android.content.Context;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.recording.WorkoutRecorder;
 
-public class CurrentTime extends WorkoutInformation {
+public class CurrentTime extends RecordingInformation {
 
     public CurrentTime(Context context) {
         super(context);

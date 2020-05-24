@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -33,6 +33,9 @@ public interface WorkoutDao {
 
     @Query("SELECT * FROM workout ORDER BY start DESC")
     Workout[] getWorkouts();
+
+    @Query("SELECT * FROM workout ORDER BY start DESC LIMIT 1")
+    Workout getLastWorkout();
 
     @Query("SELECT * FROM workout ORDER BY start ASC")
     Workout[] getAllWorkoutsHistorically();
