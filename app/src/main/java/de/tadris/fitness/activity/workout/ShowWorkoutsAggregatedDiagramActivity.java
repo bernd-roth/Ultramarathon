@@ -281,6 +281,7 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity imp
         lineDataSet.setCircleColor(getThemePrimaryColor());
         lineDataSet.setCircleRadius(6);
         lineDataSet.setCircleHoleRadius(2);
+        lineDataSet.setCircleHoleColor(getThemeTextColorInverse());
         lineDataSet.setLineWidth(4);
         lineDataSet.setMode(LineDataSet.Mode.LINEAR);
         lineDataSet.setDrawValues(false);
