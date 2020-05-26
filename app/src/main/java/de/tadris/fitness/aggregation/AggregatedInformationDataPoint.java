@@ -17,46 +17,48 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.recording.information;
+package de.tadris.fitness.aggregation;
 
-import android.content.Context;
+import java.util.Date;
 
-import de.tadris.fitness.R;
-import de.tadris.fitness.recording.WorkoutRecorder;
+public class AggregatedInformationDataPoint {
 
-public class BurnedEnergy extends RecordingInformation {
+    private final Date date;
+    private double sum;
+    private int count;
 
-    public BurnedEnergy(Context context) {
-        super(context);
+    public AggregatedInformationDataPoint(Date date, double sum, int count) {
+        this.date = date;
+        this.sum = sum;
+        this.count = count;
     }
 
-    @Override
-    public String getId() {
-        return "energy_burned";
+    public Date getDate() {
+        return date;
     }
 
-    @Override
-    boolean isEnabledByDefault() {
-        return false;
+    public double getSum() {
+        return sum;
     }
 
-    @Override
-    boolean canBeDisplayed() {
-        return true;
+    public double getAvg() {
+        if (count > 0) {
+            return sum / count;
+        } else {
+            return 0;
+        }
     }
 
-    @Override
-    public String getTitle() {
-        return getString(R.string.workoutBurnedEnergy);
+    public int getCount() {
+        return count;
     }
 
-    @Override
-    String getDisplayedText(WorkoutRecorder recorder) {
-        return getEnergyUnitUtils().getEnergy(recorder.getCalories());
+    public void setSum(double sum) {
+        this.sum = sum;
     }
 
-    @Override
-    public String getSpokenText(WorkoutRecorder recorder) {
-        return null;
+    public void setCount(int count) {
+        this.count = count;
     }
+
 }

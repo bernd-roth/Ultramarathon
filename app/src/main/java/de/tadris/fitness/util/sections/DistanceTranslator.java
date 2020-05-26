@@ -6,8 +6,8 @@ import java.util.List;
 import de.tadris.fitness.util.unit.DistanceUnitUtils;
 
 public class DistanceTranslator {
-    DistanceUnitUtils distanceUnitUtils;
-    SectionListModel listModel;
+    private DistanceUnitUtils distanceUnitUtils;
+    private SectionListModel listModel;
 
     public DistanceTranslator(DistanceUnitUtils distanceUnitUtils, SectionListModel listModel) {
         this.distanceUnitUtils = distanceUnitUtils;

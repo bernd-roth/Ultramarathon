@@ -24,7 +24,7 @@ import android.content.Context;
 import de.tadris.fitness.R;
 import de.tadris.fitness.recording.WorkoutRecorder;
 
-public class AverageSpeedTotal extends WorkoutInformation {
+public class AverageSpeedTotal extends RecordingInformation {
 
     public AverageSpeedTotal(Context context) {
         super(context);

@@ -76,7 +76,7 @@ import de.tadris.fitness.recording.LocationListener;
 import de.tadris.fitness.recording.WorkoutRecorder;
 import de.tadris.fitness.recording.announcement.TTSController;
 import de.tadris.fitness.recording.information.InformationDisplay;
-import de.tadris.fitness.recording.information.WorkoutInformation;
+import de.tadris.fitness.recording.information.RecordingInformation;
 
 public class RecordWorkoutActivity extends FitoTrackActivity implements LocationListener.LocationChangeListener,
         WorkoutRecorder.WorkoutRecorderListener, TTSController.VoiceAnnouncementCallback,
@@ -605,7 +605,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
     }
 
     @Override
-    public void onSelectWorkoutInformation(int slot, WorkoutInformation information) {
+    public void onSelectWorkoutInformation(int slot, RecordingInformation information) {
         updateDescription();
     }
 }

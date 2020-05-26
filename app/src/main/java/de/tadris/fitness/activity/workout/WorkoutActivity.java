@@ -79,13 +79,15 @@ public abstract class WorkoutActivity extends InformationActivity {
     protected IntervalSet usedIntervalSet;
     protected Interval[] intervals;
 
-    protected DistanceUnitUtils distanceUnitUtils = Instance.getInstance(this).distanceUnitUtils;
-    protected EnergyUnitUtils energyUnitUtils = Instance.getInstance(this).energyUnitUtils;
+    protected DistanceUnitUtils distanceUnitUtils;
+    protected EnergyUnitUtils energyUnitUtils;
 
     CombinedChart speedDiagram;
     CombinedChart heightDiagram;
 
     void initBeforeContent() {
+        distanceUnitUtils = Instance.getInstance(this).distanceUnitUtils;
+        energyUnitUtils = Instance.getInstance(this).energyUnitUtils;
         workout= selectedWorkout;
         samples= Arrays.asList(Instance.getInstance(this).db.workoutDao().getAllSamplesOfWorkout(workout.id));
         if (workout.intervalSetUsedId != 0) {

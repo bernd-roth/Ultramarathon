@@ -42,6 +42,7 @@ import de.tadris.fitness.activity.record.RecordWorkoutActivity;
 import de.tadris.fitness.activity.settings.MainSettingsActivity;
 import de.tadris.fitness.activity.workout.EnterWorkoutActivity;
 import de.tadris.fitness.activity.workout.ShowWorkoutActivity;
+import de.tadris.fitness.activity.workout.ShowWorkoutsAggregatedDiagramActivity;
 import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.dialog.SelectWorkoutTypeDialog;
@@ -56,6 +57,7 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
     private FloatingActionMenu menu;
     private Workout[] workouts;
     private TextView hintText;
+    private int listSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,7 +151,12 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
 
     private void refresh() {
         loadData();
-        refreshAdapter();
+        if (listSize != workouts.length) {
+            // Adapter refresh causes the view to scroll up
+            // That should only be done if the list has changed
+            refreshAdapter();
+        }
+        listSize = workouts.length;
     }
 
     private void loadData() {
@@ -193,6 +200,11 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
 
         if (id == R.id.actionOpenSettings) {
             startActivity(new Intent(this, MainSettingsActivity.class));
+            return true;
+        }
+
+        if (id == R.id.actionOpenStatisticss) {
+            startActivity(new Intent(this, ShowWorkoutsAggregatedDiagramActivity.class));
             return true;
         }
 

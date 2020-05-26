@@ -17,46 +17,36 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.recording.information;
+package de.tadris.fitness.aggregation.information;
 
 import android.content.Context;
 
 import de.tadris.fitness.R;
-import de.tadris.fitness.recording.WorkoutRecorder;
+import de.tadris.fitness.aggregation.AggregationType;
+import de.tadris.fitness.data.Workout;
 
-public class CurrentSpeed extends RecordingInformation {
-
-    public CurrentSpeed(Context context) {
+public class Duration extends AbstractWorkoutInformation {
+    public Duration(Context context) {
         super(context);
     }
 
     @Override
-    public String getId() {
-        return "current_speed";
+    public int getTitleRes() {
+        return R.string.workoutDuration;
     }
 
     @Override
-    boolean isEnabledByDefault() {
-        return true;
+    public String getUnit() {
+        return context.getString(R.string.timeMinuteShort);
     }
 
     @Override
-    boolean canBeDisplayed() {
-        return true;
+    public double getValueFromWorkout(Workout workout) {
+        return (double) (workout.duration / 1000 / 60);
     }
 
     @Override
-    public String getTitle() {
-        return getString(R.string.currentSpeed);
-    }
-
-    @Override
-    String getDisplayedText(WorkoutRecorder recorder) {
-        return getDistanceUnitUtils().getSpeed(recorder.getCurrentSpeed());
-    }
-
-    @Override
-    public String getSpokenText(WorkoutRecorder recorder) {
-        return getString(R.string.currentSpeed) + ": " + getDistanceUnitUtils().getSpeed(recorder.getCurrentSpeed(), true) + ".";
+    public AggregationType getAggregationType() {
+        return AggregationType.SUM;
     }
 }
