@@ -39,8 +39,12 @@ public abstract class UnitUtils {
     }
 
     public static String round(double d, int count) {
-        double value = Math.round(d * Math.pow(10, count)) / Math.pow(10, count);
+        double value = roundDouble(d, count);
         return String.valueOf(value).replaceAll("\\.", String.valueOf(getDecimalSeparator()));
+    }
+
+    public static double roundDouble(double d, int count) {
+        return Math.round(d * Math.pow(10, count)) / Math.pow(10, count);
     }
 
     protected static char getDecimalSeparator() {

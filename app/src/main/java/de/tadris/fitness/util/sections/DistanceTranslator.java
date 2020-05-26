@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.tadris.fitness.util.unit.DistanceUnitUtils;
+import de.tadris.fitness.util.unit.UnitUtils;
 
 public class DistanceTranslator {
     private DistanceUnitUtils distanceUnitUtils;
@@ -116,6 +117,6 @@ public class DistanceTranslator {
                         length = listModel.getWorkout().descent / length;
                 break;
         }
-        return length;
+        return UnitUtils.roundDouble(length, 2);
     }
 }
