@@ -30,7 +30,6 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.tadris.fitness.activity.record.RecordWorkoutActivity;
 import de.tadris.fitness.data.AppDatabase;
 import de.tadris.fitness.data.UserPreferences;
 import de.tadris.fitness.data.WorkoutType;
@@ -48,7 +47,7 @@ public class Instance {
 
     private static Instance instance;
     public static Instance getInstance(Context context){
-        if(context == null){
+        if (context == null) {
             Log.e("Instance", "no Context Provided");
         }
         if(instance == null){

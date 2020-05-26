@@ -47,4 +47,6 @@
     <color name="aggregatedDiagramMax">#F44336</color>
     <color name="aggregatedDiagramAvg">#00BCD4</color>
     <color name="aggregatedDiagramMin">#4CAF50</color>
+
+    <color name="lineHighlight">#229a9a9a</color>
 </resources>

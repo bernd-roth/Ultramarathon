@@ -262,6 +262,7 @@
         <item>kcal</item>
         <item>Joule</item>
     </string-array>
+    <string name="sections">Sections</string>
 
     <string-array name="pref_announcement_mode">
         <item>Always</item>

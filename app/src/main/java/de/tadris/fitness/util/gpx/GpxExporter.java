@@ -80,7 +80,7 @@ public class GpxExporter {
     }
 
     @SuppressLint("SimpleDateFormat")
-    private static final SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+    private static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
 
     private static String getDateTime(long time) {
         return getDateTime(new Date(time));

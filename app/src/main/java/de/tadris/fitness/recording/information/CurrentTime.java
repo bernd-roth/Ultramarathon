@@ -52,10 +52,10 @@ public class CurrentTime extends RecordingInformation {
 
         StringBuilder spokenTime = new StringBuilder();
 
-            long hours = currentTime.get(Calendar.HOUR_OF_DAY);
-            spokenTime.append(hours).append(" ");
-            spokenTime.append(getString(R.string.oClock)).append(" ")
-                    .append(getString(R.string.and)).append(" ");
+        long hours = currentTime.get(Calendar.HOUR_OF_DAY);
+        spokenTime.append(hours).append(" ");
+        spokenTime.append(getString(R.string.oClock)).append(" ")
+                .append(getString(R.string.and)).append(" ");
         long minutes = currentTime.get(Calendar.MINUTE);
         spokenTime.append(minutes).append(" ");
         spokenTime.append(getString(minutes == 1 ? R.string.timeMinuteSingular : R.string.timeMinutePlural));
