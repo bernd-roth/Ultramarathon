@@ -30,11 +30,11 @@ import de.tadris.fitness.recording.announcement.Announcement;
 import de.tadris.fitness.util.unit.DistanceUnitUtils;
 import de.tadris.fitness.util.unit.EnergyUnitUtils;
 
-public abstract class WorkoutInformation implements Announcement {
+public abstract class RecordingInformation implements Announcement {
 
     private Context context;
 
-    WorkoutInformation(Context context) {
+    RecordingInformation(Context context) {
         this.context = context;
     }
 

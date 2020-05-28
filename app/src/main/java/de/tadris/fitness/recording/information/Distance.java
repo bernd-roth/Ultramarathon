@@ -24,7 +24,7 @@ import android.content.Context;
 import de.tadris.fitness.R;
 import de.tadris.fitness.recording.WorkoutRecorder;
 
-public class Distance extends WorkoutInformation {
+public class Distance extends RecordingInformation {
 
     public Distance(Context context) {
         super(context);

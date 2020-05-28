@@ -47,7 +47,7 @@ public class Instance {
 
     private static Instance instance;
     public static Instance getInstance(Context context){
-        if(context == null){
+        if (context == null) {
             Log.e("Instance", "no Context Provided");
         }
         if(instance == null){

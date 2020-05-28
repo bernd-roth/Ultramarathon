@@ -59,6 +59,10 @@ abstract public class FitoTrackActivity extends Activity {
         return getThemeColor(android.R.attr.textColorPrimary);
     }
 
+    protected int getThemeTextColorInverse() {
+        return (0xffffffff - getThemeTextColor()) | 0xff000000;
+    }
+
     protected int getThemeColor(@AttrRes int colorRes) {
         final TypedValue value = new TypedValue ();
         getTheme().resolveAttribute(colorRes, value, true);

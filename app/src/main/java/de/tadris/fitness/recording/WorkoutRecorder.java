@@ -132,6 +132,7 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
 
     /**
      * Handles the Record Wathdog, for GPS Check, Pause Detection and Auto Timeout
+     *
      * @return is still active workout
      */
     boolean handleWatchdog() {
