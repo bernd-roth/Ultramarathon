@@ -97,7 +97,6 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
     private final InfoViewHolder[] infoViews = new InfoViewHolder[4];
     private TextView timeView;
     private TextView gpsStatusView;
-    private TextView attribution;
     private View waitingForGPSOverlay;
     private Button startButton;
     private boolean gpsFound = false;
@@ -145,7 +144,6 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
         waitingForGPSOverlay = findViewById(R.id.recorderWaitingOverlay);
         waitingForGPSOverlay.setVisibility(View.VISIBLE);
 
-        attribution = findViewById(R.id.recordMapAttribution);
         startButton = findViewById(R.id.recordStart);
         startButton.setEnabled(false);
         startButton.setOnClickListener(v -> {
@@ -221,11 +219,6 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
                 waitingForGPSOverlay.setVisibility(View.GONE);
             }
         }).start();
-        hideOSMAttribution();
-    }
-
-    private void hideOSMAttribution() {
-        attribution.animate().alpha(0f).setDuration(1000).setStartDelay(5000).start();
     }
 
     private void setupMap() {
