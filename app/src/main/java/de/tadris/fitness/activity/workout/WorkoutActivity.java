@@ -333,8 +333,6 @@ public abstract class WorkoutActivity extends InformationActivity {
             map.animate().alpha(1f).setDuration(1000).start();
         }, 1000);
 
-        map.getModel().mapViewPosition.setMapLimit(bounds);
-
         mapRoot= new LinearLayout(this);
         mapRoot.setOrientation(LinearLayout.VERTICAL);
         mapRoot.addView(map);
