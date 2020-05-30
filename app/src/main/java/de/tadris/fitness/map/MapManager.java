@@ -38,12 +38,17 @@ public class MapManager {
 
         String chosenTileLayer= Instance.getInstance(mapView.getContext()).userPreferences.getMapStyle();
         switch (chosenTileLayer){
-            case "osm.humanitarian":       tileSource= HumanitarianTileSource.INSTANCE; break;
+            case "osm.humanitarian":
+                tileSource = HumanitarianTileSource.INSTANCE;
+                break;
             case "thunderforest.outdoors": tileSource= ThunderforestTileSource.OUTDOORS; break;
             case "thunderforest.cycle":
                 tileSource = ThunderforestTileSource.CYCLE_MAP;
                 break;
-            default:             tileSource= MapnikTileSource.INSTANCE; break; // Inclusive "osm.mapnik"
+            case "osm.mapnik":
+            default:
+                tileSource = MapnikTileSource.INSTANCE;
+                break;
         }
         tileSource.setUserAgent("mapsforge-android");
 

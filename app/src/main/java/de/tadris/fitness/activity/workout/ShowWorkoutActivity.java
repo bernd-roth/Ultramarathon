@@ -48,7 +48,10 @@ import de.tadris.fitness.osm.OAuthAuthentication;
 import de.tadris.fitness.osm.OsmTraceUploader;
 import de.tadris.fitness.util.DialogUtils;
 import de.tadris.fitness.util.FileUtils;
-import de.tadris.fitness.util.gpx.GpxExporter;
+import de.tadris.fitness.util.io.general.IOHelper;
+import de.tadris.fitness.util.sections.SectionListModel;
+import de.tadris.fitness.util.sections.SectionListPresenter;
+import de.tadris.fitness.util.sections.SectionListView;
 import de.tadris.fitness.view.ProgressDialogController;
 import de.westnordost.osmapi.traces.GpsTraceDetails;
 import oauth.signpost.OAuthConsumer;
@@ -76,8 +79,8 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
         addKeyValue(getString(R.string.workoutDate), getDate());
         addKeyValue(getString(R.string.workoutDuration), distanceUnitUtils.getHourMinuteSecondTime(workout.duration),
                 getString(R.string.workoutPauseDuration), distanceUnitUtils.getHourMinuteSecondTime(workout.pauseDuration));
-        addKeyValue(getString(R.string.workoutStartTime), Instance.getInstance(this).dateTimeUtils.formatTime(new Date(workout.start)),
-                getString(R.string.workoutEndTime), Instance.getInstance(this).dateTimeUtils.formatTime(new Date(workout.end)));
+        addKeyValue(getString(R.string.workoutStartTime), Instance.getInstance(this).userDateTimeUtils.formatTime(new Date(workout.start)),
+                getString(R.string.workoutEndTime), Instance.getInstance(this).userDateTimeUtils.formatTime(new Date(workout.end)));
 
         addKeyValue(getString(R.string.workoutDistance), distanceUnitUtils.getDistance(workout.length), getString(R.string.workoutPace), distanceUnitUtils.getPace(workout.avgPace));
 
@@ -120,19 +123,27 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
             addHeightDiagram();
 
             heightDiagram.setOnClickListener(v -> startDiagramActivity(ShowWorkoutMapDiagramActivity.DIAGRAM_TYPE_HEIGHT));
+
+            addTitle(getString(R.string.sections));
+            addSectionList();
         }
+    }
 
-
+    private void addSectionList() {
+        SectionListView listView = new SectionListView(this);
+        SectionListModel listModel = new SectionListModel(workout, samples);
+        SectionListPresenter listPresenter = new SectionListPresenter(listView, listModel);
+        root.addView(listView);
     }
 
     private void startDiagramActivity(String diagramType) {
-        ShowWorkoutMapDiagramActivity.DIAGRAM_TYPE= diagramType;
+        ShowWorkoutMapDiagramActivity.DIAGRAM_TYPE = diagramType;
         startActivity(new Intent(ShowWorkoutActivity.this, ShowWorkoutMapDiagramActivity.class));
     }
 
 
     private void openEditCommentDialog() {
-        final EditText editText= new EditText(this);
+        final EditText editText = new EditText(this);
         editText.setText(workout.comment);
         editText.setSingleLine(true);
         editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
@@ -144,7 +155,7 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
     }
 
     private void changeComment(String comment) {
-        workout.comment= comment;
+        workout.comment = comment;
         Instance.getInstance(this).db.workoutDao().updateWorkout(workout);
         updateCommentText();
     }
@@ -167,7 +178,7 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
     }
 
     private String getDate() {
-        return Instance.getInstance(this).dateTimeUtils.formatDate(new Date(workout.start));
+        return Instance.getInstance(this).userDateTimeUtils.formatDate(new Date(workout.start));
     }
 
 
@@ -180,45 +191,46 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
         return true;
     }
 
-    public void deleteWorkout(){
+    public void deleteWorkout() {
         Instance.getInstance(this).db.workoutDao().deleteWorkout(workout);
         finish();
     }
 
-    private void showDeleteDialog(){
+    private void showDeleteDialog() {
         DialogUtils.showDeleteWorkoutDialog(this, this);
     }
 
-    private void exportToGpx(){
+    private void exportToGpx() {
         if (!hasStoragePermission()) {
             requestStoragePermissions();
             return;
         }
-        ProgressDialogController dialogController= new ProgressDialogController(this, getString(R.string.exporting));
+        ProgressDialogController dialogController = new ProgressDialogController(this, getString(R.string.exporting));
         dialogController.setIndeterminate(true);
         dialogController.show();
         new Thread(() -> {
-            try{
-                String file= getFilesDir().getAbsolutePath() + String.format("/shared/workout-%s-%s.gpx", workout.getPlainDateString(), workout.comment);
+            try {
+                String file = getFilesDir().getAbsolutePath() + String.format("/shared/workout-%s-%s.gpx", workout.getPlainDateString(), workout.comment);
                 File parent = new File(file).getParentFile();
                 if (!parent.exists() && !parent.mkdirs()) {
                     throw new IOException("Cannot write to " + file);
                 }
                 Uri uri = FileProvider.getUriForFile(getBaseContext(), BuildConfig.APPLICATION_ID + ".fileprovider", new File(file));
 
-                GpxExporter.exportWorkout(getBaseContext(), workout, new File(file));
+                IOHelper.GpxExporter.exportWorkout(workout, samples, new File(file));
                 dialogController.cancel();
                 mHandler.post(() -> FileUtils.saveOrShareFile(this, uri));
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
                 mHandler.post(() -> showErrorDialog(e, R.string.error, R.string.errorGpxExportFailed));
             }
         }).start();
     }
 
-    private OAuthConsumer oAuthConsumer= null;
-    private void prepareUpload(){
-        OAuthAuthentication authentication= new OAuthAuthentication(mHandler, this, new OAuthAuthentication.OAuthAuthenticationListener() {
+    private OAuthConsumer oAuthConsumer = null;
+
+    private void prepareUpload() {
+        OAuthAuthentication authentication = new OAuthAuthentication(mHandler, this, new OAuthAuthentication.OAuthAuthenticationListener() {
             @Override
             public void authenticationFailed() {
                 new AlertDialog.Builder(ShowWorkoutActivity.this)
@@ -230,7 +242,7 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
 
             @Override
             public void authenticationComplete(OAuthConsumer consumer) {
-                oAuthConsumer= consumer;
+                oAuthConsumer = consumer;
                 showUploadOptions();
             }
         });
@@ -239,8 +251,9 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
     }
 
     private AlertDialog dialog = null;
-    private void showUploadOptions(){
-        dialog= new AlertDialog.Builder(this)
+
+    private void showUploadOptions() {
+        dialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.actionUploadToOSM)
                 .setView(R.layout.dialog_upload_osm)
                 .setPositiveButton(R.string.upload, null) // Listener added later so that we can control if the dialog is dismissed on click
@@ -274,7 +287,7 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
 
     }
 
-    private void uploadToOsm(boolean cut, GpsTraceDetails.Visibility visibility, String description){
+    private void uploadToOsm(boolean cut, GpsTraceDetails.Visibility visibility, String description) {
         List<WorkoutSample> samples = new ArrayList<>(this.samples);
         new OsmTraceUploader(this, mHandler, workout, samples, visibility, oAuthConsumer, cut, description).upload();
     }
@@ -282,7 +295,7 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch(id){
+        switch (id) {
             case R.id.actionDeleteWorkout:
                 showDeleteDialog();
                 return true;

@@ -22,6 +22,7 @@ package de.tadris.fitness.activity.workout;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -78,13 +79,15 @@ public abstract class WorkoutActivity extends InformationActivity {
     protected IntervalSet usedIntervalSet;
     protected Interval[] intervals;
 
-    protected DistanceUnitUtils distanceUnitUtils = Instance.getInstance(this).distanceUnitUtils;
-    protected EnergyUnitUtils energyUnitUtils = Instance.getInstance(this).energyUnitUtils;
+    protected DistanceUnitUtils distanceUnitUtils;
+    protected EnergyUnitUtils energyUnitUtils;
 
     CombinedChart speedDiagram;
     CombinedChart heightDiagram;
 
     void initBeforeContent() {
+        distanceUnitUtils = Instance.getInstance(this).distanceUnitUtils;
+        energyUnitUtils = Instance.getInstance(this).energyUnitUtils;
         workout= selectedWorkout;
         samples= Arrays.asList(Instance.getInstance(this).db.workoutDao().getAllSamplesOfWorkout(workout.id));
         if (workout.intervalSetUsedId != 0) {
@@ -104,7 +107,7 @@ public abstract class WorkoutActivity extends InformationActivity {
     }
 
     private void addDiagram(SampleConverter converter) {
-        root.addView(getDiagram(converter), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, fullScreenItems ? ViewGroup.LayoutParams.MATCH_PARENT : getWindowManager().getDefaultDisplay().getWidth()*3/4));
+        root.addView(getDiagram(converter), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, fullScreenItems ? ViewGroup.LayoutParams.MATCH_PARENT : getMapHeight()/2));
     }
 
     boolean diagramsInteractive = false;
@@ -330,8 +333,6 @@ public abstract class WorkoutActivity extends InformationActivity {
             map.animate().alpha(1f).setDuration(1000).start();
         }, 1000);
 
-        map.getModel().mapViewPosition.setMapLimit(bounds);
-
         mapRoot= new LinearLayout(this);
         mapRoot.setOrientation(LinearLayout.VERTICAL);
         mapRoot.addView(map);
@@ -353,7 +354,9 @@ public abstract class WorkoutActivity extends InformationActivity {
     }
 
     private int getMapHeight() {
-        return getWindowManager().getDefaultDisplay().getWidth()*3/4;
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        return displayMetrics.widthPixels*3/4;
     }
 
     protected boolean hasSamples() {

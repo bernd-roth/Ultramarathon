@@ -139,12 +139,14 @@
     <string name="workoutTypeOther">Anderes</string>
     <string name="type">Typ</string>
     <string name="enterWorkout">Workout eingeben</string>
+    <string name="importWorkout">Workout importieren</string>
     <string name="setDuration">Dauer setzen</string>
     <string name="info">Info</string>
     <string name="OpenStreetMapAttribution">© OpenStreetMap Mitwirkende</string>
     <string name="theme">Thema</string>
     <string name="hintRestart">Bitte die App neustarten, damit die Änderungen wirksam werden</string>
     <string name="noComment">Kein Kommentar</string>
+    <string name="sections">Abschnitte</string>
 
     <string-array name="pref_announcement_mode">
         <item>Immer</item>
@@ -238,6 +240,8 @@
     <string name="currentTime">Aktuelle Uhrzeit</string>
     <string name="oClock">Uhr</string>
     <string name="unlockPhoneStopWorkout">Bitte das Telefon entsperren, um die Aufnahme zu beenden</string>
+    <string name="workout_statistics">Workout Statistiken</string>
+    <string name="workoutStatsHelpText">Dieser Screen zeigt historische Statistiken zu den Workouts. Um es zu verwenden, müssen man zunächst die Trainingsart angeben, indem man darauf klickt. Dann stellt man die Information, über die man etwas wissen möchte, und die Zeitspanne ein.\n\nWenn man z. B. \"Woche\" als Zeitspanne auswählt, werden alle Workouts jeder Woche in einem Datenpunkt zusammengefasst und entweder der Durchschnitt oder die Summe jeder Woche berechnet.</string>
     <string name="replaceOrMergeMessage">Datenbank ersetzen oder mit Backup zusammenführen?</string>
     <string name="replace">Ersetzen</string>
     <string name="merge">Zusammenführen</string>
@@ -263,5 +267,20 @@
         <item>24/07/2001</item>
         <item>07/24/2001</item>
     </string-array>
+    <string name="no_workouts_recorded_for_this_activity">Keine Workouts dieser Aktivität</string>
+    <string name="day">Tag</string>
+    <string name="week">Woche</string>
+    <string name="month">Monat</string>
+    <string name="year">Jahr</string>
+    <string name="min">Min</string>
+    <string name="max">Max</string>
+    <string name="avg">Durchschn.</string>
+    <string name="sum">Summe</string>
+    <string name="workoutNumber">Anzahl der Workouts</string>
+    <string name="statsFilter">Filtern:</string>
+    <string name="help">Hilfe</string>
+    <string name="dayInMonth">Tag des Monats</string>
+    <string name="singleWorkout">Einzelnes Workout</string>
+    <string name="calendarWeekYear">Kalendarwoche / Jahr</string>
 
 </resources>

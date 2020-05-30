@@ -80,7 +80,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutV
     public void onBindViewHolder(WorkoutViewHolder holder, final int position) {
         Context context = holder.root.getContext();
         Workout workout= workouts[position];
-        holder.dateText.setText(Instance.getInstance(context).dateTimeUtils.formatDateTime(new Date(workout.start)));
+        holder.dateText.setText(Instance.getInstance(context).userDateTimeUtils.formatDateTime(new Date(workout.start)));
         holder.typeText.setText(workout.getWorkoutType().title);
         if(workout.comment != null){
             if(workout.comment.length() > 33){
