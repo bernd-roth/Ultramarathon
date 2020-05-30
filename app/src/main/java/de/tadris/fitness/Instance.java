@@ -30,15 +30,14 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.tadris.fitness.activity.record.RecordWorkoutActivity;
 import de.tadris.fitness.data.AppDatabase;
 import de.tadris.fitness.data.UserPreferences;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.recording.LocationListener;
 import de.tadris.fitness.recording.WorkoutRecorder;
 import de.tadris.fitness.recording.announcement.TTSController;
-import de.tadris.fitness.util.DateTimeUtils;
 import de.tadris.fitness.util.FitoTrackThemes;
+import de.tadris.fitness.util.UserDateTimeUtils;
 import de.tadris.fitness.util.unit.DistanceUnitUtils;
 import de.tadris.fitness.util.unit.EnergyUnitUtils;
 
@@ -48,7 +47,7 @@ public class Instance {
 
     private static Instance instance;
     public static Instance getInstance(Context context){
-        if(context == null){
+        if (context == null) {
             Log.e("Instance", "no Context Provided");
         }
         if(instance == null){
@@ -64,7 +63,7 @@ public class Instance {
     public final List<TTSController.VoiceAnnouncementCallback> voiceAnnouncementCallbackListeners;
     public final UserPreferences userPreferences;
     public final FitoTrackThemes themes;
-    public final DateTimeUtils dateTimeUtils;
+    public final UserDateTimeUtils userDateTimeUtils;
     public final DistanceUnitUtils distanceUnitUtils;
     public final EnergyUnitUtils energyUnitUtils;
 
@@ -77,7 +76,7 @@ public class Instance {
         voiceAnnouncementCallbackListeners = new ArrayList<>();
         userPreferences= new UserPreferences(context);
         themes = new FitoTrackThemes(context);
-        dateTimeUtils = new DateTimeUtils(userPreferences);
+        userDateTimeUtils = new UserDateTimeUtils(userPreferences);
         distanceUnitUtils = new DistanceUnitUtils(context);
         energyUnitUtils = new EnergyUnitUtils(context);
         recorder = new WorkoutRecorder(context, WorkoutType.OTHER);

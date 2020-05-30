@@ -19,12 +19,18 @@
 
 package de.tadris.fitness.util.gpx;
 
+import android.annotation.SuppressLint;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @JacksonXmlRootElement(localName = "gpx")
 public class Gpx {
 
@@ -41,6 +47,11 @@ public class Gpx {
 
     @JacksonXmlElementWrapper(useWrapping = false)
     List<Track> trk;
+
+    // newly added attributes
+    private HashMap<String, String> xmlns;
+//    private List<Route> rte;
+//    private List<Waypoint> wpt;
 
     public Gpx(){}
 
@@ -76,4 +87,8 @@ public class Gpx {
     public List<Track> getTrk() {
         return trk;
     }
+
+    @SuppressLint("SimpleDateFormat")
+    public static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+
 }

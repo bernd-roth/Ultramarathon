@@ -22,13 +22,12 @@ package de.tadris.fitness.recording.information;
 import android.content.Context;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.recording.WorkoutRecorder;
 
-public class CurrentTime extends WorkoutInformation {
+public class CurrentTime extends RecordingInformation {
 
     public CurrentTime(Context context) {
         super(context);
@@ -53,10 +52,10 @@ public class CurrentTime extends WorkoutInformation {
 
         StringBuilder spokenTime = new StringBuilder();
 
-            long hours = currentTime.get(Calendar.HOUR_OF_DAY);
-            spokenTime.append(hours).append(" ");
-            spokenTime.append(getString(R.string.oClock)).append(" ")
-                    .append(getString(R.string.and)).append(" ");
+        long hours = currentTime.get(Calendar.HOUR_OF_DAY);
+        spokenTime.append(hours).append(" ");
+        spokenTime.append(getString(R.string.oClock)).append(" ")
+                .append(getString(R.string.and)).append(" ");
         long minutes = currentTime.get(Calendar.MINUTE);
         spokenTime.append(minutes).append(" ");
         spokenTime.append(getString(minutes == 1 ? R.string.timeMinuteSingular : R.string.timeMinutePlural));

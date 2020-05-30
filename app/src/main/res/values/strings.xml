@@ -115,6 +115,7 @@
     <string name="type">Type</string>
 
     <string name="enterWorkout">Enter Workout</string>
+    <string name="importWorkout">Import Workout</string>
 
     <string name="setDuration">Set Duration</string>
 
@@ -195,7 +196,7 @@
     <string name="selectIntervalSet">Select Interval Set</string>
     <string name="intervalSetSelected">Interval Set selected</string>
     <string name="intervalsIncludePauseTitle">Include Pause Time in Interval Training</string>
-    <string name="intervalsIncludePauseSummary">If true, the intervals will continue even if you do pauses in your workout.</string>
+    <string name="intervalsIncludePauseSummary">If activated, the intervals will continue even if you do pauses in your workout.</string>
     <string name="intervalTraining">Interval Training</string>
     <string name="intervalSet">Interval Set</string>
     <string name="intervalSets">Interval Sets</string>
@@ -239,13 +240,31 @@
     <string name="currentTime">Current Time</string>
     <string name="oClock">o Clock</string>
     <string name="unlockPhoneStopWorkout">Please unlock your phone to stop the recording</string>
+    <string name="no_workouts_recorded_for_this_activity">No workouts for this activity</string>
+    <string name="workout_statistics">Workout Statistics</string>
+    <string name="day">Day</string>
+    <string name="week">Week</string>
+    <string name="month">Month</string>
+    <string name="year">Year</string>
+    <string name="min">Min</string>
+    <string name="max">Max</string>
+    <string name="avg">Avg</string>
+    <string name="sum">Sum</string>
+    <string name="workoutNumber">Number of workouts</string>
+    <string name="statsFilter">Filter:</string>
+    <string name="help">Help</string>
+    <string name="calendarWeekYear">Calendar Week / Year</string>
+    <string name="dayInMonth">Day in Month</string>
+    <string name="singleWorkout">Single Workout</string>
+    <string name="workoutStatsHelpText">This screen shows historical stats of the workouts. To use it you first need to specify the workout type by clicking on it. Then set the information you want to know about and the time span. \n\nE.g. if you select \"Week\" as time span, all workouts of each week will be merged into one data point either calculating the average or sum of each week.</string>
+    <string name="dataSamples">Samples</string>
     <string name="announcementSuppressDuringCall">Suppress during call</string>
-
 
     <string-array name="pref_energy_units">
         <item>kcal</item>
         <item>Joule</item>
     </string-array>
+    <string name="sections">Sections</string>
 
     <string-array name="pref_announcement_mode">
         <item>Always</item>

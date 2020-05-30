@@ -19,6 +19,9 @@
 
 package de.tadris.fitness.util.gpx;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Metadata {
 
     private String name;
@@ -27,7 +30,6 @@ public class Metadata {
 
     public Metadata() {
     }
-
     public Metadata(String name, String desc, String time) {
         this.name = name;
         this.desc = desc;
