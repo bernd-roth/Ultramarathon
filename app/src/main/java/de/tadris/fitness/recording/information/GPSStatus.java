@@ -24,7 +24,7 @@ import android.content.Context;
 import de.tadris.fitness.R;
 import de.tadris.fitness.recording.WorkoutRecorder;
 
-public class GPSStatus extends WorkoutInformation {
+public class GPSStatus extends RecordingInformation {
 
     public GPSStatus(Context context) {
         super(context);

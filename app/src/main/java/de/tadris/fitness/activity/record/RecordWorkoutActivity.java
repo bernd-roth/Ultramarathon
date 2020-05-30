@@ -76,7 +76,7 @@ import de.tadris.fitness.recording.LocationListener;
 import de.tadris.fitness.recording.WorkoutRecorder;
 import de.tadris.fitness.recording.announcement.TTSController;
 import de.tadris.fitness.recording.information.InformationDisplay;
-import de.tadris.fitness.recording.information.WorkoutInformation;
+import de.tadris.fitness.recording.information.RecordingInformation;
 
 public class RecordWorkoutActivity extends FitoTrackActivity implements LocationListener.LocationChangeListener,
         WorkoutRecorder.WorkoutRecorderListener, TTSController.VoiceAnnouncementCallback,
@@ -97,7 +97,6 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
     private final InfoViewHolder[] infoViews = new InfoViewHolder[4];
     private TextView timeView;
     private TextView gpsStatusView;
-    private TextView attribution;
     private View waitingForGPSOverlay;
     private Button startButton;
     private boolean gpsFound = false;
@@ -145,7 +144,6 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
         waitingForGPSOverlay = findViewById(R.id.recorderWaitingOverlay);
         waitingForGPSOverlay.setVisibility(View.VISIBLE);
 
-        attribution = findViewById(R.id.recordMapAttribution);
         startButton = findViewById(R.id.recordStart);
         startButton.setEnabled(false);
         startButton.setOnClickListener(v -> {
@@ -221,11 +219,6 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
                 waitingForGPSOverlay.setVisibility(View.GONE);
             }
         }).start();
-        hideOSMAttribution();
-    }
-
-    private void hideOSMAttribution() {
-        attribution.animate().alpha(0f).setDuration(1000).setStartDelay(5000).start();
     }
 
     private void setupMap() {
@@ -605,7 +598,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
     }
 
     @Override
-    public void onSelectWorkoutInformation(int slot, WorkoutInformation information) {
+    public void onSelectWorkoutInformation(int slot, RecordingInformation information) {
         updateDescription();
     }
 }

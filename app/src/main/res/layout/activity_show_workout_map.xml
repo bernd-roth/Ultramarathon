@@ -25,12 +25,29 @@
     android:orientation="vertical"
     tools:context=".activity.workout.ShowWorkoutMapActivity">
 
-    <LinearLayout
-        android:id="@+id/showWorkoutMapParent"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/showWorkoutMapParent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/recordMapAttribution"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_margin="5dp"
+            android:text="@string/OpenStreetMapAttribution"
+            android:textColor="@color/textColorLight"
+            android:textSize="12sp" />
+
+
+    </FrameLayout>
 
 </LinearLayout>

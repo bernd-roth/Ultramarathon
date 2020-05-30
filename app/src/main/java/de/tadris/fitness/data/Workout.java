@@ -28,7 +28,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
 
@@ -109,9 +108,16 @@ public class Workout{
     public String getDateString(){
         return SimpleDateFormat.getDateTimeInstance().format(new Date(start));
     }
+
     @JsonIgnore
     public String getSafeDateString(){
         return new SimpleDateFormat("yyyy-MM-dd_HH-mm", Locale.getDefault()).format(new Date(start));
+    }
+
+    @JsonIgnore
+    public String getSafeComment(){
+        return this.comment.replaceAll("[^0-9a-zA-Z-_]+","_") // replace all unwanted chars by `_`
+                .substring(0,50); // cut the comment after 50 Chars
     }
 
     @JsonIgnore

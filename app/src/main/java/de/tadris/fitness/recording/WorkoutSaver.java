@@ -33,11 +33,11 @@ import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.util.AltitudeCorrection;
 import de.tadris.fitness.util.CalorieCalculator;
 
-class WorkoutSaver {
+public class WorkoutSaver {
 
     private final Context context;
-    private final Workout workout;
-    private final List<WorkoutSample> samples;
+    protected final Workout workout;
+    protected final List<WorkoutSample> samples;
     private final AppDatabase db;
 
     public WorkoutSaver(Context context, Workout workout, List<WorkoutSample> samples) {
@@ -61,7 +61,7 @@ class WorkoutSaver {
         storeInDatabase();
     }
 
-    private void setIds(){
+    protected void setIds() {
         workout.id= System.currentTimeMillis();
         int i= 0;
         for(WorkoutSample sample : samples) {
@@ -82,7 +82,7 @@ class WorkoutSaver {
         }
     }
 
-    private void setSimpleValues(){
+    protected void setSimpleValues() {
         double length= 0;
         for(int i= 1; i < samples.size(); i++){
             double sampleLength= samples.get(i - 1).toLatLong().sphericalDistance(samples.get(i).toLatLong());
@@ -93,7 +93,7 @@ class WorkoutSaver {
         workout.avgPace= ((double)workout.duration / 1000 / 60) / ((double) workout.length / 1000);
     }
 
-    private void setTopSpeed(){
+    protected void setTopSpeed() {
         double topSpeed= 0;
         for(WorkoutSample sample : samples){
             if(sample.speed > topSpeed){
@@ -167,7 +167,7 @@ class WorkoutSaver {
         return pressureSum  / samples.size();
     }
 
-    private void setAscentAndDescent(){
+    protected void setAscentAndDescent() {
         workout.ascent = 0;
         workout.descent = 0;
 
@@ -198,12 +198,12 @@ class WorkoutSaver {
 
     }
 
-    private void setCalories() {
+    protected void setCalories() {
         // Ascent has to be set previously
         workout.calorie = CalorieCalculator.calculateCalories(workout, Instance.getInstance(context).userPreferences.getUserWeight());
     }
 
-    private void storeInDatabase(){
+    protected void storeInDatabase() {
         db.workoutDao().insertWorkoutAndSamples(workout, samples.toArray(new WorkoutSample[0]));
     }
 }

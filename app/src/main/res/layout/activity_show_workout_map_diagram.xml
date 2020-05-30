@@ -37,17 +37,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/showWorkoutMapParent"
+    <FrameLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/showWorkoutMapParent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" />
+
+        <TextView
+            android:id="@+id/recordMapAttribution"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_margin="5dp"
+            android:text="@string/OpenStreetMapAttribution"
+            android:textColor="@color/textColorLight"
+            android:textSize="12sp" />
+
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/showWorkoutDiagramParent"
