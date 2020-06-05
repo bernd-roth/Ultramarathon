@@ -54,6 +54,7 @@ public class WorkoutSaver {
         setTopSpeed();
 
         setElevation();
+        setRoundedSampleElevation();
         setAscentAndDescent();
 
         setCalories();
@@ -167,22 +168,33 @@ public class WorkoutSaver {
         return pressureSum  / samples.size();
     }
 
-    protected void setAscentAndDescent() {
-        workout.ascent = 0;
-        workout.descent = 0;
+    private void setRoundedSampleElevation() {
+        // Should only be done on newly recorded samples
+        roundSampleElevation();
+        for (WorkoutSample sample : samples) {
+            sample.elevation = sample.tmpElevation;
+        }
+    }
 
-        // First calculate a floating average to eliminate pressure noise to influence our ascent/descent
+    private void roundSampleElevation() {
         int range = 7;
-        for(int i= 0; i < samples.size(); i++){
+        for (int i = 0; i < samples.size(); i++) {
             int minIndex = Math.max(i - range, 0);
             int maxIndex = Math.min(i + range, samples.size() - 1);
             samples.get(i).tmpElevation = getAverageElevation(samples.subList(minIndex, maxIndex));
         }
+    }
+
+    protected void setAscentAndDescent() {
+        workout.ascent = 0;
+        workout.descent = 0;
+
+        // Eliminate pressure noise
+        roundSampleElevation();
 
         // Now sum up the ascent/descent
         for(int i= 0; i < samples.size(); i++) {
             WorkoutSample sample = samples.get(i);
-            sample.elevation= sample.tmpElevation;
             if(i >= 1){
                 WorkoutSample lastSample= samples.get(i-1);
                 double diff= sample.elevation - lastSample.elevation;
