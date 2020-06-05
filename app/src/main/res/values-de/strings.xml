@@ -242,6 +242,9 @@
     <string name="unlockPhoneStopWorkout">Bitte das Telefon entsperren, um die Aufnahme zu beenden</string>
     <string name="workout_statistics">Workout Statistiken</string>
     <string name="workoutStatsHelpText">Dieser Screen zeigt historische Statistiken zu den Workouts. Um es zu verwenden, müssen man zunächst die Trainingsart angeben, indem man darauf klickt. Dann stellt man die Information, über die man etwas wissen möchte, und die Zeitspanne ein.\n\nWenn man z. B. \"Woche\" als Zeitspanne auswählt, werden alle Workouts jeder Woche in einem Datenpunkt zusammengefasst und entweder der Durchschnitt oder die Summe jeder Woche berechnet.</string>
+    <string name="replaceOrMergeMessage">Datenbank ersetzen oder mit Backup zusammenführen?</string>
+    <string name="replace">Ersetzen</string>
+    <string name="merge">Zusammenführen</string>
 
     <string-array name="pref_energy_units">
         <item>kcal</item>

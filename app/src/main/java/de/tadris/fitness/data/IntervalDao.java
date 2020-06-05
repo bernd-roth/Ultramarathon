@@ -28,6 +28,9 @@ import androidx.room.Update;
 @Dao
 public interface IntervalDao {
 
+    @Query("SELECT * FROM interval WHERE id = :id")
+    Interval findById(long id);
+
     @Query("SELECT * FROM interval_set WHERE id = :id")
     IntervalSet getSet(long id);
 
@@ -51,5 +54,4 @@ public interface IntervalDao {
 
     @Delete
     void deleteInterval(Interval interval);
-
 }

@@ -31,6 +31,7 @@ import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.AppDatabase;
 import de.tadris.fitness.data.Interval;
+import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutSample;
 
@@ -39,17 +40,19 @@ public class RestoreController {
     private final Context context;
     private final Uri input;
     private final ImportStatusListener listener;
+    private final boolean replace;
     private FitoTrackDataContainer dataContainer;
     private final AppDatabase database;
 
-    public RestoreController(Context context, Uri input, ImportStatusListener listener) {
+    public RestoreController(Context context, Uri input, boolean replace, ImportStatusListener listener) {
         this.context = context;
         this.input = input;
+        this.replace = replace;
         this.listener = listener;
-        this.database= Instance.getInstance(context).db;
+        this.database = Instance.getInstance(context).db;
     }
 
-    public void restoreData() throws IOException, UnsupportedVersionException{
+    public void restoreData() throws IOException, UnsupportedVersionException {
         listener.onStatusChanged(0, context.getString(R.string.loadingFile));
         loadDataFromFile();
         checkVersion();
@@ -69,33 +72,42 @@ public class RestoreController {
         }
     }
 
-    private void restoreDatabase(){
+    private void restoreDatabase() {
         database.runInTransaction(() -> {
-            resetDatabase();
+            if (replace) {
+                resetDatabase();
+            }
             restoreWorkouts();
             restoreSamples();
             restoreIntervalSets();
         });
     }
 
-    private void resetDatabase(){
+    private void resetDatabase() {
         database.clearAllTables();
     }
 
-    private void restoreWorkouts(){
+    private void restoreWorkouts() {
         listener.onStatusChanged(60, context.getString(R.string.workouts));
         if (dataContainer.getWorkouts() != null) {
             for (Workout workout : dataContainer.getWorkouts()) {
-                database.workoutDao().insertWorkout(workout);
+                // Only Import Unknown Workouts
+                if (database.workoutDao().findById(workout.id) == null) {
+                    database.workoutDao().insertWorkout(workout);
+                }
             }
         }
     }
 
-    private void restoreSamples(){
+    private void restoreSamples() {
         listener.onStatusChanged(80, context.getString(R.string.locationData));
         if (dataContainer.getSamples() != null) {
             for (WorkoutSample sample : dataContainer.getSamples()) {
-                database.workoutDao().insertSample(sample);
+                // Only Import Unknown Samples with Known Workout
+                if (database.workoutDao().findById(sample.workoutId) != null &&
+                        database.workoutDao().findSampleById(sample.id) == null) {
+                    database.workoutDao().insertSample(sample);
+                }
             }
         }
     }
@@ -110,16 +122,23 @@ public class RestoreController {
     }
 
     private void restoreIntervalSet(IntervalSetContainer container) {
-        database.intervalDao().insertIntervalSet(container.getSet());
+        IntervalSet set = container.getSet();
+        // Only Import unknownInterval Sets
+        if(database.intervalDao().getSet(set.id) == null) {
+            database.intervalDao().insertIntervalSet(set);
+        }
         if (container.getIntervals() != null) {
             for (Interval interval : container.getIntervals()) {
-                database.intervalDao().insertInterval(interval);
+                // Only Import Unknown Intervals
+                if(database.intervalDao().findById(interval.id) == null) {
+                    database.intervalDao().insertInterval(interval);
+                }
             }
         }
     }
 
 
-    public interface ImportStatusListener{
+    public interface ImportStatusListener {
         void onStatusChanged(int progress, String action);
     }
 

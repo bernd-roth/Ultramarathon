@@ -28,6 +28,12 @@ import androidx.room.Update;
 @Dao
 public interface WorkoutDao {
 
+    @Query("SELECT * FROM workout WHERE id = :id")
+    Workout findById(long id);
+
+    @Query("SELECT * FROM workout_sample WHERE id = :id")
+    WorkoutSample findSampleById(long id);
+
     @Query("SELECT * FROM workout_sample WHERE workout_id = :workout_id")
     WorkoutSample[] getAllSamplesOfWorkout(long workout_id);
 
