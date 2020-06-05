@@ -257,10 +257,10 @@
     <string name="dayInMonth">Day in Month</string>
     <string name="singleWorkout">Single Workout</string>
     <string name="workoutStatsHelpText">This screen shows historical stats of the workouts. To use it you first need to specify the workout type by clicking on it. Then set the information you want to know about and the time span. \n\nE.g. if you select \"Week\" as time span, all workouts of each week will be merged into one data point either calculating the average or sum of each week.</string>
-    <string name="dataSamples">Samples</string>
     <string name="replaceOrMergeMessage">Replace or merge database with backup file?</string>
     <string name="replace">Replace</string>
     <string name="merge">Merge</string>
+    <string name="workoutImported">Workout imported successfully</string>
 
     <string-array name="pref_energy_units">
         <item>kcal</item>
