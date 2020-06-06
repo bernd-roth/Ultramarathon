@@ -245,6 +245,7 @@
     <string name="replaceOrMergeMessage">Datenbank ersetzen oder mit Backup zusammenführen?</string>
     <string name="replace">Ersetzen</string>
     <string name="merge">Zusammenführen</string>
+    <string name="announcementSuppressDuringCall">Während Anruf unterdrücken</string>
 
     <string-array name="pref_energy_units">
         <item>kcal</item>
