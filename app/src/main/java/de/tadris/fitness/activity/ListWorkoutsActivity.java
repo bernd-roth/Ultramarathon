@@ -32,6 +32,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -145,17 +146,23 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
         ProgressDialogController dialogController= new ProgressDialogController(this, getString(R.string.importWorkout));
         dialogController.show();
 
-        try{
-            InputStream stream = getContentResolver().openInputStream(uri);
-            IOHelper.GpxImporter.importWorkout(getApplicationContext(), stream);
-            mHandler.post(dialogController::cancel);
-        }catch (Exception e){
-            e.printStackTrace();
-            mHandler.post(() -> {
-                dialogController.cancel();
-                showErrorDialog(e, R.string.error, R.string.errorImportFailed);
-            });
-        }
+        new Thread(() -> {
+            try {
+                InputStream stream = getContentResolver().openInputStream(uri);
+                IOHelper.GpxImporter.importWorkout(getApplicationContext(), stream);
+                mHandler.post(() -> {
+                    Toast.makeText(this, R.string.workoutImported, Toast.LENGTH_LONG).show();
+                    dialogController.cancel();
+                    refresh();
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+                mHandler.post(() -> {
+                    dialogController.cancel();
+                    showErrorDialog(e, R.string.error, R.string.errorImportFailed);
+                });
+            }
+        }).start();
     }
 
     private void checkFirstStart() {

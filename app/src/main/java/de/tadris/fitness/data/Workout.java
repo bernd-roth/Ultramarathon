@@ -110,8 +110,14 @@ public class Workout{
     }
 
     @JsonIgnore
-    public String getPlainDateString() {
-        return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.getDefault()).format(new Date(start));
+    public String getSafeDateString(){
+        return new SimpleDateFormat("yyyy-MM-dd_HH-mm", Locale.getDefault()).format(new Date(start));
+    }
+
+    @JsonIgnore
+    public String getSafeComment(){
+        return this.comment.replaceAll("[^0-9a-zA-Z-_]+","_") // replace all unwanted chars by `_`
+                .substring(0, Math.min(this.comment.length(), 50)); // cut the comment after 50 Chars
     }
 
     @JsonIgnore
