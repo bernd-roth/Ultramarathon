@@ -91,8 +91,8 @@ public class RestoreController {
         listener.onStatusChanged(60, context.getString(R.string.workouts));
         if (dataContainer.getWorkouts() != null) {
             for (Workout workout : dataContainer.getWorkouts()) {
-                // Only Import Unknown Workouts
-                if (database.workoutDao().findById(workout.id) == null) {
+                // Only Import Unknown Workouts on merge
+                if (replace || database.workoutDao().findById(workout.id) == null) {
                     database.workoutDao().insertWorkout(workout);
                 }
             }
@@ -103,9 +103,10 @@ public class RestoreController {
         listener.onStatusChanged(80, context.getString(R.string.locationData));
         if (dataContainer.getSamples() != null) {
             for (WorkoutSample sample : dataContainer.getSamples()) {
-                // Only Import Unknown Samples with Known Workout
-                if (database.workoutDao().findById(sample.workoutId) != null &&
-                        database.workoutDao().findSampleById(sample.id) == null) {
+                // Only import unknown samples with known workout on merge
+                // Query not necessary on replace because data was cleared
+                if (replace || (database.workoutDao().findById(sample.workoutId) != null &&
+                        database.workoutDao().findSampleById(sample.id) == null)) {
                     database.workoutDao().insertSample(sample);
                 }
             }
