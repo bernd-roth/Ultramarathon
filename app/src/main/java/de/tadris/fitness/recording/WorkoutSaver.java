@@ -44,20 +44,30 @@ public class WorkoutSaver {
         this.context = context;
         this.workout = workout;
         this.samples = samples;
-        db= Instance.getInstance(context).db;
+        this.db = Instance.getInstance(context).db;
+    }
+
+    public void finalizeWorkout(){
+        clearSamplesWithSameTime(true);
+        calculateData();
+
+        updateInDatabase();
+    }
+
+    public void discardWorkout(){
+        deleteWorkoutAndSamples();
+    }
+
+    public void addSample(WorkoutSample sample){
+        sample.id = this.workout.id + this.samples.size();
+        db.workoutDao().insertSample(sample);
     }
 
     public void saveWorkout(){
         setIds();
-        clearSamplesWithSameTime();
-        setSimpleValues();
-        setTopSpeed();
 
-        setElevation();
-        setRoundedSampleElevation();
-        setAscentAndDescent();
-
-        setCalories();
+        clearSamplesWithSameTime(false);
+        calculateData();
 
         storeInDatabase();
     }
@@ -72,12 +82,26 @@ public class WorkoutSaver {
         }
     }
 
-    private void clearSamplesWithSameTime(){
+    private void calculateData(){
+        setSimpleValues();
+        setTopSpeed();
+
+        setElevation();
+        setRoundedSampleElevation();
+        setAscentAndDescent();
+
+        setCalories();
+    }
+
+    private void clearSamplesWithSameTime(boolean delete){
         for(int i= samples.size()-2; i >= 0; i--){
             WorkoutSample sample= samples.get(i);
             WorkoutSample lastSample= samples.get(i+1);
             if(sample.absoluteTime == lastSample.absoluteTime){
                 samples.remove(lastSample);
+                if(delete) {
+                    db.workoutDao().deleteSample(lastSample); // delete sample also from DB
+                }
                 Log.i("WorkoutManager", "Removed samples at " + sample.absoluteTime + " rel: " + sample.relativeTime + "; " + lastSample.relativeTime);
             }
         }
@@ -217,5 +241,14 @@ public class WorkoutSaver {
 
     protected void storeInDatabase() {
         db.workoutDao().insertWorkoutAndSamples(workout, samples.toArray(new WorkoutSample[0]));
+    }
+
+    protected void updateInDatabase() {
+        db.workoutDao().updateWorkout(workout);
+    }
+
+    protected void deleteWorkoutAndSamples(){
+        db.workoutDao().deleteWorkoutAndSamples(workout, samples.toArray(new WorkoutSample[0]));
+
     }
 }
