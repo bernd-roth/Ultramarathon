@@ -35,8 +35,8 @@ android {
         applicationId "de.tadris.fitness"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 610
-        versionName "6.1"
+        versionCode 700
+        versionName "7.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -94,6 +94,7 @@ dependencies {
         compile.exclude group: 'net.sf.kxml', module: 'kxml2' // already included in Android
     }
 
+    // Parsing date strings in GPX-files
     implementation 'com.github.sisyphsu:dateparser:1.0.4'
     annotationProcessor 'org.projectlombok:lombok:1.18.8'
 
