@@ -32,6 +32,7 @@ import org.mapsforge.core.model.LatLong;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.tadris.fitness.BuildConfig;
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.IntervalSet;
@@ -103,7 +104,6 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
         this.workout = workout;
         this.samples.addAll(samples);
 
-        // TODO re calculate running time...
         // time = 0; x
         // pauseTime = 0; x
         // lastResume; x
@@ -112,7 +112,7 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
         // distance = 0; x
         reconstructBySamples();
 
-        workoutSaver = new WorkoutSaver(this.context, workout, samples);
+        workoutSaver = new WorkoutSaver(this.context, this.workout, this.samples);
         init();
     }
 
@@ -134,6 +134,13 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
             prefLocation = sample.toLatLong();
             lastSampleTime = sample.absoluteTime;
             time = sample.relativeTime; // Update Times Always To Sample RelTime
+        }
+        if(System.currentTimeMillis()-lastSampleTime > PAUSE_TIME) {
+            state = RecordingState.PAUSED;
+            time += time + PAUSE_TIME;
+            lastPause = lastSampleTime + PAUSE_TIME;
+        }else{
+            state = RecordingState.RUNNING;
         }
     }
 
@@ -162,7 +169,13 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
             Log.i("Recorder", "Start");
             workout.id = System.currentTimeMillis();
             workout.start = System.currentTimeMillis();
-            workoutSaver.storeInDatabase(); // Already Persist Workout
+            //Init Workout To Be able to Save
+            workout.end = -1L;
+            workout.avgSpeed = -1d;
+            workout.topSpeed = -1d;
+            workout.ascent = -1f;
+            workout.descent = -1f;
+            workoutSaver.storeWorkoutInDatabase(); // Already Persist Workout
             resume();
         } else if (state == RecordingState.PAUSED) {
             resume();
@@ -185,7 +198,9 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
      * @return is still active workout
      */
     boolean handleWatchdog() {
-        Log.d("WorkoutRecorder", "handleWatchdog " + this.getState().toString() + " samples: " + samples.size() + " autoTout: " + autoTimeout + "inst: " + this.toString());
+        if(BuildConfig.DEBUG) {
+            Log.d("WorkoutRecorder", "handleWatchdog " + this.getState().toString() + " samples: " + samples.size() + " autoTout: " + autoTimeout + " inst: " + this.toString());
+        }
         if (isActive()) {
             checkSignalState();
             synchronized (samples) {
@@ -255,7 +270,6 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
     }
 
     public void stop() {
-        Log.i("Recorder", "Stop with " + getSampleCount() + " Samples");
         if (state == RecordingState.PAUSED) {
             resume();
         }
@@ -265,6 +279,7 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
         workout.pauseDuration = pauseTime;
         state = RecordingState.STOPPED;
         Instance.getInstance(context).locationChangeListeners.remove(this);
+        Log.i("Recorder", "Stop with " + getSampleCount() + " Samples");
     }
 
     public void save() {
@@ -448,6 +463,10 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
 
     public List<Interval> getIntervalList() {
         return intervalList;
+    }
+
+    public void discard() {
+        workoutSaver.discardWorkout();
     }
 
     public enum RecordingState {
