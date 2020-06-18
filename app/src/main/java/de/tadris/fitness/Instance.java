@@ -27,7 +27,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import de.tadris.fitness.data.AppDatabase;
-import de.tadris.fitness.data.DatabaseProvider;
 import de.tadris.fitness.data.UserPreferences;
 import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutSample;
@@ -76,7 +75,7 @@ public class Instance {
         userDateTimeUtils = new UserDateTimeUtils(userPreferences);
         distanceUnitUtils = new DistanceUnitUtils(context);
         energyUnitUtils = new EnergyUnitUtils(context);
-        db = DatabaseProvider.provide(context);
+        db = AppDatabase.provideDatabase(context);
 
         recorder = restoreRecorder(context);
     }
