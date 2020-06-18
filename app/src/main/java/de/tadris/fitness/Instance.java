@@ -83,7 +83,7 @@ public class Instance {
 
     private WorkoutRecorder restoreRecorder(Context context){
         Workout lastWorkout = db.workoutDao().getLastWorkout();
-        if (lastWorkout.end == 0){
+        if (lastWorkout != null && lastWorkout.end == -1){
             List<WorkoutSample> samples = Arrays.asList(db.workoutDao().getAllSamplesOfWorkout(lastWorkout.id));
             return new WorkoutRecorder(context, lastWorkout, samples);
         }
