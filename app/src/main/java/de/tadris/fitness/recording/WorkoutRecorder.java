@@ -50,11 +50,12 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
     private static final int AUTO_TIMEOUT_MULTIPLYER = 1_000 * 60; // minutes to ms
     private static final int DEFAULT_WORKOUT_AUTO_TIMEOUT = 20;
 
+    private final long autoTimeout;
     private final Context context;
     private final Workout workout;
-    private final long autoTimeout;
-    private RecordingState state;
     private final List<WorkoutSample> samples = new ArrayList<>();
+    private final WorkoutSaver workoutSaver;
+    private RecordingState state;
     private long time = 0;
     private long pauseTime = 0;
     private long lastResume;
@@ -87,7 +88,53 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
 
         this.workout.setWorkoutType(workoutType);
 
+        workoutSaver = new WorkoutSaver(this.context, workout, samples);
+
         init();
+    }
+
+    public WorkoutRecorder(Context context, Workout workout, List<WorkoutSample> samples){
+        this.context = context;
+        this.state = RecordingState.PAUSED;
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        this.autoTimeout = prefs.getInt("autoTimeoutPeriod", DEFAULT_WORKOUT_AUTO_TIMEOUT) * AUTO_TIMEOUT_MULTIPLYER;
+
+        this.workout = workout;
+        this.samples.addAll(samples);
+
+        // TODO re calculate running time...
+        // time = 0; x
+        // pauseTime = 0; x
+        // lastResume; x
+        // lastPause = 0; x
+        // lastSampleTime = 0; x
+        // distance = 0; x
+        reconstructBySamples();
+
+        workoutSaver = new WorkoutSaver(this.context, workout, samples);
+        init();
+    }
+
+    private void reconstructBySamples(){
+        lastResume = workout.start;
+        lastSampleTime = workout.start;
+        LatLong prefLocation = null;
+        for(WorkoutSample sample: samples){
+            long timeDiff = sample.absoluteTime - lastSampleTime;
+            if (timeDiff > PAUSE_TIME){ // Handle Pause
+                lastPause = lastSampleTime+PAUSE_TIME; // Also add the Minimal Pause Time ;D
+                lastResume = sample.absoluteTime; // Workout resumed at new sample
+                pauseTime += timeDiff-PAUSE_TIME; // Add Time Diff without Pause Time
+            }
+            if(prefLocation!=null){ //Update Distance
+                double sampleDistance = prefLocation.sphericalDistance(sample.toLatLong());
+                distance+=sampleDistance;
+            }
+            prefLocation = sample.toLatLong();
+            lastSampleTime = sample.absoluteTime;
+            time = sample.relativeTime; // Update Times Always To Sample RelTime
+        }
     }
 
     public List<WorkoutRecorderListener> getWorkoutRecorderListeners() {
@@ -113,7 +160,9 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
     public void start() {
         if (state == RecordingState.IDLE) {
             Log.i("Recorder", "Start");
+            workout.id = System.currentTimeMillis();
             workout.start = System.currentTimeMillis();
+            workoutSaver.storeInDatabase(); // Already Persist Workout
             resume();
         } else if (state == RecordingState.PAUSED) {
             resume();
@@ -224,7 +273,8 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
         }
         Log.i("Recorder", "Save");
         synchronized (samples) {
-            new WorkoutSaver(context, workout, samples).saveWorkout();
+            //new WorkoutSaver(context, workout, samples).saveWorkout();
+            workoutSaver.finalizeWorkout();
         }
         saved = true;
     }
@@ -278,7 +328,11 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
             sample.tmpPressure = -1;
         }
         synchronized (samples) {
-            samples.add(sample);
+            if(workoutSaver == null){
+                throw new RuntimeException("Missing WorkoutSaver for Recorder");
+            }
+            workoutSaver.addSample(sample); // already persist to db
+            samples.add(sample); // add to recorder list
         }
     }
 
