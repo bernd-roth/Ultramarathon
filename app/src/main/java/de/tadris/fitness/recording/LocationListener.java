@@ -40,9 +40,11 @@ import androidx.core.app.NotificationManagerCompat;
 import org.mapsforge.core.model.LatLong;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import de.tadris.fitness.BuildConfig;
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.activity.record.RecordWorkoutActivity;
@@ -53,6 +55,8 @@ import de.tadris.fitness.recording.information.GPSStatus;
 import de.tadris.fitness.util.NotificationHelper;
 
 public class LocationListener extends Service {
+
+    private Date serviceStartTime;
 
     /**
      * @param location the location whose geographical coordinates should be converted.
@@ -174,6 +178,7 @@ public class LocationListener extends Service {
         Log.i(TAG, "onStartCommand");
         super.onStartCommand(intent, flags, startId);
 
+        serviceStartTime = new Date();
         Notification notification = this.getNotification();
 
         startForeground(NOTIFICATION_ID, notification);
@@ -189,9 +194,15 @@ public class LocationListener extends Service {
                     getText(R.string.workoutDuration),
                     instance.distanceUnitUtils.getHourMinuteSecondTime(instance.recorder.getDuration()));
         }
+        if(BuildConfig.DEBUG && serviceStartTime != null) {
+            contentText = String.format("%s\n\nServiceCreateTime: %s",
+                    contentText,
+                    instance.userDateTimeUtils.formatTime(serviceStartTime));
+        }
         Notification.Builder builder = new Notification.Builder(this)
                 .setContentTitle(getText(R.string.trackerRunning))
                 .setContentText(contentText)
+                .setStyle(new Notification.BigTextStyle().bigText(contentText))
                 .setSmallIcon(R.drawable.notification);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             NotificationHelper.createChannels(this);
@@ -306,7 +317,7 @@ public class LocationListener extends Service {
                     if (!instance.recorder.getWorkoutRecorderListeners().contains(recordListener)) {
                         instance.recorder.getWorkoutRecorderListeners().add(recordListener);
                     }
-                    while (instance.recorder.handleWatchdog()) {
+                    while (instance.recorder.handleWatchdog() && running) {
                         updateNotification();
                         // UPDATE INTERVAL LIST IF NEEDED
                         List<Interval> intervalList = instance.recorder.getIntervalList();
@@ -319,6 +330,7 @@ public class LocationListener extends Service {
                         announcements.check();
                         Thread.sleep(WATCHDOG_INTERVAL);
                     }
+                    Thread.sleep(WATCHDOG_INTERVAL); // Additional Retry Interval
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -331,7 +343,7 @@ public class LocationListener extends Service {
     }
 
     private void initializeWatchdog() {
-        if (mWatchdogThread == null) {
+        if (mWatchdogThread == null || !mWatchdogThread.isAlive()) {
             mWatchdogRunner = new WatchDogRunner();
             mWatchdogThread = new Thread(mWatchdogRunner, "WorkoutWatchdog");
         }
