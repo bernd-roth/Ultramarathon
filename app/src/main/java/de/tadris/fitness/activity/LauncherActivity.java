@@ -55,13 +55,16 @@ public class LauncherActivity extends Activity {
                 recorder.getState() == WorkoutRecorder.RecordingState.RUNNING) {
             // Resume to running Workout
             Intent recorderActivityIntent = new Intent(this, RecordWorkoutActivity.class);
+            recorderActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             recorderActivityIntent.setAction(RecordWorkoutActivity.RESUME_ACTION);
             startActivity(recorderActivityIntent);
             finish();
             overridePendingTransition(R.anim.fade_in, R.anim.stay);
         } else {
             // Go to Workout List
-            startActivity(new Intent(this, ListWorkoutsActivity.class));
+            Intent listWorkoutActivityIntent = new Intent(this, ListWorkoutsActivity.class);
+            listWorkoutActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(listWorkoutActivityIntent);
             finish();
             overridePendingTransition(R.anim.fade_in, R.anim.stay);
         }

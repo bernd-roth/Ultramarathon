@@ -108,6 +108,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
     private boolean voiceFeedbackAvailable = false;
     private Thread updater;
+    private boolean finished;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -478,6 +479,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
     @Override
     public void onResume() {
         super.onResume();
+        finished = false;
         enableLockScreenVisibility();
         invalidateOptionsMenu();
         downloadLayer.onResume();
@@ -542,11 +544,14 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
         }
     }
 
-    private void activityFinish(){
-        Intent launcherIntent = new Intent(this, LauncherActivity.class);
-        launcherIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        this.startActivity(launcherIntent);
-        this.finish();
+    private synchronized void activityFinish(){
+        if(!this.finished) {
+            this.finished = true;
+            this.finish();
+            Intent launcherIntent = new Intent(this, LauncherActivity.class);
+            launcherIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            this.startActivity(launcherIntent);
+        }
     }
 
     @Override
