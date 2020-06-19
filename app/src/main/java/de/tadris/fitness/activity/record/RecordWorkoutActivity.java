@@ -303,7 +303,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
     }
 
     private void stop() {
-        if(instance.recorder.getState()!= WorkoutRecorder.RecordingState.IDLE) {
+        if(instance.recorder.getState() != WorkoutRecorder.RecordingState.IDLE) {
             instance.recorder.stop();
             if (instance.recorder.getSampleCount() > 3) {
                 showEnterDescriptionDialog();
@@ -550,7 +550,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
     @Override
     public void onBackPressed() {
-        if (instance.recorder.getSampleCount() > 3) {
+        if(instance.recorder.isActive() && instance.recorder.getState() != WorkoutRecorder.RecordingState.IDLE){
             showAreYouSureToStopDialog();
         } else {
             super.onBackPressed();
