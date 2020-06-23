@@ -113,10 +113,10 @@ public class BackupSettingsActivity extends FitoTrackSettingsActivity {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.importBackup)
                 .setMessage(R.string.replaceOrMergeMessage)
-                .setNegativeButton(R.string.replace, ((dialog, which) -> {
+                .setPositiveButton(R.string.replace, ((dialog, which) -> {
                     showReplaceImport();
                 }))
-                .setPositiveButton(R.string.merge, ((dialog, which) -> {
+                .setNegativeButton(R.string.merge, ((dialog, which) -> {
                     showMergeImport();
                 }))
                 .show();

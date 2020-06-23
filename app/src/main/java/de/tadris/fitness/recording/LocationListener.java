@@ -118,7 +118,7 @@ public class LocationListener extends Service {
 
         @Override
         public void onSensorChanged(SensorEvent event) {
-            Log.i(TAG, "onPressureChange: " + event.values[0]);
+            //Log.i(TAG, "onPressureChange: " + event.values[0]);
             instance.lastPressure = event.values[0];
         }
 
