@@ -242,7 +242,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
     }
 
     private void startUpdater() {
-        if (updater == null) {
+        if (updater == null || !updater.isAlive()) {
             updater = new Thread(() -> {
                 try {
                     while (instance.recorder.isActive()) {
