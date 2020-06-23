@@ -194,7 +194,7 @@ public class LocationListener extends Service {
                     getText(R.string.workoutDuration),
                     instance.distanceUnitUtils.getHourMinuteSecondTime(instance.recorder.getDuration()));
         }
-        if(BuildConfig.DEBUG && serviceStartTime != null) {
+        if (BuildConfig.DEBUG && serviceStartTime != null) {
             contentText = String.format("%s\n\nServiceCreateTime: %s",
                     contentText,
                     instance.userDateTimeUtils.formatTime(serviceStartTime));
@@ -314,9 +314,7 @@ public class LocationListener extends Service {
             running = true;
             try {
                 while (running) {
-                    if (!instance.recorder.getWorkoutRecorderListeners().contains(recordListener)) {
-                        instance.recorder.getWorkoutRecorderListeners().add(recordListener);
-                    }
+                    instance.recorder.addWorkoutListener(recordListener);
                     while (instance.recorder.handleWatchdog() && running) {
                         updateNotification();
                         // UPDATE INTERVAL LIST IF NEEDED

@@ -144,10 +144,6 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
         }
     }
 
-    public List<WorkoutRecorderListener> getWorkoutRecorderListeners() {
-        return workoutRecorderListeners;
-    }
-
     public Workout getWorkout() {
         return this.workout;
     }
