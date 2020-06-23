@@ -91,7 +91,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
     private MapView mapView;
     private TileDownloadLayer downloadLayer;
-    private final Instance instance = Instance.getInstance(this);
+    private Instance instance;
     private Polyline polyline;
     private final List<LatLong> latLongList = new ArrayList<>();
     private final InfoViewHolder[] infoViews = new InfoViewHolder[4];
@@ -112,6 +112,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
+        instance = Instance.getInstance(this);
         boolean wasAlreadyRunning = false;
         if (LAUNCH_ACTION.equals(intent.getAction())) {
             Serializable workoutType = intent.getSerializableExtra(WORKOUT_TYPE_EXTRA);
