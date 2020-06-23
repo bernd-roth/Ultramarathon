@@ -65,6 +65,7 @@ import java.util.List;
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.activity.FitoTrackActivity;
+import de.tadris.fitness.activity.LauncherActivity;
 import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.data.WorkoutSample;
@@ -107,6 +108,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
     private boolean voiceFeedbackAvailable = false;
     private Thread updater;
+    private boolean finished;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -307,13 +309,13 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
         if (instance.recorder.getSampleCount() > 3) {
             showEnterDescriptionDialog();
         } else {
-            finish();
+            activityFinish();
         }
     }
 
     private void saveAndClose() {
         save();
-        finish();
+        activityFinish();
     }
 
     private boolean save() {
@@ -420,7 +422,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
         new AlertDialog.Builder(this)
                 .setTitle(R.string.noGpsTitle)
                 .setMessage(R.string.noGpsMessage)
-                .setNegativeButton(R.string.cancel, (dialog, which) -> finish())
+                .setNegativeButton(R.string.cancel, (dialog, which) -> activityFinish())
                 .setPositiveButton(R.string.enable, (dialog, which) -> startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS)))
                 .setCancelable(false)
                 .create().show();
@@ -475,8 +477,10 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
         super.onPause();
     }
 
+    @Override
     public void onResume() {
         super.onResume();
+        finished = false;
         enableLockScreenVisibility();
         invalidateOptionsMenu();
         downloadLayer.onResume();
@@ -536,7 +540,18 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
         if (instance.recorder.getSampleCount() > 3) {
             showAreYouSureToStopDialog();
         } else {
-            super.onBackPressed();
+            activityFinish();
+            //super.onBackPressed();
+        }
+    }
+
+    private synchronized void activityFinish(){
+        if(!this.finished) {
+            this.finished = true;
+            this.finish();
+            Intent launcherIntent = new Intent(this, LauncherActivity.class);
+            launcherIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            this.startActivity(launcherIntent);
         }
     }
 
@@ -596,7 +611,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
     @Override
     public void onAutoStop() {
-        finish();
+        activityFinish();
     }
 
     @Override
