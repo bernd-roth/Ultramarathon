@@ -29,6 +29,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
@@ -56,6 +57,7 @@ import de.tadris.fitness.aggregation.WorkoutAggregator;
 import de.tadris.fitness.aggregation.WorkoutInformation;
 import de.tadris.fitness.aggregation.WorkoutInformationManager;
 import de.tadris.fitness.aggregation.WorkoutTypeFilter;
+import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.dialog.SelectWorkoutTypeDialog;
 import de.tadris.fitness.util.unit.UnitUtils;
@@ -111,7 +113,17 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity imp
         refresh();
 
         timeSpanSelector.setSelection(2);
-        onSelectWorkoutType(Instance.getInstance(this).db.workoutDao().getLastWorkout().getWorkoutType());
+
+        if (getLastWorkout() != null) {
+            onSelectWorkoutType(getLastWorkout().getWorkoutType());
+        } else {
+            Toast.makeText(this, R.string.no_workouts_recorded, Toast.LENGTH_LONG).show();
+            finish();
+        }
+    }
+
+    private Workout getLastWorkout() {
+        return Instance.getInstance(this).db.workoutDao().getLastWorkout();
     }
 
     private void initInformationSpinner() {
