@@ -193,7 +193,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
             onGPSStateChanged(gpsState, gpsState);
         }
 
-        instance.recorder.getWorkoutRecorderListeners().add(this);
+        instance.recorder.addWorkoutListener(this);
     }
 
     private void acquireWakelock() {
@@ -451,7 +451,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
         instance.locationChangeListeners.remove(this);
         instance.voiceAnnouncementCallbackListeners.remove(this);
-        instance.recorder.getWorkoutRecorderListeners().remove(this);
+        instance.recorder.removeWorkoutListener(this);
 
         if (instance.recorder.getState() == WorkoutRecorder.RecordingState.IDLE) {
             // Stop recording/listener if not started yet

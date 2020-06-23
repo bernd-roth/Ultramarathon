@@ -47,7 +47,7 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
     /**
      * Time after which the workout is stopped and saved automatically because there is no activity anymore
      */
-    private static final int AUTO_TIMEOUT_MULTIPLYER = 1_000 * 60; // minutes to ms
+    private static final int AUTO_TIMEOUT_MULTIPLIER = 1_000 * 60; // minutes to ms
     private static final int DEFAULT_WORKOUT_AUTO_TIMEOUT = 20;
 
     private final Context context;
@@ -65,9 +65,9 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
     private boolean saved = false;
 
     private static final double SIGNAL_BAD_THRESHOLD = 30; // In meters
-    private static final int SIGNAL_LOST_THRESHOLD = 10_000; // 10Seconds In milliseconds
+    private static final int SIGNAL_LOST_THRESHOLD = 10_000; // 10 Seconds In milliseconds
     private Location lastFix = null;
-    private final List<WorkoutRecorderListener> workoutRecorderListeners = new ArrayList<>();
+    private final List<WorkoutRecorderListener> workoutRecorderListeners = new ArrayList<>(); // Only synchronized access
     private GpsState gpsState = GpsState.SIGNAL_LOST;
     private List<Interval> intervalList;
 
@@ -76,7 +76,7 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
         this.state = RecordingState.IDLE;
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        this.autoTimeout = prefs.getInt("autoTimeoutPeriod", DEFAULT_WORKOUT_AUTO_TIMEOUT) * AUTO_TIMEOUT_MULTIPLYER;
+        this.autoTimeout = prefs.getInt("autoTimeoutPeriod", DEFAULT_WORKOUT_AUTO_TIMEOUT) * AUTO_TIMEOUT_MULTIPLIER;
 
         this.workout = new Workout();
         workout.edited = false;
@@ -88,10 +88,6 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
         this.workout.setWorkoutType(workoutType);
 
         init();
-    }
-
-    public List<WorkoutRecorderListener> getWorkoutRecorderListeners() {
-        return workoutRecorderListeners;
     }
 
     public Workout getWorkout() {
@@ -131,7 +127,7 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
     }
 
     /**
-     * Handles the Record Wathdog, for GPS Check, Pause Detection and Auto Timeout
+     * Handles the Record Watchdog, for GPS Check, Pause Detection and Auto Timeout
      *
      * @return is still active workout
      */
@@ -146,8 +142,10 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
                         if (isActive()) {
                             stop();
                             save();
-                            for (WorkoutRecorderListener listener : workoutRecorderListeners) {
-                                listener.onAutoStop();
+                            synchronized (workoutRecorderListeners) {
+                                for (WorkoutRecorderListener listener : workoutRecorderListeners) {
+                                    listener.onAutoStop();
+                                }
                             }
                         }
                     } else if (timeDiff > PAUSE_TIME) {
@@ -180,8 +178,10 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
             state = GpsState.SIGNAL_OKAY;
         }
         if (state != gpsState) {
-            for (WorkoutRecorderListener listener : workoutRecorderListeners) {
-                listener.onGPSStateChanged(gpsState, state);
+            synchronized (workoutRecorderListeners) {
+                for (WorkoutRecorderListener listener : workoutRecorderListeners) {
+                    listener.onGPSStateChanged(gpsState, state);
+                }
             }
             gpsState = state;
         }
@@ -394,6 +394,20 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
 
     public List<Interval> getIntervalList() {
         return intervalList;
+    }
+
+    public void addWorkoutListener(WorkoutRecorderListener listener) {
+        synchronized (workoutRecorderListeners) {
+            if (!workoutRecorderListeners.contains(listener)) {
+                workoutRecorderListeners.add(listener);
+            }
+        }
+    }
+
+    public void removeWorkoutListener(WorkoutRecorderListener listener) {
+        synchronized (workoutRecorderListeners) {
+            workoutRecorderListeners.remove(listener);
+        }
     }
 
     public enum RecordingState {

@@ -251,7 +251,7 @@ public class LocationListener extends Service {
     public void onDestroy() {
         Log.i(TAG, "onDestroy");
 
-        instance.recorder.getWorkoutRecorderListeners().remove(recordListener);
+        instance.recorder.removeWorkoutListener(recordListener);
 
         if (mLocationManager != null) {
             mLocationManager.removeUpdates(gpsListener);
@@ -303,9 +303,7 @@ public class LocationListener extends Service {
             running = true;
             try {
                 while (running) {
-                    if (!instance.recorder.getWorkoutRecorderListeners().contains(recordListener)) {
-                        instance.recorder.getWorkoutRecorderListeners().add(recordListener);
-                    }
+                    instance.recorder.addWorkoutListener(recordListener);
                     while (instance.recorder.handleWatchdog()) {
                         updateNotification();
                         // UPDATE INTERVAL LIST IF NEEDED
