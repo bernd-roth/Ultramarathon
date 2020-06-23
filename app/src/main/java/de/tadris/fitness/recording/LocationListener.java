@@ -262,7 +262,7 @@ public class LocationListener extends Service {
     public void onDestroy() {
         Log.i(TAG, "onDestroy");
 
-        instance.recorder.getWorkoutRecorderListeners().remove(recordListener);
+        instance.recorder.removeWorkoutListener(recordListener);
 
         if (mLocationManager != null) {
             mLocationManager.removeUpdates(gpsListener);

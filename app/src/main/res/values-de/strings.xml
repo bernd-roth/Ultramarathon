@@ -284,5 +284,7 @@
     <string name="singleWorkout">Einzelnes Workout</string>
     <string name="calendarWeekYear">Kalendarwoche / Jahr</string>
     <string name="workoutImported">Workout erfolgreich importiert</string>
+    <string name="no_workouts_recorded">Keine aufgezeichneten Workouts</string>
+    <string name="workoutTypeSkateboarding">Skateboarden</string>
 
 </resources>

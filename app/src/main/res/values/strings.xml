@@ -263,12 +263,14 @@
     <string name="merge">Merge</string>
     <string name="workoutImported">Workout imported successfully</string>
     <string name="announcementSuppressDuringCall">Suppress during call</string>
+    <string name="no_workouts_recorded">No workouts recorded</string>
+    <string name="sections">Sections</string>
+    <string name="workoutTypeSkateboarding">Skateboarding</string>
 
     <string-array name="pref_energy_units">
         <item>kcal</item>
         <item>Joule</item>
     </string-array>
-    <string name="sections">Sections</string>
 
     <string-array name="pref_announcement_mode">
         <item>Always</item>
