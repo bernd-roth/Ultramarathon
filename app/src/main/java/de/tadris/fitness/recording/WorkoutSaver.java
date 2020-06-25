@@ -44,20 +44,32 @@ public class WorkoutSaver {
         this.context = context;
         this.workout = workout;
         this.samples = samples;
-        db= Instance.getInstance(context).db;
+        this.db = Instance.getInstance(context).db;
+    }
+
+    public void finalizeWorkout(){
+        clearSamplesWithSameTime(true);
+
+        calculateData();
+
+        updateInDatabase();
+    }
+
+    public void discardWorkout(){
+        deleteWorkoutAndSamples();
+    }
+
+    public synchronized void addSample(WorkoutSample sample){
+        sample.id = this.workout.id + this.samples.size();
+        sample.workoutId = this.workout.id;
+        db.workoutDao().insertSample(sample);
     }
 
     public void saveWorkout(){
         setIds();
-        clearSamplesWithSameTime();
-        setSimpleValues();
-        setTopSpeed();
 
-        setElevation();
-        setRoundedSampleElevation();
-        setAscentAndDescent();
-
-        setCalories();
+        clearSamplesWithSameTime(false);
+        calculateData();
 
         storeInDatabase();
     }
@@ -72,12 +84,26 @@ public class WorkoutSaver {
         }
     }
 
-    private void clearSamplesWithSameTime(){
+    private void calculateData(){
+        setSimpleValues();
+        setTopSpeed();
+
+        setElevation();
+        setRoundedSampleElevation();
+        setAscentAndDescent();
+
+        setCalories();
+    }
+
+    private void clearSamplesWithSameTime(boolean delete){
         for(int i= samples.size()-2; i >= 0; i--){
             WorkoutSample sample= samples.get(i);
             WorkoutSample lastSample= samples.get(i+1);
             if(sample.absoluteTime == lastSample.absoluteTime){
                 samples.remove(lastSample);
+                if(delete) {
+                    db.workoutDao().deleteSample(lastSample); // delete sample also from DB
+                }
                 Log.i("WorkoutManager", "Removed samples at " + sample.absoluteTime + " rel: " + sample.relativeTime + "; " + lastSample.relativeTime);
             }
         }
@@ -186,28 +212,31 @@ public class WorkoutSaver {
     }
 
     protected void setAscentAndDescent() {
-        workout.ascent = 0;
-        workout.descent = 0;
+        workout.ascent = 0f;
+        workout.descent = 0f;
 
         // Eliminate pressure noise
         roundSampleElevation();
 
         // Now sum up the ascent/descent
-        for(int i= 0; i < samples.size(); i++) {
-            WorkoutSample sample = samples.get(i);
-            if(i >= 1){
-                WorkoutSample lastSample= samples.get(i-1);
-                double diff= sample.elevation - lastSample.elevation;
-                if(diff > 0){
+        if(samples.size()>1) {
+            WorkoutSample prevSample = samples.get(0);
+            for( int i = 1; i< samples.size(); i++) {
+                WorkoutSample sample = samples.get(i);
+                double diff = sample.elevation - prevSample.elevation;
+                if(Double.isNaN(diff)){
+                    Log.e("WorkoutSaver", "ElevationDiff is NaN fallback to 0");
+                    diff = 0d;
+                }
+                if (diff > 0) {
                     // If this sample is higher than the last one, add difference to ascent
                     workout.ascent += diff;
-                }else{
+                } else {
                     // If this sample is lower than the last one, add difference to descent
                     workout.descent += Math.abs(diff);
                 }
             }
         }
-
     }
 
     protected void setCalories() {
@@ -217,5 +246,17 @@ public class WorkoutSaver {
 
     protected void storeInDatabase() {
         db.workoutDao().insertWorkoutAndSamples(workout, samples.toArray(new WorkoutSample[0]));
+    }
+
+    protected void storeWorkoutInDatabase() {
+        db.workoutDao().insertWorkout(workout);
+    }
+
+    protected void updateInDatabase() {
+        db.workoutDao().updateWorkout(workout);
+    }
+
+    protected void deleteWorkoutAndSamples(){
+        db.workoutDao().deleteWorkoutAndSamples(workout, samples.toArray(new WorkoutSample[0]));
     }
 }

@@ -35,6 +35,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -305,10 +306,18 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
     }
 
     private void stop() {
-        instance.recorder.stop();
-        if (instance.recorder.getSampleCount() > 3) {
-            showEnterDescriptionDialog();
-        } else {
+        if(instance.recorder.getState() != WorkoutRecorder.RecordingState.IDLE) { //Only Running Records can be stopped
+            instance.recorder.stop();
+            if (instance.recorder.getSampleCount() > 3) {
+                showEnterDescriptionDialog();
+            } else {
+                Toast.makeText(this, R.string.workoutDiscarded, Toast.LENGTH_LONG).show();
+                instance.recorder.discard();
+                activityFinish();
+            }
+        }else{
+            // TODO use Resource
+            Toast.makeText(this, "No Workout Started", Toast.LENGTH_LONG).show();
             activityFinish();
         }
     }
@@ -319,14 +328,19 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
     }
 
     private boolean save() {
-        if (instance.recorder.getSampleCount() > 3) {
-            instance.recorder.save();
-            return true;
-        } else {
-            // Inform the user about not saving the workout
-            Toast.makeText(this, R.string.workoutDiscarded, Toast.LENGTH_LONG).show();
-            return false;
+        if(instance.recorder.getState() != WorkoutRecorder.RecordingState.IDLE) {
+            if (instance.recorder.getSampleCount() > 3) {
+                instance.recorder.save();
+                return true;
+            } else {
+                // Inform the user about not saving the workout
+                Toast.makeText(this, R.string.workoutDiscarded, Toast.LENGTH_LONG).show();
+                instance.recorder.discard();
+                return false;
+            }
         }
+        // Only Started Workoutds need to be discarded
+        return false;
     }
 
     private void saveIfNotSaved() {
@@ -405,6 +419,8 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
             } else {
                 startService(locationListener);
             }
+        }else{
+            Log.d("RecordWorkoutActivity","Listener Already Running");
         }
 
         checkGpsStatus();
@@ -455,13 +471,15 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
         instance.voiceAnnouncementCallbackListeners.remove(this);
         instance.recorder.removeWorkoutListener(this);
 
+        // TODO Check if needed, seems 2b useless
         if (instance.recorder.getState() == WorkoutRecorder.RecordingState.IDLE) {
             // Stop recording/listener if not started yet
+            // Why Stop Something not started?
             stop();
         }
 
-        // Kill Service on Finished Recording
-        if (instance.recorder.getState() == WorkoutRecorder.RecordingState.STOPPED) {
+        // Kill Service on Finished or not Started Recording
+        if (instance.recorder.getState() == WorkoutRecorder.RecordingState.STOPPED || instance.recorder.getState() == WorkoutRecorder.RecordingState.IDLE) {
             //ONLY SAVE WHEN STOPPED
             saveIfNotSaved();
             stopListener();
@@ -537,9 +555,11 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
     @Override
     public void onBackPressed() {
-        if (instance.recorder.getSampleCount() > 3) {
+        if(instance.recorder.isActive() && instance.recorder.getState() != WorkoutRecorder.RecordingState.IDLE){
+            // Still Running Workout
             showAreYouSureToStopDialog();
         } else {
+            // Stopped or Idle Workout
             activityFinish();
             //super.onBackPressed();
         }

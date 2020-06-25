@@ -55,6 +55,9 @@ public interface WorkoutDao {
     @Insert
     void insertWorkoutAndSamples(Workout workout, WorkoutSample[] samples);
 
+    @Delete
+    void deleteWorkoutAndSamples(Workout workout, WorkoutSample[] toArray);
+
     @Insert
     void insertWorkout(Workout workout);
 
@@ -67,5 +70,7 @@ public interface WorkoutDao {
     @Insert
     void insertSample(WorkoutSample sample);
 
+    @Delete
+    void deleteSample(WorkoutSample sample);
 
 }
