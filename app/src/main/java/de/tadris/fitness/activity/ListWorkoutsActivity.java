@@ -232,6 +232,7 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
             refreshAdapter();
         }
         listSize = workouts.length;
+        refreshFABMenu();
     }
 
     private void loadData() {
@@ -242,7 +243,6 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
     private void refreshAdapter() {
         adapter = new WorkoutAdapter(workouts, this);
         listView.setAdapter(adapter);
-        refreshFABMenu();
     }
 
     private void refreshFABMenu() {
