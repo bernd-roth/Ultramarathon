@@ -33,6 +33,7 @@ import androidx.core.content.FileProvider;
 import java.io.File;
 import java.io.IOException;
 
+import de.tadris.fitness.BuildConfig;
 import de.tadris.fitness.R;
 import de.tadris.fitness.export.BackupController;
 import de.tadris.fitness.export.RestoreController;
@@ -80,19 +81,19 @@ public class BackupSettingsActivity extends FitoTrackSettingsActivity {
         dialogController.show();
         new Thread(() -> {
             try {
-                String file = getFilesDir().getAbsolutePath() + "/shared/backup.ftb";
+                String file = getFilesDir().getAbsolutePath() + "/shared/backup" + System.currentTimeMillis() + ".ftb";
                 File parent = new File(file).getParentFile();
                 if (!parent.exists() && !parent.mkdirs()) {
                     throw new IOException("Cannot write");
                 }
-                Uri uri = FileProvider.getUriForFile(getBaseContext(), "de.tadris.fitness.fileprovider", new File(file));
+                Uri uri = FileProvider.getUriForFile(getBaseContext(), BuildConfig.APPLICATION_ID + ".fileprovider", new File(file));
 
                 BackupController backupController = new BackupController(getBaseContext(), new File(file), (progress, action) -> mHandler.post(() -> dialogController.setProgress(progress, action)));
                 backupController.exportData();
 
                 mHandler.post(() -> {
                     dialogController.cancel();
-                    FileUtils.saveOrShareFile(this, uri, "ftb");
+                    FileUtils.saveOrShareFile(this, uri);
                 });
             } catch (Exception e) {
                 e.printStackTrace();
@@ -111,9 +112,15 @@ public class BackupSettingsActivity extends FitoTrackSettingsActivity {
         }
         new AlertDialog.Builder(this)
                 .setTitle(R.string.importBackup)
-                .setMessage(R.string.importBackupMessage)
-                .setNegativeButton(R.string.cancel, null)
-                .setPositiveButton(R.string.restore, (dialog, which) -> importBackup()).create().show();
+                .setMessage(R.string.replaceOrMergeMessage)
+                .setPositiveButton(R.string.replace, ((dialog, which) -> {
+                    showReplaceImport();
+                }))
+                .setNegativeButton(R.string.merge, ((dialog, which) -> {
+                    showMergeImport();
+                }))
+                .show();
+
     }
 
     private void requestPermissions() {
@@ -128,34 +135,49 @@ public class BackupSettingsActivity extends FitoTrackSettingsActivity {
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
     }
 
-    private static final int FILE_SELECT_CODE = 21;
+    private static final int FILE_REPLACE_SELECT_CODE = 21;
+    private static final int FILE_MERGE_SELECT_CODE = 22;
 
-    private void importBackup() {
+    private void showMergeImport() {
+        importBackup(FILE_MERGE_SELECT_CODE);
+    }
+
+    private void showReplaceImport() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.importBackup)
+                .setMessage(R.string.importBackupMessage)
+                .setNegativeButton(R.string.cancel, null)
+                .setPositiveButton(R.string.restore, (dialog, which) -> importBackup(FILE_REPLACE_SELECT_CODE)).create().show();
+    }
+
+    private void importBackup(final int selectCode) {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("*/*");
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         try {
-            startActivityForResult(Intent.createChooser(intent, getString(R.string.chooseBackupFile)), FILE_SELECT_CODE);
+            startActivityForResult(Intent.createChooser(intent, getString(R.string.chooseBackupFile)), selectCode);
         } catch (android.content.ActivityNotFoundException ignored) {
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == FILE_SELECT_CODE) {
-            if (resultCode == RESULT_OK) {
-                importBackup(data.getData());
+        if (resultCode == RESULT_OK) {
+            if (requestCode == FILE_REPLACE_SELECT_CODE) {
+                importBackup(data.getData(), true);
+            } else if (requestCode == FILE_MERGE_SELECT_CODE) {
+                importBackup(data.getData(), false);
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void importBackup(Uri uri) {
+    private void importBackup(Uri uri, boolean replace) {
         ProgressDialogController dialogController = new ProgressDialogController(this, getString(R.string.backup));
         dialogController.show();
         new Thread(() -> {
             try {
-                RestoreController restoreController = new RestoreController(getBaseContext(), uri,
+                RestoreController restoreController = new RestoreController(getBaseContext(), uri, replace,
                         (progress, action) -> mHandler.post(() -> dialogController.setProgress(progress, action)));
                 restoreController.restoreData();
 

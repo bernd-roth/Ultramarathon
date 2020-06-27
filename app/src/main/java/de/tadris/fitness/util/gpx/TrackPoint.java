@@ -19,9 +19,11 @@
 
 package de.tadris.fitness.util.gpx;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
-class TrackPoint {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class TrackPoint {
 
     @JacksonXmlProperty(isAttribute = true)
     private

@@ -62,8 +62,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_margin="5dp"
+            android:text="@string/OpenStreetMapAttribution"
             android:textColor="@color/textColorLight"
-            android:text="@string/OpenStreetMapAttribution" />
+            android:textSize="12sp" />
 
 
     </FrameLayout>

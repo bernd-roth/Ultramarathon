@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -28,17 +28,35 @@ import androidx.room.Update;
 @Dao
 public interface WorkoutDao {
 
+    @Query("SELECT * FROM workout WHERE id = :id")
+    Workout findById(long id);
+
+    @Query("SELECT * FROM workout_sample WHERE id = :id")
+    WorkoutSample findSampleById(long id);
+
     @Query("SELECT * FROM workout_sample WHERE workout_id = :workout_id")
     WorkoutSample[] getAllSamplesOfWorkout(long workout_id);
 
     @Query("SELECT * FROM workout ORDER BY start DESC")
     Workout[] getWorkouts();
 
+    @Query("SELECT * FROM workout ORDER BY start DESC LIMIT 1")
+    Workout getLastWorkout();
+
+    @Query("SELECT * FROM workout ORDER BY start ASC")
+    Workout[] getAllWorkoutsHistorically();
+
+    @Query("SELECT * FROM workout WHERE workoutType = :workout_type ORDER BY start ASC ")
+    Workout[] getWorkoutsHistorically(String workout_type);
+
     @Query("SELECT * FROM workout_sample")
     WorkoutSample[] getSamples();
 
     @Insert
     void insertWorkoutAndSamples(Workout workout, WorkoutSample[] samples);
+
+    @Delete
+    void deleteWorkoutAndSamples(Workout workout, WorkoutSample[] toArray);
 
     @Insert
     void insertWorkout(Workout workout);
@@ -52,5 +70,7 @@ public interface WorkoutDao {
     @Insert
     void insertSample(WorkoutSample sample);
 
+    @Delete
+    void deleteSample(WorkoutSample sample);
 
 }

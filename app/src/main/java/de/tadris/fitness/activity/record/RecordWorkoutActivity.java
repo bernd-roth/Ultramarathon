@@ -35,6 +35,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -65,6 +66,7 @@ import java.util.List;
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.activity.FitoTrackActivity;
+import de.tadris.fitness.activity.LauncherActivity;
 import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.data.WorkoutSample;
@@ -76,7 +78,7 @@ import de.tadris.fitness.recording.LocationListener;
 import de.tadris.fitness.recording.WorkoutRecorder;
 import de.tadris.fitness.recording.announcement.TTSController;
 import de.tadris.fitness.recording.information.InformationDisplay;
-import de.tadris.fitness.recording.information.WorkoutInformation;
+import de.tadris.fitness.recording.information.RecordingInformation;
 
 public class RecordWorkoutActivity extends FitoTrackActivity implements LocationListener.LocationChangeListener,
         WorkoutRecorder.WorkoutRecorderListener, TTSController.VoiceAnnouncementCallback,
@@ -91,13 +93,12 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
     private MapView mapView;
     private TileDownloadLayer downloadLayer;
-    private final Instance instance = Instance.getInstance(this);
+    private Instance instance;
     private Polyline polyline;
     private final List<LatLong> latLongList = new ArrayList<>();
     private final InfoViewHolder[] infoViews = new InfoViewHolder[4];
     private TextView timeView;
     private TextView gpsStatusView;
-    private TextView attribution;
     private View waitingForGPSOverlay;
     private Button startButton;
     private boolean gpsFound = false;
@@ -108,11 +109,13 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
     private boolean voiceFeedbackAvailable = false;
     private Thread updater;
+    private boolean finished;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
+        instance = Instance.getInstance(this);
         boolean wasAlreadyRunning = false;
         if (LAUNCH_ACTION.equals(intent.getAction())) {
             Serializable workoutType = intent.getSerializableExtra(WORKOUT_TYPE_EXTRA);
@@ -145,7 +148,6 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
         waitingForGPSOverlay = findViewById(R.id.recorderWaitingOverlay);
         waitingForGPSOverlay.setVisibility(View.VISIBLE);
 
-        attribution = findViewById(R.id.recordMapAttribution);
         startButton = findViewById(R.id.recordStart);
         startButton.setEnabled(false);
         startButton.setOnClickListener(v -> {
@@ -193,6 +195,8 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
             WorkoutRecorder.GpsState gpsState = instance.recorder.getGpsState();
             onGPSStateChanged(gpsState, gpsState);
         }
+
+        instance.recorder.addWorkoutListener(this);
     }
 
     private void acquireWakelock() {
@@ -221,11 +225,6 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
                 waitingForGPSOverlay.setVisibility(View.GONE);
             }
         }).start();
-        hideOSMAttribution();
-    }
-
-    private void hideOSMAttribution() {
-        attribution.animate().alpha(0f).setDuration(1000).setStartDelay(5000).start();
     }
 
     private void setupMap() {
@@ -247,7 +246,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
     }
 
     private void startUpdater() {
-        if (updater == null) {
+        if (updater == null || !updater.isAlive()) {
             updater = new Thread(() -> {
                 try {
                     while (instance.recorder.isActive()) {
@@ -307,28 +306,41 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
     }
 
     private void stop() {
-        instance.recorder.stop();
-        if (instance.recorder.getSampleCount() > 3) {
-            showEnterDescriptionDialog();
-        } else {
-            finish();
+        if(instance.recorder.getState() != WorkoutRecorder.RecordingState.IDLE) { //Only Running Records can be stopped
+            instance.recorder.stop();
+            if (instance.recorder.getSampleCount() > 3) {
+                showEnterDescriptionDialog();
+            } else {
+                Toast.makeText(this, R.string.workoutDiscarded, Toast.LENGTH_LONG).show();
+                instance.recorder.discard();
+                activityFinish();
+            }
+        }else{
+            // TODO use Resource
+            Toast.makeText(this, "No Workout Started", Toast.LENGTH_LONG).show();
+            activityFinish();
         }
     }
 
     private void saveAndClose() {
         save();
-        finish();
+        activityFinish();
     }
 
     private boolean save() {
-        if (instance.recorder.getSampleCount() > 3) {
-            instance.recorder.save();
-            return true;
-        } else {
-            // Inform the user about not saving the workout
-            Toast.makeText(this, R.string.workoutDiscarded, Toast.LENGTH_LONG).show();
-            return false;
+        if(instance.recorder.getState() != WorkoutRecorder.RecordingState.IDLE) {
+            if (instance.recorder.getSampleCount() > 3) {
+                instance.recorder.save();
+                return true;
+            } else {
+                // Inform the user about not saving the workout
+                Toast.makeText(this, R.string.workoutDiscarded, Toast.LENGTH_LONG).show();
+                instance.recorder.discard();
+                return false;
+            }
         }
+        // Only Started Workoutds need to be discarded
+        return false;
     }
 
     private void saveIfNotSaved() {
@@ -374,6 +386,10 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (hasPermission()) {
+            // Restart LocationListener so it can retry to register for location updates now that is got permission
+            if (isServiceRunning(LocationListener.class)) {
+                stopListener();
+            }
             startListener();
         }
     }
@@ -403,6 +419,8 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
             } else {
                 startService(locationListener);
             }
+        }else{
+            Log.d("RecordWorkoutActivity","Listener Already Running");
         }
 
         checkGpsStatus();
@@ -420,7 +438,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
         new AlertDialog.Builder(this)
                 .setTitle(R.string.noGpsTitle)
                 .setMessage(R.string.noGpsMessage)
-                .setNegativeButton(R.string.cancel, (dialog, which) -> finish())
+                .setNegativeButton(R.string.cancel, (dialog, which) -> activityFinish())
                 .setPositiveButton(R.string.enable, (dialog, which) -> startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS)))
                 .setCancelable(false)
                 .create().show();
@@ -441,9 +459,6 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
     @Override
     protected void onDestroy() {
-        //instance.recorder.stop(); // REALLY
-        //saveIfNotSaved(); // Important to save
-
         // Clear map
         mapView.destroyAll();
         AndroidGraphicFactory.clearResourceMemoryCache();
@@ -454,8 +469,17 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
         instance.locationChangeListeners.remove(this);
         instance.voiceAnnouncementCallbackListeners.remove(this);
-        // Kill Service on Finished Recording
-        if (instance.recorder.getState() == WorkoutRecorder.RecordingState.STOPPED) {
+        instance.recorder.removeWorkoutListener(this);
+
+        // TODO Check if needed, seems 2b useless
+        if (instance.recorder.getState() == WorkoutRecorder.RecordingState.IDLE) {
+            // Stop recording/listener if not started yet
+            // Why Stop Something not started?
+            stop();
+        }
+
+        // Kill Service on Finished or not Started Recording
+        if (instance.recorder.getState() == WorkoutRecorder.RecordingState.STOPPED || instance.recorder.getState() == WorkoutRecorder.RecordingState.IDLE) {
             //ONLY SAVE WHEN STOPPED
             saveIfNotSaved();
             stopListener();
@@ -468,16 +492,16 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
     public void onPause() {
         downloadLayer.onPause();
         isResumed = false;
-        instance.recorder.getWorkoutRecorderListeners().remove(this);
         super.onPause();
     }
 
+    @Override
     public void onResume() {
         super.onResume();
+        finished = false;
         enableLockScreenVisibility();
         invalidateOptionsMenu();
         downloadLayer.onResume();
-        instance.recorder.getWorkoutRecorderListeners().add(this);
         startUpdater();
         isResumed = true;
     }
@@ -491,13 +515,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
     private boolean isRestrictedInput() {
         KeyguardManager myKM = (KeyguardManager) this.getSystemService(Context.KEYGUARD_SERVICE);
-        if (myKM.inKeyguardRestrictedInputMode()) {
-            //it is locked
-            return true;
-        } else {
-            //it is not locked
-            return false;
-        }
+        return myKM.inKeyguardRestrictedInputMode(); // return whether phone is in locked state
     }
 
     @Override
@@ -511,7 +529,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.actionRecordingStop:
-                stop();
+                onPressStopButton();
                 return true;
             case R.id.actionSelectIntervalSet:
                 showIntervalSelection();
@@ -520,20 +538,40 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
         return super.onOptionsItemSelected(item);
     }
 
+    private void onPressStopButton() {
+        if (isRestrictedInput()) {
+            Toast.makeText(this, R.string.unlockPhoneStopWorkout, Toast.LENGTH_LONG).show();
+        } else {
+            stop();
+        }
+    }
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         boolean preparationPhase = instance.recorder.getState() == WorkoutRecorder.RecordingState.IDLE;
         menu.findItem(R.id.actionSelectIntervalSet).setVisible(preparationPhase && voiceFeedbackAvailable);
-        menu.findItem(R.id.actionRecordingStop).setVisible(!isRestrictedInput());
         return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
     public void onBackPressed() {
-        if (instance.recorder.getSampleCount() > 3) {
+        if(instance.recorder.isActive() && instance.recorder.getState() != WorkoutRecorder.RecordingState.IDLE){
+            // Still Running Workout
             showAreYouSureToStopDialog();
         } else {
-            super.onBackPressed();
+            // Stopped or Idle Workout
+            activityFinish();
+            //super.onBackPressed();
+        }
+    }
+
+    private synchronized void activityFinish(){
+        if(!this.finished) {
+            this.finished = true;
+            this.finish();
+            Intent launcherIntent = new Intent(this, LauncherActivity.class);
+            launcherIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            this.startActivity(launcherIntent);
         }
     }
 
@@ -593,11 +631,11 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
     @Override
     public void onAutoStop() {
-        finish();
+        activityFinish();
     }
 
     @Override
-    public void onSelectWorkoutInformation(int slot, WorkoutInformation information) {
+    public void onSelectWorkoutInformation(int slot, RecordingInformation information) {
         updateDescription();
     }
 }

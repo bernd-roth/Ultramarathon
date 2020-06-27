@@ -27,7 +27,7 @@ import java.util.List;
 public class InformationManager {
 
     private Context context;
-    private List<WorkoutInformation> information = new ArrayList<>();
+    private List<RecordingInformation> information = new ArrayList<>();
 
     public InformationManager(Context context) {
         this.context = context;
@@ -44,10 +44,11 @@ public class InformationManager {
         information.add(new CurrentSpeed(context));
         information.add(new Ascent(context));
         information.add(new BurnedEnergy(context));
+        information.add(new CurrentTime(context));
     }
 
-    public WorkoutInformation getInformationById(String id) {
-        for (WorkoutInformation information : this.information) {
+    public RecordingInformation getInformationById(String id) {
+        for (RecordingInformation information : this.information) {
             if (information.getId().equals(id)) {
                 return information;
             }
@@ -55,9 +56,9 @@ public class InformationManager {
         return null;
     }
 
-    public List<WorkoutInformation> getDisplayableInformation() {
-        List<WorkoutInformation> displayable = new ArrayList<>();
-        for (WorkoutInformation information : this.information) {
+    public List<RecordingInformation> getDisplayableInformation() {
+        List<RecordingInformation> displayable = new ArrayList<>();
+        for (RecordingInformation information : this.information) {
             if (information.canBeDisplayed()) {
                 displayable.add(information);
             }
@@ -65,7 +66,7 @@ public class InformationManager {
         return displayable;
     }
 
-    public List<WorkoutInformation> getInformation() {
+    public List<RecordingInformation> getInformation() {
         return information;
     }
 }

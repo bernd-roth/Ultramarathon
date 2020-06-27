@@ -32,6 +32,7 @@ import org.mapsforge.core.model.LatLong;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.tadris.fitness.BuildConfig;
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.IntervalSet;
@@ -47,14 +48,15 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
     /**
      * Time after which the workout is stopped and saved automatically because there is no activity anymore
      */
-    private static final int AUTO_TIMEOUT_MULTIPLYER = 1_000 * 60; // minutes to ms
+    private static final int AUTO_TIMEOUT_MULTIPLIER = 1_000 * 60; // minutes to ms
     private static final int DEFAULT_WORKOUT_AUTO_TIMEOUT = 20;
 
+    private final long autoTimeout;
     private final Context context;
     private final Workout workout;
-    private final long autoTimeout;
-    private RecordingState state;
     private final List<WorkoutSample> samples = new ArrayList<>();
+    private final WorkoutSaver workoutSaver;
+    private RecordingState state;
     private long time = 0;
     private long pauseTime = 0;
     private long lastResume;
@@ -65,9 +67,9 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
     private boolean saved = false;
 
     private static final double SIGNAL_BAD_THRESHOLD = 30; // In meters
-    private static final int SIGNAL_LOST_THRESHOLD = 10_000; // 10Seconds In milliseconds
+    private static final int SIGNAL_LOST_THRESHOLD = 10_000; // 10 Seconds In milliseconds
     private Location lastFix = null;
-    private final List<WorkoutRecorderListener> workoutRecorderListeners = new ArrayList<>();
+    private final List<WorkoutRecorderListener> workoutRecorderListeners = new ArrayList<>(); // Only synchronized access
     private GpsState gpsState = GpsState.SIGNAL_LOST;
     private List<Interval> intervalList;
 
@@ -76,7 +78,7 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
         this.state = RecordingState.IDLE;
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        this.autoTimeout = prefs.getInt("autoTimeoutPeriod", DEFAULT_WORKOUT_AUTO_TIMEOUT) * AUTO_TIMEOUT_MULTIPLYER;
+        this.autoTimeout = prefs.getInt("autoTimeoutPeriod", DEFAULT_WORKOUT_AUTO_TIMEOUT) * AUTO_TIMEOUT_MULTIPLIER;
 
         this.workout = new Workout();
         workout.edited = false;
@@ -87,11 +89,59 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
 
         this.workout.setWorkoutType(workoutType);
 
+        workoutSaver = new WorkoutSaver(this.context, workout, samples);
+
         init();
     }
 
-    public List<WorkoutRecorderListener> getWorkoutRecorderListeners() {
-        return workoutRecorderListeners;
+    public WorkoutRecorder(Context context, Workout workout, List<WorkoutSample> samples){
+        this.context = context;
+        this.state = RecordingState.PAUSED;
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        this.autoTimeout = prefs.getInt("autoTimeoutPeriod", DEFAULT_WORKOUT_AUTO_TIMEOUT) * AUTO_TIMEOUT_MULTIPLIER;
+
+        this.workout = workout;
+        this.samples.addAll(samples);
+
+        // time = 0; x
+        // pauseTime = 0; x
+        // lastResume; x
+        // lastPause = 0; x
+        // lastSampleTime = 0; x
+        // distance = 0; x
+        reconstructBySamples();
+
+        workoutSaver = new WorkoutSaver(this.context, this.workout, this.samples);
+        init();
+    }
+
+    private void reconstructBySamples(){
+        lastResume = workout.start;
+        lastSampleTime = workout.start;
+        LatLong prefLocation = null;
+        for(WorkoutSample sample: samples){
+            long timeDiff = sample.absoluteTime - lastSampleTime;
+            if (timeDiff > PAUSE_TIME){ // Handle Pause
+                lastPause = lastSampleTime+PAUSE_TIME; // Also add the Minimal Pause Time ;D
+                lastResume = sample.absoluteTime; // Workout resumed at new sample
+                pauseTime += timeDiff-PAUSE_TIME; // Add Time Diff without Pause Time
+            }
+            if(prefLocation!=null){ //Update Distance
+                double sampleDistance = prefLocation.sphericalDistance(sample.toLatLong());
+                distance+=sampleDistance;
+            }
+            prefLocation = sample.toLatLong();
+            lastSampleTime = sample.absoluteTime;
+            time = sample.relativeTime; // Update Times Always To Sample RelTime
+        }
+        if(System.currentTimeMillis()-lastSampleTime > PAUSE_TIME) {
+            state = RecordingState.PAUSED;
+            time += time + PAUSE_TIME;
+            lastPause = lastSampleTime + PAUSE_TIME;
+        }else{
+            state = RecordingState.RUNNING;
+        }
     }
 
     public Workout getWorkout() {
@@ -113,7 +163,15 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
     public void start() {
         if (state == RecordingState.IDLE) {
             Log.i("Recorder", "Start");
+            workout.id = System.currentTimeMillis();
             workout.start = System.currentTimeMillis();
+            //Init Workout To Be able to Save
+            workout.end = -1L;
+            workout.avgSpeed = -1d;
+            workout.topSpeed = -1d;
+            workout.ascent = -1f;
+            workout.descent = -1f;
+            workoutSaver.storeWorkoutInDatabase(); // Already Persist Workout
             resume();
         } else if (state == RecordingState.PAUSED) {
             resume();
@@ -131,11 +189,14 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
     }
 
     /**
-     * Handles the Record Wathdog, for GPS Check, Pause Detection and Auto Timeout
+     * Handles the Record Watchdog, for GPS Check, Pause Detection and Auto Timeout
+     *
      * @return is still active workout
      */
     boolean handleWatchdog() {
-        Log.d("WorkoutRecorder", "handleWatchdog " + this.getState().toString() + " samples: " + samples.size() + " autoTout: " + autoTimeout + "inst: " + this.toString());
+        if(BuildConfig.DEBUG) {
+            Log.d("WorkoutRecorder", "handleWatchdog " + this.getState().toString() + " samples: " + samples.size() + " autoTout: " + autoTimeout + " inst: " + this.toString());
+        }
         if (isActive()) {
             checkSignalState();
             synchronized (samples) {
@@ -145,8 +206,10 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
                         if (isActive()) {
                             stop();
                             save();
-                            for (WorkoutRecorderListener listener : workoutRecorderListeners) {
-                                listener.onAutoStop();
+                            synchronized (workoutRecorderListeners) {
+                                for (WorkoutRecorderListener listener : workoutRecorderListeners) {
+                                    listener.onAutoStop();
+                                }
                             }
                         }
                     } else if (timeDiff > PAUSE_TIME) {
@@ -179,8 +242,10 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
             state = GpsState.SIGNAL_OKAY;
         }
         if (state != gpsState) {
-            for (WorkoutRecorderListener listener : workoutRecorderListeners) {
-                listener.onGPSStateChanged(gpsState, state);
+            synchronized (workoutRecorderListeners) {
+                for (WorkoutRecorderListener listener : workoutRecorderListeners) {
+                    listener.onGPSStateChanged(gpsState, state);
+                }
             }
             gpsState = state;
         }
@@ -205,7 +270,6 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
     }
 
     public void stop() {
-        Log.i("Recorder", "Stop with " + getSampleCount() + " Samples");
         if (state == RecordingState.PAUSED) {
             resume();
         }
@@ -215,6 +279,7 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
         workout.pauseDuration = pauseTime;
         state = RecordingState.STOPPED;
         Instance.getInstance(context).locationChangeListeners.remove(this);
+        Log.i("Recorder", "Stop with " + getSampleCount() + " Samples");
     }
 
     public void save() {
@@ -223,7 +288,8 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
         }
         Log.i("Recorder", "Save");
         synchronized (samples) {
-            new WorkoutSaver(context, workout, samples).saveWorkout();
+            //new WorkoutSaver(context, workout, samples).saveWorkout();
+            workoutSaver.finalizeWorkout();
         }
         saved = true;
     }
@@ -277,7 +343,11 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
             sample.tmpPressure = -1;
         }
         synchronized (samples) {
-            samples.add(sample);
+            if(workoutSaver == null){
+                throw new RuntimeException("Missing WorkoutSaver for Recorder");
+            }
+            workoutSaver.addSample(sample); // already persist to db
+            samples.add(sample); // add to recorder list
         }
     }
 
@@ -393,6 +463,24 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
 
     public List<Interval> getIntervalList() {
         return intervalList;
+    }
+
+    public void discard() {
+        workoutSaver.discardWorkout();
+    }
+
+    public void addWorkoutListener(WorkoutRecorderListener listener) {
+        synchronized (workoutRecorderListeners) {
+            if (!workoutRecorderListeners.contains(listener)) {
+                workoutRecorderListeners.add(listener);
+            }
+        }
+    }
+
+    public void removeWorkoutListener(WorkoutRecorderListener listener) {
+        synchronized (workoutRecorderListeners) {
+            workoutRecorderListeners.remove(listener);
+        }
     }
 
     public enum RecordingState {

@@ -35,8 +35,8 @@ android {
         applicationId "de.tadris.fitness"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 600
-        versionName "6.0"
+        versionCode 710
+        versionName "7.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -95,6 +95,10 @@ dependencies {
     configurations {
         compile.exclude group: 'net.sf.kxml', module: 'kxml2' // already included in Android
     }
+
+    // Parsing date strings in GPX-files
+    implementation 'com.github.sisyphsu:dateparser:1.0.4'
+    annotationProcessor 'org.projectlombok:lombok:1.18.8'
 
     // Android Room Database
     def room_version = "2.2.5"

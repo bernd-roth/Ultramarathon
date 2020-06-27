@@ -19,9 +19,12 @@
 
 package de.tadris.fitness.activity;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -29,12 +32,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+
+import java.io.InputStream;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
@@ -42,10 +49,13 @@ import de.tadris.fitness.activity.record.RecordWorkoutActivity;
 import de.tadris.fitness.activity.settings.MainSettingsActivity;
 import de.tadris.fitness.activity.workout.EnterWorkoutActivity;
 import de.tadris.fitness.activity.workout.ShowWorkoutActivity;
+import de.tadris.fitness.activity.workout.ShowWorkoutsAggregatedDiagramActivity;
 import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.dialog.SelectWorkoutTypeDialog;
 import de.tadris.fitness.util.DialogUtils;
+import de.tadris.fitness.util.io.general.IOHelper;
+import de.tadris.fitness.view.ProgressDialogController;
 import de.tadris.fitness.view.WorkoutAdapter;
 
 public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAdapter.WorkoutAdapterListener {
@@ -56,6 +66,7 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
     private FloatingActionMenu menu;
     private Workout[] workouts;
     private TextView hintText;
+    private int listSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,10 +93,76 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
 
         findViewById(R.id.workoutListRecord).setOnClickListener(v -> showWorkoutSelection());
         findViewById(R.id.workoutListEnter).setOnClickListener(v -> startEnterWorkoutActivity());
+        findViewById(R.id.workoutListImport).setOnClickListener(v -> showImportDialog());
 
         checkFirstStart();
 
         refresh();
+    }
+
+    private final Handler mHandler = new Handler();
+
+    private boolean hasPermission() {
+        return ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestPermissions() {
+        if (!hasPermission()) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 10);
+        }
+    }
+
+    private void showImportDialog() {
+        if(!hasPermission()){
+            requestPermissions();
+            return;
+        }
+        importWorkout();
+        refresh();
+        menu.close(true);
+    }
+
+    private static final int FILE_SELECT_CODE= 21;
+    private void importWorkout(){
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        try {
+            startActivityForResult(Intent.createChooser(intent, getString(R.string.importWorkout)), FILE_SELECT_CODE);
+        } catch (android.content.ActivityNotFoundException ignored) { }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == FILE_SELECT_CODE) {
+            if (resultCode == RESULT_OK) {
+                importFile(data.getData());
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void importFile(Uri uri){
+        ProgressDialogController dialogController= new ProgressDialogController(this, getString(R.string.importWorkout));
+        dialogController.show();
+
+        new Thread(() -> {
+            try {
+                InputStream stream = getContentResolver().openInputStream(uri);
+                IOHelper.GpxImporter.importWorkout(getApplicationContext(), stream);
+                mHandler.post(() -> {
+                    Toast.makeText(this, R.string.workoutImported, Toast.LENGTH_LONG).show();
+                    dialogController.cancel();
+                    refresh();
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+                mHandler.post(() -> {
+                    dialogController.cancel();
+                    showErrorDialog(e, R.string.error, R.string.errorImportFailed);
+                });
+            }
+        }).start();
     }
 
     private void checkFirstStart() {
@@ -149,7 +226,13 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
 
     private void refresh() {
         loadData();
-        refreshAdapter();
+        if (listSize != workouts.length) {
+            // Adapter refresh causes the view to scroll up
+            // That should only be done if the list has changed
+            refreshAdapter();
+        }
+        listSize = workouts.length;
+        refreshFABMenu();
     }
 
     private void loadData() {
@@ -160,7 +243,6 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
     private void refreshAdapter() {
         adapter = new WorkoutAdapter(workouts, this);
         listView.setAdapter(adapter);
-        refreshFABMenu();
     }
 
     private void refreshFABMenu() {
@@ -193,6 +275,11 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
 
         if (id == R.id.actionOpenSettings) {
             startActivity(new Intent(this, MainSettingsActivity.class));
+            return true;
+        }
+
+        if (id == R.id.actionOpenStatisticss) {
+            startActivity(new Intent(this, ShowWorkoutsAggregatedDiagramActivity.class));
             return true;
         }
 

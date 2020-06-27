@@ -19,11 +19,13 @@
 
 package de.tadris.fitness.util.gpx;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 
 import java.util.List;
 
-class TrackSegment {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class TrackSegment {
 
     @JacksonXmlElementWrapper(useWrapping = false)
     List<TrackPoint> trkpt;
