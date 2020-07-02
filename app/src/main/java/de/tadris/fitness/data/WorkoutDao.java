@@ -25,6 +25,8 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import java.util.List;
+
 @Dao
 public interface WorkoutDao {
 
@@ -73,4 +75,6 @@ public interface WorkoutDao {
     @Delete
     void deleteSample(WorkoutSample sample);
 
+    @Update
+    void updateSamples(WorkoutSample[] samples);
 }
