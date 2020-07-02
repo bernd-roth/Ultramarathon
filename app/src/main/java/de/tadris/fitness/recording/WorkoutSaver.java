@@ -24,7 +24,6 @@ import android.hardware.SensorManager;
 import android.util.Log;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import de.tadris.fitness.Instance;
@@ -97,8 +96,6 @@ public class WorkoutSaver {
     }
 
     private void clearSamplesWithSameTime(boolean delete) {
-        int count = 0;
-        int oldCount = samples.size();
         for (int i = samples.size() - 2; i >= 0; i--) {
             WorkoutSample sample = samples.get(i);
             WorkoutSample lastSample = samples.get(i + 1);
@@ -108,11 +105,8 @@ public class WorkoutSaver {
                     db.workoutDao().deleteSample(lastSample); // delete sample also from DB
                 }
                 Log.i("WorkoutManager", "Removed samples at " + sample.absoluteTime + " rel: " + sample.relativeTime + "; " + lastSample.relativeTime);
-            } else {
-                count++;
             }
         }
-        Log.i("WorkoutManager", "Cleared SampleList: " + count + "/" + oldCount);
     }
 
     protected void setSimpleValues() {
