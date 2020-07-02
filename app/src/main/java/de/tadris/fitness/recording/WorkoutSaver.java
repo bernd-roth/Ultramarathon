@@ -232,7 +232,7 @@ public class WorkoutSaver {
             for (int i = 1; i < samples.size(); i++) {
                 WorkoutSample sample = samples.get(i);
                 // Use Rounded Elevations
-                double diff = sample.tmpElevation - prevSample.tmpElevation;
+                double diff = sample.elevation - prevSample.elevation;
                 if (Double.isNaN(diff)) {
                     Log.e("WorkoutSaver", "ElevationDiff is NaN fallback to 0");
                     diff = 0d;
@@ -244,6 +244,7 @@ public class WorkoutSaver {
                     // If this sample is lower than the last one, add difference to descent
                     workout.descent += Math.abs(diff);
                 }
+                prevSample = sample;
             }
         }
     }
