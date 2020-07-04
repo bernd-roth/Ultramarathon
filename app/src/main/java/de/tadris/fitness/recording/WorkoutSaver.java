@@ -47,7 +47,7 @@ public class WorkoutSaver {
         this.db = Instance.getInstance(context).db;
     }
 
-    public void finalizeWorkout(){
+    public void finalizeWorkout() {
         clearSamplesWithSameTime(true);
 
         calculateData();
@@ -55,17 +55,17 @@ public class WorkoutSaver {
         updateInDatabase();
     }
 
-    public void discardWorkout(){
+    public void discardWorkout() {
         deleteWorkoutAndSamples();
     }
 
-    public synchronized void addSample(WorkoutSample sample){
+    public synchronized void addSample(WorkoutSample sample) {
         sample.id = this.workout.id + this.samples.size();
         sample.workoutId = this.workout.id;
         db.workoutDao().insertSample(sample);
     }
 
-    public void saveWorkout(){
+    public void saveWorkout() {
         setIds();
 
         clearSamplesWithSameTime(false);
@@ -75,16 +75,16 @@ public class WorkoutSaver {
     }
 
     protected void setIds() {
-        workout.id= System.currentTimeMillis();
-        int i= 0;
-        for(WorkoutSample sample : samples) {
+        workout.id = System.currentTimeMillis();
+        int i = 0;
+        for (WorkoutSample sample : samples) {
             i++;
             sample.id = workout.id + i;
             sample.workoutId = workout.id;
         }
     }
 
-    private void calculateData(){
+    private void calculateData() {
         setSimpleValues();
         setTopSpeed();
 
@@ -95,13 +95,13 @@ public class WorkoutSaver {
         setCalories();
     }
 
-    private void clearSamplesWithSameTime(boolean delete){
-        for(int i= samples.size()-2; i >= 0; i--){
-            WorkoutSample sample= samples.get(i);
-            WorkoutSample lastSample= samples.get(i+1);
-            if(sample.absoluteTime == lastSample.absoluteTime){
+    private void clearSamplesWithSameTime(boolean delete) {
+        for (int i = samples.size() - 2; i >= 0; i--) {
+            WorkoutSample sample = samples.get(i);
+            WorkoutSample lastSample = samples.get(i + 1);
+            if (sample.absoluteTime == lastSample.absoluteTime) {
                 samples.remove(lastSample);
-                if(delete) {
+                if (delete) {
                     db.workoutDao().deleteSample(lastSample); // delete sample also from DB
                 }
                 Log.i("WorkoutManager", "Removed samples at " + sample.absoluteTime + " rel: " + sample.relativeTime + "; " + lastSample.relativeTime);
@@ -110,29 +110,30 @@ public class WorkoutSaver {
     }
 
     protected void setSimpleValues() {
-        double length= 0;
-        for(int i= 1; i < samples.size(); i++){
-            double sampleLength= samples.get(i - 1).toLatLong().sphericalDistance(samples.get(i).toLatLong());
-            length+= sampleLength;
+        double length = 0;
+        for (int i = 1; i < samples.size(); i++) {
+            double sampleLength = samples.get(i - 1).toLatLong().sphericalDistance(samples.get(i).toLatLong());
+            length += sampleLength;
         }
-        workout.length= (int)length;
-        workout.avgSpeed= ((double) workout.length) / ((double) workout.duration / 1000);
-        workout.avgPace= ((double)workout.duration / 1000 / 60) / ((double) workout.length / 1000);
+        workout.length = (int) length;
+        workout.avgSpeed = ((double) workout.length) / ((double) workout.duration / 1000);
+        workout.avgPace = ((double) workout.duration / 1000 / 60) / ((double) workout.length / 1000);
     }
 
     protected void setTopSpeed() {
-        double topSpeed= 0;
-        for(WorkoutSample sample : samples){
-            if(sample.speed > topSpeed){
-                topSpeed= sample.speed;
+        double topSpeed = 0;
+        for (WorkoutSample sample : samples) {
+            if (sample.speed > topSpeed) {
+                topSpeed = sample.speed;
             }
         }
-        workout.topSpeed= topSpeed;
+        workout.topSpeed = topSpeed;
     }
 
     private void setElevation() {
         setCorrectedElevation();
         setPressureElevation();
+        updateSamples();
     }
 
     private void setCorrectedElevation() {
@@ -151,47 +152,47 @@ public class WorkoutSaver {
     }
 
     private void setPressureElevation() {
-        boolean pressureDataAvailable= samples.get(0).tmpPressure != -1;
+        boolean pressureDataAvailable = samples.get(0).tmpPressure != -1;
 
-        if(!pressureDataAvailable){
+        if (!pressureDataAvailable) {
             // Because pressure data isn't available we just use the use GPS elevation
             // in WorkoutSample.elevation which was already set
             return;
         }
 
-        double avgElevation= getAverageElevation();
-        double avgPressure=  getAveragePressure();
+        double avgElevation = getAverageElevation();
+        double avgPressure = getAveragePressure();
 
-        for(int i= 0; i < samples.size(); i++){
-            WorkoutSample sample= samples.get(i);
+        for (int i = 0; i < samples.size(); i++) {
+            WorkoutSample sample = samples.get(i);
 
             // Altitude Difference to Average Elevation in meters
             float altitude_difference =
                     SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, sample.tmpPressure) -
                             SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, (float) avgPressure);
-            sample.elevation= avgElevation + altitude_difference;
+            sample.elevation = avgElevation + altitude_difference;
         }
     }
 
-    private double getAverageElevation(){
+    private double getAverageElevation() {
         return getAverageElevation(samples);
     }
 
-    private double getAverageElevation(List<WorkoutSample> samples){
-        double elevationSum= 0; // Sum of elevation
-        for(WorkoutSample sample : samples){
-            elevationSum+= sample.elevation;
+    private double getAverageElevation(List<WorkoutSample> samples) {
+        double elevationSum = 0; // Sum of elevation
+        for (WorkoutSample sample : samples) {
+            elevationSum += sample.elevation;
         }
 
         return elevationSum / samples.size();
     }
 
-    private double getAveragePressure(){
-        double pressureSum= 0;
-        for(WorkoutSample sample : samples){
-            pressureSum+= sample.tmpPressure;
+    private double getAveragePressure() {
+        double pressureSum = 0;
+        for (WorkoutSample sample : samples) {
+            pressureSum += sample.tmpPressure;
         }
-        return pressureSum  / samples.size();
+        return pressureSum / samples.size();
     }
 
     private void setRoundedSampleElevation() {
@@ -209,6 +210,7 @@ public class WorkoutSaver {
             int maxIndex = Math.min(i + range, samples.size() - 1);
             samples.get(i).tmpElevation = getAverageElevation(samples.subList(minIndex, maxIndex));
         }
+        updateSamples();
     }
 
     protected void setAscentAndDescent() {
@@ -219,12 +221,13 @@ public class WorkoutSaver {
         roundSampleElevation();
 
         // Now sum up the ascent/descent
-        if(samples.size()>1) {
+        if (samples.size() > 1) {
             WorkoutSample prevSample = samples.get(0);
-            for( int i = 1; i< samples.size(); i++) {
+            for (int i = 1; i < samples.size(); i++) {
                 WorkoutSample sample = samples.get(i);
+                // Use Rounded Elevations
                 double diff = sample.elevation - prevSample.elevation;
-                if(Double.isNaN(diff)){
+                if (Double.isNaN(diff)) {
                     Log.e("WorkoutSaver", "ElevationDiff is NaN fallback to 0");
                     diff = 0d;
                 }
@@ -235,6 +238,7 @@ public class WorkoutSaver {
                     // If this sample is lower than the last one, add difference to descent
                     workout.descent += Math.abs(diff);
                 }
+                prevSample = sample;
             }
         }
     }
@@ -252,11 +256,15 @@ public class WorkoutSaver {
         db.workoutDao().insertWorkout(workout);
     }
 
+    protected void updateSamples() {
+        db.workoutDao().updateSamples(samples.toArray(new WorkoutSample[0]));
+    }
+
     protected void updateInDatabase() {
         db.workoutDao().updateWorkout(workout);
     }
 
-    protected void deleteWorkoutAndSamples(){
+    protected void deleteWorkoutAndSamples() {
         db.workoutDao().deleteWorkoutAndSamples(workout, samples.toArray(new WorkoutSample[0]));
     }
 }

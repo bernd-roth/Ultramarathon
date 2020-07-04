@@ -73,4 +73,6 @@ public interface WorkoutDao {
     @Delete
     void deleteSample(WorkoutSample sample);
 
+    @Update
+    void updateSamples(WorkoutSample[] samples);
 }
