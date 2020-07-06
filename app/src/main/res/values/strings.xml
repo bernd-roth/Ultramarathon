@@ -110,6 +110,8 @@
     <string name="workoutTypeJogging">Jogging</string>
     <string name="workoutTypeCycling">Cycling</string>
     <string name="workoutTypeHiking">Hiking</string>
+    <string name="workoutTypeSkateboarding">Skateboarding</string>
+    <string name="workoutTypeInlineSkating">Inline Skating</string>
     <string name="workoutTypeOther">Other</string>
     <string name="workoutTypeUnknown">Unknown</string>
     <string name="type">Type</string>
@@ -233,7 +235,6 @@
     <string name="unitKcalLong">Calories</string>
     <string name="unitKJoule">Kilojoule</string>
     <string name="pref_energy_unit">Energy unit</string>
-    <string name="workoutTypeInlineSkating">Inline Skating</string>
     <string name="manageAutoTimeoutSummary">Edit the interval for automatic workout stop</string>
     <string name="intervalAutoTimeoutTraining">Auto Workout Timeout</string>
     <string name="pref_auto_timeout_title">Timespan for Auto-Stop</string>
@@ -265,7 +266,6 @@
     <string name="announcementSuppressDuringCall">Suppress during call</string>
     <string name="no_workouts_recorded">No workouts recorded</string>
     <string name="sections">Sections</string>
-    <string name="workoutTypeSkateboarding">Skateboarding</string>
 
     <string-array name="pref_energy_units">
         <item>kcal</item>
