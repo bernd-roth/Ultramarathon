@@ -59,7 +59,7 @@ public class WorkoutBuilder {
         workout.length = length;
 
         workout.avgSpeed = (double) length / (double) (duration / 1000);
-        workout.topSpeed = 0;
+        workout.topSpeed = workout.avgSpeed;
         workout.avgPace = ((double) workout.duration / 1000 / 60) / ((double) workout.length / 1000);
 
         workout.pauseDuration = 0;
