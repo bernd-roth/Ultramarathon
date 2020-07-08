@@ -20,7 +20,9 @@
 package de.tadris.fitness.activity.workout;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,8 +34,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.animation.Easing;
-import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.CombinedData;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -66,7 +73,7 @@ import static android.widget.AdapterView.OnItemSelectedListener;
 
 public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity implements SelectWorkoutTypeDialog.WorkoutTypeSelectListener {
 
-    LineChart chart;
+    CombinedChart chart;
     Spinner informationSelector, timeSpanSelector;
     View typeSelector;
     TextView infoMin, infoAvg, infoMax;
@@ -228,8 +235,15 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity imp
             return;
         }
 
-        LineData lineData = createLineData();
-        chart.setData(lineData);
+        CombinedData combinedData = new CombinedData();
+        if (selectedInformation.getAggregationType() == AggregationType.SUM) {
+            combinedData.setData(createBarData());
+            combinedData.setData(new LineData(new LineDataSet(new ArrayList<>(), "")));
+        } else {
+            combinedData.setData(createLineData());
+            combinedData.setData(new BarData(new BarDataSet(new ArrayList<>(), "")));
+        }
+        chart.setData(combinedData);
 
         chart.getXAxis().setValueFormatter(new ValueFormatter() {
             @Override
@@ -253,6 +267,9 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity imp
                     String formattedDate = chart.getXAxis().getValueFormatter().getFormattedValue(dataPoint.getDate().getTime());
                     String text = getString(selectedSpan.title) + " " + formattedDate + ": " + UnitUtils.round(e.getY(), 2) + " " + selectedInformation.getUnit();
                     chart.getDescription().setText(text);
+                    if (selectedSpan == AggregationSpan.SINGLE) {
+                        openWorkoutAt(dataPoint.getDate().getTime());
+                    }
                 } else {
                     onNothingSelected();
                 }
@@ -266,26 +283,29 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity imp
 
         chart.invalidate();
         chart.animateY(500, Easing.EaseOutCubic);
+        chart.zoomAndCenterAnimated(1, 1, 0, 0, YAxis.AxisDependency.LEFT, 500);
+    }
+
+
+    private BarData createBarData() {
+        BarDataSet barDataSet;
+        barDataSet = new BarDataSet(getDiagramEntries(), getString(selectedInformation.getTitleRes()) + " - " + getString(selectedInformation.getAggregationType().title));
+        barDataSet.setColor(getThemePrimaryColor());
+        barDataSet.setBarBorderColor(getThemePrimaryColor());
+        barDataSet.setBarBorderWidth(3f);
+        barDataSet.setValueTextColor(getThemeTextColor());
+        barDataSet.setValueTextSize(12);
+        barDataSet.setDrawValues(false);
+
+        BarData barData = new BarData(barDataSet);
+        barData.setBarWidth(selectedSpan.spanInterval * 0.85f);
+
+        return barData;
     }
 
     private LineData createLineData() {
-        final ArrayList<Entry> entries = new ArrayList<>();
-        for (AggregatedInformationDataPoint dataPoint : aggregatedWorkoutData.getDataPoints()) {
-            float value;
-            switch (selectedInformation.getAggregationType()) {
-                default:
-                case SUM:
-                    value = (float) dataPoint.getSum();
-                    break;
-                case AVERAGE:
-                    value = (float) dataPoint.getAvg();
-                    break;
-            }
-            entries.add(new Entry(dataPoint.getDate().getTime(), value, dataPoint));
-        }
-
         LineDataSet lineDataSet;
-        lineDataSet = new LineDataSet(entries, getString(selectedInformation.getTitleRes()) + " - " + getString(selectedInformation.getAggregationType().title));
+        lineDataSet = new LineDataSet(new ArrayList<>(getDiagramEntries()), getString(selectedInformation.getTitleRes()) + " - " + getString(selectedInformation.getAggregationType().title));
         lineDataSet.setColor(getThemePrimaryColor());
         lineDataSet.setValueTextColor(getThemeTextColor());
         lineDataSet.setValueTextSize(12);
@@ -314,6 +334,24 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity imp
         return new LineData(dataSets);
     }
 
+    private List<BarEntry> getDiagramEntries() {
+        final ArrayList<BarEntry> entries = new ArrayList<>();
+        for (AggregatedInformationDataPoint dataPoint : aggregatedWorkoutData.getDataPoints()) {
+            float value;
+            switch (selectedInformation.getAggregationType()) {
+                default:
+                case SUM:
+                    value = (float) dataPoint.getSum();
+                    break;
+                case AVERAGE:
+                    value = (float) dataPoint.getAvg();
+                    break;
+            }
+            entries.add(new BarEntry(dataPoint.getDate().getTime(), value, dataPoint));
+        }
+        return entries;
+    }
+
     private LineDataSet createHorizontalLineData(float xMin, float xMax, float y, int color, String label) {
         final ArrayList<Entry> entries = new ArrayList<>();
         entries.add(new Entry(xMin, y));
@@ -327,6 +365,16 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity imp
         lineDataSet.enableDashedLine(10, 10, 0);
         lineDataSet.setMode(LineDataSet.Mode.LINEAR);
         return lineDataSet;
+    }
+
+    private void openWorkoutAt(long time) {
+        Workout workout = Instance.getInstance(this).db.workoutDao().getWorkoutByStart(time);
+        if (workout != null) {
+            WorkoutActivity.selectedWorkout = workout;
+            startActivity(new Intent(this, ShowWorkoutActivity.class));
+        } else {
+            Log.i("DiagramActivity", "Cannot get workout at time=" + time);
+        }
     }
 
     @Override

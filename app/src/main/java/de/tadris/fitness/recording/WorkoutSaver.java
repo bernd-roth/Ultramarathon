@@ -52,7 +52,7 @@ public class WorkoutSaver {
 
         calculateData();
 
-        updateInDatabase();
+        updateWorkoutAndSamples();
     }
 
     public void discardWorkout() {
@@ -133,7 +133,6 @@ public class WorkoutSaver {
     private void setElevation() {
         setCorrectedElevation();
         setPressureElevation();
-        updateSamples();
     }
 
     private void setCorrectedElevation() {
@@ -256,11 +255,16 @@ public class WorkoutSaver {
         db.workoutDao().insertWorkout(workout);
     }
 
+    protected void updateWorkoutAndSamples() {
+        updateWorkoutInDatabase();
+        updateSamples();
+    }
+
     protected void updateSamples() {
         db.workoutDao().updateSamples(samples.toArray(new WorkoutSample[0]));
     }
 
-    protected void updateInDatabase() {
+    protected void updateWorkoutInDatabase() {
         db.workoutDao().updateWorkout(workout);
     }
 
