@@ -292,6 +292,13 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
         new OsmTraceUploader(this, mHandler, workout, samples, visibility, oAuthConsumer, cut, description).upload();
     }
 
+    private void openEditWorkoutActivity() {
+        final Intent intent = new Intent(this, EnterWorkoutActivity.class);
+        intent.putExtra(EnterWorkoutActivity.WORKOUT_ID_EXTRA, workout.id);
+        startActivity(intent);
+        finish();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -305,8 +312,8 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
             case R.id.actionUploadOSM:
                 prepareUpload();
                 return true;
-            case R.id.actionEditComment:
-                openEditCommentDialog();
+            case R.id.actionEditWorkout:
+                openEditWorkoutActivity();
                 return true;
         }
         return super.onOptionsItemSelected(item);

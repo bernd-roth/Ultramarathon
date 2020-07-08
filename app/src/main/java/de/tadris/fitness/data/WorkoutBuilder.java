@@ -37,6 +37,9 @@ public class WorkoutBuilder {
 
     private String comment;
 
+    private Workout existingWorkout;
+    private boolean fromExistingWorkout = false;
+
     public WorkoutBuilder() {
         workoutType = WorkoutType.RUNNING;
         start = Calendar.getInstance();
@@ -46,14 +49,22 @@ public class WorkoutBuilder {
     }
 
     public Workout create(Context context) {
-        Workout workout = new Workout();
+        Workout workout;
+
+        if (fromExistingWorkout) {
+            workout = existingWorkout;
+        } else {
+            workout = new Workout();
+        }
 
         // Calculate values
         workout.start = start.getTimeInMillis();
         workout.duration = duration;
         workout.end = workout.start + workout.duration;
 
-        workout.id = workout.start;
+        if (!fromExistingWorkout) {
+            workout.id = workout.start;
+        }
         workout.setWorkoutType(workoutType);
 
         workout.length = length;
@@ -62,9 +73,11 @@ public class WorkoutBuilder {
         workout.topSpeed = workout.avgSpeed;
         workout.avgPace = ((double) workout.duration / 1000 / 60) / ((double) workout.length / 1000);
 
-        workout.pauseDuration = 0;
-        workout.ascent = 0;
-        workout.descent = 0;
+        if (!fromExistingWorkout) {
+            workout.pauseDuration = 0;
+            workout.ascent = 0;
+            workout.descent = 0;
+        }
 
         workout.calorie = CalorieCalculator.calculateCalories(workout, Instance.getInstance(context).userPreferences.getUserWeight());
         workout.comment = comment;
@@ -74,10 +87,22 @@ public class WorkoutBuilder {
         return workout;
     }
 
-    public Workout insertWorkout(Context context) {
+    public Workout saveWorkout(Context context) {
         Workout workout = create(context);
-        Instance.getInstance(context).db.workoutDao().insertWorkout(workout);
+        if (fromExistingWorkout) {
+            updateWorkout(context, workout);
+        } else {
+            insertWorkout(context, workout);
+        }
         return workout;
+    }
+
+    private void updateWorkout(Context context, Workout workout) {
+        Instance.getInstance(context).db.workoutDao().updateWorkout(workout);
+    }
+
+    private void insertWorkout(Context context, Workout workout) {
+        Instance.getInstance(context).db.workoutDao().insertWorkout(workout);
     }
 
     public WorkoutType getWorkoutType() {
@@ -118,5 +143,22 @@ public class WorkoutBuilder {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public boolean isFromExistingWorkout() {
+        return fromExistingWorkout;
+    }
+
+    public static WorkoutBuilder fromWorkout(Workout workout) {
+        WorkoutBuilder builder = new WorkoutBuilder();
+        builder.fromExistingWorkout = true;
+        builder.existingWorkout = workout;
+        builder.workoutType = workout.getWorkoutType();
+        builder.start.setTimeInMillis(workout.start);
+        builder.duration = workout.duration;
+        builder.length = workout.length;
+        builder.comment = workout.comment;
+
+        return builder;
     }
 }

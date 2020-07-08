@@ -52,6 +52,9 @@ public interface WorkoutDao {
     @Query("SELECT * FROM workout WHERE start = :start")
     Workout getWorkoutByStart(long start);
 
+    @Query("SELECT * FROM workout WHERE id = :id")
+    Workout getWorkoutById(long id);
+
     @Query("SELECT * FROM workout_sample")
     WorkoutSample[] getSamples();
 

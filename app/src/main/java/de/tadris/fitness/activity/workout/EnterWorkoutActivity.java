@@ -36,6 +36,7 @@ import java.util.Calendar;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
+import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutBuilder;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.dialog.DatePickerFragment;
@@ -43,8 +44,11 @@ import de.tadris.fitness.dialog.DurationPickerDialogFragment;
 import de.tadris.fitness.dialog.SelectWorkoutTypeDialog;
 import de.tadris.fitness.dialog.TimePickerFragment;
 import de.tadris.fitness.util.unit.DistanceUnitSystem;
+import de.tadris.fitness.util.unit.UnitUtils;
 
 public class EnterWorkoutActivity extends InformationActivity implements SelectWorkoutTypeDialog.WorkoutTypeSelectListener, DatePickerFragment.DatePickerCallback, TimePickerFragment.TimePickerCallback, DurationPickerDialogFragment.DurationPickListener {
+
+    public static final String WORKOUT_ID_EXTRA = "de.tadris.fitness.EnterWorkoutActivity.WORKOUT_ID_EXTRA";
 
     WorkoutBuilder workoutBuilder = new WorkoutBuilder();
     TextView typeTextView, dateTextView, timeTextView, durationTextView;
@@ -58,11 +62,12 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
 
         initRoot();
 
-        addTitle(getString(R.string.info));
+        setTitle(R.string.enterWorkout);
         setupActionBar();
 
         unitSystem = Instance.getInstance(this).distanceUnitUtils.getDistanceUnitSystem();
 
+        addTitle(getString(R.string.info));
         KeyValueLine typeLine = addKeyValueLine(getString(R.string.type));
         typeTextView = typeLine.value;
         typeLine.lineRoot.setOnClickListener(v -> showTypeSelection());
@@ -106,7 +111,28 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
         commentEditText.setSingleLine(true);
         root.addView(commentEditText);
 
+        Intent intent = getIntent();
+        long workoutId = intent.getLongExtra(WORKOUT_ID_EXTRA, 0);
+        if (workoutId != 0) {
+            Workout workout = Instance.getInstance(this).db.workoutDao().getWorkoutById(workoutId);
+            if (workout != null) {
+                loadFromWorkout(workout);
+            } else {
+                Toast.makeText(this, R.string.cannotFindWorkout, Toast.LENGTH_LONG).show();
+                finish();
+            }
+        }
+
         updateTextViews();
+    }
+
+    private void loadFromWorkout(Workout workout) {
+        workoutBuilder = WorkoutBuilder.fromWorkout(workout);
+        distanceEditText.setText(String.valueOf(
+                UnitUtils.roundDouble(unitSystem.getDistanceFromKilometers(workoutBuilder.getLength() / 1000d), 3)
+        ));
+        commentEditText.setText(workoutBuilder.getComment());
+        setTitle(R.string.editWorkout);
     }
 
     private void saveWorkout() {
@@ -128,7 +154,7 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
             Toast.makeText(this, R.string.errorEnterValidDuration, Toast.LENGTH_LONG).show();
             return;
         }
-        ShowWorkoutActivity.selectedWorkout = workoutBuilder.insertWorkout(this);
+        ShowWorkoutActivity.selectedWorkout = workoutBuilder.saveWorkout(this);
         startActivity(new Intent(this, ShowWorkoutActivity.class));
         finish();
     }
@@ -197,6 +223,8 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.enter_workout_menu, menu);
+        menu.findItem(R.id.actionEnterWorkoutAdd).setIcon(
+                workoutBuilder.isFromExistingWorkout() ? R.drawable.ic_save : R.drawable.ic_add_white);
         return true;
     }
 
