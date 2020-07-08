@@ -316,7 +316,7 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
                     WorkoutSample lastSample = samples.get(samples.size() - 1);
                     distance = Math.abs(LocationListener.locationToLatLong(location).sphericalDistance(new LatLong(lastSample.lat, lastSample.lon)));
                     long timediff = Math.abs(lastSample.absoluteTime - location.getTime());
-                    if (distance < workout.getWorkoutType().minDistance && timediff < 500) {
+                    if (distance < workout.getWorkoutType().minDistance || timediff < 500) {
                         return;
                     }
                 }
