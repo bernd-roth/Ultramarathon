@@ -424,23 +424,30 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
 
     // Returns average speed within the given time in m/s
     public double getCurrentSpeed(int time) {
-        if (samples.size() < 2) {
-            return 0;
-        }
-        long minTime = System.currentTimeMillis() - time;
-        double distance = 0;
-        WorkoutSample lastSample = samples.get(samples.size() - 1);
-        for (int i = samples.size() - 1; i >= 0; i--) { // Go backwards
-            WorkoutSample currentSample = samples.get(i);
-            if (currentSample.absoluteTime > minTime) {
-                distance += currentSample.toLatLong().sphericalDistance(lastSample.toLatLong());
-            } else {
-                // We can exit the loop now as every other sample was recorded earlier
-                break;
+        synchronized (samples) {
+            if (samples.size() < 2) {
+                return 0;
             }
-            lastSample = currentSample;
+            long minTime = getDuration() - time;
+            Log.d("currentSpeed", "minTime= " + minTime);
+            double distance = 0;
+            WorkoutSample lastSample = samples.get(samples.size() - 1);
+            for (int i = samples.size() - 1; i >= 0; i--) { // Go backwards
+                Log.d("currentSpeed", "counting backwards i=" + i + ", size=" + samples.size());
+                WorkoutSample currentSample = samples.get(i);
+                if (currentSample.relativeTime > minTime) {
+                    Log.d("currentSpeed", "add distance of sample recorded at " + currentSample.relativeTime + " (" + currentSample.absoluteTime + ")");
+                    distance += currentSample.toLatLong().sphericalDistance(lastSample.toLatLong());
+                } else {
+                    Log.d("currentSpeed", "exit loop because sample at " + currentSample.relativeTime + " (" + currentSample.absoluteTime + ")");
+                    // We can exit the loop now as every other sample was recorded earlier
+                    break;
+                }
+                lastSample = currentSample;
+            }
+            Log.d("currentSpeed", "distance=" + distance);
+            return distance / (time / 1000d);
         }
-        return distance / time;
     }
 
     public long getTimeSinceStart() {
