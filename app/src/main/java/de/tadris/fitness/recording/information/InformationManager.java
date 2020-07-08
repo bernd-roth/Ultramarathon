@@ -36,15 +36,16 @@ public class InformationManager {
 
     private void addInformation() {
         information.add(new GPSStatus(context));
-        information.add(new Distance(context));
+        information.add(new CurrentTime(context));
         information.add(new Duration(context));
         information.add(new PauseDuration(context));
+        information.add(new Distance(context));
+        information.add(new CurrentSpeed(context));
+        information.add(new SpeedLastMinute(context));
         information.add(new AverageSpeedMotion(context));
         information.add(new AverageSpeedTotal(context));
-        information.add(new CurrentSpeed(context));
         information.add(new Ascent(context));
         information.add(new BurnedEnergy(context));
-        information.add(new CurrentTime(context));
     }
 
     public RecordingInformation getInformationById(String id) {

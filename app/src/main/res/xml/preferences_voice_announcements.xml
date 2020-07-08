@@ -45,6 +45,11 @@
             android:title="@string/announcementGPSStatus" />
 
         <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="announcement_currentTime"
+            android:title="@string/currentTime" />
+
+        <CheckBoxPreference
             android:defaultValue="true"
             android:key="announcement_duration"
             android:title="@string/workoutDuration" />
@@ -61,6 +66,11 @@
 
         <CheckBoxPreference
             android:defaultValue="false"
+            android:key="announcement_speed_last_minute"
+            android:title="@string/speedLastMinute" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
             android:key="announcement_avgSpeedMotion"
             android:title="@string/avgSpeedInMotion" />
 
@@ -74,10 +84,6 @@
             android:key="announcement_ascent"
             android:title="@string/workoutAscent" />
 
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="announcement_currentTime"
-            android:title="@string/currentTime" />
     </PreferenceCategory>
 
 </PreferenceScreen>

@@ -314,7 +314,7 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
                 // and if the time difference to the last sample is too small
                 synchronized (samples) {
                     WorkoutSample lastSample = samples.get(samples.size() - 1);
-                    distance = Math.abs(LocationListener.locationToLatLong(location).sphericalDistance(new LatLong(lastSample.lat, lastSample.lon)));
+                    distance = Math.abs(LocationListener.locationToLatLong(location).sphericalDistance(lastSample.toLatLong()));
                     long timediff = Math.abs(lastSample.absoluteTime - location.getTime());
                     if (distance < workout.getWorkoutType().minDistance && timediff < 500) {
                         return;
@@ -412,6 +412,7 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
         return distance / (double) (getTimeSinceStart() / 1000);
     }
 
+    // in m/s
     public double getCurrentSpeed() {
         WorkoutSample lastSample = getLastSample();
         if (lastSample != null) {
@@ -419,6 +420,27 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
         } else {
             return 0;
         }
+    }
+
+    // Returns average speed within the given time in m/s
+    public double getCurrentSpeed(int time) {
+        if (samples.size() < 2) {
+            return 0;
+        }
+        long minTime = System.currentTimeMillis() - time;
+        double distance = 0;
+        WorkoutSample lastSample = samples.get(samples.size() - 1);
+        for (int i = samples.size() - 1; i >= 0; i--) { // Go backwards
+            WorkoutSample currentSample = samples.get(i);
+            if (currentSample.absoluteTime > minTime) {
+                distance += currentSample.toLatLong().sphericalDistance(lastSample.toLatLong());
+            } else {
+                // We can exit the loop now as every other sample was recorded earlier
+                break;
+            }
+            lastSample = currentSample;
+        }
+        return distance / time;
     }
 
     public long getTimeSinceStart() {

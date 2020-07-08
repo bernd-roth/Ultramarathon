@@ -266,6 +266,8 @@
     <string name="announcementSuppressDuringCall">Suppress during call</string>
     <string name="no_workouts_recorded">No workouts recorded</string>
     <string name="sections">Sections</string>
+    <string name="speedLastMinute">Avg. Speed (Last Minute)</string>
+    <string name="speedLastMinuteSpoken">Speed within the last minute</string>
 
     <string-array name="pref_energy_units">
         <item>kcal</item>
