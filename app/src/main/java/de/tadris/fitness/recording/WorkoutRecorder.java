@@ -335,12 +335,12 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
         sample.lon = location.getLongitude();
         sample.elevation = location.getAltitude();
         sample.speed = location.getSpeed();
-        sample.relativeTime = location.getTime() - workout.start - pauseTime;
+        sample.relativeTime = location.getTime() - workout.start - getPauseDuration();
         sample.absoluteTime = location.getTime();
         if (Instance.getInstance(context).pressureAvailable) {
-            sample.tmpPressure = Instance.getInstance(context).lastPressure;
+            sample.pressure = Instance.getInstance(context).lastPressure;
         } else {
-            sample.tmpPressure = -1;
+            sample.pressure = -1;
         }
         synchronized (samples) {
             if (workoutSaver == null) {
@@ -389,7 +389,7 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
             }
             double lastElevation = -1;
             for (WorkoutSample sample : samples) {
-                double elevation = SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, sample.tmpPressure);
+                double elevation = SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, sample.pressure);
                 if (lastElevation == -1) lastElevation = elevation;
                 elevation = (elevation + lastElevation * 9) / 10; // Slow floating average
                 if (elevation > lastElevation) {

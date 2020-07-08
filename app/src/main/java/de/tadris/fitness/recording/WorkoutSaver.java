@@ -151,7 +151,7 @@ public class WorkoutSaver {
     }
 
     private void setPressureElevation() {
-        boolean pressureDataAvailable = samples.get(0).tmpPressure != -1;
+        boolean pressureDataAvailable = samples.get(0).pressure != -1;
 
         if (!pressureDataAvailable) {
             // Because pressure data isn't available we just use the use GPS elevation
@@ -167,7 +167,7 @@ public class WorkoutSaver {
 
             // Altitude Difference to Average Elevation in meters
             float altitude_difference =
-                    SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, sample.tmpPressure) -
+                    SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, sample.pressure) -
                             SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, (float) avgPressure);
             sample.elevation = avgElevation + altitude_difference;
         }
@@ -189,7 +189,7 @@ public class WorkoutSaver {
     private double getAveragePressure() {
         double pressureSum = 0;
         for (WorkoutSample sample : samples) {
-            pressureSum += sample.tmpPressure;
+            pressureSum += sample.pressure;
         }
         return pressureSum / samples.size();
     }

@@ -59,6 +59,8 @@ public class WorkoutSample{
 
     public double speed;
 
+    public float pressure;
+
     @JsonIgnore
     @Ignore
     public double tmpRoundedSpeed;
@@ -66,10 +68,6 @@ public class WorkoutSample{
     @JsonIgnore
     @Ignore
     public double tmpElevation;
-
-    @JsonIgnore
-    @Ignore
-    public float tmpPressure;
 
     @JsonIgnore
     @Ignore
