@@ -81,7 +81,7 @@
     <string name="workoutStartTime">Start Tid</string>
     <string name="workoutEndTime">Slut Tid</string>
     <string name="workoutDistance">Distance</string>
-    <string name="workoutPace">Pace</string>
+    <string name="workoutPace">Tempo</string>
     <string name="workoutRoute">Rute</string>
     <string name="workoutSpeed">Hastighed</string>
     <string name="workoutAvgSpeedShort">Gns. Hastighed</string>
