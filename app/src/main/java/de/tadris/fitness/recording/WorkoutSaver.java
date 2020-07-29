@@ -209,7 +209,6 @@ public class WorkoutSaver {
             int maxIndex = Math.min(i + range, samples.size() - 1);
             samples.get(i).tmpElevation = getAverageElevation(samples.subList(minIndex, maxIndex));
         }
-        updateSamples();
     }
 
     protected void setAscentAndDescent() {
