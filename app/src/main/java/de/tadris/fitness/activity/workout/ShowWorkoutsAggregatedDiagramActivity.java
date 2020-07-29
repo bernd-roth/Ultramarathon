@@ -370,8 +370,9 @@ public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity imp
     private void openWorkoutAt(long time) {
         Workout workout = Instance.getInstance(this).db.workoutDao().getWorkoutByStart(time);
         if (workout != null) {
-            WorkoutActivity.selectedWorkout = workout;
-            startActivity(new Intent(this, ShowWorkoutActivity.class));
+            final Intent intent = new Intent(this, ShowWorkoutActivity.class);
+            intent.putExtra(ShowWorkoutActivity.WORKOUT_ID_EXTRA, workout.id);
+            startActivity(intent);
         } else {
             Log.i("DiagramActivity", "Cannot get workout at time=" + time);
         }

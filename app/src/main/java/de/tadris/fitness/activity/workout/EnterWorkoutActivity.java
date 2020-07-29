@@ -154,8 +154,10 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
             Toast.makeText(this, R.string.errorEnterValidDuration, Toast.LENGTH_LONG).show();
             return;
         }
-        ShowWorkoutActivity.selectedWorkout = workoutBuilder.saveWorkout(this);
-        startActivity(new Intent(this, ShowWorkoutActivity.class));
+        Workout workout = workoutBuilder.saveWorkout(this);
+        final Intent intent = new Intent(this, ShowWorkoutActivity.class);
+        intent.putExtra(ShowWorkoutActivity.WORKOUT_ID_EXTRA, workout.id);
+        startActivity(intent);
         finish();
     }
 

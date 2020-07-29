@@ -19,6 +19,7 @@
 
 package de.tadris.fitness.activity.workout;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Handler;
@@ -26,6 +27,7 @@ import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.components.Description;
@@ -67,7 +69,7 @@ import de.tadris.fitness.util.unit.EnergyUnitUtils;
 
 public abstract class WorkoutActivity extends InformationActivity {
 
-    public static Workout selectedWorkout;
+    public static final String WORKOUT_ID_EXTRA = "de.tadris.fitness.WorkoutActivity.WORKOUT_ID_EXTRA";
 
     List<WorkoutSample> samples;
     Workout workout;
@@ -88,8 +90,19 @@ public abstract class WorkoutActivity extends InformationActivity {
     void initBeforeContent() {
         distanceUnitUtils = Instance.getInstance(this).distanceUnitUtils;
         energyUnitUtils = Instance.getInstance(this).energyUnitUtils;
-        workout= selectedWorkout;
-        samples= Arrays.asList(Instance.getInstance(this).db.workoutDao().getAllSamplesOfWorkout(workout.id));
+
+        Intent intent = getIntent();
+        long workoutId = intent.getLongExtra(WORKOUT_ID_EXTRA, 0);
+        if (workoutId != 0) {
+            workout = Instance.getInstance(this).db.workoutDao().getWorkoutById(workoutId);
+            if (workout == null) {
+                Toast.makeText(this, R.string.cannotFindWorkout, Toast.LENGTH_LONG).show();
+                finish();
+                return;
+            }
+        }
+
+        samples = Arrays.asList(Instance.getInstance(this).db.workoutDao().getAllSamplesOfWorkout(workout.id));
         if (workout.intervalSetUsedId != 0) {
             usedIntervalSet = Instance.getInstance(this).db.intervalDao().getSet(workout.intervalSetUsedId);
             intervals = Instance.getInstance(this).db.intervalDao().getAllIntervalsOfSet(usedIntervalSet.id);
