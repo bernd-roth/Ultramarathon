@@ -17,25 +17,10 @@
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="de.tadris.fitness.activity.settings.AboutActivity">
 
-    <Preference
-        android:key="userInterface"
-        android:summary="@string/preferencesUserInterfaceSummary"
-        android:title="@string/preferencesUserInterfaceTitle" />
-
-    <Preference
-        android:key="recordingSettings"
-        android:summary="@string/preferencesRecordingSummary"
-        android:title="@string/preferencesRecordingTitle" />
-
-    <Preference
-        android:key="backupSettings"
-        android:summary="@string/preferencesBackupSummary"
-        android:title="@string/preferencesBackupTitle" />
-
-    <Preference
-        android:key="about"
-        android:title="@string/aboutTitle" />
-
-</PreferenceScreen>
+</androidx.constraintlayout.widget.ConstraintLayout>

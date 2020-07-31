@@ -56,7 +56,7 @@ public class FitoTrackThemes {
         }
     }
 
-    private boolean shouldUseLightMode() {
+    public boolean shouldUseLightMode() {
         switch (getThemeSetting()) {
             default:
             case THEME_SETTING_LIGHT:

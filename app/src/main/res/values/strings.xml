@@ -270,6 +270,18 @@
     <string name="speedLastMinuteSpoken">Speed within the last minute</string>
     <string name="cannotFindWorkout">Cannot find workout</string>
     <string name="editWorkout">Edit Workout</string>
+    <string name="aboutTitle">About</string>
+    <string name="aboutVersion">Version</string>
+    <string name="aboutChangelog">Changelog</string>
+    <string name="aboutOpenSourceLibraries">Open source libraries</string>
+    <string name="aboutReportBug">Report a bug</string>
+    <string name="aboutLinks">Links</string>
+    <string name="aboutAuthor">Author</string>
+    <string name="aboutContributors">Contributors</string>
+    <string name="aboutTranslators">Translators</string>
+    <string name="aboutSendFeedback">Send feedback to developer</string>
+    <string name="aboutSourceCode">View source code</string>
+    <string name="sendEmail">Send Email</string>
 
     <string-array name="pref_energy_units">
         <item>kcal</item>

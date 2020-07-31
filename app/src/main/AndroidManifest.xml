@@ -40,6 +40,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".activity.settings.AboutActivity"></activity>
         <activity android:name=".activity.settings.EditIntervalSetActivity" />
         <activity android:name=".activity.settings.ManageIntervalSetsActivity" />
         <activity android:name=".activity.settings.VoiceAnnouncementsSettingsActivity" />
@@ -56,8 +57,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.record.RecordWorkoutActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait"
             android:showOnLockScreen="true" />
         <activity
             android:name=".activity.ListWorkoutsActivity"

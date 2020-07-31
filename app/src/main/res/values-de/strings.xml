@@ -282,11 +282,25 @@
     <string name="help">Hilfe</string>
     <string name="dayInMonth">Tag des Monats</string>
     <string name="singleWorkout">Einzelnes Workout</string>
-    <string name="calendarWeekYear">Kalendarwoche / Jahr</string>
+    <string name="calendarWeekYear">Kalenderwoche / Jahr</string>
     <string name="workoutImported">Workout erfolgreich importiert</string>
     <string name="no_workouts_recorded">Keine aufgezeichneten Workouts</string>
     <string name="workoutTypeSkateboarding">Skateboarden</string>
     <string name="speedLastMinute">Durchschn. Geschw. (letzte Minute)</string>
     <string name="speedLastMinuteSpoken">Geschwindigkeit in der letzten Minute</string>
+    <string name="cannotFindWorkout">Kann workout nicht finden</string>
+    <string name="editWorkout">Workout bearbeiten</string>
+    <string name="aboutTitle">Über</string>
+    <string name="aboutVersion">Version</string>
+    <string name="aboutChangelog">Änderungen</string>
+    <string name="aboutOpenSourceLibraries">Open-Source Bibliotheken</string>
+    <string name="aboutReportBug">Einen Fehler melden</string>
+    <string name="aboutLinks">Links</string>
+    <string name="aboutAuthor">Autor</string>
+    <string name="aboutContributors">Mitwirkende</string>
+    <string name="aboutTranslators">Übersetzer</string>
+    <string name="aboutSendFeedback">Feedback an den Entwickler sinden</string>
+    <string name="aboutSourceCode">Source Code ansehen</string>
+    <string name="sendEmail">Email senden</string>
 
 </resources>

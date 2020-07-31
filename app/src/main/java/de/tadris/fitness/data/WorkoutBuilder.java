@@ -70,13 +70,13 @@ public class WorkoutBuilder {
         workout.length = length;
 
         workout.avgSpeed = (double) length / (double) (duration / 1000);
-        workout.topSpeed = workout.avgSpeed;
         workout.avgPace = ((double) workout.duration / 1000 / 60) / ((double) workout.length / 1000);
 
         if (!fromExistingWorkout) {
             workout.pauseDuration = 0;
             workout.ascent = 0;
             workout.descent = 0;
+            workout.topSpeed = workout.avgSpeed;
         }
 
         workout.calorie = CalorieCalculator.calculateCalories(workout, Instance.getInstance(context).userPreferences.getUserWeight());

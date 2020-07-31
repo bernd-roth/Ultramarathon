@@ -50,6 +50,11 @@ public class MainSettingsActivity extends FitoTrackSettingsActivity {
             return true;
         });
 
+        findPreference("about").setOnPreferenceClickListener(preference -> {
+            startActivity(new Intent(this, AboutActivity.class));
+            return true;
+        });
+
     }
 
 }
