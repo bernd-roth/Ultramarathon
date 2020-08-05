@@ -34,6 +34,11 @@ public class ImperialWithMeters extends Imperial {
     }
 
     @Override
+    public double getDistanceFromMeters(double meters) {
+        return meters;
+    }
+
+    @Override
     public String getShortDistanceUnit() {
         return "m";
     }
