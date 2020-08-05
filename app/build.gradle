@@ -70,8 +70,9 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
 
-    // Maps provider
+    // Maps
     implementation 'org.mapsforge:mapsforge-core:0.13.0'
     implementation 'org.mapsforge:mapsforge-map:0.13.0'
     implementation 'org.mapsforge:mapsforge-map-reader:0.13.0'
@@ -99,7 +100,6 @@ dependencies {
 
     // Parsing date strings in GPX-files
     implementation 'com.github.sisyphsu:dateparser:1.0.4'
-    implementation 'androidx.cardview:cardview:1.0.0'
     annotationProcessor 'org.projectlombok:lombok:1.18.8'
 
     // About Screen
