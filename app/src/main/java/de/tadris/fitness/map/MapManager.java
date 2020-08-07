@@ -29,7 +29,6 @@ import de.tadris.fitness.Instance;
 import de.tadris.fitness.map.tilesource.FitoTrackTileSource;
 import de.tadris.fitness.map.tilesource.HumanitarianTileSource;
 import de.tadris.fitness.map.tilesource.MapnikTileSource;
-import de.tadris.fitness.map.tilesource.ThunderforestTileSource;
 
 public class MapManager {
 
@@ -40,10 +39,6 @@ public class MapManager {
         switch (chosenTileLayer){
             case "osm.humanitarian":
                 tileSource = HumanitarianTileSource.INSTANCE;
-                break;
-            case "thunderforest.outdoors": tileSource= ThunderforestTileSource.OUTDOORS; break;
-            case "thunderforest.cycle":
-                tileSource = ThunderforestTileSource.CYCLE_MAP;
                 break;
             case "osm.mapnik":
             default:

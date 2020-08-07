@@ -156,8 +156,6 @@
     <string-array name="pref_map_layers">
         <item>Mapnik\nStandard OSM Kartenstil</item>
         <item>Humanitarian\nSchöne Karte, aber manchmal nicht verfügbar</item>
-        <item>Outdoors\nLimitierter Zugriff</item>
-        <item>Cyclemap\nLimitierter Zugriff</item>
     </string-array>
 
     <string-array name="osm_track_visibility">

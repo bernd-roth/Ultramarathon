@@ -202,8 +202,6 @@
     <string-array name="pref_map_layers">
         <item>Mapnik\nAlapértelmezett OSM térképstílus</item>
         <item>Humanitarian\nTiszta térkép, de néha nem érhető el</item>
-        <item>Outdoors\nKorlátozott hozzáférés</item>
-        <item>Cyclemap\nKorlátozott hozzáférés</item>
     </string-array>
 
 </resources>

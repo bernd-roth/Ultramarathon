@@ -178,8 +178,6 @@
     <string-array name="pref_map_layers">
         <item>Mapnik\nMapa OSM predeterminado</item>
         <item>Humanitarian\nMapa limpio pero a veces no disponible</item>
-        <item>Outdoors\nAcceso limitado</item>
-        <item>Cyclemap\nAcceso limitado</item>
     </string-array>
 
 </resources>

@@ -280,8 +280,6 @@
     <string-array name="pref_map_layers">
         <item>Mapnik\nStyle OSM par défaut</item>
         <item>Humanitaire\nJolie carte mais parfois indisponible</item>
-        <item>Extérieur\nAccès limité</item>
-        <item>Cyclemap\nAccès limité</item>
     </string-array>
 
     <string-array name="pref_theme_setting">
