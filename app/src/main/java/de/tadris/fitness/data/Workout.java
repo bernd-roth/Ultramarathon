@@ -117,7 +117,7 @@ public class Workout{
     @JsonIgnore
     public String getSafeComment(){
         String safeComment = this.comment.replaceAll("[^0-9a-zA-Z-_]+", "_"); // replace all unwanted chars by `_`
-        return safeComment.substring(0, Math.min(this.comment.length(), 50)); // cut the comment after 50 Chars
+        return safeComment.substring(0, Math.min(safeComment.length(), 50)); // cut the comment after 50 Chars
     }
 
     @JsonIgnore
