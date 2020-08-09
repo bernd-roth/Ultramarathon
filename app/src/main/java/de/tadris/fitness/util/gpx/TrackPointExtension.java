@@ -19,11 +19,15 @@
 
 package de.tadris.fitness.util.gpx;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class TrackPointExtension {
 
     private double speed;
 
-    public TrackPointExtension(){}
+    public TrackPointExtension() {
+    }
 
     public TrackPointExtension(double speed) {
         this.speed = speed;
