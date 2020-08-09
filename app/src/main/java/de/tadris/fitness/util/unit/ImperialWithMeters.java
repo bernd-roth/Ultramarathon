@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -21,30 +21,24 @@ package de.tadris.fitness.util.unit;
 
 import de.tadris.fitness.R;
 
+
+/**
+ * This is the imperial system with meters as the elevation unit
+ */
 public class ImperialWithMeters extends Imperial {
 
     @Override
-    public double getMetersFromShortDistance(double shortdistance) {
-        return shortdistance;
-    }
-
-    @Override
-    public double getShortDistanceFromLong(double longdistance) {
-        return longdistance * 1609.344d;
-    }
-
-    @Override
-    public double getDistanceFromMeters(double meters) {
+    public double getElevationFromMeters(double meters) {
         return meters;
     }
 
     @Override
-    public String getShortDistanceUnit() {
+    public String getElevationUnit() {
         return "m";
     }
 
     @Override
-    public int getShortDistanceUnitTitle(boolean isPlural) {
+    public int getElevationUnitTitle(boolean isPlural) {
         return isPlural ? R.string.unitMetersPlural : R.string.unitMetersSingular;
     }
 }

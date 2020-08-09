@@ -287,13 +287,6 @@
         <item>Sombre</item>
     </string-array>
 
-    <string-array name="pref_unit_systems">
-        <item>Métrique</item>
-        <item>Métrique en m/s</item>
-        <item>Impérial</item>
-        <item>Impérial en mètre</item>
-    </string-array>
-
     <string-array name="pref_time_format">
         <item>Valeur par défaut</item>
         <item>12:08 PM</item>

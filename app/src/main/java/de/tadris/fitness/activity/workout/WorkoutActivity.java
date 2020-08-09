@@ -270,7 +270,7 @@ public abstract class WorkoutActivity extends InformationActivity {
 
             @Override
             public float getValue(WorkoutSample sample) {
-                return (float) distanceUnitUtils.getDistanceUnitSystem().getDistanceFromMeters(sample.elevation);
+                return (float) distanceUnitUtils.getDistanceUnitSystem().getElevationFromMeters(sample.elevation);
             }
 
             @Override
@@ -280,7 +280,7 @@ public abstract class WorkoutActivity extends InformationActivity {
 
             @Override
             public String getDescription() {
-                return "min - " + distanceUnitUtils.getDistanceUnitSystem().getShortDistanceUnit();
+                return "min - " + distanceUnitUtils.getDistanceUnitSystem().getElevationUnit();
             }
 
             @Override

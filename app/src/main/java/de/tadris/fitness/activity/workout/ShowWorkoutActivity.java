@@ -117,8 +117,8 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
         if (hasSamples()) {
             addTitle(getString(R.string.height));
 
-            addKeyValue(getString(R.string.workoutAscent), distanceUnitUtils.getDistance((int) workout.ascent),
-                    getString(R.string.workoutDescent), distanceUnitUtils.getDistance((int) workout.descent));
+            addKeyValue(getString(R.string.workoutAscent), distanceUnitUtils.getElevation((int) workout.ascent),
+                    getString(R.string.workoutDescent), distanceUnitUtils.getElevation((int) workout.descent));
 
             addHeightDiagram();
 

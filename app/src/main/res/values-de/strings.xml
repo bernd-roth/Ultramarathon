@@ -172,9 +172,11 @@
     <string-array name="pref_unit_systems">
         <item>Metrisch</item>
         <item>Physikalische Größen (m/s)</item>
-        <item>Imperial</item>
+        <item>Imperial (UK)</item>
         <item>Imperial mit Metern</item>
+        <item>Imperial (US Customary)</item>
     </string-array>
+
     <string name="start">Start</string>
     <string name="cannotStart">Starten unmöglich</string>
     <string name="add">Hinzufügen</string>
