@@ -24,15 +24,15 @@ import android.content.Context;
 import de.tadris.fitness.R;
 import de.tadris.fitness.recording.WorkoutRecorder;
 
-public class AverageSpeedTotal extends RecordingInformation {
+public class AveragePace extends RecordingInformation {
 
-    public AverageSpeedTotal(Context context) {
+    public AveragePace(Context context) {
         super(context);
     }
 
     @Override
     public String getId() {
-        return "avgSpeedTotal";
+        return "avg_pace";
     }
 
     @Override
@@ -47,17 +47,16 @@ public class AverageSpeedTotal extends RecordingInformation {
 
     @Override
     public String getTitle() {
-        return getString(R.string.avgSpeedTotalShort);
+        return getString(R.string.workoutPace);
     }
 
     @Override
     String getDisplayedText(WorkoutRecorder recorder) {
-        return getDistanceUnitUtils().getSpeed(recorder.getAvgSpeedTotal());
+        return getDistanceUnitUtils().getPace(recorder.getAvgPace());
     }
 
     @Override
     public String getSpokenText(WorkoutRecorder recorder) {
-        String avgSpeed = getDistanceUnitUtils().getSpeed(recorder.getAvgSpeedTotal(), true);
-        return getString(R.string.avgSpeedTotalLong) + ": " + avgSpeed + ".";
+        return getTitle() + ": " + getDistanceUnitUtils().getPace(recorder.getAvgPace(), true);
     }
 }

@@ -81,6 +81,11 @@
 
         <CheckBoxPreference
             android:defaultValue="false"
+            android:key="announcement_avg_pace"
+            android:title="@string/workoutPace" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
             android:key="announcement_ascent"
             android:title="@string/workoutAscent" />
 
