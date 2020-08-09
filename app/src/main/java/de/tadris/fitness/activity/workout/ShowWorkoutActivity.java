@@ -218,11 +218,16 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
                 Uri uri = FileProvider.getUriForFile(getBaseContext(), BuildConfig.APPLICATION_ID + ".fileprovider", new File(file));
 
                 IOHelper.GpxExporter.exportWorkout(workout, samples, new File(file));
-                dialogController.cancel();
-                mHandler.post(() -> FileUtils.saveOrShareFile(this, uri));
+                mHandler.post(() -> {
+                    dialogController.cancel();
+                    FileUtils.saveOrShareFile(this, uri);
+                });
             } catch (Exception e) {
                 e.printStackTrace();
-                mHandler.post(() -> showErrorDialog(e, R.string.error, R.string.errorGpxExportFailed));
+                mHandler.post(() -> {
+                    dialogController.cancel();
+                    showErrorDialog(e, R.string.error, R.string.errorGpxExportFailed);
+                });
             }
         }).start();
     }
