@@ -534,8 +534,19 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
             case R.id.actionSelectIntervalSet:
                 showIntervalSelection();
                 return true;
+            case R.id.actionEditHint:
+                showEditInformationHint();
+                return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showEditInformationHint() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.editDisplayedInformation)
+                .setMessage(R.string.editDisplayedInformationHint)
+                .setPositiveButton(R.string.okay, null)
+                .show();
     }
 
     private void onPressStopButton() {
@@ -550,6 +561,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
     public boolean onPrepareOptionsMenu(Menu menu) {
         boolean preparationPhase = instance.recorder.getState() == WorkoutRecorder.RecordingState.IDLE;
         menu.findItem(R.id.actionSelectIntervalSet).setVisible(preparationPhase && voiceFeedbackAvailable);
+        menu.findItem(R.id.actionEditHint).setVisible(preparationPhase);
         return super.onPrepareOptionsMenu(menu);
     }
 

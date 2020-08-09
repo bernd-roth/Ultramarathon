@@ -300,5 +300,7 @@
     <string name="aboutSendFeedback">Feedback an den Entwickler sinden</string>
     <string name="aboutSourceCode">Source Code ansehen</string>
     <string name="sendEmail">Email senden</string>
+    <string name="editDisplayedInformationHint">Solange das Workout noch nicht gestartet wurde, kannst du die angezeigten Werte bearbeiten, indem du auf eines der vier Felder klickst.</string>
+    <string name="editDisplayedInformation">Angezeigte Informationen bearbeiten</string>
 
 </resources>

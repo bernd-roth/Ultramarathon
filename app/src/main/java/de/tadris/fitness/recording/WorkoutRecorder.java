@@ -409,7 +409,11 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
 
     public double getAvgPace() {
         double speed = getAvgSpeed();
-        return (1 / speed) * 1000 / 60;
+        if (speed < 0.001) {
+            return 0;
+        } else {
+            return (1 / speed) * 1000 / 60;
+        }
     }
 
     // in m/s
