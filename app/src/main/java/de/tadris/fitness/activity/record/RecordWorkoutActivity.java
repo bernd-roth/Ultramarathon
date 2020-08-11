@@ -316,8 +316,6 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
                 activityFinish();
             }
         }else{
-            // TODO use Resource
-            Toast.makeText(this, "No Workout Started", Toast.LENGTH_LONG).show();
             activityFinish();
         }
     }
@@ -471,18 +469,16 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
         instance.voiceAnnouncementCallbackListeners.remove(this);
         instance.recorder.removeWorkoutListener(this);
 
-        // TODO Check if needed, seems 2b useless
-        if (instance.recorder.getState() == WorkoutRecorder.RecordingState.IDLE) {
-            // Stop recording/listener if not started yet
-            // Why Stop Something not started?
-            stop();
-        }
-
         // Kill Service on Finished or not Started Recording
-        if (instance.recorder.getState() == WorkoutRecorder.RecordingState.STOPPED || instance.recorder.getState() == WorkoutRecorder.RecordingState.IDLE) {
+        if (instance.recorder.getState() == WorkoutRecorder.RecordingState.STOPPED ||
+                instance.recorder.getState() == WorkoutRecorder.RecordingState.IDLE) {
             //ONLY SAVE WHEN STOPPED
             saveIfNotSaved();
             stopListener();
+            if (instance.recorder.getState() == WorkoutRecorder.RecordingState.IDLE) {
+                // Inform the user
+                Toast.makeText(this, R.string.noWorkoutStarted, Toast.LENGTH_LONG).show();
+            }
         }
 
         super.onDestroy();
