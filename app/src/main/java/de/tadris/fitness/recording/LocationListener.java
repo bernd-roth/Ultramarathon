@@ -47,11 +47,11 @@ import java.util.Locale;
 import de.tadris.fitness.BuildConfig;
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
-import de.tadris.fitness.activity.record.RecordWorkoutActivity;
 import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.recording.announcement.TTSController;
 import de.tadris.fitness.recording.announcement.VoiceAnnouncements;
 import de.tadris.fitness.recording.information.GPSStatus;
+import de.tadris.fitness.ui.record.RecordWorkoutActivity;
 import de.tadris.fitness.util.NotificationHelper;
 
 public class LocationListener extends Service {

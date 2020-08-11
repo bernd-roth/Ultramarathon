@@ -31,7 +31,7 @@ import android.text.InputType;
 import android.widget.EditText;
 
 import de.tadris.fitness.R;
-import de.tadris.fitness.view.ProgressDialogController;
+import de.tadris.fitness.ui.dialog.ProgressDialogController;
 import oauth.signpost.OAuth;
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.OAuthProvider;

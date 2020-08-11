@@ -21,6 +21,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="de.tadris.fitness.activity.settings.AboutActivity">
+    tools:context="de.tadris.fitness.ui.settings.AboutActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

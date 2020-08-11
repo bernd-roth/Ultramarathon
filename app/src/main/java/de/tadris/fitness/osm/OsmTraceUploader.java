@@ -34,7 +34,7 @@ import java.util.List;
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutSample;
-import de.tadris.fitness.view.ProgressDialogController;
+import de.tadris.fitness.ui.dialog.ProgressDialogController;
 import de.westnordost.osmapi.OsmConnection;
 import de.westnordost.osmapi.common.errors.OsmAuthorizationException;
 import de.westnordost.osmapi.traces.GpsTraceDetails;
