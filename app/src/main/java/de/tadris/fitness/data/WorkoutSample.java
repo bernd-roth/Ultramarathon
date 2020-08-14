@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -55,7 +55,17 @@ public class WorkoutSample{
 
     public double lon;
 
+    /**
+     * Elevation over the WGS84 ellipsoid in meters
+     */
     public double elevation;
+
+    /**
+     * Elevation over the media sea level in meters
+     * This value should be displayed to the user.
+     */
+    @ColumnInfo(name = "elevation_msl")
+    public double elevationMSL = 0;
 
     public double speed;
 

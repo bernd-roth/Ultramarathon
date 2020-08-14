@@ -89,7 +89,6 @@ public class WorkoutSaver {
         setTopSpeed();
 
         setElevation();
-        setRoundedSampleElevation();
         setAscentAndDescent();
 
         setCalories();
@@ -131,23 +130,9 @@ public class WorkoutSaver {
     }
 
     private void setElevation() {
-        setCorrectedElevation();
         setPressureElevation();
-    }
-
-    private void setCorrectedElevation() {
-        // Please see the AltitudeCorrection.java for the reason of this
-        try {
-            int lat = (int) Math.round(samples.get(0).lat);
-            int lon = (int) Math.round(samples.get(0).lon);
-            AltitudeCorrection correction = new AltitudeCorrection(context, lat, lon);
-            for (WorkoutSample sample : samples) {
-                sample.elevation = correction.getHeightOverSeaLevel(sample.elevation);
-            }
-        } catch (IOException e) {
-            // If we can't read the file, we cannot correct the values
-            e.printStackTrace();
-        }
+        setRoundedSampleElevation();
+        setMSLElevation();
     }
 
     private void setPressureElevation() {
@@ -208,6 +193,22 @@ public class WorkoutSaver {
             int minIndex = Math.max(i - range, 0);
             int maxIndex = Math.min(i + range, samples.size() - 1);
             samples.get(i).tmpElevation = getAverageElevation(samples.subList(minIndex, maxIndex));
+        }
+    }
+
+    protected void setMSLElevation() {
+        // Set the median sea level elevation value for all samples
+        // Please see the AltitudeCorrection.java for more information
+        try {
+            int lat = (int) Math.round(samples.get(0).lat);
+            int lon = (int) Math.round(samples.get(0).lon);
+            AltitudeCorrection correction = new AltitudeCorrection(context, lat, lon);
+            for (WorkoutSample sample : samples) {
+                sample.elevationMSL = correction.getHeightOverSeaLevel(sample.elevation);
+            }
+        } catch (IOException e) {
+            // If we can't read the file, we cannot correct the values
+            e.printStackTrace();
         }
     }
 

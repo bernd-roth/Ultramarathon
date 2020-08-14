@@ -40,7 +40,7 @@ import de.tadris.fitness.R;
  * but we want the height over the sea level. That's why we have to correct the height.
  * Luckily I found a file containing the corrections for all places around the world.
  * <p>
- * The geoids.csv is from https://github.com/vectorstofinal/geoid_heights licensed under MIT
+ * The geoids.csv is from https://github.com/vectorstofinal/geoid_heights and licensed under MIT
  */
 public class AltitudeCorrection {
 

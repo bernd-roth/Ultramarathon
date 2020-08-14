@@ -39,6 +39,7 @@ public class ImportWorkoutSaver extends WorkoutSaver {
         setSpeed();
         setTopSpeed();
 
+        setMSLElevation();
         setAscentAndDescent();
 
         setCalories();

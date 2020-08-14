@@ -28,7 +28,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(version = 8, entities = {Workout.class, WorkoutSample.class, Interval.class, IntervalSet.class})
+@Database(version = 9, entities = {Workout.class, WorkoutSample.class, Interval.class, IntervalSet.class})
 public abstract class AppDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "fito-track";
@@ -205,6 +205,21 @@ public abstract class AppDatabase extends RoomDatabase {
                             database.beginTransaction();
 
                             database.execSQL("ALTER table workout_sample add COLUMN pressure REAL not null default 0");
+
+                            database.setTransactionSuccessful();
+                        } finally {
+                            database.endTransaction();
+                        }
+                    }
+                }, new Migration(8, 9) {
+                    @Override
+                    public void migrate(@NonNull SupportSQLiteDatabase database) {
+                        try {
+                            database.beginTransaction();
+
+                            database.execSQL("ALTER table workout_sample add COLUMN elevation_msl REAL not null default 0;");
+
+                            database.execSQL("UPDATE workout_sample set elevation_msl = elevation;");
 
                             database.setTransactionSuccessful();
                         } finally {
