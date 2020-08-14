@@ -137,7 +137,7 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
         }
         if (System.currentTimeMillis() - lastSampleTime > PAUSE_TIME) {
             state = RecordingState.PAUSED;
-            time += time + PAUSE_TIME;
+            time += PAUSE_TIME;
             lastPause = lastSampleTime + PAUSE_TIME;
         } else {
             state = RecordingState.RUNNING;
