@@ -24,17 +24,27 @@ import de.tadris.fitness.R;
 class USCustomary extends Imperial {
 
     @Override
-    public double getElevationFromMeters(double meters) {
-        return meters * 3.280840;
+    public double getMetersFromShortDistance(double shortdistance) {
+        return 0.3048 * shortdistance;
     }
 
     @Override
-    public String getElevationUnit() {
+    public double getShortDistanceFromLong(double longdistance) {
+        return 5280 * longdistance; // miles -> feet
+    }
+
+    @Override
+    public double getDistanceFromMeters(double meters) {
+        return 3.28084 * meters;
+    }
+
+    @Override
+    public String getShortDistanceUnit() {
         return "ft";
     }
 
     @Override
-    public int getElevationUnitTitle(boolean isPlural) {
+    public int getShortDistanceUnitTitle(boolean isPlural) {
         return isPlural ? R.string.unitFootPlural : R.string.unitFootSingular;
     }
 
