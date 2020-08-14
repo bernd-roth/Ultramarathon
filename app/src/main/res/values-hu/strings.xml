@@ -181,12 +181,6 @@
         <item>Csak fülhallgatón</item>
     </string-array>
 
-    <string-array name="pref_unit_systems">
-        <item>Metrikus</item>
-        <item>Metrikus m/s értékkel</item>
-        <item>Birodalmi</item>
-        <item>Birodalmi méterrel</item>
-    </string-array>
 
     <string-array name="pref_theme_setting">
         <item>Világos</item>

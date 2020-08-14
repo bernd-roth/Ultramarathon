@@ -285,6 +285,8 @@
     <string name="editDisplayedInformation">Edit displayed information</string>
     <string name="editDisplayedInformationHint">As long as the workout has not started, you can edit the displayed values by clicking on one of the four fields.</string>
     <string name="noWorkoutStarted">No Workout Started</string>
+    <string name="unitFootPlural">Feet</string>
+    <string name="unitFootSingular">Foot</string>
 
     <string-array name="pref_energy_units">
         <item>kcal</item>
@@ -311,6 +313,7 @@
         <item>Metric with m/s</item>
         <item>Imperial</item>
         <item>Imperial with meters</item>
+        <item>US Customary</item>
     </string-array>
 
     <string-array name="pref_time_format">

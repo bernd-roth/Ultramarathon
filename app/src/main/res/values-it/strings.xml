@@ -261,12 +261,6 @@
         <item>Scuro</item>
     </string-array>
 
-    <string-array name="pref_unit_systems">
-        <item>Metrico</item>
-        <item>Metrico in m/s</item>
-        <item>Imperiale</item>
-        <item>Imperiale in metri</item>
-    </string-array>
 
     <string-array name="pref_time_format">
         <item>Default di sistema</item>

@@ -285,13 +285,6 @@
         <item>Donker</item>
     </string-array>
 
-    <string-array name="pref_unit_systems">
-        <item>Metrisch</item>
-        <item>Metrisch in m/s</item>
-        <item>Imperial</item>
-        <item>Imperial with meters</item>
-    </string-array>
-
     <string-array name="pref_time_format">
         <item>Systeemstandaard</item>
         <item>12:08 PM</item>

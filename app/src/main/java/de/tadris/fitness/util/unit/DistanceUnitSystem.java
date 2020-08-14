@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -29,22 +29,44 @@ public interface DistanceUnitSystem {
         return getMetersFromShortDistance(getShortDistanceFromLong(longdistance));
     }
 
+    default double getElevationFromMeters(double meters) {
+        return getDistanceFromMeters(meters);
+    }
+
     double getShortDistanceFromLong(double longdistance);
 
     double getDistanceFromMeters(double meters);
+
     double getDistanceFromKilometers(double kilometers);
+
     double getWeightFromKilogram(double kilogram);
+
     double getKilogramFromUnit(double unit);
+
     double getSpeedFromMeterPerSecond(double meterPerSecond);
+
+
     String getLongDistanceUnit();
 
     @StringRes
     int getLongDistanceUnitTitle(boolean isPlural);
+
     String getShortDistanceUnit();
 
     @StringRes
     int getShortDistanceUnitTitle(boolean isPlural);
+
+    default String getElevationUnit() {
+        return getShortDistanceUnit();
+    }
+
+    @StringRes
+    default int getElevationUnitTitle(boolean isPlural) {
+        return getShortDistanceUnitTitle(isPlural);
+    }
+
     String getWeightUnit();
+
     String getSpeedUnit();
 
     @StringRes

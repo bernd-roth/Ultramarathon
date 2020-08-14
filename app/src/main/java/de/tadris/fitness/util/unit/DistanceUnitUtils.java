@@ -49,6 +49,8 @@ public class DistanceUnitUtils extends UnitUtils {
                 return new Imperial();
             case 4:
                 return new ImperialWithMeters();
+            case 5:
+                return new USCustomary();
         }
     }
 
@@ -126,6 +128,19 @@ public class DistanceUnitUtils extends UnitUtils {
             } else {
                 return (int) distanceUnitSystem.getDistanceFromMeters(distanceInMeters) + " " + distanceUnitSystem.getShortDistanceUnit();
             }
+        }
+    }
+
+    public String getElevation(int elevationInMeters) {
+        return getElevation(elevationInMeters, false);
+    }
+
+    public String getElevation(int elevationInMeters, boolean useLongUnitNames) {
+        int value = (int) distanceUnitSystem.getElevationFromMeters(elevationInMeters);
+        if (useLongUnitNames) {
+            return value + " " + getString(distanceUnitSystem.getElevationUnitTitle(value != 1));
+        } else {
+            return value + " " + distanceUnitSystem.getElevationUnit();
         }
     }
 

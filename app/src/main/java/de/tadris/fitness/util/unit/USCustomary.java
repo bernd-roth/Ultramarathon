@@ -17,46 +17,36 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.recording.information;
-
-import android.content.Context;
+package de.tadris.fitness.util.unit;
 
 import de.tadris.fitness.R;
-import de.tadris.fitness.recording.WorkoutRecorder;
 
-public class Ascent extends RecordingInformation {
+class USCustomary extends Imperial {
 
-    public Ascent(Context context) {
-        super(context);
+    @Override
+    public double getMetersFromShortDistance(double shortdistance) {
+        return 0.3048 * shortdistance;
     }
 
     @Override
-    public String getId() {
-        return "ascent";
+    public double getShortDistanceFromLong(double longdistance) {
+        return 5280 * longdistance; // miles -> feet
     }
 
     @Override
-    boolean isEnabledByDefault() {
-        return false;
+    public double getDistanceFromMeters(double meters) {
+        return 3.28084 * meters;
     }
 
     @Override
-    boolean canBeDisplayed() {
-        return true;
+    public String getShortDistanceUnit() {
+        return "ft";
     }
 
     @Override
-    public String getTitle() {
-        return getString(R.string.workoutAscent);
+    public int getShortDistanceUnitTitle(boolean isPlural) {
+        return isPlural ? R.string.unitFootPlural : R.string.unitFootSingular;
     }
 
-    @Override
-    String getDisplayedText(WorkoutRecorder recorder) {
-        return getDistanceUnitUtils().getDistance(recorder.getAscent());
-    }
 
-    @Override
-    public String getSpokenText(WorkoutRecorder recorder) {
-        return getString(R.string.workoutAscent) + ": " + getDistanceUnitUtils().getElevation(recorder.getAscent(), true) + ".";
-    }
 }
