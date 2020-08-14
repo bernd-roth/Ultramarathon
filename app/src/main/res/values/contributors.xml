@@ -25,12 +25,15 @@
         <item>thrillfall</item>
         <item>Fabian Siegel</item>
         <item>Ruslan Sokolovski</item>
+        <item>escoand</item>
+        <item>Sergey Koziakov</item>
     </string-array>
 
     <string-array name="translators">
         <item>albertheres: Dutch</item>
         <item>Amadeous: French</item>
         <item>Balázs Úr: Hungarian</item>
+        <item>Dan Johansen: Danish</item>
         <item>epinez: German</item>
         <item>Hugo Leroux: French</item>
         <item>Ruslan Sokolovski: Spanish</item>
