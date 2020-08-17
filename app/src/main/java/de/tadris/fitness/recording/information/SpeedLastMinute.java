@@ -26,6 +26,8 @@ import de.tadris.fitness.recording.WorkoutRecorder;
 
 public class SpeedLastMinute extends RecordingInformation {
 
+    private static int TIME = 1000 * 60; // One minute
+
     public SpeedLastMinute(Context context) {
         super(context);
     }
@@ -52,11 +54,11 @@ public class SpeedLastMinute extends RecordingInformation {
 
     @Override
     String getDisplayedText(WorkoutRecorder recorder) {
-        return getDistanceUnitUtils().getSpeed(recorder.getCurrentSpeed());
+        return getDistanceUnitUtils().getSpeed(recorder.getCurrentSpeed(TIME));
     }
 
     @Override
     public String getSpokenText(WorkoutRecorder recorder) {
-        return getString(R.string.speedLastMinuteSpoken) + ": " + getDistanceUnitUtils().getSpeed(recorder.getCurrentSpeed(1000 * 60), true) + ".";
+        return getString(R.string.speedLastMinuteSpoken) + ": " + getDistanceUnitUtils().getSpeed(recorder.getCurrentSpeed(TIME), true) + ".";
     }
 }

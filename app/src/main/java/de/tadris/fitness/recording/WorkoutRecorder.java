@@ -437,25 +437,22 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
             if (samples.size() < 2) {
                 return 0;
             }
-            long minTime = getDuration() - time;
-            Log.d("currentSpeed", "minTime= " + minTime);
+            long currentTime = getDuration();
+            long minTime = currentTime - time;
             double distance = 0;
             WorkoutSample lastSample = samples.get(samples.size() - 1);
             for (int i = samples.size() - 1; i >= 0; i--) { // Go backwards
-                Log.d("currentSpeed", "counting backwards i=" + i + ", size=" + samples.size());
                 WorkoutSample currentSample = samples.get(i);
                 if (currentSample.relativeTime > minTime) {
-                    Log.d("currentSpeed", "add distance of sample recorded at " + currentSample.relativeTime + " (" + currentSample.absoluteTime + ")");
                     distance += currentSample.toLatLong().sphericalDistance(lastSample.toLatLong());
                 } else {
-                    Log.d("currentSpeed", "exit loop because sample at " + currentSample.relativeTime + " (" + currentSample.absoluteTime + ")");
-                    // We can exit the loop now as every other sample was recorded earlier
-                    break;
+                    break; // We can exit the loop now as every other sample was recorded earlier
                 }
                 lastSample = currentSample;
             }
-            Log.d("currentSpeed", "distance=" + distance);
-            return distance / (time / 1000d);
+            minTime = lastSample.relativeTime; // Set minTime to the time of the last sample that was added
+            long timeDiff = currentTime - minTime;
+            return distance / (timeDiff / 1000d);
         }
     }
 
