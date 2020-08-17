@@ -32,12 +32,6 @@
         <item>osm.humanitarian</item>
     </string-array>
 
-    <string-array name="osm_track_visibility">
-        <item>Identifiable</item>
-        <item>Trackable</item>
-        <item>Private</item>
-    </string-array>
-
     <string-array name="pref_theme_setting_values">
         <item>0</item>
         <item>1</item>

@@ -288,6 +288,12 @@
     <string name="unitFootPlural">Feet</string>
     <string name="unitFootSingular">Foot</string>
 
+    <string-array name="osm_track_visibility">
+        <item>Identifiable</item>
+        <item>Trackable</item>
+        <item>Private</item>
+    </string-array>
+
     <string-array name="pref_energy_units">
         <item>kcal</item>
         <item>Joule</item>
