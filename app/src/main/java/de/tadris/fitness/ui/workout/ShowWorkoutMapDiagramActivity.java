@@ -25,10 +25,10 @@ import de.tadris.fitness.R;
 
 public class ShowWorkoutMapDiagramActivity extends WorkoutActivity {
 
-    public static final String DIAGRAM_TYPE_HEIGHT= "height";
-    public static final String DIAGRAM_TYPE_SPEED=  "speed";
+    public static final String DIAGRAM_TYPE_EXTRA = "de.tadris.fitness.ShowWorkoutMapDiagramActivity.DIAGRAM_TYPE";
 
-    static String DIAGRAM_TYPE;
+    public static final String DIAGRAM_TYPE_HEIGHT = "height";
+    public static final String DIAGRAM_TYPE_SPEED = "speed";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +46,14 @@ public class ShowWorkoutMapDiagramActivity extends WorkoutActivity {
 
         diagramsInteractive= true;
         root= findViewById(R.id.showWorkoutDiagramParent);
-        switch (DIAGRAM_TYPE){
-            case DIAGRAM_TYPE_HEIGHT: addHeightDiagram(); break;
-            case DIAGRAM_TYPE_SPEED:  addSpeedDiagram();  break;
+        switch (getIntent().getStringExtra(DIAGRAM_TYPE_EXTRA)) {
+            case DIAGRAM_TYPE_HEIGHT:
+                addHeightDiagram();
+                break;
+            default:
+            case DIAGRAM_TYPE_SPEED:
+                addSpeedDiagram();
+                break;
         }
 
     }

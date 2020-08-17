@@ -95,11 +95,11 @@ public abstract class WorkoutActivity extends InformationActivity {
         long workoutId = intent.getLongExtra(WORKOUT_ID_EXTRA, 0);
         if (workoutId != 0) {
             workout = Instance.getInstance(this).db.workoutDao().getWorkoutById(workoutId);
-            if (workout == null) {
-                Toast.makeText(this, R.string.cannotFindWorkout, Toast.LENGTH_LONG).show();
-                finish();
-                return;
-            }
+        }
+        if (workout == null) {
+            Toast.makeText(this, R.string.cannotFindWorkout, Toast.LENGTH_LONG).show();
+            finish();
+            return;
         }
 
         samples = Arrays.asList(Instance.getInstance(this).db.workoutDao().getAllSamplesOfWorkout(workout.id));

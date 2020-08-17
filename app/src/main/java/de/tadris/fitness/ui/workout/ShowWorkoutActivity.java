@@ -90,7 +90,7 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
             addMap();
 
             map.setClickable(false);
-            mapRoot.setOnClickListener(v -> startActivity(new Intent(ShowWorkoutActivity.this, ShowWorkoutMapActivity.class)));
+            mapRoot.setOnClickListener(v -> startFullscreenMapActivity());
 
         }
 
@@ -137,8 +137,16 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
     }
 
     private void startDiagramActivity(String diagramType) {
-        ShowWorkoutMapDiagramActivity.DIAGRAM_TYPE = diagramType;
-        startActivity(new Intent(ShowWorkoutActivity.this, ShowWorkoutMapDiagramActivity.class));
+        final Intent intent = new Intent(this, ShowWorkoutMapDiagramActivity.class);
+        intent.putExtra(ShowWorkoutActivity.WORKOUT_ID_EXTRA, workout.id);
+        intent.putExtra(ShowWorkoutMapDiagramActivity.DIAGRAM_TYPE_EXTRA, diagramType);
+        startActivity(intent);
+    }
+
+    private void startFullscreenMapActivity() {
+        final Intent intent = new Intent(this, ShowWorkoutMapActivity.class);
+        intent.putExtra(ShowWorkoutActivity.WORKOUT_ID_EXTRA, workout.id);
+        startActivity(intent);
     }
 
 
