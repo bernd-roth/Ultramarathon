@@ -170,7 +170,7 @@ public class DistanceUnitUtils extends UnitUtils {
     }
 
     private String getSecondsText(int seconds) {
-        return seconds + " " + (seconds == 1 ? getString(R.string.timeHourSingular) : getString(R.string.timeHourPlural));
+        return seconds + " " + (seconds == 1 ? getString(R.string.timeSecondsSingular) : getString(R.string.timeSecondsPlural));
     }
 
     public DistanceUnitSystem getDistanceUnitSystem() {
