@@ -166,7 +166,7 @@ public class DistanceUnitUtils extends UnitUtils {
     }
 
     private String getMinuteText(int minutes) {
-        return minutes + " " + (minutes == 1 ? getString(R.string.timeMinuteSingular) : getString(R.string.timeHourPlural));
+        return minutes + " " + (minutes == 1 ? getString(R.string.timeMinuteSingular) : getString(R.string.timeMinutePlural));
     }
 
     private String getSecondsText(int seconds) {
