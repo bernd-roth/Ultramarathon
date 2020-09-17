@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
@@ -15,9 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-
-<resources>
+  --><resources>
     <string name="app_name">FitoTrack</string>
     <string name="backup">Backup</string>
     <string name="cancel">Abbrechen</string>
@@ -50,7 +49,6 @@
     <string name="pref_unit_system">Bevorzugtes Einheitensystem</string>
     <string name="pref_weight">Dein Gewicht</string>
     <string name="pref_weight_summary">Dein Gewicht ist zur Kalorienberechnung wichtig</string>
-
     <string name="preferences">Einstellungen</string>
     <string name="recordWorkout">Workout aufzeichnen</string>
     <string name="restore">Wiederherstellen</string>
@@ -63,7 +61,7 @@
     <string name="stopRecordingQuestionMessage">Möchtest du die Aufzeichnung wirklich stoppen?</string>
     <string name="trackerRunning">Tracker läuft</string>
     <string name="trackerRunningMessage">Dein Workout wird aufgezeichnet</string>
-    <string name="trackingInfo">Tracking Info</string>
+    <string name="trackingInfo">Informationen zur Aufnahme</string>
     <string name="trackingInfoDescription">Info über den laufenden Tracker</string>
     <string name="workoutAvgSpeedShort">Durchschnittsgeschw.</string>
     <string name="workoutBurnedEnergy">Verbrannte Kalorien</string>
@@ -147,28 +145,23 @@
     <string name="hintRestart">Bitte die App neustarten, damit die Änderungen wirksam werden</string>
     <string name="noComment">Kein Kommentar</string>
     <string name="sections">Abschnitte</string>
-
     <string-array name="pref_announcement_mode">
         <item>Immer</item>
         <item>Nur mit Kopfhörern</item>
     </string-array>
-
     <string-array name="pref_map_layers">
         <item>Mapnik\nStandard OSM Kartenstil</item>
         <item>Humanitarian\nSchöne Karte, aber manchmal nicht verfügbar</item>
     </string-array>
-
     <string-array name="osm_track_visibility">
         <item>Identifizierbar</item>
         <item>Verfolgbar</item>
         <item>Privat</item>
     </string-array>
-
     <string-array name="pref_theme_setting">
         <item>Hell</item>
         <item>Dunkel</item>
     </string-array>
-
     <string-array name="pref_unit_systems">
         <item>Metrisch</item>
         <item>Physikalische Größen (m/s)</item>
@@ -176,7 +169,6 @@
         <item>Imperial mit Metern</item>
         <item>Imperial (US Customary)</item>
     </string-array>
-
     <string name="start">Start</string>
     <string name="cannotStart">Starten unmöglich</string>
     <string name="add">Hinzufügen</string>
@@ -246,18 +238,15 @@
     <string name="replace">Ersetzen</string>
     <string name="merge">Zusammenführen</string>
     <string name="announcementSuppressDuringCall">Während Anruf unterdrücken</string>
-
     <string-array name="pref_energy_units">
         <item>kcal</item>
         <item>Joule</item>
     </string-array>
-
     <string-array name="pref_time_format">
         <item>System-Vorgabe</item>
         <item>12:08 PM</item>
         <item>15:23</item>
     </string-array>
-
     <string-array name="pref_date_format">
         <item>System-Vorgabe</item>
         <item>2001-07-24</item>
@@ -307,5 +296,4 @@
     <string name="unitFootPlural">Fuß</string>
     <string name="unitFootSingular">Fuß</string>
     <string name="noWorkoutStarted">Kein Workout gestartet</string>
-
 </resources>
