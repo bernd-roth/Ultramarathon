@@ -50,8 +50,8 @@
     <string name="voiceAnnouncementsTitle">Anuncios de voz</string>
     <string name="pref_voice_announcements_summary">Configure indicaciones de voz que le informarán durante el entrenamiento</string>
     <string name="pref_announcements_config_title">Disparador de anuncio</string>
-    <string name="pref_announcements_config_summary">Elija el tiempo y la distancia entre los anuncios de voz.</string>
-    <string name="pref_announcements_content">Contenido de los anuncios.</string>
+    <string name="pref_announcements_config_summary">Elija el tiempo y la distancia entre los anuncios de voz</string>
+    <string name="pref_announcements_content">Contenido de los anuncios</string>
     <string name="gpsLost">Señal de GPS perdida</string>
     <string name="gpsFound">Señal GPS encontrada</string>
     <string name="workoutTime">Hora</string>
@@ -64,7 +64,7 @@
     <string name="workoutPace">Ritmo</string>
     <string name="workoutRoute">Ruta</string>
     <string name="workoutSpeed">Velocidad</string>
-    <string name="workoutAvgSpeedShort">Velo. Prom.</string>
+    <string name="workoutAvgSpeedShort">Vel. Promedio</string>
     <string name="workoutAvgSpeedLong">Velocidad promedio</string>
     <string name="workoutTopSpeed">Velocidad máxima</string>
     <string name="workoutBurnedEnergy">Energía quemada</string>
@@ -72,7 +72,7 @@
     <string name="workoutEnergyConsumption">Consumo de energía</string>
     <string name="uploading">Subiendo</string>
     <string name="enterVerificationCode">Introduzca el código de verificación</string>
-    <string name="authenticationFailed">Error de autenticación</string>
+    <string name="authenticationFailed">Error de autenticación.</string>
     <string name="upload">Subir</string>
     <string name="uploadSuccessful">Subida exitosa</string>
     <string name="uploadFailed">Fallo en la subida</string>
@@ -142,4 +142,37 @@
         <item>Humanitarian\nMapa limpio pero a veces no disponible</item>
     </string-array>
     <string name="setDuration">Especificar duración</string>
+    <string name="avgSpeedTotalLong">Velocidad Promedio en Total</string>
+    <string name="avgSpeedTotalShort">Vel. Promedio (Total)</string>
+    <string name="avgSpeedInMotion">Vel. Promedio (en movimiento)</string>
+    <string name="enterDescription">Ingrese una descripción</string>
+    <string name="hintAddWorkout">Haga clic en el ícono mas para ingresar un entrenamiento.</string>
+    <string name="currentSpeed">Velocidad actual</string>
+    <string name="enterName">Ingrese un nombre</string>
+    <string name="length_in_minutes">Duración (minutos):</string>
+    <string name="interval_name">Nombre:</string>
+    <string name="create">Crear</string>
+    <string name="workoutRecording">Grabación de entrenamiento</string>
+    <string name="workoutTypeOther">Otro</string>
+    <string name="workoutEdited">Este entrenamiento ha sido editado.</string>
+    <string name="errorWorkoutAddFuture">El entrenamiento no puede ser en el futuro</string>
+    <string name="start">Iniciar</string>
+    <string name="add_interval">Agregar intervalo</string>
+    <string name="hintRestart">Por favor reinicie la aplicación para aplicar los cambios</string>
+    <string name="enterWorkout">Ingrese entrenamiento</string>
+    <string name="workoutTypeSkateboarding">Skate</string>
+    <string name="timeSecondsShort">s</string>
+    <string name="add">Agregar</string>
+    <string name="cannotStart">No se puede iniciar</string>
+    <string name="noComment">Sin comentario</string>
+    <string name="theme">Tema</string>
+    <string name="OpenStreetMapAttribution">© Contribuidores de OpenStreetMap</string>
+    <string name="info">Info</string>
+    <string name="importWorkout">Importar entrenamiento</string>
+    <string name="type">Tipo</string>
+    <string name="workoutTypeInlineSkating">Patín en línea</string>
+    <string name="timeHourShort">h</string>
+    <string name="errorEnterValidDuration">Ingrese una duración válida</string>
+    <string name="errorEnterValidNumber">Ingrese un numero válido</string>
+    <string name="timeMinuteShort">min</string>
 </resources>
