@@ -106,7 +106,7 @@
     <string name="enable">Inschakelen</string>
     <string name="comment">Opmerking</string>
     <string name="enterComment">Opmerking invoeren</string>
-    <string name="okay">Okay</string>
+    <string name="okay">Oke</string>
     <string name="stopRecordingQuestion">Stop Opname?</string>
     <string name="stopRecordingQuestionMessage">Weet je zeker dat je de opname wilt stoppen?</string>
     <!-- leave the underscore because "continue" is a java command -->
@@ -171,7 +171,7 @@
     <string name="intervalSet">Interval reeks</string>
     <string name="intervalSets">Interval reeksen</string>
     <string name="currentSpeed">Huidige snelheid</string>
-    <string name="hintAddWorkout">Klik op het pluspictogram om een ​​training op te nemen of in te voeren.</string>
+    <string name="hintAddWorkout">Klik op het pluspictogram om een training op te nemen of in te voeren.</string>
     <string name="enterDescription">Voer een beschrijving in</string>
     <string name="avgSpeedInMotion">Gem. snelheid (tijdens beweging)</string>
     <string name="avgSpeedTotalShort">Gem. snelheid (totaal)</string>
@@ -232,7 +232,7 @@
     <string name="merge">Samenvoegen</string>
     <string name="workoutImported">Trainingen succesvol geïmporteerd</string>
     <string name="announcementSuppressDuringCall">Onderdrukken tijdens gesprek</string>
-    <string name="no_workouts_recorded">No workouts recorded</string>
+    <string name="no_workouts_recorded">Geen trainingen opgenomen</string>
     <string name="sections">Secties</string>
     <string name="speedLastMinute">Gem. snelheid (Laaste minuut)</string>
     <string name="speedLastMinuteSpoken">Snelheid in de laatste minuut</string>
@@ -275,4 +275,15 @@
     <string name="aboutChangelog">Wijzigingen</string>
     <string name="aboutVersion">Versie</string>
     <string name="aboutTitle">Over</string>
+    <string name="unitFootPlural">Voeten</string>
+    <string name="unitFootSingular">Voet</string>
+    <string name="noWorkoutStarted">Geen training gestart</string>
+    <string name="editDisplayedInformationHint">Zolang de training nog niet is gestart, kun je de weergegeven waarden bewerken door op een van de vier velden te klikken.</string>
+    <string name="editDisplayedInformation">Bewerk de weergegeven informatie</string>
+    <string name="sendEmail">Stuur een email</string>
+    <string name="aboutSourceCode">Bekijk de broncode</string>
+    <string name="aboutSendFeedback">Stuur feedback naar de ontwikkelaar</string>
+    <string name="aboutTranslators">Vertalers</string>
+    <string name="aboutContributors">Bijdragers</string>
+    <string name="aboutAuthor">Auteur</string>
 </resources>
