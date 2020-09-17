@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -15,15 +16,12 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-	
-<resources>
+  --><resources>
     <string name="app_name">FitoTrack</string>
     <string name="workout_add">Toevoegen</string>
     <string name="stop">Stop</string>
     <string name="delete">Verwijderen</string>
     <string name="exporting">Exporteren</string>
-
     <string name="error">Fout</string>
     <string name="errorGpxExportFailed">De GPX export is mislukt.</string>
     <string name="errorExportFailed">Data export is mislukt.</string>
@@ -37,16 +35,12 @@
     <string name="finished">Gereed</string>
     <string name="loadingFile">Bestand laden</string>
     <string name="chooseBackupFile">Kies back-up bestand</string>
- 
     <string name="importBackupMessage">WAARSCHUWING: Al je huidige gegevens in de app worden verwijderd. Als je deze niet wilt verliezen, maak dan vooraf een back-up. Weet je zeker dat je de back-up wilt herstellen?</string>
     <string name="restore">Herstellen</string>
     <string name="backup">Back-up</string>
-
     <string name="pref_ringtone_silent">Stil</string>
-
     <string name="setPreferencesTitle">Voorkeuren opgeven</string>
     <string name="setPreferencesMessage">Geef je voorkeur voor het eenheidssysteem en je gewicht op bij instellingen.</string>
-
     <string name="timeMinuteSingular">Minuut</string>
     <string name="timeMinutePlural">Minuten</string>
     <string name="timeMinuteShort">min</string>
@@ -55,25 +49,17 @@
     <string name="timeHourShort">h</string>
     <string name="timeSecondsShort">s</string>
     <string name="and">en</string>
-
     <string name="errorEnterValidNumber">Voer een juist nummer in</string>
     <string name="errorWorkoutAddFuture">De training kan niet in de toekomst zijn</string>
     <string name="errorEnterValidDuration">Voer een geldige duur in</string>
-
     <string name="announcementGPSStatus">GPS status</string>
- 
     <string name="voiceAnnouncementsTitle">Gesproken aanwijzingen</string>
-    
     <string name="pref_voice_announcements_summary">Configureer de stembesturing voor tijdens de training</string>
-    
     <string name="pref_announcements_config_title">Trigger voor gesproken aanwijzingen</string>
     <string name="pref_announcements_config_summary">Kies de tijd en afstand tussen de gesproken aanwijzingen</string>
-    
     <string name="pref_announcements_content">Inhoud van de gesproken aanwijzingen</string>
-
     <string name="gpsLost">GPS signaal verloren</string>
     <string name="gpsFound">GPS signaal gevonden</string>
-    
     <string name="workoutTime">Tijd</string>
     <string name="workoutDate">Datum</string>
     <string name="workoutDuration">Tijdsduur</string>
@@ -98,55 +84,39 @@
     <string name="uploadSuccessful">Uploaden gelukt</string>
     <string name="uploadFailed">Uploaden mislukt</string>
     <string name="uploadFailedOsmNotAuthorized">Niet geautoriseerd, probeer opnieuw</string>
- 
     <string name="workoutAscent">Oplopend</string>
     <string name="workoutDescent">Aflopend</string>
-
     <string name="height">Hoogte</string>
-
-
     <string name="workoutTypeRunning">Hardlopen</string>
     <string name="workoutTypeWalking">Wandelen</string>
     <string name="workoutTypeJogging">Joggen</string>
     <string name="workoutTypeCycling">Fietsen</string>
     <string name="workoutTypeHiking">Bergwandelen</string>
-	<string name="workoutTypeSkateboarding">Skateboarden</string>
+    <string name="workoutTypeSkateboarding">Skateboarden</string>
     <string name="workoutTypeInlineSkating">Inline skaten</string>
     <string name="workoutTypeOther">Anders</string>
     <string name="workoutTypeUnknown">Onbekend</string>
     <string name="type">Type</string>
-
     <string name="enterWorkout">Training invoeren</string>
     <string name="importWorkout">Training importeren</string>
-
     <string name="setDuration">Tijdsduur instellen</string>
-
-
     <string name="recordWorkout">Training opnemen</string>
- 
     <string name="noGpsTitle">GPS uitgeschakeld</string>
     <string name="noGpsMessage">Schakel GPS in om je training op te nemen.</string>
     <string name="enable">Inschakelen</string>
-
     <string name="comment">Opmerking</string>
     <string name="enterComment">Opmerking invoeren</string>
     <string name="okay">Okay</string>
-
     <string name="stopRecordingQuestion">Stop Opname?</string>
     <string name="stopRecordingQuestionMessage">Weet je zeker dat je de opname wilt stoppen?</string>
- 
     <!-- leave the underscore because "continue" is a java command -->
     <string name="continue_">Doorgaan</string>
-
     <string name="deleteWorkout">Training verwijderen</string>
     <string name="deleteWorkoutMessage">Weet je zeker dat je de training wilt verwijderen?</string>
-
     <string name="trackerRunning">Tracker loopt</string>
     <string name="trackerRunningMessage">Je training wordt opgenomen</string>
-
     <string name="trackingInfo">Tracking info</string>
     <string name="trackingInfoDescription">Info over de lopende opname</string>
-
     <string name="cancel">Annuleren</string>
     <string name="exportAsGpxFile">Exporteren als GPX bestand</string>
     <string name="pref_weight">Je gewicht</string>
@@ -168,7 +138,6 @@
     <string name="ttsNotAvailable">Tekst-naar-spraak is niet beschikbaar</string>
     <string name="action_edit_comment">Bewerk opmerking</string>
     <string name="pref_announcement_mode">Aankondigingsmodus</string>
-
     <string name="save">Opslaan</string>
     <string name="share">Delen</string>
     <string name="savedToDownloads">Opgeslagen in Downloads</string>
@@ -180,7 +149,6 @@
     <string name="noComment">Geen opmerking</string>
     <string name="start">Start</string>
     <string name="cannotStart">Kan niet starten</string>
-
     <string name="add">Toevoegen</string>
     <string name="add_interval">Interval toevoegen</string>
     <string name="manageIntervalSets">Interval reeksen beheren</string>
@@ -259,44 +227,38 @@
     <string name="singleWorkout">Enkele training</string>
     <string name="workoutStatsHelpText">Dit scherm toont historische statistieken van de trainingen. Om het te gebruiken, moet je eerst het trainingstype specificeren door erop te klikken. Stel vervolgens de informatie in waarover je meer wilt weten en de tijdsduur. \n\nE.g. Bijvoorbeeld als je \"Week\" selecteert als tijdsperiode, worden alle trainingen van elke week samengevoegd tot één gegevenspunt, waarbij ofwel het gemiddelde ofwel de som van elke week wordt berekend.</string>
     <string name="dataSamples">Voorbeelden</string>
-	<string name="replaceOrMergeMessage">Database vervangen of samenvoegen met back-upbestand?</string>
+    <string name="replaceOrMergeMessage">Database vervangen of samenvoegen met back-upbestand?</string>
     <string name="replace">Vervangen</string>
     <string name="merge">Samenvoegen</string>
     <string name="workoutImported">Trainingen succesvol geïmporteerd</string>
     <string name="announcementSuppressDuringCall">Onderdrukken tijdens gesprek</string>
-	<string name="no_workouts_recorded">No workouts recorded</string>
+    <string name="no_workouts_recorded">No workouts recorded</string>
     <string name="sections">Secties</string>
     <string name="speedLastMinute">Gem. snelheid (Laaste minuut)</string>
     <string name="speedLastMinuteSpoken">Snelheid in de laatste minuut</string>
     <string name="cannotFindWorkout">Kan geen training vinden</string>
     <string name="editWorkout">Training aanpassen</string>
-
     <string-array name="pref_energy_units">
         <item>kcal</item>
         <item>Joule</item>
     </string-array>
-    
     <string-array name="pref_announcement_mode">
-    <item>Altijd</item>
-    <item>Alleen met koptelefoon</item>
+        <item>Altijd</item>
+        <item>Alleen met koptelefoon</item>
     </string-array>
-    
     <string-array name="pref_map_layers">
         <item>Mapnik\nStandaard OSM kaartstijl</item>
         <item>Humanitarian\nMinimalistische kaart (soms niet beschikbaar)</item>
     </string-array>
-
     <string-array name="pref_theme_setting">
         <item>Licht</item>
         <item>Donker</item>
     </string-array>
-
     <string-array name="pref_time_format">
         <item>Systeemstandaard</item>
         <item>12:08 PM</item>
         <item>15:23</item>
     </string-array>
-
     <string-array name="pref_date_format">
         <item>Systeemstandaard</item>
         <item>2001-07-24</item>
@@ -307,5 +269,10 @@
         <item>24/07/2001</item>
         <item>07/24/2001</item>
     </string-array>
-
+    <string name="aboutLinks">Links</string>
+    <string name="aboutReportBug">Meld een bug</string>
+    <string name="aboutOpenSourceLibraries">Open source bibliotheken</string>
+    <string name="aboutChangelog">Wijzigingen</string>
+    <string name="aboutVersion">Versie</string>
+    <string name="aboutTitle">Over</string>
 </resources>
