@@ -180,7 +180,7 @@
     <string name="noWorkoutStarted">No se inició el entrenamiento</string>
     <string name="editDisplayedInformationHint">Siempre que el entrenamiento no haya comenzado, puede editar los valores mostrados haciendo clic en uno de los cuatro campos.</string>
     <string name="editDisplayedInformation">Editar la información presentada</string>
-    <string name="sendEmail">Enviar email</string>
+    <string name="sendEmail">Enviar un correo electrónico</string>
     <string name="aboutSourceCode">Ver código fuente</string>
     <string name="aboutSendFeedback">Enviar comentarios al desarrollador</string>
     <string name="aboutTranslators">Traductores</string>
@@ -270,4 +270,5 @@
     <string name="manageIntervalSets">Gestionar conjuntos de intervalos</string>
     <string name="manageIntervalsSummary">Edite los conjuntos de intervalos que podrá utilizar durante el entrenamiento mediante la retroalimentación de voz.</string>
     <string name="hintEditIntervalSet">Agregue intervalos que se hablarán.</string>
+    <string name="recordingPermissionNotGrantedTitle">Permisos no concedidos</string>
 </resources>
