@@ -163,7 +163,7 @@
     <string name="workoutTypeSkateboarding">Patineta</string>
     <string name="timeSecondsShort">s</string>
     <string name="add">Agregar</string>
-    <string name="cannotStart">No se puede iniciar</string>
+    <string name="cannotStart">Esperando GPS</string>
     <string name="noComment">Sin comentario</string>
     <string name="theme">Tema</string>
     <string name="OpenStreetMapAttribution">© Contribuidores de OpenStreetMap</string>
