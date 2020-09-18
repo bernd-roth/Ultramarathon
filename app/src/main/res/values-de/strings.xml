@@ -298,4 +298,9 @@
     <string name="unitFootPlural">Fuß</string>
     <string name="unitFootSingular">Fuß</string>
     <string name="noWorkoutStarted">Kein Workout gestartet</string>
+    <string name="trackerWaitingMessage">Warten auf Beginn des Workouts</string>
+    <string name="dataSamples">Datenpunkte</string>
+    <string name="recordingPermissionNotGrantedTitle">Berechtigungen nicht erteilt</string>
+    <string name="recordingPermissionNotGrantedMessage">Du hast FitoTrack nicht erlaubt, auf deinen Standort zuzugreifen. FitoTrack benötigt diese Erlaubnis, um deine Bewegung während des Trainings zu verfolgen.</string>
+    <string name="recordingBackgroundPermissionNotGrantedMessage">Du hast FitoTrack nicht erlaubt, im Hintergrund auf deinen Standort zuzugreifen. (z.B. bei ausgeschaltetem Bildschirm) Workouts werden möglicherweise nicht korrekt aufgezeichnet.</string>
 </resources>
