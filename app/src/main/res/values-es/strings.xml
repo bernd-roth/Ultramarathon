@@ -209,7 +209,7 @@
 \nP. ej. si selecciona \"Semana\" como período de tiempo, todos los entrenamientos de cada semana se fusionarán en un punto de datos, ya sea calculando el promedio o la suma de cada semana.</string>
     <string name="singleWorkout">Entrenamiento único</string>
     <string name="dayInMonth">Día del mes</string>
-    <string name="calendarWeekYear">Calendario Semana / Año</string>
+    <string name="calendarWeekYear">Calendario Semana/Año</string>
     <string name="help">Ayuda</string>
     <string name="statsFilter">Filtro:</string>
     <string name="workoutNumber">Número de entrenamientos</string>
@@ -221,13 +221,13 @@
     <string name="month">Mes</string>
     <string name="week">Semana</string>
     <string name="day">Día</string>
-    <string name="workout_statistics">Estadísticas de entrenamientos</string>
+    <string name="workout_statistics">Estadísticas de entrenamiento</string>
     <string name="no_workouts_recorded_for_this_activity">No existen entrenamientos para esta actividad</string>
     <string name="unlockPhoneStopWorkout">Por favor desbloquee su teléfono para detener la grabación</string>
-    <string name="oClock">en punto</string>
-    <string name="currentTime">Hora actual</string>
+    <string name="oClock">En punto</string>
+    <string name="currentTime">Tiempo actual</string>
     <string name="pref_auto_timeout_title">Intervalo de tiempo para la parada automática</string>
-    <string name="intervalAutoTimeoutTraining">Parada automática en entrenamiento</string>
+    <string name="intervalAutoTimeoutTraining">Parada automática de entrenamiento</string>
     <string name="manageAutoTimeoutSummary">Edite el intervalo para la parada automática del entrenamiento</string>
     <string name="pref_energy_unit">Unidad de energía</string>
     <string name="unitKJoule">Kilojulios</string>
@@ -250,11 +250,11 @@
     <string name="preferenceTimeFormat">Formato de hora</string>
     <string name="preferenceDateFormat">Formato de fecha</string>
     <string name="preferencesCategoryAppearance">Apariencia</string>
-    <string name="preferencesBackupSummary">Guardado/Recuperación de sus datos de entrenamiento</string>
+    <string name="preferencesBackupSummary">Respaldo/Restauración de sus datos de entrenamiento</string>
     <string name="preferencesBackupTitle">Base de datos</string>
     <string name="preferencesRecordingSummary">Gestionar la grabación del entrenamiento</string>
     <string name="preferencesRecordingTitle">Grabación</string>
-    <string name="preferencesUserInterfaceSummary">Personalise la app</string>
+    <string name="preferencesUserInterfaceSummary">Personalizar la aplicación</string>
     <string name="preferencesUserInterfaceTitle">Interfaz de usuario</string>
     <string name="intervalSets">Conjuntos de intervalos</string>
     <string name="intervalSet">Conjunto de intervalos</string>
@@ -269,4 +269,5 @@
     <string name="createIntervalSet">Crear nuevo conjunto de intervalos</string>
     <string name="manageIntervalSets">Gestionar conjuntos de intervalos</string>
     <string name="manageIntervalsSummary">Edite los conjuntos de intervalos que podrá utilizar durante el entrenamiento mediante la retroalimentación de voz.</string>
+    <string name="hintEditIntervalSet">Agregue intervalos que se hablarán.</string>
 </resources>
