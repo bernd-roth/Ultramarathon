@@ -280,7 +280,7 @@
     <string name="noWorkoutStarted">Geen training gestart</string>
     <string name="editDisplayedInformationHint">Zolang de training nog niet is gestart, kun je de weergegeven waarden bewerken door op een van de vier velden te klikken.</string>
     <string name="editDisplayedInformation">Bewerk de weergegeven informatie</string>
-    <string name="sendEmail">Stuur een email</string>
+    <string name="sendEmail">Stuur een e-mail</string>
     <string name="aboutSourceCode">Bekijk de broncode</string>
     <string name="aboutSendFeedback">Stuur feedback naar de ontwikkelaar</string>
     <string name="aboutTranslators">Vertalers</string>
