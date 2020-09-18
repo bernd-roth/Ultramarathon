@@ -187,7 +187,7 @@ public class LocationListener extends Service {
     }
 
     private Notification getNotification() {
-        String contentText = getText(R.string.trackerRunningMessage).toString();
+        String contentText = getText(R.string.trackerWaitingMessage).toString();
         if (instance.recorder.getState() != WorkoutRecorder.RecordingState.IDLE) {
             contentText = String.format(Locale.getDefault(), "\n%s\n%s: %s",
                     instance.recorder.getState().toString(),

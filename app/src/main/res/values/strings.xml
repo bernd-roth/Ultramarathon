@@ -143,6 +143,7 @@
 
     <string name="trackerRunning">Tracker is running</string>
     <string name="trackerRunningMessage">Your workout is being recorded</string>
+    <string name="trackerWaitingMessage">Waiting to start workout</string>
 
     <string name="trackingInfo">Tracking Info</string>
     <string name="trackingInfoDescription">Info about the tracker running</string>
