@@ -160,7 +160,7 @@
     <string name="add_interval">Agregar intervalo</string>
     <string name="hintRestart">Por favor reinicie la aplicación para aplicar los cambios</string>
     <string name="enterWorkout">Ingrese entrenamiento</string>
-    <string name="workoutTypeSkateboarding">Skate</string>
+    <string name="workoutTypeSkateboarding">Patineta</string>
     <string name="timeSecondsShort">s</string>
     <string name="add">Agregar</string>
     <string name="cannotStart">No se puede iniciar</string>
