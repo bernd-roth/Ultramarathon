@@ -227,7 +227,7 @@
     <string name="unitFootPlural">Láb</string>
     <string name="manageAutoTimeoutSummary">Az intervallum szerkesztése az automatikus edzésleállításhoz</string>
     <string name="editDisplayedInformation">Megjelenített információk szerkesztése</string>
-    <string name="sendEmail">E-mail küldése</string>
+    <string name="sendEmail">Ímél küldése</string>
     <string name="merge">Egyesítés</string>
     <string name="per">/</string>
     <string name="workoutTypeSkateboarding">Gördeszkázás</string>
