@@ -30,10 +30,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
+import android.provider.Settings;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
@@ -48,6 +50,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.StringRes;
 import androidx.core.app.ActivityCompat;
 
 import org.mapsforge.core.graphics.Paint;
@@ -88,6 +91,9 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
     public static final String LAUNCH_ACTION = "de.tadris.fitness.RecordWorkoutActivity.LAUNCH_ACTION";
     public static final String RESUME_ACTION = "de.tadris.fitness.RecordWorkoutActivity.RESUME_ACTION";
     public static final String WORKOUT_TYPE_EXTRA = "de.tadris.fitness.RecordWorkoutActivity.WORKOUT_TYPE_EXTRA";
+
+    public static final int REQUEST_CODE_LOCATION_PERMISSION = 10;
+    public static final int REQUEST_CODE_BACKGROUND_LOCATION_PERMISSION = 11;
 
     public WorkoutType activity = WorkoutType.OTHER;
 
@@ -372,9 +378,20 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
     private void checkPermissions() {
         if (!hasPermission()) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 10);
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 10);
+            requestLocationPermission();
+        } else if (!hasBackgroundPermission()) {
+            // We cannot request location permission and background permission at the same time due to android 11+ behaviour
+            requestBackgroundLocationPermission();
         }
+    }
+
+    private void requestLocationPermission() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_CODE_LOCATION_PERMISSION);
+    }
+
+    private void requestBackgroundLocationPermission() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION}, REQUEST_CODE_BACKGROUND_LOCATION_PERMISSION);
     }
 
     private boolean hasPermission() {
@@ -382,14 +399,42 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
                 || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
 
+    private boolean hasBackgroundPermission() {
+        return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED;
+    }
+
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if (hasPermission()) {
-            // Restart LocationListener so it can retry to register for location updates now that is got permission
-            if (isServiceRunning(LocationListener.class)) {
-                stopListener();
+        if (requestCode == REQUEST_CODE_LOCATION_PERMISSION) {
+            if (hasPermission()) {
+                // Restart LocationListener so it can retry to register for location updates now that we got permission
+                if (isServiceRunning(LocationListener.class)) {
+                    stopListener();
+                }
+                startListener();
+                if (!hasBackgroundPermission()) {
+                    requestBackgroundLocationPermission();
+                }
+            } else {
+                showPermissionsNotGrantedDialog(R.string.recordingPermissionNotGrantedMessage);
             }
-            startListener();
+        } else if (requestCode == REQUEST_CODE_BACKGROUND_LOCATION_PERMISSION && !hasBackgroundPermission()) {
+            showPermissionsNotGrantedDialog(R.string.recordingBackgroundPermissionNotGrantedMessage);
         }
+    }
+
+    private void showPermissionsNotGrantedDialog(@StringRes int message) {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.recordingPermissionNotGrantedTitle)
+                .setMessage(message)
+                .setPositiveButton(R.string.settings, (dialog, which) -> openLocationSettings())
+                .create().show();
+    }
+
+    private void openLocationSettings() {
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", getPackageName(), null);
+        intent.setData(uri);
+        startActivity(intent);
     }
 
     private void stopListener() {

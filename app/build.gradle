@@ -29,12 +29,12 @@ allprojects {
 }
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     buildToolsVersion "29.0.3"
     defaultConfig {
         applicationId "de.tadris.fitness"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 800
         versionName "8.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

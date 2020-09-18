@@ -30,6 +30,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
     <uses-feature
         android:name="android.hardware.location.gps"
@@ -47,7 +48,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.settings.AboutActivity"></activity>
+        <activity android:name=".ui.settings.AboutActivity" />
         <activity android:name=".ui.settings.EditIntervalSetActivity" />
         <activity android:name=".ui.settings.ManageIntervalSetsActivity" />
         <activity android:name=".ui.settings.VoiceAnnouncementsSettingsActivity" />
@@ -94,7 +95,9 @@
                 android:resource="@xml/filepaths" />
         </provider>
 
-        <service android:name=".recording.LocationListener" />
+        <service
+            android:name=".recording.LocationListener"
+            android:foregroundServiceType="location" />
     </application>
 
 </manifest>
