@@ -286,4 +286,8 @@
     <string name="aboutTranslators">Vertalers</string>
     <string name="aboutContributors">Bijdragers</string>
     <string name="aboutAuthor">Auteur</string>
+    <string name="trackerWaitingMessage">Wachten om de training te starten</string>
+    <string name="recordingPermissionNotGrantedTitle">Toestemmingen niet verleend</string>
+    <string name="recordingPermissionNotGrantedMessage">Je hebt FitoTrack geen toestemming gegeven om toegang te krijgen tot je locatie. FitoTrack heeft deze toestemming nodig om jou bewegingen tijdens de training te volgen.</string>
+    <string name="recordingBackgroundPermissionNotGrantedMessage">U heeft FitoTrack geen toestemming gegeven om op de achtergrond toegang te krijgen tot uw locatie. (Bijv. Met het scherm uitgeschakeld) Trainingen worden mogelijk niet correct geregistreerd.</string>
 </resources>
