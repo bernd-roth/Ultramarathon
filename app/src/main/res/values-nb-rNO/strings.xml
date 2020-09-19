@@ -240,4 +240,8 @@
     <string name="stop">Stopp</string>
     <string name="workout_add">Legg til</string>
     <string name="app_name">FitoTrack</string>
+    <string name="trackerWaitingMessage">Venter på å starte treningsøkt</string>
+    <string name="recordingPermissionNotGrantedTitle">Tilganger ikke innvilget</string>
+    <string name="recordingPermissionNotGrantedMessage">Du har ikke innvilget FitoTrack tilgang til å se din posisjon. Dette trengs for å spore din bevegelse under treningsøkter.</string>
+    <string name="recordingBackgroundPermissionNotGrantedMessage">Du har ikke innvilget FitoTrack tilgang til å se din posisjon i bakgrunnen. (F.eks. med skjermen avskrudd.) Det kan hende treningsøkter ikke vil tas opp riktig.</string>
 </resources>
