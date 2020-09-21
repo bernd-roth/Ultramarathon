@@ -1,2 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="chooseBackupFile">Elexir arquivo de respaldo</string>
+    <string name="loadingFile">Cargando arquivo</string>
+    <string name="finished">Rematado</string>
+    <string name="converting">Converter</string>
+    <string name="locationData">Datos da localización</string>
+    <string name="workouts">Adestramentos</string>
+    <string name="preferences">Preferencia</string>
+    <string name="initialising">Inicializando</string>
+    <string name="shareFile">Compartir arquivo</string>
+    <string name="errorImportFailed">A importación de datos fallou.</string>
+    <string name="errorExportFailed">A exportación de datos fallou.</string>
+    <string name="errorGpxExportFailed">A exportación GPX fallou.</string>
+    <string name="error">Erro</string>
+    <string name="exporting">Exportar</string>
+    <string name="delete">Eliminar</string>
+    <string name="stop">Deter</string>
+    <string name="workout_add">Engadir</string>
+    <string name="app_name">FitoTrack</string>
+</resources>
