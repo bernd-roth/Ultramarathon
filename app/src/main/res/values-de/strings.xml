@@ -70,7 +70,7 @@
     <string name="workoutDuration">Dauer</string>
     <string name="workoutEndTime">Endzeit</string>
     <string name="workoutEnergyConsumption">Energieverbrauch</string>
-    <string name="workoutPace">Tempo</string>
+    <string name="workoutPace">Pace</string>
     <string name="workoutPauseDuration">Pausenzeit</string>
     <string name="workoutRoute">Route</string>
     <string name="workoutSpeed">Geschwindigkeit</string>
@@ -124,7 +124,7 @@
     <string name="action_edit_comment">Kommentar bearbeiten</string>
     <string name="pref_announcement_mode">Modus der Ansagen</string>
     <string name="save">Speichern</string>
-    <string name="savedToDownloads">Im Huntergeladenen-Ordner gespeichert</string>
+    <string name="savedToDownloads">Im Download-Ordner gespeichert</string>
     <string name="savingFailed">Speichern fehlgeschlagen</string>
     <string name="share">Teilen</string>
     <string name="timeMinuteShort">min</string>
