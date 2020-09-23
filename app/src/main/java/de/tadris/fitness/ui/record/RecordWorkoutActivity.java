@@ -234,7 +234,8 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
     }
 
     private void setupMap() {
-        this.mapView = new MapView(this);
+        mapView = new MapView(this);
+        mapView.setClickable(false);
         downloadLayer = MapManager.setupMap(mapView);
     }
 

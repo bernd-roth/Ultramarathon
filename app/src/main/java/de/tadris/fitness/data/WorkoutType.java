@@ -28,6 +28,11 @@ import java.io.Serializable;
 
 import de.tadris.fitness.R;
 
+/**
+ * If you add a new Workout type, you need to do the following:
+ * - define a picture, color and style
+ * - define the calorie calculation for the workout type in CalorieCalculator.java if you know it
+ */
 public enum WorkoutType implements Serializable {
 
     RUNNING("running", R.string.workoutTypeRunning, 5, true, R.drawable.ic_run, R.color.colorPrimaryRunning, R.style.Running, R.style.RunningDark),
