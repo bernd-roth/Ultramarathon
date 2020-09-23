@@ -40,6 +40,9 @@
     <color name="colorPrimaryHiking">#009688</color>
     <color name="colorPrimaryDarkHiking">#007267</color>
 
+    <color name="colorPrimaryRowing">#0078B8</color>
+    <color name="colorPrimaryDarkRowing">#00527E</color>
+
     <color name="textLighterBlack">#E6000000</color>
     <color name="textDarkerWhite">#E6FFFFFF</color>
     <color name="textColorLight">#C8414141</color>

@@ -112,6 +112,7 @@
     <string name="workoutTypeHiking">Hiking</string>
     <string name="workoutTypeSkateboarding">Skateboarding</string>
     <string name="workoutTypeInlineSkating">Inline Skating</string>
+    <string name="workoutTypeRowing">Rowing</string>
     <string name="workoutTypeOther">Other</string>
     <string name="workoutTypeUnknown">Unknown</string>
     <string name="type">Type</string>

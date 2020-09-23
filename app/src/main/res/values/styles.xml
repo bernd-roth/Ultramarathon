@@ -54,6 +54,11 @@
         <item name="android:colorPrimaryDark">@color/colorPrimaryDarkSkating</item>
     </style>
 
+    <style name="Rowing" parent="AppTheme">
+        <item name="android:colorPrimary">@color/colorPrimaryRowing</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimaryDarkRowing</item>
+    </style>
+
 
     <style name="AppThemeDark" parent="android:Theme.Material">
         <item name="android:colorPrimary">@color/colorPrimary</item>
@@ -82,6 +87,11 @@
     <style name="SkatingDark" parent="AppThemeDark">
         <item name="android:colorPrimary">@color/colorPrimarySkating</item>
         <item name="android:colorPrimaryDark">@color/colorPrimaryDarkSkating</item>
+    </style>
+
+    <style name="RowingDark" parent="AppThemeDark">
+        <item name="android:colorPrimary">@color/colorPrimaryRowing</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimaryDarkRowing</item>
     </style>
 
 

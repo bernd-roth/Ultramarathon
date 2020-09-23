@@ -36,6 +36,7 @@ public enum WorkoutType implements Serializable {
     CYCLING("cycling", R.string.workoutTypeCycling, 10, true, R.drawable.ic_bike, R.color.colorPrimaryBicyclingLighter, R.style.Bicycling, R.style.BicyclingDark),
     INLINE_SKATING("inline_skating", R.string.workoutTypeInlineSkating, 7, true, R.drawable.ic_inline_skating, R.color.colorPrimarySkating, R.style.Skating, R.style.SkatingDark),
     SKATEBOARDING("skateboarding", R.string.workoutTypeSkateboarding, 7, true, R.drawable.ic_skateboarding, R.color.colorPrimarySkating, R.style.Skating, R.style.SkatingDark),
+    ROWING("rowing", R.string.workoutTypeRowing, 7, true, R.drawable.ic_rowing, R.color.colorPrimaryRowing, R.style.Rowing, R.style.RowingDark),
     OTHER("other", R.string.workoutTypeOther, 7, true, R.drawable.ic_other, R.color.colorPrimary, R.style.AppTheme, R.style.AppThemeDark);
 
     public String id;
