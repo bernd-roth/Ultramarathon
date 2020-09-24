@@ -304,4 +304,5 @@
     <string name="recordingPermissionNotGrantedMessage">Du hast FitoTrack nicht erlaubt, auf deinen Standort zuzugreifen. FitoTrack benötigt diese Erlaubnis, um deine Bewegung während des Trainings zu verfolgen.</string>
     <string name="recordingBackgroundPermissionNotGrantedMessage">Du hast FitoTrack nicht erlaubt, im Hintergrund auf deinen Standort zuzugreifen. (z.B. bei ausgeschaltetem Bildschirm) Workouts werden möglicherweise nicht korrekt aufgezeichnet.</string>
     <string name="workoutTypeRowing">Rudern</string>
+    <string name="savedSuccessfully">Erfolgreich gespeichert</string>
 </resources>
