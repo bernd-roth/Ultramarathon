@@ -19,7 +19,7 @@
   --><resources>
     <string name="app_name">FitoTrack</string>
     <string name="workout_add">Aggiungi</string>
-    <string name="stop">Stop</string>
+    <string name="stop">Ferma</string>
     <string name="delete">Cancella</string>
     <string name="exporting">Esportazione</string>
     <string name="error">Errore</string>
