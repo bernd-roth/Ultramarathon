@@ -37,8 +37,8 @@ import de.tadris.fitness.BuildConfig;
 import de.tadris.fitness.R;
 import de.tadris.fitness.export.BackupController;
 import de.tadris.fitness.export.RestoreController;
+import de.tadris.fitness.ui.ShareFileActivity;
 import de.tadris.fitness.ui.dialog.ProgressDialogController;
-import de.tadris.fitness.util.FileUtils;
 
 public class BackupSettingsActivity extends FitoTrackSettingsActivity {
 
@@ -93,7 +93,9 @@ public class BackupSettingsActivity extends FitoTrackSettingsActivity {
 
                 mHandler.post(() -> {
                     dialogController.cancel();
-                    FileUtils.saveOrShareFile(this, uri);
+                    Intent intent = new Intent(this, ShareFileActivity.class);
+                    intent.putExtra(ShareFileActivity.EXTRA_FILE_URI, uri.toString());
+                    startActivity(intent);
                 });
             } catch (Exception e) {
                 e.printStackTrace();

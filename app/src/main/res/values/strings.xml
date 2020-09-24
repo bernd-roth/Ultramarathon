@@ -173,7 +173,7 @@
 
     <string name="save">Save</string>
     <string name="share">Share</string>
-    <string name="savedToDownloads">Saved to Downloads</string>
+    <string name="savedSuccessfully">Saved successfully</string>
     <string name="savingFailed">Saving failed</string>
     <string name="info">Info</string>
     <string name="OpenStreetMapAttribution">© OpenStreetMap contributors</string>
