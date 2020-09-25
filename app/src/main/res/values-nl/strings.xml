@@ -290,4 +290,6 @@
     <string name="recordingPermissionNotGrantedTitle">Toestemmingen niet verleend</string>
     <string name="recordingPermissionNotGrantedMessage">Je hebt FitoTrack geen toestemming gegeven om toegang te krijgen tot je locatie. FitoTrack heeft deze toestemming nodig om jou bewegingen tijdens de training te volgen.</string>
     <string name="recordingBackgroundPermissionNotGrantedMessage">U heeft FitoTrack geen toestemming gegeven om op de achtergrond toegang te krijgen tot uw locatie. (Bijv. Met het scherm uitgeschakeld) Trainingen worden mogelijk niet correct geregistreerd.</string>
+    <string name="savedSuccessfully">Opgeslagen</string>
+    <string name="workoutTypeRowing">Roeien</string>
 </resources>
