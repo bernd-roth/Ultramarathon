@@ -30,7 +30,7 @@ Please see the [Userguide](https://codeberg.org/jannis/FitoTrack/wiki/How-to-use
 
 You find the app useful and want to contribute to make it even better? Here are some ways you can help:
 
-* **Report issues.** A very simple way of contributing to the project is to report crashes and bugs, as well as suggest possible new features. You can join the [Telegram Group](https://t.me/fitotrack) and share your ideas regarding the app.
+* **Report issues.** A very simple way of contributing to the project is to report crashes and bugs, as well as suggest possible new features. You can join the [Telegram Group](https://t.me/fitotrack)/[Matrix Room](https://matrix.to/#/#fitotrack:matrix.org?via=matrix.org) and share your ideas regarding the app.
 * **Share the app.** Tell your friends, family, colleagues about the app, in real life and online. You could, for example, write a post about FitoTrack on your favorite social media networks.
 * **Translate.** You can [translate](https://codeberg.org/jannis/FitoTrack/wiki/Translation) FitoTrack on [Weblate](https://hosted.weblate.org/engage/fitotrack/) without writing a single line of code.
 * **Write code.** If you're able to write code for Android or just want to help with translations, please refer to the [Contribution](https://codeberg.org/jannis/FitoTrack/wiki/Contributing) site in the project wiki.
@@ -40,7 +40,7 @@ You find the app useful and want to contribute to make it even better? Here are 
 When I started programming this app I decided that it should be completely free and open-source. This also means that there will be no income for me from ads or paid features. So if you enjoy the app and want to support my work you are able to do so:
 
 * BTC: 3BSbGRbJaiSxVg3D6nVRK5C1SZEezhjtK5
-* Bank transfer: You can [Email](mailto:jannis@tadris.de) me or join the [Telegram Group](https://t.me/fitotrack) to get in touch with me.
+* Bank transfer: You can [Email](mailto:jannis@tadris.de) me or join the [Telegram Group](https://t.me/fitotrack)/[Matrix Room](https://matrix.to/#/#fitotrack:matrix.org?via=matrix.org) to get in touch with me.
 
 ## License
 
