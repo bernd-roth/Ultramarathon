@@ -244,4 +244,6 @@
     <string name="recordingPermissionNotGrantedTitle">Tilganger ikke innvilget</string>
     <string name="recordingPermissionNotGrantedMessage">Du har ikke innvilget FitoTrack tilgang til å se din posisjon. Dette trengs for å spore din bevegelse under treningsøkter.</string>
     <string name="recordingBackgroundPermissionNotGrantedMessage">Du har ikke innvilget FitoTrack tilgang til å se din posisjon i bakgrunnen. (F.eks. med skjermen avskrudd.) Det kan hende treningsøkter ikke vil tas opp riktig.</string>
+    <string name="savedSuccessfully">Lagret</string>
+    <string name="workoutTypeRowing">Roing</string>
 </resources>
