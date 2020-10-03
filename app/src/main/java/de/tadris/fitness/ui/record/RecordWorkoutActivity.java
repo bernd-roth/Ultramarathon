@@ -176,12 +176,12 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
         acquireWakelock();
 
+        onGPSStateChanged(WorkoutRecorder.GpsState.SIGNAL_LOST, WorkoutRecorder.GpsState.SIGNAL_LOST);
+
         instance.locationChangeListeners.add(this);
         instance.voiceAnnouncementCallbackListeners.add(this);
 
         startListener();
-
-        onGPSStateChanged(WorkoutRecorder.GpsState.SIGNAL_LOST, WorkoutRecorder.GpsState.SIGNAL_LOST);
 
         if (wasAlreadyRunning) {
             if (instance.recorder.getState() != WorkoutRecorder.RecordingState.IDLE) {
@@ -191,10 +191,8 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
             latLongList.clear();
             List<WorkoutSample> samples = instance.recorder.getSamples();
-            synchronized (samples) {
-                for (WorkoutSample sample : samples) {
-                    latLongList.add(sample.toLatLong());
-                }
+            for (WorkoutSample sample : samples) {
+                latLongList.add(sample.toLatLong());
             }
             updateLine();
 
@@ -344,7 +342,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
                 return false;
             }
         }
-        // Only Started Workoutds need to be discarded
+        // Only Started Workouts need to be discarded
         return false;
     }
 

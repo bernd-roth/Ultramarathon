@@ -25,6 +25,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import de.tadris.fitness.data.AppDatabase;
 import de.tadris.fitness.data.UserPreferences;
@@ -68,7 +69,7 @@ public class Instance {
 
     private Instance(Context context) {
         instance = this;
-        locationChangeListeners = new ArrayList<>();
+        locationChangeListeners = new CopyOnWriteArrayList<>();
         voiceAnnouncementCallbackListeners = new ArrayList<>();
         userPreferences= new UserPreferences(context);
         themes = new FitoTrackThemes(context);

@@ -31,6 +31,7 @@ import org.mapsforge.core.model.LatLong;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import de.tadris.fitness.BuildConfig;
 import de.tadris.fitness.Instance;
@@ -69,7 +70,7 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
     private static final double SIGNAL_BAD_THRESHOLD = 30; // In meters
     private static final int SIGNAL_LOST_THRESHOLD = 10_000; // 10 Seconds In milliseconds
     private Location lastFix = null;
-    private final List<WorkoutRecorderListener> workoutRecorderListeners = new ArrayList<>(); // Only synchronized access
+    private final List<WorkoutRecorderListener> workoutRecorderListeners = new CopyOnWriteArrayList<>();
     private GpsState gpsState = GpsState.SIGNAL_LOST;
     private List<Interval> intervalList;
 
@@ -206,10 +207,8 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
                         if (isActive()) {
                             stop();
                             save();
-                            synchronized (workoutRecorderListeners) {
-                                for (WorkoutRecorderListener listener : workoutRecorderListeners) {
-                                    listener.onAutoStop();
-                                }
+                            for (WorkoutRecorderListener listener : workoutRecorderListeners) {
+                                listener.onAutoStop();
                             }
                         }
                     } else if (timeDiff > PAUSE_TIME) {
@@ -242,10 +241,8 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
             state = GpsState.SIGNAL_OKAY;
         }
         if (state != gpsState) {
-            synchronized (workoutRecorderListeners) {
-                for (WorkoutRecorderListener listener : workoutRecorderListeners) {
-                    listener.onGPSStateChanged(gpsState, state);
-                }
+            for (WorkoutRecorderListener listener : workoutRecorderListeners) {
+                listener.onGPSStateChanged(gpsState, state);
             }
             gpsState = state;
         }
@@ -505,17 +502,13 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
     }
 
     public void addWorkoutListener(WorkoutRecorderListener listener) {
-        synchronized (workoutRecorderListeners) {
-            if (!workoutRecorderListeners.contains(listener)) {
-                workoutRecorderListeners.add(listener);
-            }
+        if (!workoutRecorderListeners.contains(listener)) {
+            workoutRecorderListeners.add(listener);
         }
     }
 
     public void removeWorkoutListener(WorkoutRecorderListener listener) {
-        synchronized (workoutRecorderListeners) {
-            workoutRecorderListeners.remove(listener);
-        }
+        workoutRecorderListeners.remove(listener);
     }
 
     public enum RecordingState {
