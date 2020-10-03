@@ -271,4 +271,8 @@
     <string name="manageIntervalsSummary">Edite los conjuntos de intervalos que podrá utilizar durante el entrenamiento mediante la retroalimentación de voz.</string>
     <string name="hintEditIntervalSet">Agregue intervalos que se hablarán.</string>
     <string name="recordingPermissionNotGrantedTitle">Permisos no concedidos</string>
+    <string name="recordingBackgroundPermissionNotGrantedMessage">No se otorgó el permiso a FitoTrack para acceder a su ubicación en segundo plano (p. ej. con la pantalla apagada). Es posible que los entrenamientos no se graben correctamente.</string>
+    <string name="recordingPermissionNotGrantedMessage">No se otorgó el permiso a FitoTrack para acceder a su ubicación. FitoTrack necesita este permiso para registrar sus movimientos durante su entrenamiento.</string>
+    <string name="savedSuccessfully">Guardado</string>
+    <string name="workoutTypeRowing">Remo</string>
 </resources>
