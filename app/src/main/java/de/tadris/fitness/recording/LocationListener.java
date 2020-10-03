@@ -185,12 +185,25 @@ public class LocationListener extends Service {
 
         return START_STICKY;
     }
+    private String getRecordingStateString(){
+        switch(instance.recorder.getState()){
+            case IDLE:
+                return getString(R.string.recordingStateIdle);
+            case RUNNING:
+                return getString(R.string.recordingStateRunning);
+            case PAUSED:
+                return getString(R.string.recordingStatePaused);
+            case STOPPED:
+                return getString(R.string.recordingStateStopped);
+        }
+        return "";
+    }
 
     private Notification getNotification() {
         String contentText = getText(R.string.trackerWaitingMessage).toString();
         if (instance.recorder.getState() != WorkoutRecorder.RecordingState.IDLE) {
             contentText = String.format(Locale.getDefault(), "\n%s\n%s: %s",
-                    instance.recorder.getState().toString(),
+                    getRecordingStateString(),
                     getText(R.string.workoutDuration),
                     instance.distanceUnitUtils.getHourMinuteSecondTime(instance.recorder.getDuration()));
         }

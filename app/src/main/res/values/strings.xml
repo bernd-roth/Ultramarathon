@@ -292,6 +292,11 @@
     <string name="recordingPermissionNotGrantedTitle">Permissions not granted</string>
     <string name="recordingPermissionNotGrantedMessage">You did not grant FitoTrack permission to access your location. FitoTrack needs this permission to track your movement during your workout.</string>
     <string name="recordingBackgroundPermissionNotGrantedMessage">You did not grant FitoTrack permission to access your location in the background. (E.g. with the screen turned off) Workouts might not be recorded correctly.</string>
+    <string name="speechConfigNoSpeech">No Speech</string>
+    <string name="recordingStateIdle">Idle</string>
+    <string name="recordingStateRunning">Running</string>
+    <string name="recordingStatePaused">Paused</string>
+    <string name="recordingStateStopped">Stopped</string>
 
     <string-array name="osm_track_visibility">
         <item>Identifiable</item>

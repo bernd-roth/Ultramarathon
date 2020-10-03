@@ -60,7 +60,7 @@ public class VoiceAnnouncementsSettingsActivity extends FitoTrackSettingsActivit
         NumberPicker npT = v.findViewById(R.id.spokenUpdatesTimePicker);
         npT.setMaxValue(60);
         npT.setMinValue(0);
-        npT.setFormatter(value -> value == 0 ? "No speech" : value + " min");
+        npT.setFormatter(value -> (value == 0) ? getString(R.string.speechConfigNoSpeech) : (value + " " + getString(R.string.timeMinuteShort)) );
         final String updateTimeVariable = "spokenUpdateTimePeriod";
         npT.setValue(preferences.getInt(updateTimeVariable, 0));
         npT.setWrapSelectorWheel(false);
@@ -69,7 +69,7 @@ public class VoiceAnnouncementsSettingsActivity extends FitoTrackSettingsActivit
         NumberPicker npD = v.findViewById(R.id.spokenUpdatesDistancePicker);
         npD.setMaxValue(10);
         npD.setMinValue(0);
-        npD.setFormatter(value -> value == 0 ? "No speech" : value + distanceUnit);
+        npD.setFormatter(value -> value == 0 ?  getString(R.string.speechConfigNoSpeech) : value + distanceUnit);
         final String updateDistanceVariable = "spokenUpdateDistancePeriod";
         npD.setValue(preferences.getInt(updateDistanceVariable, 0));
         npD.setWrapSelectorWheel(false);
