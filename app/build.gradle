@@ -35,8 +35,8 @@ android {
         applicationId "de.tadris.fitness"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 800
-        versionName "8.0"
+        versionCode 810
+        versionName "8.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
