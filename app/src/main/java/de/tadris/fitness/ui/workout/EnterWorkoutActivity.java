@@ -80,6 +80,7 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
             // If the User clicks on the finish button on the keyboard, continue by showing the date selection
             if (actionId == EditorInfo.IME_ACTION_SEARCH ||
                     actionId == EditorInfo.IME_ACTION_DONE ||
+                    actionId == EditorInfo.IME_ACTION_NEXT ||
                     event != null &&
                             event.getAction() == KeyEvent.ACTION_DOWN &&
                             event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
@@ -90,7 +91,8 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
             }
             return false;
         });
-        addKeyValueLine(getString(R.string.workoutDistance), distanceEditText, unitSystem.getLongDistanceUnit());
+        KeyValueLine distanceLine = addKeyValueLine(getString(R.string.workoutDistance), distanceEditText, unitSystem.getLongDistanceUnit());
+        distanceLine.lineRoot.setOnClickListener(v -> requestKeyboard(distanceEditText));
 
 
         KeyValueLine dateLine = addKeyValueLine(getString(R.string.workoutDate));
@@ -176,7 +178,7 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
     public void onSelectWorkoutType(WorkoutType workoutType) {
         workoutBuilder.setWorkoutType(workoutType);
         updateTextViews();
-        distanceEditText.requestFocus();
+        requestKeyboard(distanceEditText);
     }
 
     private void showDateSelection() {
@@ -218,7 +220,7 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
     public void onDurationPick(long duration) {
         workoutBuilder.setDuration(duration);
         updateTextViews();
-        commentEditText.requestFocus();
+        requestKeyboard(commentEditText);
     }
 
     @Override
