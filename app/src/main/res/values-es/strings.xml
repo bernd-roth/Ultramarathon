@@ -271,4 +271,5 @@
     <string name="manageIntervalsSummary">Edite los conjuntos de intervalos que podrá utilizar durante el entrenamiento mediante la retroalimentación de voz.</string>
     <string name="hintEditIntervalSet">Agregue intervalos que se hablarán.</string>
     <string name="recordingPermissionNotGrantedTitle">Permisos no concedidos</string>
+    <string name="recordingStateIdle">Inactivo</string>
 </resources>
