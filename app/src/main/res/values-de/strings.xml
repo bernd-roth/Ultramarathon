@@ -305,4 +305,9 @@
     <string name="recordingBackgroundPermissionNotGrantedMessage">Du hast FitoTrack nicht erlaubt, im Hintergrund auf deinen Standort zuzugreifen. (z.B. bei ausgeschaltetem Bildschirm) Workouts werden möglicherweise nicht korrekt aufgezeichnet.</string>
     <string name="workoutTypeRowing">Rudern</string>
     <string name="savedSuccessfully">Gespeichert</string>
+    <string name="recordingStateStopped">Gestoppt</string>
+    <string name="recordingStatePaused">Pausiert</string>
+    <string name="recordingStateRunning">Aktiv</string>
+    <string name="recordingStateIdle">Untätig</string>
+    <string name="speechConfigNoSpeech">Keine Ansage</string>
 </resources>
