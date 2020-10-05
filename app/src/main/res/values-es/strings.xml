@@ -275,5 +275,39 @@
     <string name="recordingPermissionNotGrantedMessage">No se otorgó el permiso a FitoTrack para acceder a su ubicación. FitoTrack necesita este permiso para registrar sus movimientos durante su entrenamiento.</string>
     <string name="savedSuccessfully">Guardado</string>
     <string name="workoutTypeRowing">Remo</string>
+    <string name="speechConfigNoSpeech">Desact.</string>
     <string name="recordingStateIdle">Inactivo</string>
+    <string name="recordingStateRunning">Grabando</string>
+    <string name="recordingStatePaused">Pausado</string>
+    <string name="recordingStateStopped">Detenido</string>
+
+    <string-array name="pref_unit_systems">
+        <item>Métrico</item>
+        <item>Métrico</item>
+        <item>Imperial</item>
+        <item>Imperial with metros</item>
+        <item>Unidades de EEUU</item>
+    </string-array>
+
+    <string-array name="pref_time_format">
+        <item>Predeterminado del sistema</item>
+        <item>12:08 PM</item>
+        <item>15:23</item>
+    </string-array>
+
+    <string-array name="pref_date_format">
+        <item>Predeterminado del sistema</item>
+        <item>2001-07-24</item>
+        <item>2001.07.24</item>
+        <item>2001/07/24</item>
+        <item>24-07-2001</item>
+        <item>24.07.2001</item>
+        <item>24/07/2001</item>
+        <item>07/24/2001</item>
+    </string-array>
+
+    <string-array name="pref_theme_setting">
+        <item>Claro</item>
+        <item>Oscuro</item>
+    </string-array>
 </resources>
