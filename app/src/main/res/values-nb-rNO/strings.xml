@@ -246,4 +246,9 @@
     <string name="recordingBackgroundPermissionNotGrantedMessage">Du har ikke innvilget FitoTrack tilgang til å se din posisjon i bakgrunnen. (F.eks. med skjermen avskrudd.) Det kan hende treningsøkter ikke vil tas opp riktig.</string>
     <string name="savedSuccessfully">Lagret</string>
     <string name="workoutTypeRowing">Roing</string>
+    <string name="recordingStateStopped">Stoppet</string>
+    <string name="recordingStatePaused">Pauset</string>
+    <string name="recordingStateRunning">Aktiv</string>
+    <string name="recordingStateIdle">Lediggang</string>
+    <string name="speechConfigNoSpeech">Ingen kunngjøring</string>
 </resources>
