@@ -50,6 +50,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 import androidx.core.app.ActivityCompat;
 
@@ -378,7 +379,8 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
     private void checkPermissions() {
         if (!hasPermission()) {
             requestLocationPermission();
-        } else if (!hasBackgroundPermission()) {
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
+                !hasBackgroundPermission()) {
             // We cannot request location permission and background permission at the same time due to android 11+ behaviour
             requestBackgroundLocationPermission();
         }
@@ -389,6 +391,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
                 Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_CODE_LOCATION_PERMISSION);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     private void requestBackgroundLocationPermission() {
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION}, REQUEST_CODE_BACKGROUND_LOCATION_PERMISSION);
     }
@@ -399,7 +402,11 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
     }
 
     private boolean hasBackgroundPermission() {
-        return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        } else {
+            return true;
+        }
     }
 
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -410,7 +417,8 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
                     stopListener();
                 }
                 startListener();
-                if (!hasBackgroundPermission()) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
+                        !hasBackgroundPermission()) {
                     requestBackgroundLocationPermission();
                 }
             } else {
