@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -275,4 +274,12 @@
     <string name="recordingPermissionNotGrantedMessage">No se otorgó el permiso a FitoTrack para acceder a su ubicación. FitoTrack necesita este permiso para registrar sus movimientos durante su entrenamiento.</string>
     <string name="savedSuccessfully">Guardado</string>
     <string name="workoutTypeRowing">Remo</string>
+    <string name="recordingStateStopped">Detenido</string>
+    <string name="recordingStatePaused">Pausado</string>
+    <string name="recordingStateRunning">Corriendo</string>
+    <string name="recordingStateIdle">Ocioso</string>
+    <string name="speechConfigNoSpeech">No se anuncia</string>
+    <string name="aboutHelpTranslating">Ayuda para traducir</string>
+    <string name="aboutUnlistedContributors">Gracias a todos los contribuyentes no listados que ayudaron a traducir y extender FitoTrack!</string>
+    <string name="trackerWaitingMessage">Esperando para empezar a entrenar</string>
 </resources>
