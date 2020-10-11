@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -292,4 +291,13 @@
     <string name="unitFootPlural">Piedi</string>
     <string name="unitFootSingular">Piede</string>
     <string name="recordingPermissionNotGrantedTitle">Autorizzazioni non concesse</string>
+    <string name="recordingStateStopped">Fermato</string>
+    <string name="recordingStatePaused">Pausa</string>
+    <string name="recordingStateRunning">In esecuzione</string>
+    <string name="recordingStateIdle">Inattivo</string>
+    <string name="speechConfigNoSpeech">Nessun annuncio</string>
+    <string name="aboutHelpTranslating">Aiuta a tradurre</string>
+    <string name="aboutUnlistedContributors">Grazie a tutti i collaboratori non elencati che hanno contribuito alla traduzione e all\'estensione di FitoTrack!</string>
+    <string name="savedSuccessfully">Salvato</string>
+    <string name="workoutTypeRowing">Canottaggio</string>
 </resources>
