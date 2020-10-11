@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -298,4 +297,13 @@
     <string name="recordingPermissionNotGrantedTitle">Permissions non accordées</string>
     <string name="recordingPermissionNotGrantedMessage">Vius n\'avez pas accordé à FitoTrack la permission d\'accéder à la position. FitoTrack a besoin de cette permission pour suivre votre déplacement durant la séance d\'entraînement.</string>
     <string name="recordingBackgroundPermissionNotGrantedMessage">Vous n\'avez pas donné la permission à FitoTrack d\'accéder à votre position en arrière-plan. (Par exemple, l\'écran éteint.) Les séances d\'entraînement peuvent ne pas être enregistrées correctement.</string>
+    <string name="recordingStateStopped">Arrêtés</string>
+    <string name="recordingStatePaused">Mis en pause</string>
+    <string name="recordingStateRunning">Fonctionnement</string>
+    <string name="recordingStateIdle">Inactif</string>
+    <string name="speechConfigNoSpeech">Pas d\'annonce</string>
+    <string name="aboutHelpTranslating">Aide à la traduction</string>
+    <string name="aboutUnlistedContributors">Merci à tous les contributeurs non listés qui ont aidé à la traduction et à l\'extension de FitoTrack!</string>
+    <string name="savedSuccessfully">Sauvegardé</string>
+    <string name="workoutTypeRowing">Aviron</string>
 </resources>
