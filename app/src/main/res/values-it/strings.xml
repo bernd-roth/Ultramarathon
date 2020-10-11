@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -282,7 +283,6 @@
     <string name="aboutLinks">Collegamenti</string>
     <string name="aboutAuthor">Autore</string>
     <string name="aboutContributors">Contributori</string>
-    <string name="aboutTranslators">Traduttori</string>
     <string name="aboutSendFeedback">Invia suggerimenti allo sviluppatore</string>
     <string name="aboutSourceCode">Visualizza il codice sorgente</string>
     <string name="sendEmail">Invia un\'e-mail</string>

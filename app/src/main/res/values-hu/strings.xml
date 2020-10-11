@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -264,7 +265,6 @@
     <string name="intervalTraining">Intervallum edzés</string>
     <string name="unitMetersPlural">Méter</string>
     <string name="manageIntervalSets">Intervallumsorozatok kezelése</string>
-    <string name="aboutTranslators">Fordítók</string>
     <string name="unitMilesPerHour">Mérföld per óra</string>
     <string name="speedLastMinuteSpoken">Sebesség az elmúlt percen belül</string>
     <string name="unlockPhoneStopWorkout">Oldja fel a telefont a rögzítés leállításához</string>

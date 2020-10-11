@@ -58,6 +58,7 @@ public class AboutActivity extends FitoTrackActivity {
         aboutPage.addItem(applyUrlToElement(createThemedElement(getString(R.string.aboutChangelog)).setIconDrawable(R.drawable.ic_changes), getString(R.string.urlChangelog)));
         aboutPage.addItem(applyUrlToElement(createThemedElement(getString(R.string.aboutOpenSourceLibraries)).setIconDrawable(R.drawable.ic_library_books), getString(R.string.urlCopyrightNotices)));
         aboutPage.addItem(applyUrlToElement(createThemedElement(getString(R.string.aboutReportBug)).setIconDrawable(R.drawable.ic_bug_report), getString(R.string.urlBugReport)));
+        aboutPage.addItem(applyUrlToElement(createThemedElement(getString(R.string.aboutHelpTranslating)).setIconDrawable(R.drawable.ic_language), getString(R.string.urlWeblate)));
         aboutPage.addItem(applyUrlToElement(createThemedElement(getString(R.string.aboutSendFeedback)).setIconDrawable(R.drawable.ic_email), "mailto:" + getString(R.string.emailAuthor)));
 
         aboutPage.addGroup(getString(R.string.aboutAuthor));
@@ -65,9 +66,7 @@ public class AboutActivity extends FitoTrackActivity {
 
         aboutPage.addGroup(getString(R.string.aboutContributors));
         addPersonsFromArray(getResources().getStringArray(R.array.contributors));
-
-        aboutPage.addGroup(getString(R.string.aboutTranslators));
-        addPersonsFromArray(getResources().getStringArray(R.array.translators));
+        aboutPage.addItem(createThemedElement(getString(R.string.aboutUnlistedContributors)).setIconDrawable(R.drawable.ic_group));
     }
 
     private void addPersonsFromArray(String[] array) {

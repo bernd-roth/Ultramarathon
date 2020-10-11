@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -248,9 +249,10 @@
     <string name="aboutLinks">Links</string>
     <string name="aboutAuthor">Author</string>
     <string name="aboutContributors">Contributors</string>
-    <string name="aboutTranslators">Translators</string>
     <string name="aboutSendFeedback">Send feedback to developer</string>
     <string name="aboutSourceCode">View source code</string>
+    <string name="aboutUnlistedContributors">Thanks to all the unlisted contributors that helped translating and extending FitoTrack!</string>
+    <string name="aboutHelpTranslating">Help translating</string>
     <string name="sendEmail">Send Email</string>
     <string name="editDisplayedInformation">Edit displayed information</string>
     <string name="editDisplayedInformationHint">As long as the workout has not started, you can edit the displayed values by clicking on one of the four fields.</string>
