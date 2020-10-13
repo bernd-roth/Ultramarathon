@@ -283,7 +283,6 @@
     <string name="sendEmail">Stuur een e-mail</string>
     <string name="aboutSourceCode">Bekijk de broncode</string>
     <string name="aboutSendFeedback">Stuur feedback naar de ontwikkelaar</string>
-    <string name="aboutTranslators">Vertalers</string>
     <string name="aboutContributors">Bijdragers</string>
     <string name="aboutAuthor">Auteur</string>
     <string name="trackerWaitingMessage">Wachten om de training te starten</string>
@@ -292,4 +291,11 @@
     <string name="recordingBackgroundPermissionNotGrantedMessage">U heeft FitoTrack geen toestemming gegeven om op de achtergrond toegang te krijgen tot uw locatie. (Bijv. Met het scherm uitgeschakeld) Trainingen worden mogelijk niet correct geregistreerd.</string>
     <string name="savedSuccessfully">Opgeslagen</string>
     <string name="workoutTypeRowing">Roeien</string>
+    <string name="recordingStateStopped">Gestopt</string>
+    <string name="recordingStatePaused">Gepauzeerd</string>
+    <string name="recordingStateRunning">Lopend</string>
+    <string name="recordingStateIdle">Niet actief</string>
+    <string name="speechConfigNoSpeech">Geen aankondiging</string>
+    <string name="aboutHelpTranslating">Helpen met vertalen</string>
+    <string name="aboutUnlistedContributors">Met dank aan alle niet-beursgenoteerde medewerkers die hebben geholpen bij het vertalen en uitbreiden van FitoTrack!</string>
 </resources>

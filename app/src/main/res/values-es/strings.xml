@@ -183,7 +183,6 @@
     <string name="sendEmail">Enviar un correo electrónico</string>
     <string name="aboutSourceCode">Ver código fuente</string>
     <string name="aboutSendFeedback">Enviar comentarios al desarrollador</string>
-    <string name="aboutTranslators">Traductores</string>
     <string name="aboutContributors">Colaboradores</string>
     <string name="aboutAuthor">Autor</string>
     <string name="aboutLinks">Enlaces</string>
@@ -275,11 +274,14 @@
     <string name="recordingPermissionNotGrantedMessage">No se otorgó el permiso a FitoTrack para acceder a su ubicación. FitoTrack necesita este permiso para registrar sus movimientos durante su entrenamiento.</string>
     <string name="savedSuccessfully">Guardado</string>
     <string name="workoutTypeRowing">Remo</string>
-    <string name="speechConfigNoSpeech">Desact.</string>
-    <string name="recordingStateIdle">Inactivo</string>
-    <string name="recordingStateRunning">Grabando</string>
-    <string name="recordingStatePaused">Pausado</string>
     <string name="recordingStateStopped">Detenido</string>
+    <string name="recordingStatePaused">Pausado</string>
+    <string name="recordingStateRunning">Corriendo</string>
+    <string name="recordingStateIdle">Ocioso</string>
+    <string name="speechConfigNoSpeech">No se anuncia</string>
+    <string name="aboutHelpTranslating">Ayuda para traducir</string>
+    <string name="aboutUnlistedContributors">Gracias a todos los contribuyentes no listados que ayudaron a traducir y extender FitoTrack!</string>
+    <string name="trackerWaitingMessage">Esperando para empezar a entrenar</string>
 
     <string-array name="pref_unit_systems">
         <item>Métrico</item>

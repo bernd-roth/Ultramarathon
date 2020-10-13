@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+  ~
+  ~ This file is part of FitoTrack
+  ~
+  ~ FitoTrack is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     FitoTrack is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
 <resources>
     <string name="sections">Seksjoner</string>
     <string name="dataSamples">Bruddstykker</string>
@@ -25,8 +44,6 @@
     <string name="sendEmail">Send e-post</string>
     <string name="aboutSourceCode">Vis kildekode</string>
     <string name="aboutSendFeedback">Send tilbakemelding til utvikler</string>
-    <string name="aboutTranslators">Oversettere
-\nNorsk bokmål, Allan Nordhøy</string>
     <string name="aboutContributors">Bidragsytere</string>
     <string name="aboutAuthor">Utvikler</string>
     <string name="aboutLinks">Lenker</string>
@@ -246,4 +263,9 @@
     <string name="recordingBackgroundPermissionNotGrantedMessage">Du har ikke innvilget FitoTrack tilgang til å se din posisjon i bakgrunnen. (F.eks. med skjermen avskrudd.) Det kan hende treningsøkter ikke vil tas opp riktig.</string>
     <string name="savedSuccessfully">Lagret</string>
     <string name="workoutTypeRowing">Roing</string>
+    <string name="recordingStateStopped">Stoppet</string>
+    <string name="recordingStatePaused">Pauset</string>
+    <string name="recordingStateRunning">Aktiv</string>
+    <string name="recordingStateIdle">Lediggang</string>
+    <string name="speechConfigNoSpeech">Ingen kunngjøring</string>
 </resources>

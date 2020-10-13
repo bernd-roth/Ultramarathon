@@ -264,7 +264,6 @@
     <string name="intervalTraining">Intervallum edzés</string>
     <string name="unitMetersPlural">Méter</string>
     <string name="manageIntervalSets">Intervallumsorozatok kezelése</string>
-    <string name="aboutTranslators">Fordítók</string>
     <string name="unitMilesPerHour">Mérföld per óra</string>
     <string name="speedLastMinuteSpoken">Sebesség az elmúlt percen belül</string>
     <string name="unlockPhoneStopWorkout">Oldja fel a telefont a rögzítés leállításához</string>
@@ -274,10 +273,17 @@
     <string name="currentSpeed">Jelenlegi sebesség</string>
     <string name="intervalAutoTimeoutTraining">Automatikus edzési időkorlát</string>
     <string name="statsFilter">Szűrő:</string>
-    <string name="recordingBackgroundPermissionNotGrantedMessage">Nem adott engedélyt a FitoTrack számára a tartózkodási helyéhez való hozzáféréshez a háttérben. (Pl. Kikapcsolt képernyő esetén) Előfordulhat, hogy az edzéseket nem megfelelően rögzítették.</string>
+    <string name="recordingBackgroundPermissionNotGrantedMessage">Nem adott engedélyt a FitoTrack számára a tartózkodási helyének háttérben (például kikapcsolt képernyő esetén) történő hozzáféréséhez. Előfordulhat, hogy az edzések nem megfelelően kerülnek rögzítésre.</string>
     <string name="recordingPermissionNotGrantedMessage">Nem adott engedélyt a FitoTrack számára a tartózkodási helyéhez való hozzáféréshez. A FitoTracknek erre az engedélyre szüksége van az edzés közbeni mozgásának nyomon követéséhez.</string>
     <string name="recordingPermissionNotGrantedTitle">Engedélyek nincsenek megadva</string>
     <string name="savedSuccessfully">Elmentve</string>
     <string name="trackerWaitingMessage">Várakozás az edzés megkezdésére</string>
     <string name="workoutTypeRowing">Evezés</string>
+    <string name="recordingStateStopped">Leállítva</string>
+    <string name="recordingStatePaused">Szüneteltetve</string>
+    <string name="recordingStateRunning">Fut</string>
+    <string name="recordingStateIdle">Tétlen</string>
+    <string name="speechConfigNoSpeech">Nincs közlemény</string>
+    <string name="aboutHelpTranslating">Segítség a fordításban</string>
+    <string name="aboutUnlistedContributors">Köszönet az összes fel nem sorolt közreműködőnek, akik segítettek a FitoTrack fordításában és bővítésében!</string>
 </resources>

@@ -22,7 +22,7 @@ FitoTrack is a mobile app for logging and viewing your workouts. Whether you're 
 
 - **Track workouts.** Choose the type of sport you would like to track and just start running, cycling or hiking, for example. You can see the general information right below the map on the tracking screen.
 - **View your workouts.** View general information such as date, time, duration, distance, speed and pace. See your route on a map. Work out your level of performance from the speed diagram.
-- **Open-Source.** There is neither advertivesment nor tracking, and the source code is open and licensed under the GPLv3.
+- **Open-Source.** There is neither advertisement nor tracking, and the source code is open and licensed under the GPLv3.
 
 Please see the [Userguide](https://codeberg.org/jannis/FitoTrack/wiki/How-to-use) if you have any problems.
 
