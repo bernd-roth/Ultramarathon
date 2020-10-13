@@ -60,19 +60,29 @@ public class VoiceAnnouncementsSettingsActivity extends FitoTrackSettingsActivit
         NumberPicker npT = v.findViewById(R.id.spokenUpdatesTimePicker);
         npT.setMaxValue(60);
         npT.setMinValue(0);
-        npT.setFormatter(value -> (value == 0) ? getString(R.string.speechConfigNoSpeech) : (value + " " + getString(R.string.timeMinuteShort)) );
         final String updateTimeVariable = "spokenUpdateTimePeriod";
         npT.setValue(preferences.getInt(updateTimeVariable, 0));
         npT.setWrapSelectorWheel(false);
+        String[] npTValues = new String[61];
+        npTValues[0]=  getString(R.string.speechConfigNoSpeech);
+        for (int i=1; i<=60; i++){
+            npTValues[i] = i + " " + getString(R.string.timeMinuteShort);
+        }
+        npT.setDisplayedValues(npTValues);
 
         final String distanceUnit = " " + Instance.getInstance(this).distanceUnitUtils.getDistanceUnitSystem().getLongDistanceUnit();
         NumberPicker npD = v.findViewById(R.id.spokenUpdatesDistancePicker);
         npD.setMaxValue(10);
         npD.setMinValue(0);
-        npD.setFormatter(value -> value == 0 ?  getString(R.string.speechConfigNoSpeech) : value + distanceUnit);
         final String updateDistanceVariable = "spokenUpdateDistancePeriod";
         npD.setValue(preferences.getInt(updateDistanceVariable, 0));
         npD.setWrapSelectorWheel(false);
+        String[] npDValues = new String[11];
+        npDValues[0]=  getString(R.string.speechConfigNoSpeech);
+        for (int i=1; i<=10; i++){
+            npDValues[i] = i + distanceUnit;
+        }
+        npD.setDisplayedValues(npDValues);
 
         d.setView(v);
 
