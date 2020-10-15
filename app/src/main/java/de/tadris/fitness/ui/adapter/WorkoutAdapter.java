@@ -60,12 +60,16 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutV
         }
     }
 
-    private final Workout[] workouts;
+    private Workout[] workouts;
     private final WorkoutAdapterListener listener;
 
     public WorkoutAdapter(Workout[] workouts, WorkoutAdapterListener listener) {
-        this.workouts = workouts;
+        setWorkouts(workouts);
         this.listener = listener;
+    }
+
+    public void setWorkouts(Workout[] workouts) {
+        this.workouts = workouts;
     }
 
     @Override

@@ -61,12 +61,13 @@ import de.tadris.fitness.util.io.general.IOHelper;
 public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAdapter.WorkoutAdapterListener {
 
     private RecyclerView listView;
-    private RecyclerView.Adapter adapter;
+    private WorkoutAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private FloatingActionMenu menu;
     private Workout[] workouts;
     private TextView hintText;
     private int listSize;
+    private int lastClickedIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +79,8 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
 
         layoutManager = new LinearLayoutManager(this);
         listView.setLayoutManager(layoutManager);
+        adapter = new WorkoutAdapter(workouts, this);
+        listView.setAdapter(adapter);
 
         menu = findViewById(R.id.workoutListMenu);
         menu.setOnMenuButtonLongClickListener(v -> {
@@ -215,6 +218,7 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
         final Intent intent = new Intent(this, ShowWorkoutActivity.class);
         intent.putExtra(ShowWorkoutActivity.WORKOUT_ID_EXTRA, workout.id);
         startActivity(intent);
+        lastClickedIndex = pos;
     }
 
     @Override
@@ -227,10 +231,11 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
 
     private void refresh() {
         loadData();
+        if (workouts.length > 0) {
+            adapter.notifyItemChanged(lastClickedIndex, workouts[lastClickedIndex]);
+        }
         if (listSize != workouts.length) {
-            // Adapter refresh causes the view to scroll up
-            // That should only be done if the list has changed
-            refreshAdapter();
+            adapter.notifyDataSetChanged();
         }
         listSize = workouts.length;
         refreshFABMenu();
@@ -239,11 +244,7 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
     private void loadData() {
         workouts = Instance.getInstance(this).db.workoutDao().getWorkouts();
         hintText.setVisibility(workouts.length == 0 ? View.VISIBLE : View.INVISIBLE);
-    }
-
-    private void refreshAdapter() {
-        adapter = new WorkoutAdapter(workouts, this);
-        listView.setAdapter(adapter);
+        adapter.setWorkouts(workouts);
     }
 
     private void refreshFABMenu() {
