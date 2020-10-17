@@ -26,9 +26,12 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
+import androidx.documentfile.provider.DocumentFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,6 +42,8 @@ import de.tadris.fitness.export.BackupController;
 import de.tadris.fitness.export.RestoreController;
 import de.tadris.fitness.ui.ShareFileActivity;
 import de.tadris.fitness.ui.dialog.ProgressDialogController;
+import de.tadris.fitness.ui.dialog.ThreadSafeProgressDialogController;
+import de.tadris.fitness.util.io.general.IOHelper;
 
 public class BackupSettingsActivity extends FitoTrackSettingsActivity {
 
@@ -59,6 +64,10 @@ public class BackupSettingsActivity extends FitoTrackSettingsActivity {
         });
         findPreference("export").setOnPreferenceClickListener(preference -> {
             showExportDialog();
+            return true;
+        });
+        findPreference("importMultiple").setOnPreferenceClickListener(preference -> {
+            showMassImportGpx();
             return true;
         });
 
@@ -139,6 +148,7 @@ public class BackupSettingsActivity extends FitoTrackSettingsActivity {
 
     private static final int FILE_REPLACE_SELECT_CODE = 21;
     private static final int FILE_MERGE_SELECT_CODE = 22;
+    private static final int FOLDER_IMPORT_SELECT_CODE = 23;
 
     private void showMergeImport() {
         importBackup(FILE_MERGE_SELECT_CODE);
@@ -165,10 +175,16 @@ public class BackupSettingsActivity extends FitoTrackSettingsActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            if (requestCode == FILE_REPLACE_SELECT_CODE) {
-                importBackup(data.getData(), true);
-            } else if (requestCode == FILE_MERGE_SELECT_CODE) {
-                importBackup(data.getData(), false);
+            switch (requestCode) {
+                case FILE_REPLACE_SELECT_CODE:
+                    importBackup(data.getData(), true);
+                    break;
+                case FILE_MERGE_SELECT_CODE:
+                    importBackup(data.getData(), false);
+                    break;
+                case FOLDER_IMPORT_SELECT_CODE:
+                    massImportGpx(data.getData());
+                    break;
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -189,6 +205,68 @@ public class BackupSettingsActivity extends FitoTrackSettingsActivity {
                 mHandler.post(() -> {
                     dialogController.cancel();
                     showErrorDialog(e, R.string.error, R.string.errorImportFailed);
+                });
+            }
+        }).start();
+    }
+
+    private void showMassImportGpx() {
+        if (!hasPermission()) {
+            requestPermissions();
+            return;
+        }
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.importMultipleGpxFiles)
+                .setMessage(R.string.importMultipleMessageSelectFolder)
+                .setPositiveButton(R.string.okay, (dialog, which) -> openMassImportFolderSelector())
+                .setNegativeButton(R.string.cancel, null)
+                .show();
+    }
+
+    private void openMassImportFolderSelector() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+        startActivityForResult(intent, FOLDER_IMPORT_SELECT_CODE);
+    }
+
+    private void massImportGpx(Uri dirUri) {
+        Log.d("MassImport", dirUri.toString());
+        ThreadSafeProgressDialogController dialog = new ThreadSafeProgressDialogController(this, getString(R.string.importingFiles));
+        dialog.show();
+        new Thread(() -> {
+            try {
+                int imported = 0;
+                DocumentFile documentFile = DocumentFile.fromTreeUri(this, dirUri);
+                DocumentFile[] files = documentFile.listFiles();
+                for (int i = 0; i < files.length; i++) {
+                    dialog.setProgress(100 * i / files.length);
+                    DocumentFile file = files[i];
+                    if (file.isFile() && file.canRead()) {
+                        try {
+                            Uri fileUri = file.getUri();
+                            Log.d("MassImport", "Importing " + fileUri.toString());
+                            IOHelper.GpxImporter.importWorkout(this, getContentResolver().openInputStream(fileUri));
+                            Thread.sleep(1000); // This is a VERY unclean way to ensure the workouts get different IDs, please see WorkoutSaver.setIds()
+                            imported++;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            if (imported == 0 && i == files.length - 1) {
+                                // If all workouts failed throw exception so it is shown to the user
+                                throw e;
+                            }
+                        }
+                    }
+                }
+                dialog.setProgress(100);
+                final int tmpImported = imported; // Needs to be a final variable to use in the handler lambda
+                mHandler.post(() -> {
+                    dialog.cancel();
+                    Toast.makeText(this, String.format(getString(R.string.importedWorkouts), tmpImported), Toast.LENGTH_LONG).show();
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+                mHandler.post(() -> {
+                    dialog.cancel();
+                    Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                 });
             }
         }).start();

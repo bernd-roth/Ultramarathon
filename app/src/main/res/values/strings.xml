@@ -17,7 +17,9 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources>
+  -->
+
+<resources>
     <string name="app_name">FitoTrack</string>
     <string name="workout_add">Add</string>
     <string name="stop">Stop</string>
@@ -267,6 +269,12 @@
     <string name="recordingStateRunning">Running</string>
     <string name="recordingStatePaused">Paused</string>
     <string name="recordingStateStopped">Stopped</string>
+    <string name="importMultipleGpxFiles">Import multiple GPX-files</string>
+    <string name="importMultipleMessageSelectFolder">Please select a folder containing all the GPX-files you would like to import.</string>
+    <string name="importMultipleGpxFilesSummary">Import more than one GPX-files from the filesystem at once</string>
+    <string name="bulkActions">Bulk actions</string>
+    <string name="importingFiles">Importing files</string>
+    <string name="importedWorkouts">Imported %d workouts</string>
     <string-array name="osm_track_visibility">
         <item>Identifiable</item>
         <item>Trackable</item>
