@@ -306,4 +306,10 @@
     <string name="aboutUnlistedContributors">Merci à tous les contributeurs non listés qui ont aidé à la traduction et à l\'extension de FitoTrack!</string>
     <string name="savedSuccessfully">Sauvegardé</string>
     <string name="workoutTypeRowing">Aviron</string>
+    <string name="importedWorkouts">Pourcentage %d entraînement importé</string>
+    <string name="importingFiles">Importation de fichiers</string>
+    <string name="bulkActions">Actions de masse</string>
+    <string name="importMultipleGpxFilesSummary">Importer plus d\'un fichier GPX à la fois à partir du système de fichiers</string>
+    <string name="importMultipleMessageSelectFolder">Veuillez sélectionner un dossier contenant tous les fichiers GPX que vous souhaitez importer.</string>
+    <string name="importMultipleGpxFiles">Importer plusieurs fichiers GPX</string>
 </resources>
