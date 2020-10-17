@@ -79,7 +79,7 @@ public class ShareFileActivity extends FitoTrackActivity {
         intent.setType("application/*");
         intent.putExtra(Intent.EXTRA_TITLE, file.getLastPathSegment());
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             // Show Download-Folder as default
             intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, MediaStore.Downloads.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY));
         }
