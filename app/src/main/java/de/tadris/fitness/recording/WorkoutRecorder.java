@@ -164,7 +164,7 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
     public void start() {
         if (state == RecordingState.IDLE) {
             Log.i("Recorder", "Start");
-            workout.id = System.currentTimeMillis();
+            workout.id = System.nanoTime();
             workout.start = System.currentTimeMillis();
             //Init Workout To Be able to Save
             workout.end = -1L;

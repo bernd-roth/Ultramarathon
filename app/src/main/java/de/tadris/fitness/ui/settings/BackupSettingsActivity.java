@@ -245,7 +245,6 @@ public class BackupSettingsActivity extends FitoTrackSettingsActivity {
                             Uri fileUri = file.getUri();
                             Log.d("MassImport", "Importing " + fileUri.toString());
                             IOHelper.GpxImporter.importWorkout(this, getContentResolver().openInputStream(fileUri));
-                            Thread.sleep(1000); // This is a VERY unclean way to ensure the workouts get different IDs, please see WorkoutSaver.setIds()
                             imported++;
                         } catch (Exception e) {
                             e.printStackTrace();

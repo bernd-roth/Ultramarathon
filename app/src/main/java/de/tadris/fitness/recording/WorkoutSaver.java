@@ -75,7 +75,7 @@ public class WorkoutSaver {
     }
 
     protected void setIds() {
-        workout.id = System.currentTimeMillis();
+        workout.id = System.nanoTime();
         int i = 0;
         for (WorkoutSample sample : samples) {
             i++;
