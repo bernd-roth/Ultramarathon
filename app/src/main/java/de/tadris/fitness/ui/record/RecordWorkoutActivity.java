@@ -378,17 +378,36 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
     private void checkPermissions() {
         if (!hasPermission()) {
-            requestLocationPermission();
+            showLocationPermissionConsent();
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
                 !hasBackgroundPermission()) {
             // We cannot request location permission and background permission at the same time due to android 11+ behaviour
-            requestBackgroundLocationPermission();
+            showBackgroundLocationPermissionConsent();
         }
+    }
+
+    private void showLocationPermissionConsent() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.recordingPermissionNotGrantedTitle)
+                .setMessage(R.string.recordingGrantLocationPermissionMessage)
+                .setPositiveButton(R.string.actionGrant, (dialog, which) -> requestLocationPermission())
+                .setNegativeButton(R.string.cancel, (dialog, which) -> activityFinish())
+                .show();
     }
 
     private void requestLocationPermission() {
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_CODE_LOCATION_PERMISSION);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    private void showBackgroundLocationPermissionConsent() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.recordingPermissionNotGrantedTitle)
+                .setMessage(R.string.recordingGrantBackgroundPermissionMessage)
+                .setPositiveButton(R.string.actionGrant, (dialog, which) -> requestBackgroundLocationPermission())
+                .setNegativeButton(R.string.cancel, (dialog, which) -> activityFinish())
+                .show();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
@@ -419,7 +438,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
                 startListener();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
                         !hasBackgroundPermission()) {
-                    requestBackgroundLocationPermission();
+                    showBackgroundLocationPermissionConsent();
                 }
             } else {
                 showPermissionsNotGrantedDialog(R.string.recordingPermissionNotGrantedMessage);

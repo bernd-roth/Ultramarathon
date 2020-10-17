@@ -320,4 +320,7 @@
     <string name="bulkActions">Massenaktionen</string>
     <string name="importingFiles">Dateien importieren</string>
     <string name="importedWorkouts">%d Workouts importiert</string>
+    <string name="recordingGrantBackgroundPermissionMessage">FitoTrack erfasst Standortdaten auch im Hintergrund, um das Workout bei ausgeschaltetem Bildschirm aufzeichnen zu können. Bitte gewähre der App deshalb die Berechtigung.</string>
+    <string name="actionGrant">Gewähren</string>
+    <string name="recordingGrantLocationPermissionMessage">FitoTrack erfasst Standortdaten zur Aufzeichnung des Workouts. Bitte erteile die Standortberechtigung, um ein Training aufzuzeichnen.</string>
 </resources>
