@@ -67,17 +67,18 @@ dependencies {
 
     // Android
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.documentfile:documentfile:1.0.1'
 
     // Maps
-    implementation 'org.mapsforge:mapsforge-core:0.14.0'
-    implementation 'org.mapsforge:mapsforge-map:0.14.0'
-    implementation 'org.mapsforge:mapsforge-map-reader:0.14.0'
-    implementation 'org.mapsforge:mapsforge-themes:0.14.0'
-    implementation 'org.mapsforge:mapsforge-map-android:0.14.0'
+    def mapsforge_version = "0.14.0"
+    implementation "org.mapsforge:mapsforge-core:$mapsforge_version"
+    implementation "org.mapsforge:mapsforge-map:$mapsforge_version"
+    implementation "org.mapsforge:mapsforge-map-reader:$mapsforge_version"
+    implementation "org.mapsforge:mapsforge-themes:$mapsforge_version"
+    implementation "org.mapsforge:mapsforge-map-android:$mapsforge_version"
     implementation 'com.caverock:androidsvg:1.4'
 
     // UI
