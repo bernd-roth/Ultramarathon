@@ -303,7 +303,7 @@
     <string name="recordingStateIdle">Inactif</string>
     <string name="speechConfigNoSpeech">Pas d\'annonce</string>
     <string name="aboutHelpTranslating">Aide à la traduction</string>
-    <string name="aboutUnlistedContributors">Merci à tous les contributeurs non listés qui ont aidé à la traduction et à l\'extension de FitoTrack!</string>
+    <string name="aboutUnlistedContributors">Merci à tous les contributeurs non listés qui ont aidé à la traduction et à l\'extension de FitoTrack !</string>
     <string name="savedSuccessfully">Sauvegardé</string>
     <string name="workoutTypeRowing">Aviron</string>
     <string name="importedWorkouts">Pourcentage %d entraînement importé</string>
