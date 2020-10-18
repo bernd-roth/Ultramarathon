@@ -367,9 +367,6 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
             case R.id.actionShareWorkout:
                 shareWorkoutActivity();
                 return true;
-            case R.id.actionShareWorkout:
-                shareWorkoutActivity();
-                return true;
         }
         return super.onOptionsItemSelected(item);
     }
