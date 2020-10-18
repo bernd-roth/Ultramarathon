@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+  ~
+  ~ This file is part of FitoTrack
+  ~
+  ~ FitoTrack is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     FitoTrack is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/shareWorkout"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+tools:context=".ui.workout.ShareWorkoutActivity">
+
+
+
+    <LinearLayout
+        android:id="@+id/showWorkoutMapParent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textview1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|start"
+        android:layout_margin="15dp"
+        android:shadowColor="@android:color/darker_gray"
+        android:shadowRadius="5"
+        android:text="@string/app_name"
+        android:textColor="#000000"
+        android:textSize="30dp"
+        android:textStyle="bold" />
+    <LinearLayout
+        android:id="@+id/TestshowWorkoutMapParent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="bottom|center">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_marginStart="15dp">
+
+            <TableRow
+                android:id="@+id/tableRow1"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <!-- Column 1 -->
+                <TextView
+                    android:id="@+id/workoutTypeTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-black"
+                    android:text="@string/workoutTypeRunning"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <!-- Column 2 -->
+                <TextView
+                    android:id="@+id/workoutPaceTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-black"
+                    android:text="@string/workoutPace"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <!-- Column 3 -->
+                <TextView
+                    android:id="@+id/workoutTimeTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-black"
+                    android:text="@string/workoutDuration"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow2"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <!-- Column 1 -->
+                <TextView
+                    android:id="@+id/workoutDistance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-black"
+                    android:text=""
+                    android:textColor="#000000"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+                <!-- android:text="6,1 km" -->
+                <!-- Column 2 -->
+                <TextView
+                    android:id="@+id/workoutPace"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-black"
+                    android:text=""
+                    android:textColor="#000000"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+                <!-- android:text="6:04 min/km" -->
+
+                <!-- Column 3 -->
+                <TextView
+                    android:id="@+id/workoutTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-black"
+                    android:text=""
+                    android:textColor="#000000"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+                <!-- android:text="37m 16s" -->
+            </TableRow>
+
+        </TableLayout>
+        <TextView
+            android:id="@+id/recordMapAttribution"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_margin="5dp"
+            android:text="@string/OpenStreetMapAttribution"
+            android:textColor="@color/textColorLight"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+</FrameLayout>
+
