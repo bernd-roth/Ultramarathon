@@ -44,15 +44,20 @@ import org.mapsforge.map.view.MapView;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.concurrent.TimeUnit;
 
 import de.tadris.fitness.R;
 
 public class ShareWorkoutActivity extends WorkoutActivity {
 
-   @Override
+    private long workoutId;
+    private boolean shared=false;
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+        workoutId = intent.getLongExtra(ShowWorkoutActivity.WORKOUT_ID_EXTRA, 0);
 
         initBeforeContent();
 
@@ -81,11 +86,12 @@ public class ShareWorkoutActivity extends WorkoutActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.actionShareWorkout) {
-            shareWorkoutActivity();
-            return true;
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.actionShareWorkout:
+                shareWorkoutActivity();
+                return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -113,13 +119,11 @@ public class ShareWorkoutActivity extends WorkoutActivity {
         Bitmap bitmap = getBitmapFromView(findViewById(R.id.shareWorkout));
 
         try {
-            String ts = String.valueOf(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()));
-            File file = new File(this.getExternalCacheDir(),"fitotrack-workout_"+ts+".png");
+            File file = new File(this.getExternalCacheDir(),"fitotrack-workout.png");
             FileOutputStream fOut = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
             fOut.flush();
             fOut.close();
-
 
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -131,8 +135,7 @@ public class ShareWorkoutActivity extends WorkoutActivity {
             } else {
                 intent.setDataAndType(Uri.fromFile(file), "image/png");
             }
-            startActivity(Intent.createChooser(intent,null));
-
+            startActivity(intent);
 
         } catch (Exception e) {
             e.printStackTrace();

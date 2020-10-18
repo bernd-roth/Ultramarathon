@@ -18,12 +18,13 @@
   -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/shareWorkout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.workout.ShareWorkoutActivity">
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/shareWorkout"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+tools:context=".ui.workout.ShareWorkoutActivity">
+
 
 
     <LinearLayout
@@ -38,22 +39,20 @@
         android:id="@+id/textview1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|end"
+        android:layout_gravity="top|start"
         android:layout_margin="15dp"
-        android:shadowColor="#000000"
-        android:shadowRadius="10"
+        android:shadowColor="@android:color/darker_gray"
+        android:shadowRadius="5"
         android:text="@string/app_name"
-        android:textColor="#FFFFFF"
-        android:textSize="30sp"
-        android:textStyle="bold|italic" />
-    <!--@color/textDarkerWhite @android:color/darker_gray-->
-
+        android:textColor="#000000"
+        android:textSize="30dp"
+        android:textStyle="bold" />
     <LinearLayout
         android:id="@+id/TestshowWorkoutMapParent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_gravity="bottom|center">
 
         <TableLayout
             android:layout_width="match_parent"
@@ -74,9 +73,7 @@
                     android:layout_weight="1"
                     android:fontFamily="sans-serif-black"
                     android:text="@string/workoutTypeRunning"
-                    android:textColor="#FFFFFF"
-                    android:shadowColor="#000000"
-                    android:shadowRadius="10"
+                    android:textColor="#000000"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -88,9 +85,7 @@
                     android:layout_weight="1"
                     android:fontFamily="sans-serif-black"
                     android:text="@string/workoutPace"
-                    android:textColor="#FFFFFF"
-                    android:shadowColor="#000000"
-                    android:shadowRadius="10"
+                    android:textColor="#000000"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -102,9 +97,7 @@
                     android:layout_weight="1"
                     android:fontFamily="sans-serif-black"
                     android:text="@string/workoutDuration"
-                    android:textColor="#FFFFFF"
-                    android:shadowColor="#000000"
-                    android:shadowRadius="10"
+                    android:textColor="#000000"
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </TableRow>
@@ -122,9 +115,7 @@
                     android:layout_weight="1"
                     android:fontFamily="sans-serif-black"
                     android:text=""
-                    android:textColor="#FFFFFF"
-                    android:shadowColor="#000000"
-                    android:shadowRadius="10"
+                    android:textColor="#000000"
                     android:textSize="22sp"
                     android:textStyle="bold" />
                 <!-- android:text="6,1 km" -->
@@ -136,9 +127,7 @@
                     android:layout_weight="1"
                     android:fontFamily="sans-serif-black"
                     android:text=""
-                    android:textColor="#FFFFFF"
-                    android:shadowColor="#000000"
-                    android:shadowRadius="10"
+                    android:textColor="#000000"
                     android:textSize="22sp"
                     android:textStyle="bold" />
                 <!-- android:text="6:04 min/km" -->
@@ -151,16 +140,13 @@
                     android:layout_weight="1"
                     android:fontFamily="sans-serif-black"
                     android:text=""
-                    android:textColor="#FFFFFF"
-                    android:shadowColor="#000000"
-                    android:shadowRadius="10"
+                    android:textColor="#000000"
                     android:textSize="22sp"
                     android:textStyle="bold" />
                 <!-- android:text="37m 16s" -->
             </TableRow>
 
         </TableLayout>
-
         <TextView
             android:id="@+id/recordMapAttribution"
             android:layout_width="wrap_content"
