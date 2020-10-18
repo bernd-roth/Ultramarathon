@@ -285,10 +285,10 @@
 
     <string-array name="pref_unit_systems">
         <item>Métrico</item>
-        <item>Métrico</item>
-        <item>Imperial</item>
-        <item>Imperial with metros</item>
-        <item>Unidades de EEUU</item>
+        <item>Métrico con m/s</item>
+        <item>Imperial (UK)</item>
+        <item>Imperial con metros</item>
+        <item>Imperial (EEUU)</item>
     </string-array>
 
     <string-array name="pref_time_format">
