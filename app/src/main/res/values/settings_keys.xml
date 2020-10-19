@@ -72,6 +72,7 @@
     <string name="urlBugReport" translatable="false">https://codeberg.org/jannis/FitoTrack/issues</string>
     <string name="urlCopyrightNotices" translatable="false">https://codeberg.org/jannis/FitoTrack/src/branch/master/NOTICE.md</string>
     <string name="urlWeblate" translatable="false">https://hosted.weblate.org/engage/fitotrack/</string>
+    <string name="urlPrivacy" translatable="false">https://codeberg.org/jannis/FitoTrack/src/branch/master/doc/privacy-policy.md</string>
     <string name="authorName" translatable="false">Jannis Scheibe</string>
     <string name="urlAuthor" translatable="false">https://codeberg.org/jannis</string>
     <string name="emailAuthor" translatable="false">jannis@tadris.de</string>

@@ -255,6 +255,7 @@
     <string name="aboutSourceCode">View source code</string>
     <string name="aboutUnlistedContributors">Thanks to all the unlisted contributors that helped translating and extending FitoTrack!</string>
     <string name="aboutHelpTranslating">Help translating</string>
+    <string name="aboutPrivacyPolicy">Privacy Policy</string>
     <string name="sendEmail">Send Email</string>
     <string name="editDisplayedInformation">Edit displayed information</string>
     <string name="editDisplayedInformationHint">As long as the workout has not started, you can edit the displayed values by clicking on one of the four fields.</string>

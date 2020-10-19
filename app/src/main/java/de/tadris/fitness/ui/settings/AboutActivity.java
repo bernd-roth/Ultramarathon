@@ -55,6 +55,7 @@ public class AboutActivity extends FitoTrackActivity {
 
         aboutPage.addGroup(getString(R.string.aboutLinks));
         aboutPage.addItem(applyUrlToElement(createThemedElement(getString(R.string.aboutSourceCode)).setIconDrawable(R.drawable.ic_code), getString(R.string.urlRepository)));
+        aboutPage.addItem(applyUrlToElement(createThemedElement(getString(R.string.aboutPrivacyPolicy)).setIconDrawable(R.drawable.ic_privacy), getString(R.string.urlPrivacy)));
         aboutPage.addItem(applyUrlToElement(createThemedElement(getString(R.string.aboutChangelog)).setIconDrawable(R.drawable.ic_changes), getString(R.string.urlChangelog)));
         aboutPage.addItem(applyUrlToElement(createThemedElement(getString(R.string.aboutOpenSourceLibraries)).setIconDrawable(R.drawable.ic_library_books), getString(R.string.urlCopyrightNotices)));
         aboutPage.addItem(applyUrlToElement(createThemedElement(getString(R.string.aboutReportBug)).setIconDrawable(R.drawable.ic_bug_report), getString(R.string.urlBugReport)));
