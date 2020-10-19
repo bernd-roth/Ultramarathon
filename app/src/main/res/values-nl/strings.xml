@@ -298,4 +298,10 @@
     <string name="speechConfigNoSpeech">Geen aankondiging</string>
     <string name="aboutHelpTranslating">Helpen met vertalen</string>
     <string name="aboutUnlistedContributors">Met dank aan alle niet-beursgenoteerde medewerkers die hebben geholpen bij het vertalen en uitbreiden van FitoTrack!</string>
+    <string name="importedWorkouts">Geïmporteerde %d trainingen</string>
+    <string name="importingFiles">Bestanden importeren</string>
+    <string name="bulkActions">Bulkacties</string>
+    <string name="importMultipleGpxFilesSummary">Importeer meer dan één GPX-bestand tegelijk uit het bestandssysteem</string>
+    <string name="importMultipleMessageSelectFolder">Selecteer een map met alle GPX-bestanden die u wilt importeren.</string>
+    <string name="importMultipleGpxFiles">Meerdere GPX-bestanden importeren</string>
 </resources>

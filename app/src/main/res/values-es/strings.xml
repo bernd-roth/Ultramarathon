@@ -282,7 +282,6 @@
     <string name="aboutHelpTranslating">Ayuda para traducir</string>
     <string name="aboutUnlistedContributors">Gracias a todos los contribuyentes no listados que ayudaron a traducir y extender FitoTrack!</string>
     <string name="trackerWaitingMessage">Esperando para empezar a entrenar</string>
-
     <string-array name="pref_unit_systems">
         <item>Métrico</item>
         <item>Métrico</item>
@@ -290,13 +289,11 @@
         <item>Imperial with metros</item>
         <item>Unidades de EEUU</item>
     </string-array>
-
     <string-array name="pref_time_format">
         <item>Predeterminado del sistema</item>
         <item>12:08 PM</item>
         <item>15:23</item>
     </string-array>
-
     <string-array name="pref_date_format">
         <item>Predeterminado del sistema</item>
         <item>2001-07-24</item>
@@ -307,9 +304,14 @@
         <item>24/07/2001</item>
         <item>07/24/2001</item>
     </string-array>
-
     <string-array name="pref_theme_setting">
         <item>Claro</item>
         <item>Oscuro</item>
     </string-array>
+    <string name="importedWorkouts">Importado %d ejercicios</string>
+    <string name="importingFiles">Importar archivos</string>
+    <string name="bulkActions">Acciones masivas</string>
+    <string name="importMultipleGpxFilesSummary">Importar más de un archivo GPX del sistema de archivos a la vez</string>
+    <string name="importMultipleMessageSelectFolder">Por favor, seleccione una carpeta que contenga todos los archivos GPX que desee importar.</string>
+    <string name="importMultipleGpxFiles">Importar múltiples archivos GPX</string>
 </resources>
