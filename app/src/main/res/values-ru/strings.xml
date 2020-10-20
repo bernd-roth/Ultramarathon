@@ -247,4 +247,14 @@
     <string name="errorImportFailed">Ошибка в импорте данных.</string>
     <string name="errorExportFailed">Ошибка в экспорте данных.</string>
     <string name="errorGpxExportFailed">Ошибка в экспорте GPX.</string>
+    <string name="importedWorkouts">Импортировано %d тренировок</string>
+    <string name="importingFiles">Импорт файлов</string>
+    <string name="bulkActions">Массовые действия</string>
+    <string name="importMultipleGpxFilesSummary">Импортировать более одного GPX-файла из файловой системы одновременно</string>
+    <string name="importMultipleMessageSelectFolder">Пожалуйста, выберите папку, содержащую все GPX-фпйлы, которые вы хотите импортировать.</string>
+    <string name="importMultipleGpxFiles">Импортировать несколько GPX-файлов</string>
+    <string name="actionGrant">Предоставить</string>
+    <string name="recordingGrantBackgroundPermissionMessage">FitoTrack также собирает данные о местоположении в фоновом режиме для записи тренировки, когда экран выключен. Пожалуйста, предоставьте разрешение.</string>
+    <string name="recordingGrantLocationPermissionMessage">FitoTrack собирает данные о местоположении для записи тренировки. Пожалуйста, предоставьте разрешение на запись тренировки.</string>
+    <string name="manageIntervalsSummary">Отредактируйте наборы интервалов, которые вы сможете использовать во время тренировки, с помощью голосовой обратной связи.</string>
 </resources>
