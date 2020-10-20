@@ -116,4 +116,19 @@ public class GpxImporter implements IWorkoutImporter {
     private static Date parseDate(String str) {
         return DateParserUtils.parseDate(str);
     }
+
+    private static WorkoutType getTypeById(String id) {
+        switch (id) {
+            // Strava IDs
+            case "1":
+                return WorkoutType.RUNNING;
+            case "2":
+                return WorkoutType.CYCLING;
+            case "11":
+                return WorkoutType.WALKING;
+
+            default:
+                return WorkoutType.getTypeById(id);
+        }
+    }
 }
