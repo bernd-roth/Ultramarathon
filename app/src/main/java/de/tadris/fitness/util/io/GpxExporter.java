@@ -34,6 +34,7 @@ import java.util.TimeZone;
 import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.util.gpx.Gpx;
+import de.tadris.fitness.util.gpx.GpxTpxExtension;
 import de.tadris.fitness.util.gpx.Metadata;
 import de.tadris.fitness.util.gpx.Track;
 import de.tadris.fitness.util.gpx.TrackPoint;
@@ -79,7 +80,7 @@ public class GpxExporter implements IWorkoutExporter {
 
         for(WorkoutSample sample : samples){
             trkpt.add(new TrackPoint(sample.lat, sample.lon, sample.elevation,
-                    getDateTime(sample.absoluteTime), new TrackPointExtension(sample.speed)));
+                    getDateTime(sample.absoluteTime), new TrackPointExtension(sample.speed, new GpxTpxExtension(sample.heartRate))));
         }
         segment.setTrkpt(trkpt);
 

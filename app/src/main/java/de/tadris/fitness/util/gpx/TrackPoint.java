@@ -26,12 +26,10 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 public class TrackPoint {
 
     @JacksonXmlProperty(isAttribute = true)
-    private
-    double lat;
+    private double lat;
 
     @JacksonXmlProperty(isAttribute = true)
-    private
-    double lon;
+    private double lon;
 
     private double ele;
 
