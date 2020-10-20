@@ -71,7 +71,7 @@ import de.tadris.fitness.util.unit.UnitUtils;
 
 import static android.widget.AdapterView.OnItemSelectedListener;
 
-public class ShowWorkoutsAggregatedDiagramActivity extends FitoTrackActivity implements SelectWorkoutTypeDialog.WorkoutTypeSelectListener {
+public class AggregatedWorkoutStatisticsActivity extends FitoTrackActivity implements SelectWorkoutTypeDialog.WorkoutTypeSelectListener {
 
     CombinedChart chart;
     Spinner informationSelector, timeSpanSelector;

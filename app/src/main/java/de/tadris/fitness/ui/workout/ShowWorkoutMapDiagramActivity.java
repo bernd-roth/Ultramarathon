@@ -29,7 +29,10 @@ import com.github.mikephil.charting.charts.CombinedChart;
 import de.tadris.fitness.R;
 import de.tadris.fitness.ui.dialog.SampleConverterPickerDialog;
 import de.tadris.fitness.ui.workout.diagram.ConverterManager;
+import de.tadris.fitness.ui.workout.diagram.HeartRateConverter;
+import de.tadris.fitness.ui.workout.diagram.HeightConverter;
 import de.tadris.fitness.ui.workout.diagram.SampleConverter;
+import de.tadris.fitness.ui.workout.diagram.SpeedConverter;
 
 public class ShowWorkoutMapDiagramActivity extends WorkoutActivity {
 
@@ -37,6 +40,7 @@ public class ShowWorkoutMapDiagramActivity extends WorkoutActivity {
 
     public static final String DIAGRAM_TYPE_HEIGHT = "height";
     public static final String DIAGRAM_TYPE_SPEED = "speed";
+    public static final String DIAGRAM_TYPE_HEART_RATE = "heartrate";
 
     private ConverterManager converterManager;
 
@@ -49,7 +53,7 @@ public class ShowWorkoutMapDiagramActivity extends WorkoutActivity {
         super.onCreate(savedInstanceState);
         initBeforeContent();
 
-        converterManager = new ConverterManager(this);
+        converterManager = new ConverterManager(this, getWorkoutData());
 
         setContentView(R.layout.activity_show_workout_map_diagram);
         initRoot();
@@ -74,12 +78,24 @@ public class ShowWorkoutMapDiagramActivity extends WorkoutActivity {
     }
 
     private void initDiagram() {
-        String typeExtra = getIntent().getStringExtra(DIAGRAM_TYPE_EXTRA);
-        boolean isHeightDiagram = typeExtra != null && typeExtra.equals(DIAGRAM_TYPE_HEIGHT);
-        SampleConverter defaultConverter = converterManager.availableConverters.get(isHeightDiagram ? 1 : 0);
+        SampleConverter defaultConverter = getDefaultConverter();
         converterManager.selectedConverters.add(defaultConverter);
         chart = addDiagram(defaultConverter);
         updateChart();
+    }
+
+    private SampleConverter getDefaultConverter() {
+        String typeExtra = getIntent().getStringExtra(DIAGRAM_TYPE_EXTRA);
+        if (typeExtra == null) typeExtra = "";
+        switch (typeExtra) {
+            default:
+            case DIAGRAM_TYPE_SPEED:
+                return new SpeedConverter(this);
+            case DIAGRAM_TYPE_HEIGHT:
+                return new HeightConverter(this);
+            case DIAGRAM_TYPE_HEART_RATE:
+                return new HeartRateConverter(this);
+        }
     }
 
     private void updateChart() {

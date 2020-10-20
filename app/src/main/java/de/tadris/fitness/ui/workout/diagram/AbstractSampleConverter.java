@@ -21,6 +21,7 @@ package de.tadris.fitness.ui.workout.diagram;
 
 import android.content.Context;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
 import com.github.mikephil.charting.charts.CombinedChart;
@@ -58,4 +59,14 @@ public abstract class AbstractSampleConverter implements SampleConverter {
     public boolean isIntervalSetVisible() {
         return false;
     } // Defaults to false
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        return obj != null && getClass().equals(obj.getClass());
+    }
 }

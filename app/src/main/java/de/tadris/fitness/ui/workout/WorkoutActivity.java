@@ -67,9 +67,7 @@ import de.tadris.fitness.data.WorkoutData;
 import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.map.MapManager;
 import de.tadris.fitness.map.WorkoutLayer;
-import de.tadris.fitness.ui.workout.diagram.HeightConverter;
 import de.tadris.fitness.ui.workout.diagram.SampleConverter;
-import de.tadris.fitness.ui.workout.diagram.SpeedConverter;
 import de.tadris.fitness.util.IntervalSetCalculator;
 import de.tadris.fitness.util.unit.DistanceUnitUtils;
 import de.tadris.fitness.util.unit.EnergyUnitUtils;
@@ -90,9 +88,6 @@ public abstract class WorkoutActivity extends InformationActivity {
 
     protected DistanceUnitUtils distanceUnitUtils;
     protected EnergyUnitUtils energyUnitUtils;
-
-    CombinedChart speedDiagram;
-    CombinedChart heightDiagram;
 
     void initBeforeContent() {
         distanceUnitUtils = Instance.getInstance(this).distanceUnitUtils;
@@ -274,14 +269,6 @@ public abstract class WorkoutActivity extends InformationActivity {
         } else {
             return null;
         }
-    }
-
-    void addHeightDiagram(){
-        heightDiagram = addDiagram(new HeightConverter(this));
-    }
-
-    void addSpeedDiagram(){
-        speedDiagram = addDiagram(new SpeedConverter(this));
     }
 
     boolean fullScreenItems = false;

@@ -48,6 +48,10 @@ import de.tadris.fitness.osm.OAuthAuthentication;
 import de.tadris.fitness.osm.OsmTraceUploader;
 import de.tadris.fitness.ui.ShareFileActivity;
 import de.tadris.fitness.ui.dialog.ProgressDialogController;
+import de.tadris.fitness.ui.workout.diagram.HeartRateConverter;
+import de.tadris.fitness.ui.workout.diagram.HeightConverter;
+import de.tadris.fitness.ui.workout.diagram.SampleConverter;
+import de.tadris.fitness.ui.workout.diagram.SpeedConverter;
 import de.tadris.fitness.util.DialogUtils;
 import de.tadris.fitness.util.io.general.IOHelper;
 import de.tadris.fitness.util.sections.SectionListModel;
@@ -103,11 +107,17 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
 
             addKeyValue(getString(R.string.workoutTopSpeed), distanceUnitUtils.getSpeed(workout.topSpeed));
 
-            addSpeedDiagram();
-
-            speedDiagram.setOnClickListener(v -> startDiagramActivity(ShowWorkoutMapDiagramActivity.DIAGRAM_TYPE_SPEED));
+            addDiagram(new SpeedConverter(this), ShowWorkoutMapDiagramActivity.DIAGRAM_TYPE_SPEED);
         } else {
             addKeyValue(getString(R.string.workoutAvgSpeedShort), distanceUnitUtils.getSpeed(workout.avgSpeed));
+        }
+
+        if (workout.hasHeartRateData()) {
+            addTitle(getString(R.string.workoutHeartRate));
+            addKeyValue(getString(R.string.workoutAvgHeartRate), workout.avgHeartRate + " bpm",
+                    getString(R.string.workoutMaxHeartRate), workout.maxHeartRate + " bpm");
+
+            addDiagram(new HeartRateConverter(this), ShowWorkoutMapDiagramActivity.DIAGRAM_TYPE_HEART_RATE);
         }
 
         addTitle(getString(R.string.workoutBurnedEnergy));
@@ -120,9 +130,7 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
             addKeyValue(getString(R.string.workoutAscent), distanceUnitUtils.getElevation((int) workout.ascent),
                     getString(R.string.workoutDescent), distanceUnitUtils.getElevation((int) workout.descent));
 
-            addHeightDiagram();
-
-            heightDiagram.setOnClickListener(v -> startDiagramActivity(ShowWorkoutMapDiagramActivity.DIAGRAM_TYPE_HEIGHT));
+            addDiagram(new HeightConverter(this), ShowWorkoutMapDiagramActivity.DIAGRAM_TYPE_HEIGHT);
 
             addTitle(getString(R.string.sections));
             addSectionList();
@@ -134,6 +142,10 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
         SectionListModel listModel = new SectionListModel(workout, samples);
         SectionListPresenter listPresenter = new SectionListPresenter(listView, listModel);
         root.addView(listView);
+    }
+
+    void addDiagram(SampleConverter converter, String mapDiagramActivityExtra) {
+        addDiagram(converter).setOnClickListener(v -> startDiagramActivity(mapDiagramActivityExtra));
     }
 
     private void startDiagramActivity(String diagramType) {

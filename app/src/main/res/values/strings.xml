@@ -80,6 +80,8 @@
     <string name="workoutTotalEnergy">Total Energy</string>
     <string name="workoutEnergyConsumption">Energy Consumption</string>
     <string name="workoutHeartRate">Heart Rate</string>
+    <string name="workoutMaxHeartRate">Max Heart Rate</string>
+    <string name="workoutAvgHeartRate">Avg. Heart Rate</string>
     <string name="workoutEdited">This workout has been edited.</string>
     <string name="uploading">Uploading</string>
     <string name="enterVerificationCode">Enter Verification Code</string>

@@ -24,16 +24,20 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.tadris.fitness.data.WorkoutData;
+
 public class ConverterManager {
 
     public List<SampleConverter> availableConverters = new ArrayList<>();
     public List<SampleConverter> selectedConverters = new ArrayList<>();
 
-    public ConverterManager(Context context) {
-        availableConverters.add(new SpeedConverter(context)); // Needs to be index 0
-        availableConverters.add(new HeightConverter(context)); // Needs to be index 1
+    public ConverterManager(Context context, WorkoutData data) {
+        availableConverters.add(new SpeedConverter(context));
+        availableConverters.add(new HeightConverter(context));
         availableConverters.add(new InclinationConverter(context));
-        availableConverters.add(new HeartRateConverter(context));
+        if (data.getWorkout().hasHeartRateData()) {
+            availableConverters.add(new HeartRateConverter(context));
+        }
     }
 
 

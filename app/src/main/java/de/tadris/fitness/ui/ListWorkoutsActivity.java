@@ -52,9 +52,9 @@ import de.tadris.fitness.ui.dialog.ProgressDialogController;
 import de.tadris.fitness.ui.dialog.SelectWorkoutTypeDialog;
 import de.tadris.fitness.ui.record.RecordWorkoutActivity;
 import de.tadris.fitness.ui.settings.MainSettingsActivity;
+import de.tadris.fitness.ui.workout.AggregatedWorkoutStatisticsActivity;
 import de.tadris.fitness.ui.workout.EnterWorkoutActivity;
 import de.tadris.fitness.ui.workout.ShowWorkoutActivity;
-import de.tadris.fitness.ui.workout.ShowWorkoutsAggregatedDiagramActivity;
 import de.tadris.fitness.util.DialogUtils;
 import de.tadris.fitness.util.io.general.IOHelper;
 
@@ -281,7 +281,7 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
         }
 
         if (id == R.id.actionOpenStatisticss) {
-            startActivity(new Intent(this, ShowWorkoutsAggregatedDiagramActivity.class));
+            startActivity(new Intent(this, AggregatedWorkoutStatisticsActivity.class));
             return true;
         }
 

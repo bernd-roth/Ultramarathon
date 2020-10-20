@@ -89,7 +89,7 @@
         <activity android:name=".ui.settings.InterfaceSettingsActivity" />
         <activity android:name=".ui.settings.RecordingSettingsActivity" />
         <activity android:name=".ui.settings.BackupSettingsActivity" />
-        <activity android:name=".ui.workout.ShowWorkoutsAggregatedDiagramActivity" />
+        <activity android:name=".ui.workout.AggregatedWorkoutStatisticsActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
