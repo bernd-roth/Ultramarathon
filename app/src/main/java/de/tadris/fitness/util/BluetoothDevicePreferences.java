@@ -17,21 +17,27 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.aggregation;
+package de.tadris.fitness.util;
 
-import de.tadris.fitness.data.Workout;
-import de.tadris.fitness.data.WorkoutType;
+import android.content.Context;
+import android.content.SharedPreferences;
 
-public class WorkoutTypeFilter implements WorkoutFilter {
+public class BluetoothDevicePreferences {
 
-    private final WorkoutType type;
+    public static final String DEVICE_HEART_RATE = "hr";
 
-    public WorkoutTypeFilter(WorkoutType type) {
-        this.type = type;
+    private final SharedPreferences preferences;
+
+    public BluetoothDevicePreferences(Context context) {
+        this.preferences = context.getSharedPreferences("bluetooth", Context.MODE_PRIVATE);
     }
 
-    @Override
-    public boolean isAccepted(Workout workout) {
-        return workout.getWorkoutType() == type;
+    public String getAddress(String device) {
+        return preferences.getString(device, "");
     }
+
+    public void setAddress(String device, String address) {
+        preferences.edit().putString(device, address).apply();
+    }
+
 }

@@ -51,5 +51,10 @@
     <color name="aggregatedDiagramAvg">#00BCD4</color>
     <color name="aggregatedDiagramMin">#4CAF50</color>
 
+    <color name="heartRateStateUnavailable">#8E8E8E</color>
+    <color name="heartRateStateConnecting">#00BCD4</color>
+    <color name="heartRateStateAvailable">#4CAF50</color>
+    <color name="heartRateStateFailed">#F44336</color>
+
     <color name="lineHighlight">#229a9a9a</color>
 </resources>

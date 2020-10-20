@@ -40,9 +40,10 @@ import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.recording.sensors.HeartRateMeasurement;
 import de.tadris.fitness.util.CalorieCalculator;
 
-public class WorkoutRecorder implements LocationListener.LocationChangeListener {
+public class WorkoutRecorder implements RecorderService.RecorderServiceListener {
 
     private static final int PAUSE_TIME = 10_000; // 10 Seconds
 
@@ -73,6 +74,9 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
     private final List<WorkoutRecorderListener> workoutRecorderListeners = new CopyOnWriteArrayList<>();
     private GpsState gpsState = GpsState.SIGNAL_LOST;
     private List<Interval> intervalList;
+
+    private float lastPressure = -1;
+    private int lastHeartRate = -1;
 
     public WorkoutRecorder(Context context, WorkoutType workoutType) {
         this.context = context;
@@ -158,7 +162,7 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
     }
 
     private void init() {
-        Instance.getInstance(context).locationChangeListeners.add(this);
+        Instance.getInstance(context).recorderServiceListeners.add(this);
     }
 
     public void start() {
@@ -275,7 +279,7 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
         workout.duration = time;
         workout.pauseDuration = pauseTime;
         state = RecordingState.STOPPED;
-        Instance.getInstance(context).locationChangeListeners.remove(this);
+        Instance.getInstance(context).recorderServiceListeners.remove(this);
         Log.i("Recorder", "Stop with " + getSampleCount() + " Samples");
     }
 
@@ -311,7 +315,7 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
                 // and if the time difference to the last sample is too small
                 synchronized (samples) {
                     WorkoutSample lastSample = samples.get(samples.size() - 1);
-                    distance = Math.abs(LocationListener.locationToLatLong(location).sphericalDistance(lastSample.toLatLong()));
+                    distance = Math.abs(RecorderService.locationToLatLong(location).sphericalDistance(lastSample.toLatLong()));
                     long timediff = Math.abs(lastSample.absoluteTime - location.getTime());
                     if (distance < workout.getWorkoutType().minDistance || timediff < 500) {
                         return;
@@ -334,11 +338,8 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
         sample.speed = location.getSpeed();
         sample.relativeTime = location.getTime() - workout.start - getPauseDuration();
         sample.absoluteTime = location.getTime();
-        if (Instance.getInstance(context).pressureAvailable) {
-            sample.pressure = Instance.getInstance(context).lastPressure;
-        } else {
-            sample.pressure = -1;
-        }
+        sample.pressure = lastPressure;
+        sample.heartRate = lastHeartRate;
         synchronized (samples) {
             if (workoutSaver == null) {
                 throw new RuntimeException("Missing WorkoutSaver for Recorder");
@@ -364,6 +365,24 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
 
     public int getDistanceInMeters() {
         return (int) distance;
+    }
+
+    @Override
+    public void onPressureChange(float pressure) {
+        lastPressure = pressure;
+    }
+
+    @Override
+    public void onHeartRateChange(HeartRateMeasurement measurement) {
+        lastHeartRate = measurement.heartRate;
+    }
+
+    @Override
+    public void onHeartRateConnectionChange(RecorderService.HeartRateConnectionState state) {
+        if (state != RecorderService.HeartRateConnectionState.CONNECTED) {
+            // If heart rate sensor currently not available
+            lastHeartRate = -1;
+        }
     }
 
     private int maxCalories = 0;
@@ -475,6 +494,10 @@ public class WorkoutRecorder implements LocationListener.LocationChangeListener 
         } else {
             return time;
         }
+    }
+
+    public int getCurrentHeartRate() {
+        return lastHeartRate;
     }
 
     public void setComment(String comment) {

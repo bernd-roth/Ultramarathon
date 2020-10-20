@@ -56,6 +56,16 @@
             android:textColor="@android:color/holo_red_dark"
             android:textStyle="bold" />
 
+        <ImageView
+            android:id="@+id/recordHrStatus"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="bottom|left"
+            android:layout_margin="5dp"
+            android:src="@drawable/ic_bluetooth"
+            android:textStyle="bold"
+            android:tint="@color/heartRateStateUnavailable" />
+
         <TextView
             android:id="@+id/recordMapAttribution"
             android:layout_width="wrap_content"

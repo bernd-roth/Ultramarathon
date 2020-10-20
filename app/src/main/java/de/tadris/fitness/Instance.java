@@ -32,7 +32,7 @@ import de.tadris.fitness.data.UserPreferences;
 import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.data.WorkoutType;
-import de.tadris.fitness.recording.LocationListener;
+import de.tadris.fitness.recording.RecorderService;
 import de.tadris.fitness.recording.WorkoutRecorder;
 import de.tadris.fitness.recording.announcement.TTSController;
 import de.tadris.fitness.util.FitoTrackThemes;
@@ -56,7 +56,7 @@ public class Instance {
 
     public final AppDatabase db;
     public WorkoutRecorder recorder;
-    public final List<LocationListener.LocationChangeListener> locationChangeListeners;
+    public final List<RecorderService.RecorderServiceListener> recorderServiceListeners;
     public final List<TTSController.VoiceAnnouncementCallback> voiceAnnouncementCallbackListeners;
     public final UserPreferences userPreferences;
     public final FitoTrackThemes themes;
@@ -64,12 +64,9 @@ public class Instance {
     public final DistanceUnitUtils distanceUnitUtils;
     public final EnergyUnitUtils energyUnitUtils;
 
-    public boolean pressureAvailable= false;
-    public float lastPressure= 0;
-
     private Instance(Context context) {
         instance = this;
-        locationChangeListeners = new CopyOnWriteArrayList<>();
+        recorderServiceListeners = new CopyOnWriteArrayList<>();
         voiceAnnouncementCallbackListeners = new ArrayList<>();
         userPreferences= new UserPreferences(context);
         themes = new FitoTrackThemes(context);

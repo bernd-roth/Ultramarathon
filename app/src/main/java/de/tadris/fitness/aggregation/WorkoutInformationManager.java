@@ -36,8 +36,8 @@ import de.tadris.fitness.aggregation.information.WorkoutCount;
 
 public class WorkoutInformationManager {
 
-    private Context context;
-    private List<WorkoutInformation> information = new ArrayList<>();
+    private final Context context;
+    private final List<WorkoutInformation> information = new ArrayList<>();
 
     public WorkoutInformationManager(Context context) {
         this.context = context;

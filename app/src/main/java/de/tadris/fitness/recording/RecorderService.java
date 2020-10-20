@@ -23,6 +23,7 @@ package de.tadris.fitness.recording;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -35,6 +36,9 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
+import androidx.annotation.ColorRes;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationManagerCompat;
 
 import org.mapsforge.core.model.LatLong;
@@ -51,10 +55,13 @@ import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.recording.announcement.TTSController;
 import de.tadris.fitness.recording.announcement.VoiceAnnouncements;
 import de.tadris.fitness.recording.information.GPSStatus;
+import de.tadris.fitness.recording.sensors.HRManager;
+import de.tadris.fitness.recording.sensors.HeartRateMeasurement;
 import de.tadris.fitness.ui.record.RecordWorkoutActivity;
 import de.tadris.fitness.util.NotificationHelper;
+import no.nordicsemi.android.ble.observer.ConnectionObserver;
 
-public class LocationListener extends Service {
+public class RecorderService extends Service {
 
     private Date serviceStartTime;
 
@@ -69,7 +76,7 @@ public class LocationListener extends Service {
     private static final String TAG = "LocationListener";
     private static final int NOTIFICATION_ID = 10;
 
-    private static final int WATCHDOG_INTERVAL = 2_500; //Triger Watchdog every 2.5 Seconds
+    private static final int WATCHDOG_INTERVAL = 2_500; // Trigger Watchdog every 2.5 Seconds
 
     private LocationManager mLocationManager = null;
 
@@ -82,6 +89,8 @@ public class LocationListener extends Service {
 
     private WatchDogRunner mWatchdogRunner;
     private Thread mWatchdogThread = null;
+
+    private HRManager hrManager;
 
     private static final int LOCATION_INTERVAL = 1000;
 
@@ -97,7 +106,7 @@ public class LocationListener extends Service {
         public void onLocationChanged(Location location) {
             Log.i(TAG, "onLocationChanged: " + location);
             mLastLocation.set(location);
-            for (LocationChangeListener listener : instance.locationChangeListeners) {
+            for (RecorderServiceListener listener : instance.recorderServiceListeners) {
                 listener.onLocationChange(location);
             }
         }
@@ -122,12 +131,57 @@ public class LocationListener extends Service {
 
         @Override
         public void onSensorChanged(SensorEvent event) {
-            //Log.i(TAG, "onPressureChange: " + event.values[0]);
-            instance.lastPressure = event.values[0];
+            for (RecorderServiceListener listener : instance.recorderServiceListeners) {
+                listener.onPressureChange(event.values[0]);
+            }
         }
 
         @Override
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        }
+    }
+
+    private class HeartRateListener implements HRManager.HRManagerCallback, ConnectionObserver {
+        @Override
+        public void onHeartRateMeasure(HeartRateMeasurement measurement) {
+            for (RecorderServiceListener listener : instance.recorderServiceListeners) {
+                listener.onHeartRateChange(measurement);
+            }
+        }
+
+        @Override
+        public void onDeviceConnecting(@NonNull BluetoothDevice device) {
+            publishState(HeartRateConnectionState.CONNECTING);
+        }
+
+        @Override
+        public void onDeviceConnected(@NonNull BluetoothDevice device) {
+            publishState(HeartRateConnectionState.CONNECTED);
+        }
+
+        @Override
+        public void onDeviceFailedToConnect(@NonNull BluetoothDevice device, int reason) {
+            publishState(HeartRateConnectionState.CONNECTION_FAILED);
+        }
+
+        @Override
+        public void onDeviceReady(@NonNull BluetoothDevice device) {
+            publishState(HeartRateConnectionState.CONNECTED);
+        }
+
+        @Override
+        public void onDeviceDisconnecting(@NonNull BluetoothDevice device) {
+        }
+
+        @Override
+        public void onDeviceDisconnected(@NonNull BluetoothDevice device, int reason) {
+            publishState(HeartRateConnectionState.DISCONNECTED);
+        }
+
+        private void publishState(HeartRateConnectionState state) {
+            for (RecorderServiceListener listener : instance.recorderServiceListeners) {
+                listener.onHeartRateConnectionChange(state);
+            }
         }
     }
 
@@ -144,7 +198,7 @@ public class LocationListener extends Service {
 
         @Override
         public void onGPSStateChanged(WorkoutRecorder.GpsState oldState, WorkoutRecorder.GpsState state) {
-            GPSStatus announcement = new GPSStatus(LocationListener.this);
+            GPSStatus announcement = new GPSStatus(RecorderService.this);
             if (instance.recorder.isResumed() && announcement.isAnnouncementEnabled()) {
                 if (oldState == WorkoutRecorder.GpsState.SIGNAL_LOST) { // GPS Signal found
                     mTTSController.speak(announcement.getSpokenGPSFound());
@@ -185,6 +239,7 @@ public class LocationListener extends Service {
 
         return START_STICKY;
     }
+
     private String getRecordingStateString(){
         switch(instance.recorder.getState()){
             case IDLE:
@@ -252,12 +307,12 @@ public class LocationListener extends Service {
         initializePressureSensor();
         if (mSensorManager != null && mPressureSensor != null) {
             Log.i(TAG, "started Pressure Sensor");
-            instance.pressureAvailable = true;
             mSensorManager.registerListener(pressureListener, mPressureSensor, SensorManager.SENSOR_DELAY_NORMAL);
         } else {
             Log.i(TAG, "no Pressure Sensor Available");
-            instance.pressureAvailable = false;
         }
+
+        initializeHRManager();
 
         initializeTTS();
 
@@ -291,6 +346,8 @@ public class LocationListener extends Service {
         // Shutdown TTS
         mTTSController.destroy();
 
+        hrManager.stop();
+
         stopForeground(true);
         super.onDestroy();
     }
@@ -311,6 +368,12 @@ public class LocationListener extends Service {
         if (mPressureSensor == null) {
             mPressureSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
         }
+    }
+
+    private void initializeHRManager() {
+        hrManager = new HRManager(this, new HeartRateListener());
+        hrManager.setConnectionObserver(new HeartRateListener());
+        hrManager.start();
     }
 
     private void initializeTTS() {
@@ -363,8 +426,34 @@ public class LocationListener extends Service {
         }
     }
 
-    public interface LocationChangeListener {
+    public interface RecorderServiceListener {
+
         void onLocationChange(Location location);
+
+        void onPressureChange(float pressure);
+
+        void onHeartRateChange(HeartRateMeasurement measurement);
+
+        void onHeartRateConnectionChange(HeartRateConnectionState state);
+
+    }
+
+    public enum HeartRateConnectionState {
+        DISCONNECTED(R.color.heartRateStateUnavailable, R.drawable.ic_bluetooth),
+        CONNECTING(R.color.heartRateStateConnecting, R.drawable.ic_bluetooth_connecting),
+        CONNECTED(R.color.heartRateStateAvailable, R.drawable.ic_bluetooth_connected),
+        CONNECTION_FAILED(R.color.heartRateStateFailed, R.drawable.ic_bluetooth_off);
+
+        @ColorRes
+        public final int colorRes;
+
+        @DrawableRes
+        public final int iconRes;
+
+        HeartRateConnectionState(int colorRes, int iconRes) {
+            this.colorRes = colorRes;
+            this.iconRes = iconRes;
+        }
     }
 
 }

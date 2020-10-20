@@ -17,21 +17,25 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.aggregation;
+package de.tadris.fitness.recording.sensors;
 
-import de.tadris.fitness.data.Workout;
-import de.tadris.fitness.data.WorkoutType;
+import android.bluetooth.BluetoothDevice;
 
-public class WorkoutTypeFilter implements WorkoutFilter {
+import java.util.List;
 
-    private final WorkoutType type;
+public class HeartRateMeasurement {
 
-    public WorkoutTypeFilter(WorkoutType type) {
-        this.type = type;
-    }
+    public final BluetoothDevice device;
+    public final int heartRate;
+    public final boolean contactDetected;
+    public final int energyExpanded;
+    public final List<Integer> rrIntervals;
 
-    @Override
-    public boolean isAccepted(Workout workout) {
-        return workout.getWorkoutType() == type;
+    public HeartRateMeasurement(BluetoothDevice device, int heartRate, boolean contactDetected, int energyExpanded, List<Integer> rrIntervals) {
+        this.device = device;
+        this.heartRate = heartRate;
+        this.contactDetected = contactDetected;
+        this.energyExpanded = energyExpanded;
+        this.rrIntervals = rrIntervals;
     }
 }

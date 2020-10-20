@@ -96,16 +96,22 @@ public class Workout{
     @ColumnInfo(name = "interval_set_include_pauses")
     public boolean intervalSetIncludesPauses;
 
-    public String toString(){
-        if(comment.length() > 2){
+    @ColumnInfo(name = "avg_heart_rate")
+    public int avgHeartRate = -1;
+
+    @ColumnInfo(name = "max_heart_rate")
+    public int maxHeartRate = -1;
+
+    public String toString() {
+        if (comment.length() > 2) {
             return comment;
-        }else{
+        } else {
             return getDateString();
         }
     }
 
     @JsonIgnore
-    public String getDateString(){
+    public String getDateString() {
         return SimpleDateFormat.getDateTimeInstance().format(new Date(start));
     }
 
@@ -128,6 +134,11 @@ public class Workout{
     @JsonIgnore
     public void setWorkoutType(WorkoutType workoutType) {
         this.workoutTypeId = workoutType.id;
+    }
+
+    @JsonIgnore
+    public boolean hasHeartRateData() {
+        return avgHeartRate > 0;
     }
 
 

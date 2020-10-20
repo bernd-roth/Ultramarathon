@@ -25,6 +25,8 @@ import android.animation.AnimatorListenerAdapter;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.KeyguardManager;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -47,6 +49,7 @@ import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,20 +77,23 @@ import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.map.MapManager;
-import de.tadris.fitness.recording.LocationListener;
+import de.tadris.fitness.recording.RecorderService;
 import de.tadris.fitness.recording.WorkoutRecorder;
 import de.tadris.fitness.recording.announcement.TTSController;
 import de.tadris.fitness.recording.information.InformationDisplay;
 import de.tadris.fitness.recording.information.RecordingInformation;
+import de.tadris.fitness.recording.sensors.HeartRateMeasurement;
 import de.tadris.fitness.ui.FitoTrackActivity;
 import de.tadris.fitness.ui.LauncherActivity;
+import de.tadris.fitness.ui.dialog.ChooseBluetoothDeviceDialog;
 import de.tadris.fitness.ui.dialog.SelectIntervalSetDialog;
 import de.tadris.fitness.ui.dialog.SelectWorkoutInformationDialog;
+import de.tadris.fitness.util.BluetoothDevicePreferences;
 
-public class RecordWorkoutActivity extends FitoTrackActivity implements LocationListener.LocationChangeListener,
+public class RecordWorkoutActivity extends FitoTrackActivity implements RecorderService.RecorderServiceListener,
         WorkoutRecorder.WorkoutRecorderListener, TTSController.VoiceAnnouncementCallback,
         SelectIntervalSetDialog.IntervalSetSelectListener, InfoViewHolder.InfoViewClickListener,
-        SelectWorkoutInformationDialog.WorkoutInformationSelectListener {
+        SelectWorkoutInformationDialog.WorkoutInformationSelectListener, ChooseBluetoothDeviceDialog.BluetoothDeviceSelectListener {
 
     public static final String LAUNCH_ACTION = "de.tadris.fitness.RecordWorkoutActivity.LAUNCH_ACTION";
     public static final String RESUME_ACTION = "de.tadris.fitness.RecordWorkoutActivity.RESUME_ACTION";
@@ -95,6 +101,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
     public static final int REQUEST_CODE_LOCATION_PERMISSION = 10;
     public static final int REQUEST_CODE_BACKGROUND_LOCATION_PERMISSION = 11;
+    public static final int REQUEST_CODE_ENABLE_BLUETOOTH = 12;
 
     public WorkoutType activity = WorkoutType.OTHER;
 
@@ -106,6 +113,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
     private final InfoViewHolder[] infoViews = new InfoViewHolder[4];
     private TextView timeView;
     private TextView gpsStatusView;
+    private ImageView hrStatusView;
     private View waitingForGPSOverlay;
     private Button startButton;
     private boolean gpsFound = false;
@@ -172,6 +180,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
         infoViews[3] = new InfoViewHolder(3, this, findViewById(R.id.recordInfo4Title), findViewById(R.id.recordInfo4Value));
         timeView = findViewById(R.id.recordTime);
         gpsStatusView = findViewById(R.id.recordGpsStatus);
+        hrStatusView = findViewById(R.id.recordHrStatus);
 
         updateDescription();
 
@@ -179,7 +188,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
         onGPSStateChanged(WorkoutRecorder.GpsState.SIGNAL_LOST, WorkoutRecorder.GpsState.SIGNAL_LOST);
 
-        instance.locationChangeListeners.add(this);
+        instance.recorderServiceListeners.add(this);
         instance.voiceAnnouncementCallbackListeners.add(this);
 
         startListener();
@@ -432,10 +441,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
         if (requestCode == REQUEST_CODE_LOCATION_PERMISSION) {
             if (hasPermission()) {
                 // Restart LocationListener so it can retry to register for location updates now that we got permission
-                if (isServiceRunning(LocationListener.class)) {
-                    stopListener();
-                }
-                startListener();
+                restartListener();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
                         !hasBackgroundPermission()) {
                     showBackgroundLocationPermissionConsent();
@@ -463,11 +469,6 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
         startActivity(intent);
     }
 
-    private void stopListener() {
-        Intent locationListener = new Intent(getApplicationContext(), LocationListener.class);
-        stopService(locationListener);
-    }
-
     private boolean isServiceRunning(Class aService) {
         final ActivityManager activityManager = (ActivityManager) this.getSystemService(Context.ACTIVITY_SERVICE);
         final List<ActivityManager.RunningServiceInfo> services = activityManager.getRunningServices(Integer.MAX_VALUE);
@@ -480,19 +481,31 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
         return false;
     }
 
+    private void restartListener() {
+        stopListener();
+        startListener();
+    }
+
     private void startListener() {
-        if (!isServiceRunning(LocationListener.class)) {
-            Intent locationListener = new Intent(getApplicationContext(), LocationListener.class);
+        if (!isServiceRunning(RecorderService.class)) {
+            Intent locationListener = new Intent(getApplicationContext(), RecorderService.class);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 startForegroundService(locationListener);
             } else {
                 startService(locationListener);
             }
-        }else{
-            Log.d("RecordWorkoutActivity","Listener Already Running");
+        } else {
+            Log.d("RecordWorkoutActivity", "Listener Already Running");
         }
 
         checkGpsStatus();
+    }
+
+    private void stopListener() {
+        if (isServiceRunning(RecorderService.class)) {
+            Intent locationListener = new Intent(getApplicationContext(), RecorderService.class);
+            stopService(locationListener);
+        }
     }
 
     private void checkGpsStatus() {
@@ -515,7 +528,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
 
     @Override
     public void onLocationChange(Location location) {
-        LatLong latLong = LocationListener.locationToLatLong(location);
+        LatLong latLong = RecorderService.locationToLatLong(location);
         mapView.getModel().mapViewPosition.animateTo(latLong);
 
         if (instance.recorder.getState() == WorkoutRecorder.RecordingState.RUNNING) {
@@ -524,6 +537,20 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
         }
 
         foundGPS();
+    }
+
+    @Override
+    public void onPressureChange(float pressure) {
+    }
+
+    @Override
+    public void onHeartRateChange(HeartRateMeasurement measurement) {
+    }
+
+    @Override
+    public void onHeartRateConnectionChange(RecorderService.HeartRateConnectionState state) {
+        hrStatusView.setImageResource(state.iconRes);
+        hrStatusView.setColorFilter(getResources().getColor(state.colorRes));
     }
 
     @Override
@@ -536,7 +563,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
             wakeLock.release();
         }
 
-        instance.locationChangeListeners.remove(this);
+        instance.recorderServiceListeners.remove(this);
         instance.voiceAnnouncementCallbackListeners.remove(this);
         instance.recorder.removeWorkoutListener(this);
 
@@ -604,6 +631,8 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
             case R.id.actionEditHint:
                 showEditInformationHint();
                 return true;
+            case R.id.actionConnectHR:
+                chooseHRDevice();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -614,6 +643,27 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
                 .setMessage(R.string.editDisplayedInformationHint)
                 .setPositiveButton(R.string.okay, null)
                 .show();
+    }
+
+    private void chooseHRDevice() {
+        try {
+            new ChooseBluetoothDeviceDialog(this, this).show();
+        } catch (ChooseBluetoothDeviceDialog.BluetoothNotAvailableException ignored) {
+            askToActivateBluetooth();
+        }
+    }
+
+    private void askToActivateBluetooth() {
+        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+        startActivityForResult(enableBtIntent, REQUEST_CODE_ENABLE_BLUETOOTH);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_ENABLE_BLUETOOTH && resultCode == RESULT_OK) {
+            chooseHRDevice();
+        }
     }
 
     private void onPressStopButton() {
@@ -629,6 +679,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
         boolean preparationPhase = instance.recorder.getState() == WorkoutRecorder.RecordingState.IDLE;
         menu.findItem(R.id.actionSelectIntervalSet).setVisible(preparationPhase && voiceFeedbackAvailable);
         menu.findItem(R.id.actionEditHint).setVisible(preparationPhase);
+        menu.findItem(R.id.actionConnectHR).setVisible(isBluetoothSupported());
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -716,5 +767,16 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Location
     @Override
     public void onSelectWorkoutInformation(int slot, RecordingInformation information) {
         updateDescription();
+    }
+
+    @Override
+    public void onSelectBluetoothDevice(BluetoothDevice device) {
+        new BluetoothDevicePreferences(this).setAddress(BluetoothDevicePreferences.DEVICE_HEART_RATE, device.getAddress());
+        restartListener();
+    }
+
+    private boolean isBluetoothSupported() {
+        // Check if device has a bluetooth adapter
+        return BluetoothAdapter.getDefaultAdapter() != null;
     }
 }

@@ -85,8 +85,10 @@ public class WorkoutSaver {
     }
 
     private void calculateData() {
-        setSimpleValues();
+        setLength();
         setTopSpeed();
+
+        setHeartRate();
 
         setElevation();
         setAscentAndDescent();
@@ -108,10 +110,12 @@ public class WorkoutSaver {
         }
     }
 
-    protected void setSimpleValues() {
+    protected void setLength() {
         double length = 0;
         for (int i = 1; i < samples.size(); i++) {
-            double sampleLength = samples.get(i - 1).toLatLong().sphericalDistance(samples.get(i).toLatLong());
+            WorkoutSample currentSample = samples.get(i);
+            WorkoutSample lastSample = samples.get(i - 1);
+            double sampleLength = lastSample.toLatLong().sphericalDistance(currentSample.toLatLong());
             length += sampleLength;
         }
         workout.length = (int) length;
@@ -127,6 +131,19 @@ public class WorkoutSaver {
             }
         }
         workout.topSpeed = topSpeed;
+    }
+
+    protected void setHeartRate() {
+        int heartRateSum = 0;
+        int maxHeartRate = -1;
+        for (WorkoutSample sample : samples) {
+            heartRateSum += sample.heartRate;
+            if (sample.heartRate > maxHeartRate) {
+                maxHeartRate = sample.heartRate;
+            }
+        }
+        workout.maxHeartRate = maxHeartRate;
+        workout.avgHeartRate = heartRateSum / samples.size();
     }
 
     private void setElevation() {

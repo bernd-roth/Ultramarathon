@@ -35,9 +35,11 @@ public class ImportWorkoutSaver extends WorkoutSaver {
 
     public void saveWorkout(){
         setIds();
-        setSimpleValues();
+        setLength();
         setSpeed();
         setTopSpeed();
+
+        setHeartRate();
 
         setMSLElevation();
         setAscentAndDescent();

@@ -79,6 +79,7 @@
     <string name="workoutBurnedEnergy">Burned Energy</string>
     <string name="workoutTotalEnergy">Total Energy</string>
     <string name="workoutEnergyConsumption">Energy Consumption</string>
+    <string name="workoutHeartRate">Heart Rate</string>
     <string name="workoutEdited">This workout has been edited.</string>
     <string name="uploading">Uploading</string>
     <string name="enterVerificationCode">Enter Verification Code</string>
@@ -279,6 +280,8 @@
     <string name="bulkActions">Bulk actions</string>
     <string name="importingFiles">Importing files</string>
     <string name="importedWorkouts">Imported %d workouts</string>
+    <string name="selectBluetoothDevice">Select Bluetooth device</string>
+    <string name="connectHeartRateDevice">Connect heart rate device</string>
     <string-array name="osm_track_visibility">
         <item>Identifiable</item>
         <item>Trackable</item>
