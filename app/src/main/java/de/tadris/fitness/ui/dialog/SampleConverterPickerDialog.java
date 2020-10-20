@@ -21,6 +21,7 @@ package de.tadris.fitness.ui.dialog;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -31,9 +32,12 @@ import de.tadris.fitness.ui.workout.diagram.SampleConverter;
 
 public class SampleConverterPickerDialog {
 
+    private static final int MAX_SELECTED = 2;
+
     private final Activity context;
     private final SampleConverterSelectListener listener;
     private final ConverterManager manager;
+    private Dialog dialog;
 
     public SampleConverterPickerDialog(Activity context, SampleConverterSelectListener listener, ConverterManager manager) {
         this.context = context;
@@ -53,7 +57,14 @@ public class SampleConverterPickerDialog {
             checkBox.setChecked(manager.selectedConverters.contains(converter));
             checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if (isChecked) {
+                    if (manager.selectedConverters.size() >= MAX_SELECTED) {
+                        checkBox.setChecked(false);
+                        return;
+                    }
                     manager.selectedConverters.add(converter);
+                    if (manager.selectedConverters.size() >= MAX_SELECTED && dialog != null) {
+                        dialog.dismiss();
+                    }
                 } else {
                     manager.selectedConverters.remove(converter);
                 }
@@ -71,7 +82,7 @@ public class SampleConverterPickerDialog {
         builderSingle.setPositiveButton(R.string.okay, null);
         builderSingle.setOnDismissListener(dialog -> listener.onDialogClose());
 
-        AlertDialog dialog = builderSingle.create();
+        dialog = builderSingle.create();
 
         dialog.show();
     }

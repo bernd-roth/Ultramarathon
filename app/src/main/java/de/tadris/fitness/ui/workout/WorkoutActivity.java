@@ -181,7 +181,7 @@ public abstract class WorkoutActivity extends InformationActivity {
 
         Description description = new Description();
 
-        if (hasMultipleConverters) {
+        if (hasMultipleConverters || converters.size() == 0) {
             description.setText("");
         } else {
             description.setText(converters.get(0).getDescription());
