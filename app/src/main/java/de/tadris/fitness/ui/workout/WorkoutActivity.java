@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -38,6 +39,7 @@ import com.github.mikephil.charting.data.CombinedData;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
@@ -53,6 +55,7 @@ import org.mapsforge.map.layer.overlay.FixedPixelCircle;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import de.tadris.fitness.Instance;
@@ -60,10 +63,14 @@ import de.tadris.fitness.R;
 import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.data.Workout;
-import de.tadris.fitness.data.WorkoutManager;
+import de.tadris.fitness.data.WorkoutData;
 import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.map.MapManager;
 import de.tadris.fitness.map.WorkoutLayer;
+import de.tadris.fitness.ui.workout.diagram.HeightConverter;
+import de.tadris.fitness.ui.workout.diagram.SampleConverter;
+import de.tadris.fitness.ui.workout.diagram.SpeedConverter;
+import de.tadris.fitness.util.IntervalSetCalculator;
 import de.tadris.fitness.util.unit.DistanceUnitUtils;
 import de.tadris.fitness.util.unit.EnergyUnitUtils;
 
@@ -116,93 +123,27 @@ public abstract class WorkoutActivity extends InformationActivity {
         }
         setTitle(workout.getWorkoutType().title);
 
-        theme= getTheme();
+        theme = getTheme();
     }
 
-    private void addDiagram(SampleConverter converter) {
-        root.addView(getDiagram(converter), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, fullScreenItems ? ViewGroup.LayoutParams.MATCH_PARENT : getMapHeight()/2));
+    protected CombinedChart addDiagram(SampleConverter converter) {
+        CombinedChart chart = getDiagram(converter);
+        root.addView(chart, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, fullScreenItems ? ViewGroup.LayoutParams.MATCH_PARENT : getMapHeight() / 2));
+        return chart;
     }
 
     boolean diagramsInteractive = false;
 
     private CombinedChart getDiagram(SampleConverter converter) {
+        return getDiagram(Collections.singletonList(converter), converter.isIntervalSetVisible());
+    }
+
+    private CombinedChart getDiagram(List<SampleConverter> converters, boolean showIntervalSets) {
         CombinedChart chart = new CombinedChart(this);
-        CombinedData combinedData = new CombinedData();
 
-        converter.onCreate();
-
-        List<Entry> entries = new ArrayList<>();
-        for (WorkoutSample sample : samples) {
-            // turn your data into Entry objects
-            Entry e = new Entry((float) (sample.relativeTime) / 1000f / 60f, converter.getValue(sample), sample);
-            entries.add(e);
-        }
-
-        LineDataSet dataSet = new LineDataSet(entries, converter.getName()); // add entries to dataset
-        dataSet.setColor(getThemePrimaryColor());
-        dataSet.setValueTextColor(getThemePrimaryColor());
-        dataSet.setDrawCircles(false);
-        dataSet.setLineWidth(4);
-        dataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
-
-        Description description= new Description();
-        description.setText(converter.getDescription());
-
-        LineData lineData = new LineData(dataSet);
-        combinedData.setData(lineData);
-
-        float yMax = lineData.getYMax() * 1.05f;
-        if (converter.isIntervalSetVisible() && intervals != null && intervals.length > 0) {
-            List<BarEntry> barEntries = new ArrayList<>();
-            int index = 0;
-            if (workout.intervalSetIncludesPauses) {
-                long time = 0;
-                long lastTime = samples.get(0).absoluteTime;
-                for (WorkoutSample sample : samples) {
-                    if (index >= intervals.length) {
-                        index = 0;
-                    }
-                    Interval currentInterval = intervals[index];
-                    time += sample.absoluteTime - lastTime;
-                    if (time > currentInterval.delayMillis) {
-                        time = 0;
-                        index++;
-                        barEntries.add(new BarEntry((float) (sample.relativeTime) / 1000f / 60f, yMax));
-                    }
-                    lastTime = sample.absoluteTime;
-                }
-            } else {
-                long time = 0;
-                while (time < workout.duration) {
-                    if (index >= intervals.length) {
-                        index = 0;
-                    }
-                    Interval interval = intervals[index];
-
-                    barEntries.add(new BarEntry((float) (time) / 1000f / 60f, yMax));
-
-                    time += interval.delayMillis;
-                    index++;
-                }
-            }
-
-            BarDataSet barDataSet = new BarDataSet(barEntries, getString(R.string.intervalSet));
-            barDataSet.setBarBorderWidth(3);
-            barDataSet.setBarBorderColor(getThemePrimaryColor());
-            barDataSet.setColor(getThemePrimaryColor());
-
-            BarData barData = new BarData(barDataSet);
-            barData.setBarWidth(0.01f);
-            barData.setDrawValues(false);
-
-            combinedData.setData(barData);
-        }
-
-        chart.setData(combinedData);
         chart.setScaleXEnabled(diagramsInteractive);
         chart.setScaleYEnabled(false);
-        chart.setDescription(description);
-        if(diagramsInteractive){
+        if (diagramsInteractive) {
             chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
                 @Override
                 public void onValueSelected(Entry e, Highlight h) {
@@ -230,29 +171,101 @@ public abstract class WorkoutActivity extends InformationActivity {
         chart.getDescription().setTextColor(getThemeTextColor());
 
 
-        converter.afterAdd(chart);
+        updateChart(chart, converters, showIntervalSets);
+
+        for (SampleConverter converter : converters) {
+            converter.afterAdd(chart);
+        }
 
         return chart;
     }
 
-    private void onDiagramValueSelected(LatLong latLong) {
-        Paint p= AndroidGraphicFactory.INSTANCE.createPaint();
-        p.setColor(0xff693cff);
-        highlightingCircle= new FixedPixelCircle(latLong, 20, p, null);
-        map.addLayer(highlightingCircle);
+    protected void updateChart(CombinedChart chart, List<SampleConverter> converters, boolean showIntervalSets) {
+        boolean hasMultipleConverters = converters.size() > 1;
+        CombinedData combinedData = new CombinedData();
 
-        if(!map.getBoundingBox().contains(latLong)){
-            map.getModel().mapViewPosition.animateTo(latLong);
+        Description description = new Description();
+
+        if (hasMultipleConverters) {
+            description.setText("");
+        } else {
+            description.setText(converters.get(0).getDescription());
         }
+        chart.setDescription(description);
+        chart.getAxisLeft().setValueFormatter(new ValueFormatter() {
+        });
+        chart.getAxisRight().setValueFormatter(new ValueFormatter() {
+        });
+
+        LineData lineData = new LineData();
+
+        int converterIndex = 0;
+        for (SampleConverter converter : converters) {
+            converter.onCreate(getWorkoutData());
+
+            List<Entry> entries = new ArrayList<>();
+            for (WorkoutSample sample : samples) {
+                // turn data into Entry objects
+                Entry e = new Entry((float) (sample.relativeTime) / 1000f / 60f, converter.getValue(sample), sample);
+                entries.add(e);
+            }
+
+            LineDataSet dataSet = new LineDataSet(entries, converter.getName()); // add entries to dataset
+            int color = hasMultipleConverters ? getResources().getColor(converter.getColor()) : getThemePrimaryColor();
+            dataSet.setColor(color);
+            dataSet.setValueTextColor(color);
+            dataSet.setDrawCircles(false);
+            dataSet.setLineWidth(4);
+            dataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+            if (converters.size() == 2) {
+                YAxis.AxisDependency axisDependency = converterIndex == 0 ? YAxis.AxisDependency.LEFT : YAxis.AxisDependency.RIGHT;
+                dataSet.setAxisDependency(axisDependency);
+                chart.getAxis(axisDependency).setValueFormatter(new ValueFormatter() {
+                    @Override
+                    public String getFormattedValue(float value) {
+                        return value + " " + converter.getUnit();
+                    }
+                });
+            }
+            lineData.addDataSet(dataSet);
+            converterIndex++;
+        }
+
+        combinedData.setData(lineData);
+
+        float yMax = lineData.getYMax() * 1.05f;
+        if (showIntervalSets && intervals != null && intervals.length > 0) {
+            List<BarEntry> barEntries = new ArrayList<>();
+
+            for (long relativeTime : IntervalSetCalculator.getTimesFromWorkout(getWorkoutData(), intervals)) {
+                barEntries.add(new BarEntry((float) (relativeTime) / 1000f / 60f, yMax));
+            }
+
+            BarDataSet barDataSet = new BarDataSet(barEntries, getString(R.string.intervalSet));
+            barDataSet.setBarBorderWidth(3);
+            barDataSet.setBarBorderColor(getThemePrimaryColor());
+            barDataSet.setColor(getThemePrimaryColor());
+
+            BarData barData = new BarData(barDataSet);
+            barData.setBarWidth(0.01f);
+            barData.setDrawValues(false);
+
+            combinedData.setData(barData);
+        }
+
+        chart.setData(combinedData);
+        chart.invalidate();
     }
 
-    interface SampleConverter{
-        void onCreate();
-        float getValue(WorkoutSample sample);
-        String getName();
-        String getDescription();
-        boolean isIntervalSetVisible();
-        void afterAdd(CombinedChart chart);
+    private void onDiagramValueSelected(LatLong latLong) {
+        Paint p = AndroidGraphicFactory.INSTANCE.createPaint();
+        p.setColor(0xff693cff);
+        highlightingCircle = new FixedPixelCircle(latLong, 20, p, null);
+        map.addLayer(highlightingCircle);
+
+        if (!map.getBoundingBox().contains(latLong)) {
+            map.getModel().mapViewPosition.animateTo(latLong);
+        }
     }
 
     private WorkoutSample findSample(Entry entry) {
@@ -264,69 +277,11 @@ public abstract class WorkoutActivity extends InformationActivity {
     }
 
     void addHeightDiagram(){
-        addDiagram(new SampleConverter() {
-            @Override
-            public void onCreate() { }
-
-            @Override
-            public float getValue(WorkoutSample sample) {
-                return (float) distanceUnitUtils.getDistanceUnitSystem().getElevationFromMeters(sample.elevationMSL);
-            }
-
-            @Override
-            public String getName() {
-                return getString(R.string.height);
-            }
-
-            @Override
-            public String getDescription() {
-                return "min - " + distanceUnitUtils.getDistanceUnitSystem().getElevationUnit();
-            }
-
-            @Override
-            public boolean isIntervalSetVisible() {
-                return false;
-            }
-
-            @Override
-            public void afterAdd(CombinedChart chart) {
-                heightDiagram= chart;
-            }
-        });
+        heightDiagram = addDiagram(new HeightConverter(this));
     }
 
     void addSpeedDiagram(){
-        addDiagram(new SampleConverter() {
-            @Override
-            public void onCreate() {
-                WorkoutManager.roundSpeedValues(samples);
-            }
-
-            @Override
-            public float getValue(WorkoutSample sample) {
-                return (float) distanceUnitUtils.getDistanceUnitSystem().getSpeedFromMeterPerSecond(sample.tmpRoundedSpeed);
-            }
-
-            @Override
-            public String getName() {
-                return getString(R.string.workoutSpeed);
-            }
-
-            @Override
-            public String getDescription() {
-                return "min - " + distanceUnitUtils.getDistanceUnitSystem().getSpeedUnit();
-            }
-
-            @Override
-            public boolean isIntervalSetVisible() {
-                return true;
-            }
-
-            @Override
-            public void afterAdd(CombinedChart chart) {
-                speedDiagram= chart;
-            }
-        });
+        speedDiagram = addDiagram(new SpeedConverter(this));
     }
 
     boolean fullScreenItems = false;
@@ -369,11 +324,15 @@ public abstract class WorkoutActivity extends InformationActivity {
     private int getMapHeight() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        return displayMetrics.widthPixels*3/4;
+        return displayMetrics.widthPixels * 3 / 4;
     }
 
     protected boolean hasSamples() {
         return samples.size() > 1;
+    }
+
+    protected WorkoutData getWorkoutData() {
+        return new WorkoutData(workout, samples);
     }
 
     @Override

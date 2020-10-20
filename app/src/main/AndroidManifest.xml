@@ -65,9 +65,7 @@
         <activity
             android:name=".ui.workout.ShowWorkoutMapActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.workout.ShowWorkoutMapDiagramActivity"
-            android:screenOrientation="portrait" />
+        <activity android:name=".ui.workout.ShowWorkoutMapDiagramActivity" />
         <activity
             android:name=".ui.workout.ShowWorkoutActivity"
             android:screenOrientation="portrait" />

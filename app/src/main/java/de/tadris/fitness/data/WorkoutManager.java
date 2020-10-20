@@ -37,13 +37,27 @@ public class WorkoutManager {
     }
 
     public static void calculateInclination(List<WorkoutSample> samples){
-        samples.get(0).tmpInclination= 0;
-        for(int i= 1; i < samples.size(); i++){
-            WorkoutSample sample= samples.get(i);
-            WorkoutSample lastSample= samples.get(i);
-            double elevationDifference= sample.elevation - sample.elevation;
-            double distance= sample.toLatLong().sphericalDistance(lastSample.toLatLong());
-            sample.tmpInclination= (float)(elevationDifference*100/distance);
+        samples.get(0).tmpInclination = 0;
+
+        // Calculate inclination
+        for (int i = 1; i < samples.size(); i++) {
+            WorkoutSample sample = samples.get(i);
+            WorkoutSample lastSample = samples.get(i - 1);
+            double elevationDifference = sample.elevation - lastSample.elevation;
+            double distance = sample.toLatLong().sphericalDistance(lastSample.toLatLong());
+            sample.tmpInclination = (float) (elevationDifference * 100 / distance);
+        }
+
+        // Some rounding
+        for (int i = 0; i < samples.size(); i++) {
+            WorkoutSample sample = samples.get(i);
+            if (i == 0) {
+                sample.tmpInclination = (sample.tmpInclination + samples.get(i + 1).tmpInclination) / 2;
+            } else if (i == samples.size() - 1) {
+                sample.tmpInclination = (sample.tmpInclination + samples.get(i - 1).tmpInclination) / 2;
+            } else {
+                sample.tmpInclination = (sample.tmpInclination + samples.get(i - 1).tmpInclination + samples.get(i + 1).tmpInclination) / 3;
+            }
         }
     }
 

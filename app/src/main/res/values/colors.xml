@@ -56,5 +56,10 @@
     <color name="heartRateStateAvailable">#4CAF50</color>
     <color name="heartRateStateFailed">#F44336</color>
 
+    <color name="diagramHeight">#0078B8</color>
+    <color name="diagramSpeed">#FB8C00</color>
+    <color name="diagramHeartRate">#F44336</color>
+    <color name="diagramInclination">#009688</color>
+
     <color name="lineHighlight">#229a9a9a</color>
 </resources>
