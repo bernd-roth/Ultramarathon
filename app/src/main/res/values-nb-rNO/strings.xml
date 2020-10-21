@@ -139,7 +139,6 @@
     <string name="OpenStreetMapAttribution">© OpenStreetMap-bidragsytere</string>
     <string name="info">Info</string>
     <string name="savingFailed">Kunne ikke lagre</string>
-    <string name="savedToDownloads">Lagret til nedlastinger</string>
     <string name="share">Del</string>
     <string name="save">Lagre</string>
     <string name="pref_announcement_mode">Kunngjøringsmodus</string>

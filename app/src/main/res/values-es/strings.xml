@@ -126,7 +126,6 @@
     <string name="pref_announcement_mode">Modo de anuncio</string>
     <string name="save">Guardar</string>
     <string name="share">Compartir</string>
-    <string name="savedToDownloads">Guardado en Descargas</string>
     <string name="savingFailed">Error al guardar</string>
     <string-array name="pref_announcement_mode">
         <item>Siempre</item>
