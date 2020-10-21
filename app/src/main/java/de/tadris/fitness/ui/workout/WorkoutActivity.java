@@ -228,7 +228,7 @@ public abstract class WorkoutActivity extends InformationActivity {
 
         combinedData.setData(lineData);
 
-        float yMax = lineData.getYMax() * 1.05f;
+        float yMax = lineData.getDataSetByIndex(0).getYMax() * 1.05f;
         if (showIntervalSets && intervals != null && intervals.length > 0) {
             List<BarEntry> barEntries = new ArrayList<>();
 
@@ -246,6 +246,8 @@ public abstract class WorkoutActivity extends InformationActivity {
             barData.setDrawValues(false);
 
             combinedData.setData(barData);
+        } else {
+            combinedData.setData(new BarData()); // Empty bar data
         }
 
         chart.setData(combinedData);
