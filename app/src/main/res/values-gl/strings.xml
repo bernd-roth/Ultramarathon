@@ -16,9 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-
-<resources>
+  --><resources>
     <string name="chooseBackupFile">Elexir arquivo de respaldo</string>
     <string name="loadingFile">Cargando arquivo</string>
     <string name="finished">Rematado</string>
@@ -262,4 +260,21 @@
     <string name="pref_ringtone_silent">Silencio</string>
     <string name="backup">Respaldo</string>
     <string name="restore">Restaurar</string>
+    <string name="importedWorkouts">Importáronse %d adestramentos</string>
+    <string name="importingFiles">Importación de ficheiros</string>
+    <string name="bulkActions">Accións masivas</string>
+    <string name="importMultipleGpxFilesSummary">Importe máis dun ficheiro GPX do sistema de ficheiros á vez</string>
+    <string name="importMultipleMessageSelectFolder">Seleccione un cartafol que conteña todos os ficheiros GPX que desexa importar.</string>
+    <string name="importMultipleGpxFiles">Importa varios ficheiros GPX</string>
+    <string name="recordingStateStopped">Detido</string>
+    <string name="recordingStatePaused">En pausa</string>
+    <string name="recordingStateRunning">Correndo</string>
+    <string name="recordingStateIdle">Inactivo</string>
+    <string name="speechConfigNoSpeech">Sen anuncio</string>
+    <string name="actionGrant">Concede</string>
+    <string name="recordingGrantBackgroundPermissionMessage">FitoTrack tamén recolle datos de localización en segundo plano para gravar o adestramento cando a pantalla está apagada. Polo tanto, concede o permiso.</string>
+    <string name="recordingGrantLocationPermissionMessage">FitoTrack recolle datos de localización para gravar o adestramento. Concede o permiso de localización para gravar un adestramento.</string>
+    <string name="aboutPrivacyPolicy">Política de Privacidade</string>
+    <string name="aboutHelpTranslating">Axuda a traducir</string>
+    <string name="aboutUnlistedContributors">Grazas a todos os colaboradores non cotizados que axudaron a traducir e ampliar FitoTrack!</string>
 </resources>
