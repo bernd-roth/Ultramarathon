@@ -58,7 +58,7 @@ public class ShowWorkoutMapDiagramActivity extends WorkoutActivity {
         setContentView(R.layout.activity_show_workout_map_diagram);
         initRoot();
 
-        this.selection = findViewById(R.id.showWorkoutDiagramSelector);
+        this.selection = findViewById(R.id.showWorkoutDiagramInfo);
         this.showIntervals = findViewById(R.id.showWorkoutDiagramIntervals);
 
         initAfterContent();
@@ -72,7 +72,7 @@ public class ShowWorkoutMapDiagramActivity extends WorkoutActivity {
 
         initDiagram();
 
-        selection.setOnClickListener(v -> new SampleConverterPickerDialog(this, this::updateChart, converterManager).show());
+        findViewById(R.id.showWorkoutDiagramSelector).setOnClickListener(v -> new SampleConverterPickerDialog(this, this::updateChart, converterManager).show());
         showIntervals.setOnCheckedChangeListener((buttonView, isChecked) -> updateChart());
         showIntervals.setVisibility(intervals != null && intervals.length > 0 ? View.VISIBLE : View.GONE);
     }

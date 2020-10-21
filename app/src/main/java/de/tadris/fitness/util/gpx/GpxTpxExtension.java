@@ -19,11 +19,13 @@
 
 package de.tadris.fitness.util.gpx;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class GpxTpxExtension {
 
-    @JacksonXmlProperty(localName = "gpxtpx:hr")
+    @JacksonXmlProperty(localName = "hr", namespace = "gpxtpx")
     private int hr;
 
     public GpxTpxExtension() {

@@ -39,7 +39,7 @@ import com.github.mikephil.charting.data.CombinedData;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.formatter.DefaultAxisValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
@@ -187,10 +187,8 @@ public abstract class WorkoutActivity extends InformationActivity {
             description.setText(converters.get(0).getDescription());
         }
         chart.setDescription(description);
-        chart.getAxisLeft().setValueFormatter(new ValueFormatter() {
-        });
-        chart.getAxisRight().setValueFormatter(new ValueFormatter() {
-        });
+        chart.getAxisLeft().setValueFormatter(null);
+        chart.getAxisRight().setValueFormatter(null);
 
         LineData lineData = new LineData();
 
@@ -215,10 +213,10 @@ public abstract class WorkoutActivity extends InformationActivity {
             if (converters.size() == 2) {
                 YAxis.AxisDependency axisDependency = converterIndex == 0 ? YAxis.AxisDependency.LEFT : YAxis.AxisDependency.RIGHT;
                 dataSet.setAxisDependency(axisDependency);
-                chart.getAxis(axisDependency).setValueFormatter(new ValueFormatter() {
+                chart.getAxis(axisDependency).setValueFormatter(new DefaultAxisValueFormatter(0) {
                     @Override
                     public String getFormattedValue(float value) {
-                        return value + " " + converter.getUnit();
+                        return super.getFormattedValue(value) + " " + converter.getUnit();
                     }
                 });
             }

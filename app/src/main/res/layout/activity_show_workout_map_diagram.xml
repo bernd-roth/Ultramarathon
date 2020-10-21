@@ -79,13 +79,31 @@
             android:checked="true"
             android:text="@string/showIntervals" />
 
-        <TextView
+        <LinearLayout
             android:id="@+id/showWorkoutDiagramSelector"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:gravity="center"
             android:background="?android:selectableItemBackground"
-            android:singleLine="true"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_edit"
+                android:tint="?android:textColorSecondary" />
+
+            <TextView
+                android:id="@+id/showWorkoutDiagramInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:singleLine="true"
+                android:text="Speed, Inclination"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/showWorkoutDiagramParent"

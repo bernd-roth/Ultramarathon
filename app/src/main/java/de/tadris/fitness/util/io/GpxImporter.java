@@ -35,7 +35,7 @@ import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.util.gpx.Gpx;
 import de.tadris.fitness.util.gpx.Track;
 import de.tadris.fitness.util.gpx.TrackPoint;
-import de.tadris.fitness.util.gpx.TrackPointExtension;
+import de.tadris.fitness.util.gpx.TrackPointExtensions;
 import de.tadris.fitness.util.gpx.TrackSegment;
 import de.tadris.fitness.util.io.general.IWorkoutImporter;
 
@@ -107,7 +107,7 @@ public class GpxImporter implements IWorkoutImporter {
             sample.lat = point.getLat();
             sample.lon = point.getLon();
             sample.relativeTime = sample.absoluteTime - startTime;
-            TrackPointExtension extensions = point.getExtensions();
+            TrackPointExtensions extensions = point.getExtensions();
             if (extensions != null) {
                 sample.speed = extensions.getSpeed();
                 if (extensions.getGpxTpxExtension() != null) {
@@ -124,6 +124,9 @@ public class GpxImporter implements IWorkoutImporter {
     }
 
     private static WorkoutType getTypeById(String id) {
+        if (id == null) {
+            id = "";
+        }
         switch (id) {
             // Strava IDs
             case "1":

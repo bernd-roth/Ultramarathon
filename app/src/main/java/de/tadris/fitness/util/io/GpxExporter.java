@@ -38,7 +38,7 @@ import de.tadris.fitness.util.gpx.GpxTpxExtension;
 import de.tadris.fitness.util.gpx.Metadata;
 import de.tadris.fitness.util.gpx.Track;
 import de.tadris.fitness.util.gpx.TrackPoint;
-import de.tadris.fitness.util.gpx.TrackPointExtension;
+import de.tadris.fitness.util.gpx.TrackPointExtensions;
 import de.tadris.fitness.util.gpx.TrackSegment;
 import de.tadris.fitness.util.io.general.IWorkoutExporter;
 
@@ -80,7 +80,7 @@ public class GpxExporter implements IWorkoutExporter {
 
         for(WorkoutSample sample : samples){
             trkpt.add(new TrackPoint(sample.lat, sample.lon, sample.elevation,
-                    getDateTime(sample.absoluteTime), new TrackPointExtension(sample.speed, new GpxTpxExtension(sample.heartRate))));
+                    getDateTime(sample.absoluteTime), new TrackPointExtensions(sample.speed, new GpxTpxExtension(sample.heartRate))));
         }
         segment.setTrkpt(trkpt);
 
