@@ -140,7 +140,6 @@
     <string name="pref_announcement_mode">Aankondigingsmodus</string>
     <string name="save">Opslaan</string>
     <string name="share">Delen</string>
-    <string name="savedToDownloads">Opgeslagen in Downloads</string>
     <string name="savingFailed">Opslaan mislukt</string>
     <string name="info">Info</string>
     <string name="OpenStreetMapAttribution">© OpenStreetMap bijdragers</string>

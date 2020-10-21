@@ -137,7 +137,6 @@
     <string name="pref_announcement_mode">Közlemény módja</string>
     <string name="save">Mentés</string>
     <string name="share">Megosztás</string>
-    <string name="savedToDownloads">Elmentve a letöltésekbe</string>
     <string name="savingFailed">A mentés sikertelen</string>
     <string name="info">Információ</string>
     <string name="OpenStreetMapAttribution">© OpenStreetMap közreműködők</string>
