@@ -49,15 +49,9 @@ import de.tadris.fitness.R;
 
 public class ShareWorkoutActivity extends WorkoutActivity {
 
-    private long workoutId;
-    private boolean shared=false;
-
-    @Override
+   @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Intent intent = getIntent();
-        workoutId = intent.getLongExtra(ShowWorkoutActivity.WORKOUT_ID_EXTRA, 0);
 
         initBeforeContent();
 
