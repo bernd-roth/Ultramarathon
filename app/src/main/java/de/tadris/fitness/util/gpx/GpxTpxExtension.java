@@ -20,24 +20,26 @@
 package de.tadris.fitness.util.gpx;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class TrackPointExtension {
+public class GpxTpxExtension {
 
-    private double speed;
+    @JacksonXmlProperty(localName = "hr", namespace = "gpxtpx")
+    private int hr;
 
-    public TrackPointExtension() {
+    public GpxTpxExtension() {
     }
 
-    public TrackPointExtension(double speed) {
-        this.speed = speed;
+    public GpxTpxExtension(int hr) {
+        this.hr = hr;
     }
 
-    public double getSpeed() {
-        return speed;
+    public int getHr() {
+        return hr;
     }
 
-    public void setSpeed(double speed) {
-        this.speed = speed;
+    public void setHr(int hr) {
+        this.hr = hr;
     }
 }

@@ -26,12 +26,10 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 public class TrackPoint {
 
     @JacksonXmlProperty(isAttribute = true)
-    private
-    double lat;
+    private double lat;
 
     @JacksonXmlProperty(isAttribute = true)
-    private
-    double lon;
+    private double lon;
 
     private double ele;
 
@@ -39,11 +37,11 @@ public class TrackPoint {
 
     private String fix;
 
-    private TrackPointExtension extensions;
+    private TrackPointExtensions extensions;
 
     public TrackPoint(){}
 
-    public TrackPoint(double lat, double lon, double ele, String time, TrackPointExtension extensions) {
+    public TrackPoint(double lat, double lon, double ele, String time, TrackPointExtensions extensions) {
         this.lat = lat;
         this.lon = lon;
         this.ele = ele;
@@ -83,11 +81,11 @@ public class TrackPoint {
         this.time = time;
     }
 
-    public TrackPointExtension getExtensions() {
+    public TrackPointExtensions getExtensions() {
         return extensions;
     }
 
-    public void setExtensions(TrackPointExtension extensions) {
+    public void setExtensions(TrackPointExtensions extensions) {
         this.extensions = extensions;
     }
 }

@@ -23,20 +23,27 @@
     package="de.tadris.fitness">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
     <uses-feature
         android:name="android.hardware.location.gps"
         android:required="true" />
     <uses-feature
         android:name="android.hardware.sensor.barometer"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.bluetooth"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
         android:required="false" />
 
     <application
@@ -48,7 +55,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.ShareFileActivity"></activity>
+        <activity android:name=".ui.ShareFileActivity" />
         <activity android:name=".ui.settings.AboutActivity" />
         <activity android:name=".ui.settings.EditIntervalSetActivity" />
         <activity android:name=".ui.settings.ManageIntervalSetsActivity" />
@@ -58,9 +65,7 @@
         <activity
             android:name=".ui.workout.ShowWorkoutMapActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.workout.ShowWorkoutMapDiagramActivity"
-            android:screenOrientation="portrait" />
+        <activity android:name=".ui.workout.ShowWorkoutMapDiagramActivity" />
         <activity
             android:name=".ui.workout.ShowWorkoutActivity"
             android:screenOrientation="portrait" />
@@ -84,7 +89,7 @@
         <activity android:name=".ui.settings.InterfaceSettingsActivity" />
         <activity android:name=".ui.settings.RecordingSettingsActivity" />
         <activity android:name=".ui.settings.BackupSettingsActivity" />
-        <activity android:name=".ui.workout.ShowWorkoutsAggregatedDiagramActivity" />
+        <activity android:name=".ui.workout.AggregatedWorkoutStatisticsActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -97,7 +102,7 @@
         </provider>
 
         <service
-            android:name=".recording.LocationListener"
+            android:name=".recording.RecorderService"
             android:foregroundServiceType="location" />
     </application>
 

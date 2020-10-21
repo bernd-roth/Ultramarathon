@@ -45,6 +45,7 @@ public class InformationManager {
         information.add(new AverageSpeedMotion(context));
         information.add(new AverageSpeedTotal(context));
         information.add(new AveragePace(context));
+        information.add(new CurrentHeartRate(context));
         information.add(new Ascent(context));
         information.add(new BurnedEnergy(context));
     }

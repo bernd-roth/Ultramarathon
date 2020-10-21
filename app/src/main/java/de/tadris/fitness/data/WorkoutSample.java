@@ -71,6 +71,9 @@ public class WorkoutSample{
 
     public float pressure;
 
+    @ColumnInfo(name = "heart_rate")
+    public int heartRate; // in bpm
+
     @JsonIgnore
     @Ignore
     public double tmpRoundedSpeed;

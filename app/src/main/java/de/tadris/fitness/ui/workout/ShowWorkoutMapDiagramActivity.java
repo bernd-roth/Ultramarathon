@@ -20,8 +20,19 @@
 package de.tadris.fitness.ui.workout;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.TextView;
+
+import com.github.mikephil.charting.charts.CombinedChart;
 
 import de.tadris.fitness.R;
+import de.tadris.fitness.ui.dialog.SampleConverterPickerDialog;
+import de.tadris.fitness.ui.workout.diagram.ConverterManager;
+import de.tadris.fitness.ui.workout.diagram.HeartRateConverter;
+import de.tadris.fitness.ui.workout.diagram.HeightConverter;
+import de.tadris.fitness.ui.workout.diagram.SampleConverter;
+import de.tadris.fitness.ui.workout.diagram.SpeedConverter;
 
 public class ShowWorkoutMapDiagramActivity extends WorkoutActivity {
 
@@ -29,14 +40,26 @@ public class ShowWorkoutMapDiagramActivity extends WorkoutActivity {
 
     public static final String DIAGRAM_TYPE_HEIGHT = "height";
     public static final String DIAGRAM_TYPE_SPEED = "speed";
+    public static final String DIAGRAM_TYPE_HEART_RATE = "heartrate";
+
+    private ConverterManager converterManager;
+
+    private CombinedChart chart;
+    private TextView selection;
+    private CheckBox showIntervals;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initBeforeContent();
 
+        converterManager = new ConverterManager(this, getWorkoutData());
+
         setContentView(R.layout.activity_show_workout_map_diagram);
         initRoot();
+
+        this.selection = findViewById(R.id.showWorkoutDiagramInfo);
+        this.showIntervals = findViewById(R.id.showWorkoutDiagramIntervals);
 
         initAfterContent();
 
@@ -44,18 +67,50 @@ public class ShowWorkoutMapDiagramActivity extends WorkoutActivity {
         addMap();
         map.setClickable(true);
 
-        diagramsInteractive= true;
-        root= findViewById(R.id.showWorkoutDiagramParent);
-        switch (getIntent().getStringExtra(DIAGRAM_TYPE_EXTRA)) {
-            case DIAGRAM_TYPE_HEIGHT:
-                addHeightDiagram();
-                break;
+        diagramsInteractive = true;
+        root = findViewById(R.id.showWorkoutDiagramParent);
+
+        initDiagram();
+
+        findViewById(R.id.showWorkoutDiagramSelector).setOnClickListener(v -> new SampleConverterPickerDialog(this, this::updateChart, converterManager).show());
+        showIntervals.setOnCheckedChangeListener((buttonView, isChecked) -> updateChart());
+        showIntervals.setVisibility(intervals != null && intervals.length > 0 ? View.VISIBLE : View.GONE);
+    }
+
+    private void initDiagram() {
+        SampleConverter defaultConverter = getDefaultConverter();
+        converterManager.selectedConverters.add(defaultConverter);
+        chart = addDiagram(defaultConverter);
+        updateChart();
+    }
+
+    private SampleConverter getDefaultConverter() {
+        String typeExtra = getIntent().getStringExtra(DIAGRAM_TYPE_EXTRA);
+        if (typeExtra == null) typeExtra = "";
+        switch (typeExtra) {
             default:
             case DIAGRAM_TYPE_SPEED:
-                addSpeedDiagram();
-                break;
+                return new SpeedConverter(this);
+            case DIAGRAM_TYPE_HEIGHT:
+                return new HeightConverter(this);
+            case DIAGRAM_TYPE_HEART_RATE:
+                return new HeartRateConverter(this);
         }
+    }
 
+    private void updateChart() {
+        updateChart(chart, converterManager.selectedConverters, showIntervals.isChecked());
+        boolean first = true;
+        StringBuilder sb = new StringBuilder();
+        for (SampleConverter converter : converterManager.selectedConverters) {
+            if (first) {
+                first = false;
+            } else {
+                sb.append(", ");
+            }
+            sb.append(converter.getName());
+        }
+        selection.setText(converterManager.selectedConverters.size() > 0 ? sb.toString() : getString(R.string.nothingSelected));
     }
 
 

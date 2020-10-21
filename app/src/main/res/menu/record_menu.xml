@@ -33,4 +33,7 @@
         android:id="@+id/actionRecordingStop"
         android:showAsAction="ifRoom"
         android:title="@string/stop" />
+    <item
+        android:id="@+id/actionConnectHR"
+        android:title="@string/connectHeartRateDevice" />
 </menu>

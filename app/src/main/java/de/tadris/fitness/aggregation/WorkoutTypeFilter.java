@@ -24,7 +24,7 @@ import de.tadris.fitness.data.WorkoutType;
 
 public class WorkoutTypeFilter implements WorkoutFilter {
 
-    private WorkoutType type;
+    private final WorkoutType type;
 
     public WorkoutTypeFilter(WorkoutType type) {
         this.type = type;

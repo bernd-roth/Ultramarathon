@@ -24,7 +24,6 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
-import java.util.HashMap;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -37,6 +36,18 @@ public class Gpx {
     @JacksonXmlProperty(isAttribute = true)
     String creator;
 
+    @JacksonXmlProperty(isAttribute = true, localName = "xsi:schemaLocation")
+    String schemaLocation = "http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd";
+
+    @JacksonXmlProperty(isAttribute = true, localName = "xmlns:xsi")
+    String schemaInstance = "http://www.w3.org/2001/XMLSchema-instance";
+
+    @JacksonXmlProperty(isAttribute = true, localName = "xmlns:gpxtpx")
+    String tpxSchemaLocation = "http://www.garmin.com/xmlschemas/TrackPointExtension/v1";
+
+    @JacksonXmlProperty(isAttribute = true, localName = "xmlns")
+    String xmlNamespace = "http://www.topografix.com/GPX/1/1";
+
     Metadata metadata;
 
     String name;
@@ -45,12 +56,21 @@ public class Gpx {
     @JacksonXmlElementWrapper(useWrapping = false)
     List<Track> trk;
 
-    // newly added attributes
-    private HashMap<String, String> xmlns;
-//    private List<Route> rte;
-//    private List<Waypoint> wpt;
+    public Gpx() {
+    }
 
-    public Gpx(){}
+    public Gpx(String version, String creator, String schemaLocation, String schemaInstance, String tpxSchemaLocation, String xmlNamespace, Metadata metadata, String name, String desc, List<Track> trk) {
+        this.version = version;
+        this.creator = creator;
+        this.schemaLocation = schemaLocation;
+        this.schemaInstance = schemaInstance;
+        this.tpxSchemaLocation = tpxSchemaLocation;
+        this.xmlNamespace = xmlNamespace;
+        this.metadata = metadata;
+        this.name = name;
+        this.desc = desc;
+        this.trk = trk;
+    }
 
     public Gpx(String version, String creator, Metadata metadata, String name, String desc, List<Track> trk) {
         this.version = version;
@@ -85,4 +105,35 @@ public class Gpx {
         return trk;
     }
 
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public String getSchemaLocation() {
+        return schemaLocation;
+    }
+
+    public void setSchemaLocation(String schemaLocation) {
+        this.schemaLocation = schemaLocation;
+    }
+
+    public void setMetadata(Metadata metadata) {
+        this.metadata = metadata;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public void setTrk(List<Track> trk) {
+        this.trk = trk;
+    }
 }

@@ -29,10 +29,10 @@ import de.tadris.fitness.data.Workout;
 
 public class WorkoutAggregator {
 
-    private Context context;
-    private WorkoutFilter filter;
-    private WorkoutInformation information;
-    private AggregationSpan span;
+    private final Context context;
+    private final WorkoutFilter filter;
+    private final WorkoutInformation information;
+    private final AggregationSpan span;
 
     public WorkoutAggregator(Context context, WorkoutFilter filter, WorkoutInformation information, AggregationSpan span) {
         this.context = context;

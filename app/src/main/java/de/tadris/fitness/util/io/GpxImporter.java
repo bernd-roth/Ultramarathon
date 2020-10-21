@@ -35,6 +35,7 @@ import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.util.gpx.Gpx;
 import de.tadris.fitness.util.gpx.Track;
 import de.tadris.fitness.util.gpx.TrackPoint;
+import de.tadris.fitness.util.gpx.TrackPointExtensions;
 import de.tadris.fitness.util.gpx.TrackSegment;
 import de.tadris.fitness.util.io.general.IWorkoutImporter;
 
@@ -67,14 +68,14 @@ public class GpxImporter implements IWorkoutImporter {
         }
 
         String startTime = firstPoint.getTime();
-        ;
+
         workout.start = parseDate(startTime).getTime();
 
         int index = firstSegment.getTrkpt().size();
         String lastTime = firstSegment.getTrkpt().get(index - 1).getTime();
         workout.end = parseDate(lastTime).getTime();
         workout.duration = workout.end - workout.start;
-        workout.workoutTypeId = WorkoutType.getTypeById(gpx.getTrk().get(0).getType()).id;
+        workout.workoutTypeId = getTypeById(gpx.getTrk().get(0).getType()).id;
 
         List<WorkoutSample> samples = getSamplesFromTrack(workout.start, gpx.getTrk().get(0));
 
@@ -106,8 +107,13 @@ public class GpxImporter implements IWorkoutImporter {
             sample.lat = point.getLat();
             sample.lon = point.getLon();
             sample.relativeTime = sample.absoluteTime - startTime;
-            if(point.getExtensions() != null)
-                sample.speed = point.getExtensions().getSpeed();
+            TrackPointExtensions extensions = point.getExtensions();
+            if (extensions != null) {
+                sample.speed = extensions.getSpeed();
+                if (extensions.getGpxTpxExtension() != null) {
+                    sample.heartRate = extensions.getGpxTpxExtension().getHr();
+                }
+            }
             samples.add(sample);
         }
         return samples;
@@ -115,5 +121,23 @@ public class GpxImporter implements IWorkoutImporter {
 
     private static Date parseDate(String str) {
         return DateParserUtils.parseDate(str);
+    }
+
+    private static WorkoutType getTypeById(String id) {
+        if (id == null) {
+            id = "";
+        }
+        switch (id) {
+            // Strava IDs
+            case "1":
+                return WorkoutType.RUNNING;
+            case "2":
+                return WorkoutType.CYCLING;
+            case "11":
+                return WorkoutType.WALKING;
+
+            default:
+                return WorkoutType.getTypeById(id);
+        }
     }
 }
