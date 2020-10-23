@@ -260,4 +260,12 @@
     <string name="aboutPrivacyPolicy">политика конфиденциальности</string>
     <string name="no_workouts_recorded">Тренировки не записаны</string>
     <string name="workoutDiscarded">Тренировка отменена</string>
+    <string name="inclination">Наклон</string>
+    <string name="nothingSelected">Ничего не выбрано</string>
+    <string name="showIntervals">Показать интервалы</string>
+    <string name="connectHeartRateDevice">Подключите устройство для измерения частоты сердечных сокращений</string>
+    <string name="selectBluetoothDevice">Выберите устройство Bluetooth</string>
+    <string name="workoutAvgHeartRate">Средняя Частота Сердечных Сокращений</string>
+    <string name="workoutMaxHeartRate">Максимальная Частота Сердечных Сокращений</string>
+    <string name="workoutHeartRate">частота сердцебиения</string>
 </resources>
