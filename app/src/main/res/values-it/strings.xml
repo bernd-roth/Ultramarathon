@@ -309,4 +309,12 @@
     <string name="recordingGrantBackgroundPermissionMessage">FitoTrack raccoglie anche i dati di localizzazione in background per registrare l\'allenamento quando lo schermo è spento. Pertanto, si prega di concedere l\'autorizzazione.</string>
     <string name="recordingGrantLocationPermissionMessage">FitoTrack raccoglie i dati di localizzazione per registrare l\'allenamento. Si prega di concedere alla località il permesso di registrare l\'allenamento.</string>
     <string name="aboutPrivacyPolicy">Politica sulla privacy</string>
+    <string name="inclination">Inclinazione</string>
+    <string name="nothingSelected">Niente di selezionato</string>
+    <string name="showIntervals">Mostra intervalli</string>
+    <string name="connectHeartRateDevice">Collegare il cardiofrequenzimetro</string>
+    <string name="selectBluetoothDevice">Selezionare il dispositivo Bluetooth</string>
+    <string name="workoutAvgHeartRate">Avg. Frequenza cardiaca</string>
+    <string name="workoutMaxHeartRate">Frequenza cardiaca max</string>
+    <string name="workoutHeartRate">Frequenza cardiaca</string>
 </resources>
