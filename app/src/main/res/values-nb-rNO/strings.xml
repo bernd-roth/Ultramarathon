@@ -277,4 +277,12 @@
     <string name="recordingGrantBackgroundPermissionMessage">FitoTrack samler også inn stedsdata i bakgrunnen for å registrere treningen når skjermen er slått av. Gi derfor tillatelsen.</string>
     <string name="recordingGrantLocationPermissionMessage">FitoTrack samler inn lokasjonsdata for å registrere treningen. Gi stedet tillatelse til å spille inn en treningsøkt.</string>
     <string name="aboutPrivacyPolicy">Personvernregler</string>
+    <string name="inclination">Tilbøyelighet</string>
+    <string name="nothingSelected">Ingenting er valgt</string>
+    <string name="showIntervals">Vis intervaller</string>
+    <string name="connectHeartRateDevice">Koble hjertefrekvens-enhet</string>
+    <string name="selectBluetoothDevice">Velg Bluetooth-enhe</string>
+    <string name="workoutAvgHeartRate">Avg. hjertefrekvens</string>
+    <string name="workoutMaxHeartRate">Maks Puls</string>
+    <string name="workoutHeartRate">hjertefrekvens</string>
 </resources>
