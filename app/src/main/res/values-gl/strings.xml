@@ -277,4 +277,12 @@
     <string name="aboutPrivacyPolicy">Política de Privacidade</string>
     <string name="aboutHelpTranslating">Axuda a traducir</string>
     <string name="aboutUnlistedContributors">Grazas a todos os colaboradores non cotizados que axudaron a traducir e ampliar FitoTrack!</string>
+    <string name="inclination">Inclinación</string>
+    <string name="nothingSelected">Nada seleccionados</string>
+    <string name="showIntervals">Amosar intervalos</string>
+    <string name="connectHeartRateDevice">Conectar corazón tipo de dispositivo</string>
+    <string name="selectBluetoothDevice">Seleccione dispositivo Bluetooth</string>
+    <string name="workoutAvgHeartRate">Avg. Taxa De Corazón</string>
+    <string name="workoutMaxHeartRate">Max Taxa De Corazón</string>
+    <string name="workoutHeartRate">Taxa De Corazón</string>
 </resources>
