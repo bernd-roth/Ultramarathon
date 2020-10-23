@@ -270,4 +270,42 @@
         <item>07/24/2001</item>
     </string-array>
     <string name="sendEmail">Send e-mail</string>
+    <string name="importMultipleGpxFilesSummary">Importer mere end én GPX-fil fra filsystemet på én gang</string>
+    <string name="aboutVersion">Version</string>
+    <string name="importedWorkouts">Importeret %d træning</string>
+    <string name="importingFiles">Import af filer</string>
+    <string name="bulkActions">Bulk handlinger</string>
+    <string name="importMultipleMessageSelectFolder">Vælg en mappe, der indeholder alle de GPX filer, du gerne vil importere.</string>
+    <string name="importMultipleGpxFiles">Importer flere GPX filer</string>
+    <string name="recordingStateStopped">Stoppe</string>
+    <string name="recordingStatePaused">Pause</string>
+    <string name="recordingStateRunning">Køre</string>
+    <string name="recordingStateIdle">Tomgang</string>
+    <string name="speechConfigNoSpeech">Ingen Meddelelse</string>
+    <string name="actionGrant">Give</string>
+    <string name="recordingGrantBackgroundPermissionMessage">FitoTrack indsamler også placeringsdata i baggrunden for at optage træningen, når skærmen er slukket. Giv derfor tilladelse.</string>
+    <string name="recordingGrantLocationPermissionMessage">FitoTrack indsamler lokaliseringsdata for at registrere træningen. Giv lokationstilladelsen tilladelse til at optage en træning.</string>
+    <string name="recordingBackgroundPermissionNotGrantedMessage">Du gav ikke FitoTrack tilladelse til at få adgang til din placering i baggrunden. (F.eks. når skærmen er slukket) er træning muligvis ikke optaget korrekt.</string>
+    <string name="recordingPermissionNotGrantedMessage">Du gav ikke FitoTrack tilladelse til at få adgang til din placering. FitoTrack har brug for denne tilladelse til at spore dine bevægelser under din træning.</string>
+    <string name="recordingPermissionNotGrantedTitle">Tilladelser ikke givet</string>
+    <string name="unitFootSingular">Fod</string>
+    <string name="unitFootPlural">Fødder</string>
+    <string name="noWorkoutStarted">Ingen Træning Startede</string>
+    <string name="editDisplayedInformationHint">Så længe træningen ikke er startet, kan du redigere de viste værdier ved at klikke på et af de fire felter.</string>
+    <string name="editDisplayedInformation">Rediger viste oplysninger</string>
+    <string name="aboutPrivacyPolicy">Fortrolighedspolitik</string>
+    <string name="aboutHelpTranslating">Hjælp med at oversætte</string>
+    <string name="aboutUnlistedContributors">Tak til alle de unoterede bidragydere, der hjalp med at oversætte og udvide FitoTrack!</string>
+    <string name="aboutSourceCode">Vis kildekode</string>
+    <string name="aboutSendFeedback">Send feedback til udvikleren</string>
+    <string name="aboutContributors">Bidragyder</string>
+    <string name="aboutAuthor">Forfatter</string>
+    <string name="aboutChangelog">Changelog</string>
+    <string name="aboutLinks">Links</string>
+    <string name="aboutReportBug">Anmeld en fejl</string>
+    <string name="aboutOpenSourceLibraries">Open source-biblioteker</string>
+    <string name="aboutTitle">Om</string>
+    <string name="savedSuccessfully">Gemt</string>
+    <string name="trackerWaitingMessage">Venter på at starte træningen</string>
+    <string name="workoutTypeRowing">Roning</string>
 </resources>

@@ -312,4 +312,8 @@
     <string name="importMultipleGpxFilesSummary">Importer plus d\'un fichier GPX à la fois à partir du système de fichiers</string>
     <string name="importMultipleMessageSelectFolder">Veuillez sélectionner un dossier contenant tous les fichiers GPX que vous souhaitez importer.</string>
     <string name="importMultipleGpxFiles">Importer plusieurs fichiers GPX</string>
+    <string name="actionGrant">Subvention</string>
+    <string name="recordingGrantBackgroundPermissionMessage">FitoTrack collecte également des données de localisation en arrière-plan pour enregistrer l\'entraînement lorsque l\'écran est éteint. Par conséquent, veuillez accorder la permission.</string>
+    <string name="recordingGrantLocationPermissionMessage">FitoTrack collecte les données de localisation pour enregistrer l\'entraînement. Veuillez autoriser l\'emplacement pour enregistrer un entraînement.</string>
+    <string name="aboutPrivacyPolicy">Fortrolighedspolitik</string>
 </resources>

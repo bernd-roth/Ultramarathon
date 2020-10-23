@@ -292,4 +292,8 @@
     <string name="importMultipleGpxFilesSummary">Egyszerre több GPX fájlt importálhat a fájlrendszerből</string>
     <string name="importMultipleMessageSelectFolder">Válasszon egy mappát, amely tartalmazza az összes importálni kívánt GPX-fájlt.</string>
     <string name="importMultipleGpxFiles">Több GPX-fájl importálása</string>
+    <string name="actionGrant">Grant</string>
+    <string name="recordingGrantBackgroundPermissionMessage">A FitoTrack a helyszínen adatokat is gyűjt a háttérben, hogy rögzítse az edzést, amikor a képernyő kikapcsol. Ezért kérjük, adja meg az engedélyt.</string>
+    <string name="recordingGrantLocationPermissionMessage">A FitoTrack helyadatokat gyűjt az edzés rögzítéséhez. Kérjük, adja meg a hely engedélyét az edzés rögzítéséhez.</string>
+    <string name="aboutPrivacyPolicy">Adatvédelmi irányelvek</string>
 </resources>

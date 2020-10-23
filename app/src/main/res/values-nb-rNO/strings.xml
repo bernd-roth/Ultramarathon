@@ -18,27 +18,27 @@
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
   --><resources>
     <string name="sections">Seksjoner</string>
-    <string name="dataSamples">Bruddstykker</string>
+    <string name="dataSamples">Prøver</string>
     <string name="workoutStatsHelpText">Denne skjermen viser historisk treningsøktstatistikk. Angi treningsøkten først ved å klikke på den. Sett så infoen du ønsker og tidsrommet.
 \n
 \nFor eksempel, hvis du velger \"Uke\", som tidsrom, vil alle treningsøkter for hver uke bli flettet til ett datapunkt som enten er gjennomsnitt eller sum for hver uke.</string>
     <string name="unitMilesPerHour">Engelske mil per time</string>
-    <string name="unitYardsPlural">Yard</string>
+    <string name="unitYardsPlural">Verft</string>
     <string name="unitYardsSingular">Yard</string>
     <string name="unitMilesPlural">Engelske mil</string>
-    <string name="unitMilesSingular">Engelsk mil</string>
+    <string name="unitMilesSingular">Mil</string>
     <string name="workoutPauseDuration">Pausevarighet</string>
     <string name="pref_announcements_content">Innholdet i kunngjøringene</string>
     <string name="pref_announcements_config_summary">Velg tid og distanse mellom stemmeanvisninger</string>
     <string name="pref_voice_announcements_summary">Sett opp stemmeinstruks som holder deg oppdatert i løpet av treningsøkten</string>
-    <string name="errorWorkoutAddFuture">Treningsøkten kan ikke være i fremtiden</string>
-    <string name="setPreferencesMessage">Du kan sette ditt foretrukne enhetssystem og din vekt i innstillingene.</string>
-    <string name="importBackupMessage">Advarsel: Alle dine eksisterende data i programmet vil slettes. Hvis du ikke vil miste dem kan du først ta en ny sikkerhetskopi. Er du sikker på at du vil slette sikkerhetskopien\?</string>
+    <string name="errorWorkoutAddFuture">Treningen kan ikke være i fremtiden</string>
+    <string name="setPreferencesMessage">Du kan stille inn foretrukket enhetssystem og vekt i innstillingene.</string>
+    <string name="importBackupMessage">ADVARSEL: Alle eksisterende data i appen blir slettet. Hvis du ikke vil miste dem, må du først ta en annen sikkerhetskopi. Er du sikker på at du vil gjenopprette denne sikkerhetskopien\?</string>
     <string name="unitFootSingular">Fot</string>
     <string name="noWorkoutStarted">Ingen treningsøkt i gang</string>
     <string name="unitFootPlural">Fot</string>
     <string name="editDisplayedInformationHint">Så lenge treningsøkten ikke har startet, kan du redigere viste verdier ved å klikk på én av de fire feltene.</string>
-    <string name="editDisplayedInformation">Rediger visningsinfo</string>
+    <string name="editDisplayedInformation">Rediger vist informasjon</string>
     <string name="sendEmail">Send e-post</string>
     <string name="aboutSourceCode">Vis kildekode</string>
     <string name="aboutSendFeedback">Send tilbakemelding til utvikler</string>
@@ -46,7 +46,7 @@
     <string name="aboutAuthor">Utvikler</string>
     <string name="aboutLinks">Lenker</string>
     <string name="aboutReportBug">Innrapporter en feil</string>
-    <string name="aboutOpenSourceLibraries">Friprog-bibliotek</string>
+    <string name="aboutOpenSourceLibraries">Open source-biblioteker</string>
     <string name="aboutChangelog">Endringslogg</string>
     <string name="aboutVersion">Versjon</string>
     <string name="aboutTitle">Om</string>
@@ -56,7 +56,7 @@
     <string name="speedLastMinute">Gjen.-hastighet (siste minutt)</string>
     <string name="no_workouts_recorded">Ingen treningsøkter tatt opp</string>
     <string name="announcementSuppressDuringCall">Forhindre ved anrop</string>
-    <string name="workoutImported">Treningsøkt importert</string>
+    <string name="workoutImported">Treningen ble importert</string>
     <string name="merge">Flett</string>
     <string name="replace">Erstatt</string>
     <string name="replaceOrMergeMessage">Erstatt eller flett database med sikkerhetskopifil\?</string>
@@ -77,7 +77,7 @@
     <string name="workout_statistics">Treningsøktstatistikk</string>
     <string name="no_workouts_recorded_for_this_activity">Ingen treningsøkter for denne aktiviteten</string>
     <string name="unlockPhoneStopWorkout">Lås opp enheten din for å stoppe opptaket</string>
-    <string name="oClock">er klokkeslettet</string>
+    <string name="oClock">o Klokke</string>
     <string name="currentTime">Nåværende tid</string>
     <string name="pref_auto_timeout_title">Tidsperiode for automatisk stopp</string>
     <string name="intervalAutoTimeoutTraining">Automatisk tidsavbrudd for treningsøkt</string>
@@ -113,7 +113,7 @@
     <string name="intervalSets">Intervallsett</string>
     <string name="intervalSet">Intervallsett</string>
     <string name="intervalTraining">Intervalltrening</string>
-    <string name="intervalsIncludePauseSummary">Lar intervaller fortsette selv om du tar pauser i treningsøkten.</string>
+    <string name="intervalsIncludePauseSummary">Hvis aktivert, vil intervallene fortsette, selv om du gjør en pause i treningen.</string>
     <string name="intervalsIncludePauseTitle">Inkluder pausetid i intervalltrening</string>
     <string name="intervalSetSelected">Intervallsett valgt</string>
     <string name="selectIntervalSet">Velg intervallsett</string>
@@ -138,7 +138,7 @@
     <string name="theme">Drakt</string>
     <string name="OpenStreetMapAttribution">© OpenStreetMap-bidragsytere</string>
     <string name="info">Info</string>
-    <string name="savingFailed">Kunne ikke lagre</string>
+    <string name="savingFailed">Lagringen mislyktes</string>
     <string name="savedToDownloads">Lagret til nedlastinger</string>
     <string name="share">Del</string>
     <string name="save">Lagre</string>
@@ -158,12 +158,12 @@
     <string name="exportDataSummary">Dette utfører sikkerhetskopi av alle treningsøkter</string>
     <string name="exportData">Eksporter data</string>
     <string name="settings">Innstillinger</string>
-    <string name="pref_unit_system">Foretrekket enhet</string>
+    <string name="pref_unit_system">Foretrukket system av enheter</string>
     <string name="pref_weight_summary">Din vekt trengs for å regne ut forbrente kalorier</string>
     <string name="pref_weight">Din vekt</string>
     <string name="exportAsGpxFile">Eksporter som GPX-fil</string>
     <string name="cancel">Avbryt</string>
-    <string name="trackingInfoDescription">Info om kjørende sporer</string>
+    <string name="trackingInfoDescription">Info om trackeren som kjører</string>
     <string name="trackingInfo">Sporingsinfo</string>
     <string name="trackerRunningMessage">Din treningsøkt blir innspilt</string>
     <string name="trackerRunning">Sporer påslått</string>
@@ -177,7 +177,7 @@
     <string name="comment">Kommentar</string>
     <string name="enable">Skru på</string>
     <string name="noGpsMessage">Skru på GPS for sporing av din treningsøkt.</string>
-    <string name="noGpsTitle">GPS avskrudd</string>
+    <string name="noGpsTitle">GPS deaktivert</string>
     <string name="recordWorkout">Ta opp treningsøkt</string>
     <string name="setDuration">Sett varighet</string>
     <string name="importWorkout">Importer treningsøkt</string>
@@ -197,7 +197,7 @@
     <string name="workoutAscent">Stigning</string>
     <string name="uploadFailedOsmNotAuthorized">Ikke identitetsbekreftet, prøv igjen</string>
     <string name="uploadFailed">Kunne ikke laste opp</string>
-    <string name="uploadSuccessful">Opplastet</string>
+    <string name="uploadSuccessful">Last opp vellykket</string>
     <string name="upload">Last opp</string>
     <string name="authenticationFailed">Identitetsbekreftelse mislyktes</string>
     <string name="enterVerificationCode">Skriv inn bekreftelseskode</string>
@@ -237,7 +237,7 @@
     <string name="pref_ringtone_silent">Stille</string>
     <string name="backup">Sikkerhetskopier</string>
     <string name="restore">Gjenopprett</string>
-    <string name="chooseBackupFile">Endre sikkerhetskopifil</string>
+    <string name="chooseBackupFile">Velg Backup-File</string>
     <string name="loadingFile">Laster inn fil</string>
     <string name="finished">Fullført</string>
     <string name="converting">Konverterer</string>
@@ -246,9 +246,9 @@
     <string name="preferences">Innstillinger</string>
     <string name="initialising">Igangsetter</string>
     <string name="shareFile">Del fil</string>
-    <string name="errorImportFailed">Kunne ikke importere data.</string>
-    <string name="errorExportFailed">Kunne ikke eksportere data.</string>
-    <string name="errorGpxExportFailed">Kunne ikke eksportere GPX.</string>
+    <string name="errorImportFailed">Dataimporten mislyktes.</string>
+    <string name="errorExportFailed">Dataeksporten mislyktes.</string>
+    <string name="errorGpxExportFailed">GPX-eksporten mislyktes.</string>
     <string name="error">Feil</string>
     <string name="exporting">Eksporterer</string>
     <string name="delete">Slett</string>
@@ -257,8 +257,8 @@
     <string name="app_name">FitoTrack</string>
     <string name="trackerWaitingMessage">Venter på å starte treningsøkt</string>
     <string name="recordingPermissionNotGrantedTitle">Tilganger ikke innvilget</string>
-    <string name="recordingPermissionNotGrantedMessage">Du har ikke innvilget FitoTrack tilgang til å se din posisjon. Dette trengs for å spore din bevegelse under treningsøkter.</string>
-    <string name="recordingBackgroundPermissionNotGrantedMessage">Du har ikke innvilget FitoTrack tilgang til å se din posisjon i bakgrunnen. (F.eks. med skjermen avskrudd.) Det kan hende treningsøkter ikke vil tas opp riktig.</string>
+    <string name="recordingPermissionNotGrantedMessage">Du ga ikke FitoTrack tillatelse til å få tilgang til posisjonen din. FitoTrack trenger denne tillatelsen for å spore bevegelsen din under treningen.</string>
+    <string name="recordingBackgroundPermissionNotGrantedMessage">Du ga ikke FitoTrack tillatelse til å få tilgang til posisjonen din i bakgrunnen. (F.eks. Med skjermen slått av) Treningsøktene blir kanskje ikke registrert riktig.</string>
     <string name="savedSuccessfully">Lagret</string>
     <string name="workoutTypeRowing">Roing</string>
     <string name="recordingStateStopped">Stoppet</string>
@@ -271,7 +271,11 @@
     <string name="importMultipleGpxFilesSummary">Importer mer enn én GPX-fil fra filsystemet samtidig</string>
     <string name="importMultipleMessageSelectFolder">Velg en mappe inneholdende alle GPX-filer du ønsker å importere.</string>
     <string name="aboutUnlistedContributors">Takk til alle ulistede bidragsytere som har hjulpet til i oversettelsen og utvidelsen av FitoTrack.</string>
-    <string name="importedWorkouts">Importerte %d arbeidsøkter</string>
+    <string name="importedWorkouts">Importerte %d treningsøkter</string>
     <string name="importMultipleGpxFiles">Importer flerfoldige GPX-filer</string>
     <string name="aboutHelpTranslating">Hjelp til i oversettelsen</string>
+    <string name="actionGrant">Stipend</string>
+    <string name="recordingGrantBackgroundPermissionMessage">FitoTrack samler også inn stedsdata i bakgrunnen for å registrere treningen når skjermen er slått av. Gi derfor tillatelsen.</string>
+    <string name="recordingGrantLocationPermissionMessage">FitoTrack samler inn lokasjonsdata for å registrere treningen. Gi stedet tillatelse til å spille inn en treningsøkt.</string>
+    <string name="aboutPrivacyPolicy">Personvernregler</string>
 </resources>
