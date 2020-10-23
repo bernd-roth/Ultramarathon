@@ -44,6 +44,7 @@ import org.mapsforge.map.view.MapView;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.concurrent.TimeUnit;
 
 import de.tadris.fitness.R;
 
@@ -80,12 +81,11 @@ public class ShareWorkoutActivity extends WorkoutActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.actionShareWorkout:
-                shareWorkoutActivity();
-                return true;
+        if (item.getItemId() == R.id.actionShareWorkout) {
+            shareWorkoutActivity();
+            return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -113,11 +113,13 @@ public class ShareWorkoutActivity extends WorkoutActivity {
         Bitmap bitmap = getBitmapFromView(findViewById(R.id.shareWorkout));
 
         try {
-            File file = new File(this.getExternalCacheDir(),"fitotrack-workout.png");
+            String ts = String.valueOf(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()));
+            File file = new File(this.getExternalCacheDir(),"fitotrack-workout_"+ts+".png");
             FileOutputStream fOut = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
             fOut.flush();
             fOut.close();
+
 
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -129,7 +131,8 @@ public class ShareWorkoutActivity extends WorkoutActivity {
             } else {
                 intent.setDataAndType(Uri.fromFile(file), "image/png");
             }
-            startActivity(intent);
+            startActivity(Intent.createChooser(intent,null));
+
 
         } catch (Exception e) {
             e.printStackTrace();
