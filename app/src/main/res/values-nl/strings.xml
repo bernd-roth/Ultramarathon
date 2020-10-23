@@ -307,4 +307,12 @@
     <string name="recordingGrantBackgroundPermissionMessage">FitoTrack verzamelt ook locatiegegevens op de achtergrond om de training op te nemen wanneer het scherm is uitgeschakeld. Geef daarom toestemming.</string>
     <string name="recordingGrantLocationPermissionMessage">FitoTrack verzamelt locatiegegevens om de training vast te leggen. Geef de locatie toestemming om een training vast te leggen.</string>
     <string name="aboutPrivacyPolicy">Privacybeleid</string>
+    <string name="inclination">Helling</string>
+    <string name="nothingSelected">Niets geselecteerd</string>
+    <string name="showIntervals">Toon de intervallen</string>
+    <string name="connectHeartRateDevice">Sluit het hartslagapparaat aan</string>
+    <string name="selectBluetoothDevice">Selecteer Bluetoothapparaat</string>
+    <string name="workoutAvgHeartRate">Avg. Hartslag</string>
+    <string name="workoutMaxHeartRate">Maximale hartslag</string>
+    <string name="workoutHeartRate">Hartslag</string>
 </resources>
