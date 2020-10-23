@@ -295,4 +295,12 @@
     <string name="recordingGrantBackgroundPermissionMessage">A FitoTrack a helyszínen adatokat is gyűjt a háttérben, hogy rögzítse az edzést, amikor a képernyő kikapcsol. Ezért kérjük, adja meg az engedélyt.</string>
     <string name="recordingGrantLocationPermissionMessage">A FitoTrack helyadatokat gyűjt az edzés rögzítéséhez. Kérjük, adja meg a hely engedélyét az edzés rögzítéséhez.</string>
     <string name="aboutPrivacyPolicy">Adatvédelmi irányelvek</string>
+    <string name="inclination">Dőlésszög</string>
+    <string name="nothingSelected">Nincs kiválasztva</string>
+    <string name="showIntervals">Intervallumok megjelenítése</string>
+    <string name="connectHeartRateDevice">Csatlakoztassa a pulzusmérőt</string>
+    <string name="selectBluetoothDevice">Válassza ki a Bluetooth eszközt</string>
+    <string name="workoutAvgHeartRate">Avg. Pulzusszám</string>
+    <string name="workoutMaxHeartRate">Max Pulzusszám</string>
+    <string name="workoutHeartRate">Pulzusszám</string>
 </resources>
