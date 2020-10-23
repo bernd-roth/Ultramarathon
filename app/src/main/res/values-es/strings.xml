@@ -317,4 +317,12 @@
     <string name="recordingGrantBackgroundPermissionMessage">FitoTrack también recopila datos de ubicación en segundo plano para registrar el entrenamiento cuando la pantalla está apagada. Por lo tanto, conceda el permiso.</string>
     <string name="recordingGrantLocationPermissionMessage">FitoTrack recopila datos de localización para registrar el entrenamiento. Por favor, otorgue el permiso para acceder a su ubicación para grabar un entrenamiento.</string>
     <string name="aboutPrivacyPolicy">Política de privacidad</string>
+    <string name="inclination">Inclinación</string>
+    <string name="nothingSelected">Nada seleccionado</string>
+    <string name="showIntervals">Mostrar los intervalos</string>
+    <string name="connectHeartRateDevice">Conectar el dispositivo de frecuencia cardíaca</string>
+    <string name="selectBluetoothDevice">Seleccione el dispositivo Bluetooth</string>
+    <string name="workoutAvgHeartRate">Promedio. Ritmo cardíaco</string>
+    <string name="workoutMaxHeartRate">Ritmo cardíaco máximo</string>
+    <string name="workoutHeartRate">Ritmo cardíaco</string>
 </resources>
