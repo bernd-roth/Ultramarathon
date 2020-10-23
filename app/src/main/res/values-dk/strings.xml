@@ -307,4 +307,12 @@
     <string name="savedSuccessfully">Gemt</string>
     <string name="trackerWaitingMessage">Venter på at starte træningen</string>
     <string name="workoutTypeRowing">Roning</string>
+    <string name="inclination">Hældning</string>
+    <string name="nothingSelected">Intet valgt</string>
+    <string name="showIntervals">Vis intervaller</string>
+    <string name="connectHeartRateDevice">Tilslut puls enhed</string>
+    <string name="selectBluetoothDevice">Vælg Bluetooth-enhed</string>
+    <string name="workoutAvgHeartRate">Avg. puls</string>
+    <string name="workoutMaxHeartRate">Maks Puls</string>
+    <string name="workoutHeartRate">puls</string>
 </resources>
