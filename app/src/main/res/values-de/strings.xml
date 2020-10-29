@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -328,4 +329,16 @@
     <string name="workoutAvgHeartRate">Durchschn. Herzfrequenz</string>
     <string name="workoutMaxHeartRate">Max Herzfrequenz</string>
     <string name="workoutHeartRate">Herzfrequenz</string>
+    <string name="announcementWorkoutActions">Workout Aktionen (pausieren, fortsetzten, etc.)</string>
+    <string name="intervals">Intervalle</string>
+    <string name="heartRateNotAvailable">Herzfrequenz aktuell nicht verfügbar.</string>
+    <string name="resumeWorkout">Workout fortsetzen</string>
+    <string name="autoPauseTitle">Auto-Pause</string>
+    <string name="autoPauseSummary">Workouts automatisch pausieren und fortsetzen</string>
+    <string name="actionPause">Pausieren</string>
+    <string name="actionResume">Fortsetzen</string>
+    <string name="workoutPaused">Workout pausiert</string>
+    <string name="workoutResumed">Workout fortgesetzt</string>
+    <string name="workoutStopped">Workout gestoppt</string>
+    <string name="workoutStarted">Workout gestartet</string>
 </resources>
