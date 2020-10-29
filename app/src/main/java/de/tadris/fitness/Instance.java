@@ -78,12 +78,20 @@ public class Instance {
         recorder = restoreRecorder(context);
     }
 
-    private WorkoutRecorder restoreRecorder(Context context){
+    private WorkoutRecorder restoreRecorder(Context context) {
         Workout lastWorkout = db.workoutDao().getLastWorkout();
-        if (lastWorkout != null && lastWorkout.end == -1){
-            List<WorkoutSample> samples = Arrays.asList(db.workoutDao().getAllSamplesOfWorkout(lastWorkout.id));
-            return new WorkoutRecorder(context, lastWorkout, samples);
+        if (lastWorkout != null && lastWorkout.end == -1) {
+            return restoreRecorder(context, lastWorkout);
         }
         return new WorkoutRecorder(context, WorkoutType.OTHER);
+    }
+
+    private WorkoutRecorder restoreRecorder(Context context, Workout workout) {
+        List<WorkoutSample> samples = Arrays.asList(db.workoutDao().getAllSamplesOfWorkout(workout.id));
+        return new WorkoutRecorder(context, workout, samples);
+    }
+
+    public void prepareResume(Context context, Workout workout) {
+        recorder = restoreRecorder(context, workout);
     }
 }

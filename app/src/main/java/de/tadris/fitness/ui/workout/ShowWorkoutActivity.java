@@ -48,6 +48,7 @@ import de.tadris.fitness.osm.OAuthAuthentication;
 import de.tadris.fitness.osm.OsmTraceUploader;
 import de.tadris.fitness.ui.ShareFileActivity;
 import de.tadris.fitness.ui.dialog.ProgressDialogController;
+import de.tadris.fitness.ui.record.RecordWorkoutActivity;
 import de.tadris.fitness.ui.workout.diagram.HeartRateConverter;
 import de.tadris.fitness.ui.workout.diagram.HeightConverter;
 import de.tadris.fitness.ui.workout.diagram.SampleConverter;
@@ -206,9 +207,14 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.show_workout_menu, menu);
+        menu.findItem(R.id.actionResumeWorkout).setVisible(isLastWorkout());
         menu.findItem(R.id.actionUploadOSM).setVisible(hasSamples());
         menu.findItem(R.id.actionExportGpx).setVisible(hasSamples());
         return true;
+    }
+
+    private boolean isLastWorkout() {
+        return Instance.getInstance(this).db.workoutDao().getLastWorkout().id == workout.id;
     }
 
     public void deleteWorkout() {
@@ -343,8 +349,23 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
             case R.id.actionEditWorkout:
                 openEditWorkoutActivity();
                 return true;
+            case R.id.actionResumeWorkout:
+                resumeWorkout();
+                return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void resumeWorkout() {
+        // Load workout into instance
+        Instance.getInstance(this).prepareResume(this, workout);
+
+        // Start recording activity
+        Intent recorderActivityIntent = new Intent(this, RecordWorkoutActivity.class);
+        recorderActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        recorderActivityIntent.setAction(RecordWorkoutActivity.RESUME_ACTION);
+        startActivity(recorderActivityIntent);
+        finish();
     }
 
     @Override

@@ -60,9 +60,17 @@ public class WorkoutSaver {
     }
 
     public synchronized void addSample(WorkoutSample sample) {
-        sample.id = this.workout.id + this.samples.size();
+        if (samples.size() == 0) {
+            sample.id = this.workout.id + this.samples.size();
+        } else {
+            sample.id = getLastSample().id + 1;
+        }
         sample.workoutId = this.workout.id;
         db.workoutDao().insertSample(sample);
+    }
+
+    private WorkoutSample getLastSample() {
+        return samples.get(samples.size() - 1);
     }
 
     public void saveWorkout() {

@@ -53,7 +53,7 @@ public class WorkoutRecorder implements RecorderService.RecorderServiceListener 
     private static final int AUTO_TIMEOUT_MULTIPLIER = 1_000 * 60; // minutes to ms
     private static final int DEFAULT_WORKOUT_AUTO_TIMEOUT = 20;
 
-    private final long autoTimeout;
+    private long autoTimeout;
     private final Context context;
     private final Workout workout;
     private final List<WorkoutSample> samples = new ArrayList<>();
@@ -82,9 +82,6 @@ public class WorkoutRecorder implements RecorderService.RecorderServiceListener 
         this.context = context;
         this.state = RecordingState.IDLE;
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        this.autoTimeout = prefs.getInt("autoTimeoutPeriod", DEFAULT_WORKOUT_AUTO_TIMEOUT) * AUTO_TIMEOUT_MULTIPLIER;
-
         this.workout = new Workout();
         workout.edited = false;
 
@@ -102,9 +99,6 @@ public class WorkoutRecorder implements RecorderService.RecorderServiceListener 
     public WorkoutRecorder(Context context, Workout workout, List<WorkoutSample> samples) {
         this.context = context;
         this.state = RecordingState.PAUSED;
-
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        this.autoTimeout = prefs.getInt("autoTimeoutPeriod", DEFAULT_WORKOUT_AUTO_TIMEOUT) * AUTO_TIMEOUT_MULTIPLIER;
 
         this.workout = workout;
         this.samples.addAll(samples);
@@ -162,6 +156,9 @@ public class WorkoutRecorder implements RecorderService.RecorderServiceListener 
     }
 
     private void init() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        this.autoTimeout = prefs.getInt("autoTimeoutPeriod", DEFAULT_WORKOUT_AUTO_TIMEOUT) * AUTO_TIMEOUT_MULTIPLIER;
+
         Instance.getInstance(context).recorderServiceListeners.add(this);
     }
 
@@ -289,7 +286,6 @@ public class WorkoutRecorder implements RecorderService.RecorderServiceListener 
         }
         Log.i("Recorder", "Save");
         synchronized (samples) {
-            //new WorkoutSaver(context, workout, samples).saveWorkout();
             workoutSaver.finalizeWorkout();
         }
         saved = true;
