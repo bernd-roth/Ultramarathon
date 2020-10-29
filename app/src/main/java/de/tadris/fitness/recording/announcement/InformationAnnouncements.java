@@ -65,16 +65,24 @@ public class InformationAnnouncements {
 
         if (shouldSpeak) {
             speak();
+        } else {
+            speakAnnouncements(false);
         }
     }
 
     private void speak() {
-        for (RecordingInformation announcement : manager.getInformation()) {
-            TTSController.speak(recorder, announcement);
-        }
+        speakAnnouncements(true);
 
         lastSpokenUpdateTime = recorder.getDuration();
         lastSpokenUpdateDistance = recorder.getDistanceInMeters();
+    }
+
+    private void speakAnnouncements(boolean playAllAnnouncements) {
+        for (RecordingInformation announcement : manager.getInformation()) {
+            if (playAllAnnouncements || announcement.isPlayedAlways()) {
+                TTSController.speak(recorder, announcement);
+            }
+        }
     }
 
 }

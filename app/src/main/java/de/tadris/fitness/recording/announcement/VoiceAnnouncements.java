@@ -46,7 +46,7 @@ public class VoiceAnnouncements {
     }
 
     public void check() {
-        //Supress all anouncements when currently on Call
+        // Suppress all announcements when currently on call
         if (supressOnCall && isOnCall()) {
             return;
         }

@@ -41,6 +41,11 @@
 
         <CheckBoxPreference
             android:defaultValue="true"
+            android:key="system_actions"
+            android:title="@string/announcementWorkoutActions" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
             android:key="announcement_gps-lost"
             android:title="@string/announcementGPSStatus" />
 

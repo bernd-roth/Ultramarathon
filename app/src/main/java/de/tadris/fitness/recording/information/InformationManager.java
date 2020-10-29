@@ -26,8 +26,8 @@ import java.util.List;
 
 public class InformationManager {
 
-    private Context context;
-    private List<RecordingInformation> information = new ArrayList<>();
+    private final Context context;
+    private final List<RecordingInformation> information = new ArrayList<>();
 
     public InformationManager(Context context) {
         this.context = context;
@@ -36,6 +36,7 @@ public class InformationManager {
 
     private void addInformation() {
         information.add(new GPSStatus(context));
+        information.add(new SystemActions(context));
         information.add(new CurrentTime(context));
         information.add(new Duration(context));
         information.add(new PauseDuration(context));
