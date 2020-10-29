@@ -164,11 +164,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Recorder
         waitingForGPSOverlay.setVisibility(View.VISIBLE);
 
         startButton = findViewById(R.id.recordStart);
-        startButton.setEnabled(false);
-        startButton.setOnClickListener(v -> {
-            hideStartButton();
-            start();
-        });
+        updateStartButton(false, R.string.cannotStart, null);
 
         checkPermissions();
 
@@ -315,13 +311,30 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Recorder
         }
     }
 
+    private void showStartButton() {
+        startButton.setAlpha(1);
+        if (startButton.getVisibility() != View.VISIBLE) {
+            startButton.clearAnimation();
+            startButton.setAlpha(0);
+            startButton.animate().alpha(1).setDuration(500).start();
+        }
+        startButton.setVisibility(View.VISIBLE);
+    }
+
+    private void updateStartButton(boolean enabled, @StringRes int text, View.OnClickListener listener) {
+        showStartButton();
+        startButton.setEnabled(enabled);
+        startButton.setText(text);
+        startButton.setOnClickListener(listener);
+    }
+
     private void start() {
         instance.recorder.start();
         invalidateOptionsMenu();
     }
 
     private void stop() {
-        if(instance.recorder.getState() != WorkoutRecorder.RecordingState.IDLE) { //Only Running Records can be stopped
+        if (instance.recorder.getState() != WorkoutRecorder.RecordingState.IDLE) { // Only Running Records can be stopped
             instance.recorder.stop();
             if (instance.recorder.getSampleCount() > 3) {
                 showEnterDescriptionDialog();
@@ -330,7 +343,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Recorder
                 instance.recorder.discard();
                 activityFinish();
             }
-        }else{
+        } else {
             activityFinish();
         }
     }
@@ -634,8 +647,27 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Recorder
                 return true;
             case R.id.actionConnectHR:
                 chooseHRDevice();
+                return true;
+            case R.id.actionManualPause:
+                onManualPauseButtonClick();
+                return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void onManualPauseButtonClick() {
+        if (instance.recorder.isResumed()) {
+            instance.recorder.pause();
+            updateStartButton(true, R.string.actionResume, v -> {
+                if (instance.recorder.isPaused()) {
+                    onManualPauseButtonClick();
+                }
+            });
+        } else if (instance.recorder.isPaused()) {
+            instance.recorder.resume();
+            hideStartButton();
+        }
+        invalidateOptionsMenu();
     }
 
     private void showEditInformationHint() {
@@ -681,6 +713,13 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Recorder
         menu.findItem(R.id.actionSelectIntervalSet).setVisible(preparationPhase && voiceFeedbackAvailable);
         menu.findItem(R.id.actionEditHint).setVisible(preparationPhase);
         menu.findItem(R.id.actionConnectHR).setVisible(isBluetoothSupported());
+        MenuItem pauseResumeItem = menu.findItem(R.id.actionManualPause);
+        if (!instance.recorder.isAutoPauseEnabled() && instance.recorder.isActive() && !preparationPhase) {
+            pauseResumeItem.setVisible(true);
+            pauseResumeItem.setIcon(instance.recorder.isResumed() ? R.drawable.ic_pause : R.drawable.ic_resume);
+        } else {
+            pauseResumeItem.setVisible(false);
+        }
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -717,11 +756,12 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Recorder
 
             if (instance.recorder.getState() == WorkoutRecorder.RecordingState.IDLE) {
                 if (state == WorkoutRecorder.GpsState.SIGNAL_OKAY) {
-                    startButton.setText(R.string.start);
-                    startButton.setEnabled(true);
+                    updateStartButton(true, R.string.start, v -> {
+                        hideStartButton();
+                        start();
+                    });
                 } else {
-                    startButton.setText(R.string.cannotStart);
-                    startButton.setEnabled(false);
+                    updateStartButton(false, R.string.cannotStart, null);
                 }
             }
         });

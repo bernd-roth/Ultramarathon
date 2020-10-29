@@ -54,6 +54,7 @@ public class WorkoutRecorder implements RecorderService.RecorderServiceListener 
     private static final int DEFAULT_WORKOUT_AUTO_TIMEOUT = 20;
 
     private long autoTimeout;
+    private boolean useAutoPause;
     private final Context context;
     private final Workout workout;
     private final List<WorkoutSample> samples = new ArrayList<>();
@@ -158,6 +159,7 @@ public class WorkoutRecorder implements RecorderService.RecorderServiceListener 
     private void init() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         this.autoTimeout = prefs.getInt("autoTimeoutPeriod", DEFAULT_WORKOUT_AUTO_TIMEOUT) * AUTO_TIMEOUT_MULTIPLIER;
+        this.useAutoPause = prefs.getBoolean("autoPause", true);
 
         Instance.getInstance(context).recorderServiceListeners.add(this);
     }
@@ -212,13 +214,15 @@ public class WorkoutRecorder implements RecorderService.RecorderServiceListener 
                                 listener.onAutoStop();
                             }
                         }
-                    } else if (timeDiff > PAUSE_TIME) {
-                        if (state == RecordingState.RUNNING && gpsState != GpsState.SIGNAL_LOST) {
-                            pause();
-                        }
-                    } else {
-                        if (state == RecordingState.PAUSED) {
-                            resume();
+                    } else if (useAutoPause) {
+                        if (timeDiff > PAUSE_TIME) {
+                            if (state == RecordingState.RUNNING && gpsState != GpsState.SIGNAL_LOST) {
+                                pause();
+                            }
+                        } else {
+                            if (state == RecordingState.PAUSED) {
+                                resume();
+                            }
                         }
                     }
                 }
@@ -249,7 +253,7 @@ public class WorkoutRecorder implements RecorderService.RecorderServiceListener 
         }
     }
 
-    private void resume() {
+    public void resume() {
         Log.i("Recorder", "Resume");
         state = RecordingState.RUNNING;
         lastResume = System.currentTimeMillis();
@@ -258,7 +262,7 @@ public class WorkoutRecorder implements RecorderService.RecorderServiceListener 
         }
     }
 
-    private void pause() {
+    public void pause() {
         if (state == RecordingState.RUNNING) {
             Log.i("Recorder", "Pause");
             state = RecordingState.PAUSED;
@@ -293,6 +297,10 @@ public class WorkoutRecorder implements RecorderService.RecorderServiceListener 
 
     public boolean isSaved() {
         return saved;
+    }
+
+    public boolean isAutoPauseEnabled() {
+        return useAutoPause;
     }
 
     public int getSampleCount() {

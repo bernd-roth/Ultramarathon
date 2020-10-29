@@ -29,6 +29,13 @@
         android:icon="@drawable/ic_list"
         android:showAsAction="always"
         android:title="@string/selectIntervalSet" />
+
+    <item
+        android:id="@+id/actionManualPause"
+        android:icon="@drawable/ic_pause"
+        android:showAsAction="ifRoom"
+        android:title="@string/actionPause" />
+
     <item
         android:id="@+id/actionRecordingStop"
         android:showAsAction="ifRoom"
