@@ -43,6 +43,7 @@ import de.tadris.fitness.export.RestoreController;
 import de.tadris.fitness.ui.ShareFileActivity;
 import de.tadris.fitness.ui.dialog.ProgressDialogController;
 import de.tadris.fitness.ui.dialog.ThreadSafeProgressDialogController;
+import de.tadris.fitness.util.DataManager;
 import de.tadris.fitness.util.io.general.IOHelper;
 
 public class BackupSettingsActivity extends FitoTrackSettingsActivity {
@@ -90,7 +91,7 @@ public class BackupSettingsActivity extends FitoTrackSettingsActivity {
         dialogController.show();
         new Thread(() -> {
             try {
-                String file = getFilesDir().getAbsolutePath() + "/shared/backup" + System.currentTimeMillis() + ".ftb";
+                String file = DataManager.getSharedDirectory(this) + "/backup" + System.currentTimeMillis() + ".ftb";
                 File parent = new File(file).getParentFile();
                 if (!parent.exists() && !parent.mkdirs()) {
                     throw new IOException("Cannot write");

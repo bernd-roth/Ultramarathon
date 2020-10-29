@@ -53,6 +53,7 @@ import de.tadris.fitness.ui.workout.diagram.HeartRateConverter;
 import de.tadris.fitness.ui.workout.diagram.HeightConverter;
 import de.tadris.fitness.ui.workout.diagram.SampleConverter;
 import de.tadris.fitness.ui.workout.diagram.SpeedConverter;
+import de.tadris.fitness.util.DataManager;
 import de.tadris.fitness.util.DialogUtils;
 import de.tadris.fitness.util.io.general.IOHelper;
 import de.tadris.fitness.util.sections.SectionListModel;
@@ -236,7 +237,7 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
         dialogController.show();
         new Thread(() -> {
             try {
-                String file = getFilesDir().getAbsolutePath() + String.format("/shared/workout-%s-%s.gpx", workout.getSafeDateString(), workout.getSafeComment());
+                String file = DataManager.getSharedDirectory(this) + String.format("/workout-%s-%s.gpx", workout.getSafeDateString(), workout.getSafeComment());
                 File parent = new File(file).getParentFile();
                 if (!parent.exists() && !parent.mkdirs()) {
                     throw new IOException("Cannot write to " + file);

@@ -44,7 +44,7 @@ public class ShareFileActivity extends FitoTrackActivity {
 
     public static String EXTRA_FILE_URI = "file_uri";
 
-    private static int REQUEST_CODE_TARGET_DIRECTORY = 1;
+    private static final int REQUEST_CODE_TARGET_DIRECTORY = 1;
 
     private Uri file;
 

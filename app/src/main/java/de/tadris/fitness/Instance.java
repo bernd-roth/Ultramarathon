@@ -35,6 +35,7 @@ import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.recording.RecorderService;
 import de.tadris.fitness.recording.WorkoutRecorder;
 import de.tadris.fitness.recording.announcement.TTSController;
+import de.tadris.fitness.util.DataManager;
 import de.tadris.fitness.util.FitoTrackThemes;
 import de.tadris.fitness.util.UserDateTimeUtils;
 import de.tadris.fitness.util.unit.DistanceUnitUtils;
@@ -68,7 +69,7 @@ public class Instance {
         instance = this;
         recorderServiceListeners = new CopyOnWriteArrayList<>();
         voiceAnnouncementCallbackListeners = new ArrayList<>();
-        userPreferences= new UserPreferences(context);
+        userPreferences = new UserPreferences(context);
         themes = new FitoTrackThemes(context);
         userDateTimeUtils = new UserDateTimeUtils(userPreferences);
         distanceUnitUtils = new DistanceUnitUtils(context);
@@ -76,6 +77,12 @@ public class Instance {
         db = AppDatabase.provideDatabase(context);
 
         recorder = restoreRecorder(context);
+
+        startBackgroundClean(context);
+    }
+
+    private void startBackgroundClean(Context context) {
+        DataManager.cleanFilesASync(context);
     }
 
     private WorkoutRecorder restoreRecorder(Context context) {
