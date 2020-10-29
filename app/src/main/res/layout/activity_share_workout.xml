@@ -18,13 +18,12 @@
   -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:id="@+id/shareWorkout"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical"
-tools:context=".ui.workout.ShareWorkoutActivity">
-
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/shareWorkout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.workout.ShareWorkoutActivity">
 
 
     <LinearLayout
@@ -39,20 +38,22 @@ tools:context=".ui.workout.ShareWorkoutActivity">
         android:id="@+id/textview1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|start"
+        android:layout_gravity="top|end"
         android:layout_margin="15dp"
-        android:shadowColor="@android:color/darker_gray"
-        android:shadowRadius="5"
+        android:shadowColor="#000000"
+        android:shadowRadius="10"
         android:text="@string/app_name"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         android:textSize="30sp"
-        android:textStyle="bold" />
+        android:textStyle="bold|italic" />
+    <!--@color/textDarkerWhite @android:color/darker_gray-->
+
     <LinearLayout
         android:id="@+id/TestshowWorkoutMapParent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="bottom|center">
+        android:layout_gravity="bottom|center"
+        android:orientation="vertical">
 
         <TableLayout
             android:layout_width="match_parent"
@@ -73,7 +74,9 @@ tools:context=".ui.workout.ShareWorkoutActivity">
                     android:layout_weight="1"
                     android:fontFamily="sans-serif-black"
                     android:text="@string/workoutTypeRunning"
-                    android:textColor="#000000"
+                    android:textColor="#FFFFFF"
+                    android:shadowColor="#000000"
+                    android:shadowRadius="10"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -85,7 +88,9 @@ tools:context=".ui.workout.ShareWorkoutActivity">
                     android:layout_weight="1"
                     android:fontFamily="sans-serif-black"
                     android:text="@string/workoutPace"
-                    android:textColor="#000000"
+                    android:textColor="#FFFFFF"
+                    android:shadowColor="#000000"
+                    android:shadowRadius="10"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -97,7 +102,9 @@ tools:context=".ui.workout.ShareWorkoutActivity">
                     android:layout_weight="1"
                     android:fontFamily="sans-serif-black"
                     android:text="@string/workoutDuration"
-                    android:textColor="#000000"
+                    android:textColor="#FFFFFF"
+                    android:shadowColor="#000000"
+                    android:shadowRadius="10"
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </TableRow>
@@ -115,7 +122,9 @@ tools:context=".ui.workout.ShareWorkoutActivity">
                     android:layout_weight="1"
                     android:fontFamily="sans-serif-black"
                     android:text=""
-                    android:textColor="#000000"
+                    android:textColor="#FFFFFF"
+                    android:shadowColor="#000000"
+                    android:shadowRadius="10"
                     android:textSize="22sp"
                     android:textStyle="bold" />
                 <!-- android:text="6,1 km" -->
@@ -127,7 +136,9 @@ tools:context=".ui.workout.ShareWorkoutActivity">
                     android:layout_weight="1"
                     android:fontFamily="sans-serif-black"
                     android:text=""
-                    android:textColor="#000000"
+                    android:textColor="#FFFFFF"
+                    android:shadowColor="#000000"
+                    android:shadowRadius="10"
                     android:textSize="22sp"
                     android:textStyle="bold" />
                 <!-- android:text="6:04 min/km" -->
@@ -140,13 +151,16 @@ tools:context=".ui.workout.ShareWorkoutActivity">
                     android:layout_weight="1"
                     android:fontFamily="sans-serif-black"
                     android:text=""
-                    android:textColor="#000000"
+                    android:textColor="#FFFFFF"
+                    android:shadowColor="#000000"
+                    android:shadowRadius="10"
                     android:textSize="22sp"
                     android:textStyle="bold" />
                 <!-- android:text="37m 16s" -->
             </TableRow>
 
         </TableLayout>
+
         <TextView
             android:id="@+id/recordMapAttribution"
             android:layout_width="wrap_content"
