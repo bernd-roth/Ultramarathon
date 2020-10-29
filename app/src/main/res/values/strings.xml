@@ -287,6 +287,8 @@
     <string name="showIntervals">Show intervals</string>
     <string name="nothingSelected">Nothing selected</string>
     <string name="inclination">Inclination</string>
+    <string name="intervals">Intervals</string>
+    <string name="heartRateNotAvailable">Heart rate is currently not available.</string>
     <string-array name="osm_track_visibility">
         <item>Identifiable</item>
         <item>Trackable</item>
