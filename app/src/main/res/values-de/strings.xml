@@ -17,7 +17,9 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources>
+  -->
+
+<resources>
     <string name="app_name">FitoTrack</string>
     <string name="backup">Sichern</string>
     <string name="cancel">Abbrechen</string>
@@ -312,7 +314,7 @@
     <string name="aboutUnlistedContributors">Vielen Dank an alle nicht aufgeführten Mitwirkenden, die beim Übersetzen und Erweitern von FitoTrack geholfen haben!</string>
     <string name="aboutHelpTranslating">Beim Übersetzen helfen</string>
     <string name="importMultipleGpxFiles">Mehrere GPX-Dateien importieren</string>
-    <string name="importMultipleMessageSelectFolder">Bitte wähle einen Ordner, der alle GPX-Dateien enhält, die du importieren möchtest.</string>
+    <string name="importMultipleMessageSelectFolder">Bitte wähle einen Ordner, der alle GPX-Dateien enthält, die du importieren möchtest.</string>
     <string name="importMultipleGpxFilesSummary">Auf einmal mehr als eine GPX-Datei vom Dateisystem importieren</string>
     <string name="bulkActions">Massenaktionen</string>
     <string name="importingFiles">Dateien importieren</string>
