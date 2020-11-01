@@ -33,20 +33,35 @@
         android:orientation="vertical">
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/textview1"
+    <LinearLayout
+        android:id="@+id/applogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|end"
+        android:gravity="center"
         android:layout_margin="15dp"
-        android:shadowColor="#000000"
-        android:shadowRadius="10"
-        android:text="@string/app_name"
-        android:textColor="#FFFFFF"
-        android:textSize="30sp"
-        android:textStyle="bold|italic" />
-    <!--@color/textDarkerWhite @android:color/darker_gray-->
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="3dp"
+            android:src="@drawable/logo_small"/>
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:shadowColor="#000000"
+            android:shadowRadius="10"
+            android:text="@string/app_name"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            android:textStyle="bold|italic" />
+        <!--@color/textDarkerWhite @android:color/darker_gray-->
+    </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/TestshowWorkoutMapParent"
