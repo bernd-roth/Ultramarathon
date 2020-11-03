@@ -1,2 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="timeHourShort">h</string>
+    <string name="timeHourPlural">Hores</string>
+    <string name="timeHourSingular">Hora</string>
+    <string name="timeMinuteShort">min</string>
+    <string name="timeSecondsSingular">Segon</string>
+    <string name="timeMinuteSingular">Minut</string>
+    <string name="okay">Dacord</string>
+    <string name="week">Setmana</string>
+    <string name="day">Dia</string>
+    <string name="gps">GPS</string>
+    <string name="theme">Tema</string>
+    <string name="OpenStreetMapAttribution">© OpenStreetMap contributors</string>
+    <string name="info">Info</string>
+    <string name="savingFailed">Desant el fitxer</string>
+    <string name="savedSuccessfully">Desat</string>
+    <string name="share">Comparteix</string>
+    <string name="noComment">Sense comentaris</string>
+    <string name="year">Any</string>
+    <string name="month">Mes</string>
+    <string name="min">Min</string>
+    <string name="action_edit_comment">Edita el comentari</string>
+    <string name="aboutVersion">Versió</string>
+    <string name="add">Afegeix</string>
+    <string name="max">Max</string>
+    <string name="noGpsTitle">GPS desactivat</string>
+    <string name="preferencesCategoryAppearance">Aparença</string>
+    <string name="timeSecondsPlural">Segons</string>
+    <string name="timeMinutePlural">Minuts</string>
+    <string name="preferences">Prefrències</string>
+    <string name="initialising">Inicialitzant</string>
+    <string name="shareFile">Comparteix el fitxer</string>
+    <string name="errorImportFailed">L\'importació de la informació ha fallat</string>
+    <string name="errorExportFailed">L\'exportació de la informació ha fallat</string>
+    <string name="errorGpxExportFailed">L\'exportació del GPX ha fallat.</string>
+    <string name="error">Error</string>
+    <string name="exporting">Exportant</string>
+    <string name="delete">Esborra</string>
+    <string name="stop">Atura</string>
+    <string name="workout_add">Afegeix</string>
+    <string name="app_name">FitoTrack</string>
+</resources>
