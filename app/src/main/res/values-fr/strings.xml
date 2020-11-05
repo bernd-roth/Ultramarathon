@@ -323,4 +323,8 @@
     <string name="workoutAvgHeartRate">Moyenne. Fréquence cardiaque</string>
     <string name="workoutMaxHeartRate">Fréquence cardiaque maximale</string>
     <string name="workoutHeartRate">Rythme cardiaque</string>
+    <string name="resumeWorkout">Reprendre L\'Entraînement</string>
+    <string name="heartRateNotAvailable">La fréquence cardiaque n\'est actuellement pas disponible.</string>
+    <string name="intervals">Intervalle</string>
+    <string name="announcementWorkoutActions">Actions d\'entraînement (pause, reprise, etc.)</string>
 </resources>
