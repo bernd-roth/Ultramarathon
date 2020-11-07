@@ -40,4 +40,25 @@
     <string name="stop">Atura</string>
     <string name="workout_add">Afegeix</string>
     <string name="app_name">FitoTrack</string>
+    <string name="pref_announcements_config_title">Activador de l\'anunci</string>
+    <string name="pref_voice_announcements_summary">Configureu els missatges de veu que us informin durant l\'entrenament</string>
+    <string name="voiceAnnouncementsTitle">Anuncis de veu</string>
+    <string name="announcementWorkoutActions">Accions d\'entrenament (pausa, recuperació, etc.)</string>
+    <string name="announcementGPSStatus">Estat del GPS</string>
+    <string name="errorEnterValidDuration">Introduïu una durada vàlida</string>
+    <string name="errorWorkoutAddFuture">L’entrenament no pot ser en el futur</string>
+    <string name="errorEnterValidNumber">Introduïu un número vàlid</string>
+    <string name="and">i</string>
+    <string name="setPreferencesMessage">Podeu configurar el vostre sistema d’unitat preferit i el vostre pes a la configuració.</string>
+    <string name="setPreferencesTitle">Estableix les preferències</string>
+    <string name="pref_ringtone_silent">Silenciós</string>
+    <string name="backup">Còpia de seguretat</string>
+    <string name="restore">Restaura</string>
+    <string name="importBackupMessage">ADVERTÈNCIA: s\'esborraran totes les dades existents a l\'aplicació. Si no els voleu perdre, primer feu una altra còpia de seguretat. Esteu segur que voleu restaurar aquesta còpia de seguretat\?</string>
+    <string name="chooseBackupFile">Trieu Còpia de seguretat del fitxer</string>
+    <string name="loadingFile">S\'està carregant el fitxer</string>
+    <string name="finished">Acabat</string>
+    <string name="converting">Conversió</string>
+    <string name="locationData">Dades d’ubicació</string>
+    <string name="workouts">Entrenaments</string>
 </resources>
