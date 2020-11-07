@@ -315,4 +315,16 @@
     <string name="workoutAvgHeartRate">Avg. Hartslag</string>
     <string name="workoutMaxHeartRate">Maximale hartslag</string>
     <string name="workoutHeartRate">Hartslag</string>
+    <string name="workoutStarted">Training gestart</string>
+    <string name="workoutStopped">Training gestopt</string>
+    <string name="workoutResumed">Training hervat</string>
+    <string name="workoutPaused">Training gepauzeerd</string>
+    <string name="actionResume">Hervatten</string>
+    <string name="actionPause">Pauzeren</string>
+    <string name="autoPauseSummary">Automatisch pauzeren</string>
+    <string name="autoPauseTitle">Automatisch pauzeren</string>
+    <string name="resumeWorkout">Weer Trainen</string>
+    <string name="heartRateNotAvailable">Hartslag is momenteel niet beschikbaar.</string>
+    <string name="intervals">Interval</string>
+    <string name="announcementWorkoutActions">Training acties (pauzeren, hervatten, enz.)</string>
 </resources>
