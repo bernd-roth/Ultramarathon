@@ -196,7 +196,7 @@
     <string name="unitMetersPlural">Meter</string>
     <string name="unitMetersSingular">måleren</string>
     <string name="unitKilometersPlural">Kilometer</string>
-    <string name="unitKilometersSingular">Kilometer</string>
+    <string name="unitKilometersSingular">kilometer</string>
     <string name="unitKilometersPerHour">Kilometer i timen</string>
     <string name="unitMetersPerSecond">Meter i sekundet</string>
     <string name="unitKcalLong">Kalorier</string>
@@ -224,7 +224,9 @@
     <string name="calendarWeekYear">Kalender Uge / År</string>
     <string name="dayInMonth">Dag i Måneden</string>
     <string name="singleWorkout">Enkelt Træning</string>
-    <string name="workoutStatsHelpText">Denne skærm viser historiske stats af træningerne. For at bruge det, skal du først vælge en træningstype ved at klikke på den. Så sætter de de informationer og tidsperiode du vil have. \n\n F.eks hvis du vælger \"Uge\" som tidsperiode, vil alle træninger fra hver uge blive samlet til et data punkt enten efter gennemsnittet eller summen fra hver uge.</string>
+    <string name="workoutStatsHelpText">Denne skærm viser historik for træningen. For at bruge det skal du først angive træningstypen ved at klikke på den. Indstil derefter de oplysninger, du vil vide om, og tidsrummet.
+\n
+\nF.eks. Hvis du vælger \"Uge\" som tidsperiode, bliver alle træningsprogrammer i hver uge flettet til et datapunkt, der enten beregner gennemsnittet eller summen af hver uge.</string>
     <string name="dataSamples">Brudstykker</string>
     <string name="replaceOrMergeMessage">Erstat eller kombiner database med backup fil?</string>
     <string name="replace">Erstat</string>
