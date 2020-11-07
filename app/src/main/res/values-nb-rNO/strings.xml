@@ -87,9 +87,9 @@
     <string name="unitKcalLong">Kalorier</string>
     <string name="unitMetersPerSecond">Meter per sekund</string>
     <string name="unitKilometersPerHour">Kilometer per time</string>
-    <string name="unitKilometersSingular">Kilometer</string>
+    <string name="unitKilometersSingular">kilometer</string>
     <string name="unitKilometersPlural">Kilometer</string>
-    <string name="unitMetersSingular">Meter</string>
+    <string name="unitMetersSingular">meter</string>
     <string name="unitMetersPlural">Meter</string>
     <string name="per">per</string>
     <string name="timeSecondsPlural">Sekunder</string>
@@ -188,7 +188,7 @@
     <string name="workoutTypeSkateboarding">Rullebrett</string>
     <string name="workoutTypeHiking">Tur</string>
     <string name="workoutTypeCycling">Sykling</string>
-    <string name="workoutTypeJogging">Jogging</string>
+    <string name="workoutTypeJogging">Jogge</string>
     <string name="workoutTypeWalking">Spasering</string>
     <string name="workoutTypeRunning">Løp</string>
     <string name="height">Høyde</string>
@@ -198,7 +198,7 @@
     <string name="uploadFailed">Kunne ikke laste opp</string>
     <string name="uploadSuccessful">Last opp vellykket</string>
     <string name="upload">Last opp</string>
-    <string name="authenticationFailed">Identitetsbekreftelse mislyktes</string>
+    <string name="authenticationFailed">Godkjenning mislyktes.</string>
     <string name="enterVerificationCode">Skriv inn bekreftelseskode</string>
     <string name="uploading">Laster opp</string>
     <string name="workoutEdited">Denne treningsøkten har blitt redigert.</string>
@@ -269,7 +269,7 @@
     <string name="bulkActions">Massehandlinger</string>
     <string name="importMultipleGpxFilesSummary">Importer mer enn én GPX-fil fra filsystemet samtidig</string>
     <string name="importMultipleMessageSelectFolder">Velg en mappe inneholdende alle GPX-filer du ønsker å importere.</string>
-    <string name="aboutUnlistedContributors">Takk til alle ulistede bidragsytere som har hjulpet til i oversettelsen og utvidelsen av FitoTrack.</string>
+    <string name="aboutUnlistedContributors">Takk til alle ikke-børsnoterte bidragsytere som hjalp til med å oversette og å utvide FitoTrack!</string>
     <string name="importedWorkouts">Importerte %d treningsøkter</string>
     <string name="importMultipleGpxFiles">Importer flerfoldige GPX-filer</string>
     <string name="aboutHelpTranslating">Hjelp til i oversettelsen</string>
@@ -285,4 +285,16 @@
     <string name="workoutAvgHeartRate">Avg. hjertefrekvens</string>
     <string name="workoutMaxHeartRate">Maks Puls</string>
     <string name="workoutHeartRate">hjertefrekvens</string>
+    <string name="workoutStarted">Treningen startet</string>
+    <string name="workoutStopped">Trening stoppet</string>
+    <string name="workoutResumed">Treningen gjenopptas</string>
+    <string name="workoutPaused">Trening på pause</string>
+    <string name="actionResume">Fortsette</string>
+    <string name="actionPause">Gå i stykker</string>
+    <string name="autoPauseSummary">Automatisk pause og fortsette trening</string>
+    <string name="autoPauseTitle">Bilbrudd</string>
+    <string name="resumeWorkout">Gjenoppta Trening</string>
+    <string name="heartRateNotAvailable">Puls er for øyeblikket ikke tilgjengelig.</string>
+    <string name="intervals">Intervall</string>
+    <string name="announcementWorkoutActions">Trening Handlinger (pause, gjenoppta, etc.)</string>
 </resources>
