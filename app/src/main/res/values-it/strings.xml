@@ -317,4 +317,16 @@
     <string name="workoutAvgHeartRate">Avg. Frequenza cardiaca</string>
     <string name="workoutMaxHeartRate">Frequenza cardiaca max</string>
     <string name="workoutHeartRate">Frequenza cardiaca</string>
+    <string name="actionResume">Curriculum vitae</string>
+    <string name="workoutStarted">Allenamento iniziato</string>
+    <string name="workoutStopped">Allenamento interrotto</string>
+    <string name="workoutResumed">Allenamento ripreso</string>
+    <string name="workoutPaused">Allenamento in pausa</string>
+    <string name="actionPause">pausa</string>
+    <string name="autoPauseSummary">Automaticamente mettere in pausa e continuare gli allenamenti</string>
+    <string name="autoPauseTitle">Pausa automatica</string>
+    <string name="resumeWorkout">Riprendere L\'Allenamento</string>
+    <string name="heartRateNotAvailable">La frequenza cardiaca non è attualmente disponibile.</string>
+    <string name="intervals">Intervallo</string>
+    <string name="announcementWorkoutActions">Azioni di allenamento (pausa, riprendere, ecc.)</string>
 </resources>
