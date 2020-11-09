@@ -303,4 +303,16 @@
     <string name="workoutAvgHeartRate">Avg. Pulzusszám</string>
     <string name="workoutMaxHeartRate">Max Pulzusszám</string>
     <string name="workoutHeartRate">Pulzusszám</string>
+    <string name="workoutStarted">Edzés kezdődött</string>
+    <string name="workoutStopped">Az edzés leállt</string>
+    <string name="workoutResumed">Az edzés folytatódik</string>
+    <string name="workoutPaused">Az edzés szünetelt</string>
+    <string name="actionResume">Folytatás</string>
+    <string name="actionPause">Szünet</string>
+    <string name="autoPauseSummary">Az edzések automatikus szüneteltetése és folytatása</string>
+    <string name="autoPauseTitle">Automatikus szünet</string>
+    <string name="resumeWorkout">Folytatás Edzés</string>
+    <string name="heartRateNotAvailable">A pulzusszám jelenleg nem áll rendelkezésre.</string>
+    <string name="intervals">Intervallumok</string>
+    <string name="announcementWorkoutActions">Edzésműveletek (Szünet, Folytatás stb.)</string>
 </resources>

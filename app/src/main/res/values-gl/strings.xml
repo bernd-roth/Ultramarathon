@@ -285,4 +285,16 @@
     <string name="workoutAvgHeartRate">Ritmo card. promedio</string>
     <string name="workoutMaxHeartRate">Ritmo cardíaco Máx.</string>
     <string name="workoutHeartRate">Ritmo cardíaco</string>
+    <string name="workoutStarted">Adestramento iniciado</string>
+    <string name="workoutStopped">Adestramento detido</string>
+    <string name="workoutResumed">Adestramento retomado</string>
+    <string name="workoutPaused">Adestramento pausado</string>
+    <string name="actionResume">Retomar</string>
+    <string name="actionPause">Pausar</string>
+    <string name="autoPauseSummary">Deter automáticamente e retomar o adestramento</string>
+    <string name="autoPauseTitle">Pausa automática</string>
+    <string name="resumeWorkout">Retomar adestramento</string>
+    <string name="heartRateNotAvailable">Non está dispoñible o ritmo cardíaco.</string>
+    <string name="intervals">Intervalos</string>
+    <string name="announcementWorkoutActions">Accións do adestramento (pausar, retomar, etc.)</string>
 </resources>

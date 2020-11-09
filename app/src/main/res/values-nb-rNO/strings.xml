@@ -87,9 +87,9 @@
     <string name="unitKcalLong">Kalorier</string>
     <string name="unitMetersPerSecond">Meter per sekund</string>
     <string name="unitKilometersPerHour">Kilometer per time</string>
-    <string name="unitKilometersSingular">Kilometer</string>
+    <string name="unitKilometersSingular">kilometer</string>
     <string name="unitKilometersPlural">Kilometer</string>
-    <string name="unitMetersSingular">Meter</string>
+    <string name="unitMetersSingular">meter</string>
     <string name="unitMetersPlural">Meter</string>
     <string name="per">per</string>
     <string name="timeSecondsPlural">Sekunder</string>
@@ -285,4 +285,16 @@
     <string name="workoutAvgHeartRate">Avg. hjertefrekvens</string>
     <string name="workoutMaxHeartRate">Maks Puls</string>
     <string name="workoutHeartRate">hjertefrekvens</string>
+    <string name="workoutStarted">Treningsøkt startet</string>
+    <string name="workoutStopped">Treningsøkt stoppet</string>
+    <string name="workoutResumed">Treningsøkt gjenopptatt</string>
+    <string name="workoutPaused">Trening på pause</string>
+    <string name="actionResume">Fortsette</string>
+    <string name="actionPause">Gå i stykker</string>
+    <string name="autoPauseSummary">Automatisk pause og fortsette trening</string>
+    <string name="autoPauseTitle">Bilbrudd</string>
+    <string name="resumeWorkout">Gjenoppta Trening</string>
+    <string name="heartRateNotAvailable">Puls er for øyeblikket ikke tilgjengelig.</string>
+    <string name="intervals">Intervall</string>
+    <string name="announcementWorkoutActions">Trening Handlinger (pause, gjenoppta, etc.)</string>
 </resources>
