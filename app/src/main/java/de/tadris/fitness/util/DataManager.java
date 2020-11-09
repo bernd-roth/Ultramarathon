@@ -32,6 +32,9 @@ public class DataManager {
 
     public static void cleanFiles(Context context) {
         File dir = new File(getSharedDirectory(context));
+        if (!dir.exists()) {
+            return;
+        }
         for (File file : dir.listFiles()) {
             if (file.isFile()) {
                 if (file.delete()) {
