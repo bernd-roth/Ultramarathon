@@ -275,8 +275,8 @@ public abstract class WorkoutActivity extends InformationActivity {
     LinearLayout mapRoot;
 
     void addMap(){
-        map= new MapView(this);
-        downloadLayer = MapManager.setupMap(map);
+        map = new MapView(this);
+        downloadLayer = MapManager.setupMap(this, map);
 
         WorkoutLayer workoutLayer= new WorkoutLayer(samples, getThemePrimaryColor());
         map.addLayer(workoutLayer);
@@ -298,11 +298,11 @@ public abstract class WorkoutActivity extends InformationActivity {
 
         Paint pGreen= AndroidGraphicFactory.INSTANCE.createPaint();
         pGreen.setColor(Color.GREEN);
-        map.addLayer(new FixedPixelCircle(samples.get(0).toLatLong(), 20, pGreen, null));
+        map.addLayer(new FixedPixelCircle(samples.get(0).toLatLong(), 10, pGreen, null));
         Paint pRed= AndroidGraphicFactory.INSTANCE.createPaint();
         pRed.setColor(Color.RED);
 
-        map.addLayer(new FixedPixelCircle(samples.get(samples.size()-1).toLatLong(), 20, pRed, null));
+        map.addLayer(new FixedPixelCircle(samples.get(samples.size() - 1).toLatLong(), 10, pRed, null));
 
         map.setClickable(false);
 
