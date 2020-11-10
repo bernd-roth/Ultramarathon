@@ -53,10 +53,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top|end"
-            android:shadowColor="#000000"
             android:shadowRadius="10"
             android:text="@string/app_name"
             android:textColor="#FFFFFF"
+            android:shadowColor="#000000"
             android:textSize="30sp"
             android:textStyle="bold|italic" />
         <!--@color/textDarkerWhite @android:color/darker_gray-->
@@ -74,7 +74,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
-            android:layout_marginStart="15dp">
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="3dp"
+            android:stretchColumns="0,1,2*">
 
             <TableRow
                 android:id="@+id/tableRow1"
@@ -91,10 +93,13 @@
                     android:text="@string/workoutTypeRunning"
                     android:textColor="#FFFFFF"
                     android:shadowColor="#000000"
-                    android:shadowRadius="10"
-                    android:textSize="18sp"
+                    android:shadowRadius="7"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
-
+                <!--
+                android:shadowDx="0"
+                android:shadowDy="0"
+                -->
                 <!-- Column 2 -->
                 <TextView
                     android:id="@+id/workoutPaceTitle"
@@ -105,8 +110,8 @@
                     android:text="@string/workoutPace"
                     android:textColor="#FFFFFF"
                     android:shadowColor="#000000"
-                    android:shadowRadius="10"
-                    android:textSize="18sp"
+                    android:shadowRadius="7"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <!-- Column 3 -->
@@ -116,11 +121,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="sans-serif-black"
+                    android:shadowColor="#000000"
+                    android:shadowRadius="7"
                     android:text="@string/workoutDuration"
                     android:textColor="#FFFFFF"
-                    android:shadowColor="#000000"
-                    android:shadowRadius="10"
-                    android:textSize="18sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
             </TableRow>
 
@@ -136,11 +141,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="sans-serif-black"
-                    android:text=""
+                    android:text="6,1 km"
                     android:textColor="#FFFFFF"
                     android:shadowColor="#000000"
-                    android:shadowRadius="10"
-                    android:textSize="22sp"
+                    android:shadowRadius="8"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
                 <!-- android:text="6,1 km" -->
                 <!-- Column 2 -->
@@ -150,11 +155,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="sans-serif-black"
-                    android:text=""
+                    android:text="6:04 min/km"
                     android:textColor="#FFFFFF"
                     android:shadowColor="#000000"
-                    android:shadowRadius="10"
-                    android:textSize="22sp"
+                    android:shadowRadius="8"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
                 <!-- android:text="6:04 min/km" -->
 
@@ -165,11 +170,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="sans-serif-black"
-                    android:text=""
+                    android:text="37m 16s"
                     android:textColor="#FFFFFF"
                     android:shadowColor="#000000"
-                    android:shadowRadius="10"
-                    android:textSize="22sp"
+                     android:shadowRadius="8"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
                 <!-- android:text="37m 16s" -->
             </TableRow>
