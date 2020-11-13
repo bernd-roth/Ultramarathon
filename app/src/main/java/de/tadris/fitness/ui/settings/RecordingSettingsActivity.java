@@ -92,7 +92,7 @@ public class RecordingSettingsActivity extends FitoTrackSettingsActivity {
         NumberPicker npT = v.findViewById(R.id.autoTimeoutPicker);
         npT.setMaxValue(60 / stepWidth);
         npT.setMinValue(0);
-        npT.setFormatter(value -> value == 0 ? "No Timeout" : value * stepWidth + " " + getText(R.string.timeMinuteShort));
+        npT.setFormatter(value -> value == 0 ? getText(R.string.notimeout).toString() : value * stepWidth + " " + getText(R.string.timeMinuteShort));
         final String autoTimeoutVariable = "autoTimeoutPeriod";
         npT.setValue(preferences.getInt(autoTimeoutVariable, 20) / stepWidth);
         npT.setWrapSelectorWheel(false);

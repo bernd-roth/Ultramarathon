@@ -39,7 +39,7 @@
     <string name="restore">Restaurer</string>
     <string name="backup">Sauvegarder</string>
     <string name="pref_ringtone_silent">Silencieux</string>
-    <string name="setPreferencesTitle">Définnir les préférences</string>
+    <string name="setPreferencesTitle">Définir les préférences</string>
     <string name="setPreferencesMessage">Vous pouvez définir votre système d\'unités préféré et votre poids dans les paramètres.</string>
     <string name="timeMinuteSingular">Minute</string>
     <string name="timeMinutePlural">Minutes</string>
@@ -92,15 +92,15 @@
     <string name="workoutTypeJogging">Jogging</string>
     <string name="workoutTypeCycling">Vélo</string>
     <string name="workoutTypeHiking">Randonnée</string>
-    <string name="workoutTypeSkateboarding">Planche à roulettes</string>
-    <string name="workoutTypeInlineSkating">Patins à roues alignées</string>
+    <string name="workoutTypeSkateboarding">Skateboard</string>
+    <string name="workoutTypeInlineSkating">Roller</string>
     <string name="workoutTypeOther">Autre</string>
     <string name="workoutTypeUnknown">Inconnu</string>
     <string name="type">Type</string>
-    <string name="enterWorkout">Commencer l\'entraînement</string>
-    <string name="importWorkout">Importer l\'entraînement</string>
+    <string name="enterWorkout">Enregistrer un entraînement</string>
+    <string name="importWorkout">Importer un entraînement</string>
     <string name="setDuration">Définir la durée</string>
-    <string name="recordWorkout">Enregistrer l\'entraînement</string>
+    <string name="recordWorkout">Commencer l\'entraînement</string>
     <string name="noGpsTitle">GPS désactivé</string>
     <string name="noGpsMessage">Veuillez activer le GPS pour géolocaliser votre entraînement.</string>
     <string name="enable">Activer</string>
@@ -160,7 +160,7 @@
     <string name="interval_name">Nom :</string>
     <string name="length_in_minutes">Durée (minutes) :</string>
     <string name="enterName">Entrez un nom</string>
-    <string name="deleteIntervalSet">Supprimer la série d\intervalle</string>
+    <string name="deleteIntervalSet">Supprimer la série d\'intervalle</string>
     <string name="deleteIntervalSetMessage">Voulez-vous supprimer la série d\'intervalles \?</string>
     <string name="selectIntervalSet">Sélectionnez une série d\'intervalles</string>
     <string name="intervalSetSelected">Séries d\'intervalles sélectionnées</string>
@@ -190,15 +190,15 @@
     <string name="per">par</string>
     <string name="unitMilesSingular">Mille</string>
     <string name="unitMilesPlural">Milles</string>
-    <string name="unitYardsSingular">Verge</string>
-    <string name="unitYardsPlural">Verges</string>
+    <string name="unitYardsSingular">Yard</string>
+    <string name="unitYardsPlural">Yards</string>
     <string name="unitMilesPerHour">Milles par Heure</string>
-    <string name="unitMetersPlural">Mètre</string>
-    <string name="unitMetersSingular">Mètres</string>
+    <string name="unitMetersPlural">Mètres</string>
+    <string name="unitMetersSingular">Mètre</string>
     <string name="unitKilometersPlural">Kilomètres</string>
-    <string name="unitKilometersSingular">Kilomètres</string>
+    <string name="unitKilometersSingular">Kilomètre</string>
     <string name="unitKilometersPerHour">Kilomètres par heure</string>
-    <string name="unitMetersPerSecond">Mètre par seconde</string>
+    <string name="unitMetersPerSecond">Mètres par seconde</string>
     <string name="unitKcalLong">Calories</string>
     <string name="unitKJoule">Kilojoule</string>
     <string name="pref_energy_unit">Unité énergétique</string>
@@ -251,6 +251,13 @@
         <item>Clair</item>
         <item>Sombre</item>
     </string-array>
+    <string-array name="pref_unit_systems">
+        <item>Métrique</item>
+        <item>Métrique en m/s</item>
+        <item>Impériale</item>
+        <item>Impériale en mètres</item>
+        <item>US Customary</item>
+    </string-array>
     <string-array name="pref_time_format">
         <item>Valeur par défaut</item>
         <item>12:08 PM</item>
@@ -280,7 +287,7 @@
     <string name="aboutTitle">À propos</string>
     <string name="aboutVersion">Version</string>
     <string name="aboutChangelog">Journal des changements</string>
-    <string name="aboutOpenSourceLibraries">Bibliothèques à code source ouvert</string>
+    <string name="aboutOpenSourceLibraries">Librairies Open source</string>
     <string name="aboutReportBug">Signaler une erreur</string>
     <string name="aboutLinks">Liens</string>
     <string name="aboutAuthor">Auteur·e</string>
@@ -294,7 +301,7 @@
     <string name="unitFootPlural">Pieds</string>
     <string name="unitFootSingular">Pied</string>
     <string name="recordingPermissionNotGrantedTitle">Permissions non accordées</string>
-    <string name="recordingPermissionNotGrantedMessage">Vius n\'avez pas accordé à FitoTrack la permission d\'accéder à la position. FitoTrack a besoin de cette permission pour suivre votre déplacement durant la séance d\'entraînement.</string>
+    <string name="recordingPermissionNotGrantedMessage">Vous n\'avez pas accordé à FitoTrack la permission d\'accéder à la position. FitoTrack a besoin de cette permission pour suivre votre déplacement durant la séance d\'entraînement.</string>
     <string name="recordingBackgroundPermissionNotGrantedMessage">Vous n\'avez pas donné la permission à FitoTrack d\'accéder à votre position en arrière-plan. (Par exemple, l\'écran éteint.) Les séances d\'entraînement peuvent ne pas être enregistrées correctement.</string>
     <string name="recordingStateStopped">Arrêtés</string>
     <string name="recordingStatePaused">Mis en pause</string>
@@ -311,13 +318,13 @@
     <string name="importMultipleGpxFilesSummary">Importer plus d\'un fichier GPX à la fois à partir du système de fichiers</string>
     <string name="importMultipleMessageSelectFolder">Veuillez sélectionner un dossier contenant tous les fichiers GPX que vous souhaitez importer.</string>
     <string name="importMultipleGpxFiles">Importer plusieurs fichiers GPX</string>
-    <string name="actionGrant">Subvention</string>
+    <string name="actionGrant">Autoriser</string>
     <string name="recordingGrantBackgroundPermissionMessage">FitoTrack collecte également des données de localisation en arrière-plan pour enregistrer l\'entraînement lorsque l\'écran est éteint. Par conséquent, veuillez accorder la permission.</string>
     <string name="recordingGrantLocationPermissionMessage">FitoTrack collecte les données de localisation pour enregistrer l\'entraînement. Veuillez autoriser l\'emplacement pour enregistrer un entraînement.</string>
-    <string name="aboutPrivacyPolicy">Fortrolighedspolitik</string>
+    <string name="aboutPrivacyPolicy">Politique de confidentialité</string>
     <string name="inclination">Inclinaison</string>
     <string name="nothingSelected">Rien de sélectionné</string>
-    <string name="showIntervals">Afficher les intervalles</string>
+    <string name="showIntervals">Afficher les interva lles</string>
     <string name="connectHeartRateDevice">Connecter un appareil de mesure du rythme cardiaque</string>
     <string name="selectBluetoothDevice">Sélectionner un appareil Bluetooth</string>
     <string name="workoutAvgHeartRate">Moyenne. Fréquence cardiaque</string>
@@ -325,14 +332,15 @@
     <string name="workoutHeartRate">Rythme cardiaque</string>
     <string name="resumeWorkout">Reprendre L\'Entraînement</string>
     <string name="heartRateNotAvailable">La fréquence cardiaque n\'est actuellement pas disponible.</string>
-    <string name="intervals">Intervalle</string>
+    <string name="intervals">Intervalles</string>
     <string name="announcementWorkoutActions">Actions d\'entraînement (pause, reprise, etc.)</string>
     <string name="workoutStarted">Entraînement commencé</string>
     <string name="workoutStopped">Entraînement arrêté</string>
     <string name="workoutResumed">Reprise de la séance d\'entraînement</string>
     <string name="workoutPaused">Entraînement en pause</string>
     <string name="actionResume">Reprendre</string>
-    <string name="actionPause">pause</string>
+    <string name="actionPause">Pause</string>
     <string name="autoPauseSummary">Automatiquement pause et continuer les séances d\'entraînement</string>
-    <string name="autoPauseTitle">Pause voiture</string>
+    <string name="autoPauseTitle">Pause automatique</string>
+    <string name="notimeout">Aucune pause</string>
 </resources>
