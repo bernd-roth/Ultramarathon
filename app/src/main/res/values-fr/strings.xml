@@ -324,7 +324,7 @@
     <string name="aboutPrivacyPolicy">Politique de confidentialité</string>
     <string name="inclination">Inclinaison</string>
     <string name="nothingSelected">Rien de sélectionné</string>
-    <string name="showIntervals">Afficher les interva lles</string>
+    <string name="showIntervals">Afficher les intervalles</string>
     <string name="connectHeartRateDevice">Connecter un appareil de mesure du rythme cardiaque</string>
     <string name="selectBluetoothDevice">Sélectionner un appareil Bluetooth</string>
     <string name="workoutAvgHeartRate">Moyenne. Fréquence cardiaque</string>
