@@ -325,7 +325,7 @@
     <string name="workoutAvgHeartRate">Promedio. Ritmo cardíaco</string>
     <string name="workoutMaxHeartRate">Ritmo cardíaco máximo</string>
     <string name="workoutHeartRate">Ritmo cardíaco</string>
-    <string name="workoutStarted">Entrenamiento comenzó</string>
+    <string name="workoutStarted">Entrenamiento iniciado</string>
     <string name="workoutStopped">Entrenamiento detenido</string>
     <string name="workoutResumed">Entrenamiento reanudado</string>
     <string name="workoutPaused">Entrenamiento en pausa</string>

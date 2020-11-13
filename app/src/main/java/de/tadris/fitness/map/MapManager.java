@@ -19,11 +19,14 @@
 
 package de.tadris.fitness.map;
 
+import android.app.Activity;
+
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.util.AndroidUtil;
 import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.layer.cache.TileCache;
 import org.mapsforge.map.layer.download.TileDownloadLayer;
+import org.mapsforge.map.model.DisplayModel;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.map.tilesource.FitoTrackTileSource;
@@ -32,11 +35,15 @@ import de.tadris.fitness.map.tilesource.MapnikTileSource;
 
 public class MapManager {
 
-    public static TileDownloadLayer setupMap(MapView mapView) {
+    public static TileDownloadLayer setupMap(Activity activity, MapView mapView) {
+        // This sets the device scale factor so the map is displayed accordingly
+        AndroidGraphicFactory.createInstance(activity.getApplication());
+        DisplayModel.setDefaultUserScaleFactor(0.85f);
+
         FitoTrackTileSource tileSource;
 
-        String chosenTileLayer= Instance.getInstance(mapView.getContext()).userPreferences.getMapStyle();
-        switch (chosenTileLayer){
+        String chosenTileLayer = Instance.getInstance(mapView.getContext()).userPreferences.getMapStyle();
+        switch (chosenTileLayer) {
             case "osm.humanitarian":
                 tileSource = HumanitarianTileSource.INSTANCE;
                 break;

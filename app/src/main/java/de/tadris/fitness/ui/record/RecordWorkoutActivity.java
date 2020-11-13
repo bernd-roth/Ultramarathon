@@ -240,7 +240,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Recorder
     private void setupMap() {
         mapView = new MapView(this);
         mapView.setClickable(false);
-        downloadLayer = MapManager.setupMap(mapView);
+        downloadLayer = MapManager.setupMap(this, mapView);
     }
 
     private void updateLine() {
