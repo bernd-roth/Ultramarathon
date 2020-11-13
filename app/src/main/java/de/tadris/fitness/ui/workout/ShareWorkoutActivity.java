@@ -31,6 +31,9 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -99,14 +102,23 @@ public class ShareWorkoutActivity extends WorkoutActivity {
         workoutType.setText(workout.getWorkoutType().title);
 
         TextView workoutDistance = this.findViewById(R.id.workoutDistance);
-        workoutDistance.setText(distanceUnitUtils.getDistance(workout.length));
+        //workoutDistance.setText(distanceUnitUtils.getDistance(workout.length));
+        String distance=distanceUnitUtils.getDistance(workout.length);
+        Spannable distanceSpan = new SpannableString(distance);
+        distanceSpan.setSpan(new RelativeSizeSpan(0.8f), distance.lastIndexOf(" "), distance.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        workoutDistance.setText(distanceSpan);
 
         TextView workoutPace     = this.findViewById(R.id.workoutPace);
-        workoutPace.setText(distanceUnitUtils.getPace(workout.avgPace));
+        //workoutPace.setText(distanceUnitUtils.getPace(workout.avgPace));
+        String pace=distanceUnitUtils.getPace(workout.avgPace);
+        Spannable paceSpan = new SpannableString(pace);
+        paceSpan.setSpan(new RelativeSizeSpan(0.8f), pace.lastIndexOf(" "), pace.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        workoutPace.setText(paceSpan);
 
         TextView workoutTime     = this.findViewById(R.id.workoutTime);
         workoutTime.setText(distanceUnitUtils.getHourMinuteSecondTime(workout.duration));
-    }
+
+     }
 
     private void shareWorkoutActivity() {
         Bitmap bitmap = getBitmapFromView(findViewById(R.id.shareWorkout));

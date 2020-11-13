@@ -44,8 +44,8 @@
 
         <ImageView
             android:id="@+id/logo"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginEnd="3dp"
             android:src="@drawable/logo_small"/>
         <TextView
@@ -53,12 +53,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top|end"
-            android:shadowRadius="10"
             android:text="@string/app_name"
             android:textColor="#FFFFFF"
+            android:shadowRadius="10"
             android:shadowColor="#000000"
             android:textSize="30sp"
-            android:textStyle="bold|italic" />
+            android:textStyle="bold" />
         <!--@color/textDarkerWhite @android:color/darker_gray-->
     </LinearLayout>
 
@@ -74,8 +74,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
-            android:layout_marginStart="3dp"
-            android:layout_marginEnd="3dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             android:stretchColumns="0,1,2*">
 
             <TableRow
@@ -173,7 +173,7 @@
                     android:text="37m 16s"
                     android:textColor="#FFFFFF"
                     android:shadowColor="#000000"
-                     android:shadowRadius="8"
+                    android:shadowRadius="8"
                     android:textSize="24sp"
                     android:textStyle="bold" />
                 <!-- android:text="37m 16s" -->
@@ -194,4 +194,3 @@
     </LinearLayout>
 
 </FrameLayout>
-
