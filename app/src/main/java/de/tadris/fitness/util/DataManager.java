@@ -23,6 +23,7 @@ import android.content.Context;
 import android.util.Log;
 
 import java.io.File;
+import java.util.Objects;
 
 public class DataManager {
 
@@ -32,15 +33,16 @@ public class DataManager {
 
     public static void cleanFiles(Context context) {
         File dir = new File(getSharedDirectory(context));
-        if (!dir.exists()) {
-            return;
-        }
-        for (File file : dir.listFiles()) {
-            if (file.isFile()) {
-                if (file.delete()) {
-                    Log.d("DataManager", "Deleted file " + file.getPath());
-                } else {
-                    Log.d("DataManager", "Could not delete file " + file.getPath());
+
+        if (dir.exists()) {
+            // Otherwise dir.listFiles() would return null => NullPointerException
+            for (File file : Objects.requireNonNull(dir.listFiles())) {
+                if (file.isFile()) {
+                    if (file.delete()) {
+                        Log.d("DataManager", "Deleted file " + file.getPath());
+                    } else {
+                        Log.d("DataManager", "Could not delete file " + file.getPath());
+                    }
                 }
             }
         }
