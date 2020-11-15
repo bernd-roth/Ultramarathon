@@ -33,33 +33,39 @@
         android:orientation="vertical">
 
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/applogo"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top|end"
-        android:gravity="center"
-        android:layout_margin="15dp"
-        android:orientation="horizontal">
-
+        android:gravity="right"
+        android:orientation="horizontal"
+        android:background="@drawable/share_workout_background_up">
+        <!--  android:background="@drawable/share_workout_background_down" -->
         <ImageView
             android:id="@+id/logo"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="3dp"
-            android:src="@drawable/logo_small"/>
+            android:layout_width="35dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/logo_small" />
+
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top|end"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="20dp"
             android:text="@string/app_name"
             android:textColor="#FFFFFF"
-            android:shadowRadius="10"
+            android:textSize="35sp"
+            android:textStyle="bold"
             android:shadowColor="#000000"
-            android:textSize="30sp"
-            android:textStyle="bold" />
-        <!--@color/textDarkerWhite @android:color/darker_gray-->
+            android:shadowRadius="10"
+            />
     </LinearLayout>
 
 
@@ -68,14 +74,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
+        android:background="@drawable/share_workout_background_down"
         android:orientation="vertical">
-
+        <!-- android:background="@drawable/share_workout_background_down" -->
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
+            android:layout_marginTop="15dp"
             android:stretchColumns="0,1,2*">
 
             <TableRow
@@ -90,15 +98,17 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="sans-serif-black"
-                    android:text="@string/workoutTypeRunning"
-                    android:textColor="#FFFFFF"
                     android:shadowColor="#000000"
                     android:shadowRadius="7"
+                    android:text="@string/workoutTypeRunning"
+                    android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold" />
                 <!--
                 android:shadowDx="0"
                 android:shadowDy="0"
+                android:shadowColor="#000000"
+                android:shadowRadius="7"
                 -->
                 <!-- Column 2 -->
                 <TextView
@@ -107,10 +117,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="sans-serif-black"
-                    android:text="@string/workoutPace"
-                    android:textColor="#FFFFFF"
                     android:shadowColor="#000000"
                     android:shadowRadius="7"
+                    android:text="@string/workoutPace"
+                    android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -141,10 +151,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="sans-serif-black"
-                    android:text="6,1 km"
-                    android:textColor="#FFFFFF"
                     android:shadowColor="#000000"
                     android:shadowRadius="8"
+                    android:text="6,1 km"
+                    android:textColor="#FFFFFF"
                     android:textSize="24sp"
                     android:textStyle="bold" />
                 <!-- android:text="6,1 km" -->
@@ -155,10 +165,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="sans-serif-black"
-                    android:text="6:04 min/km"
-                    android:textColor="#FFFFFF"
                     android:shadowColor="#000000"
                     android:shadowRadius="8"
+                    android:text="6:04 min/km"
+                    android:textColor="#FFFFFF"
                     android:textSize="24sp"
                     android:textStyle="bold" />
                 <!-- android:text="6:04 min/km" -->
@@ -170,10 +180,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="sans-serif-black"
-                    android:text="37m 16s"
-                    android:textColor="#FFFFFF"
                     android:shadowColor="#000000"
                     android:shadowRadius="8"
+                    android:text="37m 16s"
+                    android:textColor="#FFFFFF"
                     android:textSize="24sp"
                     android:textStyle="bold" />
                 <!-- android:text="37m 16s" -->
@@ -188,9 +198,11 @@
             android:layout_gravity="bottom|center"
             android:layout_margin="5dp"
             android:text="@string/OpenStreetMapAttribution"
-            android:textColor="@color/textColorLight"
+            android:textColor="#DCDCDC"
             android:textSize="12sp" />
+        <!-- android:textColor="@color/textLighterBlack" -->
 
     </LinearLayout>
 
 </FrameLayout>
+

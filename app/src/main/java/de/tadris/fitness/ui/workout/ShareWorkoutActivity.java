@@ -53,7 +53,7 @@ import de.tadris.fitness.R;
 
 public class ShareWorkoutActivity extends WorkoutActivity {
 
-   @Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -117,8 +117,7 @@ public class ShareWorkoutActivity extends WorkoutActivity {
 
         TextView workoutTime     = this.findViewById(R.id.workoutTime);
         workoutTime.setText(distanceUnitUtils.getHourMinuteSecondTime(workout.duration));
-
-     }
+    }
 
     private void shareWorkoutActivity() {
         Bitmap bitmap = getBitmapFromView(findViewById(R.id.shareWorkout));
