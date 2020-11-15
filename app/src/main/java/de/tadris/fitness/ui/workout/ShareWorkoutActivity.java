@@ -117,8 +117,7 @@ public class ShareWorkoutActivity extends WorkoutActivity {
 
         TextView workoutTime     = this.findViewById(R.id.workoutTime);
         workoutTime.setText(distanceUnitUtils.getHourMinuteSecondTime(workout.duration));
-
-     }
+    }
 
     private void shareWorkoutActivity() {
         Bitmap bitmap = getBitmapFromView(findViewById(R.id.shareWorkout));
