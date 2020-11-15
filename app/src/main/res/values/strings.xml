@@ -299,6 +299,7 @@
     <string name="workoutResumed">Workout resumed</string>
     <string name="workoutStopped">Workout stopped</string>
     <string name="workoutStarted">Workout started</string>
+    <string name="notimeout">No Timeout</string>
     <string-array name="osm_track_visibility">
         <item>Identifiable</item>
         <item>Trackable</item>
