@@ -26,6 +26,7 @@ import android.os.Handler;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
+import de.tadris.fitness.map.MapManager;
 import de.tadris.fitness.recording.WorkoutRecorder;
 import de.tadris.fitness.ui.record.RecordWorkoutActivity;
 
@@ -46,6 +47,7 @@ public class LauncherActivity extends Activity {
 
     private void init() {
         Instance.getInstance(this);
+        MapManager.initMapProvider(this);
         start();
     }
 

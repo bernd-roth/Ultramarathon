@@ -35,10 +35,14 @@ import de.tadris.fitness.map.tilesource.MapnikTileSource;
 
 public class MapManager {
 
-    public static TileDownloadLayer setupMap(Activity activity, MapView mapView) {
+    public static void initMapProvider(Activity activity) {
         // This sets the device scale factor so the map is displayed accordingly
         AndroidGraphicFactory.createInstance(activity.getApplication());
         DisplayModel.setDefaultUserScaleFactor(0.85f);
+    }
+
+    public static TileDownloadLayer setupMap(Activity activity, MapView mapView) {
+        initMapProvider(activity);
 
         FitoTrackTileSource tileSource;
 
