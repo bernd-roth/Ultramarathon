@@ -17,19 +17,28 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.util.io.general;
+package de.tadris.fitness.util.autoexport.source;
+
+import android.content.Context;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 
-import de.tadris.fitness.data.WorkoutData;
+public interface ExportSource {
 
-public interface IWorkoutExporter {
-    void exportWorkout(WorkoutData data, OutputStream outputStream) throws IOException;
+    String EXPORT_SOURCE_WORKOUT_GPX = "workout-gpx";
+    String EXPORT_SOURCE_BACKUP = "backup";
 
-    default void exportWorkout(WorkoutData data, File file) throws IOException {
-        exportWorkout(data, new FileOutputStream(file));
+    File provideFile(Context context) throws Exception;
+
+    static ExportSource getExportSourceByName(String name, String data) {
+        switch (name) {
+            case EXPORT_SOURCE_BACKUP:
+                return new BackupExportSource();
+            case EXPORT_SOURCE_WORKOUT_GPX:
+                return new WorkoutGpxExportSource(Long.parseLong(data));
+            default:
+                return null;
+        }
     }
+
 }

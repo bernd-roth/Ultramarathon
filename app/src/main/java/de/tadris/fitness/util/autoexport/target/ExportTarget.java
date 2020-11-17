@@ -17,19 +17,20 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.util.io.general;
+package de.tadris.fitness.util.autoexport.target;
+
+import android.content.Context;
+
+import androidx.work.Constraints;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 
-import de.tadris.fitness.data.WorkoutData;
+public interface ExportTarget {
 
-public interface IWorkoutExporter {
-    void exportWorkout(WorkoutData data, OutputStream outputStream) throws IOException;
+    void exportFile(Context context, File file) throws Exception;
 
-    default void exportWorkout(WorkoutData data, File file) throws IOException {
-        exportWorkout(data, new FileOutputStream(file));
+    default Constraints getConstraints() {
+        return new Constraints.Builder().build();
     }
+
 }

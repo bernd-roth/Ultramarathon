@@ -30,10 +30,10 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.TimeZone;
 
 import de.tadris.fitness.data.Workout;
+import de.tadris.fitness.data.WorkoutData;
 import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.util.gpx.Gpx;
 import de.tadris.fitness.util.gpx.GpxTpxExtension;
@@ -54,23 +54,25 @@ public class GpxExporter implements IWorkoutExporter {
     }
 
     @Override
-    public void exportWorkout(Workout workout, List<WorkoutSample> samples, OutputStream fileStream) throws IOException {
+    public void exportWorkout(WorkoutData data, OutputStream fileStream) throws IOException {
         XmlMapper mapper = new XmlMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         mapper.enable(ToXmlGenerator.Feature.WRITE_XML_DECLARATION);
         mapper.enable(ToXmlGenerator.Feature.WRITE_XML_1_1);
-        mapper.writeValue(fileStream, getGpxFromWorkout(workout, samples));
+        mapper.writeValue(fileStream, getGpxFromWorkout(data));
     }
 
-    private Gpx getGpxFromWorkout(Workout workout, List<WorkoutSample> samples) {
-        Track track = getTrackFromWorkout(workout, samples, 0);
+    private Gpx getGpxFromWorkout(WorkoutData data) {
+        Workout workout = data.getWorkout();
+        Track track = getTrackFromWorkout(data, 0);
         ArrayList<Track> tracks = new ArrayList<>();
         tracks.add(track);
         Metadata meta = new Metadata(workout.toString(), workout.comment, getDateTime(workout.start));
         return new Gpx("1.1", "FitoTrack", meta, workout.toString(), workout.comment, tracks);
     }
 
-    private Track getTrackFromWorkout(Workout workout, List<WorkoutSample> samples, int number) {
+    private Track getTrackFromWorkout(WorkoutData data, int number) {
+        Workout workout = data.getWorkout();
         Track track = new Track();
         track.setNumber(number);
         track.setName(workout.toString());
@@ -83,7 +85,7 @@ public class GpxExporter implements IWorkoutExporter {
         TrackSegment segment = new TrackSegment();
         ArrayList<TrackPoint> trkpt = new ArrayList<>();
 
-        for(WorkoutSample sample : samples){
+        for (WorkoutSample sample : data.getSamples()) {
             trkpt.add(new TrackPoint(sample.lat, sample.lon, sample.elevation,
                     getDateTime(sample.absoluteTime), new TrackPointExtensions(sample.speed, new GpxTpxExtension(sample.heartRate))));
         }

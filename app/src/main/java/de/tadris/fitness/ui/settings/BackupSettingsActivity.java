@@ -34,16 +34,14 @@ import androidx.core.content.FileProvider;
 import androidx.documentfile.provider.DocumentFile;
 
 import java.io.File;
-import java.io.IOException;
 
 import de.tadris.fitness.BuildConfig;
 import de.tadris.fitness.R;
-import de.tadris.fitness.export.BackupController;
 import de.tadris.fitness.export.RestoreController;
 import de.tadris.fitness.ui.ShareFileActivity;
 import de.tadris.fitness.ui.dialog.ProgressDialogController;
 import de.tadris.fitness.ui.dialog.ThreadSafeProgressDialogController;
-import de.tadris.fitness.util.DataManager;
+import de.tadris.fitness.util.autoexport.source.BackupExportSource;
 import de.tadris.fitness.util.io.general.IOHelper;
 
 public class BackupSettingsActivity extends FitoTrackSettingsActivity {
@@ -91,16 +89,8 @@ public class BackupSettingsActivity extends FitoTrackSettingsActivity {
         dialogController.show();
         new Thread(() -> {
             try {
-                String file = DataManager.getSharedDirectory(this) + "/backup" + System.currentTimeMillis() + ".ftb";
-                File parent = new File(file).getParentFile();
-                if (!parent.exists() && !parent.mkdirs()) {
-                    throw new IOException("Cannot write");
-                }
-                Uri uri = FileProvider.getUriForFile(getBaseContext(), BuildConfig.APPLICATION_ID + ".fileprovider", new File(file));
-
-                BackupController backupController = new BackupController(getBaseContext(), new File(file), (progress, action) -> mHandler.post(() -> dialogController.setProgress(progress, action)));
-                backupController.exportData();
-
+                File file = new BackupExportSource().provideFile(this, (progress, action) -> mHandler.post(() -> dialogController.setProgress(progress, action)));
+                Uri uri = FileProvider.getUriForFile(getBaseContext(), BuildConfig.APPLICATION_ID + ".fileprovider", file);
                 mHandler.post(() -> {
                     dialogController.cancel();
                     Intent intent = new Intent(this, ShareFileActivity.class);

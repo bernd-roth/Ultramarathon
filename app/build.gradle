@@ -115,6 +115,10 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-runtime:$room_version"
 
+    // Android Work Manager
+    def work_version = "2.4.0"
+    implementation "androidx.work:work-runtime:$work_version"
+
     // support for the new language APIs
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.10'
 

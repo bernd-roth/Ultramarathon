@@ -38,6 +38,7 @@ import de.tadris.fitness.recording.announcement.TTSController;
 import de.tadris.fitness.util.DataManager;
 import de.tadris.fitness.util.FitoTrackThemes;
 import de.tadris.fitness.util.UserDateTimeUtils;
+import de.tadris.fitness.util.autoexport.AutoExportPlanner;
 import de.tadris.fitness.util.unit.DistanceUnitUtils;
 import de.tadris.fitness.util.unit.EnergyUnitUtils;
 
@@ -64,6 +65,7 @@ public class Instance {
     public final UserDateTimeUtils userDateTimeUtils;
     public final DistanceUnitUtils distanceUnitUtils;
     public final EnergyUnitUtils energyUnitUtils;
+    public final AutoExportPlanner planner;
 
     private Instance(Context context) {
         instance = this;
@@ -75,6 +77,7 @@ public class Instance {
         distanceUnitUtils = new DistanceUnitUtils(context);
         energyUnitUtils = new EnergyUnitUtils(context);
         db = AppDatabase.provideDatabase(context);
+        planner = new AutoExportPlanner(context);
 
         recorder = restoreRecorder(context);
 

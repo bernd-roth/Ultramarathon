@@ -37,7 +37,9 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract IntervalDao intervalDao();
 
-    public static AppDatabase provideDatabase(Context context){
+    public abstract ExportTargetDao exportTargetDao();
+
+    public static AppDatabase provideDatabase(Context context) {
         return Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, DATABASE_NAME)
                 .addMigrations(new Migration(1, 2) {
                     @Override

@@ -99,8 +99,13 @@ public class BackupController {
         mapper.writeValue(output, dataContainer);
     }
 
-    public interface ExportStatusListener{
+    public interface ExportStatusListener {
+
+        ExportStatusListener DUMMY = (progress, action) -> {
+        };
+
         void onStatusChanged(int progress, String action);
+
     }
 
 }

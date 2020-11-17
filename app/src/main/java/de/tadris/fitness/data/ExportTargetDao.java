@@ -17,19 +17,18 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.util.io.general;
+package de.tadris.fitness.data;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import androidx.room.Dao;
+import androidx.room.Query;
 
-import de.tadris.fitness.data.WorkoutData;
+@Dao
+public interface ExportTargetDao {
 
-public interface IWorkoutExporter {
-    void exportWorkout(WorkoutData data, OutputStream outputStream) throws IOException;
+    @Query("SELECT * FROM export_target_config WHERE id = :id")
+    ExportTargetConfiguration findById(long id);
 
-    default void exportWorkout(WorkoutData data, File file) throws IOException {
-        exportWorkout(data, new FileOutputStream(file));
-    }
+    @Query("SELECT * FROM export_target_config WHERE source = :source")
+    ExportTargetConfiguration[] findAllFor(String source);
+
 }

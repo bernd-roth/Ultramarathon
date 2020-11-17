@@ -94,4 +94,8 @@ public class UserPreferences {
         return preferences.getBoolean("showOnLockScreen", false);
     }
 
+    public int getAutoBackupIntervalHours() {
+        return preferences.getInt("autoBackupInterval", 24 * 7);
+    }
+
 }
