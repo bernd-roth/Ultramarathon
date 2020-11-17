@@ -90,4 +90,8 @@ public class UserPreferences {
         return preferences.getString("energyUnit", "kcal");
     }
 
+    public boolean getShowOnLockScreen() {
+        return preferences.getBoolean("showOnLockScreen", false);
+    }
+
 }

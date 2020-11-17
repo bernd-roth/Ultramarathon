@@ -607,7 +607,9 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Recorder
     public void onResume() {
         super.onResume();
         finished = false;
-        enableLockScreenVisibility();
+        if (instance.userPreferences.getShowOnLockScreen()) {
+            enableLockScreenVisibility();
+        }
         invalidateOptionsMenu();
         downloadLayer.onResume();
         startUpdater();
