@@ -31,7 +31,6 @@ import java.util.List;
 
 import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutSample;
-import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.util.gpx.Gpx;
 import de.tadris.fitness.util.gpx.Track;
 import de.tadris.fitness.util.gpx.TrackPoint;
@@ -75,7 +74,7 @@ public class GpxImporter implements IWorkoutImporter {
         String lastTime = firstSegment.getTrkpt().get(index - 1).getTime();
         workout.end = parseDate(lastTime).getTime();
         workout.duration = workout.end - workout.start;
-        workout.workoutTypeId = getTypeById(gpx.getTrk().get(0).getType()).id;
+        workout.workoutTypeId = getTypeIdById(gpx.getTrk().get(0).getType());
 
         List<WorkoutSample> samples = getSamplesFromTrack(workout.start, gpx.getTrk().get(0));
 
@@ -123,21 +122,21 @@ public class GpxImporter implements IWorkoutImporter {
         return DateParserUtils.parseDate(str);
     }
 
-    private static WorkoutType getTypeById(String id) {
+    private static String getTypeIdById(String id) {
         if (id == null) {
             id = "";
         }
         switch (id) {
             // Strava IDs
             case "1":
-                return WorkoutType.RUNNING;
+                return "running";
             case "2":
-                return WorkoutType.CYCLING;
+                return "cycling";
             case "11":
-                return WorkoutType.WALKING;
+                return "walking";
 
             default:
-                return WorkoutType.getTypeById(id);
+                return id;
         }
     }
 }

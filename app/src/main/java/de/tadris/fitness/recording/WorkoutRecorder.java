@@ -321,7 +321,7 @@ public class WorkoutRecorder implements RecorderService.RecorderServiceListener 
                     WorkoutSample lastSample = samples.get(samples.size() - 1);
                     distance = Math.abs(RecorderService.locationToLatLong(location).sphericalDistance(lastSample.toLatLong()));
                     long timediff = Math.abs(lastSample.absoluteTime - location.getTime());
-                    if (distance < workout.getWorkoutType().minDistance || timediff < 500) {
+                    if (distance < workout.getWorkoutType(context).minDistance || timediff < 500) {
                         return;
                     }
                 }
@@ -394,7 +394,7 @@ public class WorkoutRecorder implements RecorderService.RecorderServiceListener 
     public int getCalories() {
         workout.avgSpeed = getAvgSpeed();
         workout.duration = getDuration();
-        int calories = CalorieCalculator.calculateCalories(workout, Instance.getInstance(context).userPreferences.getUserWeight());
+        int calories = CalorieCalculator.calculateCalories(context, workout, Instance.getInstance(context).userPreferences.getUserWeight());
         if (calories > maxCalories) {
             maxCalories = calories;
         }

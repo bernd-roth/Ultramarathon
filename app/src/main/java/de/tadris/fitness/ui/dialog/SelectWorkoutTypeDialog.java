@@ -26,6 +26,8 @@ import android.app.Dialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.ui.adapter.WorkoutTypeAdapter;
 
@@ -33,13 +35,13 @@ public class SelectWorkoutTypeDialog implements WorkoutTypeAdapter.WorkoutTypeAd
 
     private Activity context;
     private WorkoutTypeSelectListener listener;
-    private WorkoutType[] options;
+    private List<WorkoutType> options;
     private Dialog dialog;
 
     public SelectWorkoutTypeDialog(Activity context, WorkoutTypeSelectListener listener) {
         this.context = context;
         this.listener = listener;
-        this.options = WorkoutType.values();
+        this.options = WorkoutType.getAllTypes(context);
     }
 
     public void show() {

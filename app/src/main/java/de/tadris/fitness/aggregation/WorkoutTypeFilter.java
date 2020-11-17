@@ -32,6 +32,6 @@ public class WorkoutTypeFilter implements WorkoutFilter {
 
     @Override
     public boolean isAccepted(Workout workout) {
-        return workout.getWorkoutType() == type;
+        return workout.workoutTypeId.equals(type.id);
     }
 }

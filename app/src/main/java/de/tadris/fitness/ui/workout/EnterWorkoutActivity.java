@@ -50,7 +50,7 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
 
     public static final String WORKOUT_ID_EXTRA = "de.tadris.fitness.EnterWorkoutActivity.WORKOUT_ID_EXTRA";
 
-    WorkoutBuilder workoutBuilder = new WorkoutBuilder();
+    WorkoutBuilder workoutBuilder;
     TextView typeTextView, dateTextView, timeTextView, durationTextView;
     EditText distanceEditText, commentEditText;
     private DistanceUnitSystem unitSystem;
@@ -65,6 +65,7 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
         setTitle(R.string.enterWorkout);
         setupActionBar();
 
+        workoutBuilder = new WorkoutBuilder(this);
         unitSystem = Instance.getInstance(this).distanceUnitUtils.getDistanceUnitSystem();
 
         addTitle(getString(R.string.info));
@@ -129,7 +130,7 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
     }
 
     private void loadFromWorkout(Workout workout) {
-        workoutBuilder = WorkoutBuilder.fromWorkout(workout);
+        workoutBuilder = WorkoutBuilder.fromWorkout(this, workout);
         distanceEditText.setText(String.valueOf(
                 UnitUtils.roundDouble(unitSystem.getDistanceFromKilometers(workoutBuilder.getLength() / 1000d), 3)
         ));
@@ -164,7 +165,7 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
     }
 
     private void updateTextViews() {
-        typeTextView.setText(getString(workoutBuilder.getWorkoutType().title));
+        typeTextView.setText(workoutBuilder.getWorkoutType().title);
         dateTextView.setText(SimpleDateFormat.getDateInstance().format(workoutBuilder.getStart().getTime()));
         timeTextView.setText(SimpleDateFormat.getTimeInstance().format(workoutBuilder.getStart().getTime()));
         durationTextView.setText(Instance.getInstance(this).distanceUnitUtils.getHourMinuteSecondTime(workoutBuilder.getDuration()));

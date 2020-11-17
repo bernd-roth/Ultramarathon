@@ -1,78 +1,119 @@
-/*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
- *
- * This file is part of FitoTrack
- *
- * FitoTrack is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *
- *     FitoTrack is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *
- *     You should have received a copy of the GNU General Public License
- *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 package de.tadris.fitness.data;
 
-import androidx.annotation.ColorRes;
-import androidx.annotation.DrawableRes;
-import androidx.annotation.StringRes;
-import androidx.annotation.StyleRes;
+import android.content.Context;
+
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
+import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 
-/**
- * If you add a new Workout type, you need to do the following:
- * - define a picture, color and style
- * - define the calorie calculation for the workout type in CalorieCalculator.java if you know it
- */
-public enum WorkoutType implements Serializable {
+@Entity(tableName = "workout_type")
+public class WorkoutType implements Serializable {
 
-    RUNNING("running", R.string.workoutTypeRunning, 5, true, R.drawable.ic_run, R.color.colorPrimaryRunning, R.style.Running, R.style.RunningDark),
-    WALKING("walking", R.string.workoutTypeWalking, 5, true, R.drawable.ic_walk, R.color.colorPrimaryRunning, R.style.Running, R.style.RunningDark),
-    HIKING("hiking", R.string.workoutTypeHiking, 5, true, R.drawable.ic_walk, R.color.colorPrimaryHiking, R.style.Hiking, R.style.HikingDark),
-    CYCLING("cycling", R.string.workoutTypeCycling, 10, true, R.drawable.ic_bike, R.color.colorPrimaryBicyclingLighter, R.style.Bicycling, R.style.BicyclingDark),
-    INLINE_SKATING("inline_skating", R.string.workoutTypeInlineSkating, 7, true, R.drawable.ic_inline_skating, R.color.colorPrimarySkating, R.style.Skating, R.style.SkatingDark),
-    SKATEBOARDING("skateboarding", R.string.workoutTypeSkateboarding, 7, true, R.drawable.ic_skateboarding, R.color.colorPrimarySkating, R.style.Skating, R.style.SkatingDark),
-    ROWING("rowing", R.string.workoutTypeRowing, 7, true, R.drawable.ic_rowing, R.color.colorPrimaryRowing, R.style.Rowing, R.style.RowingDark),
-    OTHER("other", R.string.workoutTypeOther, 7, true, R.drawable.ic_other, R.color.colorPrimary, R.style.AppTheme, R.style.AppThemeDark);
+    public static final String WORKOUT_TYPE_ID_OTHER = "other";
+    public static final String WORKOUT_TYPE_ID_RUNNING = "running";
 
+    @PrimaryKey
     public String id;
-    @StringRes
-    public int title;
-    public int minDistance; // Minimum distance between samples
-    public boolean hasGPS;
-    @StyleRes
-    public int lightTheme, darkTheme;
-    @DrawableRes
-    public int icon;
-    @ColorRes
+
+    public String title;
+
+    @ColumnInfo(name = "min_distance")
+    public int minDistance;
+
     public int color;
 
-    WorkoutType(String id, int title, int minDistance, boolean hasGPS, int icon, int color, int lightTheme, int darkTheme) {
+    public String icon;
+
+    @ColumnInfo(name = "met")
+    public int MET;
+
+    public WorkoutType(String id, String title, int minDistance, int color, String icon, int MET) {
         this.id = id;
         this.title = title;
         this.minDistance = minDistance;
-        this.hasGPS = hasGPS;
-        this.icon = icon;
         this.color = color;
-        this.lightTheme = lightTheme;
-        this.darkTheme = darkTheme;
+        this.icon = icon;
+        this.MET = MET;
     }
 
-    public static WorkoutType getTypeById(String id) {
-        for (WorkoutType type : values()) {
+    private static WorkoutType[] PRESETS = null;
+
+    public static WorkoutType getWorkoutTypeById(Context context, String id) {
+        buildPresets(context);
+        for (WorkoutType type : PRESETS) {
             if (type.id.equals(id)) {
                 return type;
             }
         }
-        return OTHER;
+        WorkoutType type = Instance.getInstance(context).db.workoutTypeDao().findById(id);
+        if (type == null && !id.equals(WORKOUT_TYPE_ID_OTHER)) {
+            return getWorkoutTypeById(context, WORKOUT_TYPE_ID_OTHER);
+        } else {
+            return type;
+        }
+    }
+
+    public static List<WorkoutType> getAllTypes(Context context) {
+        buildPresets(context);
+        List<WorkoutType> result = new ArrayList<>(Arrays.asList(PRESETS));
+        WorkoutType[] fromDatabase = Instance.getInstance(context).db.workoutTypeDao().findAll();
+        result.addAll(Arrays.asList(fromDatabase));
+        return result;
+    }
+
+    private static void buildPresets(Context context) {
+        if (PRESETS != null) return; // Don't build a second time
+        PRESETS = new WorkoutType[]{
+                new WorkoutType(WORKOUT_TYPE_ID_RUNNING,
+                        context.getString(R.string.workoutTypeRunning),
+                        5,
+                        context.getResources().getColor(R.color.colorPrimaryRunning),
+                        "running",
+                        -1),
+                new WorkoutType("walking",
+                        context.getString(R.string.workoutTypeWalking),
+                        5,
+                        context.getResources().getColor(R.color.colorPrimaryRunning),
+                        "walking",
+                        -1),
+                new WorkoutType("hiking",
+                        context.getString(R.string.workoutTypeHiking),
+                        5,
+                        context.getResources().getColor(R.color.colorPrimaryHiking),
+                        "walking",
+                        -1),
+                new WorkoutType("cycling",
+                        context.getString(R.string.workoutTypeCycling),
+                        10,
+                        context.getResources().getColor(R.color.colorPrimaryBicycling),
+                        "cycling",
+                        -1),
+                new WorkoutType("inline_skating",
+                        context.getString(R.string.workoutTypeInlineSkating),
+                        7,
+                        context.getResources().getColor(R.color.colorPrimarySkating),
+                        "inline_skating",
+                        -1),
+                new WorkoutType("skateboarding",
+                        context.getString(R.string.workoutTypeSkateboarding),
+                        7,
+                        context.getResources().getColor(R.color.colorPrimarySkating),
+                        "skateboarding",
+                        -1),
+                new WorkoutType("rowing",
+                        context.getString(R.string.workoutTypeRowing),
+                        7,
+                        context.getResources().getColor(R.color.colorPrimaryRowing),
+                        "rowing",
+                        -1),
+        };
     }
 }

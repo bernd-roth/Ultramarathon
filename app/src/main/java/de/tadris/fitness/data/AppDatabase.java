@@ -28,16 +28,18 @@ import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(version = 10, entities = {Workout.class, WorkoutSample.class, Interval.class, IntervalSet.class})
+@Database(version = 10, entities = {Workout.class, WorkoutSample.class, Interval.class, IntervalSet.class, WorkoutType.class})
 public abstract class AppDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "fito-track";
 
     public abstract WorkoutDao workoutDao();
 
+    public abstract WorkoutTypeDao workoutTypeDao();
+
     public abstract IntervalDao intervalDao();
 
-    public static AppDatabase provideDatabase(Context context){
+    public static AppDatabase provideDatabase(Context context) {
         return Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, DATABASE_NAME)
                 .addMigrations(new Migration(1, 2) {
                     @Override

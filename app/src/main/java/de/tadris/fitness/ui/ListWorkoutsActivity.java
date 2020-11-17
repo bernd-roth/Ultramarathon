@@ -56,6 +56,7 @@ import de.tadris.fitness.ui.workout.AggregatedWorkoutStatisticsActivity;
 import de.tadris.fitness.ui.workout.EnterWorkoutActivity;
 import de.tadris.fitness.ui.workout.ShowWorkoutActivity;
 import de.tadris.fitness.util.DialogUtils;
+import de.tadris.fitness.util.Icon;
 import de.tadris.fitness.util.io.general.IOHelper;
 
 public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAdapter.WorkoutAdapterListener {
@@ -85,7 +86,7 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
         menu = findViewById(R.id.workoutListMenu);
         menu.setOnMenuButtonLongClickListener(v -> {
             if (workouts.length > 0) {
-                startRecording(workouts[0].getWorkoutType());
+                startRecording(workouts[0].getWorkoutType(this));
                 return true;
             } else {
                 return false;
@@ -250,9 +251,9 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
     private void refreshFABMenu() {
         FloatingActionButton lastFab = findViewById(R.id.workoutListRecordLast);
         if (workouts.length > 0) {
-            WorkoutType lastType = workouts[0].getWorkoutType();
-            lastFab.setLabelText(getString(lastType.title));
-            lastFab.setImageResource(lastType.icon);
+            WorkoutType lastType = workouts[0].getWorkoutType(this);
+            lastFab.setLabelText(lastType.title);
+            lastFab.setImageResource(Icon.getIcon(lastType.icon));
             lastFab.setColorNormal(getResources().getColor(lastType.color));
             lastFab.setColorPressed(lastFab.getColorNormal());
             lastFab.setOnClickListener(v -> {

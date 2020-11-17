@@ -43,7 +43,7 @@ public class GpxImporterTest {
 
         // Main test is that above method runs without error, additionally perform some checks:
         Assert.assertEquals(importResult.workout.comment, "...");
-        Assert.assertEquals(importResult.workout.workoutTypeId, WorkoutType.RUNNING.id);
+        Assert.assertEquals(importResult.workout.workoutTypeId, WorkoutType.WORKOUT_TYPE_ID_RUNNING);
         Assert.assertEquals(importResult.samples.size(), 10);
         Assert.assertEquals(importResult.samples.get(0).elevation, 148.5465381985937, 0.001);
         Assert.assertEquals(importResult.samples.get(6).speed, 3.25, 0.001);
@@ -68,7 +68,7 @@ public class GpxImporterTest {
         IWorkoutImporter.WorkoutImportResult importResult= importer.readWorkout(new ByteArrayInputStream(runtasticGpx.getBytes()));
 
         Assert.assertEquals(importResult.workout.comment, "runtastic_20160215_0843");
-        Assert.assertEquals(importResult.workout.workoutTypeId, WorkoutType.OTHER.id);
+        Assert.assertEquals(importResult.workout.workoutTypeId, WorkoutType.WORKOUT_TYPE_ID_OTHER);
         Assert.assertEquals(importResult.samples.size(), 10);
         //TrackSegment / samples not tested cause its similar to other imports
     }
@@ -78,7 +78,7 @@ public class GpxImporterTest {
         IWorkoutImporter.WorkoutImportResult importResult = importer.readWorkout(new ByteArrayInputStream(komootGpx.getBytes()));
 
         Assert.assertEquals(importResult.workout.comment, "NameOfTrack");
-        Assert.assertEquals(importResult.workout.workoutTypeId, WorkoutType.OTHER.id);
+        Assert.assertEquals(importResult.workout.workoutTypeId, WorkoutType.WORKOUT_TYPE_ID_OTHER);
         Assert.assertEquals(importResult.samples.size(), 10);
         //TrackSegment / samples not tested cause its similar to other imports
     }
