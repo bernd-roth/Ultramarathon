@@ -68,7 +68,7 @@ import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.map.MapManager;
 import de.tadris.fitness.map.WorkoutLayer;
 import de.tadris.fitness.ui.workout.diagram.SampleConverter;
-import de.tadris.fitness.util.IntervalSetCalculator;
+import de.tadris.fitness.util.WorkoutCalculator;
 import de.tadris.fitness.util.unit.DistanceUnitUtils;
 import de.tadris.fitness.util.unit.EnergyUnitUtils;
 
@@ -230,7 +230,7 @@ public abstract class WorkoutActivity extends InformationActivity {
         if (showIntervalSets && intervals != null && intervals.length > 0) {
             List<BarEntry> barEntries = new ArrayList<>();
 
-            for (long relativeTime : IntervalSetCalculator.getTimesFromWorkout(getWorkoutData(), intervals)) {
+            for (long relativeTime : WorkoutCalculator.getIntervalSetTimesFromWorkout(getWorkoutData(), intervals)) {
                 barEntries.add(new BarEntry((float) (relativeTime) / 1000f / 60f, yMax));
             }
 
@@ -288,20 +288,26 @@ public abstract class WorkoutActivity extends InformationActivity {
             map.animate().alpha(1f).setDuration(1000).start();
         }, 1000);
 
-        mapRoot= new LinearLayout(this);
+        mapRoot = new LinearLayout(this);
         mapRoot.setOrientation(LinearLayout.VERTICAL);
         mapRoot.addView(map);
 
         root.addView(mapRoot, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, fullScreenItems ? ViewGroup.LayoutParams.MATCH_PARENT : getMapHeight()));
         map.setAlpha(0);
 
+        Paint pBlue = AndroidGraphicFactory.INSTANCE.createPaint();
+        pBlue.setColor(Color.BLUE);
+        for (WorkoutCalculator.Pause pause : WorkoutCalculator.getPausesFromWorkout(getWorkoutData())) {
+            float radius = Math.min(10, Math.max(2, (float) Math.sqrt((float) pause.duration / 1000)));
+            map.addLayer(new FixedPixelCircle(pause.location, radius, pBlue, null));
+        }
 
-        Paint pGreen= AndroidGraphicFactory.INSTANCE.createPaint();
+        Paint pGreen = AndroidGraphicFactory.INSTANCE.createPaint();
         pGreen.setColor(Color.GREEN);
         map.addLayer(new FixedPixelCircle(samples.get(0).toLatLong(), 10, pGreen, null));
-        Paint pRed= AndroidGraphicFactory.INSTANCE.createPaint();
-        pRed.setColor(Color.RED);
 
+        Paint pRed = AndroidGraphicFactory.INSTANCE.createPaint();
+        pRed.setColor(Color.RED);
         map.addLayer(new FixedPixelCircle(samples.get(samples.size() - 1).toLatLong(), 10, pRed, null));
 
         map.setClickable(false);

@@ -19,6 +19,8 @@
 
 package de.tadris.fitness.util;
 
+import org.mapsforge.core.model.LatLong;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,16 +29,65 @@ import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutData;
 import de.tadris.fitness.data.WorkoutSample;
 
-public class IntervalSetCalculator {
+public class WorkoutCalculator {
 
-    public static List<Long> getTimesFromWorkout(WorkoutData data, Interval[] intervals) {
+    public static List<Pause> getPausesFromWorkout(WorkoutData data) {
+        List<Pause> result = new ArrayList<>();
+        List<WorkoutSample> samples = data.getSamples();
+
+        long absoluteTime = data.getWorkout().start;
+        long relativeTime = 0;
+        boolean lastWasPause = false;
+
+        for (WorkoutSample sample : samples) {
+            long absoluteDiff = sample.absoluteTime - absoluteTime;
+            long relativeDiff = sample.relativeTime - relativeTime;
+            long diff = absoluteDiff - relativeDiff;
+
+            if (diff > 10000) {
+                if (lastWasPause) {
+                    // Add duration to last pause if there is no sample between detected pauses
+                    result.get(result.size() - 1).addDuration(diff);
+                } else {
+                    result.add(new Pause(absoluteTime, relativeTime, diff, sample.toLatLong()));
+                }
+                lastWasPause = true;
+            } else {
+                lastWasPause = false;
+            }
+            absoluteTime = sample.absoluteTime;
+            relativeTime = sample.relativeTime;
+        }
+        return result;
+    }
+
+    public static class Pause {
+        public final long absoluteTimeStart;
+        public final long relativeTimeStart;
+        public long duration;
+        public final LatLong location;
+
+        public Pause(long absoluteTimeStart, long relativeTimeStart, long duration, LatLong location) {
+            this.absoluteTimeStart = absoluteTimeStart;
+            this.relativeTimeStart = relativeTimeStart;
+            this.duration = duration;
+            this.location = location;
+        }
+
+        private void addDuration(long duration) {
+            this.duration += duration;
+        }
+
+    }
+
+    public static List<Long> getIntervalSetTimesFromWorkout(WorkoutData data, Interval[] intervals) {
         List<Long> result = new ArrayList<>();
         Workout workout = data.getWorkout();
         List<WorkoutSample> samples = data.getSamples();
 
         int index = 0;
+        long time = 0;
         if (workout.intervalSetIncludesPauses) {
-            long time = 0;
             long lastTime = samples.get(0).absoluteTime;
             for (WorkoutSample sample : samples) {
                 if (index >= intervals.length) {
@@ -52,7 +103,6 @@ public class IntervalSetCalculator {
                 lastTime = sample.absoluteTime;
             }
         } else {
-            long time = 0;
             while (time < workout.duration) {
                 if (index >= intervals.length) {
                     index = 0;
