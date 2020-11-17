@@ -351,10 +351,19 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
                 openEditWorkoutActivity();
                 return true;
             case R.id.actionResumeWorkout:
-                resumeWorkout();
+                showResumeConfirmation();
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showResumeConfirmation() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.resumeWorkout)
+                .setMessage(R.string.resumeWorkoutConfirmation)
+                .setPositiveButton(R.string.actionResume, (dialog, which) -> resumeWorkout())
+                .setNegativeButton(R.string.cancel, null)
+                .show();
     }
 
     private void resumeWorkout() {

@@ -343,4 +343,8 @@
     <string name="workoutResumed">Workout fortgesetzt</string>
     <string name="workoutStopped">Workout gestoppt</string>
     <string name="workoutStarted">Workout gestartet</string>
+    <string name="notimeout">Kein Timeout</string>
+    <string name="prefShowOnLockScreenTitle">Auf dem Sperrbildschirm sichtbar</string>
+    <string name="prefShowOnLockScreenSummary">Zeige Workout-Informationen, selbst wenn das Telefon gesperrt ist.</string>
+    <string name="resumeWorkoutConfirmation">Möchtest du das Workout wirklich fortsetzen? Dies wird unter anderem auch eine Pause von dem Zeitpunkt erstellen, an dem das Workout gestoppt wurde.</string>
 </resources>
