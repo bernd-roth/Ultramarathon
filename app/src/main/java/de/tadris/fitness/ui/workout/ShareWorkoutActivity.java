@@ -76,7 +76,6 @@ public class ShareWorkoutActivity extends WorkoutActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.share_workout_menu, menu);
 
         return super.onCreateOptionsMenu(menu);
@@ -102,14 +101,12 @@ public class ShareWorkoutActivity extends WorkoutActivity {
         workoutType.setText(workout.getWorkoutType().title);
 
         TextView workoutDistance = this.findViewById(R.id.workoutDistance);
-        //workoutDistance.setText(distanceUnitUtils.getDistance(workout.length));
         String distance=distanceUnitUtils.getDistance(workout.length);
         Spannable distanceSpan = new SpannableString(distance);
         distanceSpan.setSpan(new RelativeSizeSpan(0.8f), distance.lastIndexOf(" "), distance.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         workoutDistance.setText(distanceSpan);
 
         TextView workoutPace     = this.findViewById(R.id.workoutPace);
-        //workoutPace.setText(distanceUnitUtils.getPace(workout.avgPace));
         String pace=distanceUnitUtils.getPace(workout.avgPace);
         Spannable paceSpan = new SpannableString(pace);
         paceSpan.setSpan(new RelativeSizeSpan(0.8f), pace.lastIndexOf(" "), pace.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
