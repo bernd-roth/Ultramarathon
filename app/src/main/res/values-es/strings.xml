@@ -337,4 +337,8 @@
     <string name="heartRateNotAvailable">La frecuencia cardíaca no está disponible actualmente.</string>
     <string name="intervals">Intervalo</string>
     <string name="announcementWorkoutActions">Acciones de entrenamiento (pausa, reanudación, etc.)</string>
+    <string name="resumeWorkoutConfirmation">¿Realmente desea reanudar el entrenamiento\? Esto también agregará una pausa desde el momento en que el entrenamiento fue detenido.</string>
+    <string name="prefShowOnLockScreenSummary">Mostrar la información sobre el entrenamiento aún si el teléfono está bloqueado.</string>
+    <string name="prefShowOnLockScreenTitle">Visible en la pantalla de bloqueo</string>
+    <string name="notimeout">Desactivado</string>
 </resources>
