@@ -231,7 +231,7 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
 
     private void refresh() {
         loadData();
-        if (workouts.length > 0) {
+        if (workouts.length > lastClickedIndex) {
             adapter.notifyItemChanged(lastClickedIndex, workouts[lastClickedIndex]);
         }
         if (listSize != workouts.length) {
