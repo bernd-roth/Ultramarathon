@@ -297,4 +297,8 @@
     <string name="heartRateNotAvailable">Non está dispoñible o ritmo cardíaco.</string>
     <string name="intervals">Intervalos</string>
     <string name="announcementWorkoutActions">Accións do adestramento (pausar, retomar, etc.)</string>
+    <string name="resumeWorkoutConfirmation">Queres continuar este adestramento\? Esto engadirá unha pausa desde o momento en que o adestramento se detivo.</string>
+    <string name="prefShowOnLockScreenSummary">Mostrar información do adestramento incluso coa pantalla bloqueada.</string>
+    <string name="prefShowOnLockScreenTitle">Visible na pantalla de bloqueo</string>
+    <string name="notimeout">Sen caducidade</string>
 </resources>
