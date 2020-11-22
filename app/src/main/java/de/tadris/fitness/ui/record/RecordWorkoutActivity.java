@@ -30,7 +30,6 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
@@ -57,6 +56,9 @@ import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 import androidx.core.app.ActivityCompat;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.graphics.Style;
 import org.mapsforge.core.model.LatLong;
@@ -79,10 +81,13 @@ import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.map.MapManager;
 import de.tadris.fitness.recording.RecorderService;
 import de.tadris.fitness.recording.WorkoutRecorder;
-import de.tadris.fitness.recording.announcement.TTSController;
+import de.tadris.fitness.recording.event.HeartRateConnectionChangeEvent;
+import de.tadris.fitness.recording.event.LocationChangeEvent;
+import de.tadris.fitness.recording.event.TTSReadyEvent;
+import de.tadris.fitness.recording.event.WorkoutAutoStopEvent;
+import de.tadris.fitness.recording.event.WorkoutGPSStateChanged;
 import de.tadris.fitness.recording.information.InformationDisplay;
 import de.tadris.fitness.recording.information.RecordingInformation;
-import de.tadris.fitness.recording.sensors.HeartRateMeasurement;
 import de.tadris.fitness.ui.FitoTrackActivity;
 import de.tadris.fitness.ui.LauncherActivity;
 import de.tadris.fitness.ui.dialog.ChooseBluetoothDeviceDialog;
@@ -90,10 +95,9 @@ import de.tadris.fitness.ui.dialog.SelectIntervalSetDialog;
 import de.tadris.fitness.ui.dialog.SelectWorkoutInformationDialog;
 import de.tadris.fitness.util.BluetoothDevicePreferences;
 
-public class RecordWorkoutActivity extends FitoTrackActivity implements RecorderService.RecorderServiceListener,
-        WorkoutRecorder.WorkoutRecorderListener, TTSController.VoiceAnnouncementCallback,
-        SelectIntervalSetDialog.IntervalSetSelectListener, InfoViewHolder.InfoViewClickListener,
-        SelectWorkoutInformationDialog.WorkoutInformationSelectListener, ChooseBluetoothDeviceDialog.BluetoothDeviceSelectListener {
+public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIntervalSetDialog.IntervalSetSelectListener,
+        InfoViewHolder.InfoViewClickListener, SelectWorkoutInformationDialog.WorkoutInformationSelectListener,
+        ChooseBluetoothDeviceDialog.BluetoothDeviceSelectListener {
 
     public static final String LAUNCH_ACTION = "de.tadris.fitness.RecordWorkoutActivity.LAUNCH_ACTION";
     public static final String RESUME_ACTION = "de.tadris.fitness.RecordWorkoutActivity.RESUME_ACTION";
@@ -182,10 +186,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Recorder
 
         acquireWakelock();
 
-        onGPSStateChanged(WorkoutRecorder.GpsState.SIGNAL_LOST, WorkoutRecorder.GpsState.SIGNAL_LOST);
-
-        instance.recorderServiceListeners.add(this);
-        instance.voiceAnnouncementCallbackListeners.add(this);
+        onGPSStateChanged(new WorkoutGPSStateChanged(WorkoutRecorder.GpsState.SIGNAL_LOST, WorkoutRecorder.GpsState.SIGNAL_LOST));
 
         startListener();
 
@@ -203,10 +204,20 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Recorder
             updateLine();
 
             WorkoutRecorder.GpsState gpsState = instance.recorder.getGpsState();
-            onGPSStateChanged(gpsState, gpsState);
+            onGPSStateChanged(new WorkoutGPSStateChanged(gpsState, gpsState));
         }
+    }
 
-        instance.recorder.addWorkoutListener(this);
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 
     private void acquireWakelock() {
@@ -540,9 +551,9 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Recorder
                 .create().show();
     }
 
-    @Override
-    public void onLocationChange(Location location) {
-        LatLong latLong = RecorderService.locationToLatLong(location);
+    @Subscribe
+    public void onLocationChange(LocationChangeEvent e) {
+        LatLong latLong = RecorderService.locationToLatLong(e.location);
         mapView.getModel().mapViewPosition.animateTo(latLong);
 
         if (instance.recorder.getState() == WorkoutRecorder.RecordingState.RUNNING) {
@@ -553,18 +564,10 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Recorder
         foundGPS();
     }
 
-    @Override
-    public void onPressureChange(float pressure) {
-    }
-
-    @Override
-    public void onHeartRateChange(HeartRateMeasurement measurement) {
-    }
-
-    @Override
-    public void onHeartRateConnectionChange(RecorderService.HeartRateConnectionState state) {
-        hrStatusView.setImageResource(state.iconRes);
-        hrStatusView.setColorFilter(getResources().getColor(state.colorRes));
+    @Subscribe
+    public void onHeartRateConnectionChange(HeartRateConnectionChangeEvent e) {
+        hrStatusView.setImageResource(e.state.iconRes);
+        hrStatusView.setColorFilter(getResources().getColor(e.state.colorRes));
     }
 
     @Override
@@ -576,10 +579,6 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Recorder
         if (wakeLock.isHeld()) {
             wakeLock.release();
         }
-
-        instance.recorderServiceListeners.remove(this);
-        instance.voiceAnnouncementCallbackListeners.remove(this);
-        instance.recorder.removeWorkoutListener(this);
 
         // Kill Service on Finished or not Started Recording
         if (instance.recorder.getState() == WorkoutRecorder.RecordingState.STOPPED ||
@@ -737,8 +736,8 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Recorder
         }
     }
 
-    private synchronized void activityFinish(){
-        if(!this.finished) {
+    private synchronized void activityFinish() {
+        if (!this.finished) {
             this.finished = true;
             this.finish();
             Intent launcherIntent = new Intent(this, LauncherActivity.class);
@@ -747,26 +746,25 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Recorder
         }
     }
 
-    @Override
-    public void onGPSStateChanged(WorkoutRecorder.GpsState oldState, WorkoutRecorder.GpsState state) {
-        mHandler.post(() -> {
-            gpsStatusView.setTextColor(state.color);
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onGPSStateChanged(WorkoutGPSStateChanged e) {
+        WorkoutRecorder.GpsState state = e.newState;
+        gpsStatusView.setTextColor(state.color);
 
-            if (state != WorkoutRecorder.GpsState.SIGNAL_LOST) {
-                foundGPS();
-            }
+        if (state != WorkoutRecorder.GpsState.SIGNAL_LOST) {
+            foundGPS();
+        }
 
-            if (instance.recorder.getState() == WorkoutRecorder.RecordingState.IDLE) {
-                if (state == WorkoutRecorder.GpsState.SIGNAL_OKAY) {
-                    updateStartButton(true, R.string.start, v -> {
-                        hideStartButton();
-                        start();
-                    });
-                } else {
-                    updateStartButton(false, R.string.cannotStart, null);
-                }
+        if (instance.recorder.getState() == WorkoutRecorder.RecordingState.IDLE) {
+            if (state == WorkoutRecorder.GpsState.SIGNAL_OKAY) {
+                updateStartButton(true, R.string.start, v -> {
+                    hideStartButton();
+                    start();
+                });
+            } else {
+                updateStartButton(false, R.string.cannotStart, null);
             }
-        });
+        }
     }
 
     private void foundGPS() {
@@ -789,9 +787,9 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Recorder
         Toast.makeText(this, R.string.intervalSetSelected, Toast.LENGTH_LONG).show();
     }
 
-    @Override
-    public void onVoiceAnnouncementIsReady(boolean available) {
-        this.voiceFeedbackAvailable = available;
+    @Subscribe
+    public void onVoiceAnnouncementIsReady(TTSReadyEvent e) {
+        this.voiceFeedbackAvailable = e.ttsAvailable;
         invalidateOptionsMenu();
     }
 
@@ -802,8 +800,8 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements Recorder
         }
     }
 
-    @Override
-    public void onAutoStop() {
+    @Subscribe
+    public void onAutoStop(WorkoutAutoStopEvent e) {
         activityFinish();
     }
 

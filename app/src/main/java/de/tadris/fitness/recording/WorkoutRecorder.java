@@ -27,11 +27,13 @@ import android.location.Location;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.mapsforge.core.model.LatLong;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import de.tadris.fitness.BuildConfig;
 import de.tadris.fitness.Instance;
@@ -40,10 +42,15 @@ import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.data.WorkoutType;
-import de.tadris.fitness.recording.sensors.HeartRateMeasurement;
+import de.tadris.fitness.recording.event.HeartRateChangeEvent;
+import de.tadris.fitness.recording.event.HeartRateConnectionChangeEvent;
+import de.tadris.fitness.recording.event.LocationChangeEvent;
+import de.tadris.fitness.recording.event.PressureChangeEvent;
+import de.tadris.fitness.recording.event.WorkoutAutoStopEvent;
+import de.tadris.fitness.recording.event.WorkoutGPSStateChanged;
 import de.tadris.fitness.util.CalorieCalculator;
 
-public class WorkoutRecorder implements RecorderService.RecorderServiceListener {
+public class WorkoutRecorder {
 
     private static final int PAUSE_TIME = 10_000; // 10 Seconds
 
@@ -72,7 +79,6 @@ public class WorkoutRecorder implements RecorderService.RecorderServiceListener 
     private static final double SIGNAL_BAD_THRESHOLD = 30; // In meters
     private static final int SIGNAL_LOST_THRESHOLD = 10_000; // 10 Seconds In milliseconds
     private Location lastFix = null;
-    private final List<WorkoutRecorderListener> workoutRecorderListeners = new CopyOnWriteArrayList<>();
     private GpsState gpsState = GpsState.SIGNAL_LOST;
     private List<Interval> intervalList;
 
@@ -157,11 +163,10 @@ public class WorkoutRecorder implements RecorderService.RecorderServiceListener 
     }
 
     private void init() {
+        EventBus.getDefault().register(this);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         this.autoTimeout = prefs.getInt("autoTimeoutPeriod", DEFAULT_WORKOUT_AUTO_TIMEOUT) * AUTO_TIMEOUT_MULTIPLIER;
         this.useAutoPause = prefs.getBoolean("autoPause", true);
-
-        Instance.getInstance(context).recorderServiceListeners.add(this);
     }
 
     public void start() {
@@ -210,9 +215,7 @@ public class WorkoutRecorder implements RecorderService.RecorderServiceListener 
                         if (isActive()) {
                             stop();
                             save();
-                            for (WorkoutRecorderListener listener : workoutRecorderListeners) {
-                                listener.onAutoStop();
-                            }
+                            EventBus.getDefault().post(new WorkoutAutoStopEvent());
                         }
                     } else if (useAutoPause) {
                         if (timeDiff > PAUSE_TIME) {
@@ -246,9 +249,7 @@ public class WorkoutRecorder implements RecorderService.RecorderServiceListener 
             state = GpsState.SIGNAL_OKAY;
         }
         if (state != gpsState) {
-            for (WorkoutRecorderListener listener : workoutRecorderListeners) {
-                listener.onGPSStateChanged(gpsState, state);
-            }
+            EventBus.getDefault().post(new WorkoutGPSStateChanged(this.gpsState, state));
             gpsState = state;
         }
     }
@@ -280,7 +281,7 @@ public class WorkoutRecorder implements RecorderService.RecorderServiceListener 
         workout.duration = time;
         workout.pauseDuration = pauseTime;
         state = RecordingState.STOPPED;
-        Instance.getInstance(context).recorderServiceListeners.remove(this);
+        EventBus.getDefault().unregister(this);
         Log.i("Recorder", "Stop with " + getSampleCount() + " Samples");
     }
 
@@ -309,8 +310,9 @@ public class WorkoutRecorder implements RecorderService.RecorderServiceListener 
         }
     }
 
-    @Override
-    public void onLocationChange(Location location) {
+    @Subscribe(sticky = true, threadMode = ThreadMode.BACKGROUND)
+    public void onLocationChange(LocationChangeEvent e) {
+        Location location = e.location;
         lastFix = location;
         if (isActive()) {
             double distance = 0;
@@ -371,19 +373,19 @@ public class WorkoutRecorder implements RecorderService.RecorderServiceListener 
         return (int) distance;
     }
 
-    @Override
-    public void onPressureChange(float pressure) {
-        lastPressure = pressure;
+    @Subscribe
+    public void onPressureChange(PressureChangeEvent e) {
+        lastPressure = e.pressure;
     }
 
-    @Override
-    public void onHeartRateChange(HeartRateMeasurement measurement) {
-        lastHeartRate = measurement.heartRate;
+    @Subscribe
+    public void onHeartRateChange(HeartRateChangeEvent event) {
+        lastHeartRate = event.heartRate;
     }
 
-    @Override
-    public void onHeartRateConnectionChange(RecorderService.HeartRateConnectionState state) {
-        if (state != RecorderService.HeartRateConnectionState.CONNECTED) {
+    @Subscribe
+    public void onHeartRateConnectionChange(HeartRateConnectionChangeEvent event) {
+        if (event.state != RecorderService.HeartRateConnectionState.CONNECTED) {
             // If heart rate sensor currently not available
             lastHeartRate = -1;
         }
@@ -528,16 +530,6 @@ public class WorkoutRecorder implements RecorderService.RecorderServiceListener 
         workoutSaver.discardWorkout();
     }
 
-    public void addWorkoutListener(WorkoutRecorderListener listener) {
-        if (!workoutRecorderListeners.contains(listener)) {
-            workoutRecorderListeners.add(listener);
-        }
-    }
-
-    public void removeWorkoutListener(WorkoutRecorderListener listener) {
-        workoutRecorderListeners.remove(listener);
-    }
-
     public enum RecordingState {
         IDLE, RUNNING, PAUSED, STOPPED
     }
@@ -552,12 +544,6 @@ public class WorkoutRecorder implements RecorderService.RecorderServiceListener 
         GpsState(int color) {
             this.color = color;
         }
-    }
-
-    public interface WorkoutRecorderListener {
-        void onGPSStateChanged(GpsState oldState, GpsState state);
-
-        void onAutoStop();
     }
 
 }
