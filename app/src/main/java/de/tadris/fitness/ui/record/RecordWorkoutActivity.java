@@ -182,6 +182,10 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         gpsStatusView = findViewById(R.id.recordGpsStatus);
         hrStatusView = findViewById(R.id.recordHrStatus);
 
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+
         updateDescription();
 
         acquireWakelock();
@@ -206,18 +210,6 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
             WorkoutRecorder.GpsState gpsState = instance.recorder.getGpsState();
             onGPSStateChanged(new WorkoutGPSStateChanged(gpsState, gpsState));
         }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    protected void onStop() {
-        EventBus.getDefault().unregister(this);
-        super.onStop();
     }
 
     private void acquireWakelock() {
@@ -575,6 +567,8 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         // Clear map
         mapView.destroyAll();
         AndroidGraphicFactory.clearResourceMemoryCache();
+
+        EventBus.getDefault().unregister(this);
 
         if (wakeLock.isHeld()) {
             wakeLock.release();
