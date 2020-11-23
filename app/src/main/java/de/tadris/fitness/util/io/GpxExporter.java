@@ -77,7 +77,7 @@ public class GpxExporter implements IWorkoutExporter {
         track.setCmt(workout.comment);
         track.setDesc(workout.comment);
         track.setSrc("FitoTrack");
-        track.setType(workout.getWorkoutType().id);
+        track.setType(workout.workoutTypeId);
         track.setTrkseg(new ArrayList<>());
 
         TrackSegment segment = new TrackSegment();

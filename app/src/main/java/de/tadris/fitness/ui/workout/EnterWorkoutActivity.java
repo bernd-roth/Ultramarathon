@@ -22,7 +22,6 @@ package de.tadris.fitness.ui.workout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -46,7 +45,8 @@ import de.tadris.fitness.ui.dialog.TimePickerFragment;
 import de.tadris.fitness.util.unit.DistanceUnitSystem;
 import de.tadris.fitness.util.unit.UnitUtils;
 
-public class EnterWorkoutActivity extends InformationActivity implements SelectWorkoutTypeDialog.WorkoutTypeSelectListener, DatePickerFragment.DatePickerCallback, TimePickerFragment.TimePickerCallback, DurationPickerDialogFragment.DurationPickListener {
+public class EnterWorkoutActivity extends InformationActivity implements SelectWorkoutTypeDialog.WorkoutTypeSelectListener,
+        DatePickerFragment.DatePickerCallback, TimePickerFragment.TimePickerCallback, DurationPickerDialogFragment.DurationPickListener {
 
     public static final String WORKOUT_ID_EXTRA = "de.tadris.fitness.EnterWorkoutActivity.WORKOUT_ID_EXTRA";
 
@@ -73,9 +73,7 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
         typeTextView = typeLine.value;
         typeLine.lineRoot.setOnClickListener(v -> showTypeSelection());
 
-        distanceEditText = new EditText(this);
-        distanceEditText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-        distanceEditText.setSingleLine(true);
+        distanceEditText = createEditText();
         distanceEditText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         distanceEditText.setOnEditorActionListener((v, actionId, event) -> {
             // If the User clicks on the finish button on the keyboard, continue by showing the date selection
@@ -245,7 +243,7 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
     }
 
     @Override
-    void initRoot() {
+    protected void initRoot() {
         root = findViewById(R.id.enterWorkoutRoot);
     }
 }

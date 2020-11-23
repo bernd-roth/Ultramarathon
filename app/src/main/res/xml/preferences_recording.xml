@@ -26,24 +26,6 @@
         android:title="@string/autoPauseTitle" />
 
     <Preference
-        android:key="speech"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:summary="@string/pref_voice_announcements_summary"
-        android:title="@string/voiceAnnouncementsTitle" />
-
-    <Preference
-        android:key="intervals"
-        android:summary="@string/manageIntervalsSummary"
-        android:title="@string/intervalTraining" />
-
-    <SwitchPreference
-        android:defaultValue="true"
-        android:key="intervalsIncludePause"
-        android:summary="@string/intervalsIncludePauseSummary"
-        android:title="@string/intervalsIncludePauseTitle" />
-
-    <Preference
         android:key="autoTimeoutConfig"
         android:summary="@string/manageAutoTimeoutSummary"
         android:title="@string/intervalAutoTimeoutTraining" />
@@ -53,5 +35,28 @@
         android:key="showOnLockScreen"
         android:summary="@string/prefShowOnLockScreenSummary"
         android:title="@string/prefShowOnLockScreenTitle" />
+
+    <PreferenceCategory android:title="@string/preferenceCategoryVoiceFeedback">
+
+        <Preference
+            android:key="speech"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="@string/pref_voice_announcements_summary"
+            android:title="@string/voiceAnnouncementsTitle" />
+
+        <Preference
+            android:key="intervals"
+            android:summary="@string/manageIntervalsSummary"
+            android:title="@string/intervalTraining" />
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="intervalsIncludePause"
+            android:summary="@string/intervalsIncludePauseSummary"
+            android:title="@string/intervalsIncludePauseTitle" />
+
+
+    </PreferenceCategory>
 
 </PreferenceScreen>

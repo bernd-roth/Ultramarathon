@@ -1,7 +1,27 @@
+/*
+ * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ *
+ * This file is part of FitoTrack
+ *
+ * FitoTrack is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     FitoTrack is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package de.tadris.fitness.data;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -21,6 +41,7 @@ public class WorkoutType implements Serializable {
     public static final String WORKOUT_TYPE_ID_RUNNING = "running";
 
     @PrimaryKey
+    @NonNull
     public String id;
 
     public String title;
@@ -35,7 +56,7 @@ public class WorkoutType implements Serializable {
     @ColumnInfo(name = "met")
     public int MET;
 
-    public WorkoutType(String id, String title, int minDistance, int color, String icon, int MET) {
+    public WorkoutType(@NonNull String id, String title, int minDistance, int color, String icon, int MET) {
         this.id = id;
         this.title = title;
         this.minDistance = minDistance;
@@ -114,6 +135,12 @@ public class WorkoutType implements Serializable {
                         context.getResources().getColor(R.color.colorPrimaryRowing),
                         "rowing",
                         -1),
+                new WorkoutType(WORKOUT_TYPE_ID_OTHER,
+                        context.getString(R.string.workoutTypeOther),
+                        7,
+                        context.getResources().getColor(R.color.colorPrimary),
+                        "other",
+                        0),
         };
     }
 }

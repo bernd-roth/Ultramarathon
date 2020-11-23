@@ -71,7 +71,7 @@ public class WorkoutTypeAdapter extends RecyclerView.Adapter<WorkoutTypeAdapter.
     public void onBindViewHolder(WorkoutTypeHolder holder, final int position) {
         WorkoutType type = types.get(position);
         holder.iconView.setImageResource(Icon.getIcon(type.icon));
-        holder.iconView.setColorFilter(holder.root.getContext().getResources().getColor(type.color));
+        holder.iconView.setColorFilter(type.color);
         holder.nameText.setText(type.title);
         holder.root.setOnClickListener(v -> listener.onItemSelect(position, type));
     }
