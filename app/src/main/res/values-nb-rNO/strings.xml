@@ -188,7 +188,7 @@
     <string name="workoutTypeSkateboarding">Rullebrett</string>
     <string name="workoutTypeHiking">Tur</string>
     <string name="workoutTypeCycling">Sykling</string>
-    <string name="workoutTypeJogging">Jogging</string>
+    <string name="workoutTypeJogging">Jogge</string>
     <string name="workoutTypeWalking">Spasering</string>
     <string name="workoutTypeRunning">Løp</string>
     <string name="height">Høyde</string>
@@ -198,7 +198,7 @@
     <string name="uploadFailed">Kunne ikke laste opp</string>
     <string name="uploadSuccessful">Last opp vellykket</string>
     <string name="upload">Last opp</string>
-    <string name="authenticationFailed">Identitetsbekreftelse mislyktes</string>
+    <string name="authenticationFailed">Godkjenning mislyktes.</string>
     <string name="enterVerificationCode">Skriv inn bekreftelseskode</string>
     <string name="uploading">Laster opp</string>
     <string name="workoutEdited">Denne treningsøkten har blitt redigert.</string>
@@ -269,7 +269,7 @@
     <string name="bulkActions">Massehandlinger</string>
     <string name="importMultipleGpxFilesSummary">Importer mer enn én GPX-fil fra filsystemet samtidig</string>
     <string name="importMultipleMessageSelectFolder">Velg en mappe inneholdende alle GPX-filer du ønsker å importere.</string>
-    <string name="aboutUnlistedContributors">Takk til alle ulistede bidragsytere som har hjulpet til i oversettelsen og utvidelsen av FitoTrack.</string>
+    <string name="aboutUnlistedContributors">Takk til alle ikke-børsnoterte bidragsytere som hjalp til med å oversette og å utvide FitoTrack!</string>
     <string name="importedWorkouts">Importerte %d treningsøkter</string>
     <string name="importMultipleGpxFiles">Importer flerfoldige GPX-filer</string>
     <string name="aboutHelpTranslating">Hjelp til i oversettelsen</string>
@@ -297,4 +297,8 @@
     <string name="heartRateNotAvailable">Puls er for øyeblikket ikke tilgjengelig.</string>
     <string name="intervals">Intervall</string>
     <string name="announcementWorkoutActions">Trening Handlinger (pause, gjenoppta, etc.)</string>
+    <string name="resumeWorkoutConfirmation">Tror du virkelig ønsker å fortsette denne treningen\? Dette vil også legge til en pause fra treningen ble stoppet.</string>
+    <string name="prefShowOnLockScreenSummary">Vis trening informasjon selv om telefonen er låst.</string>
+    <string name="prefShowOnLockScreenTitle">Synlig på låseskjermen</string>
+    <string name="notimeout">Ingen Timeout</string>
 </resources>
