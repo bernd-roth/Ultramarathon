@@ -329,4 +329,8 @@
     <string name="heartRateNotAvailable">Puls er i øjeblikket ikke tilgængelig.</string>
     <string name="intervals">Interval</string>
     <string name="announcementWorkoutActions">Workorkout handlinger (pause, genoptage, etc.)</string>
+    <string name="resumeWorkoutConfirmation">Vil du virkelig genoptage denne træning\? Dette vil også tilføje en pause fra det tidspunkt, hvor træningen blev stoppet.</string>
+    <string name="prefShowOnLockScreenSummary">Vis træningsoplysninger, selvom telefonen er låst.</string>
+    <string name="prefShowOnLockScreenTitle">Synlig på låseskærmen</string>
+    <string name="notimeout">Ingen Timeout</string>
 </resources>
