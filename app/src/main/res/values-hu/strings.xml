@@ -315,4 +315,8 @@
     <string name="heartRateNotAvailable">A pulzusszám jelenleg nem áll rendelkezésre.</string>
     <string name="intervals">Intervallumok</string>
     <string name="announcementWorkoutActions">Edzésműveletek (Szünet, Folytatás stb.)</string>
+    <string name="resumeWorkoutConfirmation">Tényleg szeretné folytatni ezt az edzést\? Ez is hozzá egy szünet az idő az edzés leállt.</string>
+    <string name="prefShowOnLockScreenSummary">Edzésinformációk megjelenítése akkor is, ha a telefon zárolva van.</string>
+    <string name="prefShowOnLockScreenTitle">Látható a zár képernyőn</string>
+    <string name="notimeout">Nincs Időtúllépés</string>
 </resources>
