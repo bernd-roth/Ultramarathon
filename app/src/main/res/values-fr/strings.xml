@@ -191,7 +191,7 @@
     <string name="unitMilesSingular">Mille</string>
     <string name="unitMilesPlural">Milles</string>
     <string name="unitYardsSingular">Yard</string>
-    <string name="unitYardsPlural">Yards</string>
+    <string name="unitYardsPlural">Cour</string>
     <string name="unitMilesPerHour">Milles par Heure</string>
     <string name="unitMetersPlural">Mètres</string>
     <string name="unitMetersSingular">Mètre</string>
@@ -343,4 +343,7 @@
     <string name="autoPauseSummary">Automatiquement pause et continuer les séances d\'entraînement</string>
     <string name="autoPauseTitle">Pause automatique</string>
     <string name="notimeout">Aucune pause</string>
+    <string name="resumeWorkoutConfirmation">Voulez-vous vraiment reprendre cette séance d\'entraînement\? Cela ajoutera également une pause à partir du moment où l\'entraînement a été arrêté.</string>
+    <string name="prefShowOnLockScreenSummary">Afficher les informations d\'entraînement, même si le téléphone est verrouillé.</string>
+    <string name="prefShowOnLockScreenTitle">Visible sur l\'écran de verrouillage</string>
 </resources>
