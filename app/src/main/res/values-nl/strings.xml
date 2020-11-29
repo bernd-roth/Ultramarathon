@@ -327,4 +327,8 @@
     <string name="heartRateNotAvailable">Hartslag is momenteel niet beschikbaar.</string>
     <string name="intervals">Interval</string>
     <string name="announcementWorkoutActions">Training acties (pauzeren, hervatten, enz.)</string>
+    <string name="resumeWorkoutConfirmation">Wil je echt doorgaan met deze training\? Dit zal ook een pauze toevoegen vanaf het moment dat de training werd gestopt.</string>
+    <string name="prefShowOnLockScreenSummary">Toon training informatie, zelfs als de telefoon op slot zit.</string>
+    <string name="prefShowOnLockScreenTitle">Zichtbaar op vergrendelscherm</string>
+    <string name="notimeout">Geen Time-Out</string>
 </resources>
