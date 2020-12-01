@@ -21,4 +21,7 @@
     <files-path
         name="share"
         path="shared/" />
+    <external-path
+        name="external_files"
+        path="."/>
 </paths>

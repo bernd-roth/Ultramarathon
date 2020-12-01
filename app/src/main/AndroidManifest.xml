@@ -90,7 +90,9 @@
         <activity android:name=".ui.settings.RecordingSettingsActivity" />
         <activity android:name=".ui.settings.BackupSettingsActivity" />
         <activity android:name=".ui.workout.AggregatedWorkoutStatisticsActivity" />
-
+        <activity
+            android:name=".ui.workout.ShareWorkoutActivity"
+            android:screenOrientation="portrait" />
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

@@ -19,23 +19,9 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/actionResumeWorkout"
-        android:title="@string/resumeWorkout" />
-
-    <item
-        android:id="@+id/actionEditWorkout"
-        android:title="@string/editWorkout" />
-    <item
-        android:id="@+id/actionExportGpx"
-        android:title="@string/exportAsGpxFile" />
-    <item
-        android:id="@+id/actionUploadOSM"
-        android:title="@string/actionUploadToOSM" />
-    <item
-        android:id="@+id/actionDeleteWorkout"
-        android:title="@string/delete" />
-    <item
-        android:id="@+id/actionShareWorkout"
-        android:title="@string/share" />
+      <item
+          android:id="@+id/actionShareWorkout"
+          android:icon="@android:drawable/ic_menu_share"
+          android:showAsAction="always"
+          android:title="@string/share" />
 </menu>
