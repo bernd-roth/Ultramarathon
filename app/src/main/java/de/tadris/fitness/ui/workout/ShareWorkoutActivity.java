@@ -88,13 +88,13 @@ public class ShareWorkoutActivity extends WorkoutActivity {
     }
 
     @Override
-    void initRoot() {
+    protected void initRoot() {
         root = findViewById(R.id.showWorkoutMapParent);
     }
 
     private void initContents(){
         TextView workoutType = this.findViewById(R.id.workoutTypeTitle);
-        workoutType.setText(workout.getWorkoutType().title);
+        workoutType.setText(workout.getWorkoutType(this).title);
 
         TextView workoutDistance = this.findViewById(R.id.workoutDistance);
         String distance=distanceUnitUtils.getDistance(workout.length);

@@ -28,7 +28,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(version = 10, entities = {Workout.class, WorkoutSample.class, Interval.class, IntervalSet.class, WorkoutType.class})
+@Database(version = 11, entities = {Workout.class, WorkoutSample.class, Interval.class, IntervalSet.class, WorkoutType.class})
 public abstract class AppDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "fito-track";
@@ -237,6 +237,26 @@ public abstract class AppDatabase extends RoomDatabase {
                             database.execSQL("ALTER table workout_sample add COLUMN heart_rate INTEGER not null default 0;");
                             database.execSQL("ALTER table workout add COLUMN avg_heart_rate INTEGER not null default 0;");
                             database.execSQL("ALTER table workout add COLUMN max_heart_rate INTEGER not null default 0;");
+
+                            database.setTransactionSuccessful();
+                        } finally {
+                            database.endTransaction();
+                        }
+                    }
+                }, new Migration(10, 11) {
+                    @Override
+                    public void migrate(@NonNull SupportSQLiteDatabase database) {
+                        try {
+                            database.beginTransaction();
+
+                            database.execSQL("CREATE TABLE workout_type (\n" +
+                                    "    id text NOT NULL primary key,\n" +
+                                    "    icon text,\n" +
+                                    "    title text,\n" +
+                                    "    min_distance integer NOT NULL,\n" +
+                                    "    color integer NOT NULL,\n" +
+                                    "    met integer NOT NULL\n" +
+                                    ");");
 
                             database.setTransactionSuccessful();
                         } finally {

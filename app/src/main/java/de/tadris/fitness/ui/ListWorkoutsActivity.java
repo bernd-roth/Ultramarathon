@@ -254,7 +254,7 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
             WorkoutType lastType = workouts[0].getWorkoutType(this);
             lastFab.setLabelText(lastType.title);
             lastFab.setImageResource(Icon.getIcon(lastType.icon));
-            lastFab.setColorNormal(getResources().getColor(lastType.color));
+            lastFab.setColorNormal(lastType.color);
             lastFab.setColorPressed(lastFab.getColorNormal());
             lastFab.setOnClickListener(v -> {
                 menu.close(true);
