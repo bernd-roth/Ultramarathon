@@ -120,7 +120,7 @@ public class DistanceUnitUtils extends UnitUtils {
 
     public String getDistance(int distanceInMeters, boolean useLongUnitNames) {
         if (distanceInMeters >= 1000) {
-            String lengthInLongUnit = round(distanceUnitSystem.getDistanceFromKilometers((double) distanceInMeters / 1000d), 1);
+            String lengthInLongUnit = round(distanceUnitSystem.getDistanceFromKilometers((double) distanceInMeters / 1000d), 2);
             if (useLongUnitNames) {
                 return lengthInLongUnit + " " + getString(distanceUnitSystem.getLongDistanceUnitTitle(false));
             } else {
