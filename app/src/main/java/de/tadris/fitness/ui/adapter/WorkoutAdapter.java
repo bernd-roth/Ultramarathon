@@ -34,6 +34,7 @@ import java.util.Date;
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.Workout;
+import de.tadris.fitness.util.Icon;
 
 public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutViewHolder>{
 
@@ -85,7 +86,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutV
         Context context = holder.root.getContext();
         Workout workout= workouts[position];
         holder.dateText.setText(Instance.getInstance(context).userDateTimeUtils.formatDateTime(new Date(workout.start)));
-        holder.typeText.setText(workout.getWorkoutType().title);
+        holder.typeText.setText(workout.getWorkoutType(context).title);
         if(workout.comment != null){
             if(workout.comment.length() > 33){
                 holder.commentText.setText(workout.comment.substring(0, 30) + "...");
@@ -97,7 +98,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutV
         }
         holder.lengthText.setText(Instance.getInstance(context).distanceUnitUtils.getDistance(workout.length));
         holder.timeText.setText(Instance.getInstance(context).distanceUnitUtils.getHourMinuteTime(workout.duration));
-        holder.iconView.setImageResource(workout.getWorkoutType().icon);
+        holder.iconView.setImageResource(Icon.getIcon(workout.getWorkoutType(context).icon));
         holder.root.setOnClickListener(v -> listener.onItemClick(position, workout));
         holder.root.setOnLongClickListener(v -> {
             listener.onItemLongClick(position, workout);

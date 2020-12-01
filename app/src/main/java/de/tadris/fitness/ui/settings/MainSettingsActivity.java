@@ -45,6 +45,11 @@ public class MainSettingsActivity extends FitoTrackSettingsActivity {
             return true;
         });
 
+        findPreference("workoutTypeSettings").setOnPreferenceClickListener(preference -> {
+            startActivity(new Intent(this, ManageWorkoutTypesActivity.class));
+            return true;
+        });
+
         findPreference("backupSettings").setOnPreferenceClickListener(preference -> {
             startActivity(new Intent(this, BackupSettingsActivity.class));
             return true;

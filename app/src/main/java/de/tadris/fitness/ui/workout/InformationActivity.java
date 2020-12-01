@@ -23,6 +23,7 @@ import android.graphics.Typeface;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -33,7 +34,7 @@ import de.tadris.fitness.ui.FitoTrackActivity;
 
 public abstract class InformationActivity extends FitoTrackActivity {
 
-    ViewGroup root;
+    protected ViewGroup root;
 
     protected void addTitle(String title) {
         TextView textView = new TextView(this);
@@ -122,6 +123,25 @@ public abstract class InformationActivity extends FitoTrackActivity {
         return new KeyValueLine(v, keyView, valueView, view);
     }
 
+    protected EditText addEditTextLine(String key) {
+        return addEditTextLine(key, "");
+    }
+
+    protected EditText addEditTextLine(String key, String unit) {
+        EditText editText = createEditText();
+        KeyValueLine keyValueLine = addKeyValueLine(key, editText, unit);
+        keyValueLine.lineRoot.setOnClickListener(v -> requestKeyboard(editText));
+        return editText;
+    }
+
+    protected EditText createEditText() {
+        EditText editText = new EditText(this);
+        editText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        editText.setSingleLine(true);
+        editText.setMinEms(5);
+        return editText;
+    }
+
     public static class KeyValueLine {
         public View lineRoot;
         public TextView key;
@@ -136,7 +156,7 @@ public abstract class InformationActivity extends FitoTrackActivity {
         }
     }
 
-    abstract void initRoot();
+    protected abstract void initRoot();
 
 
 }

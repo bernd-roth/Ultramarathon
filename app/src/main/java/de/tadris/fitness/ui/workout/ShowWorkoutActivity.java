@@ -393,7 +393,7 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
     }
 
     @Override
-    void initRoot() {
+    protected void initRoot() {
         root = findViewById(R.id.showWorkoutRoot);
     }
 }

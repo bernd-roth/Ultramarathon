@@ -107,7 +107,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     public static final int REQUEST_CODE_BACKGROUND_LOCATION_PERMISSION = 11;
     public static final int REQUEST_CODE_ENABLE_BLUETOOTH = 12;
 
-    public WorkoutType activity = WorkoutType.OTHER;
+    public WorkoutType activity;
 
     private MapView mapView;
     private TileDownloadLayer downloadLayer;
@@ -136,6 +136,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         Intent intent = getIntent();
         instance = Instance.getInstance(this);
         boolean wasAlreadyRunning = false;
+        activity = WorkoutType.getWorkoutTypeById(this, WorkoutType.WORKOUT_TYPE_ID_OTHER);
         if (LAUNCH_ACTION.equals(intent.getAction())) {
             Serializable workoutType = intent.getSerializableExtra(WORKOUT_TYPE_EXTRA);
             if (workoutType instanceof WorkoutType) {
@@ -152,7 +153,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
                 instance.recorder = new WorkoutRecorder(getApplicationContext(), activity);
             }
         } else {
-            activity = instance.recorder.getWorkout().getWorkoutType();
+            activity = instance.recorder.getWorkout().getWorkoutType(this);
             wasAlreadyRunning = true;
         }
 

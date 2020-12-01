@@ -82,7 +82,7 @@ public class Instance {
         if (lastWorkout != null && lastWorkout.end == -1) {
             return restoreRecorder(context, lastWorkout);
         }
-        return new WorkoutRecorder(context, WorkoutType.OTHER);
+        return new WorkoutRecorder(context, WorkoutType.getWorkoutTypeById(context, WorkoutType.WORKOUT_TYPE_ID_OTHER));
     }
 
     private WorkoutRecorder restoreRecorder(Context context, Workout workout) {

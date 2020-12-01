@@ -19,6 +19,8 @@
 
 package de.tadris.fitness.data;
 
+import android.content.Context;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -128,8 +130,8 @@ public class Workout{
     }
 
     @JsonIgnore
-    public WorkoutType getWorkoutType() {
-        return WorkoutType.getTypeById(workoutTypeId);
+    public WorkoutType getWorkoutType(Context context) {
+        return WorkoutType.getWorkoutTypeById(context, workoutTypeId);
     }
 
     @JsonIgnore

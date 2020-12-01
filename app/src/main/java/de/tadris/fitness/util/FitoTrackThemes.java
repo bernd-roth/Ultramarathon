@@ -50,9 +50,39 @@ public class FitoTrackThemes {
     @StyleRes
     public int getWorkoutTypeTheme(WorkoutType type) {
         if (shouldUseLightMode()) {
-            return type.lightTheme;
+            switch (type.id) {
+                case "walking":
+                case "running":
+                    return R.style.Running;
+                case "hiking":
+                    return R.style.Hiking;
+                case "cycling":
+                    return R.style.Bicycling;
+                case "skateboarding":
+                case "inline_skating":
+                    return R.style.Skating;
+                case "rowing":
+                    return R.style.Rowing;
+                default:
+                    return R.style.AppTheme;
+            }
         } else {
-            return type.darkTheme;
+            switch (type.id) {
+                case "walking":
+                case "running":
+                    return R.style.RunningDark;
+                case "hiking":
+                    return R.style.HikingDark;
+                case "cycling":
+                    return R.style.BicyclingDark;
+                case "skateboarding":
+                case "inline_skating":
+                    return R.style.SkatingDark;
+                case "rowing":
+                    return R.style.RowingDark;
+                default:
+                    return R.style.AppThemeDark;
+            }
         }
     }
 
