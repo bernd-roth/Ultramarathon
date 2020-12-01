@@ -255,7 +255,7 @@ public abstract class WorkoutActivity extends InformationActivity {
     private void onDiagramValueSelected(LatLong latLong) {
         Paint p = AndroidGraphicFactory.INSTANCE.createPaint();
         p.setColor(0xff693cff);
-        highlightingCircle = new FixedPixelCircle(latLong, 20, p, null);
+        highlightingCircle = new FixedPixelCircle(latLong, 10, p, null);
         map.addLayer(highlightingCircle);
 
         if (!map.getBoundingBox().contains(latLong)) {
