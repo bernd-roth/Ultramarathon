@@ -19,10 +19,6 @@
 
 package de.tadris.fitness.ui.workout;
 
-import de.tadris.fitness.BuildConfig;
-import de.tadris.fitness.map.MapManager;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -34,22 +30,22 @@ import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.RelativeSizeSpan;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
 
-import org.mapsforge.map.view.MapView;
-
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import de.tadris.fitness.BuildConfig;
 import de.tadris.fitness.R;
+import de.tadris.fitness.util.DataManager;
 
 public class ShareWorkoutActivity extends WorkoutActivity {
 
@@ -121,7 +117,11 @@ public class ShareWorkoutActivity extends WorkoutActivity {
 
         try {
             String ts = String.valueOf(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()));
-            File file = new File(this.getExternalCacheDir(),"fitotrack-workout_"+ts+".png");
+            File parent = new File(DataManager.getSharedDirectory(this));
+            File file = new File(parent, "fitotrack-workout_" + ts + ".png");
+            if (!parent.exists() && !parent.mkdirs()) {
+                throw new IOException("Cannot write");
+            }
             FileOutputStream fOut = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
             fOut.flush();
@@ -139,10 +139,9 @@ public class ShareWorkoutActivity extends WorkoutActivity {
                 intent.setDataAndType(Uri.fromFile(file), "image/png");
             }
             startActivity(Intent.createChooser(intent,null));
-
-
         } catch (Exception e) {
             e.printStackTrace();
+            Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
