@@ -344,4 +344,23 @@
     <string name="prefShowOnLockScreenTitle">Auf dem Sperrbildschirm sichtbar</string>
     <string name="prefShowOnLockScreenSummary">Zeige Workout-Informationen, selbst wenn das Telefon gesperrt ist.</string>
     <string name="resumeWorkoutConfirmation">Möchtest du das Workout wirklich fortsetzen? Dies wird unter anderem auch eine Pause von dem Zeitpunkt erstellen, an dem das Workout gestoppt wurde.</string>
+    <string name="editWorkoutType">Workout-Typ bearbeiten</string>
+    <string name="workoutTypeEditIcon">Symbol</string>
+    <string name="deleteWorkoutTypeConfirmation">Möchtest du den Workout-Typ wirklich löschen\?</string>
+    <string name="deleteWorkoutType">Workout-Typ löschen</string>
+    <string name="actionSave">Speichern</string>
+    <string name="customWorkoutTypesTitle">Benutzerdefinierte Workout-Typen</string>
+    <string name="preferenceCategoryVoiceFeedback">Sprachfeedback</string>
+    <string name="workoutTypeEditMETHint">Ein Maß für den Energieverbrauch</string>
+    <string name="workoutTypeEditMET">MET</string>
+    <string name="workoutTypeEditMinDistanceHint">Minimaler Abstand zwischen zwei GPS-Punkten</string>
+    <string name="workoutTypeEditMinDistance">Punkteabstand</string>
+    <string name="workoutTypeEditNameError">Bitte gib einen Namen an</string>
+    <string name="workoutTypeEditName">Name</string>
+    <string name="workoutTypeEditIdErrorUnique">Es gibt bereits einen Workouttyp mit dieser ID</string>
+    <string name="workoutTypeEditIdErrorEmpty">Bitte gib eine ID an</string>
+    <string name="workoutTypeEditIdErrorCharacters">Erlaubte Zeichen: a–z, A–Z, 0–9, _, -</string>
+    <string name="workoutTypeEditId">ID</string>
+    <string name="hintManageWorkoutTypes">Klicke auf das Plus, um benutzerdefinierte Workouttypen hinzuzufügen.</string>
+    <string name="workoutTypeAdd">Hinzufügen</string>
 </resources>
