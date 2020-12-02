@@ -67,6 +67,7 @@ import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.ui.FitoTrackActivity;
 import de.tadris.fitness.ui.dialog.SelectWorkoutTypeDialog;
+import de.tadris.fitness.util.Icon;
 import de.tadris.fitness.util.unit.UnitUtils;
 
 import static android.widget.AdapterView.OnItemSelectedListener;
@@ -83,7 +84,7 @@ public class AggregatedWorkoutStatisticsActivity extends FitoTrackActivity imple
     WorkoutInformationManager informationManager;
 
     WorkoutInformation selectedInformation;
-    WorkoutType selectedWorkoutType = WorkoutType.RUNNING;
+    WorkoutType selectedWorkoutType;
     AggregationSpan selectedSpan = AggregationSpan.WEEK;
 
     AggregatedWorkoutData aggregatedWorkoutData = null;
@@ -108,6 +109,7 @@ public class AggregatedWorkoutStatisticsActivity extends FitoTrackActivity imple
         workoutTypeIcon = findViewById(R.id.aggregationWorkoutTypeIcon);
         chart = findViewById(R.id.aggregationChart);
 
+        selectedWorkoutType = WorkoutType.getWorkoutTypeById(this, WorkoutType.WORKOUT_TYPE_ID_RUNNING);
         informationManager = new WorkoutInformationManager(this);
         selectedInformation = informationManager.getInformation().get(0);
 
@@ -122,7 +124,7 @@ public class AggregatedWorkoutStatisticsActivity extends FitoTrackActivity imple
         timeSpanSelector.setSelection(2);
 
         if (getLastWorkout() != null) {
-            onSelectWorkoutType(getLastWorkout().getWorkoutType());
+            onSelectWorkoutType(getLastWorkout().getWorkoutType(this));
         } else {
             Toast.makeText(this, R.string.no_workouts_recorded, Toast.LENGTH_LONG).show();
             finish();
@@ -207,8 +209,8 @@ public class AggregatedWorkoutStatisticsActivity extends FitoTrackActivity imple
         refreshValueTexts();
         refreshChart();
         setTitle(getString(selectedInformation.getTitleRes()) + " " + getString(R.string.per) + " " + getString(selectedSpan.title));
-        workoutTypeText.setText(getString(selectedWorkoutType.title));
-        workoutTypeIcon.setImageResource(selectedWorkoutType.icon);
+        workoutTypeText.setText(selectedWorkoutType.title);
+        workoutTypeIcon.setImageResource(Icon.getIcon(selectedWorkoutType.icon));
         axisLeftLabel.setText(selectedInformation.getUnit());
         axisRightLabel.setText(selectedInformation.getUnit());
         xAxisLabel.setText(selectedSpan.axisLabel);

@@ -23,7 +23,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import de.tadris.fitness.data.Workout;
-import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.util.CalorieCalculator;
 
 public class CalorieCalculatorTest {
@@ -32,7 +31,7 @@ public class CalorieCalculatorTest {
     public void testCalculation() {
         Workout workout = new Workout();
         workout.avgSpeed = 2.7d;
-        workout.setWorkoutType(WorkoutType.RUNNING);
+        workout.workoutTypeId = "running";
         workout.duration = 1000L * 60 * 10;
         int calorie = CalorieCalculator.calculateCalories(workout, 80);
         System.out.println("Calories: " + calorie);

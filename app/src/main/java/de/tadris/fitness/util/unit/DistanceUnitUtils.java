@@ -96,16 +96,21 @@ public class DistanceUnitUtils extends UnitUtils {
     }
 
     public String getPace(double metricPace, boolean useLongUnits) {
-        double one = distanceUnitSystem.getDistanceFromKilometers(1);
-        double secondsTotal = 60 * metricPace / one;
-        int minutes = (int) secondsTotal / 60;
-        int seconds = (int) secondsTotal % 60;
-        if (useLongUnits) {
-            return getMinuteText(minutes) + " " + getString(R.string.and) +
-                    " " + getSecondsText(seconds) + " " + getString(R.string.per) +
-                    " " + getString(distanceUnitSystem.getLongDistanceUnitTitle(false));
-        } else {
-            return minutes + ":" + (seconds < 10 ? "0" : "") + seconds + " min/" + distanceUnitSystem.getLongDistanceUnit();
+        if (!Double.isInfinite(metricPace)) {
+            double one = distanceUnitSystem.getDistanceFromKilometers(1);
+            double secondsTotal = 60 * metricPace / one;
+            int minutes = (int) secondsTotal / 60;
+            int seconds = (int) secondsTotal % 60;
+            if (useLongUnits) {
+                return getMinuteText(minutes) + " " + getString(R.string.and) +
+                        " " + getSecondsText(seconds) + " " + getString(R.string.per) +
+                        " " + getString(distanceUnitSystem.getLongDistanceUnitTitle(false));
+            } else {
+                return minutes + ":" + (seconds < 10 ? "0" : "") + seconds + " min/" + distanceUnitSystem.getLongDistanceUnit();
+            }
+        }
+        else {
+            return "-";
         }
     }
 
@@ -115,7 +120,7 @@ public class DistanceUnitUtils extends UnitUtils {
 
     public String getDistance(int distanceInMeters, boolean useLongUnitNames) {
         if (distanceInMeters >= 1000) {
-            String lengthInLongUnit = round(distanceUnitSystem.getDistanceFromKilometers((double) distanceInMeters / 1000d), 1);
+            String lengthInLongUnit = round(distanceUnitSystem.getDistanceFromKilometers((double) distanceInMeters / 1000d), 2);
             if (useLongUnitNames) {
                 return lengthInLongUnit + " " + getString(distanceUnitSystem.getLongDistanceUnitTitle(false));
             } else {

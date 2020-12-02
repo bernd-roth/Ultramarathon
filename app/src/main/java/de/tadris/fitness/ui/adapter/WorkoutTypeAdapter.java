@@ -28,8 +28,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.util.Icon;
 
 public class WorkoutTypeAdapter extends RecyclerView.Adapter<WorkoutTypeAdapter.WorkoutTypeHolder> {
 
@@ -48,10 +51,10 @@ public class WorkoutTypeAdapter extends RecyclerView.Adapter<WorkoutTypeAdapter.
         }
     }
 
-    private final WorkoutType[] types;
+    private final List<WorkoutType> types;
     private final WorkoutTypeAdapterListener listener;
 
-    public WorkoutTypeAdapter(WorkoutType[] types, WorkoutTypeAdapterListener listener) {
+    public WorkoutTypeAdapter(List<WorkoutType> types, WorkoutTypeAdapterListener listener) {
         this.types = types;
         this.listener = listener;
     }
@@ -66,9 +69,9 @@ public class WorkoutTypeAdapter extends RecyclerView.Adapter<WorkoutTypeAdapter.
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(WorkoutTypeHolder holder, final int position) {
-        WorkoutType type = types[position];
-        holder.iconView.setImageResource(type.icon);
-        holder.iconView.setColorFilter(holder.root.getContext().getResources().getColor(type.color));
+        WorkoutType type = types.get(position);
+        holder.iconView.setImageResource(Icon.getIcon(type.icon));
+        holder.iconView.setColorFilter(type.color);
         holder.nameText.setText(type.title);
         holder.root.setOnClickListener(v -> listener.onItemSelect(position, type));
     }
@@ -76,7 +79,7 @@ public class WorkoutTypeAdapter extends RecyclerView.Adapter<WorkoutTypeAdapter.
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return types.length;
+        return types.size();
     }
 
     public interface WorkoutTypeAdapterListener {

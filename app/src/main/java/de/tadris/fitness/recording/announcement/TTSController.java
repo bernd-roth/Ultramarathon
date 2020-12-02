@@ -27,22 +27,23 @@ import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.util.Log;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.Locale;
 
 import de.tadris.fitness.recording.WorkoutRecorder;
+import de.tadris.fitness.recording.event.TTSReadyEvent;
 
 public class TTSController {
 
     private TextToSpeech textToSpeech;
     private boolean ttsAvailable;
-    private VoiceAnnouncementCallback callback;
 
     private final AnnouncementMode currentMode;
 
     private final AudioManager audioManager;
 
-    public TTSController(Context context, VoiceAnnouncementCallback callback) {
-        this.callback = callback;
+    public TTSController(Context context) {
         this.textToSpeech = new TextToSpeech(context, this::ttsReady);
         this.audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         this.currentMode = AnnouncementMode.getCurrentMode(context);
@@ -53,7 +54,7 @@ public class TTSController {
         if (ttsAvailable) {
             textToSpeech.setOnUtteranceProgressListener(new TextToSpeechListener());
         }
-        callback.onVoiceAnnouncementIsReady(ttsAvailable);
+        EventBus.getDefault().post(new TTSReadyEvent(ttsAvailable));
     }
 
     public void speak(WorkoutRecorder recorder, Announcement announcement) {
@@ -112,9 +113,5 @@ public class TTSController {
         @Override
         public void onError(String utteranceId) {
         }
-    }
-
-    public interface VoiceAnnouncementCallback {
-        void onVoiceAnnouncementIsReady(boolean available);
     }
 }

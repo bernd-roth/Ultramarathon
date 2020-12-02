@@ -22,19 +22,15 @@ package de.tadris.fitness;
 import android.content.Context;
 import android.util.Log;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import de.tadris.fitness.data.AppDatabase;
 import de.tadris.fitness.data.UserPreferences;
 import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.data.WorkoutType;
-import de.tadris.fitness.recording.RecorderService;
 import de.tadris.fitness.recording.WorkoutRecorder;
-import de.tadris.fitness.recording.announcement.TTSController;
 import de.tadris.fitness.util.DataManager;
 import de.tadris.fitness.util.FitoTrackThemes;
 import de.tadris.fitness.util.UserDateTimeUtils;
@@ -58,8 +54,6 @@ public class Instance {
 
     public final AppDatabase db;
     public WorkoutRecorder recorder;
-    public final List<RecorderService.RecorderServiceListener> recorderServiceListeners;
-    public final List<TTSController.VoiceAnnouncementCallback> voiceAnnouncementCallbackListeners;
     public final UserPreferences userPreferences;
     public final FitoTrackThemes themes;
     public final UserDateTimeUtils userDateTimeUtils;
@@ -69,8 +63,6 @@ public class Instance {
 
     private Instance(Context context) {
         instance = this;
-        recorderServiceListeners = new CopyOnWriteArrayList<>();
-        voiceAnnouncementCallbackListeners = new ArrayList<>();
         userPreferences = new UserPreferences(context);
         themes = new FitoTrackThemes(context);
         userDateTimeUtils = new UserDateTimeUtils(userPreferences);
@@ -93,7 +85,7 @@ public class Instance {
         if (lastWorkout != null && lastWorkout.end == -1) {
             return restoreRecorder(context, lastWorkout);
         }
-        return new WorkoutRecorder(context, WorkoutType.OTHER);
+        return new WorkoutRecorder(context, WorkoutType.getWorkoutTypeById(context, WorkoutType.WORKOUT_TYPE_ID_OTHER));
     }
 
     private WorkoutRecorder restoreRecorder(Context context, Workout workout) {

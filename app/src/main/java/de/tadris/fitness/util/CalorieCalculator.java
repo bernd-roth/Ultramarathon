@@ -19,22 +19,23 @@
 
 package de.tadris.fitness.util;
 
+import android.content.Context;
+
 import de.tadris.fitness.data.Workout;
 
 public class CalorieCalculator {
 
     /**
-     *
      * workoutType, duration, ascent and avgSpeed of workout have to be set
      *
      * @param workout the workout
-     * @param weight the weight of the person in kilogram
+     * @param weight  the weight of the person in kilogram
      * @return calories burned
      */
-    public static int calculateCalories(Workout workout, double weight){
-        double mins= (double)(workout.duration / 1000) / 60;
-        int ascent= (int)workout.ascent; // 1 calorie per meter
-        return (int)(mins * (getMET(workout) * 3.5 * weight) / 200) + ascent;
+    public static int calculateCalories(Context context, Workout workout, double weight) {
+        double mins = (double) (workout.duration / 1000) / 60;
+        int ascent = (int) workout.ascent; // 1 calorie per meter
+        return (int) (mins * (getMET(context, workout) * 3.5 * weight) / 200) + ascent;
     }
 
     /**
@@ -51,24 +52,24 @@ public class CalorieCalculator {
      *
      * @return MET
      */
-    private static double getMET(Workout workout) {
-        double speedInKmh= workout.avgSpeed * 3.6;
+    private static double getMET(Context context, Workout workout) {
+        double speedInKmh = workout.avgSpeed * 3.6;
 
-        switch (workout.getWorkoutType()) {
-            case RUNNING:
-            case WALKING:
-            case HIKING:
+        switch (workout.workoutTypeId) {
+            case "running":
+            case "walking":
+            case "hiking":
                 return Math.max(3, speedInKmh * 0.97);
-            case CYCLING:
+            case "cycling":
                 return Math.max(3.5, 0.00818 * Math.pow(speedInKmh, 2) + 0.1925 * speedInKmh + 1.13);
-            case INLINE_SKATING:
+            case "inline_skating":
                 return Math.max(3, 0.6747 * speedInKmh - 2.1893);
-            case SKATEBOARDING:
+            case "skateboarding":
                 return Math.max(4, 0.43 * speedInKmh + 0.89);
-            case ROWING:
+            case "rowing":
                 return Math.max(2.5, 0.18 * Math.pow(speedInKmh, 2) - 1.375 * speedInKmh + 5.2);
             default:
-                return 0;
+                return workout.getWorkoutType(context).MET;
         }
     }
 

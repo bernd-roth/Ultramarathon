@@ -209,6 +209,7 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
         menu.findItem(R.id.actionResumeWorkout).setVisible(isLastWorkout());
         menu.findItem(R.id.actionUploadOSM).setVisible(hasSamples());
         menu.findItem(R.id.actionExportGpx).setVisible(hasSamples());
+        menu.findItem(R.id.actionShareWorkout).setVisible(hasSamples());
         return true;
     }
 
@@ -325,6 +326,16 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
         finish();
     }
 
+    private void shareWorkoutActivity() {
+        try {
+            final Intent intent = new Intent(this, ShareWorkoutActivity.class);
+            intent.putExtra(ShowWorkoutActivity.WORKOUT_ID_EXTRA, workout.id);
+            startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -342,10 +353,22 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
                 openEditWorkoutActivity();
                 return true;
             case R.id.actionResumeWorkout:
-                resumeWorkout();
+                showResumeConfirmation();
+                return true;
+            case R.id.actionShareWorkout:
+                shareWorkoutActivity();
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showResumeConfirmation() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.resumeWorkout)
+                .setMessage(R.string.resumeWorkoutConfirmation)
+                .setPositiveButton(R.string.actionResume, (dialog, which) -> resumeWorkout())
+                .setNegativeButton(R.string.cancel, null)
+                .show();
     }
 
     private void resumeWorkout() {
@@ -361,7 +384,7 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
     }
 
     @Override
-    void initRoot() {
+    protected void initRoot() {
         root = findViewById(R.id.showWorkoutRoot);
     }
 }
