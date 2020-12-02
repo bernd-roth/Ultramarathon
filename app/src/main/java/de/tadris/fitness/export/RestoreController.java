@@ -144,7 +144,10 @@ public class RestoreController {
         listener.onStatusChanged(95, context.getString(R.string.customWorkoutTypesTitle));
         if (dataContainer.getWorkoutTypes() != null) {
             for (WorkoutType type : dataContainer.getWorkoutTypes()) {
-                database.workoutTypeDao().insert(type);
+                // Only import unknown workout types
+                if (database.workoutTypeDao().findById(type.id) == null) {
+                    database.workoutTypeDao().insert(type);
+                }
             }
         }
     }
