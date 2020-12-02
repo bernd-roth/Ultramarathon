@@ -34,6 +34,7 @@ import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutSample;
+import de.tadris.fitness.data.WorkoutType;
 
 public class RestoreController {
 
@@ -80,6 +81,7 @@ public class RestoreController {
             restoreWorkouts();
             restoreSamples();
             restoreIntervalSets();
+            restoreWorkoutTypes();
         });
     }
 
@@ -100,7 +102,7 @@ public class RestoreController {
     }
 
     private void restoreSamples() {
-        listener.onStatusChanged(80, context.getString(R.string.locationData));
+        listener.onStatusChanged(70, context.getString(R.string.locationData));
         if (dataContainer.getSamples() != null) {
             for (WorkoutSample sample : dataContainer.getSamples()) {
                 // Only import unknown samples with known workout on merge
@@ -114,7 +116,7 @@ public class RestoreController {
     }
 
     private void restoreIntervalSets() {
-        listener.onStatusChanged(95, context.getString(R.string.intervalSets));
+        listener.onStatusChanged(90, context.getString(R.string.intervalSets));
         if (dataContainer.getIntervalSets() != null) {
             for (IntervalSetContainer container : dataContainer.getIntervalSets()) {
                 restoreIntervalSet(container);
@@ -131,9 +133,18 @@ public class RestoreController {
         if (container.getIntervals() != null) {
             for (Interval interval : container.getIntervals()) {
                 // Only Import Unknown Intervals
-                if(database.intervalDao().findById(interval.id) == null) {
+                if (database.intervalDao().findById(interval.id) == null) {
                     database.intervalDao().insertInterval(interval);
                 }
+            }
+        }
+    }
+
+    private void restoreWorkoutTypes() {
+        listener.onStatusChanged(95, context.getString(R.string.customWorkoutTypesTitle));
+        if (dataContainer.getWorkoutTypes() != null) {
+            for (WorkoutType type : dataContainer.getWorkoutTypes()) {
+                database.workoutTypeDao().insert(type);
             }
         }
     }

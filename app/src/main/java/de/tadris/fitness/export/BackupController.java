@@ -58,8 +58,10 @@ public class BackupController {
         saveWorkoutsToContainer();
         listener.onStatusChanged(20, context.getString(R.string.locationData));
         saveSamplesToContainer();
-        listener.onStatusChanged(55, context.getString(R.string.intervalSets));
+        listener.onStatusChanged(50, context.getString(R.string.intervalSets));
         saveIntervalsToContainer();
+        listener.onStatusChanged(55, context.getString(R.string.customWorkoutTypesTitle));
+        saveWorkoutTypes();
         listener.onStatusChanged(60, context.getString(R.string.converting));
         writeContainerToOutputFile();
         listener.onStatusChanged(100, context.getString(R.string.finished));
@@ -94,12 +96,16 @@ public class BackupController {
         dataContainer.getIntervalSets().add(new IntervalSetContainer(set, intervals));
     }
 
+    private void saveWorkoutTypes() {
+        dataContainer.getWorkoutTypes().addAll(Arrays.asList(database.workoutTypeDao().findAll()));
+    }
+
     private void writeContainerToOutputFile() throws IOException {
-        XmlMapper mapper= new XmlMapper();
+        XmlMapper mapper = new XmlMapper();
         mapper.writeValue(output, dataContainer);
     }
 
-    public interface ExportStatusListener{
+    public interface ExportStatusListener {
         void onStatusChanged(int progress, String action);
     }
 
