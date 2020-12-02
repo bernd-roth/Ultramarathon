@@ -19,16 +19,14 @@
 
 package de.tadris.fitness.data;
 
+import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import de.tadris.fitness.util.autoexport.target.DirectoryTarget;
 import de.tadris.fitness.util.autoexport.target.ExportTarget;
 
 @Entity(tableName = "export_target_config")
 public class ExportTargetConfiguration {
-
-    public static final String TARGET_TYPE_DIRECTORY = "directory";
 
     @PrimaryKey(autoGenerate = true)
     public long id;
@@ -42,13 +40,9 @@ public class ExportTargetConfiguration {
 
     public String data;
 
+    @Nullable
     public ExportTarget getTargetImplementation() {
-        switch (type) {
-            case TARGET_TYPE_DIRECTORY:
-                return new DirectoryTarget(data);
-            default:
-                return null;
-        }
+        return ExportTarget.getExportTargetImplementation(type, data);
     }
 
 }

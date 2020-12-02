@@ -20,6 +20,7 @@
 package de.tadris.fitness.data;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Query;
 
 @Dao
@@ -30,5 +31,8 @@ public interface ExportTargetDao {
 
     @Query("SELECT * FROM export_target_config WHERE source = :source")
     ExportTargetConfiguration[] findAllFor(String source);
+
+    @Delete
+    void delete(long id);
 
 }

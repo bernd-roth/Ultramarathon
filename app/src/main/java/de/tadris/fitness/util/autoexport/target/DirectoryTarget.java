@@ -31,7 +31,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import de.tadris.fitness.R;
+
 public class DirectoryTarget implements ExportTarget {
+
+    public static final String TARGET_TYPE_DIRECTORY = "directory";
 
     private final String directoryUri;
 
@@ -60,5 +64,15 @@ public class DirectoryTarget implements ExportTarget {
             throw new IOException("Target file not found");
         }
         IOUtils.copy(input, output);
+    }
+
+    @Override
+    public String getId() {
+        return TARGET_TYPE_DIRECTORY;
+    }
+
+    @Override
+    public int getTitleRes() {
+        return R.string.exportTargetDirectory;
     }
 }

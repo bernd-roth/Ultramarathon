@@ -21,6 +21,8 @@ package de.tadris.fitness.util.autoexport.target;
 
 import android.content.Context;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.work.Constraints;
 
 import java.io.File;
@@ -29,8 +31,28 @@ public interface ExportTarget {
 
     void exportFile(Context context, File file) throws Exception;
 
+    String getId();
+
+    @StringRes
+    int getTitleRes();
+
     default Constraints getConstraints() {
         return new Constraints.Builder().build();
+    }
+
+    ExportTarget[] exportTargetTypes = new ExportTarget[]{
+            new DirectoryTarget(null),
+    };
+
+    @Nullable
+    static ExportTarget getExportTargetImplementation(String type, String data) {
+        // TODO: check null-safety for usages
+        switch (type) {
+            case DirectoryTarget.TARGET_TYPE_DIRECTORY:
+                return new DirectoryTarget(data);
+            default:
+                return null;
+        }
     }
 
 }

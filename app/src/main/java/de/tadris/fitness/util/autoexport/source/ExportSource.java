@@ -21,7 +21,11 @@ package de.tadris.fitness.util.autoexport.source;
 
 import android.content.Context;
 
+import androidx.annotation.StringRes;
+
 import java.io.File;
+
+import de.tadris.fitness.R;
 
 public interface ExportSource {
 
@@ -29,6 +33,18 @@ public interface ExportSource {
     String EXPORT_SOURCE_BACKUP = "backup";
 
     File provideFile(Context context) throws Exception;
+
+    @StringRes
+    static int getTitle(String name) {
+        switch (name) {
+            case EXPORT_SOURCE_BACKUP:
+                return R.string.autoBackupTitle;
+            case EXPORT_SOURCE_WORKOUT_GPX:
+                return R.string.workoutGPXExportTitle;
+            default:
+                return R.string.unknown;
+        }
+    }
 
     static ExportSource getExportSourceByName(String name, String data) {
         switch (name) {

@@ -322,6 +322,12 @@
     <string name="deleteWorkoutTypeConfirmation">Do you really want to delete this workout type?</string>
     <string name="workoutTypeEditIcon">Icon</string>
     <string name="editWorkoutType">Edit workout type</string>
+    <string name="exportTargetDirectory">Directory</string>
+    <string name="autoBackupTitle">Automatic backups</string>
+    <string name="workoutGPXExportTitle">Workout GPX exports</string>
+    <string name="unknown">Unknown</string>
+    <string name="hintConfigureExportTargets">Add targets to which the files should be exported.</string>
+    <string name="deleteExportTargetConfirmation">Do you really want to delete this export target?</string>
     <string-array name="osm_track_visibility">
         <item>Identifiable</item>
         <item>Trackable</item>
