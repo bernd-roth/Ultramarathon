@@ -301,4 +301,23 @@
     <string name="prefShowOnLockScreenSummary">Vis trening informasjon selv om telefonen er låst.</string>
     <string name="prefShowOnLockScreenTitle">Synlig på låseskjermen</string>
     <string name="notimeout">Ingen Timeout</string>
+    <string name="workoutTypeEditMET">MET</string>
+    <string name="editWorkoutType">Rediger trening type</string>
+    <string name="workoutTypeEditIcon">Ikon</string>
+    <string name="deleteWorkoutTypeConfirmation">Tror du virkelig ønsker å slette denne type trening\?</string>
+    <string name="deleteWorkoutType">Slette Treningsøkt Type</string>
+    <string name="actionSave">Lagre</string>
+    <string name="customWorkoutTypesTitle">Tilpassede Typer Trening</string>
+    <string name="preferenceCategoryVoiceFeedback">Stemme tilbakemelding</string>
+    <string name="workoutTypeEditMETHint">Et mål for energiforbruk</string>
+    <string name="workoutTypeEditMinDistanceHint">Minimum avstand mellom to GPS-prøver</string>
+    <string name="workoutTypeEditMinDistance">Eksempel avstand</string>
+    <string name="workoutTypeEditNameError">Vennligst skriv inn et navn</string>
+    <string name="workoutTypeEditName">Navn</string>
+    <string name="workoutTypeEditIdErrorUnique">Det er allerede en treningsøkt type ved å bruke denne ID-en</string>
+    <string name="workoutTypeEditIdErrorEmpty">Vennligst legg inn en ID</string>
+    <string name="workoutTypeEditIdErrorCharacters">Tillatt tegn: a–z, A–Z, 0–9, _, -</string>
+    <string name="workoutTypeEditId">ID</string>
+    <string name="hintManageWorkoutTypes">Klikk på plusstegnet for å legge til en tilpasset trening typer.</string>
+    <string name="workoutTypeAdd">Legge</string>
 </resources>
