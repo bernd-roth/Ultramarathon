@@ -36,4 +36,8 @@
     <string name="errorGpxExportFailed">Eksport GPX gagal.</string>
     <string name="errorExportFailed">Eksport data gagal.</string>
     <string name="errorImportFailed">Import data gagal.</string>
+    <string name="announcementGPSStatus">Status</string>
+    <string name="chooseBackupFile">Pilih Salinan</string>
+    <string name="loadingFile">Memuat</string>
+    <string name="editWorkoutType">Sunting jenis</string>
 </resources>
