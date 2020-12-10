@@ -303,7 +303,7 @@
     <string name="importMultipleGpxFilesSummary">Importeer meer dan één GPX-bestand tegelijk uit het bestandssysteem</string>
     <string name="importMultipleMessageSelectFolder">Selecteer een map met alle GPX-bestanden die u wilt importeren.</string>
     <string name="importMultipleGpxFiles">Meerdere GPX-bestanden importeren</string>
-    <string name="actionGrant">Subsidie</string>
+    <string name="actionGrant">Toesteming verlenen</string>
     <string name="recordingGrantBackgroundPermissionMessage">FitoTrack verzamelt ook locatiegegevens op de achtergrond om de training op te nemen wanneer het scherm is uitgeschakeld. Geef daarom toestemming.</string>
     <string name="recordingGrantLocationPermissionMessage">FitoTrack verzamelt locatiegegevens om de training vast te leggen. Geef de locatie toestemming om een training vast te leggen.</string>
     <string name="aboutPrivacyPolicy">Privacybeleid</string>
