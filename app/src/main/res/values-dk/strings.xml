@@ -333,4 +333,23 @@
     <string name="prefShowOnLockScreenSummary">Vis træningsoplysninger, selvom telefonen er låst.</string>
     <string name="prefShowOnLockScreenTitle">Synlig på låseskærmen</string>
     <string name="notimeout">Ingen Timeout</string>
+    <string name="workoutTypeEditMET">MET</string>
+    <string name="editWorkoutType">Rediger træningstype</string>
+    <string name="workoutTypeEditIcon">Ikon</string>
+    <string name="deleteWorkoutTypeConfirmation">Vil du virkelig slette denne træningstype\?</string>
+    <string name="deleteWorkoutType">Slet Træningstype</string>
+    <string name="actionSave">Spare</string>
+    <string name="customWorkoutTypesTitle">Tilpassede Træningstyper</string>
+    <string name="preferenceCategoryVoiceFeedback">Stemme feedback</string>
+    <string name="workoutTypeEditMETHint">En foranstaltning til energiforbrug</string>
+    <string name="workoutTypeEditMinDistanceHint">Mindste afstand mellem to GPS-prøver</string>
+    <string name="workoutTypeEditMinDistance">Prøve afstand</string>
+    <string name="workoutTypeEditNameError">Indtast venligst et navn</string>
+    <string name="workoutTypeEditName">Navn</string>
+    <string name="workoutTypeEditIdErrorUnique">Der er allerede en træningstype ved hjælp af dette ID</string>
+    <string name="workoutTypeEditIdErrorEmpty">Indtast venligst et ID</string>
+    <string name="workoutTypeEditIdErrorCharacters">Tilladte tegn: a–z, A–Z, 0–9, _, -</string>
+    <string name="workoutTypeEditId">ID</string>
+    <string name="hintManageWorkoutTypes">Klik på plus for at tilføje tilpassede træningstyper.</string>
+    <string name="workoutTypeAdd">Tilføje</string>
 </resources>

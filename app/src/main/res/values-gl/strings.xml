@@ -301,4 +301,23 @@
     <string name="prefShowOnLockScreenSummary">Mostrar información do adestramento incluso coa pantalla bloqueada.</string>
     <string name="prefShowOnLockScreenTitle">Visible na pantalla de bloqueo</string>
     <string name="notimeout">Sen caducidade</string>
+    <string name="editWorkoutType">Edita tipo de adestramento</string>
+    <string name="workoutTypeEditIcon">Icona</string>
+    <string name="deleteWorkoutTypeConfirmation">Queres eliminar este tipo de adestramento\?</string>
+    <string name="deleteWorkoutType">Eliminar tipo de adestramento</string>
+    <string name="actionSave">Gardar</string>
+    <string name="customWorkoutTypesTitle">Adestramentos personalizados</string>
+    <string name="preferenceCategoryVoiceFeedback">Axuda por voz</string>
+    <string name="workoutTypeEditMETHint">Medida do consumo de enerxía</string>
+    <string name="workoutTypeEditMET">MET</string>
+    <string name="workoutTypeEditMinDistanceHint">Distancia mínima entre dúas medidas GPS</string>
+    <string name="workoutTypeEditMinDistance">Distancia de mostra</string>
+    <string name="workoutTypeEditNameError">Escribe un nome</string>
+    <string name="workoutTypeEditName">Nome</string>
+    <string name="workoutTypeEditIdErrorUnique">Xa existe un tipo de adestramento usando ese ID</string>
+    <string name="workoutTypeEditIdErrorEmpty">Escribe un ID</string>
+    <string name="workoutTypeEditIdErrorCharacters">Caracteres permitidos: a-z, A-Z, 0-9, _, -</string>
+    <string name="workoutTypeEditId">ID</string>
+    <string name="hintManageWorkoutTypes">Preme na icona máis para engadir tipos de adestramento.</string>
+    <string name="workoutTypeAdd">Engadir</string>
 </resources>

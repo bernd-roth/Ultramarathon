@@ -341,4 +341,23 @@
     <string name="prefShowOnLockScreenSummary">Mostrar la información sobre el entrenamiento aún si el teléfono está bloqueado.</string>
     <string name="prefShowOnLockScreenTitle">Visible en la pantalla de bloqueo</string>
     <string name="notimeout">Desactivado</string>
+    <string name="workoutTypeEditMET">MET</string>
+    <string name="editWorkoutType">Editar tipo de entrenamiento</string>
+    <string name="workoutTypeEditIcon">Icono</string>
+    <string name="deleteWorkoutTypeConfirmation">Realmente desea eliminar este tipo de entrenamiento\?</string>
+    <string name="deleteWorkoutType">Eliminar tipo de entrenamiento</string>
+    <string name="actionSave">Guardar</string>
+    <string name="customWorkoutTypesTitle">Tipos de entrenamiento personalizados</string>
+    <string name="preferenceCategoryVoiceFeedback">Comentarios de voz</string>
+    <string name="workoutTypeEditMETHint">Una medida para el consumo de energía</string>
+    <string name="workoutTypeEditMinDistanceHint">Distancia mínima entre dos muestras de GPS</string>
+    <string name="workoutTypeEditMinDistance">Distancia de la muestra</string>
+    <string name="workoutTypeEditNameError">Por favor, introduzca un nombre</string>
+    <string name="workoutTypeEditName">Nombre</string>
+    <string name="workoutTypeEditIdErrorUnique">Ya hay un tipo de entrenamiento que usa este ID</string>
+    <string name="workoutTypeEditIdErrorEmpty">Por favor, introduzca una ID</string>
+    <string name="workoutTypeEditIdErrorCharacters">Caracteres permitidos: a–z, A–Z, 0–9, _, -</string>
+    <string name="workoutTypeEditId">ID</string>
+    <string name="hintManageWorkoutTypes">Haga clic en el signo más para agregar tipos de entrenamiento personalizados.</string>
+    <string name="workoutTypeAdd">Añadir</string>
 </resources>

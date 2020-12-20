@@ -319,4 +319,23 @@
     <string name="prefShowOnLockScreenSummary">Edzésinformációk megjelenítése akkor is, ha a telefon zárolva van.</string>
     <string name="prefShowOnLockScreenTitle">Látható a zár képernyőn</string>
     <string name="notimeout">Nincs Időtúllépés</string>
+    <string name="workoutTypeEditMET">MET</string>
+    <string name="editWorkoutType">Edit edzés típusa</string>
+    <string name="workoutTypeEditIcon">Ikon</string>
+    <string name="deleteWorkoutTypeConfirmation">Tényleg törölni szeretné ezt az edzéstípust\?</string>
+    <string name="deleteWorkoutType">Az Edzés Típusának Törlése</string>
+    <string name="actionSave">Mentés</string>
+    <string name="customWorkoutTypesTitle">Egyéni Edzés Típusok</string>
+    <string name="preferenceCategoryVoiceFeedback">Hang visszacsatolás</string>
+    <string name="workoutTypeEditMETHint">Az energiafogyasztásra vonatkozó intézkedés</string>
+    <string name="workoutTypeEditMinDistanceHint">Két GPS-minta közötti minimális távolság</string>
+    <string name="workoutTypeEditMinDistance">Minta távolság</string>
+    <string name="workoutTypeEditNameError">Kérjük, adjon meg egy nevet</string>
+    <string name="workoutTypeEditName">Név</string>
+    <string name="workoutTypeEditIdErrorUnique">Már van egy edzés típusa használja ezt az azonosítót</string>
+    <string name="workoutTypeEditIdErrorEmpty">Kérjük, adjon meg egy azonosítót</string>
+    <string name="workoutTypeEditIdErrorCharacters">Engedélyezett karakterek: a–z, A–Z, 0–9, _, -</string>
+    <string name="workoutTypeEditId">ID</string>
+    <string name="hintManageWorkoutTypes">Kattintson a pluszra az egyéni edzéstípusok hozzáadásához.</string>
+    <string name="workoutTypeAdd">Hozzáadás</string>
 </resources>
