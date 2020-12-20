@@ -394,7 +394,7 @@ public class RecorderService extends Service {
 
     @Subscribe
     public void onGPSStateChange(WorkoutGPSStateChanged event) {
-        GPSStatus announcement = new GPSStatus(RecorderService.this);
+        GPSStatus announcement = new GPSStatus(this);
         if (instance.recorder.isResumed() && announcement.isAnnouncementEnabled()) {
             if (event.oldState == WorkoutRecorder.GpsState.SIGNAL_LOST) { // GPS Signal found
                 mTTSController.speak(announcement.getSpokenGPSFound());
