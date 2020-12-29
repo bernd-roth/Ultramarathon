@@ -24,6 +24,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
@@ -56,6 +57,7 @@ public class WorkoutType implements Serializable {
     @ColumnInfo(name = "met")
     public int MET;
 
+    @Ignore
     public WorkoutType(@NonNull String id, String title, int minDistance, int color, String icon, int MET) {
         this.id = id;
         this.title = title;
@@ -63,6 +65,9 @@ public class WorkoutType implements Serializable {
         this.color = color;
         this.icon = icon;
         this.MET = MET;
+    }
+
+    public WorkoutType() {
     }
 
     private static WorkoutType[] PRESETS = null;
