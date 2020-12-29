@@ -148,6 +148,7 @@ public class WorkoutRecorder {
         } else {
             state = RecordingState.RUNNING;
         }
+        lastSampleTime = System.currentTimeMillis(); // prevent automatic stop
     }
 
     public Workout getWorkout() {
