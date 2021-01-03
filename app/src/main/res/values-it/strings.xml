@@ -314,7 +314,7 @@
     <string name="showIntervals">Mostra intervalli</string>
     <string name="connectHeartRateDevice">Collegare il cardiofrequenzimetro</string>
     <string name="selectBluetoothDevice">Selezionare il dispositivo Bluetooth</string>
-    <string name="workoutAvgHeartRate">Frequenza cardiaca media</string>
+    <string name="workoutAvgHeartRate">Avg. Frequenza Cardiaca</string>
     <string name="workoutMaxHeartRate">Frequenza cardiaca max</string>
     <string name="workoutHeartRate">Frequenza cardiaca</string>
     <string name="actionResume">Curriculum vitae</string>
