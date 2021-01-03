@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="actionGrant">Conceder</string>
-    <string name="editWorkoutType">Editar modalidade</string>
+    <string name="editWorkoutType">Editar o tipo de exercício</string>
     <string name="workoutTypeEditIcon">Ícone</string>
-    <string name="deleteWorkoutTypeConfirmation">Deseja realmente eliminar esta modalidade\?</string>
-    <string name="deleteWorkoutType">Eliminar Modalidade</string>
+    <string name="deleteWorkoutTypeConfirmation">Deseja mesmo apagar este tipo de exercício\?</string>
+    <string name="deleteWorkoutType">Apagar O Tipo De Exercício</string>
     <string name="actionSave">Guardar</string>
-    <string name="customWorkoutTypesTitle">Modalidades Customizadas</string>
+    <string name="customWorkoutTypesTitle">Tipos De Exercício Personalizados</string>
     <string name="workoutTypeEditMETHint">Uma medida para consumo de energia</string>
     <string name="workoutTypeEditMinDistanceHint">Distância mínima entre duas amostras GPS</string>
-    <string name="workoutTypeEditMinDistance"></string>
+    <string name="workoutTypeEditMinDistance">Distância de amostragem</string>
     <string name="workoutTypeEditNameError">Introduza um nome, por favor</string>
-    <string name="workoutTypeEditIdErrorUnique">Já existe uma modalidade associada a este ID</string>
+    <string name="workoutTypeEditIdErrorUnique">Já existe um tipo de exercício usando este ID</string>
     <string name="workoutTypeEditName">Nome</string>
     <string name="workoutTypeEditIdErrorEmpty">Por favor introduza um ID</string>
     <string name="workoutTypeEditIdErrorCharacters">Caracteres permitidos: a-z, A-Z, 0-9, _, -</string>
@@ -39,7 +39,7 @@
     <string name="unitFootSingular">Pé</string>
     <string name="unitFootPlural">Pés</string>
     <string name="noWorkoutStarted">Nenhum Exercício Começado</string>
-    <string name="editDisplayedInformationHint">Desde que o exercício ainda não tenha começado, pode-se editar os valores apresentados ao clicar num dos quatro campos.</string>
+    <string name="editDisplayedInformationHint">Enquanto o treino não tiver começado, poderá editar os valores apresentados clicando num dos quatro campos.</string>
     <string name="editDisplayedInformation">Editar informação apresentada</string>
     <string name="sendEmail">Enviar Email</string>
     <string name="aboutPrivacyPolicy">Política de Privacidade</string>
@@ -50,7 +50,7 @@
     <string name="aboutContributors">Contribuidores</string>
     <string name="aboutAuthor">Autor</string>
     <string name="aboutLinks">Links</string>
-    <string name="aboutReportBug">Comunicar um bug</string>
+    <string name="aboutReportBug">Comunicar um erro</string>
     <string name="aboutOpenSourceLibraries">Bibliotecas open source</string>
     <string name="aboutVersion">Versão</string>
     <string name="aboutTitle">Sobre</string>
@@ -63,11 +63,11 @@
     <string name="workoutImported">Importação de exercício bem-sucedida</string>
     <string name="merge">Agregar</string>
     <string name="replace">Substituir</string>
-    <string name="replaceOrMergeMessage">Substituir ou agregar base de dados com o backup\?</string>
+    <string name="replaceOrMergeMessage">Substituir ou fundir a base de dados com um ficheiro de cópia de segurança\?</string>
     <string name="dataSamples">Amostras</string>
-    <string name="workoutStatsHelpText">Esta secção apresenta estatísticas relativas ao historial dos exercícios. Para usá-la, necessecita primeiro de especificar o tipo de exercício ao clicar na respetiva modalidade. De seguida, defina a informação que deseja saber e em que intervalo de tempo.
+    <string name="workoutStatsHelpText">Esta tela mostra estatísticas históricas dos treinos. Para usá-lo, você primeiro precisa especificar o tipo de exercício, clicando nele. Em seguida, defina a informação que você quer saber sobre e o período de tempo.
 \n
-\nE.g. se selecionar \"Semana\" como intervalo, todos os exercícios de cada semana serão aglomerados num só conjunto de dados calculando assim quer a média semanal quer a soma de cada semana.</string>
+\nPor exemplo, se você selecionar \"semana\" como período de tempo, todos os exercícios de cada semana serão fundidos em um ponto de dados ou calculando a média ou a soma de cada semana.</string>
     <string name="singleWorkout">Exercício Único</string>
     <string name="calendarWeekYear">Calendário Semana / Ano</string>
     <string name="help">Ajuda</string>
@@ -81,11 +81,11 @@
     <string name="month">Mês</string>
     <string name="week">Semana</string>
     <string name="day">Dia</string>
-    <string name="workout_statistics">Estatísticas de Exercícios</string>
+    <string name="workout_statistics">Estatísticas De Exercício</string>
     <string name="no_workouts_recorded_for_this_activity">Nenhum exercício para esta modalidade</string>
     <string name="unlockPhoneStopWorkout">Desbloqueie o seu telemóvel para terminar o rastreamento, por favor</string>
     <string name="oClock">em Ponto</string>
-    <string name="currentTime">Tempo</string>
+    <string name="currentTime">momento</string>
     <string name="pref_auto_timeout_title">Período para Paragem Automática</string>
     <string name="intervalAutoTimeoutTraining">Paragem Automática de Exercício</string>
     <string name="manageAutoTimeoutSummary">Configurar o intervalo para paragem automática do exercício</string>
@@ -156,7 +156,7 @@
     <string name="workoutTypeSkateboarding">Andar de Skate</string>
     <string name="workoutTypeHiking">Escalada</string>
     <string name="workoutTypeCycling">Ciclismo</string>
-    <string name="workoutTypeJogging">Jogging</string>
+    <string name="workoutTypeJogging">Movimentar</string>
     <string name="workoutTypeWalking">Caminhada</string>
     <string name="workoutTypeRunning">Corrida</string>
     <string name="height">Altura</string>
@@ -170,7 +170,7 @@
     <string name="enterVerificationCode">Introduza Código de Verificação</string>
     <string name="uploading">A fazer upload</string>
     <string name="workoutEdited">Este exercício foi editado.</string>
-    <string name="workoutAvgHeartRate">Ritmo Cardíaco Med.</string>
+    <string name="workoutAvgHeartRate">Media. cardiaco</string>
     <string name="workoutMaxHeartRate">Ritmo Cardíaco Máximo</string>
     <string name="workoutHeartRate">Ritmo Cardíaco</string>
     <string name="workoutEnergyConsumption">Consumo de Energia</string>
@@ -178,7 +178,7 @@
     <string name="workoutBurnedEnergy">Energia Gasta</string>
     <string name="workoutTopSpeed">Velocidade Máxima</string>
     <string name="workoutAvgSpeedLong">Velocidade Média</string>
-    <string name="workoutAvgSpeedShort">Velocidade Med.</string>
+    <string name="workoutAvgSpeedShort">Media. Velocidade</string>
     <string name="workoutSpeed">Velocidade</string>
     <string name="workoutRoute">Percurso</string>
     <string name="workoutPace">Andamento</string>
@@ -191,7 +191,7 @@
     <string name="workoutTime">Tempo</string>
     <string name="gpsFound">Sinal GPS reestabelecido</string>
     <string name="gpsLost">Sinal GPS perdido</string>
-    <string name="pref_announcements_config_summary">Escolher o tempo e distância entre</string>
+    <string name="pref_announcements_config_summary">Escolha o tempo e a distância entre Anúncios de voz</string>
     <string name="pref_voice_announcements_summary">Configurar avisos sonoros que vão decorrendo durante o exercício</string>
     <string name="announcementWorkoutActions">Ações de Exercício (pausa, resumir, etc.)</string>
     <string name="announcementGPSStatus">Estado de GPS</string>
@@ -208,9 +208,9 @@
     <string name="hintAddWorkout">Pressione no ícone com um mais para gravar ou adicionar um exercício.</string>
     <string name="currentSpeed">Velocidade Atual</string>
     <string name="intervalTraining">Treino por Intervalos</string>
-    <string name="intervalsIncludePauseSummary">Quando ativado, os intervalos irão continuar mesmo em pausas no decorrer do exercício.</string>
-    <string name="intervalsIncludePauseTitle">Incluir Tempo de Pausa em Treino por Intervalos</string>
-    <string name="deleteIntervalSet">Apagar Conjunto de Intervalos</string>
+    <string name="intervalsIncludePauseSummary">Se activado, os intervalos continuarão mesmo que faça pausas no seu treino.</string>
+    <string name="intervalsIncludePauseTitle">Incluir o tempo de pausa no treino do intervalo</string>
+    <string name="deleteIntervalSet">Apagar O Intervalo Definido</string>
     <string name="enterName">Introduza um nome</string>
     <string name="length_in_minutes">Duração (minutos):</string>
     <string name="interval_name">Nome:</string>
@@ -218,7 +218,7 @@
     <string name="create">Criar</string>
     <string name="createIntervalSet">Criar Novo Conjunto de Intervalos</string>
     <string name="workoutRecording">Gravando Exercício</string>
-    <string name="manageIntervalSets">Gerir Conjunto de Intervalos</string>
+    <string name="manageIntervalSets">Gerir Os Conjuntos De Intervalos</string>
     <string name="add_interval">Adicionar Intervalo</string>
     <string name="add">Adicionar</string>
     <string name="cannotStart">Não é possível começar</string>
@@ -266,4 +266,41 @@
     <string name="stop">Parar</string>
     <string name="workout_add">Adicionar</string>
     <string name="app_name">FitoTrack</string>
+    <string name="hintManageWorkoutTypes">Carregue no mais para adicionar tipos de treino personalizados.</string>
+    <string name="resumeWorkoutConfirmation">Queres mesmo retomar este exercício\? Isto também irá adicionar uma pausa a partir do momento em que o treino foi parado.</string>
+    <string name="prefShowOnLockScreenSummary">Mostrar informações de exercício, mesmo que o telefone esteja bloqueado.</string>
+    <string name="prefShowOnLockScreenTitle">Visível no ecrã de bloqueio</string>
+    <string name="notimeout">Sem Tempo-Limite</string>
+    <string name="workoutStopped">Exercício parado</string>
+    <string name="heartRateNotAvailable">A frequência cardíaca não está disponível.</string>
+    <string name="connectHeartRateDevice">Ligar o dispositivo de Frequência Cardíaca</string>
+    <string name="bulkActions">Accao</string>
+    <string name="importMultipleGpxFilesSummary">Importar mais do que um ficheiro GPX de uma vez</string>
+    <string name="recordingStatePaused">Pausa</string>
+    <string name="recordingStateRunning">Execucao</string>
+    <string name="recordingStateIdle">Ocioso</string>
+    <string name="speechConfigNoSpeech">Sem Anúncio</string>
+    <string name="recordingGrantBackgroundPermissionMessage">FitoTrack também coleta dados de localização em segundo plano para gravar o treino quando a tela é desligada. Portanto, por favor, conceda a permissão.</string>
+    <string name="recordingGrantLocationPermissionMessage">FitoTrack coleta dados de localização para registrar o exercício. Por favor, dê permissão para gravar um exercício.</string>
+    <string name="recordingBackgroundPermissionNotGrantedMessage">Você não concedeu permissão à FitoTrack para acessar a sua localização em segundo plano. (Por exemplo, com o ecrã desligado) Os exercícios podem não ser gravados correctamente.</string>
+    <string name="recordingPermissionNotGrantedMessage">Você não concedeu permissão à FitoTrack para acessar sua localização. FitoTrack precisa desta permissão para acompanhar o seu movimento durante o seu treino.</string>
+    <string name="aboutChangelog">Alteracao</string>
+    <string name="announcementSuppressDuringCall">Suprimir durante a chamada</string>
+    <string name="dayInMonth">Dia do mês</string>
+    <string name="preferencesBackupSummary">Backup/restaurar os seus dados de treino</string>
+    <string name="intervalSets">Conjuntos De Intervalos</string>
+    <string name="intervalSet">Intervalo Definido</string>
+    <string name="intervalSetSelected">Intervalo seleccionado</string>
+    <string name="selectIntervalSet">Seleccionar O Intervalo</string>
+    <string name="deleteIntervalSetMessage">Deseja apagar o intervalo definido\?</string>
+    <string name="hintEditIntervalSet">Adicione intervalos que serão falados.</string>
+    <string name="manageIntervalsSummary">Edite os conjuntos de intervalo que você será capaz de usar durante o treino usando o feedback de voz.</string>
+    <string name="pref_announcement_mode">Modo De Anúncio</string>
+    <string name="ttsNotAvailable">TextToSpeech não está disponível</string>
+    <string name="trackerRunning">O localizador está em execução</string>
+    <string name="pref_announcements_content">Conteúdo dos anúncios</string>
+    <string name="pref_announcements_config_title">Margem De Variação Do Anúncio</string>
+    <string name="voiceAnnouncementsTitle">Anúncios De Voz</string>
+    <string name="workoutTypeEditMET">MET</string>
+    <string name="preferenceCategoryVoiceFeedback">Feedback de voz</string>
 </resources>
