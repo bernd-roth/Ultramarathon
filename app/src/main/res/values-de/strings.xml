@@ -63,7 +63,7 @@
     <string name="trackerRunningMessage">Dein Workout wird aufgezeichnet</string>
     <string name="trackingInfo">Informationen zur Aufnahme</string>
     <string name="trackingInfoDescription">Infos über die laufende Verfolgung</string>
-    <string name="workoutAvgSpeedShort">Durchschnittsgeschw.</string>
+    <string name="workoutAvgSpeedShort">⌀-Geschw.</string>
     <string name="workoutBurnedEnergy">Verbrannte Kalorien</string>
     <string name="workoutDate">Datum</string>
     <string name="workoutDistance">Distanz</string>
@@ -81,7 +81,7 @@
     <string name="workoutTypeCycling">Fahrrad fahren</string>
     <string name="workoutTypeHiking">Wandern</string>
     <string name="workoutTypeJogging">Laufen</string>
-    <string name="workoutTypeRunning">Rennen</string>
+    <string name="workoutTypeRunning">Laufen</string>
     <string name="workoutTypeUnknown">Unbekannt</string>
     <string name="workoutTypeWalking">Gehen</string>
     <string name="workout_add">Hinzufügen</string>
@@ -194,8 +194,8 @@
     <string name="currentSpeed">Aktuelle Geschwindigkeit</string>
     <string name="hintAddWorkout">Klicke auf das Plus-Symbol, um ein Workout aufzuzeichnen oder einzugeben.</string>
     <string name="enterDescription">Gebe eine Beschreibung ein</string>
-    <string name="avgSpeedInMotion">Durchschnittsgeschw. (in Bewegung)</string>
-    <string name="avgSpeedTotalShort">Durchschnittsgeschw. (Gesamt)</string>
+    <string name="avgSpeedInMotion">⌀-Geschw. (Bewegung)</string>
+    <string name="avgSpeedTotalShort">⌀-Geschw. (Gesamt)</string>
     <string name="avgSpeedTotalLong">Durchschnittsgeschwindigkeit im Gesamten</string>
     <string name="preferencesUserInterfaceTitle">Benutzeroberfläche</string>
     <string name="preferencesUserInterfaceSummary">Personalisiere die App</string>
@@ -232,7 +232,7 @@
     <string name="oClock">Uhr</string>
     <string name="unlockPhoneStopWorkout">Bitte das Telefon entsperren, um die Aufnahme zu beenden</string>
     <string name="workout_statistics">Workout Statistiken</string>
-    <string name="workoutStatsHelpText">Dieser Screen zeigt historische Statistiken zu den Workouts. Um es zu verwenden, müssen man zunächst die Trainingsart angeben, indem man darauf klickt. Dann stellt man die Information, über die man etwas wissen möchte, und die Zeitspanne ein.
+    <string name="workoutStatsHelpText">Dieser Screen zeigt Statistiken zu den Workouts. Um es zu verwenden, muss man zunächst die Trainingsart angeben, indem man darauf klickt. Dann stellt man die Information, über die man etwas wissen möchte, und die Zeitspanne ein.
 \n
 \nWenn man z. B. „Woche“ als Zeitspanne auswählt, werden alle Workouts jeder Woche in einem Datenpunkt zusammengefasst und entweder der Durchschnitt oder die Summe jeder Woche berechnet.</string>
     <string name="replaceOrMergeMessage">Datenbank ersetzen oder mit Backup zusammenführen?</string>
@@ -276,7 +276,7 @@
     <string name="workoutImported">Workout erfolgreich importiert</string>
     <string name="no_workouts_recorded">Keine aufgezeichneten Workouts</string>
     <string name="workoutTypeSkateboarding">Skateboarden</string>
-    <string name="speedLastMinute">Durchschn. Geschw. (letzte Minute)</string>
+    <string name="speedLastMinute">⌀-Geschw. (letzte Minute)</string>
     <string name="speedLastMinuteSpoken">Geschwindigkeit in der letzten Minute</string>
     <string name="cannotFindWorkout">Kann workout nicht finden</string>
     <string name="editWorkout">Workout bearbeiten</string>
@@ -325,7 +325,7 @@
     <string name="showIntervals">Intervalle zeigen</string>
     <string name="connectHeartRateDevice">Herzfrequenzmesser verbinden</string>
     <string name="selectBluetoothDevice">Bluetooth-Gerät auswählen</string>
-    <string name="workoutAvgHeartRate">Durchschn. Herzfrequenz</string>
+    <string name="workoutAvgHeartRate">⌀ Herzfrequenz</string>
     <string name="workoutMaxHeartRate">Max Herzfrequenz</string>
     <string name="workoutHeartRate">Herzfrequenz</string>
     <string name="announcementWorkoutActions">Workout Aktionen (pausieren, fortsetzten, etc.)</string>
