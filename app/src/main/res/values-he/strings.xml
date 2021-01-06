@@ -34,7 +34,7 @@
     <string name="editDisplayedInformation">עריכת המידע שמוצג</string>
     <string name="unitFootPlural">רגליים</string>
     <string name="unitFootSingular">רגל</string>
-    <string name="recordingStateStopped">נעצר</string>
+    <string name="recordingStateStopped">הופסק</string>
     <string name="resumeWorkout">המשך האימון</string>
     <string name="autoPauseTitle">השהיה אוטומטית</string>
     <string name="actionPause">השהיה</string>
@@ -172,4 +172,14 @@
     <string name="uploading">כעת בהעלאה</string>
     <string name="workoutAvgSpeedShort">מהירות ממוצעת</string>
     <string name="setPreferencesTitle">קביעת ההעדפות</string>
+    <string name="recordingPermissionNotGrantedMessage">לא הענקת ל־FitoTrack גישה למיקום שלך. ל־FitoTrack יש צורך בהרשאה זו כדי לעקוב אחר התנועה שלך במהלך האימון.</string>
+    <string name="recordingPermissionNotGrantedTitle">לא הוענקו הרשאות</string>
+    <string name="unlockPhoneStopWorkout">נא לשחרר את נעילת הטלפון שלך כדי להפסיק את התיעוד</string>
+    <string name="preferencesRecordingSummary">ניהול התיעוד של האימונים</string>
+    <string name="preferencesRecordingTitle">תיעוד</string>
+    <string name="workoutRecording">תיעוד האימון</string>
+    <string name="stopRecordingQuestionMessage">האם אכן ברצונך להפסיק את התיעוד\?</string>
+    <string name="stopRecordingQuestion">להפסיק את התיעוד\?</string>
+    <string name="converting">כעת בהמרה</string>
+    <string name="exporting">כעת בייצוא</string>
 </resources>
