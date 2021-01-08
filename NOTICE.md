@@ -186,6 +186,11 @@
     OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+<https://github.com/greenrobot/EventBus>
+
+    Copyright (C) 2012-2020 Markus Junginger, greenrobot (https://greenrobot.org)
+
+    EventBus binaries and source code can be used according to the Apache License, Version 2.0.
 
 for the geoids.csv:
 

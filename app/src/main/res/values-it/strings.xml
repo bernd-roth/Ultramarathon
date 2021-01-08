@@ -244,7 +244,7 @@
     <string name="recordingPermissionNotGrantedMessage">Non hai concesso a FitoTrack il permesso di accedere alla tua posizione. FitoTrack ha bisogno di questo permesso per seguire i vostri movimenti durante l\'allenamento.</string>
     <string name="dataSamples">Campioni</string>
     <string name="no_workouts_recorded">Nessun allenamento registrato</string>
-    <string name="announcementSuppressDuringCall">Sopprimi durante la chiamata</string>
+    <string name="announcementSuppressDuringCall">Disattiva durante la chiamata</string>
     <string name="replaceOrMergeMessage">Sostituire o unire la base di dati con un file di backup\?</string>
     <string name="merge">Unisci</string>
     <string name="replace">Sostituisci</string>
@@ -314,7 +314,7 @@
     <string name="showIntervals">Mostra intervalli</string>
     <string name="connectHeartRateDevice">Collegare il cardiofrequenzimetro</string>
     <string name="selectBluetoothDevice">Selezionare il dispositivo Bluetooth</string>
-    <string name="workoutAvgHeartRate">Avg. Frequenza cardiaca</string>
+    <string name="workoutAvgHeartRate">Avg. Frequenza Cardiaca</string>
     <string name="workoutMaxHeartRate">Frequenza cardiaca max</string>
     <string name="workoutHeartRate">Frequenza cardiaca</string>
     <string name="actionResume">Curriculum vitae</string>
@@ -333,4 +333,23 @@
     <string name="prefShowOnLockScreenSummary">Mostra le informazioni sull\'allenamento anche se il telefono è bloccato.</string>
     <string name="prefShowOnLockScreenTitle">Visibile sulla schermata di blocco</string>
     <string name="notimeout">Nessun Timeout</string>
+    <string name="workoutTypeEditMET">MET</string>
+    <string name="editWorkoutType">Modifica tipo di allenamento</string>
+    <string name="workoutTypeEditIcon">Icona</string>
+    <string name="deleteWorkoutTypeConfirmation">Vuoi veramente eliminare questo tipo di allenamento\?</string>
+    <string name="deleteWorkoutType">Elimina Tipo Di Allenamento</string>
+    <string name="actionSave">Salvare</string>
+    <string name="customWorkoutTypesTitle">Tipologia allenamento personalizzato</string>
+    <string name="preferenceCategoryVoiceFeedback">Risposta vocale</string>
+    <string name="workoutTypeEditMETHint">Una misura per il consumo di energia</string>
+    <string name="workoutTypeEditMinDistanceHint">Distanza minima tra due campioni GPS</string>
+    <string name="workoutTypeEditMinDistance">Distanza del campione</string>
+    <string name="workoutTypeEditNameError">Inserisci un nome</string>
+    <string name="workoutTypeEditName">Nome</string>
+    <string name="workoutTypeEditIdErrorUnique">Esiste già un tipo di allenamento che utilizza questo ID</string>
+    <string name="workoutTypeEditIdErrorEmpty">Inserisci un ID</string>
+    <string name="workoutTypeEditIdErrorCharacters">Caratteri consentiti: a–z, A–Z, 0–9, _, -</string>
+    <string name="workoutTypeEditId">ID</string>
+    <string name="hintManageWorkoutTypes">Fare clic sul plus per aggiungere tipi di allenamento personalizzati.</string>
+    <string name="workoutTypeAdd">Aggiungere</string>
 </resources>

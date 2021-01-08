@@ -27,6 +27,7 @@ import java.util.List;
 
 import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutSample;
+import de.tadris.fitness.data.WorkoutType;
 
 @JacksonXmlRootElement(localName = "fito-track")
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -36,6 +37,7 @@ class FitoTrackDataContainer {
     private List<Workout> workouts = new ArrayList<>();
     private List<WorkoutSample> samples = new ArrayList<>();
     private List<IntervalSetContainer> intervalSets = new ArrayList<>();
+    private List<WorkoutType> workoutTypes = new ArrayList<>();
 
     public FitoTrackDataContainer(){}
 
@@ -69,5 +71,13 @@ class FitoTrackDataContainer {
 
     public void setIntervalSets(List<IntervalSetContainer> intervalSets) {
         this.intervalSets = intervalSets;
+    }
+
+    public List<WorkoutType> getWorkoutTypes() {
+        return workoutTypes;
+    }
+
+    public void setWorkoutTypes(List<WorkoutType> workoutTypes) {
+        this.workoutTypes = workoutTypes;
     }
 }

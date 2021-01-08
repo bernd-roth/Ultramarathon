@@ -284,4 +284,23 @@
     <string name="exporting">Exportuji</string>
     <string name="delete">Smazat</string>
     <string name="workout_add">Přidat</string>
+    <string name="workoutTypeEditMET">MET</string>
+    <string name="editWorkoutType">Upravit typ cvičení</string>
+    <string name="workoutTypeEditIcon">Ikona</string>
+    <string name="deleteWorkoutTypeConfirmation">Opravdu chcete odstranit tento typ tréninku\?</string>
+    <string name="deleteWorkoutType">Smazat Typ Cvičení</string>
+    <string name="actionSave">Uložit</string>
+    <string name="customWorkoutTypesTitle">Vlastní Typy Cvičení</string>
+    <string name="preferenceCategoryVoiceFeedback">Hlasová zpětná vazba</string>
+    <string name="workoutTypeEditMETHint">Opatření pro spotřebu energie</string>
+    <string name="workoutTypeEditMinDistanceHint">Minimální vzdálenost mezi dvěma vzorky GPS</string>
+    <string name="workoutTypeEditMinDistance">Vzdálenost vzorku</string>
+    <string name="workoutTypeEditNameError">Zadejte prosím jméno</string>
+    <string name="workoutTypeEditName">Název</string>
+    <string name="workoutTypeEditIdErrorUnique">K dispozici je již typ cvičení pomocí tohoto ID</string>
+    <string name="workoutTypeEditIdErrorEmpty">Zadejte prosím ID</string>
+    <string name="workoutTypeEditIdErrorCharacters">Povolené znaky: a–z, A–Z, 0–9, _, -</string>
+    <string name="workoutTypeEditId">ID</string>
+    <string name="hintManageWorkoutTypes">Kliknutím na plus přidáte vlastní typy cvičení.</string>
+    <string name="workoutTypeAdd">Přidat</string>
 </resources>
