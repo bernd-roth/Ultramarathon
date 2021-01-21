@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -32,12 +32,20 @@ public class ExportTargetConfiguration {
     public long id;
 
     /**
+     * Specifies what data to export e.g. Backup or GPX files
+     *
      * @see de.tadris.fitness.util.autoexport.source.ExportSource
      */
     public String source;
 
+    /**
+     * Type of target e.g. directory, cloud
+     */
     public String type;
 
+    /**
+     * Additional data like for example the directory path
+     */
     public String data;
 
     @Nullable

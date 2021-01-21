@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -33,6 +33,6 @@ public interface ExportTargetDao {
     ExportTargetConfiguration[] findAllFor(String source);
 
     @Delete
-    void delete(long id);
+    void delete(ExportTargetConfiguration configuration);
 
 }
