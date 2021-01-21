@@ -320,4 +320,7 @@
     <string name="workoutTypeEditId">ID</string>
     <string name="hintManageWorkoutTypes">Klikk på plusstegnet for å legge til en tilpasset trening typer.</string>
     <string name="workoutTypeAdd">Legge</string>
+    <string name="actionImportMultiple">Importer flere</string>
+    <string name="actionImport">Importer</string>
+    <string name="importWorkoutMultipleQuestion">Ønsker du å importere én eller flere GPX-filer\?</string>
 </resources>
