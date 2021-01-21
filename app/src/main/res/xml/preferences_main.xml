@@ -30,6 +30,10 @@
         android:title="@string/preferencesRecordingTitle" />
 
     <Preference
+        android:key="workoutTypeSettings"
+        android:title="@string/customWorkoutTypesTitle" />
+
+    <Preference
         android:key="backupSettings"
         android:summary="@string/preferencesBackupSummary"
         android:title="@string/preferencesBackupTitle" />

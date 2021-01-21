@@ -41,6 +41,8 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationManagerCompat;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.mapsforge.core.model.LatLong;
 
 import java.util.ArrayList;
@@ -54,9 +56,13 @@ import de.tadris.fitness.R;
 import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.recording.announcement.TTSController;
 import de.tadris.fitness.recording.announcement.VoiceAnnouncements;
+import de.tadris.fitness.recording.event.HeartRateChangeEvent;
+import de.tadris.fitness.recording.event.HeartRateConnectionChangeEvent;
+import de.tadris.fitness.recording.event.LocationChangeEvent;
+import de.tadris.fitness.recording.event.PressureChangeEvent;
+import de.tadris.fitness.recording.event.WorkoutGPSStateChanged;
 import de.tadris.fitness.recording.information.GPSStatus;
 import de.tadris.fitness.recording.sensors.HRManager;
-import de.tadris.fitness.recording.sensors.HeartRateMeasurement;
 import de.tadris.fitness.ui.record.RecordWorkoutActivity;
 import de.tadris.fitness.util.NotificationHelper;
 import no.nordicsemi.android.ble.observer.ConnectionObserver;
@@ -106,9 +112,7 @@ public class RecorderService extends Service {
         public void onLocationChanged(Location location) {
             Log.i(TAG, "onLocationChanged: " + location);
             mLastLocation.set(location);
-            for (RecorderServiceListener listener : instance.recorderServiceListeners) {
-                listener.onLocationChange(location);
-            }
+            EventBus.getDefault().postSticky(new LocationChangeEvent(location));
         }
 
         @Override
@@ -131,9 +135,7 @@ public class RecorderService extends Service {
 
         @Override
         public void onSensorChanged(SensorEvent event) {
-            for (RecorderServiceListener listener : instance.recorderServiceListeners) {
-                listener.onPressureChange(event.values[0]);
-            }
+            EventBus.getDefault().post(new PressureChangeEvent(event.values[0]));
         }
 
         @Override
@@ -143,10 +145,8 @@ public class RecorderService extends Service {
 
     private class HeartRateListener implements HRManager.HRManagerCallback, ConnectionObserver {
         @Override
-        public void onHeartRateMeasure(HeartRateMeasurement measurement) {
-            for (RecorderServiceListener listener : instance.recorderServiceListeners) {
-                listener.onHeartRateChange(measurement);
-            }
+        public void onHeartRateMeasure(HeartRateChangeEvent event) {
+            EventBus.getDefault().post(event);
         }
 
         @Override
@@ -179,48 +179,13 @@ public class RecorderService extends Service {
         }
 
         private void publishState(HeartRateConnectionState state) {
-            for (RecorderServiceListener listener : instance.recorderServiceListeners) {
-                listener.onHeartRateConnectionChange(state);
-            }
-        }
-    }
-
-    private class VoiceCallback implements TTSController.VoiceAnnouncementCallback {
-        @Override
-        public void onVoiceAnnouncementIsReady(boolean available) {
-            for (TTSController.VoiceAnnouncementCallback callback : instance.voiceAnnouncementCallbackListeners) {
-                callback.onVoiceAnnouncementIsReady(available);
-            }
-        }
-    }
-
-    private class RecordListener implements WorkoutRecorder.WorkoutRecorderListener {
-
-        @Override
-        public void onGPSStateChanged(WorkoutRecorder.GpsState oldState, WorkoutRecorder.GpsState state) {
-            GPSStatus announcement = new GPSStatus(RecorderService.this);
-            if (instance.recorder.isResumed() && announcement.isAnnouncementEnabled()) {
-                if (oldState == WorkoutRecorder.GpsState.SIGNAL_LOST) { // GPS Signal found
-                    mTTSController.speak(announcement.getSpokenGPSFound());
-                } else if (state == WorkoutRecorder.GpsState.SIGNAL_LOST) {
-                    mTTSController.speak(announcement.getSpokenGPSLost());
-                }
-            }
-        }
-
-        @Override
-        public void onAutoStop() {
-            stopSelf();
+            EventBus.getDefault().post(new HeartRateConnectionChangeEvent(state));
         }
     }
 
     private final PressureListener pressureListener = new PressureListener();
 
     private final LocationChangedListener gpsListener = new LocationChangedListener(LocationManager.GPS_PROVIDER);
-
-    private final VoiceCallback voiceCallback = new VoiceCallback();
-
-    private final RecordListener recordListener = new RecordListener();
 
     @Override
     public IBinder onBind(Intent arg0) {
@@ -317,6 +282,8 @@ public class RecorderService extends Service {
         initializeTTS();
 
         initializeWatchdog();
+
+        EventBus.getDefault().register(this);
     }
 
     private void checkLastKnownLocation() throws SecurityException {
@@ -330,7 +297,7 @@ public class RecorderService extends Service {
     public void onDestroy() {
         Log.i(TAG, "onDestroy");
 
-        instance.recorder.removeWorkoutListener(recordListener);
+        EventBus.getDefault().unregister(this);
 
         if (mLocationManager != null) {
             mLocationManager.removeUpdates(gpsListener);
@@ -377,7 +344,7 @@ public class RecorderService extends Service {
     }
 
     private void initializeTTS() {
-        mTTSController = new TTSController(this.getApplicationContext(), voiceCallback);
+        mTTSController = new TTSController(this.getApplicationContext());
         announcements = new VoiceAnnouncements(this, instance.recorder, mTTSController, new ArrayList<>());
     }
 
@@ -390,7 +357,6 @@ public class RecorderService extends Service {
             running = true;
             try {
                 while (running) {
-                    instance.recorder.addWorkoutListener(recordListener);
                     while (instance.recorder.handleWatchdog() && running) {
                         updateNotification();
                         // UPDATE INTERVAL LIST IF NEEDED
@@ -426,16 +392,16 @@ public class RecorderService extends Service {
         }
     }
 
-    public interface RecorderServiceListener {
-
-        void onLocationChange(Location location);
-
-        void onPressureChange(float pressure);
-
-        void onHeartRateChange(HeartRateMeasurement measurement);
-
-        void onHeartRateConnectionChange(HeartRateConnectionState state);
-
+    @Subscribe
+    public void onGPSStateChange(WorkoutGPSStateChanged event) {
+        GPSStatus announcement = new GPSStatus(this);
+        if (instance.recorder.isResumed() && announcement.isAnnouncementEnabled()) {
+            if (event.oldState == WorkoutRecorder.GpsState.SIGNAL_LOST) { // GPS Signal found
+                mTTSController.speak(announcement.getSpokenGPSFound());
+            } else if (event.newState == WorkoutRecorder.GpsState.SIGNAL_LOST) {
+                mTTSController.speak(announcement.getSpokenGPSLost());
+            }
+        }
     }
 
     public enum HeartRateConnectionState {

@@ -109,14 +109,14 @@ public abstract class WorkoutActivity extends InformationActivity {
             usedIntervalSet = Instance.getInstance(this).db.intervalDao().getSet(workout.intervalSetUsedId);
             intervals = Instance.getInstance(this).db.intervalDao().getAllIntervalsOfSet(usedIntervalSet.id);
         }
-        setTheme(Instance.getInstance(this).themes.getWorkoutTypeTheme(workout.getWorkoutType()));
+        setTheme(Instance.getInstance(this).themes.getWorkoutTypeTheme(workout.getWorkoutType(this)));
     }
 
     void initAfterContent() {
         if (getActionBar() != null) {
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        setTitle(workout.getWorkoutType().title);
+        setTitle(workout.getWorkoutType(this).title);
 
         theme = getTheme();
     }
@@ -255,7 +255,7 @@ public abstract class WorkoutActivity extends InformationActivity {
     private void onDiagramValueSelected(LatLong latLong) {
         Paint p = AndroidGraphicFactory.INSTANCE.createPaint();
         p.setColor(0xff693cff);
-        highlightingCircle = new FixedPixelCircle(latLong, 20, p, null);
+        highlightingCircle = new FixedPixelCircle(latLong, 10, p, null);
         map.addLayer(highlightingCircle);
 
         if (!map.getBoundingBox().contains(latLong)) {

@@ -21,7 +21,9 @@ package de.tadris.fitness.ui.workout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -46,11 +48,12 @@ import de.tadris.fitness.ui.dialog.TimePickerFragment;
 import de.tadris.fitness.util.unit.DistanceUnitSystem;
 import de.tadris.fitness.util.unit.UnitUtils;
 
-public class EnterWorkoutActivity extends InformationActivity implements SelectWorkoutTypeDialog.WorkoutTypeSelectListener, DatePickerFragment.DatePickerCallback, TimePickerFragment.TimePickerCallback, DurationPickerDialogFragment.DurationPickListener {
+public class EnterWorkoutActivity extends InformationActivity implements SelectWorkoutTypeDialog.WorkoutTypeSelectListener,
+        DatePickerFragment.DatePickerCallback, TimePickerFragment.TimePickerCallback, DurationPickerDialogFragment.DurationPickListener {
 
     public static final String WORKOUT_ID_EXTRA = "de.tadris.fitness.EnterWorkoutActivity.WORKOUT_ID_EXTRA";
 
-    WorkoutBuilder workoutBuilder = new WorkoutBuilder();
+    WorkoutBuilder workoutBuilder;
     TextView typeTextView, dateTextView, timeTextView, durationTextView;
     EditText distanceEditText, commentEditText;
     private DistanceUnitSystem unitSystem;
@@ -65,6 +68,7 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
         setTitle(R.string.enterWorkout);
         setupActionBar();
 
+        workoutBuilder = new WorkoutBuilder(this);
         unitSystem = Instance.getInstance(this).distanceUnitUtils.getDistanceUnitSystem();
 
         addTitle(getString(R.string.info));
@@ -72,10 +76,25 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
         typeTextView = typeLine.value;
         typeLine.lineRoot.setOnClickListener(v -> showTypeSelection());
 
-        distanceEditText = new EditText(this);
-        distanceEditText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-        distanceEditText.setSingleLine(true);
+        distanceEditText = createEditText();
         distanceEditText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        distanceEditText.addTextChangedListener(new TextWatcher() {
+            public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
+
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
+
+            public void afterTextChanged(Editable arg0) {
+                String str = distanceEditText.getText().toString();
+                if (str.isEmpty()) return;
+                String str2 = PerfectDecimal(str, 3, 2);
+
+                if (!str2.equals(str)) {
+                    distanceEditText.setText(str2);
+                    int pos = distanceEditText.getText().length();
+                    distanceEditText.setSelection(pos);
+                }
+            }
+        });
         distanceEditText.setOnEditorActionListener((v, actionId, event) -> {
             // If the User clicks on the finish button on the keyboard, continue by showing the date selection
             if (actionId == EditorInfo.IME_ACTION_SEARCH ||
@@ -129,7 +148,7 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
     }
 
     private void loadFromWorkout(Workout workout) {
-        workoutBuilder = WorkoutBuilder.fromWorkout(workout);
+        workoutBuilder = WorkoutBuilder.fromWorkout(this, workout);
         distanceEditText.setText(String.valueOf(
                 UnitUtils.roundDouble(unitSystem.getDistanceFromKilometers(workoutBuilder.getLength() / 1000d), 3)
         ));
@@ -164,7 +183,7 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
     }
 
     private void updateTextViews() {
-        typeTextView.setText(getString(workoutBuilder.getWorkoutType().title));
+        typeTextView.setText(workoutBuilder.getWorkoutType().title);
         dateTextView.setText(SimpleDateFormat.getDateInstance().format(workoutBuilder.getStart().getTime()));
         timeTextView.setText(SimpleDateFormat.getTimeInstance().format(workoutBuilder.getStart().getTime()));
         durationTextView.setText(Instance.getInstance(this).distanceUnitUtils.getHourMinuteSecondTime(workoutBuilder.getDuration()));
@@ -244,7 +263,39 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
     }
 
     @Override
-    void initRoot() {
+    protected void initRoot() {
         root = findViewById(R.id.enterWorkoutRoot);
+    }
+
+    /**
+     * to fix how many number appear before and after point
+     * @param str
+     * @param MAX_BEFORE_POINT
+     * @param MAX_DECIMAL
+     * @return
+     */
+    public String PerfectDecimal(String str, int MAX_BEFORE_POINT, int MAX_DECIMAL){
+        if(str.charAt(0) == '.') str = "0"+str;
+        int max = str.length();
+
+        StringBuilder rFinal = new StringBuilder();
+        boolean after = false;
+        int i = 0, up = 0, decimal = 0; char t;
+        while(i < max){
+            t = str.charAt(i);
+            if(t != '.' && !after){
+                up++;
+                if(up > MAX_BEFORE_POINT)
+                    return rFinal.toString();
+            }else if(t == '.'){
+                after = true;
+            }else{
+                decimal++;
+                if(decimal > MAX_DECIMAL)
+                    return rFinal.toString();
+            }
+            rFinal.append(t);
+            i++;
+        }return rFinal.toString();
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -21,19 +21,17 @@ package de.tadris.fitness.util.io.general;
 
 import android.content.Context;
 
-import java.util.List;
-
-import de.tadris.fitness.data.Workout;
+import de.tadris.fitness.data.WorkoutData;
 import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.recording.WorkoutSaver;
 
 public class ImportWorkoutSaver extends WorkoutSaver {
 
-    public ImportWorkoutSaver(Context context, Workout workout, List<WorkoutSample> samples) {
-        super(context, workout, samples);
+    public ImportWorkoutSaver(Context context, WorkoutData data) {
+        super(context, data);
     }
 
-    public void saveWorkout(){
+    public void saveWorkout() {
         setIds();
         setLength();
         setSpeed();

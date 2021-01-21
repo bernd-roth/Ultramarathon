@@ -44,7 +44,7 @@ public class ShowWorkoutMapActivity extends WorkoutActivity {
 
 
     @Override
-    void initRoot() {
+    protected void initRoot() {
         root = findViewById(R.id.showWorkoutMapParent);
     }
 }

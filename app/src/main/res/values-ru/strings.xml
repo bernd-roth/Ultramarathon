@@ -280,4 +280,27 @@
     <string name="heartRateNotAvailable">Частота сердечных сокращений в настоящее время недоступна.</string>
     <string name="intervals">Интервалы</string>
     <string name="announcementWorkoutActions">Действия тренировки (пауза, возобновление и т. д.)</string>
+    <string name="workoutTypeEditMET">MET</string>
+    <string name="editWorkoutType">Изменить тип тренировки</string>
+    <string name="workoutTypeEditIcon">Икона</string>
+    <string name="deleteWorkoutTypeConfirmation">Вы действительно хотите удалить этот тип тренировки\?</string>
+    <string name="deleteWorkoutType">Удалить Тип Тренировки</string>
+    <string name="actionSave">Сохранить</string>
+    <string name="customWorkoutTypesTitle">Пользовательские Типы Тренировок</string>
+    <string name="preferenceCategoryVoiceFeedback">Голосовая обратная связь</string>
+    <string name="workoutTypeEditMETHint">Мера потребления энергии</string>
+    <string name="workoutTypeEditMinDistanceHint">Минимальное расстояние между двумя образцами GPS</string>
+    <string name="workoutTypeEditMinDistance">Расстояние выборки</string>
+    <string name="workoutTypeEditNameError">Пожалуйста, введите имя</string>
+    <string name="workoutTypeEditName">Имя</string>
+    <string name="workoutTypeEditIdErrorUnique">С помощью этого идентификатора уже существует тип тренировки</string>
+    <string name="workoutTypeEditIdErrorEmpty">Пожалуйста, введите идентификатор</string>
+    <string name="workoutTypeEditId">идентификатор</string>
+    <string name="workoutTypeEditIdErrorCharacters">Допустимые символы: a–z, A–Z, 0–9, _, -</string>
+    <string name="hintManageWorkoutTypes">Нажмите на плюс, чтобы добавить пользовательские типы тренировок.</string>
+    <string name="resumeWorkoutConfirmation">Вы действительно хотите возобновить эту тренировку\? Это также добавит паузу с момента остановки тренировки.</string>
+    <string name="prefShowOnLockScreenSummary">Показывать информацию о тренировке, даже если телефон заблокирован.</string>
+    <string name="prefShowOnLockScreenTitle">Видимый на экране блокировки</string>
+    <string name="notimeout">Нет Тайм-Аута</string>
+    <string name="workoutTypeAdd">Добавь</string>
 </resources>

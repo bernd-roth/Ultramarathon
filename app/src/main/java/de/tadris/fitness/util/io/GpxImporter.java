@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -30,8 +30,8 @@ import java.util.Date;
 import java.util.List;
 
 import de.tadris.fitness.data.Workout;
+import de.tadris.fitness.data.WorkoutData;
 import de.tadris.fitness.data.WorkoutSample;
-import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.util.gpx.Gpx;
 import de.tadris.fitness.util.gpx.Track;
 import de.tadris.fitness.util.gpx.TrackPoint;
@@ -40,21 +40,42 @@ import de.tadris.fitness.util.gpx.TrackSegment;
 import de.tadris.fitness.util.io.general.IWorkoutImporter;
 
 public class GpxImporter implements IWorkoutImporter {
+
+    private Gpx gpx;
+
     @Override
-    public WorkoutImportResult readWorkout(InputStream input) throws IOException {
-        Gpx gpx = getGpx(input);
+    public WorkoutImportResult readWorkouts(InputStream input) throws IOException {
+        getGpx(input);
 
         if (gpx.getTrk().size() == 0
                 || gpx.getTrk().get(0).getTrkseg().size() == 0
                 || gpx.getTrk().get(0).getTrkseg().get(0).getTrkpt().size() == 0) {
             throw new IllegalArgumentException("given GPX file does not contain location data");
         }
-        Track track = gpx.getTrk().get(0);
+
+        List<WorkoutData> workouts = new ArrayList<>();
+        for (Track track : gpx.getTrk()) {
+            workouts.add(getWorkoutDataFromTrack(track));
+        }
+
+        return new WorkoutImportResult(workouts);
+    }
+
+    private void getGpx(InputStream input) throws IOException {
+        XmlMapper mapper = new XmlMapper();
+        mapper.configure(JsonParser.Feature.IGNORE_UNDEFINED, true);
+        gpx = mapper.readValue(input, Gpx.class);
+    }
+
+    private WorkoutData getWorkoutDataFromTrack(Track track) {
         TrackSegment firstSegment = track.getTrkseg().get(0);
         TrackPoint firstPoint = firstSegment.getTrkpt().get(0);
 
         Workout workout = new Workout();
         workout.comment = track.getName();
+        if (workout.comment == null) {
+            workout.comment = track.getDesc();
+        }
         if (gpx.getMetadata() != null) {
             if (workout.comment == null) {
                 workout.comment = gpx.getName();
@@ -75,17 +96,11 @@ public class GpxImporter implements IWorkoutImporter {
         String lastTime = firstSegment.getTrkpt().get(index - 1).getTime();
         workout.end = parseDate(lastTime).getTime();
         workout.duration = workout.end - workout.start;
-        workout.workoutTypeId = getTypeById(gpx.getTrk().get(0).getType()).id;
+        workout.workoutTypeId = getTypeIdById(gpx.getTrk().get(0).getType());
 
         List<WorkoutSample> samples = getSamplesFromTrack(workout.start, gpx.getTrk().get(0));
 
-        return new WorkoutImportResult(workout, samples);
-    }
-
-    private static Gpx getGpx(InputStream input) throws IOException {
-        XmlMapper mapper= new XmlMapper();
-        mapper.configure(JsonParser.Feature.IGNORE_UNDEFINED, true);
-        return mapper.readValue(input, Gpx.class);
+        return new WorkoutData(workout, samples);
     }
 
     private static List<WorkoutSample> getSamplesFromTrack(long startTime, Track track) {
@@ -123,21 +138,21 @@ public class GpxImporter implements IWorkoutImporter {
         return DateParserUtils.parseDate(str);
     }
 
-    private static WorkoutType getTypeById(String id) {
+    private static String getTypeIdById(String id) {
         if (id == null) {
             id = "";
         }
         switch (id) {
             // Strava IDs
             case "1":
-                return WorkoutType.RUNNING;
+                return "running";
             case "2":
-                return WorkoutType.CYCLING;
+                return "cycling";
             case "11":
-                return WorkoutType.WALKING;
+                return "walking";
 
             default:
-                return WorkoutType.getTypeById(id);
+                return id;
         }
     }
 }

@@ -343,4 +343,26 @@
     <string name="autoPauseSummary">Automatiquement pause et continuer les séances d\'entraînement</string>
     <string name="autoPauseTitle">Pause automatique</string>
     <string name="notimeout">Aucune pause</string>
+    <string name="resumeWorkoutConfirmation">Voulez-vous vraiment reprendre cette séance d\'entraînement  \? Cela ajoutera également une pause à partir du moment où l\'entraînement a été arrêté.</string>
+    <string name="prefShowOnLockScreenSummary">Afficher les informations d\'entraînement, même si le téléphone est verrouillé.</string>
+    <string name="prefShowOnLockScreenTitle">Visible sur l\'écran de verrouillage</string>
+    <string name="editWorkoutType">Modifier l\'entraînement</string>
+    <string name="workoutTypeEditIcon">Icône</string>
+    <string name="deleteWorkoutTypeConfirmation">Voulez-vous vraiment supprimer cet entraînement personnalisé \?</string>
+    <string name="deleteWorkoutType">Suppression entraînement</string>
+    <string name="actionSave">Enregistrer</string>
+    <string name="customWorkoutTypesTitle">Types d\'entraînement personnalisés</string>
+    <string name="preferenceCategoryVoiceFeedback">Commentaires vocaux</string>
+    <string name="workoutTypeEditMETHint">Quantité d\'énergie consommée</string>
+    <string name="workoutTypeEditMET">Energie dépensée</string>
+    <string name="workoutTypeEditMinDistanceHint">Distance minimale entre deux positions GPS</string>
+    <string name="workoutTypeEditMinDistance">Distance minimum</string>
+    <string name="workoutTypeEditId">Identifiant</string>
+    <string name="workoutTypeAdd">Ajouter</string>
+    <string name="workoutTypeEditNameError">Veuillez saisir un titre</string>
+    <string name="workoutTypeEditName">Titre</string>
+    <string name="hintManageWorkoutTypes">Cliquez sur + pour ajouter des types d\'entraînement personnalisés.</string>
+    <string name="workoutTypeEditIdErrorUnique">Il existe déjà un type d\'entraînement utilisant cet identifiant</string>
+    <string name="workoutTypeEditIdErrorEmpty">Veuillez saisir un identifiant</string>
+    <string name="workoutTypeEditIdErrorCharacters">Caractères autorisés : a – z, A – Z, 0–9, _, -</string>
 </resources>

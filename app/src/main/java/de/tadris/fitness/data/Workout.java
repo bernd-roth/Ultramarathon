@@ -19,6 +19,8 @@
 
 package de.tadris.fitness.data;
 
+import android.content.Context;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -103,7 +105,7 @@ public class Workout{
     public int maxHeartRate = -1;
 
     public String toString() {
-        if (comment.length() > 2) {
+        if (comment != null && comment.length() > 2) {
             return comment;
         } else {
             return getDateString();
@@ -122,13 +124,14 @@ public class Workout{
 
     @JsonIgnore
     public String getSafeComment(){
+        if (comment == null) return "";
         String safeComment = this.comment.replaceAll("[^0-9a-zA-Z-_]+", "_"); // replace all unwanted chars by `_`
         return safeComment.substring(0, Math.min(safeComment.length(), 50)); // cut the comment after 50 Chars
     }
 
     @JsonIgnore
-    public WorkoutType getWorkoutType() {
-        return WorkoutType.getTypeById(workoutTypeId);
+    public WorkoutType getWorkoutType(Context context) {
+        return WorkoutType.getWorkoutTypeById(context, workoutTypeId);
     }
 
     @JsonIgnore

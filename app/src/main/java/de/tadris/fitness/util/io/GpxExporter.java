@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -67,7 +67,7 @@ public class GpxExporter implements IWorkoutExporter {
         ArrayList<Track> tracks = new ArrayList<>();
         tracks.add(track);
         Metadata meta = new Metadata(workout.toString(), workout.comment, getDateTime(workout.start));
-        return new Gpx("1.1", "FitoTrack", meta, workout.toString(), workout.comment, tracks);
+        return new Gpx("1.0", "FitoTrack", meta, workout.toString(), workout.comment, tracks);
     }
 
     private Track getTrackFromWorkout(Workout workout, List<WorkoutSample> samples, int number) {
@@ -77,7 +77,7 @@ public class GpxExporter implements IWorkoutExporter {
         track.setCmt(workout.comment);
         track.setDesc(workout.comment);
         track.setSrc("FitoTrack");
-        track.setType(workout.getWorkoutType().id);
+        track.setType(workout.workoutTypeId);
         track.setTrkseg(new ArrayList<>());
 
         TrackSegment segment = new TrackSegment();
@@ -103,7 +103,7 @@ public class GpxExporter implements IWorkoutExporter {
     private String getDateTime(Date date) {
         // Why adding a 'Z'?
         // Normally we could use the 'X' char to specify the timezone but this is only available in Android 7+
-        // Since this minSdkVersion is 5 we cannot use it
+        // Since this minSdkVersion is 21 (Android 5) we cannot use it
         // Solution: add a 'Z'. This indicates a UTC-timestamp and the 'formatter' always returns UTC-timestamps (see constructor)
         return formatter.format(date) + "Z";
     }

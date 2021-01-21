@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -28,6 +28,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,6 +36,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
+import androidx.documentfile.provider.DocumentFile;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -50,12 +52,14 @@ import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.ui.adapter.WorkoutAdapter;
 import de.tadris.fitness.ui.dialog.ProgressDialogController;
 import de.tadris.fitness.ui.dialog.SelectWorkoutTypeDialog;
+import de.tadris.fitness.ui.dialog.ThreadSafeProgressDialogController;
 import de.tadris.fitness.ui.record.RecordWorkoutActivity;
 import de.tadris.fitness.ui.settings.MainSettingsActivity;
 import de.tadris.fitness.ui.workout.AggregatedWorkoutStatisticsActivity;
 import de.tadris.fitness.ui.workout.EnterWorkoutActivity;
 import de.tadris.fitness.ui.workout.ShowWorkoutActivity;
 import de.tadris.fitness.util.DialogUtils;
+import de.tadris.fitness.util.Icon;
 import de.tadris.fitness.util.io.general.IOHelper;
 
 public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAdapter.WorkoutAdapterListener {
@@ -85,7 +89,7 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
         menu = findViewById(R.id.workoutListMenu);
         menu.setOnMenuButtonLongClickListener(v -> {
             if (workouts.length > 0) {
-                startRecording(workouts[0].getWorkoutType());
+                startRecording(workouts[0].getWorkoutType(this));
                 return true;
             } else {
                 return false;
@@ -116,30 +120,40 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
     }
 
     private void showImportDialog() {
-        if(!hasPermission()){
+        if (!hasPermission()) {
             requestPermissions();
             return;
         }
-        importWorkout();
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.importWorkout)
+                .setMessage(R.string.importWorkoutMultipleQuestion)
+                .setPositiveButton(R.string.actionImport, (dialog, which) -> importWorkout())
+                .setNeutralButton(R.string.actionImportMultiple, (dialog, which) -> showMassImportGpx())
+                .show();
         refresh();
         menu.close(true);
     }
 
-    private static final int FILE_SELECT_CODE= 21;
-    private void importWorkout(){
+    private static final int FILE_IMPORT_SELECT_CODE = 21;
+    private static final int FOLDER_IMPORT_SELECT_CODE = 23;
+
+    private void importWorkout() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("*/*");
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         try {
-            startActivityForResult(Intent.createChooser(intent, getString(R.string.importWorkout)), FILE_SELECT_CODE);
-        } catch (android.content.ActivityNotFoundException ignored) { }
+            startActivityForResult(Intent.createChooser(intent, getString(R.string.importWorkout)), FILE_IMPORT_SELECT_CODE);
+        } catch (android.content.ActivityNotFoundException ignored) {
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == FILE_SELECT_CODE) {
-            if (resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == FILE_IMPORT_SELECT_CODE) {
                 importFile(data.getData());
+            } else if (requestCode == FOLDER_IMPORT_SELECT_CODE) {
+                massImportGpx(data.getData());
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -163,6 +177,64 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
                 mHandler.post(() -> {
                     dialogController.cancel();
                     showErrorDialog(e, R.string.error, R.string.errorImportFailed);
+                });
+            }
+        }).start();
+    }
+
+    private void showMassImportGpx() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.importMultipleGpxFiles)
+                .setMessage(R.string.importMultipleMessageSelectFolder)
+                .setPositiveButton(R.string.okay, (dialog, which) -> openMassImportFolderSelector())
+                .setNegativeButton(R.string.cancel, null)
+                .show();
+    }
+
+    private void openMassImportFolderSelector() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+        startActivityForResult(intent, FOLDER_IMPORT_SELECT_CODE);
+    }
+
+    private void massImportGpx(Uri dirUri) {
+        Log.d("MassImport", dirUri.toString());
+        ThreadSafeProgressDialogController dialog = new ThreadSafeProgressDialogController(this, getString(R.string.importingFiles));
+        dialog.show();
+        new Thread(() -> {
+            try {
+                int imported = 0;
+                DocumentFile documentFile = DocumentFile.fromTreeUri(this, dirUri);
+                DocumentFile[] files = documentFile.listFiles();
+                for (int i = 0; i < files.length; i++) {
+                    dialog.setProgress(100 * i / files.length);
+                    DocumentFile file = files[i];
+                    if (file.isFile() && file.canRead()) {
+                        try {
+                            Uri fileUri = file.getUri();
+                            Log.d("MassImport", "Importing " + fileUri.toString());
+                            IOHelper.GpxImporter.importWorkout(this, getContentResolver().openInputStream(fileUri));
+                            imported++;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            if (imported == 0 && i == files.length - 1) {
+                                // If all workouts failed throw exception so it is shown to the user
+                                throw e;
+                            }
+                        }
+                    }
+                }
+                dialog.setProgress(100);
+                final int tmpImported = imported; // Needs to be a final variable to use in the handler lambda
+                mHandler.post(() -> {
+                    dialog.cancel();
+                    Toast.makeText(this, String.format(getString(R.string.importedWorkouts), tmpImported), Toast.LENGTH_LONG).show();
+                    refresh();
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+                mHandler.post(() -> {
+                    dialog.cancel();
+                    Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                 });
             }
         }).start();
@@ -231,7 +303,7 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
 
     private void refresh() {
         loadData();
-        if (workouts.length > 0) {
+        if (workouts.length > lastClickedIndex) {
             adapter.notifyItemChanged(lastClickedIndex, workouts[lastClickedIndex]);
         }
         if (listSize != workouts.length) {
@@ -250,10 +322,10 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
     private void refreshFABMenu() {
         FloatingActionButton lastFab = findViewById(R.id.workoutListRecordLast);
         if (workouts.length > 0) {
-            WorkoutType lastType = workouts[0].getWorkoutType();
-            lastFab.setLabelText(getString(lastType.title));
-            lastFab.setImageResource(lastType.icon);
-            lastFab.setColorNormal(getResources().getColor(lastType.color));
+            WorkoutType lastType = workouts[0].getWorkoutType(this);
+            lastFab.setLabelText(lastType.title);
+            lastFab.setImageResource(Icon.getIcon(lastType.icon));
+            lastFab.setColorNormal(lastType.color);
             lastFab.setColorPressed(lastFab.getColorNormal());
             lastFab.setOnClickListener(v -> {
                 menu.close(true);

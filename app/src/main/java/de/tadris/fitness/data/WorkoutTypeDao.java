@@ -17,25 +17,30 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.recording.sensors;
+package de.tadris.fitness.data;
 
-import android.bluetooth.BluetoothDevice;
+import androidx.room.Dao;
+import androidx.room.Delete;
+import androidx.room.Insert;
+import androidx.room.Query;
+import androidx.room.Update;
 
-import java.util.List;
+@Dao
+public interface WorkoutTypeDao {
 
-public class HeartRateMeasurement {
+    @Query("SELECT * FROM workout_type WHERE id = :id")
+    WorkoutType findById(String id);
 
-    public final BluetoothDevice device;
-    public final int heartRate;
-    public final boolean contactDetected;
-    public final int energyExpanded;
-    public final List<Integer> rrIntervals;
+    @Query("SELECT * FROM workout_type")
+    WorkoutType[] findAll();
 
-    public HeartRateMeasurement(BluetoothDevice device, int heartRate, boolean contactDetected, int energyExpanded, List<Integer> rrIntervals) {
-        this.device = device;
-        this.heartRate = heartRate;
-        this.contactDetected = contactDetected;
-        this.energyExpanded = energyExpanded;
-        this.rrIntervals = rrIntervals;
-    }
+    @Delete
+    void delete(WorkoutType type);
+
+    @Insert
+    void insert(WorkoutType type);
+
+    @Update
+    void update(WorkoutType type);
+
 }

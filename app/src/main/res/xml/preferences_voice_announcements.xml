@@ -41,7 +41,7 @@
 
         <CheckBoxPreference
             android:defaultValue="true"
-            android:key="system_actions"
+            android:key="announcement_system_actions"
             android:title="@string/announcementWorkoutActions" />
 
         <CheckBoxPreference

@@ -28,8 +28,13 @@ import android.view.View;
 import android.widget.NumberPicker;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import de.tadris.fitness.R;
 import de.tadris.fitness.recording.announcement.TTSController;
+import de.tadris.fitness.recording.event.TTSReadyEvent;
 
 public class RecordingSettingsActivity extends FitoTrackSettingsActivity {
 
@@ -60,15 +65,20 @@ public class RecordingSettingsActivity extends FitoTrackSettingsActivity {
     private TTSController TTSController;
 
     private void checkTTS(Runnable onTTSAvailable) {
-        TTSController = new TTSController(this, available -> {
-            if (available) {
-                onTTSAvailable.run();
-            } else {
-                // TextToSpeech is not available
-                Toast.makeText(RecordingSettingsActivity.this, R.string.ttsNotAvailable, Toast.LENGTH_LONG).show();
-            }
-            if (TTSController != null) {
-                TTSController.destroy();
+        TTSController = new TTSController(this);
+        EventBus.getDefault().register(new Object() {
+            @Subscribe(threadMode = ThreadMode.MAIN)
+            public void onTTSReady(TTSReadyEvent e) {
+                if (e.ttsAvailable) {
+                    onTTSAvailable.run();
+                } else {
+                    // TextToSpeech is not available
+                    Toast.makeText(RecordingSettingsActivity.this, R.string.ttsNotAvailable, Toast.LENGTH_LONG).show();
+                }
+                if (TTSController != null) {
+                    TTSController.destroy();
+                }
+                EventBus.getDefault().unregister(this);
             }
         });
     }

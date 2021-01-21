@@ -303,7 +303,7 @@
     <string name="importMultipleGpxFilesSummary">Importeer meer dan één GPX-bestand tegelijk uit het bestandssysteem</string>
     <string name="importMultipleMessageSelectFolder">Selecteer een map met alle GPX-bestanden die u wilt importeren.</string>
     <string name="importMultipleGpxFiles">Meerdere GPX-bestanden importeren</string>
-    <string name="actionGrant">Subsidie</string>
+    <string name="actionGrant">Toesteming verlenen</string>
     <string name="recordingGrantBackgroundPermissionMessage">FitoTrack verzamelt ook locatiegegevens op de achtergrond om de training op te nemen wanneer het scherm is uitgeschakeld. Geef daarom toestemming.</string>
     <string name="recordingGrantLocationPermissionMessage">FitoTrack verzamelt locatiegegevens om de training vast te leggen. Geef de locatie toestemming om een training vast te leggen.</string>
     <string name="aboutPrivacyPolicy">Privacybeleid</string>
@@ -327,4 +327,27 @@
     <string name="heartRateNotAvailable">Hartslag is momenteel niet beschikbaar.</string>
     <string name="intervals">Interval</string>
     <string name="announcementWorkoutActions">Training acties (pauzeren, hervatten, enz.)</string>
+    <string name="resumeWorkoutConfirmation">Wil je echt doorgaan met deze training\? Dit zal ook een pauze toevoegen vanaf het moment dat de training werd gestopt.</string>
+    <string name="prefShowOnLockScreenSummary">Toon training informatie, zelfs als de telefoon op slot zit.</string>
+    <string name="prefShowOnLockScreenTitle">Zichtbaar op vergrendelscherm</string>
+    <string name="notimeout">Geen Time-Out</string>
+    <string name="workoutTypeEditMET">MET</string>
+    <string name="editWorkoutType">Workout type bewerken</string>
+    <string name="workoutTypeEditIcon">Pictogram</string>
+    <string name="deleteWorkoutTypeConfirmation">Wil je echt deze workout type verwijderen\?</string>
+    <string name="deleteWorkoutType">Workout-Type Verwijderen</string>
+    <string name="actionSave">Opslaan</string>
+    <string name="customWorkoutTypesTitle">Aangepaste Trainingstypes</string>
+    <string name="preferenceCategoryVoiceFeedback">Feedback</string>
+    <string name="workoutTypeEditMETHint">Een maatregel voor energieverbruik</string>
+    <string name="workoutTypeEditMinDistanceHint">Minimumafstand tussen twee GPS-monsters</string>
+    <string name="workoutTypeEditMinDistance">Monsterafstand</string>
+    <string name="workoutTypeEditNameError">Voer a. U. B. een naam in</string>
+    <string name="workoutTypeEditName">Naam</string>
+    <string name="workoutTypeEditIdErrorUnique">Er is al een workout type met behulp van deze ID</string>
+    <string name="workoutTypeEditIdErrorEmpty">Voer een ID in</string>
+    <string name="workoutTypeEditIdErrorCharacters">Toegestane tekens: a–z, A–Z, 0–9, _, -</string>
+    <string name="workoutTypeEditId">ID</string>
+    <string name="hintManageWorkoutTypes">Klik op de plus om aangepaste workout types toe te voegen.</string>
+    <string name="workoutTypeAdd">Toevoegen</string>
 </resources>

@@ -35,4 +35,7 @@
     <item
         android:id="@+id/actionDeleteWorkout"
         android:title="@string/delete" />
+    <item
+        android:id="@+id/actionShareWorkout"
+        android:title="@string/share" />
 </menu>

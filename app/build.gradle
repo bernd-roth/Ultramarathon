@@ -35,8 +35,8 @@ android {
         applicationId "de.tadris.fitness"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 830
-        versionName "8.3"
+        versionCode 1000
+        versionName "10.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -109,6 +109,8 @@ dependencies {
     // Bluetooth Low Energy (e.g. for heart rate support)
     implementation 'no.nordicsemi.android:ble:2.2.4'
     implementation 'no.nordicsemi.android:ble-common:2.2.4'
+
+    implementation 'org.greenrobot:eventbus:3.2.0'
 
     // Android Room Database
     def room_version = "2.2.5"

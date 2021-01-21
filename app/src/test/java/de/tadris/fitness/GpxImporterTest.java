@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -34,16 +34,16 @@ public class GpxImporterTest {
 
     @Test(expected = IOException.class)
     public void testImportFail() throws IOException {
-        importer.readWorkout(new ByteArrayInputStream("".getBytes()));
+        importer.readWorkouts(new ByteArrayInputStream("".getBytes()));
     }
 
     @Test
     public void testImportFitoTrackGpx() throws IOException {
-        IWorkoutImporter.WorkoutImportResult importResult= importer.readWorkout(new ByteArrayInputStream(fitotrackGpx.getBytes()));
+        IWorkoutImporter.WorkoutImportResult importResult = importer.readWorkouts(new ByteArrayInputStream(fitotrackGpx.getBytes()));
 
         // Main test is that above method runs without error, additionally perform some checks:
         Assert.assertEquals(importResult.workout.comment, "...");
-        Assert.assertEquals(importResult.workout.workoutTypeId, WorkoutType.RUNNING.id);
+        Assert.assertEquals(importResult.workout.workoutTypeId, WorkoutType.WORKOUT_TYPE_ID_RUNNING);
         Assert.assertEquals(importResult.samples.size(), 10);
         Assert.assertEquals(importResult.samples.get(0).elevation, 148.5465381985937, 0.001);
         Assert.assertEquals(importResult.samples.get(6).speed, 3.25, 0.001);
@@ -53,7 +53,7 @@ public class GpxImporterTest {
 
     @Test
     public void testImportOpenTracksGpx() throws IOException {
-        IWorkoutImporter.WorkoutImportResult importResult= importer.readWorkout(new ByteArrayInputStream(opentracksGpx.getBytes()));
+        IWorkoutImporter.WorkoutImportResult importResult = importer.readWorkouts(new ByteArrayInputStream(opentracksGpx.getBytes()));
 
         // Main test is that above method runs without error, additionally perform some checks:
         Assert.assertEquals(importResult.workout.comment, "...");
@@ -65,20 +65,20 @@ public class GpxImporterTest {
 
     @Test
     public void testImportRuntasticGpx() throws IOException {
-        IWorkoutImporter.WorkoutImportResult importResult= importer.readWorkout(new ByteArrayInputStream(runtasticGpx.getBytes()));
+        IWorkoutImporter.WorkoutImportResult importResult = importer.readWorkouts(new ByteArrayInputStream(runtasticGpx.getBytes()));
 
         Assert.assertEquals(importResult.workout.comment, "runtastic_20160215_0843");
-        Assert.assertEquals(importResult.workout.workoutTypeId, WorkoutType.OTHER.id);
+        Assert.assertEquals(importResult.workout.workoutTypeId, WorkoutType.WORKOUT_TYPE_ID_OTHER);
         Assert.assertEquals(importResult.samples.size(), 10);
         //TrackSegment / samples not tested cause its similar to other imports
     }
 
     @Test
     public void testImportKomootGpx() throws IOException {
-        IWorkoutImporter.WorkoutImportResult importResult = importer.readWorkout(new ByteArrayInputStream(komootGpx.getBytes()));
+        IWorkoutImporter.WorkoutImportResult importResult = importer.readWorkouts(new ByteArrayInputStream(komootGpx.getBytes()));
 
         Assert.assertEquals(importResult.workout.comment, "NameOfTrack");
-        Assert.assertEquals(importResult.workout.workoutTypeId, WorkoutType.OTHER.id);
+        Assert.assertEquals(importResult.workout.workoutTypeId, WorkoutType.WORKOUT_TYPE_ID_OTHER);
         Assert.assertEquals(importResult.samples.size(), 10);
         //TrackSegment / samples not tested cause its similar to other imports
     }

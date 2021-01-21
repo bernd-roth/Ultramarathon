@@ -40,8 +40,8 @@ public class WorkoutBuilder {
     private Workout existingWorkout;
     private boolean fromExistingWorkout = false;
 
-    public WorkoutBuilder() {
-        workoutType = WorkoutType.RUNNING;
+    public WorkoutBuilder(Context context) {
+        workoutType = WorkoutType.getWorkoutTypeById(context, WorkoutType.WORKOUT_TYPE_ID_RUNNING);
         start = Calendar.getInstance();
         duration = 1000L * 60 * 10;
         length = 500;
@@ -79,7 +79,7 @@ public class WorkoutBuilder {
             workout.topSpeed = workout.avgSpeed;
         }
 
-        workout.calorie = CalorieCalculator.calculateCalories(workout, Instance.getInstance(context).userPreferences.getUserWeight());
+        workout.calorie = CalorieCalculator.calculateCalories(context, workout, Instance.getInstance(context).userPreferences.getUserWeight());
         workout.comment = comment;
 
         workout.edited = true;
@@ -149,11 +149,11 @@ public class WorkoutBuilder {
         return fromExistingWorkout;
     }
 
-    public static WorkoutBuilder fromWorkout(Workout workout) {
-        WorkoutBuilder builder = new WorkoutBuilder();
+    public static WorkoutBuilder fromWorkout(Context context, Workout workout) {
+        WorkoutBuilder builder = new WorkoutBuilder(context);
         builder.fromExistingWorkout = true;
         builder.existingWorkout = workout;
-        builder.workoutType = workout.getWorkoutType();
+        builder.workoutType = workout.getWorkoutType(context);
         builder.start.setTimeInMillis(workout.start);
         builder.duration = workout.duration;
         builder.length = workout.length;

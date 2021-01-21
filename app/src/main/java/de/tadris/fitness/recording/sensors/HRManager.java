@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import de.tadris.fitness.recording.event.HeartRateChangeEvent;
 import de.tadris.fitness.util.BluetoothDevicePreferences;
 import no.nordicsemi.android.ble.BleManager;
 import no.nordicsemi.android.ble.common.callback.hr.HeartRateMeasurementDataCallback;
@@ -104,7 +105,7 @@ public class HRManager extends BleManager {
                         @Nullable Boolean contactDetected,
                         @Nullable Integer energyExpanded,
                         @Nullable List<Integer> rrIntervals) {
-                    callback.onHeartRateMeasure(new HeartRateMeasurement(
+                    callback.onHeartRateMeasure(new HeartRateChangeEvent(
                             device,
                             heartRate,
                             contactDetected != null ? contactDetected : false,
@@ -136,6 +137,6 @@ public class HRManager extends BleManager {
     }
 
     public interface HRManagerCallback {
-        void onHeartRateMeasure(HeartRateMeasurement measurement);
+        void onHeartRateMeasure(HeartRateChangeEvent event);
     }
 }

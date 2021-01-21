@@ -280,4 +280,27 @@
     <string name="delete">Sil</string>
     <string name="workout_add">Ekle</string>
     <string name="app_name">FitoTrack</string>
+    <string name="resumeWorkoutConfirmation">Bu egzersizi gerçekten devam ettirmek istiyor musunuz\? Bu aynı zamanda egzersizin durdurulduğu andan itibaren bir duraklama ekleyecektir.</string>
+    <string name="prefShowOnLockScreenSummary">Telefon kilitli olsa bile egzersiz bilgilerini göster.</string>
+    <string name="prefShowOnLockScreenTitle">Kilit ekranında görünür</string>
+    <string name="notimeout">Zaman Aşımı Yok</string>
+    <string name="editWorkoutType">Egzersiz türünü düzenle</string>
+    <string name="workoutTypeEditIcon">Simge</string>
+    <string name="deleteWorkoutTypeConfirmation">Bu egzersiz türünü gerçekten silmek istiyor musunuz\?</string>
+    <string name="deleteWorkoutType">Egzersiz Türünü Sil</string>
+    <string name="actionSave">Kaydet</string>
+    <string name="customWorkoutTypesTitle">Özel Egzersiz Türleri</string>
+    <string name="preferenceCategoryVoiceFeedback">Sesli geri bildirim</string>
+    <string name="workoutTypeEditMETHint">Enerji tüketimi için bir ölçü</string>
+    <string name="workoutTypeEditMET">MET</string>
+    <string name="workoutTypeEditMinDistanceHint">İki GPS örneği arasındaki asgari mesafe</string>
+    <string name="workoutTypeEditMinDistance">Örnek mesafesi</string>
+    <string name="workoutTypeEditNameError">Lütfen bir ad girin</string>
+    <string name="workoutTypeEditName">Ad</string>
+    <string name="workoutTypeEditIdErrorUnique">Bu kimliği kullanan bir egzersiz türü zaten var</string>
+    <string name="workoutTypeEditIdErrorEmpty">Lütfen bir kimlik girin</string>
+    <string name="workoutTypeEditIdErrorCharacters">İzin verilen karakterler: a–z, A–Z, 0–9, _, -</string>
+    <string name="workoutTypeEditId">Kimlik</string>
+    <string name="hintManageWorkoutTypes">Özel egzersiz türleri eklemek için artıya tıklayın.</string>
+    <string name="workoutTypeAdd">Ekle</string>
 </resources>
