@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -40,6 +40,7 @@ import de.tadris.fitness.Instance;
 import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.data.Workout;
+import de.tadris.fitness.data.WorkoutData;
 import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.recording.event.HeartRateChangeEvent;
@@ -98,7 +99,7 @@ public class WorkoutRecorder {
 
         this.workout.setWorkoutType(workoutType);
 
-        workoutSaver = new WorkoutSaver(this.context, workout, samples);
+        workoutSaver = new WorkoutSaver(this.context, getWorkoutData());
 
         init();
     }
@@ -118,7 +119,7 @@ public class WorkoutRecorder {
         // distance = 0; x
         reconstructBySamples();
 
-        workoutSaver = new WorkoutSaver(this.context, this.workout, this.samples);
+        workoutSaver = new WorkoutSaver(this.context, getWorkoutData());
         init();
     }
 
@@ -161,6 +162,10 @@ public class WorkoutRecorder {
 
     public List<WorkoutSample> getSamples() {
         return this.samples;
+    }
+
+    public WorkoutData getWorkoutData() {
+        return new WorkoutData(getWorkout(), getSamples());
     }
 
     private void init() {

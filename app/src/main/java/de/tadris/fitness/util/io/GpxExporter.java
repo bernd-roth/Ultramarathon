@@ -103,7 +103,7 @@ public class GpxExporter implements IWorkoutExporter {
     private String getDateTime(Date date) {
         // Why adding a 'Z'?
         // Normally we could use the 'X' char to specify the timezone but this is only available in Android 7+
-        // Since this minSdkVersion is 5 we cannot use it
+        // Since this minSdkVersion is 21 (Android 5) we cannot use it
         // Solution: add a 'Z'. This indicates a UTC-timestamp and the 'formatter' always returns UTC-timestamps (see constructor)
         return formatter.format(date) + "Z";
     }
