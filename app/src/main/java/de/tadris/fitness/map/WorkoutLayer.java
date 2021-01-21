@@ -21,9 +21,11 @@ package de.tadris.fitness.map;
 
 import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.graphics.Style;
+import org.mapsforge.core.model.LatLong;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.layer.overlay.Polyline;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.tadris.fitness.data.WorkoutSample;
@@ -51,8 +53,10 @@ public class WorkoutLayer extends Polyline {
     }
 
     private void init(){
+        List<LatLong> points = new ArrayList<LatLong>();
         for(WorkoutSample sample : samples){
-            addPoint(sample.toLatLong());
+            points.add(sample.toLatLong());
         }
+        addPoints(points);
     }
 }

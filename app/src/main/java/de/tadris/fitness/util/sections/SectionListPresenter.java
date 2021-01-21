@@ -12,7 +12,6 @@ public class SectionListPresenter implements SectionListContract.IListViewListen
         view.subscribe(this);
         loadDefaults();
         view.setSectionTypes(view.getLocalizedTypeNames());
-        view.setUnits(listModel.getUnits());
     }
 
     private void loadDefaults() {
