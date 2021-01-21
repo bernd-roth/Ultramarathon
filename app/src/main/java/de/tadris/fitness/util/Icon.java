@@ -44,6 +44,7 @@ public enum Icon {
     HANDBALL("handball", R.drawable.ic_handball),
     MOTOR_SPORTS("motor-sports", R.drawable.ic_motorsports),
     MOTOR_CYCLE("motor-cycle", R.drawable.ic_motor_cycle),
+    RIDING("riding", R.drawable.ic_ride),
     ADD("add", R.drawable.ic_add_white),
     OTHER("other", R.drawable.ic_other);
 
