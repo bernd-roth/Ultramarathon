@@ -50,6 +50,7 @@ import org.mapsforge.core.model.MapPosition;
 import org.mapsforge.core.util.LatLongUtils;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.view.MapView;
+import org.mapsforge.map.layer.Layer;
 import org.mapsforge.map.layer.download.TileDownloadLayer;
 import org.mapsforge.map.layer.overlay.FixedPixelCircle;
 
@@ -79,8 +80,7 @@ public abstract class WorkoutActivity extends InformationActivity {
     List<WorkoutSample> samples;
     Workout workout;
     private Resources.Theme theme;
-    MapView map;
-    private TileDownloadLayer downloadLayer;
+    MapView mapView;
     private FixedPixelCircle highlightingCircle;
     final Handler mHandler = new Handler();
     protected IntervalSet usedIntervalSet;
@@ -152,7 +152,7 @@ public abstract class WorkoutActivity extends InformationActivity {
                 @Override
                 public void onNothingSelected() {
                     if(highlightingCircle != null){
-                        map.getLayerManager().getLayers().remove(highlightingCircle);
+                        mapView.getLayerManager().getLayers().remove(highlightingCircle);
                     }
                 }
             });
@@ -256,10 +256,10 @@ public abstract class WorkoutActivity extends InformationActivity {
         Paint p = AndroidGraphicFactory.INSTANCE.createPaint();
         p.setColor(0xff693cff);
         highlightingCircle = new FixedPixelCircle(latLong, 10, p, null);
-        map.addLayer(highlightingCircle);
+        mapView.addLayer(highlightingCircle);
 
-        if (!map.getBoundingBox().contains(latLong)) {
-            map.getModel().mapViewPosition.animateTo(latLong);
+        if (!mapView.getBoundingBox().contains(latLong)) {
+            mapView.getModel().mapViewPosition.animateTo(latLong);
         }
     }
 
@@ -275,42 +275,43 @@ public abstract class WorkoutActivity extends InformationActivity {
     LinearLayout mapRoot;
 
     void addMap(){
-        map = new MapView(this);
-        downloadLayer = MapManager.setupMap(this, map);
+        mapView = MapManager.setupMap(this);
 
         WorkoutLayer workoutLayer= new WorkoutLayer(samples, getThemePrimaryColor());
-        map.addLayer(workoutLayer);
+        mapView.addLayer(workoutLayer);
 
         final BoundingBox bounds= new BoundingBox(workoutLayer.getLatLongs()).extendMeters(50);
         mHandler.postDelayed(() -> {
-            map.getModel().mapViewPosition.setMapPosition(new MapPosition(bounds.getCenterPoint(),
-                    (LatLongUtils.zoomForBounds(map.getDimension(), bounds, map.getModel().displayModel.getTileSize()))));
-            map.animate().alpha(1f).setDuration(1000).start();
+            mapView.getModel().mapViewPosition.setMapPosition(new MapPosition(bounds.getCenterPoint(),
+                                                                              (LatLongUtils.zoomForBounds(mapView.getDimension(), bounds,
+                                                                                                          mapView.getModel().displayModel.getTileSize()))));
+            mapView.animate().alpha(1f).setDuration(1000).start();
         }, 1000);
 
         mapRoot = new LinearLayout(this);
         mapRoot.setOrientation(LinearLayout.VERTICAL);
-        mapRoot.addView(map);
+        mapRoot.addView(mapView);
 
-        root.addView(mapRoot, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, fullScreenItems ? ViewGroup.LayoutParams.MATCH_PARENT : getMapHeight()));
-        map.setAlpha(0);
+        root.addView(mapRoot, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                                         fullScreenItems ? ViewGroup.LayoutParams.MATCH_PARENT : getMapHeight()));
+        mapView.setAlpha(0);
 
         Paint pBlue = AndroidGraphicFactory.INSTANCE.createPaint();
         pBlue.setColor(Color.BLUE);
         for (WorkoutCalculator.Pause pause : WorkoutCalculator.getPausesFromWorkout(getWorkoutData())) {
             float radius = Math.min(10, Math.max(2, (float) Math.sqrt((float) pause.duration / 1000)));
-            map.addLayer(new FixedPixelCircle(pause.location, radius, pBlue, null));
+            mapView.addLayer(new FixedPixelCircle(pause.location, radius, pBlue, null));
         }
 
         Paint pGreen = AndroidGraphicFactory.INSTANCE.createPaint();
         pGreen.setColor(Color.GREEN);
-        map.addLayer(new FixedPixelCircle(samples.get(0).toLatLong(), 10, pGreen, null));
+        mapView.addLayer(new FixedPixelCircle(samples.get(0).toLatLong(), 10, pGreen, null));
 
         Paint pRed = AndroidGraphicFactory.INSTANCE.createPaint();
         pRed.setColor(Color.RED);
-        map.addLayer(new FixedPixelCircle(samples.get(samples.size() - 1).toLatLong(), 10, pRed, null));
+        mapView.addLayer(new FixedPixelCircle(samples.get(samples.size() - 1).toLatLong(), 10, pRed, null));
 
-        map.setClickable(false);
+        mapView.setClickable(false);
 
     }
 
@@ -330,25 +331,29 @@ public abstract class WorkoutActivity extends InformationActivity {
 
     @Override
     protected void onDestroy() {
-        if (map != null) {
-            map.destroyAll();
+        if (mapView != null) {
+            mapView.destroyAll();
         }
         AndroidGraphicFactory.clearResourceMemoryCache();
         super.onDestroy();
     }
 
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
-        if (downloadLayer != null) {
-            downloadLayer.onPause();
+        for (Layer layer : mapView.getLayerManager().getLayers()) {
+            if (layer instanceof TileDownloadLayer) {
+                ((TileDownloadLayer) layer).onPause();
+            }
         }
     }
 
-    public void onResume(){
+    public void onResume() {
         super.onResume();
-        if (downloadLayer != null) {
-            downloadLayer.onResume();
+        for (Layer layer : mapView.getLayerManager().getLayers()) {
+            if (layer instanceof TileDownloadLayer) {
+                ((TileDownloadLayer) layer).onResume();
+            }
         }
     }
 

@@ -39,7 +39,7 @@ public class ShowWorkoutMapActivity extends WorkoutActivity {
         fullScreenItems = true;
         addMap();
 
-        map.setClickable(true);
+        mapView.setClickable(true);
     }
 
 
