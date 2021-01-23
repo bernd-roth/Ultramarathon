@@ -31,6 +31,18 @@
             android:key="mapStyle"
             android:title="@string/mapStyle" />
 
+        <Preference
+            android:key="offlineMapFileName"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/pref_map_file" />
+
+        <Preference
+            android:key="offlineMapThemeFileName"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/pref_theme_file" />
+
         <ListPreference
             android:defaultValue="system"
             android:entries="@array/pref_date_format"

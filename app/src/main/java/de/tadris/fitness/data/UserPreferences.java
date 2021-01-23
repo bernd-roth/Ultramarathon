@@ -94,4 +94,11 @@ public class UserPreferences {
         return preferences.getBoolean("showOnLockScreen", false);
     }
 
+    public String getOfflineMapFileName() {
+        return preferences.getString("offlineMapFileName", "n/a");
+    }
+
+    public String getOfflineMapThemeFileName() {
+        return preferences.getString("offlineMapThemeFileName", "n/a");
+    }
 }

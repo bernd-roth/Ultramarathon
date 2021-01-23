@@ -22,10 +22,16 @@ package de.tadris.fitness.ui.settings;
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.NumberPicker;
 import android.widget.Toast;
+
+import com.codekidlabs.storagechooser.StorageChooser;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
@@ -59,6 +65,21 @@ public class InterfaceSettingsActivity extends FitoTrackSettingsActivity {
             return true;
         });
 
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        Preference mapFilePref = findPreference("offlineMapFileName");
+        bindPreferenceSummaryToValue(mapFilePref);
+        mapFilePref.setOnPreferenceClickListener(preference -> {
+            showFilePickerFor("offlineMapFileName", "map");
+            return true;
+        });
+
+        Preference themeFilePref = findPreference("offlineMapThemeFileName");
+        bindPreferenceSummaryToValue(themeFilePref);
+        themeFilePref.setOnPreferenceClickListener(preference -> {
+            showFilePickerFor("offlineMapThemeFileName", "xml");
+            return true;
+        });
     }
 
     private void showWeightPicker() {
@@ -87,6 +108,19 @@ public class InterfaceSettingsActivity extends FitoTrackSettingsActivity {
         });
 
         d.create().show();
+    }
+
+    private void showFilePickerFor(String key, String filter) {
+        final StorageChooser chooser = new StorageChooser.Builder().withActivity(this).withFragmentManager(getFragmentManager()).allowCustomPath(
+                true).setType(StorageChooser.FILE_PICKER).customFilter(new ArrayList<String>(Collections.singleton(filter))).build();
+        chooser.setOnSelectListener(new StorageChooser.OnSelectListener() {
+            @Override
+            public void onSelect(String path) {
+                final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(InterfaceSettingsActivity.this);
+                preferences.edit().putString(key, path).apply();
+            }
+        });
+        chooser.show();
     }
 
 }

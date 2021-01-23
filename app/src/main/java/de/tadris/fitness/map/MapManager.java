@@ -24,12 +24,16 @@ import android.app.Activity;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.util.AndroidUtil;
 import org.mapsforge.map.android.view.MapView;
-import org.mapsforge.map.datastore.MapDataStore;
 import org.mapsforge.map.datastore.MultiMapDataStore;
 import org.mapsforge.map.layer.cache.TileCache;
 import org.mapsforge.map.layer.download.TileDownloadLayer;
 import org.mapsforge.map.layer.renderer.TileRendererLayer;
 import org.mapsforge.map.model.DisplayModel;
+import org.mapsforge.map.reader.MapFile;
+import org.mapsforge.map.rendertheme.ExternalRenderTheme;
+import org.mapsforge.map.rendertheme.XmlRenderTheme;
+
+import java.io.FileNotFoundException;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.map.tilesource.FitoTrackTileSource;
@@ -55,6 +59,8 @@ public class MapManager {
         } else {
             setupOnlineMap(mapView, tileCache, chosenTileLayer);
         }
+        mapView.setBuiltInZoomControls(false);
+        mapView.setZoomLevel((byte) 18);
         mapView.getLayerManager().redrawLayers();
         return mapView;
     }
@@ -76,13 +82,24 @@ public class MapManager {
         mapView.getLayerManager().getLayers().add(downloadLayer);
         mapView.setZoomLevelMin(tileSource.getZoomLevelMin());
         mapView.setZoomLevelMax(tileSource.getZoomLevelMax());
-        mapView.setBuiltInZoomControls(false);
-        mapView.setZoomLevel((byte) 18);
     }
 
     public static void setupOfflineMap(MapView mapView, TileCache tileCache) {
-        MapDataStore mapDataStore = new MultiMapDataStore(MultiMapDataStore.DataPolicy.DEDUPLICATE);
+        MultiMapDataStore mapDataStore = new MultiMapDataStore(MultiMapDataStore.DataPolicy.RETURN_ALL);
+        String mapFileName = Instance.getInstance(mapView.getContext()).userPreferences.getOfflineMapFileName();
+        MapFile mapFile = mapFileName.equals("n/a") ? MapFile.TEST_MAP_FILE : new MapFile(mapFileName);
+        mapDataStore.addMapDataStore(mapFile, true, true);
         TileRendererLayer renderLayer = new TileRendererLayer(tileCache, mapDataStore, mapView.getModel().mapViewPosition,
                                                               AndroidGraphicFactory.INSTANCE);
+        String themeFileName = Instance.getInstance(mapView.getContext()).userPreferences.getOfflineMapThemeFileName();
+        XmlRenderTheme theme;
+        try {
+            theme = themeFileName.equals("n/a") ? InternalRenderTheme.DEFAULT : new ExternalRenderTheme(themeFileName);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            theme = InternalRenderTheme.DEFAULT;
+        }
+        renderLayer.setXmlRenderTheme(theme);
+        mapView.getLayerManager().getLayers().add(renderLayer);
     }
 }
