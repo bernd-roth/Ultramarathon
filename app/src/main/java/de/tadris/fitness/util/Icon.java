@@ -65,6 +65,9 @@ public enum Icon {
                 return icon.iconRes;
             }
         }
+        if (iconName.equals("list")) {
+            return R.drawable.ic_list;
+        }
         return OTHER.iconRes;
     }
 

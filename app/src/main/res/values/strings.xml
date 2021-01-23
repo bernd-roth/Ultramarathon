@@ -102,6 +102,7 @@
     <string name="workoutTypeOther">Other</string>
     <string name="workoutTypeUnknown">Unknown</string>
     <string name="workoutTypeAdd">Add</string>
+    <string name="workoutTypeAll">All</string>
     <string name="type">Type</string>
     <string name="enterWorkout">Enter Workout</string>
     <string name="importWorkout">Import Workout</string>

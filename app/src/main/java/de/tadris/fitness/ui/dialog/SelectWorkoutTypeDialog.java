@@ -42,7 +42,7 @@ public class SelectWorkoutTypeDialog implements WorkoutTypeAdapter.WorkoutTypeAd
 
     private Activity context;
     private WorkoutTypeSelectListener listener;
-    private List<WorkoutType> options;
+    protected List<WorkoutType> options;
     private Dialog dialog;
 
     public SelectWorkoutTypeDialog(FitoTrackActivity context, WorkoutTypeSelectListener listener) {

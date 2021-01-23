@@ -67,6 +67,7 @@ import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.ui.FitoTrackActivity;
 import de.tadris.fitness.ui.dialog.SelectWorkoutTypeDialog;
+import de.tadris.fitness.ui.dialog.SelectWorkoutTypeDialogAll;
 import de.tadris.fitness.util.Icon;
 import de.tadris.fitness.util.unit.UnitUtils;
 
@@ -159,7 +160,7 @@ public class AggregatedWorkoutStatisticsActivity extends FitoTrackActivity imple
 
     private void initTypeSelector() {
         typeSelector.setOnClickListener(v -> {
-            new SelectWorkoutTypeDialog(this, this).show();
+            new SelectWorkoutTypeDialogAll(this, this).show();
         });
     }
 
