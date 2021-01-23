@@ -40,7 +40,7 @@ public class ShowWorkoutMapActivity extends WorkoutActivity {
         showPauses = true;
         addMap();
 
-        map.setClickable(true);
+        mapView.setClickable(true);
     }
 
 

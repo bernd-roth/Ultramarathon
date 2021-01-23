@@ -66,7 +66,7 @@ public class ShareWorkoutActivity extends WorkoutActivity {
         fullScreenItems = true;
         addMap();
 
-        map.setClickable(true);
+        mapView.setClickable(true);
 
     }
 
