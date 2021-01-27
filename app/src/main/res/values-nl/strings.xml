@@ -350,4 +350,7 @@
     <string name="workoutTypeEditId">ID</string>
     <string name="hintManageWorkoutTypes">Klik op de plus om aangepaste workout types toe te voegen.</string>
     <string name="workoutTypeAdd">Toevoegen</string>
+    <string name="actionImportMultiple">Meerdere importeren</string>
+    <string name="actionImport">Importeren</string>
+    <string name="importWorkoutMultipleQuestion">Wil je één of GPX-bestand of meerdere importeren\?</string>
 </resources>
