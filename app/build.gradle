@@ -86,9 +86,6 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'com.github.clans:fab:1.6.4'
 
-    // File picker
-    implementation 'com.github.codekidX:storage-chooser:2.0.4.4'
-
     // XML
     implementation 'stax:stax-api:1.0.1'
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.9.8'
