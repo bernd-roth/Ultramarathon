@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -37,6 +37,7 @@ public class ShowWorkoutMapActivity extends WorkoutActivity {
         initAfterContent();
 
         fullScreenItems = true;
+        showPauses = true;
         addMap();
 
         map.setClickable(true);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -271,6 +271,7 @@ public abstract class WorkoutActivity extends InformationActivity {
         }
     }
 
+    protected boolean showPauses = false;
     boolean fullScreenItems = false;
     LinearLayout mapRoot;
 
@@ -295,11 +296,13 @@ public abstract class WorkoutActivity extends InformationActivity {
         root.addView(mapRoot, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, fullScreenItems ? ViewGroup.LayoutParams.MATCH_PARENT : getMapHeight()));
         map.setAlpha(0);
 
-        Paint pBlue = AndroidGraphicFactory.INSTANCE.createPaint();
-        pBlue.setColor(Color.BLUE);
-        for (WorkoutCalculator.Pause pause : WorkoutCalculator.getPausesFromWorkout(getWorkoutData())) {
-            float radius = Math.min(10, Math.max(2, (float) Math.sqrt((float) pause.duration / 1000)));
-            map.addLayer(new FixedPixelCircle(pause.location, radius, pBlue, null));
+        if (showPauses) {
+            Paint pBlue = AndroidGraphicFactory.INSTANCE.createPaint();
+            pBlue.setColor(Color.BLUE);
+            for (WorkoutCalculator.Pause pause : WorkoutCalculator.getPausesFromWorkout(getWorkoutData())) {
+                float radius = Math.min(10, Math.max(2, (float) Math.sqrt((float) pause.duration / 1000)));
+                map.addLayer(new FixedPixelCircle(pause.location, radius, pBlue, null));
+            }
         }
 
         Paint pGreen = AndroidGraphicFactory.INSTANCE.createPaint();
