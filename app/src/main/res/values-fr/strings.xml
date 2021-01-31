@@ -365,4 +365,7 @@
     <string name="workoutTypeEditIdErrorUnique">Il existe déjà un type d\'entraînement utilisant cet identifiant</string>
     <string name="workoutTypeEditIdErrorEmpty">Veuillez saisir un identifiant</string>
     <string name="workoutTypeEditIdErrorCharacters">Caractères autorisés : a – z, A – Z, 0–9, _, -</string>
+    <string name="actionImportMultiple">Imports multiples</string>
+    <string name="actionImport">Importer</string>
+    <string name="importWorkoutMultipleQuestion">Voulez-vous importer un ou plusieurs fichiers GPX \?</string>
 </resources>

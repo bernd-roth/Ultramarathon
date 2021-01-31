@@ -303,4 +303,7 @@
     <string name="workoutTypeEditId">Kimlik</string>
     <string name="hintManageWorkoutTypes">Özel egzersiz türleri eklemek için artıya tıklayın.</string>
     <string name="workoutTypeAdd">Ekle</string>
+    <string name="importWorkoutMultipleQuestion">Bir GPX dosyasını mı yoksa birden fazla dosyayı mı içe aktarmak istiyorsunuz\?</string>
+    <string name="actionImportMultiple">Birden fazla içe aktar</string>
+    <string name="actionImport">İçe aktar</string>
 </resources>

@@ -2,9 +2,17 @@
 
 FitoTrack is a mobile app for logging and viewing your workouts. Whether you're running, cycling or hiking, FitoTrack will show you the most important information, with detailed charts and statistics. It is open-source and completely ad-free.
 
-<a href="https://hosted.weblate.org/engage/fitotrack/">
-<img src="https://hosted.weblate.org/widgets/fitotrack/-/android/svg-badge.svg" alt="Translation status" />
-</a>
+<p>
+
+  <a href="https://github.com/humanetech-community/awesome-humane-tech">
+    <img src="https://raw.githubusercontent.com/humanetech-community/awesome-humane-tech/main/humane-tech-badge.svg?sanitize=true" alt="Awesome Humane Tech" />
+  </a>
+
+  <a href="https://hosted.weblate.org/engage/fitotrack/">
+  <img src="https://hosted.weblate.org/widgets/fitotrack/-/android/svg-badge.svg" alt="Translation status" />
+  </a>
+
+</p>
 
 <p align="center">
   <a href="https://play.google.com/store/apps/details?id=de.tadris.fitness"><img alt="Get it on Google Play" src="https://codeberg.org/jannis/FitoTrack/raw/branch/master/doc/badge-google-play.png" height="75"/></a>
