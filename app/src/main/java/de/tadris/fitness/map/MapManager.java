@@ -97,7 +97,11 @@ public class MapManager {
         MultiMapDataStore multiMapDataStore = new MultiMapDataStore(MultiMapDataStore.DataPolicy.RETURN_ALL);
         XmlRenderTheme theme = null;
 
-        Uri mapDirectoryUri = Uri.parse(Instance.getInstance(mapView.getContext()).userPreferences.getOfflineMapFileName());
+        String directoryPath = Instance.getInstance(mapView.getContext()).userPreferences.getOfflineMapFileName();
+        if (directoryPath == null) {
+            return;
+        }
+        Uri mapDirectoryUri = Uri.parse(directoryPath);
 
         DocumentFile documentFile = DocumentFile.fromTreeUri(context, mapDirectoryUri);
         DocumentFile[] files = documentFile.listFiles();
