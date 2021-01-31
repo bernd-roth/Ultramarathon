@@ -95,6 +95,6 @@ public class UserPreferences {
     }
 
     public String getOfflineMapFileName() {
-        return preferences.getString("offlineMapFileName", "n/a");
+        return preferences.getString("offlineMapFileName", null);
     }
 }
