@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -20,6 +20,10 @@
 package de.tadris.fitness.map;
 
 import android.app.Activity;
+import android.content.Context;
+import android.net.Uri;
+
+import androidx.documentfile.provider.DocumentFile;
 
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.util.AndroidUtil;
@@ -30,10 +34,10 @@ import org.mapsforge.map.layer.download.TileDownloadLayer;
 import org.mapsforge.map.layer.renderer.TileRendererLayer;
 import org.mapsforge.map.model.DisplayModel;
 import org.mapsforge.map.reader.MapFile;
-import org.mapsforge.map.rendertheme.ExternalRenderTheme;
+import org.mapsforge.map.rendertheme.StreamRenderTheme;
 import org.mapsforge.map.rendertheme.XmlRenderTheme;
 
-import java.io.FileNotFoundException;
+import java.io.FileInputStream;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.map.tilesource.FitoTrackTileSource;
@@ -52,16 +56,20 @@ public class MapManager {
         MapView mapView = new MapView(activity);
         initMapProvider(activity);
         String chosenTileLayer = Instance.getInstance(mapView.getContext()).userPreferences.getMapStyle();
-        TileCache tileCache = AndroidUtil.createTileCache(mapView.getContext(), chosenTileLayer, mapView.getModel().displayModel.getTileSize(), 1f,
-                                                          mapView.getModel().frameBufferModel.getOverdrawFactor(), true);
-        if (chosenTileLayer.startsWith("offline")) {
-            setupOfflineMap(mapView, tileCache);
-        } else {
-            setupOnlineMap(mapView, tileCache, chosenTileLayer);
-        }
+        boolean isOffline = chosenTileLayer.startsWith("offline");
         mapView.setBuiltInZoomControls(false);
         mapView.setZoomLevel((byte) 18);
-        mapView.getLayerManager().redrawLayers();
+        new Thread(() -> {
+            TileCache tileCache = AndroidUtil.createTileCache(mapView.getContext(), chosenTileLayer,
+                    mapView.getModel().displayModel.getTileSize(), 1f,
+                    mapView.getModel().frameBufferModel.getOverdrawFactor(), true);
+            if (isOffline) {
+                setupOfflineMap(mapView, tileCache);
+            } else {
+                setupOnlineMap(mapView, tileCache, chosenTileLayer);
+            }
+            mapView.getLayerManager().redrawLayers();
+        }).start();
         return mapView;
     }
 
@@ -79,27 +87,46 @@ public class MapManager {
         tileSource.setUserAgent("mapsforge-android");
         TileDownloadLayer downloadLayer = new TileDownloadLayer(tileCache, mapView.getModel().mapViewPosition, tileSource,
                                                                 AndroidGraphicFactory.INSTANCE);
-        mapView.getLayerManager().getLayers().add(downloadLayer);
+        mapView.getLayerManager().getLayers().add(0, downloadLayer);
         mapView.setZoomLevelMin(tileSource.getZoomLevelMin());
         mapView.setZoomLevelMax(tileSource.getZoomLevelMax());
     }
 
     public static void setupOfflineMap(MapView mapView, TileCache tileCache) {
-        MultiMapDataStore mapDataStore = new MultiMapDataStore(MultiMapDataStore.DataPolicy.RETURN_ALL);
-        String mapFileName = Instance.getInstance(mapView.getContext()).userPreferences.getOfflineMapFileName();
-        MapFile mapFile = mapFileName.equals("n/a") ? MapFile.TEST_MAP_FILE : new MapFile(mapFileName);
-        mapDataStore.addMapDataStore(mapFile, true, true);
-        TileRendererLayer renderLayer = new TileRendererLayer(tileCache, mapDataStore, mapView.getModel().mapViewPosition,
-                                                              AndroidGraphicFactory.INSTANCE);
-        String themeFileName = Instance.getInstance(mapView.getContext()).userPreferences.getOfflineMapThemeFileName();
-        XmlRenderTheme theme;
-        try {
-            theme = themeFileName.equals("n/a") ? InternalRenderTheme.DEFAULT : new ExternalRenderTheme(themeFileName);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        Context context = mapView.getContext();
+        MultiMapDataStore multiMapDataStore = new MultiMapDataStore(MultiMapDataStore.DataPolicy.RETURN_ALL);
+        XmlRenderTheme theme = null;
+
+        Uri mapDirectoryUri = Uri.parse(Instance.getInstance(mapView.getContext()).userPreferences.getOfflineMapFileName());
+
+        DocumentFile documentFile = DocumentFile.fromTreeUri(context, mapDirectoryUri);
+        DocumentFile[] files = documentFile.listFiles();
+        for (DocumentFile file : files) {
+            // Go through all files in the map directory
+            if (file.isFile() && file.canRead() && (file.getName().endsWith(".map") || file.getName().endsWith(".xml"))) {
+                try {
+                    Uri fileUri = file.getUri();
+                    if (file.getName().endsWith(".map")) {
+                        // For map files: load as MapFile and add to data store
+                        FileInputStream inputStream = (FileInputStream) context.getContentResolver().openInputStream(fileUri);
+                        MapFile mapFile = new MapFile(inputStream, 0, null);
+                        multiMapDataStore.addMapDataStore(mapFile, true, true);
+                    } else {
+                        // For the first xml file: load as XmlRenderTheme
+                        if (theme == null) {
+                            theme = new StreamRenderTheme(fileUri.getPath(), context.getContentResolver().openInputStream(fileUri));
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        if (theme == null) {
             theme = InternalRenderTheme.DEFAULT;
         }
+        TileRendererLayer renderLayer = new TileRendererLayer(tileCache, multiMapDataStore, mapView.getModel().mapViewPosition, AndroidGraphicFactory.INSTANCE);
         renderLayer.setXmlRenderTheme(theme);
-        mapView.getLayerManager().getLayers().add(renderLayer);
+        mapView.getLayerManager().getLayers().add(0, renderLayer);
     }
 }

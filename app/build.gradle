@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -85,9 +85,6 @@ dependencies {
     implementation 'net.sf.kxml:kxml2:2.3.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'com.github.clans:fab:1.6.4'
-
-    // File picker
-    implementation 'com.github.codekidX:storage-chooser:2.0.4.4'
 
     // XML
     implementation 'stax:stax-api:1.0.1'

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -47,7 +47,6 @@
         android:required="false" />
 
     <application
-        android:requestLegacyExternalStorage="true"
         android:allowBackup="true"
         android:appCategory="productivity"
         android:icon="@mipmap/ic_launcher"
