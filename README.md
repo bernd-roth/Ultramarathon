@@ -9,7 +9,7 @@ FitoTrack is a mobile app for logging and viewing your workouts. Whether you're 
   </a>
 
   <a href="https://hosted.weblate.org/engage/fitotrack/">
-  <img src="https://hosted.weblate.org/widgets/fitotrack/-/android/svg-badge.svg" alt="Translation status" />
+    <img src="https://hosted.weblate.org/widgets/fitotrack/-/android/svg-badge.svg" alt="Translation status" />
   </a>
 
 </p>
@@ -49,8 +49,14 @@ You find the app useful and want to contribute to make it even better? Here are 
 
 When I started programming this app I decided that it should be completely free and open-source. This also means that there will be no income for me from ads or paid features. So if you enjoy the app and want to support my work you are able to do so:
 
+<a href="https://liberapay.com/jannis/donate">
+    <img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg">
+  </a>
+
+* [Liberapay](https://liberapay.com/jannis/donate) (via PayPal)
 * BTC: 3BSbGRbJaiSxVg3D6nVRK5C1SZEezhjtK5
-* Bank transfer: You can [Email](mailto:jannis@tadris.de) me or join the [Telegram Group](https://t.me/fitotrack)/[Matrix Room](https://matrix.to/#/#fitotrack:matrix.org?via=matrix.org) to get in touch with me.
+
+You can also [email](mailto:jannis@tadris.de) me or join the [Telegram Group](https://t.me/fitotrack)/[Matrix Room](https://matrix.to/#/#fitotrack:matrix.org?via=matrix.org) to get in touch with me.
 
 ## License
 
