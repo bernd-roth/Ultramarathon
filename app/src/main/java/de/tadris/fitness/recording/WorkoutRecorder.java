@@ -24,6 +24,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.hardware.SensorManager;
 import android.location.Location;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -247,7 +248,7 @@ public class WorkoutRecorder {
             return;
         }
         GpsState state;
-        if (System.currentTimeMillis() - lastFix.getTime() > SIGNAL_LOST_THRESHOLD) {
+        if ((SystemClock.elapsedRealtimeNanos() - lastFix.getElapsedRealtimeNanos()) / 1000_000L > SIGNAL_LOST_THRESHOLD) {
             state = GpsState.SIGNAL_LOST;
         } else if (lastFix.getAccuracy() > SIGNAL_BAD_THRESHOLD) {
             state = GpsState.SIGNAL_BAD;
@@ -255,6 +256,7 @@ public class WorkoutRecorder {
             state = GpsState.SIGNAL_OKAY;
         }
         if (state != gpsState) {
+            Log.d("Recorder", "GPS State: " + this.gpsState.name() + " -> " + state.name());
             EventBus.getDefault().post(new WorkoutGPSStateChanged(this.gpsState, state));
             gpsState = state;
         }
