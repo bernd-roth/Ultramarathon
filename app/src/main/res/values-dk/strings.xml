@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -246,10 +246,6 @@
     <string-array name="pref_announcement_mode">
         <item>Altid</item>
         <item>Kun i hovedtelefoner</item>
-    </string-array>
-    <string-array name="pref_map_layers">
-        <item>Mapnik\nStandard OSM Kortstil</item>
-        <item>Humanitarian\nRen kort men nogle gange ikke tilgængelig</item>
     </string-array>
     <string-array name="pref_theme_setting">
         <item>Lys</item>

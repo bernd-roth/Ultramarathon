@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -135,10 +135,6 @@
         <item>Identificable</item>
         <item>Rastreable</item>
         <item>Privado</item>
-    </string-array>
-    <string-array name="pref_map_layers">
-        <item>Mapnik\nMapa OSM predeterminado</item>
-        <item>Humanitarian\nMapa limpio pero a veces no disponible</item>
     </string-array>
     <string name="setDuration">Especificar duración</string>
     <string name="avgSpeedTotalLong">Velocidad Promedio en Total</string>

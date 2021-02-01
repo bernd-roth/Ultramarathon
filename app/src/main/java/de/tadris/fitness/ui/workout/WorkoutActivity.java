@@ -344,18 +344,22 @@ public abstract class WorkoutActivity extends InformationActivity {
     @Override
     public void onPause() {
         super.onPause();
-        for (Layer layer : mapView.getLayerManager().getLayers()) {
-            if (layer instanceof TileDownloadLayer) {
-                ((TileDownloadLayer) layer).onPause();
+        if (mapView != null) {
+            for (Layer layer : mapView.getLayerManager().getLayers()) {
+                if (layer instanceof TileDownloadLayer) {
+                    ((TileDownloadLayer) layer).onPause();
+                }
             }
         }
     }
 
     public void onResume() {
         super.onResume();
-        for (Layer layer : mapView.getLayerManager().getLayers()) {
-            if (layer instanceof TileDownloadLayer) {
-                ((TileDownloadLayer) layer).onResume();
+        if (mapView != null) {
+            for (Layer layer : mapView.getLayerManager().getLayers()) {
+                if (layer instanceof TileDownloadLayer) {
+                    ((TileDownloadLayer) layer).onResume();
+                }
             }
         }
     }

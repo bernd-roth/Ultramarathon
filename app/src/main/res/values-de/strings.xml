@@ -17,7 +17,9 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources>
+  -->
+
+<resources>
     <string name="app_name">FitoTrack</string>
     <string name="backup">Sichern</string>
     <string name="cancel">Abbrechen</string>
@@ -369,4 +371,17 @@
     <string name="actionImport">Importieren</string>
     <string name="actionImportMultiple">Mehrere importieren</string>
     <string name="pref_map_file">Lokales Kartenverzeichnis</string>
+    <string name="downloadMapsTitle">Karten herunterladen</string>
+    <string name="downloadMapsSpecifyDirectory">Bitte gebe erst ein Verzeichnis für die Karten an</string>
+    <string name="overwriteMapConfirmation">Möchtest du die bereits existierende Kartendatei %s überschreiben?</string>
+    <string name="actionDownloadMap">Karte herunterladen</string>
+    <string name="downloadMapConfirmation">Möchtest du die Kartendatei %s herunterladen?</string>
+    <string name="alreadyDownloading">Eine Datei wird bereits heruntergeladen</string>
+    <string name="actionCancelDownload">Download abbrechen</string>
+    <string name="cancelDownloadConfirmation">Möchtest du den aktuellen Download abbrechen?</string>
+    <string name="downloadSuccess">Herunterladen erfolgreich</string>
+    <string name="downloadFailed">Herunterladen fehlgeschlagen</string>
+    <string name="downloadCanceled">Herunterladen abgebrochen</string>
+    <string name="chooseMapHint">Bitte eine Kartendatei auswählen</string>
+    <string name="downloading">Herunterladen</string>
 </resources>

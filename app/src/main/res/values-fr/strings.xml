@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -242,10 +242,6 @@
     <string-array name="pref_announcement_mode">
         <item>Toujours</item>
         <item>Seulement avec des écouteurs</item>
-    </string-array>
-    <string-array name="pref_map_layers">
-        <item>Mapnik\nStyle OSM par défaut</item>
-        <item>Humanitaire\nJolie carte mais parfois indisponible</item>
     </string-array>
     <string-array name="pref_theme_setting">
         <item>Clair</item>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -155,10 +155,6 @@
         <item>Azonosítható</item>
         <item>Követhető</item>
         <item>Személyes</item>
-    </string-array>
-    <string-array name="pref_map_layers">
-        <item>Mapnik\nAlapértelmezett OSM térképstílus</item>
-        <item>Humanitarian\nTiszta térkép, de néha nem érhető el</item>
     </string-array>
     <string name="intervalSet">Intervallumsorozat</string>
     <string name="singleWorkout">Önálló edzés</string>
