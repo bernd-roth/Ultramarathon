@@ -62,7 +62,7 @@ public class CurrentHeartRate extends RecordingInformation {
     @Override
     public String getSpokenText(WorkoutRecorder recorder) {
         if (isHeartRateAvailable(recorder)) {
-            return getTitle() + ": " + getDisplayedText(recorder) + " BPM.";
+            return getTitle() + ": " + getDisplayedText(recorder) ;
         } else {
             return getString(R.string.heartRateNotAvailable);
         }
