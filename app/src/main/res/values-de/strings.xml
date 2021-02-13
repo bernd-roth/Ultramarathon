@@ -17,7 +17,9 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources>
+  -->
+
+<resources>
     <string name="app_name">FitoTrack</string>
     <string name="backup">Sichern</string>
     <string name="cancel">Abbrechen</string>
@@ -363,6 +365,6 @@
     <string name="importWorkoutMultipleQuestion">Möchtest du eine GPX-Datei importieren oder mehrere?</string>
     <string name="actionImport">Importieren</string>
     <string name="actionImportMultiple">Mehrere importieren</string>
-    <string name="recordingPermissionNotGrantedMessage">FitoTrack benötigt die Standortberechtigung, um deine Bewegung während deines Workouts zu erfassen. Standortdaten bleiben immer auf dem Handy, solgang du nicht eindeutig zugestimmt hast, sie zu teilen.</string>
-    <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack sammelt Standortdaten, um Ihre Workouts aufzuzeichnen, während die App im Hintergrund läuft oder der Bildschirm ausgeschaltet ist. Standortdaten bleiben immer auf dem Handy, solgang du nicht eindeutig zugestimmt hast, sie zu teilen.</string>
+    <string name="recordingPermissionNotGrantedMessage">FitoTrack benötigt die Standortberechtigung, um deine Bewegung während deines Workouts zu erfassen. FitoTrack sammelt auch Standortdaten, während die App im Hintergrund läuft oder der Bildschirm ausgeschaltet ist, um deine Workouts aufzuzeichnen. Standortdaten bleiben immer auf dem Handy, solgang du nicht eindeutig zugestimmt hast, sie zu teilen.</string>
+    <string name="recordingBackgroundPermissionNotGrantedMessage">Weiterhin sammelt FitoTrack auch Standortdaten im Hintergrund, wenn der Bildschirm ausgeschaltet ist. Deswegen erlaube FitoTrack bitte den Standortzugriff.</string>
 </resources>

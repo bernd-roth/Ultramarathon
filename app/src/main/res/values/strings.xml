@@ -17,7 +17,9 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources>
+  -->
+
+<resources>
     <string name="app_name">FitoTrack</string>
     <string name="workout_add">Add</string>
     <string name="stop">Stop</string>
@@ -266,8 +268,8 @@
     <string name="unitFootPlural">Feet</string>
     <string name="unitFootSingular">Foot</string>
     <string name="recordingPermissionNotGrantedTitle">Permissions not granted</string>
-    <string name="recordingPermissionNotGrantedMessage">FitoTrack needs location permission to track your movement during your workout. Location data always remains on your phone without your clear consent to share it.</string>
-    <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack collects location data to record your workouts while the app is in the background or the screen is turned off. Location data always remains on your phone without your clear consent to share it.</string>
+    <string name="recordingPermissionNotGrantedMessage">FitoTrack needs location permission to track your movement during your workout. FitoTrack also collects location data while the app is in the background or the screen is turned off to record your workouts. Location data always remains on your phone without your clear consent to share it.</string>
+    <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack also collects location data in background to record the workout when the screen is turned off. Therefore, please allow FitoTrack to have access to your location all the time.</string>
     <string name="actionGrant">Grant</string>
     <string name="speechConfigNoSpeech">No Announcement</string>
     <string name="recordingStateIdle">Idle</string>
