@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+  ~
+  ~ This file is part of FitoTrack
+  ~
+  ~ FitoTrack is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     FitoTrack is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
 <resources>
     <string name="data">Data</string>
     <string name="gps">GPS</string>
@@ -35,10 +54,6 @@
     <string name="recordingStateIdle">Nečinný</string>
     <string name="speechConfigNoSpeech">Žádné oznámení</string>
     <string name="actionGrant">Udělit</string>
-    <string name="recordingGrantBackgroundPermissionMessage">FitoTrack také shromažďuje údaje o poloze na pozadí pro záznam cvičení, když je obrazovka vypnutá. Udělte proto toto povolení.</string>
-    <string name="recordingGrantLocationPermissionMessage">FitoTrack shromažďuje údaje o poloze pro záznam cvičení. Udělte oprávnění o poloze k záznamu cvičení.</string>
-    <string name="recordingBackgroundPermissionNotGrantedMessage">Neudělili jste FitoTrack povolení k přístupu k vaší poloze na pozadí (např. při vypnuté obrazovce). Cvičení se nemusí nahrávat správně.</string>
-    <string name="recordingPermissionNotGrantedMessage">Neudělili jste FitoTrack povolení k přístupu k vaší poloze. FitoTrack potřebuje toto povolení ke sledování vašeho pohybu během tréninku.</string>
     <string name="recordingPermissionNotGrantedTitle">Oprávnění nebyla udělena</string>
     <string name="unitFootSingular">Stopa</string>
     <string name="unitFootPlural">Stopy</string>

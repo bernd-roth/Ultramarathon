@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -301,8 +301,6 @@
     <string name="unitFootPlural">Pieds</string>
     <string name="unitFootSingular">Pied</string>
     <string name="recordingPermissionNotGrantedTitle">Permissions non accordées</string>
-    <string name="recordingPermissionNotGrantedMessage">Vous n\'avez pas accordé à FitoTrack la permission d\'accéder à la position. FitoTrack a besoin de cette permission pour suivre votre déplacement durant la séance d\'entraînement.</string>
-    <string name="recordingBackgroundPermissionNotGrantedMessage">Vous n\'avez pas donné la permission à FitoTrack d\'accéder à votre position en arrière-plan. (Par exemple, l\'écran éteint.) Les séances d\'entraînement peuvent ne pas être enregistrées correctement.</string>
     <string name="recordingStateStopped">Arrêtés</string>
     <string name="recordingStatePaused">Mis en pause</string>
     <string name="recordingStateRunning">Fonctionnement</string>
@@ -319,8 +317,6 @@
     <string name="importMultipleMessageSelectFolder">Veuillez sélectionner un dossier contenant tous les fichiers GPX que vous souhaitez importer.</string>
     <string name="importMultipleGpxFiles">Importer plusieurs fichiers GPX</string>
     <string name="actionGrant">Autoriser</string>
-    <string name="recordingGrantBackgroundPermissionMessage">FitoTrack collecte également des données de localisation en arrière-plan pour enregistrer l\'entraînement lorsque l\'écran est éteint. Par conséquent, veuillez accorder la permission.</string>
-    <string name="recordingGrantLocationPermissionMessage">FitoTrack collecte les données de localisation pour enregistrer l\'entraînement. Veuillez autoriser l\'emplacement pour enregistrer un entraînement.</string>
     <string name="aboutPrivacyPolicy">Politique de confidentialité</string>
     <string name="inclination">Inclinaison</string>
     <string name="nothingSelected">Rien de sélectionné</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -240,8 +240,6 @@
     <string name="workoutStatsHelpText">Questa schermata mostra le statistiche storiche degli allenamenti. Per utilizzarlo devi prima specificare il tipo di allenamento cliccandoci sopra. Quindi imposta le informazioni che desideri conoscere e l\'intervallo di tempo.
 \n
 \nPer esempio, se si seleziona «Settimana» come intervallo di tempo, tutti gli allenamenti di ogni settimana verranno uniti in un punto dati calcolando la media o la somma di ogni settimana.</string>
-    <string name="recordingBackgroundPermissionNotGrantedMessage">Non hai concesso l\'autorizzazione FitoTrack per accedere alla tua posizione nello sfondo. (Ad esempio con lo schermo spento.) Gli allenamenti potrebbero non essere registrati correttamente.</string>
-    <string name="recordingPermissionNotGrantedMessage">Non hai concesso a FitoTrack il permesso di accedere alla tua posizione. FitoTrack ha bisogno di questo permesso per seguire i vostri movimenti durante l\'allenamento.</string>
     <string name="dataSamples">Campioni</string>
     <string name="no_workouts_recorded">Nessun allenamento registrato</string>
     <string name="announcementSuppressDuringCall">Sopprimere durante la chiamata</string>
@@ -306,8 +304,6 @@
     <string name="importMultipleMessageSelectFolder">Selezionare una cartella contenente tutti i file GPX che si desidera importare.</string>
     <string name="importMultipleGpxFiles">Importare file GPX multipli</string>
     <string name="actionGrant">Sovvenzione</string>
-    <string name="recordingGrantBackgroundPermissionMessage">FitoTrack raccoglie anche i dati di localizzazione in background per registrare l\'allenamento quando lo schermo è spento. Pertanto, si prega di concedere l\'autorizzazione.</string>
-    <string name="recordingGrantLocationPermissionMessage">FitoTrack raccoglie i dati di localizzazione per registrare l\'allenamento. Si prega di concedere alla località il permesso di registrare l\'allenamento.</string>
     <string name="aboutPrivacyPolicy">Politica sulla privacy</string>
     <string name="inclination">Inclinazione</string>
     <string name="nothingSelected">Niente di selezionato</string>

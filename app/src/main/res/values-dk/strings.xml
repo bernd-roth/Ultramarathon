@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -284,10 +284,6 @@
     <string name="recordingStateIdle">Tomgang</string>
     <string name="speechConfigNoSpeech">Ingen Meddelelse</string>
     <string name="actionGrant">Give</string>
-    <string name="recordingGrantBackgroundPermissionMessage">FitoTrack indsamler også placeringsdata i baggrunden for at optage træningen, når skærmen er slukket. Giv derfor tilladelse.</string>
-    <string name="recordingGrantLocationPermissionMessage">FitoTrack indsamler lokaliseringsdata for at registrere træningen. Giv lokationstilladelsen tilladelse til at optage en træning.</string>
-    <string name="recordingBackgroundPermissionNotGrantedMessage">Du gav ikke FitoTrack tilladelse til at få adgang til din placering i baggrunden. (F.eks. når skærmen er slukket) er træning muligvis ikke optaget korrekt.</string>
-    <string name="recordingPermissionNotGrantedMessage">Du gav ikke FitoTrack tilladelse til at få adgang til din placering. FitoTrack har brug for denne tilladelse til at spore dine bevægelser under din træning.</string>
     <string name="recordingPermissionNotGrantedTitle">Tilladelser ikke givet</string>
     <string name="unitFootSingular">Fod</string>
     <string name="unitFootPlural">Fødder</string>

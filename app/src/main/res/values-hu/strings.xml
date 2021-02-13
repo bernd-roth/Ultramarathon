@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -272,8 +272,6 @@
     <string name="currentSpeed">Jelenlegi sebesség</string>
     <string name="intervalAutoTimeoutTraining">Automatikus edzési időkorlát</string>
     <string name="statsFilter">Szűrő:</string>
-    <string name="recordingBackgroundPermissionNotGrantedMessage">Nem adott engedélyt a FitoTrack számára a tartózkodási helyének háttérben (például kikapcsolt képernyő esetén) történő hozzáféréséhez. Előfordulhat, hogy az edzések nem megfelelően kerülnek rögzítésre.</string>
-    <string name="recordingPermissionNotGrantedMessage">Nem adott engedélyt a FitoTrack számára a tartózkodási helyéhez való hozzáféréshez. A FitoTracknek erre az engedélyre szüksége van az edzés közbeni mozgásának nyomon követéséhez.</string>
     <string name="recordingPermissionNotGrantedTitle">Engedélyek nincsenek megadva</string>
     <string name="savedSuccessfully">Elmentve</string>
     <string name="trackerWaitingMessage">Várakozás az edzés megkezdésére</string>
@@ -292,8 +290,6 @@
     <string name="importMultipleMessageSelectFolder">Válasszon egy mappát, amely tartalmazza az összes importálni kívánt GPX-fájlt.</string>
     <string name="importMultipleGpxFiles">Több GPX-fájl importálása</string>
     <string name="actionGrant">Grant</string>
-    <string name="recordingGrantBackgroundPermissionMessage">A FitoTrack a helyszínen adatokat is gyűjt a háttérben, hogy rögzítse az edzést, amikor a képernyő kikapcsol. Ezért kérjük, adja meg az engedélyt.</string>
-    <string name="recordingGrantLocationPermissionMessage">A FitoTrack helyadatokat gyűjt az edzés rögzítéséhez. Kérjük, adja meg a hely engedélyét az edzés rögzítéséhez.</string>
     <string name="aboutPrivacyPolicy">Adatvédelmi irányelvek</string>
     <string name="inclination">Dőlésszög</string>
     <string name="nothingSelected">Nincs kiválasztva</string>

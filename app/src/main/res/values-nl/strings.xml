@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -286,8 +286,6 @@
     <string name="aboutAuthor">Auteur</string>
     <string name="trackerWaitingMessage">Wachten om de training te starten</string>
     <string name="recordingPermissionNotGrantedTitle">Toestemmingen niet verleend</string>
-    <string name="recordingPermissionNotGrantedMessage">Je hebt FitoTrack geen toestemming gegeven om toegang te krijgen tot je locatie. FitoTrack heeft deze toestemming nodig om jou bewegingen tijdens de training te volgen.</string>
-    <string name="recordingBackgroundPermissionNotGrantedMessage">U heeft FitoTrack geen toestemming gegeven om op de achtergrond toegang te krijgen tot uw locatie. (Bijv. Met het scherm uitgeschakeld) Trainingen worden mogelijk niet correct geregistreerd.</string>
     <string name="savedSuccessfully">Opgeslagen</string>
     <string name="workoutTypeRowing">Roeien</string>
     <string name="recordingStateStopped">Gestopt</string>
@@ -304,8 +302,6 @@
     <string name="importMultipleMessageSelectFolder">Selecteer een map met alle GPX-bestanden die u wilt importeren.</string>
     <string name="importMultipleGpxFiles">Meerdere GPX-bestanden importeren</string>
     <string name="actionGrant">Toesteming verlenen</string>
-    <string name="recordingGrantBackgroundPermissionMessage">FitoTrack verzamelt ook locatiegegevens op de achtergrond om de training op te nemen wanneer het scherm is uitgeschakeld. Geef daarom toestemming.</string>
-    <string name="recordingGrantLocationPermissionMessage">FitoTrack verzamelt locatiegegevens om de training vast te leggen. Geef de locatie toestemming om een training vast te leggen.</string>
     <string name="aboutPrivacyPolicy">Privacybeleid</string>
     <string name="inclination">Helling</string>
     <string name="nothingSelected">Niets geselecteerd</string>

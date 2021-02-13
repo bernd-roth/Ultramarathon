@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -265,10 +266,8 @@
     <string name="unitFootPlural">Feet</string>
     <string name="unitFootSingular">Foot</string>
     <string name="recordingPermissionNotGrantedTitle">Permissions not granted</string>
-    <string name="recordingPermissionNotGrantedMessage">You did not grant FitoTrack permission to access your location. FitoTrack needs this permission to track your movement during your workout.</string>
-    <string name="recordingBackgroundPermissionNotGrantedMessage">You did not grant FitoTrack permission to access your location in the background. (E.g. with the screen turned off) Workouts might not be recorded correctly.</string>
-    <string name="recordingGrantLocationPermissionMessage">FitoTrack collects location data to record the workout. Please grant the location permission to record a workout.</string>
-    <string name="recordingGrantBackgroundPermissionMessage">FitoTrack also collects location data in background to record the workout when the screen is turned off. Therefore, please grant the permission.</string>
+    <string name="recordingPermissionNotGrantedMessage">FitoTrack needs location permission to track your movement during your workout. Location data always remains on your phone without your clear consent to share it.</string>
+    <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack collects location data to record your workouts while the app is in the background or the screen is turned off. Location data always remains on your phone without your clear consent to share it.</string>
     <string name="actionGrant">Grant</string>
     <string name="speechConfigNoSpeech">No Announcement</string>
     <string name="recordingStateIdle">Idle</string>

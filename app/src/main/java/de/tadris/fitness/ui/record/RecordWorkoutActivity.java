@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -416,7 +416,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     private void showLocationPermissionConsent() {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.recordingPermissionNotGrantedTitle)
-                .setMessage(R.string.recordingGrantLocationPermissionMessage)
+                .setMessage(R.string.recordingPermissionNotGrantedMessage)
                 .setPositiveButton(R.string.actionGrant, (dialog, which) -> requestLocationPermission())
                 .setNegativeButton(R.string.cancel, (dialog, which) -> activityFinish())
                 .show();
@@ -431,7 +431,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     private void showBackgroundLocationPermissionConsent() {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.recordingPermissionNotGrantedTitle)
-                .setMessage(R.string.recordingGrantBackgroundPermissionMessage)
+                .setMessage(R.string.recordingBackgroundPermissionNotGrantedMessage)
                 .setPositiveButton(R.string.actionGrant, (dialog, which) -> requestBackgroundLocationPermission())
                 .setNegativeButton(R.string.cancel, (dialog, which) -> activityFinish())
                 .show();

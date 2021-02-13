@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+  ~
+  ~ This file is part of FitoTrack
+  ~
+  ~ FitoTrack is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     FitoTrack is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
 <resources>
     <string name="actionGrant">Conceder</string>
     <string name="editWorkoutType">Editar o tipo de exercício</string>
@@ -280,10 +299,6 @@
     <string name="recordingStateRunning">Execucao</string>
     <string name="recordingStateIdle">Ocioso</string>
     <string name="speechConfigNoSpeech">Sem Anúncio</string>
-    <string name="recordingGrantBackgroundPermissionMessage">FitoTrack também coleta dados de localização em segundo plano para gravar o treino quando a tela é desligada. Portanto, por favor, conceda a permissão.</string>
-    <string name="recordingGrantLocationPermissionMessage">FitoTrack coleta dados de localização para registrar o exercício. Por favor, dê permissão para gravar um exercício.</string>
-    <string name="recordingBackgroundPermissionNotGrantedMessage">Você não concedeu permissão à FitoTrack para acessar a sua localização em segundo plano. (Por exemplo, com o ecrã desligado) Os exercícios podem não ser gravados correctamente.</string>
-    <string name="recordingPermissionNotGrantedMessage">Você não concedeu permissão à FitoTrack para acessar sua localização. FitoTrack precisa desta permissão para acompanhar o seu movimento durante o seu treino.</string>
     <string name="aboutChangelog">Alteracao</string>
     <string name="announcementSuppressDuringCall">Suprimir durante a chamada</string>
     <string name="dayInMonth">Dia do mês</string>

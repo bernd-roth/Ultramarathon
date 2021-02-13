@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+  ~
+  ~ This file is part of FitoTrack
+  ~
+  ~ FitoTrack is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     FitoTrack is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
 <resources>
     <string name="workoutRoute">מסלול</string>
     <string name="voiceAnnouncementsTitle">הודעות קוליות</string>
@@ -172,7 +191,6 @@
     <string name="uploading">כעת בהעלאה</string>
     <string name="workoutAvgSpeedShort">מהירות ממוצעת</string>
     <string name="setPreferencesTitle">קביעת ההעדפות</string>
-    <string name="recordingPermissionNotGrantedMessage">לא הענקת ל־FitoTrack גישה למיקום שלך. ל־FitoTrack יש צורך בהרשאה זו כדי לעקוב אחר התנועה שלך במהלך האימון.</string>
     <string name="recordingPermissionNotGrantedTitle">לא הוענקו הרשאות</string>
     <string name="unlockPhoneStopWorkout">נא לשחרר את נעילת הטלפון שלך כדי להפסיק את התיעוד</string>
     <string name="preferencesRecordingSummary">ניהול התיעוד של האימונים</string>
@@ -223,7 +241,6 @@
     <string name="importMultipleMessageSelectFolder">נא לבחור תיקיה שמכילה את כל קובצי GPX שברצונך לייבא.</string>
     <string name="importMultipleGpxFiles">ייבוא קובצי GPX מרובים</string>
     <string name="actionGrant">הענקה</string>
-    <string name="recordingBackgroundPermissionNotGrantedMessage">לא הענקת ל־FitoTrack גישה למיקום שלך ברקע. (למשל כשהמסך כבוי) ייתכן שהאימונים לא יתועדו כפי שצריך.</string>
     <string name="aboutOpenSourceLibraries">ספריות קוד פתוח</string>
     <string name="workoutImported">האימון יובא בהצלחה</string>
     <string name="replaceOrMergeMessage">להחליף או למזג את מסד הנתונים עם קובץ הגיבוי\?</string>

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -299,8 +300,6 @@
     <string name="trackerWaitingMessage">Warten auf Beginn des Workouts</string>
     <string name="dataSamples">Datenpunkte</string>
     <string name="recordingPermissionNotGrantedTitle">Berechtigungen nicht erteilt</string>
-    <string name="recordingPermissionNotGrantedMessage">Du hast FitoTrack nicht erlaubt, auf deinen Standort zuzugreifen. FitoTrack benötigt diese Erlaubnis, um deine Bewegung während des Trainings zu verfolgen.</string>
-    <string name="recordingBackgroundPermissionNotGrantedMessage">Du hast FitoTrack nicht erlaubt, im Hintergrund auf deinen Standort zuzugreifen. (z.B. bei ausgeschaltetem Bildschirm) Workouts werden möglicherweise nicht korrekt aufgezeichnet.</string>
     <string name="workoutTypeRowing">Rudern</string>
     <string name="savedSuccessfully">Gespeichert</string>
     <string name="recordingStateStopped">Gestoppt</string>
@@ -316,9 +315,7 @@
     <string name="bulkActions">Massenaktionen</string>
     <string name="importingFiles">Dateien importieren</string>
     <string name="importedWorkouts">%d Workouts importiert</string>
-    <string name="recordingGrantBackgroundPermissionMessage">FitoTrack erfasst Standortdaten auch im Hintergrund, um das Workout bei ausgeschaltetem Bildschirm aufzeichnen zu können. Bitte gewähre der App deshalb die Berechtigung.</string>
     <string name="actionGrant">Gewähren</string>
-    <string name="recordingGrantLocationPermissionMessage">FitoTrack erfasst Standortdaten zur Aufzeichnung des Workouts. Bitte erteile die Standortberechtigung, um ein Training aufzuzeichnen.</string>
     <string name="aboutPrivacyPolicy">Datenschutzerklärung</string>
     <string name="inclination">Steigung</string>
     <string name="nothingSelected">Nichts ausgewählt</string>
@@ -366,4 +363,6 @@
     <string name="importWorkoutMultipleQuestion">Möchtest du eine GPX-Datei importieren oder mehrere?</string>
     <string name="actionImport">Importieren</string>
     <string name="actionImportMultiple">Mehrere importieren</string>
+    <string name="recordingPermissionNotGrantedMessage">FitoTrack benötigt die Standortberechtigung, um deine Bewegung während deines Workouts zu erfassen. Standortdaten bleiben immer auf dem Handy, solgang du nicht eindeutig zugestimmt hast, sie zu teilen.</string>
+    <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack sammelt Standortdaten, um Ihre Workouts aufzuzeichnen, während die App im Hintergrund läuft oder der Bildschirm ausgeschaltet ist. Standortdaten bleiben immer auf dem Handy, solgang du nicht eindeutig zugestimmt hast, sie zu teilen.</string>
 </resources>
