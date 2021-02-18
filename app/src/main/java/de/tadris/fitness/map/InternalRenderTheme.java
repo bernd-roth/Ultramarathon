@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -29,8 +29,8 @@ import java.io.InputStream;
  */
 public enum InternalRenderTheme implements XmlRenderTheme {
 
-    OLD("/assets/rendertheme/default.xml"),
-    DEFAULT("/assets/rendertheme/osmarender.xml");
+    OLD("/assets/mapsforge/default.xml"),
+    DEFAULT("/assets/mapsforge/osmarender.xml");
 
     private final String path;
     private XmlRenderThemeMenuCallback callback;
@@ -49,7 +49,7 @@ public enum InternalRenderTheme implements XmlRenderTheme {
      */
     @Override
     public String getRelativePathPrefix() {
-        return "/assets/";
+        return "/assets/mapsforge/";
     }
 
     @Override

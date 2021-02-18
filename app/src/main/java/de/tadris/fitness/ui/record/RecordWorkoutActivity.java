@@ -64,6 +64,7 @@ import org.mapsforge.core.graphics.Style;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.view.MapView;
+import org.mapsforge.map.layer.Layer;
 import org.mapsforge.map.layer.download.TileDownloadLayer;
 import org.mapsforge.map.layer.overlay.Polyline;
 
@@ -110,7 +111,6 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     public WorkoutType activity;
 
     private MapView mapView;
-    private TileDownloadLayer downloadLayer;
     private Instance instance;
     private Polyline polyline;
     private final List<LatLong> latLongList = new ArrayList<>();
@@ -242,9 +242,8 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     }
 
     private void setupMap() {
-        mapView = new MapView(this);
+        mapView = MapManager.setupMap(this);
         mapView.setClickable(false);
-        downloadLayer = MapManager.setupMap(this, mapView);
     }
 
     private void updateLine() {
@@ -592,7 +591,11 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
     @Override
     public void onPause() {
-        downloadLayer.onPause();
+        for (Layer layer : mapView.getLayerManager().getLayers()) {
+            if (layer instanceof TileDownloadLayer) {
+                ((TileDownloadLayer) layer).onPause();
+            }
+        }
         isResumed = false;
         super.onPause();
     }
@@ -605,7 +608,11 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
             enableLockScreenVisibility();
         }
         invalidateOptionsMenu();
-        downloadLayer.onResume();
+        for (Layer layer : mapView.getLayerManager().getLayers()) {
+            if (layer instanceof TileDownloadLayer) {
+                ((TileDownloadLayer) layer).onResume();
+            }
+        }
         startUpdater();
         isResumed = true;
     }

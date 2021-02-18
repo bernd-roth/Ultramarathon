@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -94,4 +94,7 @@ public class UserPreferences {
         return preferences.getBoolean("showOnLockScreen", false);
     }
 
+    public String getOfflineMapFileName() {
+        return preferences.getString("offlineMapFileName", null);
+    }
 }

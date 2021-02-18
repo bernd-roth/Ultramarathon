@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -20,8 +20,10 @@
 package de.tadris.fitness.ui.settings;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.NumberPicker;
@@ -59,6 +61,14 @@ public class InterfaceSettingsActivity extends FitoTrackSettingsActivity {
             return true;
         });
 
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        Preference mapFilePref = findPreference("offlineMapFileName");
+        bindPreferenceSummaryToValue(mapFilePref);
+        mapFilePref.setOnPreferenceClickListener(preference -> {
+            showFilePicker();
+            return true;
+        });
     }
 
     private void showWeightPicker() {
@@ -87,6 +97,23 @@ public class InterfaceSettingsActivity extends FitoTrackSettingsActivity {
         });
 
         d.create().show();
+    }
+
+    private static final int FOLDER_IMPORT_SELECT_CODE = 1;
+
+    private void showFilePicker() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+        startActivityForResult(intent, FOLDER_IMPORT_SELECT_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == FOLDER_IMPORT_SELECT_CODE) {
+            final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(InterfaceSettingsActivity.this);
+            preferences.edit().putString("offlineMapFileName", data.getData().toString()).apply();
+            findPreference("offlineMapFileName").setSummary(data.getData().toString());
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
 }
