@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+  ~
+  ~ This file is part of FitoTrack
+  ~
+  ~ FitoTrack is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     FitoTrack is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
 <resources>
     <string name="locationData">Lokasi</string>
     <string name="actionUploadToOSM">Muatnaik ke</string>
@@ -18,14 +37,10 @@
     <string name="deleteWorkout">Padam</string>
     <string name="noGpsMessage">Sila hidupkan GPS untuk mengesan senaman anda.</string>
     <string name="action_edit_comment">Sunting</string>
-    <string name="recordingGrantBackgroundPermissionMessage">FitoTrack juga mengumpulkan data lokasi di latar belakang untuk merakam latihan ketika skrin dimatikan. Oleh itu, sila beri kebenaran.</string>
     <string name="pref_weight_summary">Berat badan anda diperlukan untuk mengira kalori yang dibakar</string>
     <string name="pref_weight">Berat</string>
     <string name="speechConfigNoSpeech">Tiada</string>
     <string name="setPreferencesMessage">Anda boleh menetapkan sistem unit pilihan dan berat anda dalam tetapan.</string>
-    <string name="recordingGrantLocationPermissionMessage">FitoTrack mengumpulkan data lokasi untuk merakam senaman. Tolong beri kebenaran lokasi untuk merakam latihan.</string>
-    <string name="recordingBackgroundPermissionNotGrantedMessage">Anda tidak memberikan kebenaran kepada FitoTrack untuk mengakses lokasi anda di latar belakang. (Cth. Dengan layar dimatikan) Latihan mungkin tidak direkodkan dengan betul.</string>
-    <string name="recordingPermissionNotGrantedMessage">Anda tidak berikan FitoTrack kebenaran untuk mengakses lokasi anda. FitoTrack memerlukan kebenaran ini untuk mengesan pergerakan anda semasa bersenam.</string>
     <string name="recordingPermissionNotGrantedTitle">Kebenaran tidak</string>
     <string name="noWorkoutStarted">Tiada senaman dimulakan</string>
     <string name="editDisplayedInformationHint">Selagi senaman tidak bermula, anda boleh sunting nilai paparan dengan mengklik salah satu dari empat ruangan.</string>

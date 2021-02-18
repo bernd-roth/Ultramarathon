@@ -1,6 +1,6 @@
 
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -34,6 +34,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.PowerManager;
 import android.util.Log;
 
 import androidx.annotation.ColorRes;
@@ -49,6 +50,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import de.tadris.fitness.BuildConfig;
 import de.tadris.fitness.Instance;
@@ -83,6 +85,8 @@ public class RecorderService extends Service {
     private static final int NOTIFICATION_ID = 10;
 
     private static final int WATCHDOG_INTERVAL = 2_500; // Trigger Watchdog every 2.5 Seconds
+
+    private PowerManager.WakeLock wakeLock;
 
     private LocationManager mLocationManager = null;
 
@@ -202,6 +206,8 @@ public class RecorderService extends Service {
 
         startForeground(NOTIFICATION_ID, notification);
 
+        acquireWakelock();
+
         return START_STICKY;
     }
 
@@ -315,6 +321,10 @@ public class RecorderService extends Service {
 
         hrManager.stop();
 
+        if (wakeLock.isHeld()) {
+            wakeLock.release();
+        }
+
         stopForeground(true);
         super.onDestroy();
     }
@@ -390,6 +400,12 @@ public class RecorderService extends Service {
         if (!mWatchdogThread.isAlive()) {
             mWatchdogThread.start();
         }
+    }
+
+    private void acquireWakelock() {
+        PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
+        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "de.tadris.fitotrack:workout_recorder");
+        wakeLock.acquire(TimeUnit.HOURS.toMillis(4));
     }
 
     @Subscribe

@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+  ~
+  ~ This file is part of FitoTrack
+  ~
+  ~ FitoTrack is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     FitoTrack is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
 <resources>
     <string name="workoutRoute">מסלול</string>
     <string name="voiceAnnouncementsTitle">הודעות קוליות</string>
@@ -172,7 +191,6 @@
     <string name="uploading">כעת בהעלאה</string>
     <string name="workoutAvgSpeedShort">מהירות ממוצעת</string>
     <string name="setPreferencesTitle">קביעת ההעדפות</string>
-    <string name="recordingPermissionNotGrantedMessage">לא הענקת ל־FitoTrack גישה למיקום שלך. ל־FitoTrack יש צורך בהרשאה זו כדי לעקוב אחר התנועה שלך במהלך האימון.</string>
     <string name="recordingPermissionNotGrantedTitle">לא הוענקו הרשאות</string>
     <string name="unlockPhoneStopWorkout">נא לשחרר את נעילת הטלפון שלך כדי להפסיק את התיעוד</string>
     <string name="preferencesRecordingSummary">ניהול התיעוד של האימונים</string>
@@ -183,16 +201,16 @@
     <string name="converting">כעת בהמרה</string>
     <string name="exporting">כעת בייצוא</string>
     <string name="intervals">מִרווחים</string>
-    <string name="showIntervals">הצגת המִרווחים</string>
+    <string name="showIntervals">הצגת המִּרווחים</string>
     <string name="intervalSets">מערכי מִרווחים</string>
     <string name="intervalSetSelected">לא נבחרו מִרווחים</string>
     <string name="selectIntervalSet">בחירת מערך מִרווחים</string>
-    <string name="deleteIntervalSetMessage">האם ברצונך למחוק את מערך המִרווחים\?</string>
-    <string name="deleteIntervalSet">מחיקת מערך המִרווחים</string>
+    <string name="deleteIntervalSetMessage">האם ברצונך למחוק את מערך המִּרווחים\?</string>
+    <string name="deleteIntervalSet">מחיקת מערך המִּרווחים</string>
     <string name="hintManageIntervalSets">להוסיף מערך מִרווחים ולהשתמש בו באימונים שלך.</string>
     <string name="createIntervalSet">יצירת מערך מִרווחים חדש</string>
-    <string name="manageIntervalsSummary">הגדרת מערכי המִרווחים שאפשר להשתמש בהם במהלך האימון באמצעות חיווי קולי.</string>
-    <string name="manageIntervalSets">ניהול קבוצות המִרווחים</string>
+    <string name="manageIntervalsSummary">הגדרת מערכי המִּרווחים שאפשר להשתמש בהם במהלך האימון באמצעות חיווי קולי.</string>
+    <string name="manageIntervalSets">ניהול קבוצות המִּרווחים</string>
     <string name="add_interval">הוספת מִרווח</string>
     <string name="ttsNotAvailable">הטקסט לדיבור אינו זמין</string>
     <string name="importBackupSummary">שחזור מגיבוי</string>
@@ -223,7 +241,6 @@
     <string name="importMultipleMessageSelectFolder">נא לבחור תיקיה שמכילה את כל קובצי GPX שברצונך לייבא.</string>
     <string name="importMultipleGpxFiles">ייבוא קובצי GPX מרובים</string>
     <string name="actionGrant">הענקה</string>
-    <string name="recordingBackgroundPermissionNotGrantedMessage">לא הענקת ל־FitoTrack גישה למיקום שלך ברקע. (למשל כשהמסך כבוי) ייתכן שהאימונים לא יתועדו כפי שצריך.</string>
     <string name="aboutOpenSourceLibraries">ספריות קוד פתוח</string>
     <string name="workoutImported">האימון יובא בהצלחה</string>
     <string name="replaceOrMergeMessage">להחליף או למזג את מסד הנתונים עם קובץ הגיבוי\?</string>
@@ -243,4 +260,34 @@
     <string name="recordWorkout">תיעוד האימון</string>
     <string name="workoutTopSpeed">המהירות הגבוהה ביותר</string>
     <string name="setPreferencesMessage">אפשר להגדיר את יחידת המידה ואת המשקל הרצויים בהגדרות.</string>
+    <string name="noWorkoutStarted">לא החלו אימונים</string>
+    <string name="editDisplayedInformationHint">כל עוד האימון לא החל, אפשר לערוך את הערכים המוצגים באמצעות לחיצה על אחד מארבעת השדות.</string>
+    <string name="aboutSendFeedback">שליחת משוב למפתח/ת</string>
+    <string name="aboutAuthor">יוצר/ת</string>
+    <string name="dataSamples">דגימות</string>
+    <string name="calendarWeekYear">שבוע / שנה בלוח השנה</string>
+    <string name="avg">ממוצע</string>
+    <string name="no_workouts_recorded_for_this_activity">אין אימונים בפעילות זו</string>
+    <string name="currentTime">הזמן הנוכחי</string>
+    <string name="manageAutoTimeoutSummary">עריכת המִּרווח לעצירה אוטומטית של האימון</string>
+    <string name="unitKJoule">קילוג׳ול</string>
+    <string name="workoutDiscarded">האימון נמחק</string>
+    <string name="avgSpeedTotalLong">מהירות ממוצעת בסך הכול</string>
+    <string name="enterDescription">נא להזין תיאור</string>
+    <string name="hintAddWorkout">יש ללחוץ על סמל הפלוס כדי לתעד או להזין אימון.</string>
+    <string name="pref_announcements_config_title">הגורמים להודעות</string>
+    <string name="initialising">כעת באתחול</string>
+    <string name="trackingInfoDescription">מידע על המעקב שפועל</string>
+    <string name="trackerRunning">המעקב פועל</string>
+    <string name="intervalSet">מערך מִרווחים</string>
+    <string name="intervalTraining">אימון מִרווחים</string>
+    <string name="intervalsIncludePauseSummary">כאשר מופעל, המִּרווחים ימשיכו גם בעת השהיית האימון.</string>
+    <string name="intervalsIncludePauseTitle">לכלול את זמן ההשהיה באימוני מִרווחים</string>
+    <string name="enterName">נא להזין שם</string>
+    <string name="savedSuccessfully">נשמרו</string>
+    <string name="trackVisibilityPref">נראות המסלול</string>
+    <string name="finished">סיום</string>
+    <string name="speedLastMinute">מהירות ממוצעת (בדקה האחרונה)</string>
+    <string name="avgSpeedTotalShort">מהירות ממוצעת (בסך הכול)</string>
+    <string name="avgSpeedInMotion">מהירות ממוצעת (בתזוזה)</string>
 </resources>

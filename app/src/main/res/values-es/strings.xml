@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -136,10 +136,6 @@
         <item>Rastreable</item>
         <item>Privado</item>
     </string-array>
-    <string-array name="pref_map_layers">
-        <item>Mapnik\nMapa OSM predeterminado</item>
-        <item>Humanitarian\nMapa limpio pero a veces no disponible</item>
-    </string-array>
     <string name="setDuration">Especificar duración</string>
     <string name="avgSpeedTotalLong">Velocidad Promedio en Total</string>
     <string name="avgSpeedTotalShort">Vel. Promedio (Total)</string>
@@ -269,8 +265,6 @@
     <string name="manageIntervalsSummary">Edite los conjuntos de intervalos que podrá utilizar durante el entrenamiento mediante la retroalimentación de voz.</string>
     <string name="hintEditIntervalSet">Agregue intervalos que se hablarán.</string>
     <string name="recordingPermissionNotGrantedTitle">Permisos no concedidos</string>
-    <string name="recordingBackgroundPermissionNotGrantedMessage">No se otorgó el permiso a FitoTrack para acceder a su ubicación en segundo plano (p. ej. con la pantalla apagada). Es posible que los entrenamientos no se graben correctamente.</string>
-    <string name="recordingPermissionNotGrantedMessage">No se otorgó el permiso a FitoTrack para acceder a su ubicación. FitoTrack necesita este permiso para registrar sus movimientos durante su entrenamiento.</string>
     <string name="savedSuccessfully">Guardado</string>
     <string name="workoutTypeRowing">Remo</string>
     <string name="recordingStateStopped">Detenido</string>
@@ -314,8 +308,6 @@
     <string name="importMultipleMessageSelectFolder">Por favor, seleccione una carpeta que contenga todos los archivos GPX que desee importar.</string>
     <string name="importMultipleGpxFiles">Importar múltiples archivos GPX</string>
     <string name="actionGrant">Otorgar</string>
-    <string name="recordingGrantBackgroundPermissionMessage">FitoTrack también recopila datos de ubicación en segundo plano para registrar el entrenamiento cuando la pantalla está apagada. Por lo tanto, conceda el permiso.</string>
-    <string name="recordingGrantLocationPermissionMessage">FitoTrack recopila datos de localización para registrar el entrenamiento. Por favor, otorgue el permiso para acceder a su ubicación para grabar un entrenamiento.</string>
     <string name="aboutPrivacyPolicy">Política de privacidad</string>
     <string name="inclination">Inclinación</string>
     <string name="nothingSelected">Nada seleccionado</string>
@@ -360,4 +352,7 @@
     <string name="workoutTypeEditId">ID</string>
     <string name="hintManageWorkoutTypes">Haga clic en el signo más para agregar tipos de entrenamiento personalizados.</string>
     <string name="workoutTypeAdd">Añadir</string>
+    <string name="actionImportMultiple">Importar múltiples</string>
+    <string name="actionImport">Importar</string>
+    <string name="importWorkoutMultipleQuestion">¿Desea importar un archivo GPX o múltiples archivos\?</string>
 </resources>
