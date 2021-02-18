@@ -30,6 +30,7 @@
     <string-array name="pref_map_layers_values">
         <item>osm.mapnik</item>
         <item>osm.humanitarian</item>
+        <item>offline</item>
     </string-array>
 
     <string-array name="pref_theme_setting_values">

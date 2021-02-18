@@ -356,4 +356,7 @@
     <string name="workoutTypeEditId">ID</string>
     <string name="hintManageWorkoutTypes">Haga clic en el signo más para agregar tipos de entrenamiento personalizados.</string>
     <string name="workoutTypeAdd">Añadir</string>
+    <string name="actionImportMultiple">Importar múltiples</string>
+    <string name="actionImport">Importar</string>
+    <string name="importWorkoutMultipleQuestion">¿Desea importar un archivo GPX o múltiples archivos\?</string>
 </resources>
