@@ -156,10 +156,6 @@
         <item>Követhető</item>
         <item>Személyes</item>
     </string-array>
-    <string-array name="pref_map_layers">
-        <item>Mapnik\nAlapértelmezett OSM térképstílus</item>
-        <item>Humanitarian\nTiszta térkép, de néha nem érhető el</item>
-    </string-array>
     <string name="intervalSet">Intervallumsorozat</string>
     <string name="singleWorkout">Önálló edzés</string>
     <string name="no_workouts_recorded">Nincsenek edzések rögzítve</string>

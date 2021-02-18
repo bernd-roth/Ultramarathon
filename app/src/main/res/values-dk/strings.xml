@@ -247,10 +247,6 @@
         <item>Altid</item>
         <item>Kun i hovedtelefoner</item>
     </string-array>
-    <string-array name="pref_map_layers">
-        <item>Mapnik\nStandard OSM Kortstil</item>
-        <item>Humanitarian\nRen kort men nogle gange ikke tilgængelig</item>
-    </string-array>
     <string-array name="pref_theme_setting">
         <item>Lys</item>
         <item>Mørk</item>

@@ -18,7 +18,6 @@
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
-
 <resources>
     <string name="app_name">FitoTrack</string>
     <string name="workout_add">Add</string>
@@ -324,6 +323,19 @@
     <string name="workoutTypeEditIcon">Icon</string>
     <string name="editWorkoutType">Edit workout type</string>
     <string name="pref_map_file">Offline Map Directory</string>
+    <string name="downloadMapsTitle">Download Maps</string>
+    <string name="downloadMapsSpecifyDirectory">Please specify a directory for offline maps first</string>
+    <string name="overwriteMapConfirmation">Do you want to overwrite the existing map file %s?</string>
+    <string name="actionDownloadMap">Download map</string>
+    <string name="downloadMapConfirmation">Do you want to download the map file %s?</string>
+    <string name="alreadyDownloading">A file is already being downloaded</string>
+    <string name="actionCancelDownload">Cancel download</string>
+    <string name="cancelDownloadConfirmation">Do you want to cancel the current download?</string>
+    <string name="downloadSuccess">Download success</string>
+    <string name="downloadFailed">Download failed</string>
+    <string name="downloadCanceled">Download canceled</string>
+    <string name="chooseMapHint">Please choose a map file</string>
+    <string name="downloading">Downloading</string>
     <string-array name="osm_track_visibility">
         <item>Identifiable</item>
         <item>Trackable</item>

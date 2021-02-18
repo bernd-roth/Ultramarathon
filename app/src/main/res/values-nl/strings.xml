@@ -245,10 +245,6 @@
         <item>Altijd</item>
         <item>Alleen met koptelefoon</item>
     </string-array>
-    <string-array name="pref_map_layers">
-        <item>Mapnik\nStandaard OSM kaartstijl</item>
-        <item>Humanitarian\nMinimalistische kaart (soms niet beschikbaar)</item>
-    </string-array>
     <string-array name="pref_theme_setting">
         <item>Licht</item>
         <item>Donker</item>

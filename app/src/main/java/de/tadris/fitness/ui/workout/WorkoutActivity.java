@@ -297,7 +297,7 @@ public abstract class WorkoutActivity extends InformationActivity {
                                                          fullScreenItems ? ViewGroup.LayoutParams.MATCH_PARENT : getMapHeight()));
         mapView.setAlpha(0);
 
-        if (showPauses) {
+        if(showPauses){
             Paint pBlue = AndroidGraphicFactory.INSTANCE.createPaint();
             pBlue.setColor(Color.BLUE);
             for (WorkoutCalculator.Pause pause : WorkoutCalculator.getPausesFromWorkout(getWorkoutData())) {
@@ -344,18 +344,22 @@ public abstract class WorkoutActivity extends InformationActivity {
     @Override
     public void onPause() {
         super.onPause();
-        for (Layer layer : mapView.getLayerManager().getLayers()) {
-            if (layer instanceof TileDownloadLayer) {
-                ((TileDownloadLayer) layer).onPause();
+        if (mapView != null) {
+            for (Layer layer : mapView.getLayerManager().getLayers()) {
+                if (layer instanceof TileDownloadLayer) {
+                    ((TileDownloadLayer) layer).onPause();
+                }
             }
         }
     }
 
     public void onResume() {
         super.onResume();
-        for (Layer layer : mapView.getLayerManager().getLayers()) {
-            if (layer instanceof TileDownloadLayer) {
-                ((TileDownloadLayer) layer).onResume();
+        if (mapView != null) {
+            for (Layer layer : mapView.getLayerManager().getLayers()) {
+                if (layer instanceof TileDownloadLayer) {
+                    ((TileDownloadLayer) layer).onResume();
+                }
             }
         }
     }

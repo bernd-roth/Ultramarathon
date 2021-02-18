@@ -369,4 +369,18 @@
     <string name="recordingPermissionNotGrantedMessage">FitoTrack benötigt die Standortberechtigung, um deine Bewegung während deines Workouts zu erfassen. FitoTrack sammelt auch Standortdaten, während die App im Hintergrund läuft oder der Bildschirm ausgeschaltet ist, um deine Workouts aufzuzeichnen. Standortdaten bleiben immer auf dem Handy, solgang du nicht eindeutig zugestimmt hast, sie zu teilen.</string>
     <string name="recordingBackgroundPermissionNotGrantedMessage">Weiterhin sammelt FitoTrack auch Standortdaten im Hintergrund, wenn der Bildschirm ausgeschaltet ist. Deswegen erlaube FitoTrack bitte den Standortzugriff.</string>
     <string name="pref_map_file">Lokales Kartenverzeichnis</string>
+    <string name="pref_map_file">Lokales Kartenverzeichnis</string>
+    <string name="downloadMapsTitle">Karten herunterladen</string>
+    <string name="downloadMapsSpecifyDirectory">Bitte gebe erst ein Verzeichnis für die Karten an</string>
+    <string name="overwriteMapConfirmation">Möchtest du die bereits existierende Kartendatei %s überschreiben?</string>
+    <string name="actionDownloadMap">Karte herunterladen</string>
+    <string name="downloadMapConfirmation">Möchtest du die Kartendatei %s herunterladen?</string>
+    <string name="alreadyDownloading">Eine Datei wird bereits heruntergeladen</string>
+    <string name="actionCancelDownload">Download abbrechen</string>
+    <string name="cancelDownloadConfirmation">Möchtest du den aktuellen Download abbrechen?</string>
+    <string name="downloadSuccess">Herunterladen erfolgreich</string>
+    <string name="downloadFailed">Herunterladen fehlgeschlagen</string>
+    <string name="downloadCanceled">Herunterladen abgebrochen</string>
+    <string name="chooseMapHint">Bitte eine Kartendatei auswählen</string>
+    <string name="downloading">Herunterladen</string>
 </resources>

@@ -22,12 +22,15 @@ package de.tadris.fitness.ui.settings;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.NumberPicker;
 import android.widget.Toast;
+
+import androidx.documentfile.provider.DocumentFile;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
@@ -67,6 +70,11 @@ public class InterfaceSettingsActivity extends FitoTrackSettingsActivity {
         bindPreferenceSummaryToValue(mapFilePref);
         mapFilePref.setOnPreferenceClickListener(preference -> {
             showFilePicker();
+            return true;
+        });
+
+        findPreference("offlineMapDownload").setOnPreferenceClickListener(preference -> {
+            openMapDownloader();
             return true;
         });
     }
@@ -109,11 +117,20 @@ public class InterfaceSettingsActivity extends FitoTrackSettingsActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode == FOLDER_IMPORT_SELECT_CODE) {
-            final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(InterfaceSettingsActivity.this);
+            final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
             preferences.edit().putString("offlineMapFileName", data.getData().toString()).apply();
             findPreference("offlineMapFileName").setSummary(data.getData().toString());
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void openMapDownloader() {
+        String mapFileName = Instance.getInstance(this).userPreferences.getOfflineMapFileName();
+        if (mapFileName != null && DocumentFile.fromTreeUri(this, Uri.parse(mapFileName)).canWrite()) {
+            startActivity(new Intent(this, DownloadMapsActivity.class));
+        } else {
+            Toast.makeText(this, R.string.downloadMapsSpecifyDirectory, Toast.LENGTH_LONG).show();
+        }
     }
 
 }

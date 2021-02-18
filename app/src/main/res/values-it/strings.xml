@@ -214,10 +214,6 @@
         <item>Sempre</item>
         <item>Solo con cuffie</item>
     </string-array>
-    <string-array name="pref_map_layers">
-        <item>Mapnik\nDefault OSM Mapstyle</item>
-        <item>Humanitarian\nClean map but sometimes not available</item>
-    </string-array>
     <string-array name="pref_theme_setting">
         <item>Chiaro</item>
         <item>Scuro</item>

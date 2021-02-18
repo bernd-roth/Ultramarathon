@@ -56,6 +56,10 @@
             android:singleLine="true"
             android:title="@string/pref_map_file" />
 
+        <Preference
+            android:key="offlineMapDownload"
+            android:title="@string/downloadMapsTitle" />
+
         <ListPreference
             android:defaultValue="system"
             android:entries="@array/pref_date_format"
