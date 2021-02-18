@@ -35,7 +35,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.PowerManager;
 import android.provider.Settings;
 import android.text.InputType;
 import android.util.Log;
@@ -123,7 +122,6 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     private boolean gpsFound = false;
     private boolean isResumed = false;
     private final Handler mHandler = new Handler();
-    private PowerManager.WakeLock wakeLock;
     private InformationDisplay informationDisplay;
 
     private boolean voiceFeedbackAvailable = false;
@@ -189,8 +187,6 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
         updateDescription();
 
-        acquireWakelock();
-
         onGPSStateChanged(new WorkoutGPSStateChanged(WorkoutRecorder.GpsState.SIGNAL_LOST, WorkoutRecorder.GpsState.SIGNAL_LOST));
 
         startListener();
@@ -211,12 +207,6 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
             WorkoutRecorder.GpsState gpsState = instance.recorder.getGpsState();
             onGPSStateChanged(new WorkoutGPSStateChanged(gpsState, gpsState));
         }
-    }
-
-    private void acquireWakelock() {
-        PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
-        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "de.tadris.fitotrack:workout_recorder");
-        wakeLock.acquire(1000 * 60 * 120);
     }
 
     private void hideWaitOverlay() {
@@ -460,8 +450,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
             if (hasPermission()) {
                 // Restart LocationListener so it can retry to register for location updates now that we got permission
                 restartListener();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
-                        !hasBackgroundPermission()) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && !hasBackgroundPermission()) {
                     showBackgroundLocationPermissionConsent();
                 }
             } else {
@@ -570,10 +559,6 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         AndroidGraphicFactory.clearResourceMemoryCache();
 
         EventBus.getDefault().unregister(this);
-
-        if (wakeLock.isHeld()) {
-            wakeLock.release();
-        }
 
         // Kill Service on Finished or not Started Recording
         if (instance.recorder.getState() == WorkoutRecorder.RecordingState.STOPPED ||
