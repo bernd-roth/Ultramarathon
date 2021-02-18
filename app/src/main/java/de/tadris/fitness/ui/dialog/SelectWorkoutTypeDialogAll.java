@@ -17,27 +17,20 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.aggregation;
+package de.tadris.fitness.ui.dialog;
 
-import de.tadris.fitness.data.Workout;
+import de.tadris.fitness.R;
 import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.aggregation.WorkoutTypeFilter;
+import de.tadris.fitness.ui.FitoTrackActivity;
 
-public class WorkoutTypeFilter implements WorkoutFilter {
+public class SelectWorkoutTypeDialogAll extends SelectWorkoutTypeDialog {
 
-    public static final String ID_ALL = "_all";
-
-    private final WorkoutType type;
-
-    public WorkoutTypeFilter(WorkoutType type) {
-        this.type = type;
+    public SelectWorkoutTypeDialogAll(FitoTrackActivity context, WorkoutTypeSelectListener listener) {
+        super(context, listener);
+        this.options.add(0, new WorkoutType(WorkoutTypeFilter.ID_ALL,
+                context.getString(R.string.workoutTypeAll),0,
+                context.getThemePrimaryColor(), "list", 0));
     }
 
-    @Override
-    public boolean isAccepted(Workout workout) {
-        if (type.id.equals(ID_ALL)) {
-            return true;
-        } else {
-            return workout.workoutTypeId.equals(type.id);
-        }
-    }
 }
