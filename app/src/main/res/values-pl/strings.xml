@@ -21,4 +21,20 @@
     <string name="stop">Stop</string>
     <string name="workout_add">Dodaj</string>
     <string name="app_name">FitoTrack</string>
+    <string name="pref_voice_announcements_summary">Skonfiguruj powiadomienia głosowe o długości treningu</string>
+    <string name="announcementWorkoutActions">Akcje treningu (pauza, wznowienie, etc.)</string>
+    <string name="announcementGPSStatus">Status GPS</string>
+    <string name="errorEnterValidDuration">Wprowadź prawidłowy czas</string>
+    <string name="errorWorkoutAddFuture">Trening nie może odbyć się w przyszłości</string>
+    <string name="errorEnterValidNumber">Wprowadź poprawną liczbę</string>
+    <string name="and">i</string>
+    <string name="timeSecondsShort">sec.</string>
+    <string name="timeHourShort">godz.</string>
+    <string name="timeHourPlural">Godziny</string>
+    <string name="timeHourSingular">Godzina</string>
+    <string name="timeMinuteShort">min</string>
+    <string name="timeMinutePlural">Minuty</string>
+    <string name="timeMinuteSingular">Minuta</string>
+    <string name="setPreferencesMessage">Możesz ustawić swój preferowany system jednostek wag i dystansu w ustawieniach.</string>
+    <string name="backup">Kopia zapasowa</string>
 </resources>
