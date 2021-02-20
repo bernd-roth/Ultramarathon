@@ -319,4 +319,21 @@
     <string name="actionImportMultiple">Importer flere</string>
     <string name="actionImport">Importer</string>
     <string name="importWorkoutMultipleQuestion">Ønsker du å importere én eller flere GPX-filer\?</string>
+    <string name="recordingPermissionNotGrantedMessage">Innvilg posisjonstilgang for å spore dine bevegelser under arbeidsøkter, når skjermen er av, og i bakgrunnen. Den forblir på enheten din uten din klare tilgang til å dele den.</string>
+    <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack samler også posisjonsdata i bakgrunnen for å ta opp din arbeidsøkt når skjermen er av. Derfor må du innvilge kontinuerlig tilgang.</string>
+    <string name="overwriteMapConfirmation">Ønsker du å overskrive den eksisterende kartfilen «%s»\?</string>
+    <string name="downloadMapsSpecifyDirectory">Angi en mappe for frakoblede kart først</string>
+    <string name="alreadyDownloading">En fil lastes ned allerede</string>
+    <string name="downloadMapConfirmation">Er du sikker på at du vil laste ned «%s»-kartfilen\?</string>
+    <string name="actionDownloadMap">Last ned kart</string>
+    <string name="downloadFailed">Nedlastingen mislyktes</string>
+    <string name="downloadCanceled">Nedlasting avbrutt</string>
+    <string name="downloading">Laster ned …</string>
+    <string name="chooseMapHint">Velg en kartfil</string>
+    <string name="downloadSuccess">Nedlastet</string>
+    <string name="cancelDownloadConfirmation">Er du sikker på at du vil avbryte nåværende nedlasting\?</string>
+    <string name="actionCancelDownload">Avbryt nedlasting</string>
+    <string name="downloadMapsTitle">Last ned kart</string>
+    <string name="pref_map_file">Mappe for frakoblede kart</string>
+    <string name="workoutTypeAll">Alle</string>
 </resources>
