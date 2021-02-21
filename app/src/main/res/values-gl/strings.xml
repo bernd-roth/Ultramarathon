@@ -37,7 +37,7 @@
     <string name="app_name">FitoTrack</string>
     <string name="pref_announcements_config_title">Activador do anuncio</string>
     <string name="importBackupMessage">AVISO: Eliminaranse tódolos teus datos existentes na aplicación. Se non desexas perdelos, primeiro fai outra copia de apoio. Tes a certeza de querer restaurar esta copia de apoio\?</string>
-     <string name="recordingPermissionNotGrantedTitle">Permisos non concedidos</string>
+    <string name="recordingPermissionNotGrantedTitle">Permisos non concedidos</string>
     <string name="unitFootSingular">Pé</string>
     <string name="unitFootPlural">Pés</string>
     <string name="noWorkoutStarted">Non se iniciou o adestramento</string>
@@ -319,4 +319,21 @@
     <string name="actionImportMultiple">Importar varios</string>
     <string name="actionImport">Importar</string>
     <string name="importWorkoutMultipleQuestion">Queres importar un só ficheiro GPX ou varios\?</string>
+    <string name="downloading">Descargando…</string>
+    <string name="chooseMapHint">Escolle o ficheiro do mapa</string>
+    <string name="downloadCanceled">Descarga cancelada</string>
+    <string name="downloadFailed">A descarga fallou</string>
+    <string name="downloadSuccess">Descargado</string>
+    <string name="cancelDownloadConfirmation">Queres cancelar a descarga actual\?</string>
+    <string name="actionCancelDownload">Cancelar a descarga</string>
+    <string name="alreadyDownloading">Xa se está descargando un ficheiro</string>
+    <string name="downloadMapConfirmation">Queres descargar o ficheiro de mapa %s\?</string>
+    <string name="actionDownloadMap">Descargar mapa</string>
+    <string name="overwriteMapConfirmation">Queres sobrescribir o ficheiro de mapas existente %s\?</string>
+    <string name="downloadMapsSpecifyDirectory">Indica o directorio para os mapas sen conexión</string>
+    <string name="downloadMapsTitle">Descargar Mapas</string>
+    <string name="pref_map_file">Directorio de Mapas fóra de liña</string>
+    <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack tamén recolle datos de localización en segundo plano para gravar o adestramento cando a pantalla está apagada. Por tanto, dalle acceso a FitoTrack para acceder á localización de xeito permanente.</string>
+    <string name="recordingPermissionNotGrantedMessage">FitoTrack precisa do permiso de acceso á localización para seguir o teu adestramento. FitoTrack tamén recolle datos de localización cando a app está en segundo plano ou a coa pantalla apagada para poder gravar os adestramentos. Os datos de localización permanecen en todo momento no teu dispositivo a non ser que queiras compartilos de xeito explícito.</string>
+    <string name="workoutTypeAll">Todo</string>
 </resources>
