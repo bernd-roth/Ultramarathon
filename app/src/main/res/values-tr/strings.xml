@@ -16,9 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-
-<resources>
+  --><resources>
     <string name="stop">Durdur</string>
     <string name="workoutStarted">Egzersiz başlatıldı</string>
     <string name="workoutStopped">Egzersiz durduruldu</string>
@@ -321,4 +319,21 @@
     <string name="importWorkoutMultipleQuestion">Bir GPX dosyasını mı yoksa birden fazla dosyayı mı içe aktarmak istiyorsunuz\?</string>
     <string name="actionImportMultiple">Birden fazla içe aktar</string>
     <string name="actionImport">İçe aktar</string>
+    <string name="downloading">İndiriliyor…</string>
+    <string name="downloadSuccess">İndirildi</string>
+    <string name="chooseMapHint">Lütfen bir harita dosyası seçin</string>
+    <string name="downloadCanceled">İndirme iptal edildi</string>
+    <string name="downloadFailed">İndirme başarısız</string>
+    <string name="cancelDownloadConfirmation">Geçerli indirmeyi iptal etmek istiyor musunuz\?</string>
+    <string name="actionCancelDownload">İndirmeyi iptal et</string>
+    <string name="alreadyDownloading">Bir dosya zaten indiriliyor</string>
+    <string name="downloadMapConfirmation">%s harita dosyasını indirmek istiyor musunuz\?</string>
+    <string name="actionDownloadMap">Harita indir</string>
+    <string name="overwriteMapConfirmation">Mevcut %s harita dosyasının üzerine yazmak istiyor musunuz\?</string>
+    <string name="downloadMapsSpecifyDirectory">Lütfen önce çevrim dışı haritalar için bir dizin belirtin</string>
+    <string name="downloadMapsTitle">Haritaları İndir</string>
+    <string name="pref_map_file">Çevrim Dışı Harita Dizini</string>
+    <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack, ekran kapalıyken egzersizi kaydetmek için arka plandayken de konum verilerini toplar. Bu nedenle, lütfen FitoTrack\'in her zaman konumunuza erişmesine izin verin.</string>
+    <string name="recordingPermissionNotGrantedMessage">FitoTrack, egzersiz sırasında hareketinizi takip etmek için konum iznine ihtiyaç duyar. FitoTrack ayrıca uygulama arka plandayken veya egzersizlerinizi kaydetmek için ekran kapalıyken de konum verilerini toplar. Konum verileri, paylaşmak için açık rızanız olmadığı sürece her zaman telefonunuzda kalır.</string>
+    <string name="workoutTypeAll">Tümü</string>
 </resources>
