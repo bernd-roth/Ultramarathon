@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -26,6 +26,7 @@ import android.view.View;
 import android.widget.NumberPicker;
 
 import de.tadris.fitness.R;
+import de.tadris.fitness.util.NumberPickerUtils;
 
 public class DurationPickerDialogFragment {
 
@@ -48,18 +49,21 @@ public class DurationPickerDialogFragment {
         hours.setMinValue(0);
         hours.setMaxValue(24);
         hours.setValue(getInitialHours());
+        NumberPickerUtils.fixNumberPicker(hours);
 
         NumberPicker minutes = v.findViewById(R.id.durationPickerMinutes);
         minutes.setFormatter(value -> value + " " + context.getString(R.string.timeMinuteShort));
         minutes.setMinValue(0);
         minutes.setMaxValue(60);
         minutes.setValue(getInitialMinutes());
+        NumberPickerUtils.fixNumberPicker(minutes);
 
         NumberPicker seconds = v.findViewById(R.id.durationPickerSeconds);
         seconds.setFormatter(value -> value + " " + context.getString(R.string.timeSecondsShort));
         seconds.setMinValue(0);
         seconds.setMaxValue(60);
         seconds.setValue(getInitialSeconds());
+        NumberPickerUtils.fixNumberPicker(seconds);
 
         d.setView(v);
 

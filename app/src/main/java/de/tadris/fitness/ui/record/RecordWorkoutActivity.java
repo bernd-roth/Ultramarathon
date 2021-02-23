@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -35,7 +35,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.PowerManager;
 import android.provider.Settings;
 import android.text.InputType;
 import android.util.Log;
@@ -64,6 +63,7 @@ import org.mapsforge.core.graphics.Style;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.view.MapView;
+import org.mapsforge.map.layer.Layer;
 import org.mapsforge.map.layer.download.TileDownloadLayer;
 import org.mapsforge.map.layer.overlay.Polyline;
 
@@ -110,7 +110,6 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     public WorkoutType activity;
 
     private MapView mapView;
-    private TileDownloadLayer downloadLayer;
     private Instance instance;
     private Polyline polyline;
     private final List<LatLong> latLongList = new ArrayList<>();
@@ -123,7 +122,6 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     private boolean gpsFound = false;
     private boolean isResumed = false;
     private final Handler mHandler = new Handler();
-    private PowerManager.WakeLock wakeLock;
     private InformationDisplay informationDisplay;
 
     private boolean voiceFeedbackAvailable = false;
@@ -189,8 +187,6 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
         updateDescription();
 
-        acquireWakelock();
-
         onGPSStateChanged(new WorkoutGPSStateChanged(WorkoutRecorder.GpsState.SIGNAL_LOST, WorkoutRecorder.GpsState.SIGNAL_LOST));
 
         startListener();
@@ -211,12 +207,6 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
             WorkoutRecorder.GpsState gpsState = instance.recorder.getGpsState();
             onGPSStateChanged(new WorkoutGPSStateChanged(gpsState, gpsState));
         }
-    }
-
-    private void acquireWakelock() {
-        PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
-        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "de.tadris.fitotrack:workout_recorder");
-        wakeLock.acquire(1000 * 60 * 120);
     }
 
     private void hideWaitOverlay() {
@@ -242,9 +232,8 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     }
 
     private void setupMap() {
-        mapView = new MapView(this);
+        mapView = MapManager.setupMap(this);
         mapView.setClickable(false);
-        downloadLayer = MapManager.setupMap(this, mapView);
     }
 
     private void updateLine() {
@@ -416,7 +405,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     private void showLocationPermissionConsent() {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.recordingPermissionNotGrantedTitle)
-                .setMessage(R.string.recordingGrantLocationPermissionMessage)
+                .setMessage(R.string.recordingPermissionNotGrantedMessage)
                 .setPositiveButton(R.string.actionGrant, (dialog, which) -> requestLocationPermission())
                 .setNegativeButton(R.string.cancel, (dialog, which) -> activityFinish())
                 .show();
@@ -431,7 +420,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     private void showBackgroundLocationPermissionConsent() {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.recordingPermissionNotGrantedTitle)
-                .setMessage(R.string.recordingGrantBackgroundPermissionMessage)
+                .setMessage(R.string.recordingBackgroundPermissionNotGrantedMessage)
                 .setPositiveButton(R.string.actionGrant, (dialog, which) -> requestBackgroundLocationPermission())
                 .setNegativeButton(R.string.cancel, (dialog, which) -> activityFinish())
                 .show();
@@ -460,8 +449,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
             if (hasPermission()) {
                 // Restart LocationListener so it can retry to register for location updates now that we got permission
                 restartListener();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
-                        !hasBackgroundPermission()) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && !hasBackgroundPermission()) {
                     showBackgroundLocationPermissionConsent();
                 }
             } else {
@@ -571,10 +559,6 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
         EventBus.getDefault().unregister(this);
 
-        if (wakeLock.isHeld()) {
-            wakeLock.release();
-        }
-
         // Kill Service on Finished or not Started Recording
         if (instance.recorder.getState() == WorkoutRecorder.RecordingState.STOPPED ||
                 instance.recorder.getState() == WorkoutRecorder.RecordingState.IDLE) {
@@ -592,7 +576,11 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
     @Override
     public void onPause() {
-        downloadLayer.onPause();
+        for (Layer layer : mapView.getLayerManager().getLayers()) {
+            if (layer instanceof TileDownloadLayer) {
+                ((TileDownloadLayer) layer).onPause();
+            }
+        }
         isResumed = false;
         super.onPause();
     }
@@ -605,7 +593,11 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
             enableLockScreenVisibility();
         }
         invalidateOptionsMenu();
-        downloadLayer.onResume();
+        for (Layer layer : mapView.getLayerManager().getLayers()) {
+            if (layer instanceof TileDownloadLayer) {
+                ((TileDownloadLayer) layer).onResume();
+            }
+        }
         startUpdater();
         isResumed = true;
     }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -256,8 +256,6 @@
     <string name="app_name">FitoTrack</string>
     <string name="trackerWaitingMessage">Venter på å starte treningsøkt</string>
     <string name="recordingPermissionNotGrantedTitle">Tilganger ikke innvilget</string>
-    <string name="recordingPermissionNotGrantedMessage">Du ga ikke FitoTrack tillatelse til å få tilgang til posisjonen din. FitoTrack trenger denne tillatelsen for å spore bevegelsen din under treningen.</string>
-    <string name="recordingBackgroundPermissionNotGrantedMessage">Du ga ikke FitoTrack tillatelse til å få tilgang til posisjonen din i bakgrunnen. (F.eks. Med skjermen slått av) Treningsøktene blir kanskje ikke registrert riktig.</string>
     <string name="savedSuccessfully">Lagret</string>
     <string name="workoutTypeRowing">Roing</string>
     <string name="recordingStateStopped">Stoppet</string>
@@ -274,8 +272,6 @@
     <string name="importMultipleGpxFiles">Importer flerfoldige GPX-filer</string>
     <string name="aboutHelpTranslating">Hjelp til i oversettelsen</string>
     <string name="actionGrant">Stipend</string>
-    <string name="recordingGrantBackgroundPermissionMessage">FitoTrack samler også inn stedsdata i bakgrunnen for å registrere treningen når skjermen er slått av. Gi derfor tillatelsen.</string>
-    <string name="recordingGrantLocationPermissionMessage">FitoTrack samler inn lokasjonsdata for å registrere treningen. Gi stedet tillatelse til å spille inn en treningsøkt.</string>
     <string name="aboutPrivacyPolicy">Personvernregler</string>
     <string name="inclination">Tilbøyelighet</string>
     <string name="nothingSelected">Ingenting er valgt</string>
@@ -320,4 +316,7 @@
     <string name="workoutTypeEditId">ID</string>
     <string name="hintManageWorkoutTypes">Klikk på plusstegnet for å legge til en tilpasset trening typer.</string>
     <string name="workoutTypeAdd">Legge</string>
+    <string name="actionImportMultiple">Importer flere</string>
+    <string name="actionImport">Importer</string>
+    <string name="importWorkoutMultipleQuestion">Ønsker du å importere én eller flere GPX-filer\?</string>
 </resources>

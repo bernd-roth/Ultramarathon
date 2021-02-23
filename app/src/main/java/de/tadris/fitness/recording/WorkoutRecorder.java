@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -24,6 +24,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.hardware.SensorManager;
 import android.location.Location;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -40,6 +41,7 @@ import de.tadris.fitness.Instance;
 import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.data.Workout;
+import de.tadris.fitness.data.WorkoutData;
 import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.recording.event.HeartRateChangeEvent;
@@ -98,7 +100,7 @@ public class WorkoutRecorder {
 
         this.workout.setWorkoutType(workoutType);
 
-        workoutSaver = new WorkoutSaver(this.context, workout, samples);
+        workoutSaver = new WorkoutSaver(this.context, getWorkoutData());
 
         init();
     }
@@ -118,7 +120,7 @@ public class WorkoutRecorder {
         // distance = 0; x
         reconstructBySamples();
 
-        workoutSaver = new WorkoutSaver(this.context, this.workout, this.samples);
+        workoutSaver = new WorkoutSaver(this.context, getWorkoutData());
         init();
     }
 
@@ -161,6 +163,10 @@ public class WorkoutRecorder {
 
     public List<WorkoutSample> getSamples() {
         return this.samples;
+    }
+
+    public WorkoutData getWorkoutData() {
+        return new WorkoutData(getWorkout(), getSamples());
     }
 
     private void init() {
@@ -242,7 +248,7 @@ public class WorkoutRecorder {
             return;
         }
         GpsState state;
-        if (System.currentTimeMillis() - lastFix.getTime() > SIGNAL_LOST_THRESHOLD) {
+        if ((SystemClock.elapsedRealtimeNanos() - lastFix.getElapsedRealtimeNanos()) / 1000_000L > SIGNAL_LOST_THRESHOLD) {
             state = GpsState.SIGNAL_LOST;
         } else if (lastFix.getAccuracy() > SIGNAL_BAD_THRESHOLD) {
             state = GpsState.SIGNAL_BAD;
@@ -250,6 +256,7 @@ public class WorkoutRecorder {
             state = GpsState.SIGNAL_OKAY;
         }
         if (state != gpsState) {
+            Log.d("Recorder", "GPS State: " + this.gpsState.name() + " -> " + state.name());
             EventBus.getDefault().post(new WorkoutGPSStateChanged(this.gpsState, state));
             gpsState = state;
         }

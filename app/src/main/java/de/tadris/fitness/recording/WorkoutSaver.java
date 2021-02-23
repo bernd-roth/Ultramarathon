@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -29,6 +29,7 @@ import java.util.List;
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.data.AppDatabase;
 import de.tadris.fitness.data.Workout;
+import de.tadris.fitness.data.WorkoutData;
 import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.util.AltitudeCorrection;
 import de.tadris.fitness.util.CalorieCalculator;
@@ -40,10 +41,10 @@ public class WorkoutSaver {
     protected final List<WorkoutSample> samples;
     private final AppDatabase db;
 
-    public WorkoutSaver(Context context, Workout workout, List<WorkoutSample> samples) {
+    public WorkoutSaver(Context context, WorkoutData data) {
         this.context = context;
-        this.workout = workout;
-        this.samples = samples;
+        this.workout = data.getWorkout();
+        this.samples = data.getSamples();
         this.db = Instance.getInstance(context).db;
     }
 

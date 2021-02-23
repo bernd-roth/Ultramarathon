@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -27,28 +27,31 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import de.tadris.fitness.data.Workout;
-import de.tadris.fitness.data.WorkoutSample;
+import de.tadris.fitness.data.WorkoutData;
 
 public interface IWorkoutImporter {
     class WorkoutImportResult {
-        public Workout workout;
-        public List<WorkoutSample> samples;
+        List<WorkoutData> workouts;
 
-        public WorkoutImportResult(Workout workout, List<WorkoutSample> samples) {
-            this.workout = workout;
-            this.samples = samples;
+        public WorkoutImportResult(List<WorkoutData> workouts) {
+            this.workouts = workouts;
         }
     }
 
-    WorkoutImportResult readWorkout(InputStream input) throws IOException;
+    WorkoutImportResult readWorkouts(InputStream input) throws IOException;
 
-    default void importWorkout(Context context, InputStream input) throws IOException {
-        WorkoutImportResult importResult = readWorkout(input);
-        new ImportWorkoutSaver(context, importResult.workout, importResult.samples).saveWorkout();
+    /**
+     * @return number of imported workouts
+     */
+    default int importWorkout(Context context, InputStream input) throws IOException {
+        WorkoutImportResult importResult = readWorkouts(input);
+        for (WorkoutData data : importResult.workouts) {
+            new ImportWorkoutSaver(context, data).saveWorkout();
+        }
+        return importResult.workouts.size();
     }
 
-    default void importWorkout(Context context, File file) throws IOException {
-        importWorkout(context, new FileInputStream(file));
+    default int importWorkout(Context context, File file) throws IOException {
+        return importWorkout(context, new FileInputStream(file));
     }
 }

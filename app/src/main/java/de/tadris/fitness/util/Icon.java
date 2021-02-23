@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -44,7 +44,10 @@ public enum Icon {
     HANDBALL("handball", R.drawable.ic_handball),
     MOTOR_SPORTS("motor-sports", R.drawable.ic_motorsports),
     MOTOR_CYCLE("motor-cycle", R.drawable.ic_motor_cycle),
+    RIDING("riding", R.drawable.ic_ride),
     ADD("add", R.drawable.ic_add_white),
+    DOWNHILL_SKI("downhill_ski", R.drawable.ic_downhill_ski),
+    CROSS_COUNTRY_SKI("cross_country_ski", R.drawable.ic_cross_country_ski),
     OTHER("other", R.drawable.ic_other);
 
     public final String name;
@@ -63,6 +66,9 @@ public enum Icon {
             if (icon.name.equals(iconName)) {
                 return icon.iconRes;
             }
+        }
+        if (iconName.equals("list")) {
+            return R.drawable.ic_list;
         }
         return OTHER.iconRes;
     }

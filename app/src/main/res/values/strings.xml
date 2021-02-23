@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
-  ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -16,7 +17,8 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources>
+  -->
+<resources>
     <string name="app_name">FitoTrack</string>
     <string name="workout_add">Add</string>
     <string name="stop">Stop</string>
@@ -102,6 +104,7 @@
     <string name="workoutTypeOther">Other</string>
     <string name="workoutTypeUnknown">Unknown</string>
     <string name="workoutTypeAdd">Add</string>
+    <string name="workoutTypeAll">All</string>
     <string name="type">Type</string>
     <string name="enterWorkout">Enter Workout</string>
     <string name="importWorkout">Import Workout</string>
@@ -265,10 +268,8 @@
     <string name="unitFootPlural">Feet</string>
     <string name="unitFootSingular">Foot</string>
     <string name="recordingPermissionNotGrantedTitle">Permissions not granted</string>
-    <string name="recordingPermissionNotGrantedMessage">You did not grant FitoTrack permission to access your location. FitoTrack needs this permission to track your movement during your workout.</string>
-    <string name="recordingBackgroundPermissionNotGrantedMessage">You did not grant FitoTrack permission to access your location in the background. (E.g. with the screen turned off) Workouts might not be recorded correctly.</string>
-    <string name="recordingGrantLocationPermissionMessage">FitoTrack collects location data to record the workout. Please grant the location permission to record a workout.</string>
-    <string name="recordingGrantBackgroundPermissionMessage">FitoTrack also collects location data in background to record the workout when the screen is turned off. Therefore, please grant the permission.</string>
+    <string name="recordingPermissionNotGrantedMessage">FitoTrack needs location permission to track your movement during your workout. FitoTrack also collects location data while the app is in the background or the screen is turned off to record your workouts. Location data always remains on your phone without your clear consent to share it.</string>
+    <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack also collects location data in background to record the workout when the screen is turned off. Therefore, please allow FitoTrack to have access to your location all the time.</string>
     <string name="actionGrant">Grant</string>
     <string name="speechConfigNoSpeech">No Announcement</string>
     <string name="recordingStateIdle">Idle</string>
@@ -278,6 +279,9 @@
     <string name="importMultipleGpxFiles">Import multiple GPX-files</string>
     <string name="importMultipleMessageSelectFolder">Please select a folder containing all the GPX-files you would like to import.</string>
     <string name="importMultipleGpxFilesSummary">Import more than one GPX-files from the filesystem at once</string>
+    <string name="importWorkoutMultipleQuestion">Do you want to import one GPX file or multiple ones?</string>
+    <string name="actionImport">Import</string>
+    <string name="actionImportMultiple">Import multiple</string>
     <string name="bulkActions">Bulk actions</string>
     <string name="importingFiles">Importing files</string>
     <string name="importedWorkouts">Imported %d workouts</string>
@@ -319,6 +323,20 @@
     <string name="deleteWorkoutTypeConfirmation">Do you really want to delete this workout type?</string>
     <string name="workoutTypeEditIcon">Icon</string>
     <string name="editWorkoutType">Edit workout type</string>
+    <string name="pref_map_file">Offline Map Directory</string>
+    <string name="downloadMapsTitle">Download Maps</string>
+    <string name="downloadMapsSpecifyDirectory">Please specify a directory for offline maps first</string>
+    <string name="overwriteMapConfirmation">Do you want to overwrite the existing map file %s?</string>
+    <string name="actionDownloadMap">Download map</string>
+    <string name="downloadMapConfirmation">Do you want to download the map file %s?</string>
+    <string name="alreadyDownloading">A file is already being downloaded</string>
+    <string name="actionCancelDownload">Cancel download</string>
+    <string name="cancelDownloadConfirmation">Do you want to cancel the current download?</string>
+    <string name="downloadSuccess">Download success</string>
+    <string name="downloadFailed">Download failed</string>
+    <string name="downloadCanceled">Download canceled</string>
+    <string name="chooseMapHint">Please choose a map file</string>
+    <string name="downloading">Downloading</string>
     <string name="exportTargetDirectory">Directory</string>
     <string name="autoBackupTitle">Automatic backups</string>
     <string name="workoutGPXExportTitle">Workout GPX exports</string>
@@ -341,6 +359,7 @@
     <string-array name="pref_map_layers">
         <item>Mapnik\nDefault OSM Mapstyle</item>
         <item>Humanitarian\nClean map but sometimes not available</item>
+        <item>Offline\nLocal map file with local render theme</item>
     </string-array>
     <string-array name="pref_theme_setting">
         <item>Light</item>

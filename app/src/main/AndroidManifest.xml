@@ -38,6 +38,8 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".ui.settings.ConfigureExportTargetsActivity"></activity>
         <activity android:name=".ui.settings.EditWorkoutTypeActivity" />
+        <activity android:name=".ui.settings.DownloadMapsActivity"></activity>
+        <activity android:name=".ui.settings.EditWorkoutTypeActivity" />
         <activity android:name=".ui.settings.ManageWorkoutTypesActivity" />
         <activity android:name=".ui.ShareFileActivity" />
         <activity android:name=".ui.settings.AboutActivity" />

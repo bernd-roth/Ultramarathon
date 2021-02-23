@@ -24,6 +24,8 @@ import de.tadris.fitness.data.WorkoutType;
 
 public class WorkoutTypeFilter implements WorkoutFilter {
 
+    public static final String ID_ALL = "_all";
+
     private final WorkoutType type;
 
     public WorkoutTypeFilter(WorkoutType type) {
@@ -32,6 +34,10 @@ public class WorkoutTypeFilter implements WorkoutFilter {
 
     @Override
     public boolean isAccepted(Workout workout) {
-        return workout.workoutTypeId.equals(type.id);
+        if (type.id.equals(ID_ALL)) {
+            return true;
+        } else {
+            return workout.workoutTypeId.equals(type.id);
+        }
     }
 }

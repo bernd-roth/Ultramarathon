@@ -93,7 +93,7 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
 
             addMap();
 
-            map.setClickable(false);
+            mapView.setClickable(false);
             mapRoot.setOnClickListener(v -> startFullscreenMapActivity());
 
         }

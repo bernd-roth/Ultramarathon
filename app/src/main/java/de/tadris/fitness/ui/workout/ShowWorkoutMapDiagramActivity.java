@@ -65,7 +65,7 @@ public class ShowWorkoutMapDiagramActivity extends WorkoutActivity {
 
         fullScreenItems = true;
         addMap();
-        map.setClickable(true);
+        mapView.setClickable(true);
 
         diagramsInteractive = true;
         root = findViewById(R.id.showWorkoutDiagramParent);

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -214,10 +214,6 @@
         <item>Sempre</item>
         <item>Solo con cuffie</item>
     </string-array>
-    <string-array name="pref_map_layers">
-        <item>Mapnik\nDefault OSM Mapstyle</item>
-        <item>Humanitarian\nClean map but sometimes not available</item>
-    </string-array>
     <string-array name="pref_theme_setting">
         <item>Chiaro</item>
         <item>Scuro</item>
@@ -240,11 +236,9 @@
     <string name="workoutStatsHelpText">Questa schermata mostra le statistiche storiche degli allenamenti. Per utilizzarlo devi prima specificare il tipo di allenamento cliccandoci sopra. Quindi imposta le informazioni che desideri conoscere e l\'intervallo di tempo.
 \n
 \nPer esempio, se si seleziona «Settimana» come intervallo di tempo, tutti gli allenamenti di ogni settimana verranno uniti in un punto dati calcolando la media o la somma di ogni settimana.</string>
-    <string name="recordingBackgroundPermissionNotGrantedMessage">Non hai concesso l\'autorizzazione FitoTrack per accedere alla tua posizione nello sfondo. (Ad esempio con lo schermo spento.) Gli allenamenti potrebbero non essere registrati correttamente.</string>
-    <string name="recordingPermissionNotGrantedMessage">Non hai concesso a FitoTrack il permesso di accedere alla tua posizione. FitoTrack ha bisogno di questo permesso per seguire i vostri movimenti durante l\'allenamento.</string>
     <string name="dataSamples">Campioni</string>
     <string name="no_workouts_recorded">Nessun allenamento registrato</string>
-    <string name="announcementSuppressDuringCall">Disattiva durante la chiamata</string>
+    <string name="announcementSuppressDuringCall">Sopprimere durante la chiamata</string>
     <string name="replaceOrMergeMessage">Sostituire o unire la base di dati con un file di backup\?</string>
     <string name="merge">Unisci</string>
     <string name="replace">Sostituisci</string>
@@ -306,8 +300,6 @@
     <string name="importMultipleMessageSelectFolder">Selezionare una cartella contenente tutti i file GPX che si desidera importare.</string>
     <string name="importMultipleGpxFiles">Importare file GPX multipli</string>
     <string name="actionGrant">Sovvenzione</string>
-    <string name="recordingGrantBackgroundPermissionMessage">FitoTrack raccoglie anche i dati di localizzazione in background per registrare l\'allenamento quando lo schermo è spento. Pertanto, si prega di concedere l\'autorizzazione.</string>
-    <string name="recordingGrantLocationPermissionMessage">FitoTrack raccoglie i dati di localizzazione per registrare l\'allenamento. Si prega di concedere alla località il permesso di registrare l\'allenamento.</string>
     <string name="aboutPrivacyPolicy">Politica sulla privacy</string>
     <string name="inclination">Inclinazione</string>
     <string name="nothingSelected">Niente di selezionato</string>
@@ -339,8 +331,8 @@
     <string name="deleteWorkoutTypeConfirmation">Vuoi veramente eliminare questo tipo di allenamento\?</string>
     <string name="deleteWorkoutType">Elimina Tipo Di Allenamento</string>
     <string name="actionSave">Salvare</string>
-    <string name="customWorkoutTypesTitle">Tipologia allenamento personalizzato</string>
-    <string name="preferenceCategoryVoiceFeedback">Risposta vocale</string>
+    <string name="customWorkoutTypesTitle">Tipi Di Allenamento Personalizzati</string>
+    <string name="preferenceCategoryVoiceFeedback">Risposte di voce</string>
     <string name="workoutTypeEditMETHint">Una misura per il consumo di energia</string>
     <string name="workoutTypeEditMinDistanceHint">Distanza minima tra due campioni GPS</string>
     <string name="workoutTypeEditMinDistance">Distanza del campione</string>
