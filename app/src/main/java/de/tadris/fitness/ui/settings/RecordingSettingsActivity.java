@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -35,6 +35,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import de.tadris.fitness.R;
 import de.tadris.fitness.recording.announcement.TTSController;
 import de.tadris.fitness.recording.event.TTSReadyEvent;
+import de.tadris.fitness.util.NumberPickerUtils;
 
 public class RecordingSettingsActivity extends FitoTrackSettingsActivity {
 
@@ -106,6 +107,7 @@ public class RecordingSettingsActivity extends FitoTrackSettingsActivity {
         final String autoTimeoutVariable = "autoTimeoutPeriod";
         npT.setValue(preferences.getInt(autoTimeoutVariable, 20) / stepWidth);
         npT.setWrapSelectorWheel(false);
+        NumberPickerUtils.fixNumberPicker(npT);
 
         d.setView(v);
 

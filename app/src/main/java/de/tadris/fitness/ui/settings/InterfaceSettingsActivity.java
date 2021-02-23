@@ -34,6 +34,7 @@ import androidx.documentfile.provider.DocumentFile;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
+import de.tadris.fitness.util.NumberPickerUtils;
 import de.tadris.fitness.util.unit.DistanceUnitSystem;
 
 public class InterfaceSettingsActivity extends FitoTrackSettingsActivity {
@@ -94,6 +95,7 @@ public class InterfaceSettingsActivity extends FitoTrackSettingsActivity {
         final String preferenceVariable = "weight";
         np.setValue((int) Math.round(unitSystem.getWeightFromKilogram(preferences.getInt(preferenceVariable, 80))));
         np.setWrapSelectorWheel(false);
+        NumberPickerUtils.fixNumberPicker(np);
 
         d.setView(v);
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -28,6 +28,7 @@ import android.widget.NumberPicker;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
+import de.tadris.fitness.util.NumberPickerUtils;
 
 public class VoiceAnnouncementsSettingsActivity extends FitoTrackSettingsActivity {
 
@@ -69,6 +70,7 @@ public class VoiceAnnouncementsSettingsActivity extends FitoTrackSettingsActivit
             npTValues[i] = i + " " + getString(R.string.timeMinuteShort);
         }
         npT.setDisplayedValues(npTValues);
+        NumberPickerUtils.fixNumberPicker(npT);
 
         final String distanceUnit = " " + Instance.getInstance(this).distanceUnitUtils.getDistanceUnitSystem().getLongDistanceUnit();
         NumberPicker npD = v.findViewById(R.id.spokenUpdatesDistancePicker);
@@ -83,6 +85,7 @@ public class VoiceAnnouncementsSettingsActivity extends FitoTrackSettingsActivit
             npDValues[i] = i + distanceUnit;
         }
         npD.setDisplayedValues(npDValues);
+        NumberPickerUtils.fixNumberPicker(npD);
 
         d.setView(v);
 
