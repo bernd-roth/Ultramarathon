@@ -118,7 +118,7 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
 
     // Android Work Manager
-    def work_version = "2.4.0"
+    def work_version = "2.5.0"
     implementation "androidx.work:work-runtime:$work_version"
 
     // support for the new language APIs
