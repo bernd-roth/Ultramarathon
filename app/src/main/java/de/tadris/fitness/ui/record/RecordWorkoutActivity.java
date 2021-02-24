@@ -156,7 +156,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
     private boolean useNfcStart;
     private long autoStartDelayMs;    // in ms
-    private boolean useAutoStart;   // did the user enable auto start in settings?
+    private boolean useAutoStart = true;   // always enable auto start mode
     private View autoStartCountdownOverlay;
     private AutoStartWorkout autoStartWorkout;
     private VibratorController vibratorController;
@@ -185,7 +185,6 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         Log.d(TAG, "NFC start enabled:" + this.useNfcStart);
 
         this.autoStartDelayMs = instance.userPreferences.getAutoStartDelay() * AUTO_START_DELAY_MULTIPLIER;
-        this.useAutoStart = instance.userPreferences.getUseAutoStart();
         Log.d(TAG, "auto start enabled:" + this.useAutoStart + ", auto start delay: " + this.autoStartDelayMs);
 
         activity = WorkoutType.getWorkoutTypeById(this, WorkoutType.WORKOUT_TYPE_ID_OTHER);

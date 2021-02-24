@@ -17,7 +17,7 @@ import de.tadris.fitness.Instance;
  * It automatically disables the vibrator during calls, if configured in TTS preferences.
  */
 public class VibratorController {
-    private boolean enabled;
+    private boolean enabled = true;  // always enabled
     private boolean suppressOnCall;
     private Vibrator vibrator;
     private final Context context;
@@ -34,8 +34,7 @@ public class VibratorController {
         this.suppressOnCall = Instance.getInstance(context).userPreferences.getSuppressAnnouncementsDuringCall();
         vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
 
-        enabled = instance.userPreferences.getUseAutoStart();
-        if (enabled && (!vibrator.hasVibrator())) {
+        if (!vibrator.hasVibrator()) {
             enabled = false;
         }
     }

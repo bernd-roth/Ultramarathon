@@ -40,7 +40,7 @@ public class ToneGeneratorController {
         audioStream = stream;
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         suppressOnCall = instance.userPreferences.getSuppressAnnouncementsDuringCall();
-        enabled = instance.userPreferences.getUseAutoStart();
+        enabled = true;
 
         // determine audio stream volume range, needed to convert to ToneGenerator volume
         streamVolumeRange = audioManager.getStreamMaxVolume(audioStream);
