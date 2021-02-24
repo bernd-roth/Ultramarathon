@@ -2,6 +2,7 @@ package de.tadris.fitness.ui.dialog;
 
 import android.app.Activity;
 
+import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 
 /**
@@ -29,10 +30,15 @@ public class ChooseAutoStartDelayDialog extends ChooseAutoTimeDialog {
         this.initialDelayS = initialDelayS;
     }
 
+    /**
+     * Initialize dialog with default delay from preferences
+     * @param context       The context this dialog should be shown in
+     * @param listener      The listener that is called when the user selects a delay
+     */
     public ChooseAutoStartDelayDialog(Activity context, AutoStartDelaySelectListener listener) {
         super(context, context.getString(R.string.pref_auto_start_delay_title));
         this.listener = listener;
-        this.initialDelayS = DEFAULT_DELAY_S;
+        this.initialDelayS = Instance.getInstance(context).userPreferences.getAutoStartDelay();
     }
 
     @Override

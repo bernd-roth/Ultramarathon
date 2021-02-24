@@ -98,13 +98,11 @@ public class RecordingSettingsActivity
     }
 
     private void showAutoStartDelayConfig() {
-        int initialDelay = Instance.getInstance(this).userPreferences.getAutoStartDelay();
-        new ChooseAutoStartDelayDialog(this, this, initialDelay).show();
+        new ChooseAutoStartDelayDialog(this, this).show();
     }
 
     private void showAutoTimeoutConfig() {
-        int initialTimeout = Instance.getInstance(this).userPreferences.getAutoTimeout();
-        new ChooseAutoTimeoutDialog(this, this, initialTimeout).show();
+        new ChooseAutoTimeoutDialog(this, this).show();
     }
 
     @Override

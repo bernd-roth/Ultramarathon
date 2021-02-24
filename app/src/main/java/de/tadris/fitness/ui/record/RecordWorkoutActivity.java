@@ -962,8 +962,6 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
                 }
             } else if (itemId == R.id.auto_start_delay) {
                 Log.d("RecordWorkoutActivity", "Auto start with custom delay from popup menu selected");
-                UserPreferences preferences = Instance.getInstance(this).userPreferences;
-                int initialDelay = preferences.getAutoStartDelay();
                 new ChooseAutoStartDelayDialog(this, delayS -> {
                         cancelAutoStart();
                         if (!beginAutoStart(delayS * 1_000)) {
@@ -971,7 +969,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
                         } else {
                             Log.d("RecordWorkoutActivity", "Auto start from popup menu with delay of " + delayS + "s");
                         }
-                    }, initialDelay).show();
+                    }).show();
             } else {
                 return false;
             }

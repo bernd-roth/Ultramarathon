@@ -2,13 +2,13 @@ package de.tadris.fitness.ui.dialog;
 
 import android.app.Activity;
 
+import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 
 /**
  * Build a dialog to choose the auto workout timeout after which the workout is automatically stopped
  */
 public class ChooseAutoTimeoutDialog extends ChooseAutoTimeDialog {
-    public static final int DEFAULT_TIMEOUT_M = 20;
     private static final int STEP_WIDTH = 5;
     private static final int NO_TIMEOUT = 0;
     private static final int MAX_VALUE = 60;
@@ -27,10 +27,16 @@ public class ChooseAutoTimeoutDialog extends ChooseAutoTimeDialog {
         this.initialTimeoutM = initialTimeoutM;
     }
 
+
+    /**
+     * Initialize dialog with default timeout from preferences.
+     * @param context           The context this dialog should be shown in
+     * @param listener          The listener that is called when the user selects a delay
+     */
     public ChooseAutoTimeoutDialog(Activity context, ChooseAutoTimeoutDialog.AutoTimeoutSelectListener listener) {
         super(context, context.getString(R.string.pref_auto_timeout_title));
         this.listener = listener;
-        this.initialTimeoutM = DEFAULT_TIMEOUT_M;
+        this.initialTimeoutM = Instance.getInstance(context).userPreferences.getAutoTimeout();
     }
 
     @Override
