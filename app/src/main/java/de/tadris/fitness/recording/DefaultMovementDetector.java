@@ -70,7 +70,8 @@ public class DefaultMovementDetector extends MovementDetector {
                 // and if the time difference to the last sample is too small
                 distance = Math.abs(RecorderService.locationToLatLong(lastLocation).
                         sphericalDistance(RecorderService.locationToLatLong(location)));
-                long timeDiff = Math.abs(lastLocation.getTime() - location.getTime());
+                long timeDiff = (location.getElapsedRealtimeNanos() -
+                        lastLocation.getElapsedRealtimeNanos()) / 1_000_000L;
                 if (distance < workout.getWorkoutType(context).minDistance || timeDiff < 500) {
                     Log.d(TAG, "onLocationChange: not moving");
                     detectionState = DetectionState.NOT_MOVING;
