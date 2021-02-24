@@ -115,7 +115,7 @@ public class SectionAdapter extends ArrayAdapter<SectionListModel.Section> {
         viewHolder.mDown.setText(Math.round(section.descent) + distanceUnitUtils.getDistanceUnitSystem().getShortDistanceUnit());
         viewHolder.mUp.setText(Math.round(section.ascent) + distanceUnitUtils.getDistanceUnitSystem().getShortDistanceUnit());
         if (paceToggle)
-            viewHolder.pace.setText(TimeFormatter.formatDuration((long) (section.getPace())));
+            viewHolder.pace.setText((distanceUnitUtils.getPace(section.getPace()/60,false)));
         else
             viewHolder.pace.setText(distanceUnitUtils.getSpeed(1000.0 / section.getPace())); // must be in m/s
 
