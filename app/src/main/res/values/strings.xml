@@ -335,6 +335,10 @@
     <string name="downloadCanceled">Download canceled</string>
     <string name="chooseMapHint">Please choose a map file</string>
     <string name="downloading">Downloading…</string>
+    <string name="autoStartTitle">Auto start</string>
+    <string name="autoStartSummary">Automatically start workouts</string>
+    <string name="intervalAutoStartDelayTraining">Auto Start Workout Delay</string>
+    <string name="manageAutoStartDelaySummary">Edit the delay for automatic workout start</string>
     <string-array name="osm_track_visibility">
         <item>Identifiable</item>
         <item>Trackable</item>
