@@ -26,6 +26,7 @@ public class MinuteCountdownTimeAnnouncement extends CountdownTimeAnnouncement {
     @Override
     public String getSpokenText(WorkoutRecorder recorder) {
         int minutes = getCountdownS() / 60;
-        return context.getString(R.string.ttsMinuteCountdownAnnouncement, minutes);
+        String mins = context.getResources().getQuantityString(R.plurals.minutes, minutes, minutes);
+        return context.getString(R.string.ttsMinuteCountdownAnnouncement, mins);
     }
 }

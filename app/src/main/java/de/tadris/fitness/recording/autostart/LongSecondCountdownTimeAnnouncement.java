@@ -24,6 +24,8 @@ public class LongSecondCountdownTimeAnnouncement extends CountdownTimeAnnounceme
 
     @Override
     public String getSpokenText(WorkoutRecorder recorder) {
-        return context.getString(R.string.ttsLongSecondCountdownAnnouncement, getCountdownS());
+        int seconds = getCountdownS();
+        String secs = context.getResources().getQuantityString(R.plurals.seconds, seconds, seconds);
+        return context.getString(R.string.ttsLongSecondCountdownAnnouncement, secs);
     }
 }

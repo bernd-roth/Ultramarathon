@@ -359,17 +359,27 @@
     <string name="dialog_nfc_disabled">In order to use NFC tags to start and stop workouts you need to enable NFC in device settings first</string>
     <string name="action_nfc_settings">Go to NFC settings</string>
     <string name="announcementCountdown">Auto Start Actions (countdown, state, etc.)</string>
+    <!-- used for countdown voice announcements -->
+    <plurals name="seconds">
+        <item quantity="one"><xliff:g id="secs" example="1">%1$d</xliff:g> second</item>
+        <item quantity="other"><xliff:g id="secs" example="12">%1$d</xliff:g> seconds</item>
+    </plurals>
+    <!-- used for countdown voice announcements -->
+    <plurals name="minutes">
+        <item quantity="one"><xliff:g id="mins" example="1">%1$d</xliff:g> minute</item>
+        <item quantity="other"><xliff:g id="mins" example="5">%1$d</xliff:g> minutes</item>
+    </plurals>
     <!-- countdown announcement -->
     <string name="ttsLongSecondCountdownAnnouncement">
-        <xliff:g id="secs" example="5">%1$d</xliff:g> seconds until start
+        <xliff:g id="secs" example="5 seconds">%1$s</xliff:g> until start
     </string>
     <!-- countdown announcement -->
     <string name="ttsMinuteCountdownAnnouncement">
-        <xliff:g id="mins" example="12">%1$d</xliff:g> minutes until start
+        <xliff:g id="mins" example="12 minutes">%1$s</xliff:g> until start
     </string>
     <!-- countdown announcement -->
     <string name="ttsMinuteSecondCountdownAnnouncement">
-        <xliff:g id="mins" example="2">%1$d</xliff:g> minutes and <xliff:g id="secs" example="7">%2$d</xliff:g> seconds until start
+        <xliff:g id="mins" example="1 minute">%1$s</xliff:g> and <xliff:g id="secs" example="7 seconds">%2$s</xliff:g> until start
     </string>
     <string name="manageAutoStartModeSummary">Change the mode of automatic workout start</string>
     <string name="intervalAutoStartModeTraining">Auto Start Workout Mode</string>

@@ -60,7 +60,6 @@ public class AutoStartAnnouncements implements EventBusMember {
             countdownTimeAnnouncementList.add(new LongSecondCountdownTimeAnnouncement(context, instance,  i));
         }
         for (int i = 75; i <= 600; i += 15) {
-            // TODO fix grammatically wrong announcement for 1mXXs. The resource string uses minutes (plural).
             if (i % 60 == 0) {
                 countdownTimeAnnouncementList.add(new MinuteCountdownTimeAnnouncement(context, instance,  i));
             } else {
