@@ -125,6 +125,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     private TextView gpsStatusView;
     private ImageView hrStatusView;
     private View waitingForGPSOverlay;
+    private View autoStartCountdownOverlay;
     private Button startButton;
     private boolean gpsFound = false;
     private boolean isResumed = false;
@@ -181,6 +182,12 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         ((ViewGroup) findViewById(R.id.recordMapViewerRoot)).addView(mapView);
         waitingForGPSOverlay = findViewById(R.id.recorderWaitingOverlay);
         waitingForGPSOverlay.setVisibility(View.VISIBLE);
+
+        if (useAutoStart && autoStartDelay > 0) {
+            autoStartCountdownOverlay = findViewById(R.id.recorderAutoStartOverlay);
+            autoStartCountdownOverlay.setVisibility(View.VISIBLE);
+            updateAutoStartCountdown((int) (autoStartDelay / 1000));
+        }
 
         startButton = findViewById(R.id.recordStart);
         updateStartButton(false, R.string.cannotStart, null);
@@ -245,6 +252,30 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
                 waitingForGPSOverlay.setVisibility(View.GONE);
             }
         }).start();
+    }
+
+    private void hideAutoStartCountdownOverlay() {
+        if (useAutoStart && autoStartCountdownOverlay.getVisibility() != View.GONE) {
+            autoStartCountdownOverlay.clearAnimation();
+            autoStartCountdownOverlay.animate().alpha(0f).setDuration(1000).setListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animator) {
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animator) {
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animator) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animator) {
+                    autoStartCountdownOverlay.setVisibility(View.GONE);
+                }
+            }).start();
+        }
     }
 
     private void setupMap() {
@@ -337,7 +368,16 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         startButton.setOnClickListener(listener);
     }
 
+    private void updateAutoStartCountdown(int remainingSeconds) {
+        String text = String.format(getString(R.string.autoStartCountdownVal), remainingSeconds, getText(R.string.timeSecondsShort));
+        Log.d("RecordWorkoutActivity", "Updating auto start countdown: " + text + " (" + remainingSeconds + ")");
+        ((TextView) findViewById(R.id.autoStartCountdownVal)).setText(text);
+    }
+
     private void start() {
+        // hide countdown overlay from auto start
+        hideAutoStartCountdownOverlay();
+        // and start workout recorder
         instance.recorder.start();
         invalidateOptionsMenu();
     }

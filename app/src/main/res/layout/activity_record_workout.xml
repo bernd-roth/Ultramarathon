@@ -25,6 +25,7 @@
     tools:context=".ui.record.RecordWorkoutActivity">
 
     <FrameLayout
+        android:id="@+id/mapFrameView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/recordInfoRoot">
@@ -267,5 +268,46 @@
                 android:textSize="30sp" />
         </LinearLayout>
     </FrameLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/recorderAutoStartOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@id/mapFrameView"
+        android:background="@color/colorBgAutoStartCountdownOverlay"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/autoStartCountdownVal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:alpha="100"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:textColor="@color/textDarkerWhite"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/autoStartCountdownMsg" />
+
+        <TextView
+            android:id="@+id/autoStartCountdownMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="100"
+            android:text="@string/autoStartCountdownMsg"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/textDarkerWhite"
+            app:layout_constraintBottom_toTopOf="@+id/autoStartCountdownVal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>

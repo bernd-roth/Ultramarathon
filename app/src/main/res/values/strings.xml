@@ -341,6 +341,8 @@
     <string name="manageAutoStartDelaySummary">Edit the delay for automatic workout start</string>
     <string name="pref_auto_start_delay_title">Delay for Auto-Start</string>
     <string name="noAutoStartDelay">Start immediately</string>
+    <string name="autoStartCountdownMsg">Starting workout in</string>
+    <string name="autoStartCountdownVal">%1$d%2$s</string>
     <string-array name="osm_track_visibility">
         <item>Identifiable</item>
         <item>Trackable</item>
