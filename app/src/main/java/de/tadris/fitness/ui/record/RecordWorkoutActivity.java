@@ -1031,6 +1031,11 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
             case COUNTDOWN:
                 showAutoStartCountdownOverlay();
                 break;
+            case WAITING_FOR_GPS:
+                ((TextView) findViewById(R.id.autoStartCountdownVal)).setText("");
+                ((TextView) findViewById(R.id.autoStartCountdownMsg)).setText(getString(R.string.autoStartCountdownMsgGps));
+                showAutoStartCountdownOverlay();
+                break;
             case AUTO_START_REQUESTED:
                 autoStart();
                 break;
@@ -1044,6 +1049,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onCountdownChange (AutoStartWorkout.CountdownChangeEvent countdownChangeEvent) {
+        ((TextView) findViewById(R.id.autoStartCountdownMsg)).setText(getString(R.string.autoStartCountdownMsg));
         String text = String.format(getString(R.string.autoStartCountdownVal),
                 (countdownChangeEvent.countdownMs + 500) / 1000,
                 getText(R.string.timeSecondsShort));
