@@ -104,18 +104,13 @@ public class AutoStartWorkout implements EventBusMember {
     }
 
     @Override
-    public boolean registerTo(@NonNull EventBus eventBus) {
-        unregisterFromBus();
-        if(!EventBusHelper.saveRegisterTo(eventBus, this)) {
-            return false;
-        }
+    public void setEventBus(EventBus eventBus) {
         this.eventBus = eventBus;
-        return true;
     }
 
     @Override
-    public void unregisterFromBus() {
-        EventBusHelper.saveUnregisterFrom(eventBus, this);
+    public EventBus getEventBus() {
+        return eventBus;
     }
 
     /**
