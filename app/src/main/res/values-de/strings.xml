@@ -387,4 +387,6 @@
     <string name="autoStartSummary">Workouts automatisch starten</string>
     <string name="intervalAutoStartDelayTraining">Workout Auto-Start Verzögerung</string>
     <string name="manageAutoStartDelaySummary">Einstellung zum automatisch Starten des Workouts</string>
+    <string name="pref_auto_start_delay_title">Zeitspanne bis Auto-Start</string>
+    <string name="noAutoStartDelay">Sofort starten</string>
 </resources>

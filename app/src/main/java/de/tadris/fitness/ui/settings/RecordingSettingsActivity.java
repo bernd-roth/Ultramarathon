@@ -57,6 +57,11 @@ public class RecordingSettingsActivity extends FitoTrackSettingsActivity {
             return true;
         });
 
+        findPreference("autoStartDelayConfig").setOnPreferenceClickListener(preference -> {
+            showAutoStartDelayConfig();
+            return true;
+        });
+
         findPreference("autoTimeoutConfig").setOnPreferenceClickListener(preference -> {
             showAutoTimeoutConfig();
             return true;
@@ -90,6 +95,43 @@ public class RecordingSettingsActivity extends FitoTrackSettingsActivity {
 
     private void showIntervalSetManagement() {
         startActivity(new Intent(this, ManageIntervalSetsActivity.class));
+    }
+
+    private void showAutoStartDelayConfig() {
+        final AlertDialog.Builder d = new AlertDialog.Builder(this);
+        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        d.setTitle(getString(R.string.pref_auto_start_delay_title));
+        View v = getLayoutInflater().inflate(R.layout.dialog_auto_timeout_picker, null);
+
+        // TODO:
+        //  - not sure which start delays (min-max) are actually useful, some people would certainly
+        //      want delays larger than 60s
+        //  - step size should probably be non-linear, e.g.
+        //           5s from   0-30s,
+        //          10s from  30s-60s,
+        //          15s from  60s-180s,
+        //          30s from 180s-
+        int stepWidth = 5; // 5 secs Step Width
+
+        NumberPicker npT = v.findViewById(R.id.autoTimeoutPicker);
+        npT.setMaxValue(60 / stepWidth);
+        npT.setMinValue(0);
+        npT.setFormatter(value -> value == 0
+                ? getText(R.string.noAutoStartDelay).toString()
+                : value * stepWidth + " " + getText(R.string.timeSecondsShort));
+        final String autoStartDelayVariable = "autoStartDelayPeriod";
+        npT.setValue(preferences.getInt(autoStartDelayVariable, 20) / stepWidth);
+        npT.setWrapSelectorWheel(false);
+
+        d.setView(v);
+
+        d.setNegativeButton(R.string.cancel, null);
+        d.setPositiveButton(R.string.okay, (dialog, which) ->
+                preferences.edit()
+                        .putInt(autoStartDelayVariable, npT.getValue() * stepWidth)
+                        .apply());
+
+        d.create().show();
     }
 
     private void showAutoTimeoutConfig() {
