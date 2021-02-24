@@ -758,6 +758,16 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     @Override
     protected void onDestroy() {
         if (useAutoStart) {
+            // abort any ongoing auto start procedure
+            cancelAutoStart(true);
+
+            // once that's done, make sure no one stays registered to its event bus thereby creating
+            // a stale process
+            autoStartWorkout.unregisterFromBus();
+            autoStartVibratorFeedback.unregisterFromBus();
+            autoStartSoundFeedback.unregisterFromBus();
+            autoStartAnnouncements.unregisterFromBus();
+
             // shutdown Text-to-Speech engine
             if (ttsController != null) {
                 ttsController.destroyWhenDone();
@@ -963,10 +973,6 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     }
 
     private synchronized void activityFinish() {
-        autoStartWorkout.unregisterFromBus();  // tare down properly
-        autoStartVibratorFeedback.unregisterFromBus();
-        autoStartSoundFeedback.unregisterFromBus();
-        autoStartAnnouncements.unregisterFromBus();
         if (!this.finished) {
             this.finished = true;
             this.finish();
