@@ -293,11 +293,19 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     }
 
     private void showAutoStartCountdownOverlay() {
-        if (useAutoStart && autoStartCountdownOverlay.getVisibility() != View.VISIBLE) {
+        if (useAutoStart && autoStartCountdownOverlay != null) {
             autoStartCountdownOverlay.clearAnimation();
-            autoStartCountdownOverlay.setAlpha(0f);
-            autoStartCountdownOverlay.setVisibility(View.VISIBLE);
-            autoStartCountdownOverlay.animate().alpha(1f).setDuration(1000).setListener(new Animator.AnimatorListener() {
+
+            // if the view's not visible currently, we should start the animation from full transparency
+            if (autoStartCountdownOverlay.getVisibility() != View.VISIBLE) {
+                autoStartCountdownOverlay.setAlpha(0f);
+            }
+            // animation should take 1s max, if the view's not entirely hidden yet, it needs to be
+            // proportionally shorter of course
+            int durationMs = (int) ((1 - autoStartCountdownOverlay.getAlpha()) * 1000 + 0.5);
+
+            // and finally start the animation
+            autoStartCountdownOverlay.animate().alpha(1f).setDuration(durationMs).setListener(new Animator.AnimatorListener() {
                 @Override
                 public void onAnimationStart(Animator animator) {
                     // don't forget to make the view visible, needs to be done here in case hide
@@ -322,12 +330,14 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     }
 
     private void hideAutoStartCountdownOverlay() {
-        // TODO: sometimes the overlay disappears instantly instead of slowly fading out.
-        //  Maybe quickly aborting auto start triggers this.
         if (useAutoStart && autoStartCountdownOverlay != null &&
                 autoStartCountdownOverlay.getVisibility() != View.GONE) {
             autoStartCountdownOverlay.clearAnimation();
-            autoStartCountdownOverlay.animate().alpha(0f).setDuration(1000).setListener(new Animator.AnimatorListener() {
+
+            // animation should take 1s max, if the view's not entirely shown yet, it needs to be
+            // proportionally shorter of course
+            int durationMs = (int) (autoStartCountdownOverlay.getAlpha() * 1000 + 0.5);
+            autoStartCountdownOverlay.animate().alpha(0f).setDuration(durationMs).setListener(new Animator.AnimatorListener() {
                 private boolean cancelled = false;
                 @Override
                 public void onAnimationStart(Animator animator) {
@@ -1008,12 +1018,12 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
                 Log.d(TAG, "Auto start with custom delay from popup menu selected");
                 // preset with either last selected or default from prefereneces
                 new ChooseAutoStartDelayDialog(this, delayS -> {
-                        if (!beginAutoStart(delayS * 1_000)) {
-                            Log.e(TAG, "Failed to initiate auto workout start sequence from popup menu");
-                        } else {
-                            Log.d(TAG, "Auto start from popup menu with delay of " + delayS + "s");
-                        }
-                    }, (int) autoStartWorkout.getLastStartCountdownMs() / AUTO_START_DELAY_MULTIPLIER).show();
+                    if (!beginAutoStart(delayS * 1_000)) {
+                        Log.e(TAG, "Failed to initiate auto workout start sequence from popup menu");
+                    } else {
+                        Log.d(TAG, "Auto start from popup menu with delay of " + delayS + "s");
+                    }
+                }, (int) autoStartWorkout.getLastStartCountdownMs() / AUTO_START_DELAY_MULTIPLIER).show();
             } else {
                 return false;
             }
