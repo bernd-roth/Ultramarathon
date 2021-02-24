@@ -35,6 +35,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
@@ -73,6 +74,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.Semaphore;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
@@ -125,7 +129,6 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     private TextView gpsStatusView;
     private ImageView hrStatusView;
     private View waitingForGPSOverlay;
-    private View autoStartCountdownOverlay;
     private Button startButton;
     private boolean gpsFound = false;
     private boolean isResumed = false;
@@ -138,6 +141,15 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
     private long autoStartDelay;    // in ms
     private boolean useAutoStart;   // did the user enable auto start in settings?
+    private View autoStartCountdownOverlay;
+    private CountDownTimer autoStartCountdownTimer;
+    private final Timer autoStartOnGpsFixTimer = new Timer();
+
+    /**
+     * This ensures that the workout is only started once. Different threads (user input, auto start)
+     * might otherwise lead to nasty race conditions possibly starting a workout multiple times.
+     */
+    private Semaphore startedSem = new Semaphore(1);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,10 +195,52 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         waitingForGPSOverlay = findViewById(R.id.recorderWaitingOverlay);
         waitingForGPSOverlay.setVisibility(View.VISIBLE);
 
-        if (useAutoStart && autoStartDelay > 0) {
+        if (useAutoStart) {
+            // show the countdown overlay (at least, if we're actually counting down)
             autoStartCountdownOverlay = findViewById(R.id.recorderAutoStartOverlay);
-            autoStartCountdownOverlay.setVisibility(View.VISIBLE);
-            updateAutoStartCountdown((int) (autoStartDelay / 1000));
+            if (autoStartDelay > 0) {
+                // set countdown start value
+                updateAutoStartCountdown((int) (autoStartDelay / 1000));
+                autoStartCountdownOverlay.setVisibility(View.VISIBLE);
+            }
+
+            // start countdown timer
+            // do this for 0s delay as well to prevent duplicate code
+            autoStartCountdownTimer = new CountDownTimer(autoStartDelay, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    Log.d("RecordWorkoutActivity", "Remaining: " + millisUntilFinished);
+                    // (x + 500) / 1000 for rounding (otherwise the countdown would start at one
+                    // less than the expected value
+                    updateAutoStartCountdown((int) (millisUntilFinished + 500) / 1000);
+                }
+
+                @Override
+                public void onFinish() {
+                    // show 0s left...
+                    onTick(0 );
+                    // ...and start recording the workout
+                    if (RecordWorkoutActivity.this.gpsFound) {
+                        RecordWorkoutActivity.this.autoStart();
+                        return;
+                    }
+                    // whoops, no GPS yet, wait for it before start recording
+                    Log.w("RecordWorkoutActivity", "Cannot start workout yet, no GPS fix");
+                    // start as soon as GPS position is found
+                    autoStartOnGpsFixTimer.scheduleAtFixedRate(new TimerTask() {
+                        @Override
+                        public void run() {
+                            if (RecordWorkoutActivity.this.gpsFound) {
+                                this.cancel();  // no need to run again
+                                Log.d("RecordWorkoutActivity", "GPS fix -> finally able to start workout");
+                                RecordWorkoutActivity.this.runOnUiThread(RecordWorkoutActivity.this::autoStart);
+                            } else {
+                                Log.d("RecordWorkoutActivity", "Still no GPS fix...");
+                            }
+                        }
+                    }, 500, 500);
+                }
+            }.start();
         }
 
         startButton = findViewById(R.id.recordStart);
@@ -374,15 +428,51 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         ((TextView) findViewById(R.id.autoStartCountdownVal)).setText(text);
     }
 
+    private void cancelAutoStart() {
+        if (useAutoStart) {
+            // hide countdown overlay from auto start
+            hideAutoStartCountdownOverlay();
+            // make sure auto start is cancelled
+            autoStartCountdownTimer.cancel();
+            autoStartOnGpsFixTimer.cancel();
+        }
+    }
+
+    private void autoStart() {
+        Log.i("RecordWorkoutActivity", "Starting workout automatically");
+
+        // start the workout
+        start();
+    }
+
     private void start() {
-        // hide countdown overlay from auto start
-        hideAutoStartCountdownOverlay();
+        // some nasty race conditions might occur between auto start and the user pressing the start
+        // button, so better make sure we only start once
+        // TODO is this really necessary or would the flag isStarted be enough
+        if (startedSem.drainPermits() == 0) {   // consuming all permits just to be sure..
+            Log.w("RecordWorkoutActivity", "Cannot start the workout, it has already been started.");
+            return;
+        }
+
+        // take care of auto start (hide stuff and/or abort it whatever's necessary)
+        cancelAutoStart();
+
+        // show workout timer
+        hideStartButton();
+
         // and start workout recorder
         instance.recorder.start();
         invalidateOptionsMenu();
     }
 
     private void stop() {
+        // allow restarts after stopping
+        // TODO is it save to do this right on entry and not on exit??
+        startedSem.release();
+
+        // cancel auto start if necessary
+        cancelAutoStart();
+
         if (instance.recorder.getState() != WorkoutRecorder.RecordingState.IDLE) { // Only Running Records can be stopped
             instance.recorder.stop();
             if (instance.recorder.getSampleCount() > 3) {
@@ -800,10 +890,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
         if (instance.recorder.getState() == WorkoutRecorder.RecordingState.IDLE) {
             if (state == WorkoutRecorder.GpsState.SIGNAL_OKAY) {
-                updateStartButton(true, R.string.start, v -> {
-                    hideStartButton();
-                    start();
-                });
+                updateStartButton(true, R.string.start, v -> start());
             } else {
                 updateStartButton(false, R.string.cannotStart, null);
             }
