@@ -104,18 +104,46 @@
                 android:textSize="40sp"
                 android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/recordStart"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/recordStartButtonsRoot"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:backgroundTint="@color/colorPrimary"
-                android:padding="18dp"
-                android:text="@string/start"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:layout_height="match_parent"
+                tools:visibility="visible">
+
+                <Button
+                    android:id="@+id/recordStart"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:padding="18dp"
+                    android:text="@string/start"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@+id/recordStartPopup"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/recordStartPopup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:onClick="onStartPopupButtonClicked"
+                    android:text="..."
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/recordStart"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/recordStart"
+                    app:layout_constraintTop_toTopOf="@+id/recordStart" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </FrameLayout>

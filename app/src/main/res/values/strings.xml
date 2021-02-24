@@ -344,6 +344,8 @@
     <string name="autoStartCountdownMsg">Starting workout in</string>
     <string name="autoStartCountdownVal">%1$d%2$s</string>
     <string name="workoutAutoStarted">Workout started automatically</string>
+    <string name="popup_auto_start_delay">With custom delay</string>
+    <string name="popup_auto_start">Automatically</string>
     <string-array name="osm_track_visibility">
         <item>Identifiable</item>
         <item>Trackable</item>

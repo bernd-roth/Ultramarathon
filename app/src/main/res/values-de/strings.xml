@@ -391,4 +391,5 @@
     <string name="noAutoStartDelay">Sofort starten</string>
     <string name="autoStartCountdownMsg">Starte Workout in</string>
     <string name="workoutAutoStarted">Workout automatisch gestartet</string>
-</resources>
+    <string name="popup_auto_start_delay">Mit Verzögerung</string>
+    <string name="popup_auto_start">Automatisch</string></resources>
