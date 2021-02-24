@@ -21,6 +21,8 @@ public class AutoStartWorkout {
             AUTO_START_ABORTED
     }
 
+    private static final String TAG = "AutoStartWorkoutModel";
+
     private State state = State.IDLE;
     private long countdownMs;
     private long lastStartCountdownMs;
@@ -181,7 +183,7 @@ public class AutoStartWorkout {
 
             @Override
             public void onTick(long millisUntilFinished) {
-                Log.d("AutoStartWorkoutModel", "Remaining: " + millisUntilFinished);
+                Log.d(TAG, "Remaining: " + millisUntilFinished);
                 // (x + 500) / 1000 for rounding (otherwise the countdown would start at one
                 // less than the expected value
                 setCountdownMs(millisUntilFinished);
@@ -198,7 +200,7 @@ public class AutoStartWorkout {
                     return;
                 }
                 // whoops, no GPS yet, wait for it before start recording
-                Log.w("AutoStartWorkoutModel", "Cannot start workout yet, no GPS fix or bad signal quality");
+                Log.w(TAG, "Cannot start workout yet, no GPS fix or bad signal quality");
 
                 waitForGps();
             }
@@ -219,10 +221,10 @@ public class AutoStartWorkout {
             public void run() {
                 if (gpsOkay) {  // request auto start
                     this.cancel();  // no need to run again
-                    Log.d("AutoStartWorkoutModel", "GPS fix -> finally able to start workout");
+                    Log.d(TAG, "GPS fix -> finally able to start workout");
                     setState(State.AUTO_START_REQUESTED);
                 } else {    // continue waiting
-                    Log.d("AutoStartWorkoutModel", "Still no GPS fix...");
+                    Log.d(TAG, "Still no GPS fix...");
                 }
             }
         };

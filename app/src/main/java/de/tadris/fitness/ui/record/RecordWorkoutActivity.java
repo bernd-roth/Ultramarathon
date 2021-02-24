@@ -104,6 +104,8 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         InfoViewHolder.InfoViewClickListener, SelectWorkoutInformationDialog.WorkoutInformationSelectListener,
         ChooseBluetoothDeviceDialog.BluetoothDeviceSelectListener {
 
+    public static final String TAG = "RecordWorkoutActivity";
+
     public static final String LAUNCH_ACTION = "de.tadris.fitness.RecordWorkoutActivity.LAUNCH_ACTION";
     public static final String RESUME_ACTION = "de.tadris.fitness.RecordWorkoutActivity.RESUME_ACTION";
     public static final String WORKOUT_TYPE_EXTRA = "de.tadris.fitness.RecordWorkoutActivity.WORKOUT_TYPE_EXTRA";
@@ -160,7 +162,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
         this.autoStartDelayMs = instance.userPreferences.getAutoStartDelay() * AUTO_START_DELAY_MULTIPLIER;
         this.useAutoStart = instance.userPreferences.getUseAutoStart();
-        Log.d("RecordWorkoutActivity", "auto start enabled:" + this.useAutoStart + ", auto start delay: " + this.autoStartDelayMs);
+        Log.d(TAG, "auto start enabled:" + this.useAutoStart + ", auto start delay: " + this.autoStartDelayMs);
 
         activity = WorkoutType.getWorkoutTypeById(this, WorkoutType.WORKOUT_TYPE_ID_OTHER);
         if (LAUNCH_ACTION.equals(intent.getAction())) {
@@ -199,7 +201,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         if (useAutoStart) {
             autoStartWorkout = new AutoStartWorkout(autoStartDelayMs);
             if (!autoStartWorkout.init()) {
-                Log.e("RecordWorkoutActivity", "onCreate: Failed to setup auto start helper, not using auto start");
+                Log.e(TAG, "onCreate: Failed to setup auto start helper, not using auto start");
                 useAutoStart = false;
                 startPopupButton.setVisibility(View.GONE);
             } else {
@@ -441,7 +443,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     }
 
     private void autoStart() {
-        Log.i("RecordWorkoutActivity", "Starting workout automatically");
+        Log.i(TAG, "Starting workout automatically");
 
         // start the workout
         start();
@@ -455,7 +457,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         // button, so better make sure we only start once
         // TODO is this really necessary or would the flag isStarted be enough
         if (startedSem.drainPermits() == 0) {   // consuming all permits just to be sure..
-            Log.w("RecordWorkoutActivity", "Cannot start the workout, it has already been started.");
+            Log.w(TAG, "Cannot start the workout, it has already been started.");
             return;
         }
 
@@ -652,7 +654,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
                 startService(locationListener);
             }
         } else {
-            Log.d("RecordWorkoutActivity", "Listener Already Running");
+            Log.d(TAG, "Listener Already Running");
         }
 
         checkGpsStatus();
@@ -980,18 +982,18 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         startPopupMenu.setOnMenuItemClickListener(menuItem -> {
             int itemId = menuItem.getItemId();
             if(itemId == R.id.auto_start) {
-                Log.d("RecordWorkoutActivity", "Auto start from popup menu selected");
+                Log.d(TAG, "Auto start from popup menu selected");
                 if (useAutoStart) {
                     beginAutoStart(autoStartWorkout.getDefaultStartCountdownMs());
                 }
             } else if (itemId == R.id.auto_start_delay) {
-                Log.d("RecordWorkoutActivity", "Auto start with custom delay from popup menu selected");
+                Log.d(TAG, "Auto start with custom delay from popup menu selected");
                 // preset with either last selected or default from prefereneces
                 new ChooseAutoStartDelayDialog(this, delayS -> {
                         if (!beginAutoStart(delayS * 1_000)) {
-                            Log.e("RecordWorkoutActivity", "Failed to initiate auto workout start sequence from popup menu");
+                            Log.e(TAG, "Failed to initiate auto workout start sequence from popup menu");
                         } else {
-                            Log.d("RecordWorkoutActivity", "Auto start from popup menu with delay of " + delayS + "s");
+                            Log.d(TAG, "Auto start from popup menu with delay of " + delayS + "s");
                         }
                     }, (int) autoStartWorkout.getLastStartCountdownMs() / AUTO_START_DELAY_MULTIPLIER).show();
             } else {
@@ -1053,7 +1055,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         String text = String.format(getString(R.string.autoStartCountdownVal),
                 (countdownChangeEvent.countdownMs + 500) / 1000,
                 getText(R.string.timeSecondsShort));
-        Log.d("RecordWorkoutActivity", "Updating auto start countdown: " + text + " (" +
+        Log.d(TAG, "Updating auto start countdown: " + text + " (" +
                 countdownChangeEvent.countdownMs + ")");
         ((TextView) findViewById(R.id.autoStartCountdownVal)).setText(text);
     }
