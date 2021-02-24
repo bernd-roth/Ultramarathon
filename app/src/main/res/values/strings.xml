@@ -346,8 +346,11 @@
     <string name="autoStartCountdownMsgMove">Starting workout once you start moving</string>
     <string name="autoStartCountdownVal" translatable="false">%1$d%2$s</string>
     <string name="workoutAutoStarted">Workout started automatically</string>
-    <string name="popup_auto_start_delay">With custom settings</string>
-    <string name="popup_auto_start">Automatically</string>
+    <string name="popup_auto_start_delay">With custom delay</string>
+    <string name="popup_auto_start">With default delay</string>
+    <string name="popup_auto_start_immediately">Start immediately</string>
+    <string name="popup_auto_start_on_move">When I start moving</string>
+    <string name="popup_auto_start_wait_for_gps">When GPS location is precise</string>
     <string name="abort">Cancel</string>
     <string name="workoutAutoStartAborted">Auto start aborted</string>
     <string name="nfcStartTitle">Scan to start</string>

@@ -1101,6 +1101,12 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
                     AutoStartWorkout.Config config = autoStartWorkout.getDefaultStartConfig();
                     beginAutoStart(config.countdownMs, config.mode);
                 }
+            } else if(itemId == R.id.auto_start_immediately) {
+                start();
+            } else if(itemId == R.id.auto_start_on_move) {
+                beginAutoStart(0, AutoStartWorkout.Mode.ON_MOVE);
+            } else if(itemId == R.id.auto_start_wait_for_gps) {
+                beginAutoStart(0, AutoStartWorkout.Mode.WAIT_FOR_GPS);
             } else if (itemId == R.id.auto_start_delay) {
                 Log.d(TAG, "Auto start with custom settings from popup menu selected");
                 // show the reduced delay picker dialog first (then, if selected, the custom ine)

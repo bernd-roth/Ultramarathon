@@ -390,8 +390,11 @@
     <string name="customAutoStartDelay">Anderer</string>
     <string name="autoStartCountdownMsg">Starte Workout in</string>
     <string name="workoutAutoStarted">Workout automatisch gestartet</string>
-    <string name="popup_auto_start_delay">Mit speziellen Einstellungen</string>
-    <string name="popup_auto_start">Automatisch</string>
+    <string name="popup_auto_start_delay">Mit anderem Countdown</string>
+    <string name="popup_auto_start">Mit eingestelltem Countdown</string>
+    <string name="popup_auto_start_immediately">Sofort starten</string>
+    <string name="popup_auto_start_on_move">Sobald ich mich bewege</string>
+    <string name="popup_auto_start_wait_for_gps">Sobald meine Position bestimmt ist</string>
     <string name="abort">Abbrechen</string>
     <string name="workoutAutoStartAborted">Auto-Start abgebrochen</string>
     <string name="nfcStartTitle">Starten durch Scannen</string>
