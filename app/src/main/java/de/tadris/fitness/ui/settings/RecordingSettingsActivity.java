@@ -20,15 +20,14 @@
 package de.tadris.fitness.ui.settings;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.recording.announcement.TTSController;
 import de.tadris.fitness.recording.event.TTSReadyEvent;
@@ -99,35 +98,22 @@ public class RecordingSettingsActivity
     }
 
     private void showAutoStartDelayConfig() {
-        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        final String autoStartDelayVariable = "autoStartDelayPeriod";
-        int initialDelay = preferences.getInt(autoStartDelayVariable, ChooseAutoStartDelayDialog.DEFAULT_DELAY_S);
+        int initialDelay = Instance.getInstance(this).userPreferences.getAutoStartDelay();
         new ChooseAutoStartDelayDialog(this, this, initialDelay).show();
     }
 
     private void showAutoTimeoutConfig() {
-        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        final String autoTimeoutVariable = "autoTimeoutPeriod";
-
-        int initialTimeout = preferences.getInt(autoTimeoutVariable, ChooseAutoTimeoutDialog.DEFAULT_TIMEOUT_M);
+        int initialTimeout = Instance.getInstance(this).userPreferences.getAutoTimeout();
         new ChooseAutoTimeoutDialog(this, this, initialTimeout).show();
     }
 
     @Override
     public void onSelectAutoStartDelay(int delayS) {
-        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        final String autoStartDelayVariable = "autoStartDelayPeriod";
-        preferences.edit()
-                .putInt(autoStartDelayVariable, delayS)
-                .apply();
+        Instance.getInstance(this).userPreferences.setAutoStartDelay(delayS);
     }
 
     @Override
     public void onSelectAutoTimeout(int timeoutM) {
-        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        final String autoTimeoutVariable = "autoTimeoutPeriod";
-        preferences.edit()
-                .putInt(autoTimeoutVariable, timeoutM)
-                .apply();
+        Instance.getInstance(this).userPreferences.setAutoTimeout(timeoutM);
     }
 }

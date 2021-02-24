@@ -24,6 +24,31 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 public class UserPreferences {
+    private static final String AUTO_START_DELAY_VARIABLE = "autoStartDelayPeriod";
+    private static final String USE_AUTO_START_DELAY_VARIABLE = "autoStart";
+    private static final String AUTO_TIMEOUT_VARIABLE = "autoTimeoutPeriod";
+    private static final String USE_AUTO_PAUSE_VARIABLE = "autoPause";
+
+    /**
+     * Default auto start delay in seconds if no other has been chosen
+     */
+    public static final int DEFAULT_AUTO_START_DELAY_S = 20;
+
+    /**
+     * Default auto start enable state if no other has been chosen
+     */
+    public static final boolean DEFAULT_USE_AUTO_START = false;
+
+    /**
+     * Default auto workout stop timeout in minutes if no other has been chosen
+     */
+    public static final int DEFAULT_AUTO_TIMEOUT_M = 20;
+
+    /**
+     * Default auto pause enable state if no other has been chosen
+     */
+    public static final boolean DEFAULT_USE_AUTO_PAUSE = true;
+
 
     private final SharedPreferences preferences;
 
@@ -96,5 +121,70 @@ public class UserPreferences {
 
     public String getOfflineMapFileName() {
         return preferences.getString("offlineMapFileName", null);
+    }
+
+    /**
+     * Get the currently configured auto start delay
+     * @return auto start delay in seconds
+     */
+    public int getAutoStartDelay() {
+        return preferences.getInt(AUTO_START_DELAY_VARIABLE, DEFAULT_AUTO_START_DELAY_S);
+    }
+
+    /**
+     * Change the currently configured auto start delay
+     * @param delayS new auto start delay in seconds
+     */
+    public void setAutoStartDelay(int delayS) {
+        preferences.edit().putInt(AUTO_START_DELAY_VARIABLE, delayS).apply();
+    }
+
+    /**
+     * Check if auto start is currently enabled
+     * @return whether auto start is enabled or not
+     */
+    public boolean getUseAutoStart() {
+        return preferences.getBoolean(USE_AUTO_START_DELAY_VARIABLE, DEFAULT_USE_AUTO_START);
+    }
+
+    /**
+     * Change the current state of auto start
+     * @param useAutoStart new auto start enable state
+     */
+    public void setUseAutoStart(boolean useAutoStart) {
+        preferences.edit().putBoolean(USE_AUTO_START_DELAY_VARIABLE, useAutoStart).apply();
+    }
+
+    /**
+     * Get the currently configured timeout after which a workout is automatically stopped
+     * @return auto workout stop timeout in minutes
+     */
+    public int getAutoTimeout() {
+        return preferences.getInt(AUTO_TIMEOUT_VARIABLE, DEFAULT_AUTO_TIMEOUT_M);
+    }
+
+    /**
+     * Change the currently configured timeout after which a workout is automatically stopped
+     * @param timeoutM new auto workout stop timeout in minutes
+     */
+    public void setAutoTimeout(int timeoutM) {
+        preferences.edit().putInt(AUTO_TIMEOUT_VARIABLE, timeoutM).apply();
+    }
+
+
+    /**
+     * Check if auto pause is currently enabled
+     * @return whether auto pause is enabled or not
+     */
+    public boolean getUseAutoPause() {
+        return preferences.getBoolean(USE_AUTO_PAUSE_VARIABLE, DEFAULT_USE_AUTO_PAUSE);
+    }
+
+    /**
+     * Change the current state of auto pause
+     * @param useAutoStart new auto pause enable state
+     */
+    public void setUseAutoPause(boolean useAutoStart) {
+        preferences.edit().putBoolean(USE_AUTO_PAUSE_VARIABLE, useAutoStart).apply();
     }
 }

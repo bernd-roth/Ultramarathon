@@ -84,6 +84,7 @@ import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.IntervalSet;
+import de.tadris.fitness.data.UserPreferences;
 import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.map.MapManager;
@@ -119,7 +120,6 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
     // used to convert auto start time timebase from/to ms
     private static final int AUTO_START_DELAY_MULTIPLIER = 1_000; // s to ms
-    private static final int DEFAULT_WORKOUT_AUTO_START_DELAY = 0;
 
     public WorkoutType activity;
 
@@ -164,9 +164,9 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         instance = Instance.getInstance(this);
         boolean wasAlreadyRunning = false;
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        this.autoStartDelayMs = prefs.getInt("autoStartDelayPeriod", DEFAULT_WORKOUT_AUTO_START_DELAY) * AUTO_START_DELAY_MULTIPLIER;
-        this.useAutoStart = prefs.getBoolean("autoStart", false);
+        UserPreferences prefs = Instance.getInstance(this).userPreferences;
+        this.autoStartDelayMs = prefs.getAutoStartDelay() * AUTO_START_DELAY_MULTIPLIER;
+        this.useAutoStart = prefs.getUseAutoStart();
         Log.d("RecordWorkoutActivity", "auto start enabled:" + this.useAutoStart + ", auto start delay: " + this.autoStartDelayMs);
 
         activity = WorkoutType.getWorkoutTypeById(this, WorkoutType.WORKOUT_TYPE_ID_OTHER);
@@ -962,9 +962,8 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
                 }
             } else if (itemId == R.id.auto_start_delay) {
                 Log.d("RecordWorkoutActivity", "Auto start with custom delay from popup menu selected");
-                final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-                final String autoStartDelayVariable = "autoStartDelayPeriod";
-                int initialDelay = preferences.getInt(autoStartDelayVariable, ChooseAutoStartDelayDialog.DEFAULT_DELAY_S);
+                UserPreferences preferences = Instance.getInstance(this).userPreferences;
+                int initialDelay = preferences.getAutoStartDelay();
                 new ChooseAutoStartDelayDialog(this, delayS -> {
                         cancelAutoStart();
                         if (!beginAutoStart(delayS * 1_000)) {
