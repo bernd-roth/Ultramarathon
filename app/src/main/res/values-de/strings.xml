@@ -383,4 +383,10 @@
     <string name="downloadCanceled">Herunterladen abgebrochen</string>
     <string name="chooseMapHint">Bitte eine Kartendatei auswählen</string>
     <string name="downloading">Herunterladen</string>
+    <string name="exportTargetDirectory">Verzeichnis</string>
+    <string name="autoBackupTitle">Automatische Sicherungen</string>
+    <string name="workoutGPXExportTitle">Workout GPX-Sicherungen</string>
+    <string name="unknown">Unbekannt</string>
+    <string name="hintConfigureExportTargets">Füge Ziele hinzu, wohin die Dateien exportiert werden sollen.</string>
+    <string name="deleteExportTargetConfirmation">Möchtest du dieses Export-Ziel wirklich entfernen?</string>
 </resources>

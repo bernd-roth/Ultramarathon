@@ -343,6 +343,9 @@
     <string name="unknown">Unknown</string>
     <string name="hintConfigureExportTargets">Add targets to which the files should be exported.</string>
     <string name="deleteExportTargetConfirmation">Do you really want to delete this export target?</string>
+    <string name="autoExportWorkoutsSummary">Export newly recorded workouts</string>
+    <string name="autoExportBackupTitle">Automatic app backups</string>
+    <string name="autoExportBackupSummary">Export backups automatically</string>
     <string-array name="osm_track_visibility">
         <item>Identifiable</item>
         <item>Trackable</item>

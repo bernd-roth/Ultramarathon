@@ -37,10 +37,8 @@ import de.tadris.fitness.R;
 import de.tadris.fitness.export.RestoreController;
 import de.tadris.fitness.ui.ShareFileActivity;
 import de.tadris.fitness.ui.dialog.ProgressDialogController;
-import de.tadris.fitness.ui.dialog.ThreadSafeProgressDialogController;
 import de.tadris.fitness.util.autoexport.source.BackupExportSource;
-import de.tadris.fitness.util.io.general.IOHelper;
-import de.tadris.fitness.util.DataManager;
+import de.tadris.fitness.util.autoexport.source.ExportSource;
 
 public class BackupSettingsActivity extends FitoTrackSettingsActivity {
 
@@ -63,7 +61,21 @@ public class BackupSettingsActivity extends FitoTrackSettingsActivity {
             showExportDialog();
             return true;
         });
+        findPreference("autoExportWorkouts").setOnPreferenceClickListener(preference -> {
+            startExportTargetActivity(ExportSource.EXPORT_SOURCE_WORKOUT_GPX);
+            return true;
+        });
+        findPreference("autoExportBackup").setOnPreferenceClickListener(preference -> {
+            startExportTargetActivity(ExportSource.EXPORT_SOURCE_BACKUP);
+            return true;
+        });
 
+    }
+
+    private void startExportTargetActivity(String exportSource) {
+        Intent intent = new Intent(this, ConfigureExportTargetsActivity.class);
+        intent.putExtra(ConfigureExportTargetsActivity.EXTRA_SOURCE, exportSource);
+        startActivity(intent);
     }
 
     private void showExportDialog() {

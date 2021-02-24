@@ -39,7 +39,9 @@ import de.tadris.fitness.util.autoexport.source.ExportSource;
 import de.tadris.fitness.util.autoexport.target.DirectoryTarget;
 import de.tadris.fitness.util.autoexport.target.ExportTarget;
 
-public class ConfigureExportTargetsActivity extends FitoTrackActivity implements ExportTargetConfigurationAdapter.ExportTargetAdapterListener, SelectExportTargetTypeDialog.ExportTargetTypeSelectListener {
+public class ConfigureExportTargetsActivity extends FitoTrackActivity
+        implements ExportTargetConfigurationAdapter.ExportTargetAdapterListener,
+        SelectExportTargetTypeDialog.ExportTargetTypeSelectListener {
 
     public static final String EXTRA_SOURCE = "source";
 

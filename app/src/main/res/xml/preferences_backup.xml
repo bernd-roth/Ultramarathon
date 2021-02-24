@@ -30,6 +30,21 @@
             android:key="export"
             android:summary="@string/exportDataSummary"
             android:title="@string/exportData" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/autoBackupTitle">
+
+        <Preference
+            android:key="autoExportWorkouts"
+            android:summary="@string/autoExportWorkoutsSummary"
+            android:title="@string/workoutGPXExportTitle" />
+
+        <Preference
+            android:key="autoExportBackup"
+            android:summary="@string/autoExportBackupSummary"
+            android:title="@string/autoExportBackupTitle" />
+
     </PreferenceCategory>
 
 
