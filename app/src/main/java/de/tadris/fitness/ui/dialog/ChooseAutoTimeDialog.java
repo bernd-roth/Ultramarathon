@@ -15,6 +15,7 @@ public abstract class ChooseAutoTimeDialog {
 
     protected final Activity context;
     private final String title;
+    private AlertDialog dialog;
 
     /**
      *
@@ -47,7 +48,15 @@ public abstract class ChooseAutoTimeDialog {
         d.setNegativeButton(R.string.cancel, null);
         d.setPositiveButton(R.string.okay, (dialog, which) ->
                 onSelectAutoTime(optionToTime(npT.getValue())));
-        d.create().show();
+        dialog = d.create();
+        dialog.show();
+    }
+
+    /**
+     * Hide the time dialog.
+     */
+    public AlertDialog getDialog() {
+        return dialog;
     }
 
     /**

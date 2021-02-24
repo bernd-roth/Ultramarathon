@@ -158,6 +158,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     private long autoStartDelayMs;    // in ms
     private boolean useAutoStart = true;   // always enable auto start mode
     private View autoStartCountdownOverlay;
+    private ChooseAutoStartDelayDialog autoStartDelayDialog;
     private AutoStartWorkout autoStartWorkout;
     private VibratorController vibratorController;
     private AutoStartVibratorFeedback autoStartVibratorFeedback;
@@ -514,6 +515,12 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
         // take care of auto start (hide stuff and/or abort it whatever's necessary)
         cancelAutoStart(false);
+
+        // remove the auto start delay dialog, if it is visible at the moment
+        if (autoStartDelayDialog != null) {
+            autoStartDelayDialog.getDialog().cancel();
+            autoStartDelayDialog = null;
+        }
 
         // show workout timer
         hide(recordStartButtonsRoot);
@@ -1076,13 +1083,14 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
             } else if (itemId == R.id.auto_start_delay) {
                 Log.d(TAG, "Auto start with custom delay from popup menu selected");
                 // preset with either last selected or default from prefereneces
-                new ChooseAutoStartDelayDialog(this, delayS -> {
+                autoStartDelayDialog = new ChooseAutoStartDelayDialog(this, delayS -> {
                     if (!beginAutoStart(delayS * 1_000)) {
                         Log.e(TAG, "Failed to initiate auto workout start sequence from popup menu");
                     } else {
                         Log.d(TAG, "Auto start from popup menu with delay of " + delayS + "s");
                     }
-                }, (int) autoStartWorkout.getLastStartCountdownMs() / AUTO_START_DELAY_MULTIPLIER).show();
+                }, (int) autoStartWorkout.getLastStartCountdownMs() / AUTO_START_DELAY_MULTIPLIER);
+                autoStartDelayDialog.show();
             } else {
                 return false;
             }
