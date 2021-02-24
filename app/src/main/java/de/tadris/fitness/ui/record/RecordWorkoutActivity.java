@@ -34,7 +34,6 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.provider.Settings;
 import android.text.InputType;
@@ -74,8 +73,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.Semaphore;
 
 import de.tadris.fitness.Instance;
@@ -85,6 +82,7 @@ import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.map.MapManager;
+import de.tadris.fitness.model.AutoStartWorkout;
 import de.tadris.fitness.recording.RecorderService;
 import de.tadris.fitness.recording.WorkoutRecorder;
 import de.tadris.fitness.recording.event.HeartRateConnectionChangeEvent;
@@ -143,12 +141,9 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     private boolean finished;
 
     private long autoStartDelayMs;    // in ms
-    private long lastAutoStartDelayMs;    // in ms
     private boolean useAutoStart;   // did the user enable auto start in settings?
     private View autoStartCountdownOverlay;
-    private CountDownTimer autoStartCountdownTimer;
-    private final Timer autoStartOnGpsOkayTimer = new Timer("AutoStartOnGpsOkay");
-    private TimerTask autoStartOnGpsOkayTask;
+    private AutoStartWorkout autoStartWorkout;
 
     /**
      * This ensures that the workout is only started once. Different threads (user input, auto start)
@@ -164,7 +159,6 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         boolean wasAlreadyRunning = false;
 
         this.autoStartDelayMs = instance.userPreferences.getAutoStartDelay() * AUTO_START_DELAY_MULTIPLIER;
-        this.lastAutoStartDelayMs = autoStartDelayMs;
         this.useAutoStart = instance.userPreferences.getUseAutoStart();
         Log.d("RecordWorkoutActivity", "auto start enabled:" + this.useAutoStart + ", auto start delay: " + this.autoStartDelayMs);
 
@@ -203,7 +197,14 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         startPopupButton = findViewById(R.id.recordStartPopup);
         recordStartButtonsRoot = findViewById(R.id.recordStartButtonsRoot);
         if (useAutoStart) {
-            show(startPopupButton);
+            autoStartWorkout = new AutoStartWorkout(autoStartDelayMs);
+            if (!autoStartWorkout.init()) {
+                Log.e("RecordWorkoutActivity", "onCreate: Failed to setup auto start helper, not using auto start");
+                useAutoStart = false;
+                startPopupButton.setVisibility(View.GONE);
+            } else {
+                show(startPopupButton);
+            }
         } else {
             startPopupButton.setVisibility(View.GONE);
         }
@@ -303,7 +304,10 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     }
 
     private void hideAutoStartCountdownOverlay() {
-        if (useAutoStart && autoStartCountdownOverlay.getVisibility() != View.GONE) {
+        // TODO: sometimes the overlay disappears instantly instead of slowly fading out.
+        //  Maybe quickly aborting auto start triggers this.
+        if (useAutoStart && autoStartCountdownOverlay != null &&
+                autoStartCountdownOverlay.getVisibility() != View.GONE) {
             autoStartCountdownOverlay.clearAnimation();
             autoStartCountdownOverlay.animate().alpha(0f).setDuration(1000).setListener(new Animator.AnimatorListener() {
                 private boolean cancelled = false;
@@ -428,34 +432,12 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         startButton.setOnClickListener(listener);
     }
 
-    private void updateAutoStartCountdown(int remainingSeconds) {
-        String text = String.format(getString(R.string.autoStartCountdownVal), remainingSeconds, getText(R.string.timeSecondsShort));
-        Log.d("RecordWorkoutActivity", "Updating auto start countdown: " + text + " (" + remainingSeconds + ")");
-        ((TextView) findViewById(R.id.autoStartCountdownVal)).setText(text);
-    }
-
     /**
-     * Hide auto start overlay and cancel auto start countdown triggers
-     */
-    private void hideAndCancelAutoStart() {
-        // hide countdown overlay from auto start
-        if (autoStartCountdownOverlay != null) {
-            hideAutoStartCountdownOverlay();
-        }
-        cancelAutoStart();
-    }
-
-    /**
-     * Cancel auto start countdown/triggers
+     * Cancel auto start
      */
     private void cancelAutoStart() {
         // make sure auto start is cancelled
-        if (autoStartCountdownTimer != null) {
-            autoStartCountdownTimer.cancel();
-        }
-        if (autoStartOnGpsOkayTask != null) {
-            autoStartOnGpsOkayTask.cancel();
-        }
+        EventBus.getDefault().post(new AutoStartWorkout.AbortEvent());
     }
 
     private void autoStart() {
@@ -478,8 +460,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         }
 
         // take care of auto start (hide stuff and/or abort it whatever's necessary)
-        hideAndCancelAutoStart();
-        autoStartOnGpsOkayTimer.cancel();   // don't need this one anymore
+        cancelAutoStart();
 
         // show workout timer
         hide(recordStartButtonsRoot);
@@ -495,7 +476,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         startedSem.release();
 
         // cancel auto start if necessary
-        hideAndCancelAutoStart();
+        cancelAutoStart();
 
         if (instance.recorder.getState() != WorkoutRecorder.RecordingState.IDLE) { // Only Running Records can be stopped
             instance.recorder.stop();
@@ -758,6 +739,13 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     @Override
     public void onResume() {
         super.onResume();
+
+        // update countdown field if necessary
+        if (useAutoStart && autoStartWorkout != null
+                && autoStartWorkout.getState() == AutoStartWorkout.State.COUNTDOWN) {
+            onCountdownChange(new AutoStartWorkout.CountdownChangeEvent(autoStartWorkout.getCountdownMs()));
+        }
+
         finished = false;
         if (instance.userPreferences.getShowOnLockScreen()) {
             enableLockScreenVisibility();
@@ -898,6 +886,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     }
 
     private synchronized void activityFinish() {
+        autoStartWorkout.deInit();  // tare down properly
         if (!this.finished) {
             this.finished = true;
             this.finish();
@@ -993,19 +982,18 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
             if(itemId == R.id.auto_start) {
                 Log.d("RecordWorkoutActivity", "Auto start from popup menu selected");
                 if (useAutoStart) {
-                    cancelAutoStart();
-                    beginAutoStart(autoStartDelayMs);
+                    beginAutoStart(autoStartWorkout.getDefaultStartCountdownMs());
                 }
             } else if (itemId == R.id.auto_start_delay) {
                 Log.d("RecordWorkoutActivity", "Auto start with custom delay from popup menu selected");
+                // preset with either last selected or default from prefereneces
                 new ChooseAutoStartDelayDialog(this, delayS -> {
-                        cancelAutoStart();
                         if (!beginAutoStart(delayS * 1_000)) {
                             Log.e("RecordWorkoutActivity", "Failed to initiate auto workout start sequence from popup menu");
                         } else {
                             Log.d("RecordWorkoutActivity", "Auto start from popup menu with delay of " + delayS + "s");
                         }
-                    }, (int) lastAutoStartDelayMs / AUTO_START_DELAY_MULTIPLIER).show();
+                    }, (int) autoStartWorkout.getLastStartCountdownMs() / AUTO_START_DELAY_MULTIPLIER).show();
             } else {
                 return false;
             }
@@ -1016,10 +1004,9 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     }
 
     public void onAutoStartCountdownAbortButtonClicked(View v) {
-        hideAndCancelAutoStart();
+        cancelAutoStart();
         Toast.makeText(this, R.string.workoutAutoStartAborted, Toast.LENGTH_SHORT).show();
     }
-
 
     /**
      * Start the auto start sequence if enabled in settings.
@@ -1028,61 +1015,40 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
      */
     public boolean beginAutoStart(long delayMs) {
         if (useAutoStart) {
-            lastAutoStartDelayMs = delayMs;
             // show the countdown overlay (at least, if we're actually counting down)
             if (autoStartCountdownOverlay == null) {
                 autoStartCountdownOverlay = findViewById(R.id.recorderAutoStartOverlay);
             }
-            if (delayMs > 0) {
-                // set countdown start value
-                updateAutoStartCountdown((int) (delayMs / 1000));
-                showAutoStartCountdownOverlay();
-            }
-
-            // start countdown timer
-            // do this for 0s delay as well to prevent duplicate code
-            autoStartCountdownTimer = new CountDownTimer(delayMs, 1000) {
-                private boolean gpsOkay() {
-                    return instance.recorder.getGpsState() == WorkoutRecorder.GpsState.SIGNAL_OKAY;
-                }
-
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    Log.d("RecordWorkoutActivity", "Remaining: " + millisUntilFinished);
-                    // (x + 500) / 1000 for rounding (otherwise the countdown would start at one
-                    // less than the expected value
-                    updateAutoStartCountdown((int) (millisUntilFinished + 500) / 1000);
-                }
-
-                @Override
-                public void onFinish() {
-                    // show 0s left...
-                    onTick(0);
-                    // ...and start recording the workout
-                    if (gpsOkay()) {
-                        RecordWorkoutActivity.this.autoStart();
-                        return;
-                    }
-                    // whoops, no GPS yet, wait for it before start recording
-                    Log.w("RecordWorkoutActivity", "Cannot start workout yet, no GPS fix or bad signal quality");
-                    // start as soon as GPS position is found
-                    autoStartOnGpsOkayTask = new TimerTask() {
-                        @Override
-                        public void run() {
-                            if (gpsOkay()) {
-                                this.cancel();  // no need to run again
-                                Log.d("RecordWorkoutActivity", "GPS fix -> finally able to start workout");
-                                RecordWorkoutActivity.this.runOnUiThread(RecordWorkoutActivity.this::autoStart);
-                            } else {
-                                Log.d("RecordWorkoutActivity", "Still no GPS fix...");
-                            }
-                        }
-                    };
-                    autoStartOnGpsOkayTimer.scheduleAtFixedRate(autoStartOnGpsOkayTask, 500, 500);
-                }
-            }.start();
+            EventBus.getDefault().post(new AutoStartWorkout.BeginEvent(delayMs));
             return true;
         }
         return false;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onAutoStartWorkoutStateChange(AutoStartWorkout.StateChangeEvent stateChangeEvent) {
+        switch (stateChangeEvent.newState) {
+            case COUNTDOWN:
+                showAutoStartCountdownOverlay();
+                break;
+            case AUTO_START_REQUESTED:
+                autoStart();
+                break;
+            case AUTO_START_ABORTED:
+                hideAutoStartCountdownOverlay();
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onCountdownChange (AutoStartWorkout.CountdownChangeEvent countdownChangeEvent) {
+        String text = String.format(getString(R.string.autoStartCountdownVal),
+                (countdownChangeEvent.countdownMs + 500) / 1000,
+                getText(R.string.timeSecondsShort));
+        Log.d("RecordWorkoutActivity", "Updating auto start countdown: " + text + " (" +
+                countdownChangeEvent.countdownMs + ")");
+        ((TextView) findViewById(R.id.autoStartCountdownVal)).setText(text);
     }
 }
