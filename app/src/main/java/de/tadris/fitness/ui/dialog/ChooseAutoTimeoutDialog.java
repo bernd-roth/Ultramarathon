@@ -8,7 +8,7 @@ import de.tadris.fitness.R;
 /**
  * Build a dialog to choose the auto workout timeout after which the workout is automatically stopped
  */
-public class ChooseAutoTimeoutDialog extends ChooseAutoTimeDialog {
+public class ChooseAutoTimeoutDialog extends NumberPickerDialog<Integer> {
     private static final int STEP_WIDTH = 5;
     private static final int NO_TIMEOUT = 0;
     private static final int MAX_VALUE = 60;
@@ -45,19 +45,19 @@ public class ChooseAutoTimeoutDialog extends ChooseAutoTimeDialog {
     }
 
     @Override
-    protected int getInitTime() {
+    protected Integer getInitOption() {
         return initialTimeoutM;
     }
 
     @Override
-    protected String format(int delayM) {
+    protected String format(Integer delayM) {
         return delayM == NO_TIMEOUT
                 ? context.getText(R.string.notimeout).toString()
                 : delayM + " " + context.getText(R.string.timeMinuteShort);
     }
 
     @Override
-    protected int timeToOption(int delayM) {
+    protected int toOptionNum(Integer delayM) {
         int res = delayM / STEP_WIDTH;
         if (res < 0) {
             return 0;
@@ -69,12 +69,12 @@ public class ChooseAutoTimeoutDialog extends ChooseAutoTimeDialog {
     }
 
     @Override
-    protected int optionToTime(int option) {
-        return option * STEP_WIDTH;
+    protected Integer fromOptionNum(int optionNum) {
+        return optionNum * STEP_WIDTH;
     }
 
     @Override
-    protected void onSelectAutoTime(int delayM) {
+    protected void onSelectOption(Integer delayM) {
         listener.onSelectAutoTimeout(delayM);
     }
 

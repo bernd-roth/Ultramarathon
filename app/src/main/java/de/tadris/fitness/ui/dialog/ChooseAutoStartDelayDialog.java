@@ -8,7 +8,7 @@ import de.tadris.fitness.R;
 /**
  * Build a dialog to choose the delay after which a workout will be started automatically
  */
-public class ChooseAutoStartDelayDialog extends ChooseAutoTimeDialog {
+public class ChooseAutoStartDelayDialog extends NumberPickerDialog<Integer> {
 
     public static final int DEFAULT_DELAY_S = 20;
 
@@ -47,19 +47,19 @@ public class ChooseAutoStartDelayDialog extends ChooseAutoTimeDialog {
     }
 
     @Override
-    protected int getInitTime() {
+    protected Integer getInitOption() {
         return initialDelayS;
     }
 
     @Override
-    protected String format(int delayS) {
+    protected String format(Integer delayS) {
         return delayS == NO_DELAY
                 ? context.getText(R.string.noAutoStartDelay).toString()
                 : delayS + " " + context.getText(R.string.timeSecondsShort);
     }
 
     @Override
-    protected int timeToOption(int delayS) {
+    protected int toOptionNum(Integer delayS) {
         int res = delayS / STEP_WIDTH;
         if (res < 0) {
             return 0;
@@ -71,12 +71,12 @@ public class ChooseAutoStartDelayDialog extends ChooseAutoTimeDialog {
     }
 
     @Override
-    protected int optionToTime(int option) {
-        return option * STEP_WIDTH;
+    protected Integer fromOptionNum(int optionNum) {
+        return optionNum * STEP_WIDTH;
     }
 
     @Override
-    protected void onSelectAutoTime(int delayS) {
+    protected void onSelectOption(Integer delayS) {
         listener.onSelectAutoStartDelay(delayS);
     }
 

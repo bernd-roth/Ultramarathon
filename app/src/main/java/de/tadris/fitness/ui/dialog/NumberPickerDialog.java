@@ -9,9 +9,9 @@ import de.tadris.fitness.R;
 import de.tadris.fitness.util.NumberPickerUtils;
 
 /**
- * Base class for building a dialog to choose an arbitrary time from arbitrary options
+ * Base class for building a number picker dialog
  */
-public abstract class ChooseAutoTimeDialog {
+public abstract class NumberPickerDialog<T> {
 
     protected final Activity context;
     private final String title;
@@ -22,13 +22,13 @@ public abstract class ChooseAutoTimeDialog {
      * @param context The context this dialog should be shown in
      * @param title The dialog's title
      */
-    public ChooseAutoTimeDialog(Activity context, String title) {
+    public NumberPickerDialog(Activity context, String title) {
         this.context = context;
         this.title = title;
     }
 
     /**
-     * Show the time dialog.
+     * Show the number picker dialog.
      */
     public void show() {
         final AlertDialog.Builder d = new AlertDialog.Builder(context);
@@ -38,8 +38,8 @@ public abstract class ChooseAutoTimeDialog {
         NumberPicker npT = v.findViewById(R.id.autoTimeoutPicker);
         npT.setMaxValue(getOptionCount() - 1);
         npT.setMinValue(0);
-        npT.setFormatter(value -> format(optionToTime(value)));
-        npT.setValue(timeToOption(getInitTime()));
+        npT.setFormatter(value -> format(fromOptionNum(value)));
+        npT.setValue(toOptionNum(getInitOption()));
         npT.setWrapSelectorWheel(false);
         NumberPickerUtils.fixNumberPicker(npT);
 
@@ -47,13 +47,13 @@ public abstract class ChooseAutoTimeDialog {
 
         d.setNegativeButton(R.string.cancel, null);
         d.setPositiveButton(R.string.okay, (dialog, which) ->
-                onSelectAutoTime(optionToTime(npT.getValue())));
+                onSelectOption(fromOptionNum(npT.getValue())));
         dialog = d.create();
         dialog.show();
     }
 
     /**
-     * Hide the time dialog.
+     * Get the dialog instance.
      */
     public AlertDialog getDialog() {
         return dialog;
@@ -65,34 +65,32 @@ public abstract class ChooseAutoTimeDialog {
     protected abstract int getOptionCount();
 
     /**
-     * Get the initially selected time
+     * Get the initially selected option
      */
-    protected abstract int getInitTime();
+    protected abstract T getInitOption();
 
     /**
-     * Specify how a specific time should be presented to the user
-     * @param time
-     * @return
+     * Specify how a specific option should be presented to the user
+     * @param option the option that should be displayed
+     * @return the string that will be shown for this option
      */
-    protected abstract String format(int time);
+    protected abstract String format(T option);
 
     /**
-     * Convert "real-world" time to dialog option num
-     * @param time
+     * Get the option number in the dialog for a specific option
      * @return option num (must be in [0, {@link #getOptionCount()} - 1])
+     * @see #fromOptionNum(int)
      */
-    protected abstract int timeToOption(int time);
+    protected abstract int toOptionNum(T option);
 
     /**
-     * Convert dialog option num to "real-world" time
-     * @param option
-     * @return
+     * Get the original option for a specific option number
+     * @see #toOptionNum(Object)
      */
-    protected abstract int optionToTime(int option);
+    protected abstract T fromOptionNum(int optionNum);
 
     /**
-     * Provide the selected time
-     * @param time
+     * Provide the selected option
      */
-    protected abstract void onSelectAutoTime(int time);
+    protected abstract void onSelectOption(T option);
 }
