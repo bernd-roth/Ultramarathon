@@ -85,6 +85,7 @@ import de.tadris.fitness.map.MapManager;
 import de.tadris.fitness.model.AutoStartWorkout;
 import de.tadris.fitness.recording.RecorderService;
 import de.tadris.fitness.recording.WorkoutRecorder;
+import de.tadris.fitness.recording.autostart.AutoStartVibratorFeedback;
 import de.tadris.fitness.recording.event.HeartRateConnectionChangeEvent;
 import de.tadris.fitness.recording.event.LocationChangeEvent;
 import de.tadris.fitness.recording.event.TTSReadyEvent;
@@ -99,6 +100,7 @@ import de.tadris.fitness.ui.dialog.ChooseBluetoothDeviceDialog;
 import de.tadris.fitness.ui.dialog.SelectIntervalSetDialog;
 import de.tadris.fitness.ui.dialog.SelectWorkoutInformationDialog;
 import de.tadris.fitness.util.BluetoothDevicePreferences;
+import de.tadris.fitness.util.VibratorController;
 
 public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIntervalSetDialog.IntervalSetSelectListener,
         InfoViewHolder.InfoViewClickListener, SelectWorkoutInformationDialog.WorkoutInformationSelectListener,
@@ -146,6 +148,8 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     private boolean useAutoStart;   // did the user enable auto start in settings?
     private View autoStartCountdownOverlay;
     private AutoStartWorkout autoStartWorkout;
+    private AutoStartVibratorFeedback autoStartVibratorFeedback;
+    private VibratorController vibratorController;
 
     /**
      * This ensures that the workout is only started once. Different threads (user input, auto start)
@@ -200,7 +204,10 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         recordStartButtonsRoot = findViewById(R.id.recordStartButtonsRoot);
         if (useAutoStart) {
             autoStartWorkout = new AutoStartWorkout(autoStartDelayMs);
-            if (!autoStartWorkout.init()) {
+            vibratorController = new VibratorController(this, instance);
+            autoStartVibratorFeedback = new AutoStartVibratorFeedback(vibratorController);
+            autoStartVibratorFeedback.registerTo(EventBus.getDefault());
+                if (!autoStartWorkout.init()) {
                 Log.e(TAG, "onCreate: Failed to setup auto start helper, not using auto start");
                 useAutoStart = false;
                 startPopupButton.setVisibility(View.GONE);
@@ -889,6 +896,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
     private synchronized void activityFinish() {
         autoStartWorkout.deInit();  // tare down properly
+        autoStartVibratorFeedback.unregisterFromBus();
         if (!this.finished) {
             this.finished = true;
             this.finish();

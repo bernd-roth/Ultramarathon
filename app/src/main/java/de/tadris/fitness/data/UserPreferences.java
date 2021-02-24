@@ -28,6 +28,7 @@ public class UserPreferences {
     private static final String USE_AUTO_START_DELAY_VARIABLE = "autoStart";
     private static final String AUTO_TIMEOUT_VARIABLE = "autoTimeoutPeriod";
     private static final String USE_AUTO_PAUSE_VARIABLE = "autoPause";
+    private static final String ANNOUNCE_SUPPRESS_DURING_CALL_VARIABLE = "announcementSuppressDuringCall";
 
     /**
      * Default auto start delay in seconds if no other has been chosen
@@ -48,6 +49,11 @@ public class UserPreferences {
      * Default auto pause enable state if no other has been chosen
      */
     public static final boolean DEFAULT_USE_AUTO_PAUSE = true;
+
+    /**
+     * Default asuppress announcements during call state if no other has been chosen
+     */
+    public static final boolean DEFAULT_ANNOUNCE_SUPPRESS_DURING_CALL = true;
 
 
     private final SharedPreferences preferences;
@@ -186,5 +192,13 @@ public class UserPreferences {
      */
     public void setUseAutoPause(boolean useAutoStart) {
         preferences.edit().putBoolean(USE_AUTO_PAUSE_VARIABLE, useAutoStart).apply();
+    }
+
+    /**
+     * Check if voice announcements should be suppressed during calls
+     * @return whether announcements should be suppressed during calls
+     */
+    public boolean getSuppressAnnouncementsDuringCall() {
+        return preferences.getBoolean(ANNOUNCE_SUPPRESS_DURING_CALL_VARIABLE, DEFAULT_ANNOUNCE_SUPPRESS_DURING_CALL);
     }
 }

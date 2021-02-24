@@ -93,8 +93,10 @@ public class AutoStartWorkout {
      */
     public static class CountdownChangeEvent {
         public final long countdownMs;
+        public final int countdownS;
         public CountdownChangeEvent(long countdownMs) {
             this.countdownMs = countdownMs;
+            this.countdownS = (int) (countdownMs + 500) / 1000;
         }
     }
 
