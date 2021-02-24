@@ -20,34 +20,32 @@
 package de.tadris.fitness.recording.announcement;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.telephony.TelephonyManager;
 
 import java.util.List;
 
+import de.tadris.fitness.Instance;
 import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.recording.WorkoutRecorder;
 import de.tadris.fitness.recording.announcement.interval.IntervalAnnouncements;
+import de.tadris.fitness.util.TelephonyHelper;
 
 public class VoiceAnnouncements {
 
     private final InformationAnnouncements informationAnnouncements;
     private final IntervalAnnouncements intervalAnnouncements;
-    private final TelephonyManager telephonyManager;
-    private final boolean supressOnCall;
+    private final Context context;
+    private final boolean suppressOnCall;
 
     public VoiceAnnouncements(Context context, WorkoutRecorder recorder, TTSController ttsController, List<Interval> intervals) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        this.supressOnCall = prefs.getBoolean("announcementSuppressDuringCall", true);
-        this.telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        this.context = context;
+        this.suppressOnCall = Instance.getInstance(context).userPreferences.getSuppressAnnouncementsDuringCall();
         this.informationAnnouncements = new InformationAnnouncements(context, recorder, ttsController);
         this.intervalAnnouncements = new IntervalAnnouncements(context, recorder, ttsController, intervals);
     }
 
     public void check() {
         // Suppress all announcements when currently on call
-        if (supressOnCall && isOnCall()) {
+        if (suppressOnCall && TelephonyHelper.isOnCall(context)) {
             return;
         }
         intervalAnnouncements.check();
@@ -57,9 +55,4 @@ public class VoiceAnnouncements {
     public void applyIntervals(List<Interval> intervals) {
         intervalAnnouncements.setIntervals(intervals);
     }
-
-    private boolean isOnCall() {
-        return this.telephonyManager.getCallState() != TelephonyManager.CALL_STATE_IDLE;
-    }
-
 }
