@@ -443,6 +443,9 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
         // start the workout
         start();
+        // TODO (jofrev):
+        // - sound notification
+        Toast.makeText(this, R.string.workoutAutoStarted, Toast.LENGTH_SHORT).show();
     }
 
     private void start() {
@@ -881,6 +884,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onGPSStateChanged(WorkoutGPSStateChanged e) {
+
         WorkoutRecorder.GpsState state = e.newState;
         gpsStatusView.setTextColor(state.color);
 
