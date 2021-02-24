@@ -24,11 +24,17 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 public class UserPreferences {
+    private static final String USE_NFC_START_VARIABLE = "nfcStart";
     private static final String AUTO_START_DELAY_VARIABLE = "autoStartDelayPeriod";
     private static final String USE_AUTO_START_DELAY_VARIABLE = "autoStart";
     private static final String AUTO_TIMEOUT_VARIABLE = "autoTimeoutPeriod";
     private static final String USE_AUTO_PAUSE_VARIABLE = "autoPause";
     private static final String ANNOUNCE_SUPPRESS_DURING_CALL_VARIABLE = "announcementSuppressDuringCall";
+
+    /**
+     * Default NFC start enable state if no other has been chosen
+     */
+    public static final boolean DEFAULT_USE_NFC_START = false;
 
     /**
      * Default auto start delay in seconds if no other has been chosen
@@ -129,6 +135,14 @@ public class UserPreferences {
         return preferences.getString("offlineMapFileName", null);
     }
 
+    /**
+     * Check if NFC start is currently enabled
+     * @return whether NFC start is enabled or not
+     */
+    public boolean getUseNfcStart() {
+        return preferences.getBoolean(USE_NFC_START_VARIABLE, DEFAULT_USE_NFC_START);
+    }
+    
     /**
      * Get the currently configured auto start delay
      * @return auto start delay in seconds

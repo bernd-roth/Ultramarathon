@@ -349,6 +349,11 @@
     <string name="popup_auto_start">Automatically</string>
     <string name="abort">Cancel</string>
     <string name="workoutAutoStartAborted">Auto start aborted</string>
+    <string name="nfcStartTitle">Scan to start</string>
+    <string name="nfcStartSummary">If activated, you\'ll be able to start and stop workouts by scanning an NFC tag</string>
+    <string name="dialog_nfc_disabled_title">NFC is currently disabled</string>
+    <string name="dialog_nfc_disabled">In order to use NFC tags to start and stop workouts you need to enable NFC in device settings first</string>
+    <string name="action_nfc_settings">Go to NFC settings</string>
     <string-array name="osm_track_visibility">
         <item>Identifiable</item>
         <item>Trackable</item>

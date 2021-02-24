@@ -33,6 +33,8 @@ import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.media.AudioManager;
 import android.net.Uri;
+import android.nfc.NfcAdapter;
+import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -102,6 +104,7 @@ import de.tadris.fitness.ui.dialog.ChooseBluetoothDeviceDialog;
 import de.tadris.fitness.ui.dialog.SelectIntervalSetDialog;
 import de.tadris.fitness.ui.dialog.SelectWorkoutInformationDialog;
 import de.tadris.fitness.util.BluetoothDevicePreferences;
+import de.tadris.fitness.util.NfcAdapterHelper;
 import de.tadris.fitness.util.ToneGeneratorController;
 import de.tadris.fitness.util.VibratorController;
 import de.tadris.fitness.util.event.EventBusMember;
@@ -148,6 +151,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     private Thread updater;
     private boolean finished;
 
+    private boolean useNfcStart;
     private long autoStartDelayMs;    // in ms
     private boolean useAutoStart;   // did the user enable auto start in settings?
     private View autoStartCountdownOverlay;
@@ -169,6 +173,11 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         Intent intent = getIntent();
         instance = Instance.getInstance(this);
         boolean wasAlreadyRunning = false;
+
+        // only use NFC when it's enabled in settings AND supported by the device
+        this.useNfcStart = instance.userPreferences.getUseNfcStart() &&
+                NfcAdapterHelper.isNfcPresent(this);
+        Log.d(TAG, "NFC start enabled:" + this.useNfcStart);
 
         this.autoStartDelayMs = instance.userPreferences.getAutoStartDelay() * AUTO_START_DELAY_MULTIPLIER;
         this.useAutoStart = instance.userPreferences.getUseAutoStart();
@@ -201,6 +210,13 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         setTitle(R.string.recordWorkout);
 
         setupMap();
+
+        if (useNfcStart) {
+            // ask the user to enable NFC in device settings if it isn't at the moment
+            if (!NfcAdapterHelper.isNfcEnabled(this)) {
+                NfcAdapterHelper.createNfcEnableDialog(this).show();
+            }
+        }
 
         ((ViewGroup) findViewById(R.id.recordMapViewerRoot)).addView(mapView);
         waitingForGPSOverlay = findViewById(R.id.recorderWaitingOverlay);
@@ -760,6 +776,15 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
                 ((TileDownloadLayer) layer).onPause();
             }
         }
+
+        // stop intercepting NFC intents
+        if (useNfcStart && NfcAdapterHelper.isNfcEnabled(this)) {
+            if (!NfcAdapterHelper.disableNfcForegroundDispatch(this)) {
+                Log.w(TAG, "onPause: Failed to disable NFC foreground dispatch system. " +
+                        "NFC is not enabled or present in this device.");
+            }
+        }
+
         isResumed = false;
         super.onPause();
     }
@@ -767,6 +792,14 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     @Override
     public void onResume() {
         super.onResume();
+
+        // start intercepting NFC intents
+        if (useNfcStart && NfcAdapterHelper.isNfcEnabled(this)) {
+            if(!NfcAdapterHelper.enableNfcForegroundDispatch(this)) {
+                Log.w(TAG, "onPause: Failed to disable NFC foreground dispatch system. " +
+                        "NFC is not enabled or present in this device.");
+            }
+        }
 
         // update countdown field if necessary
         if (useAutoStart && autoStartWorkout != null
@@ -1003,7 +1036,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         // only show if not started yet
         // => disables this button for the short time of the hide animation, when a workout has just
         // started
-        if (startedSem.availablePermits() == 0) {
+        if (isRecordingStarted()) {
             return;
         }
         startPopupMenu = new PopupMenu(this, v);
@@ -1086,5 +1119,33 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         Log.d(TAG, "Updating auto start countdown: " + text + " (" +
                 countdownChangeEvent.countdownMs + ")");
         ((TextView) findViewById(R.id.autoStartCountdownVal)).setText(text);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        // should have only gotten here when an NFC tag has been detected
+        if (useNfcStart) {
+            // above check should actually not be necessary, b/c NFC should only be enabled if we
+            // want to use it. But it's cheep so let's keep it just to be sure..
+
+            // let's see if the intent contains an NFC tag and start/stop recording if it does
+            Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+            if (tag != null) {
+                if (isRecordingStarted()) {
+                    Log.i(TAG, "onNewIntent: NFC tag triggered workout end");
+                    stop();
+                } else {
+                    Log.i(TAG, "onNewIntent: NFC tag triggered workout start");
+                    start();    // start immediately, don't care about signal quality or anything
+                }
+            }
+        }
+    }
+
+    /**
+     * Check whether recording has already been started yet
+     */
+    private boolean isRecordingStarted() {
+        return startedSem.availablePermits() == 0;
     }
 }

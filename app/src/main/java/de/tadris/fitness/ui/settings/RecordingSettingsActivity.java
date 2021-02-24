@@ -33,6 +33,7 @@ import de.tadris.fitness.recording.announcement.TTSController;
 import de.tadris.fitness.recording.event.TTSReadyEvent;
 import de.tadris.fitness.ui.dialog.ChooseAutoStartDelayDialog;
 import de.tadris.fitness.ui.dialog.ChooseAutoTimeoutDialog;
+import de.tadris.fitness.util.NfcAdapterHelper;
 
 public class RecordingSettingsActivity
         extends FitoTrackSettingsActivity
@@ -47,6 +48,21 @@ public class RecordingSettingsActivity
         setTitle(R.string.preferencesRecordingTitle);
 
         addPreferencesFromResource(R.xml.preferences_recording);
+
+        // modify NFC option
+        if (!NfcAdapterHelper.isNfcPresent(this)) { // disable the NFC option if the device doesn't support NFC
+            findPreference("nfcStart").setEnabled(false);
+        } else {
+            // ask the user to enable NFC in device settings when they want to use it in the app
+            // but NFC is globally disabled
+            findPreference("nfcStart").setOnPreferenceChangeListener((pref, newValue) -> {
+                if ((Boolean) newValue && !NfcAdapterHelper.isNfcEnabled(this)) {
+                    NfcAdapterHelper.createNfcEnableDialog(this).show();
+                    return false;   // do NOT use NFC yet, user first needs to enable it in device settings
+                }
+                return true;
+            });
+        }
 
         findPreference("speech").setOnPreferenceClickListener(preference -> {
             checkTTS(this::showSpeechConfig);

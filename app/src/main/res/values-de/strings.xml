@@ -395,4 +395,9 @@
     <string name="popup_auto_start">Automatisch</string>
     <string name="abort">Abbrechen</string>
     <string name="workoutAutoStartAborted">Auto-Start abgebrochen</string>
+    <string name="nfcStartTitle">Starten durch Scannen</string>
+    <string name="nfcStartSummary">Aktiviere diese Option, um Workouts durch Scannen eines NFC-Tags zu starten bzw. stoppen</string>
+    <string name="dialog_nfc_disabled_title">NFC momentan deaktiviert</string>
+    <string name="dialog_nfc_disabled">Um mit Hilfe von NFC-Tags Workouts starten bzw. stoppen zu können, musst du zuerst NFC in den Geräte-Einstellungen aktivieren</string>
+    <string name="action_nfc_settings">Zu den NFC Einstellungen</string>
 </resources>
