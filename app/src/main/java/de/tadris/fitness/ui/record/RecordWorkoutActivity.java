@@ -146,6 +146,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     private boolean finished;
 
     private long autoStartDelayMs;    // in ms
+    private long lastAutoStartDelayMs;    // in ms
     private boolean useAutoStart;   // did the user enable auto start in settings?
     private View autoStartCountdownOverlay;
     private CountDownTimer autoStartCountdownTimer;
@@ -166,6 +167,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
         UserPreferences prefs = Instance.getInstance(this).userPreferences;
         this.autoStartDelayMs = prefs.getAutoStartDelay() * AUTO_START_DELAY_MULTIPLIER;
+        this.lastAutoStartDelayMs = autoStartDelayMs;
         this.useAutoStart = prefs.getUseAutoStart();
         Log.d("RecordWorkoutActivity", "auto start enabled:" + this.useAutoStart + ", auto start delay: " + this.autoStartDelayMs);
 
@@ -969,7 +971,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
                         } else {
                             Log.d("RecordWorkoutActivity", "Auto start from popup menu with delay of " + delayS + "s");
                         }
-                    }).show();
+                    }, (int) lastAutoStartDelayMs / AUTO_START_DELAY_MULTIPLIER).show();
             } else {
                 return false;
             }
@@ -987,6 +989,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
      */
     public boolean beginAutoStart(long delayMs) {
         if (useAutoStart) {
+            lastAutoStartDelayMs = delayMs;
             // show the countdown overlay (at least, if we're actually counting down)
             if (autoStartCountdownOverlay == null) {
                 autoStartCountdownOverlay = findViewById(R.id.recorderAutoStartOverlay);
