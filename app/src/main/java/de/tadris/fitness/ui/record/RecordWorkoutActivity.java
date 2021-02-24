@@ -150,7 +150,8 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     private boolean useAutoStart;   // did the user enable auto start in settings?
     private View autoStartCountdownOverlay;
     private CountDownTimer autoStartCountdownTimer;
-    private final Timer autoStartOnGpsFixTimer = new Timer();
+    private final Timer autoStartOnGpsOkayTimer = new Timer("AutoStartOnGpsOkay");
+    private TimerTask autoStartOnGpsOkayTask;
 
     /**
      * This ensures that the workout is only started once. Different threads (user input, auto start)
@@ -456,7 +457,9 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         if (autoStartCountdownTimer != null) {
             autoStartCountdownTimer.cancel();
         }
-        autoStartOnGpsFixTimer.cancel();
+        if (autoStartOnGpsOkayTask != null) {
+            autoStartOnGpsOkayTask.cancel();
+        }
     }
 
     private void autoStart() {
@@ -480,6 +483,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
         // take care of auto start (hide stuff and/or abort it whatever's necessary)
         hideAndCancelAutoStart();
+        autoStartOnGpsOkayTimer.cancel();   // don't need this one anymore
 
         // show workout timer
         hide(recordStartButtonsRoot);
@@ -1042,6 +1046,10 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
             // start countdown timer
             // do this for 0s delay as well to prevent duplicate code
             autoStartCountdownTimer = new CountDownTimer(delayMs, 1000) {
+                private boolean gpsOkay() {
+                    return instance.recorder.getGpsState() == WorkoutRecorder.GpsState.SIGNAL_OKAY;
+                }
+
                 @Override
                 public void onTick(long millisUntilFinished) {
                     Log.d("RecordWorkoutActivity", "Remaining: " + millisUntilFinished);
@@ -1055,17 +1063,17 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
                     // show 0s left...
                     onTick(0);
                     // ...and start recording the workout
-                    if (RecordWorkoutActivity.this.gpsFound) {
+                    if (gpsOkay()) {
                         RecordWorkoutActivity.this.autoStart();
                         return;
                     }
                     // whoops, no GPS yet, wait for it before start recording
-                    Log.w("RecordWorkoutActivity", "Cannot start workout yet, no GPS fix");
+                    Log.w("RecordWorkoutActivity", "Cannot start workout yet, no GPS fix or bad signal quality");
                     // start as soon as GPS position is found
-                    autoStartOnGpsFixTimer.scheduleAtFixedRate(new TimerTask() {
+                    autoStartOnGpsOkayTask = new TimerTask() {
                         @Override
                         public void run() {
-                            if (RecordWorkoutActivity.this.gpsFound) {
+                            if (gpsOkay()) {
                                 this.cancel();  // no need to run again
                                 Log.d("RecordWorkoutActivity", "GPS fix -> finally able to start workout");
                                 RecordWorkoutActivity.this.runOnUiThread(RecordWorkoutActivity.this::autoStart);
@@ -1073,7 +1081,8 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
                                 Log.d("RecordWorkoutActivity", "Still no GPS fix...");
                             }
                         }
-                    }, 500, 500);
+                    };
+                    autoStartOnGpsOkayTimer.scheduleAtFixedRate(autoStartOnGpsOkayTask, 500, 500);
                 }
             }.start();
             return true;
