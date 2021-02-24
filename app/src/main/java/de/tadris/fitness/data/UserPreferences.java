@@ -45,7 +45,7 @@ public class UserPreferences {
     public static final int DEFAULT_AUTO_START_DELAY_S = AutoStartWorkout.DEFAULT_DELAY_S;
 
     /**
-     * Default auto start delay in seconds if no other has been chosen
+     * Default auto start mode if no other has been chosen
      */
     public static final String DEFAULT_AUTO_START_MODE = AutoStartWorkout.Mode.getDefault().toString();
 
