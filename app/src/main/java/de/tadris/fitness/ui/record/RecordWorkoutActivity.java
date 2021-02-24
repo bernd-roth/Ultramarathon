@@ -276,12 +276,18 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         }).start();
     }
 
-    private void hideAutoStartCountdownOverlay() {
-        if (useAutoStart && autoStartCountdownOverlay.getVisibility() != View.GONE) {
+    private void showAutoStartCountdownOverlay() {
+        if (useAutoStart && autoStartCountdownOverlay.getVisibility() != View.VISIBLE) {
             autoStartCountdownOverlay.clearAnimation();
-            autoStartCountdownOverlay.animate().alpha(0f).setDuration(1000).setListener(new Animator.AnimatorListener() {
+            autoStartCountdownOverlay.setAlpha(0f);
+            autoStartCountdownOverlay.setVisibility(View.VISIBLE);
+            autoStartCountdownOverlay.animate().alpha(1f).setDuration(1000).setListener(new Animator.AnimatorListener() {
                 @Override
                 public void onAnimationStart(Animator animator) {
+                    // don't forget to make the view visible, needs to be done here in case hide
+                    // animation is cancelled prematurely by show animation. There was a race
+                    // condition when it was made visible again outside of the animation.
+                    autoStartCountdownOverlay.setVisibility(View.VISIBLE);
                 }
 
                 @Override
@@ -294,7 +300,35 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
                 @Override
                 public void onAnimationEnd(Animator animator) {
-                    autoStartCountdownOverlay.setVisibility(View.GONE);
+                }
+            }).start();
+        }
+    }
+
+    private void hideAutoStartCountdownOverlay() {
+        if (useAutoStart && autoStartCountdownOverlay.getVisibility() != View.GONE) {
+            autoStartCountdownOverlay.clearAnimation();
+            autoStartCountdownOverlay.animate().alpha(0f).setDuration(1000).setListener(new Animator.AnimatorListener() {
+                private boolean cancelled = false;
+                @Override
+                public void onAnimationStart(Animator animator) {
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animator) {
+                    cancelled = true;
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animator) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animator) {
+                    // prevent screen flickering
+                    if (!cancelled) {
+                        autoStartCountdownOverlay.setVisibility(View.GONE);
+                    }
                 }
             }).start();
         }
@@ -981,6 +1015,11 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         startPopupMenu.show();
     }
 
+    public void onAutoStartCountdownAbortButtonClicked(View v) {
+        hideAndCancelAutoStart();
+        Toast.makeText(this, R.string.workoutAutoStartAborted, Toast.LENGTH_SHORT).show();
+    }
+
 
     /**
      * Start the auto start sequence if enabled in settings.
@@ -997,7 +1036,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
             if (delayMs > 0) {
                 // set countdown start value
                 updateAutoStartCountdown((int) (delayMs / 1000));
-                autoStartCountdownOverlay.setVisibility(View.VISIBLE);
+                showAutoStartCountdownOverlay();
             }
 
             // start countdown timer

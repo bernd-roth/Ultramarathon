@@ -346,6 +346,8 @@
     <string name="workoutAutoStarted">Workout started automatically</string>
     <string name="popup_auto_start_delay">With custom delay</string>
     <string name="popup_auto_start">Automatically</string>
+    <string name="abort">Cancel</string>
+    <string name="workoutAutoStartAborted">Auto start aborted</string>
     <string-array name="osm_track_visibility">
         <item>Identifiable</item>
         <item>Trackable</item>
