@@ -22,7 +22,8 @@ public class AutoStartWorkout implements EventBusMember {
             COUNTDOWN,
             WAITING_FOR_GPS,
             AUTO_START_REQUESTED,
-            AUTO_START_ABORTED
+            ABORTED_BY_USER,
+            ABORTED_ALREADY_STARTED,
     }
 
     private static final String TAG = "AutoStartWorkoutModel";
@@ -99,6 +100,30 @@ public class AutoStartWorkout implements EventBusMember {
      * This event must be posted to EventBus to stop/abort the auto start sequence
      */
     public static class AbortEvent {
+        public Reason reason;
+
+        /**
+         * Some reasons why auto start is aborted.
+         */
+        public enum Reason {
+            /**
+             * When auto start is aborted, because something else triggered recording
+             */
+            STARTED,
+            /**
+             * When the user requested to abort auto start
+             */
+            USER_REQ,
+        }
+
+        public AbortEvent() {
+            this.reason = Reason.USER_REQ;
+        }
+
+        public AbortEvent(Reason reason) {
+            this.reason = reason;
+        }
+
     }
 
     /**
@@ -253,7 +278,12 @@ public class AutoStartWorkout implements EventBusMember {
         if (autoStartOnGpsOkayTask != null) {
             autoStartOnGpsOkayTask.cancel();
         }
-        setState(State.AUTO_START_ABORTED);
+
+        if (abortEvent.reason == AbortEvent.Reason.USER_REQ) {
+            setState(State.ABORTED_BY_USER);
+        } else {
+            setState(State.ABORTED_ALREADY_STARTED);
+        }
     }
 
     /**

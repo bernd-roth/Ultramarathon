@@ -9,6 +9,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import de.tadris.fitness.Instance;
 import de.tadris.fitness.model.AutoStartWorkout;
 import de.tadris.fitness.util.ToneGeneratorController;
 import de.tadris.fitness.util.event.EventBusHelper;
@@ -19,16 +20,19 @@ import de.tadris.fitness.util.event.EventBusMember;
 
 /**
  * This class automatically plays different sounds during auto start countdown so the user knows
- * how long until the workout starts and if started at all.
+ * how long until the workout starts and if it started at all.
+ * If voice announcements are enabled for auto start countdown, it will not play sounds at all.
  */
 public class AutoStartSoundFeedback implements EventBusMember {
     private static final String TAG = "AutoStartSoundFeedback";
 
     private EventBus eventBus;
     private ToneGeneratorController toneGeneratorController;
+    private final Instance instance;
 
-    public AutoStartSoundFeedback(ToneGeneratorController toneGeneratorController) {
+    public AutoStartSoundFeedback(ToneGeneratorController toneGeneratorController, Instance instance) {
         this.toneGeneratorController = toneGeneratorController;
+        this.instance = instance;
     }
 
     @Override
@@ -54,8 +58,11 @@ public class AutoStartSoundFeedback implements EventBusMember {
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onAutoStartCountdownChange(AutoStartWorkout.CountdownChangeEvent event) {
         Log.d(TAG, "onAutoStartCountdownChange: countdown changed");
-        if (0 < event.countdownS && event.countdownS <= 10) {
-            toneGeneratorController.playTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 350);
+        // only play sound when countdown announcements are disabled
+        if (!instance.userPreferences.isAutoStartCountdownAnnouncementsEnabled()) {
+            if (0 < event.countdownS && event.countdownS <= 10) {
+                toneGeneratorController.playTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 350);
+            }
         }
     }
 
@@ -65,8 +72,11 @@ public class AutoStartSoundFeedback implements EventBusMember {
      */
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onAutoStartStateChange(AutoStartWorkout.StateChangeEvent event) {
-        if (event.newState != event.oldState && event.newState == AutoStartWorkout.State.AUTO_START_REQUESTED) {
-            toneGeneratorController.playTone(ToneGenerator.TONE_DTMF_0, 1000);
+        // only play sound when countdown announcements are disabled
+        if (!instance.userPreferences.isAutoStartCountdownAnnouncementsEnabled()) {
+            if (event.newState != event.oldState && event.newState == AutoStartWorkout.State.AUTO_START_REQUESTED) {
+                toneGeneratorController.playTone(ToneGenerator.TONE_DTMF_0, 1000);
+            }
         }
     }
 }

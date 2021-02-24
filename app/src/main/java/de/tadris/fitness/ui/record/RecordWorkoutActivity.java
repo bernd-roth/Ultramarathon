@@ -88,6 +88,8 @@ import de.tadris.fitness.map.MapManager;
 import de.tadris.fitness.model.AutoStartWorkout;
 import de.tadris.fitness.recording.RecorderService;
 import de.tadris.fitness.recording.WorkoutRecorder;
+import de.tadris.fitness.recording.announcement.TTSController;
+import de.tadris.fitness.recording.autostart.AutoStartAnnouncements;
 import de.tadris.fitness.recording.autostart.AutoStartSoundFeedback;
 import de.tadris.fitness.recording.autostart.AutoStartVibratorFeedback;
 import de.tadris.fitness.recording.event.HeartRateConnectionChangeEvent;
@@ -114,6 +116,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         ChooseBluetoothDeviceDialog.BluetoothDeviceSelectListener {
 
     public static final String TAG = "RecordWorkoutActivity";
+    public static final String TTS_CONTROLLER_ID = TAG;
 
     public static final String LAUNCH_ACTION = "de.tadris.fitness.RecordWorkoutActivity.LAUNCH_ACTION";
     public static final String RESUME_ACTION = "de.tadris.fitness.RecordWorkoutActivity.RESUME_ACTION";
@@ -160,6 +163,8 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     private AutoStartVibratorFeedback autoStartVibratorFeedback;
     private ToneGeneratorController toneGeneratorController;
     private AutoStartSoundFeedback autoStartSoundFeedback;
+    private AutoStartAnnouncements autoStartAnnouncements;
+    private TTSController ttsController;
 
     /**
      * This ensures that the workout is only started once. Different threads (user input, auto start)
@@ -225,13 +230,19 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         startPopupButton = findViewById(R.id.recordStartPopup);
         recordStartButtonsRoot = findViewById(R.id.recordStartButtonsRoot);
         if (useAutoStart) {
+            // instantiate TTSController in app context to be able to completely play the auto start
+            // abort announcement even when this activity has been destroyed already
+            ttsController = new TTSController(getApplicationContext(), TTS_CONTROLLER_ID);
             autoStartWorkout = new AutoStartWorkout(autoStartDelayMs);
             vibratorController = new VibratorController(this, instance);
             autoStartVibratorFeedback = new AutoStartVibratorFeedback(vibratorController);
             toneGeneratorController = new ToneGeneratorController(this, instance, AudioManager.STREAM_NOTIFICATION);
-            autoStartSoundFeedback = new AutoStartSoundFeedback(toneGeneratorController);
+            autoStartSoundFeedback = new AutoStartSoundFeedback(toneGeneratorController, instance);
             autoStartVibratorFeedback.registerTo(EventBus.getDefault());
             autoStartSoundFeedback.registerTo(EventBus.getDefault());
+            autoStartAnnouncements = new AutoStartAnnouncements(this, autoStartWorkout,
+                    instance, instance.recorder, ttsController);
+            autoStartAnnouncements.registerTo(EventBus.getDefault());
             if (!autoStartWorkout.registerTo(EventBus.getDefault())) {
                 Log.e(TAG, "onCreate: Failed to setup auto start helper, not using auto start");
                 useAutoStart = false;
@@ -478,9 +489,11 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     /**
      * Cancel auto start
      */
-    private void cancelAutoStart() {
+    private void cancelAutoStart(boolean userReq) {
         // make sure auto start is cancelled
-        EventBus.getDefault().post(new AutoStartWorkout.AbortEvent());
+        EventBus.getDefault().post(new AutoStartWorkout.AbortEvent(userReq ?
+                AutoStartWorkout.AbortEvent.Reason.USER_REQ :
+                AutoStartWorkout.AbortEvent.Reason.STARTED));
     }
 
     private void autoStart() {
@@ -501,7 +514,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         }
 
         // take care of auto start (hide stuff and/or abort it whatever's necessary)
-        cancelAutoStart();
+        cancelAutoStart(false);
 
         // show workout timer
         hide(recordStartButtonsRoot);
@@ -517,7 +530,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         startedSem.release();
 
         // cancel auto start if necessary
-        cancelAutoStart();
+        cancelAutoStart(true);
 
         if (instance.recorder.getState() != WorkoutRecorder.RecordingState.IDLE) { // Only Running Records can be stopped
             instance.recorder.stop();
@@ -745,6 +758,12 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
     @Override
     protected void onDestroy() {
+        if (useAutoStart) {
+            // shutdown Text-to-Speech engine
+            if (ttsController != null) {
+                ttsController.destroyWhenDone();
+            }
+        }
         // Clear map
         mapView.destroyAll();
         AndroidGraphicFactory.clearResourceMemoryCache();
@@ -933,6 +952,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
     @Override
     public void onBackPressed() {
+        cancelAutoStart(true);
         if(instance.recorder.isActive() && instance.recorder.getState() != WorkoutRecorder.RecordingState.IDLE){
             // Still Running Workout
             showAreYouSureToStopDialog();
@@ -947,6 +967,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         autoStartWorkout.unregisterFromBus();  // tare down properly
         autoStartVibratorFeedback.unregisterFromBus();
         autoStartSoundFeedback.unregisterFromBus();
+        autoStartAnnouncements.unregisterFromBus();
         if (!this.finished) {
             this.finished = true;
             this.finish();
@@ -997,8 +1018,11 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
     @Subscribe
     public void onVoiceAnnouncementIsReady(TTSReadyEvent e) {
-        this.voiceFeedbackAvailable = e.ttsAvailable;
-        invalidateOptionsMenu();
+        // actually, we only care for the RecorderService's TTS controller here
+        if (e.id.equals(RecorderService.TTS_CONTROLLER_ID)) {
+            this.voiceFeedbackAvailable = e.ttsAvailable;
+            invalidateOptionsMenu();
+        }
     }
 
     @Override
@@ -1064,7 +1088,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     }
 
     public void onAutoStartCountdownAbortButtonClicked(View v) {
-        cancelAutoStart();
+        cancelAutoStart(true);
         Toast.makeText(this, R.string.workoutAutoStartAborted, Toast.LENGTH_SHORT).show();
     }
 
@@ -1099,7 +1123,8 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
             case AUTO_START_REQUESTED:
                 autoStart();
                 break;
-            case AUTO_START_ABORTED:
+            case ABORTED_BY_USER:
+            case ABORTED_ALREADY_STARTED:
                 hideAutoStartCountdownOverlay();
                 break;
             default:

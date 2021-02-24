@@ -400,4 +400,6 @@
     <string name="dialog_nfc_disabled_title">NFC momentan deaktiviert</string>
     <string name="dialog_nfc_disabled">Um mit Hilfe von NFC-Tags Workouts starten bzw. stoppen zu können, musst du zuerst NFC in den Geräte-Einstellungen aktivieren</string>
     <string name="action_nfc_settings">Zu den NFC Einstellungen</string>
+    <string name="announcementCountdown">Auto Start Aktionen (Countdown, Status, etc.)</string>
+    <string name="ttsLongCountdownAnnouncement">Noch %1$d Sekunden</string>
 </resources>

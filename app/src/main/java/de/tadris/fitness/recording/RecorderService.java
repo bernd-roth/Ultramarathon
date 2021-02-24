@@ -71,6 +71,7 @@ import no.nordicsemi.android.ble.observer.ConnectionObserver;
 
 public class RecorderService extends Service {
 
+    public static final String TTS_CONTROLLER_ID = "RecorderService";
     private Date serviceStartTime;
 
     /**
@@ -354,7 +355,7 @@ public class RecorderService extends Service {
     }
 
     private void initializeTTS() {
-        mTTSController = new TTSController(this.getApplicationContext());
+        mTTSController = new TTSController(this.getApplicationContext(), TTS_CONTROLLER_ID);
         announcements = new VoiceAnnouncements(this, instance.recorder, mTTSController, new ArrayList<>());
     }
 

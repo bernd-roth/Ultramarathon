@@ -30,6 +30,7 @@ public class UserPreferences {
     private static final String AUTO_TIMEOUT_VARIABLE = "autoTimeoutPeriod";
     private static final String USE_AUTO_PAUSE_VARIABLE = "autoPause";
     private static final String ANNOUNCE_SUPPRESS_DURING_CALL_VARIABLE = "announcementSuppressDuringCall";
+    private static final String ANNOUNCE_AUTO_START_COUNTDOWN = "announcement_countdown";
 
     /**
      * Default NFC start enable state if no other has been chosen
@@ -60,6 +61,11 @@ public class UserPreferences {
      * Default asuppress announcements during call state if no other has been chosen
      */
     public static final boolean DEFAULT_ANNOUNCE_SUPPRESS_DURING_CALL = true;
+
+    /**
+     * Default for using auto start countdown TTS announcements if no other has been chosen
+     */
+    public static final boolean DEFAULT_ANNOUNCE_AUTO_START_COUNTDOWN = true;
 
 
     private final SharedPreferences preferences;
@@ -214,5 +220,13 @@ public class UserPreferences {
      */
     public boolean getSuppressAnnouncementsDuringCall() {
         return preferences.getBoolean(ANNOUNCE_SUPPRESS_DURING_CALL_VARIABLE, DEFAULT_ANNOUNCE_SUPPRESS_DURING_CALL);
+    }
+
+    /**
+     * Check if auto start countdown related announcements are enabled
+     * @return whether countdown announcements are enabled
+     */
+    public boolean isAutoStartCountdownAnnouncementsEnabled() {
+        return preferences.getBoolean(ANNOUNCE_AUTO_START_COUNTDOWN, DEFAULT_ANNOUNCE_AUTO_START_COUNTDOWN);
     }
 }
