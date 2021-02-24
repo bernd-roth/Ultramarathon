@@ -402,4 +402,5 @@
     <string name="action_nfc_settings">Zu den NFC Einstellungen</string>
     <string name="announcementCountdown">Auto Start Aktionen (Countdown, Status, etc.)</string>
     <string name="ttsLongCountdownAnnouncement">Noch %1$d Sekunden</string>
+    <string name="autoStartCountdownMsgGps">Starte Workout sobald die GPS Position genau genug ist</string>
 </resources>
