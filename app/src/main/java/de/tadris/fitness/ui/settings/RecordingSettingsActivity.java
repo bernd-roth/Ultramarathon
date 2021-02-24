@@ -19,13 +19,10 @@
 
 package de.tadris.fitness.ui.settings;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.view.View;
-import android.widget.NumberPicker;
 import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
@@ -35,9 +32,13 @@ import org.greenrobot.eventbus.ThreadMode;
 import de.tadris.fitness.R;
 import de.tadris.fitness.recording.announcement.TTSController;
 import de.tadris.fitness.recording.event.TTSReadyEvent;
-import de.tadris.fitness.util.NumberPickerUtils;
+import de.tadris.fitness.ui.dialog.ChooseAutoStartDelayDialog;
+import de.tadris.fitness.ui.dialog.ChooseAutoTimeoutDialog;
 
-public class RecordingSettingsActivity extends FitoTrackSettingsActivity {
+public class RecordingSettingsActivity
+        extends FitoTrackSettingsActivity
+        implements ChooseAutoStartDelayDialog.AutoStartDelaySelectListener,
+        ChooseAutoTimeoutDialog.AutoTimeoutSelectListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,68 +99,35 @@ public class RecordingSettingsActivity extends FitoTrackSettingsActivity {
     }
 
     private void showAutoStartDelayConfig() {
-        final AlertDialog.Builder d = new AlertDialog.Builder(this);
         final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        d.setTitle(getString(R.string.pref_auto_start_delay_title));
-        View v = getLayoutInflater().inflate(R.layout.dialog_auto_timeout_picker, null);
-
-        // TODO:
-        //  - not sure which start delays (min-max) are actually useful, some people would certainly
-        //      want delays larger than 60s
-        //  - step size should probably be non-linear, e.g.
-        //           5s from   0-30s,
-        //          10s from  30s-60s,
-        //          15s from  60s-180s,
-        //          30s from 180s-
-        int stepWidth = 5; // 5 secs Step Width
-
-        NumberPicker npT = v.findViewById(R.id.autoTimeoutPicker);
-        npT.setMaxValue(60 / stepWidth);
-        npT.setMinValue(0);
-        npT.setFormatter(value -> value == 0
-                ? getText(R.string.noAutoStartDelay).toString()
-                : value * stepWidth + " " + getText(R.string.timeSecondsShort));
         final String autoStartDelayVariable = "autoStartDelayPeriod";
-        npT.setValue(preferences.getInt(autoStartDelayVariable, 20) / stepWidth);
-        npT.setWrapSelectorWheel(false);
-
-        d.setView(v);
-
-        d.setNegativeButton(R.string.cancel, null);
-        d.setPositiveButton(R.string.okay, (dialog, which) ->
-                preferences.edit()
-                        .putInt(autoStartDelayVariable, npT.getValue() * stepWidth)
-                        .apply());
-
-        d.create().show();
+        int initialDelay = preferences.getInt(autoStartDelayVariable, ChooseAutoStartDelayDialog.DEFAULT_DELAY_S);
+        new ChooseAutoStartDelayDialog(this, this, initialDelay).show();
     }
 
     private void showAutoTimeoutConfig() {
-        final AlertDialog.Builder d = new AlertDialog.Builder(this);
         final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        d.setTitle(getString(R.string.pref_auto_timeout_title));
-        View v = getLayoutInflater().inflate(R.layout.dialog_auto_timeout_picker, null);
-
-        int stepWidth = 5; // 5 Min Step Width
-
-        NumberPicker npT = v.findViewById(R.id.autoTimeoutPicker);
-        npT.setMaxValue(60 / stepWidth);
-        npT.setMinValue(0);
-        npT.setFormatter(value -> value == 0 ? getText(R.string.notimeout).toString() : value * stepWidth + " " + getText(R.string.timeMinuteShort));
         final String autoTimeoutVariable = "autoTimeoutPeriod";
-        npT.setValue(preferences.getInt(autoTimeoutVariable, 20) / stepWidth);
-        npT.setWrapSelectorWheel(false);
-        NumberPickerUtils.fixNumberPicker(npT);
 
-        d.setView(v);
-
-        d.setNegativeButton(R.string.cancel, null);
-        d.setPositiveButton(R.string.okay, (dialog, which) ->
-                preferences.edit()
-                        .putInt(autoTimeoutVariable, npT.getValue() * stepWidth)
-                        .apply());
-
-        d.create().show();
+        int initialTimeout = preferences.getInt(autoTimeoutVariable, ChooseAutoTimeoutDialog.DEFAULT_TIMEOUT_M);
+        new ChooseAutoTimeoutDialog(this, this, initialTimeout).show();
     }
 
+    @Override
+    public void onSelectAutoStartDelay(int delayS) {
+        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        final String autoStartDelayVariable = "autoStartDelayPeriod";
+        preferences.edit()
+                .putInt(autoStartDelayVariable, delayS)
+                .apply();
+    }
+
+    @Override
+    public void onSelectAutoTimeout(int timeoutM) {
+        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        final String autoTimeoutVariable = "autoTimeoutPeriod";
+        preferences.edit()
+                .putInt(autoTimeoutVariable, timeoutM)
+                .apply();
+    }
 }

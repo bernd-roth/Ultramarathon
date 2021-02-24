@@ -98,6 +98,7 @@ import de.tadris.fitness.recording.information.InformationDisplay;
 import de.tadris.fitness.recording.information.RecordingInformation;
 import de.tadris.fitness.ui.FitoTrackActivity;
 import de.tadris.fitness.ui.LauncherActivity;
+import de.tadris.fitness.ui.dialog.ChooseAutoStartDelayDialog;
 import de.tadris.fitness.ui.dialog.ChooseBluetoothDeviceDialog;
 import de.tadris.fitness.ui.dialog.SelectIntervalSetDialog;
 import de.tadris.fitness.ui.dialog.SelectWorkoutInformationDialog;
@@ -144,7 +145,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     private Thread updater;
     private boolean finished;
 
-    private long autoStartDelay;    // in ms
+    private long autoStartDelayMs;    // in ms
     private boolean useAutoStart;   // did the user enable auto start in settings?
     private View autoStartCountdownOverlay;
     private CountDownTimer autoStartCountdownTimer;
@@ -164,9 +165,9 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         boolean wasAlreadyRunning = false;
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        this.autoStartDelay = prefs.getInt("autoStartDelayPeriod", DEFAULT_WORKOUT_AUTO_START_DELAY) * AUTO_START_DELAY_MULTIPLIER;
+        this.autoStartDelayMs = prefs.getInt("autoStartDelayPeriod", DEFAULT_WORKOUT_AUTO_START_DELAY) * AUTO_START_DELAY_MULTIPLIER;
         this.useAutoStart = prefs.getBoolean("autoStart", false);
-        Log.d("RecordWorkoutActivity", "auto start enabled:" + this.useAutoStart + ", auto start delay: " + this.autoStartDelay);
+        Log.d("RecordWorkoutActivity", "auto start enabled:" + this.useAutoStart + ", auto start delay: " + this.autoStartDelayMs);
 
         activity = WorkoutType.getWorkoutTypeById(this, WorkoutType.WORKOUT_TYPE_ID_OTHER);
         if (LAUNCH_ACTION.equals(intent.getAction())) {
@@ -419,9 +420,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         if (autoStartCountdownTimer != null) {
             autoStartCountdownTimer.cancel();
         }
-        if (autoStartOnGpsFixTimer != null) {
-            autoStartOnGpsFixTimer.cancel();
-        }
+        autoStartOnGpsFixTimer.cancel();
     }
 
     private void autoStart() {
@@ -959,11 +958,21 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
                 Log.d("RecordWorkoutActivity", "Auto start from popup menu selected");
                 if (useAutoStart) {
                     cancelAutoStart();
-                    beginAutoStart();
+                    beginAutoStart(autoStartDelayMs);
                 }
             } else if (itemId == R.id.auto_start_delay) {
                 Log.d("RecordWorkoutActivity", "Auto start with custom delay from popup menu selected");
-                // TODO add UI element to select start delay should probably be the same as in settings
+                final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+                final String autoStartDelayVariable = "autoStartDelayPeriod";
+                int initialDelay = preferences.getInt(autoStartDelayVariable, ChooseAutoStartDelayDialog.DEFAULT_DELAY_S);
+                new ChooseAutoStartDelayDialog(this, delayS -> {
+                        cancelAutoStart();
+                        if (!beginAutoStart(delayS * 1_000)) {
+                            Log.e("RecordWorkoutActivity", "Failed to initiate auto workout start sequence from popup menu");
+                        } else {
+                            Log.d("RecordWorkoutActivity", "Auto start from popup menu with delay of " + delayS + "s");
+                        }
+                    }, initialDelay).show();
             } else {
                 return false;
             }
@@ -976,23 +985,24 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
     /**
      * Start the auto start sequence if enabled in settings.
+     * @param delayMs the delay in milliseconds after which the workout should be started
      * @return whether it has been started successfully or not
      */
-    public boolean beginAutoStart() {
+    public boolean beginAutoStart(long delayMs) {
         if (useAutoStart) {
             // show the countdown overlay (at least, if we're actually counting down)
             if (autoStartCountdownOverlay == null) {
                 autoStartCountdownOverlay = findViewById(R.id.recorderAutoStartOverlay);
             }
-            if (autoStartDelay > 0) {
+            if (delayMs > 0) {
                 // set countdown start value
-                updateAutoStartCountdown((int) (autoStartDelay / 1000));
+                updateAutoStartCountdown((int) (delayMs / 1000));
                 autoStartCountdownOverlay.setVisibility(View.VISIBLE);
             }
 
             // start countdown timer
             // do this for 0s delay as well to prevent duplicate code
-            autoStartCountdownTimer = new CountDownTimer(autoStartDelay, 1000) {
+            autoStartCountdownTimer = new CountDownTimer(delayMs, 1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     Log.d("RecordWorkoutActivity", "Remaining: " + millisUntilFinished);
