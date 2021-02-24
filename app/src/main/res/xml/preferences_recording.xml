@@ -27,6 +27,12 @@
         android:title="@string/nfcStartTitle" />
 
     <Preference
+        android:id="@+id/autoStartModeConfig"
+        android:key="autoStartModeConfig"
+        android:summary="@string/manageAutoStartModeSummary"
+        android:title="@string/intervalAutoStartModeTraining" />
+
+    <Preference
         android:id="@+id/autoStartDelayConfig"
         android:key="autoStartDelayConfig"
         android:summary="@string/manageAutoStartDelaySummary"

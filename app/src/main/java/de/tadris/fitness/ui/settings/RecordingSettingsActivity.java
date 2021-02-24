@@ -29,15 +29,18 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
+import de.tadris.fitness.model.AutoStartWorkout;
 import de.tadris.fitness.recording.announcement.TTSController;
 import de.tadris.fitness.recording.event.TTSReadyEvent;
 import de.tadris.fitness.ui.dialog.ChooseAutoStartDelayDialog;
+import de.tadris.fitness.ui.dialog.ChooseAutoStartModeDialog;
 import de.tadris.fitness.ui.dialog.ChooseAutoTimeoutDialog;
 import de.tadris.fitness.util.NfcAdapterHelper;
 
 public class RecordingSettingsActivity
         extends FitoTrackSettingsActivity
-        implements ChooseAutoStartDelayDialog.AutoStartDelaySelectListener,
+        implements ChooseAutoStartModeDialog.AutoStartModeSelectListener,
+        ChooseAutoStartDelayDialog.AutoStartDelaySelectListener,
         ChooseAutoTimeoutDialog.AutoTimeoutSelectListener {
 
     @Override
@@ -70,6 +73,11 @@ public class RecordingSettingsActivity
         });
         findPreference("intervals").setOnPreferenceClickListener(preference -> {
             checkTTS(this::showIntervalSetManagement);
+            return true;
+        });
+
+        findPreference("autoStartModeConfig").setOnPreferenceClickListener(preference -> {
+            showAutoStartModeConfig();
             return true;
         });
 
@@ -113,12 +121,21 @@ public class RecordingSettingsActivity
         startActivity(new Intent(this, ManageIntervalSetsActivity.class));
     }
 
+    private void showAutoStartModeConfig() {
+        new ChooseAutoStartModeDialog(this, this).show();
+    }
+
     private void showAutoStartDelayConfig() {
         new ChooseAutoStartDelayDialog(this, this).show();
     }
 
     private void showAutoTimeoutConfig() {
         new ChooseAutoTimeoutDialog(this, this).show();
+    }
+
+    @Override
+    public void onSelectAutoStartMode(AutoStartWorkout.Mode mode) {
+        Instance.getInstance(this).userPreferences.setAutoStartMode(mode);
     }
 
     @Override

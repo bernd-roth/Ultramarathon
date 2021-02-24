@@ -102,7 +102,9 @@ import de.tadris.fitness.recording.information.RecordingInformation;
 import de.tadris.fitness.ui.FitoTrackActivity;
 import de.tadris.fitness.ui.LauncherActivity;
 import de.tadris.fitness.ui.dialog.ChooseAutoStartDelayDialog;
+import de.tadris.fitness.ui.dialog.ChooseAutoStartModeDialog;
 import de.tadris.fitness.ui.dialog.ChooseBluetoothDeviceDialog;
+import de.tadris.fitness.ui.dialog.NumberPickerDialog;
 import de.tadris.fitness.ui.dialog.SelectIntervalSetDialog;
 import de.tadris.fitness.ui.dialog.SelectWorkoutInformationDialog;
 import de.tadris.fitness.util.BluetoothDevicePreferences;
@@ -156,9 +158,10 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
     private boolean useNfcStart;
     private long autoStartDelayMs;    // in ms
+    private AutoStartWorkout.Mode autoStartMode;
     private boolean useAutoStart = true;   // always enable auto start mode
     private View autoStartCountdownOverlay;
-    private ChooseAutoStartDelayDialog autoStartDelayDialog;
+    private NumberPickerDialog autoStartSettingsDialog;
     private AutoStartWorkout autoStartWorkout;
     private VibratorController vibratorController;
     private AutoStartVibratorFeedback autoStartVibratorFeedback;
@@ -186,7 +189,9 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         Log.d(TAG, "NFC start enabled:" + this.useNfcStart);
 
         this.autoStartDelayMs = instance.userPreferences.getAutoStartDelay() * AUTO_START_DELAY_MULTIPLIER;
-        Log.d(TAG, "auto start enabled:" + this.useAutoStart + ", auto start delay: " + this.autoStartDelayMs);
+        this.autoStartMode = instance.userPreferences.getAutoStartMode();
+        Log.d(TAG, "auto start enabled:" + this.useAutoStart + ", auto start delay: " +
+                this.autoStartDelayMs + ", auto start mode: " + autoStartMode);
 
         activity = WorkoutType.getWorkoutTypeById(this, WorkoutType.WORKOUT_TYPE_ID_OTHER);
         if (LAUNCH_ACTION.equals(intent.getAction())) {
@@ -233,10 +238,12 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
             // instantiate TTSController in app context to be able to completely play the auto start
             // abort announcement even when this activity has been destroyed already
             ttsController = new TTSController(getApplicationContext(), TTS_CONTROLLER_ID);
-            autoStartWorkout = new AutoStartWorkout(autoStartDelayMs);
+            autoStartWorkout = new AutoStartWorkout(new AutoStartWorkout.Config(autoStartDelayMs,
+                    autoStartMode));
             vibratorController = new VibratorController(this, instance);
             autoStartVibratorFeedback = new AutoStartVibratorFeedback(vibratorController);
-            toneGeneratorController = new ToneGeneratorController(this, instance, AudioManager.STREAM_NOTIFICATION);
+            toneGeneratorController = new ToneGeneratorController(this, instance,
+                    AudioManager.STREAM_NOTIFICATION);
             autoStartSoundFeedback = new AutoStartSoundFeedback(toneGeneratorController, instance);
             autoStartVibratorFeedback.registerTo(EventBus.getDefault());
             autoStartSoundFeedback.registerTo(EventBus.getDefault());
@@ -517,9 +524,9 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         cancelAutoStart(false);
 
         // remove the auto start delay dialog, if it is visible at the moment
-        if (autoStartDelayDialog != null) {
-            autoStartDelayDialog.getDialog().cancel();
-            autoStartDelayDialog = null;
+        if (autoStartSettingsDialog != null) {
+            autoStartSettingsDialog.getDialog().cancel();
+            autoStartSettingsDialog = null;
         }
 
         // show workout timer
@@ -778,6 +785,12 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
             // shutdown Text-to-Speech engine
             if (ttsController != null) {
                 ttsController.destroyWhenDone();
+            }
+
+            // remove the auto start delay dialog, if it is visible at the moment
+            if (autoStartSettingsDialog != null) {
+                autoStartSettingsDialog.getDialog().cancel();
+                autoStartSettingsDialog = null;
             }
         }
         // Clear map
@@ -1078,19 +1091,27 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
             if(itemId == R.id.auto_start) {
                 Log.d(TAG, "Auto start from popup menu selected");
                 if (useAutoStart) {
-                    beginAutoStart(autoStartWorkout.getDefaultStartCountdownMs());
+                    AutoStartWorkout.Config config = autoStartWorkout.getDefaultStartConfig();
+                    beginAutoStart(config.countdownMs, config.mode);
                 }
             } else if (itemId == R.id.auto_start_delay) {
-                Log.d(TAG, "Auto start with custom delay from popup menu selected");
-                // preset with either last selected or default from prefereneces
-                autoStartDelayDialog = new ChooseAutoStartDelayDialog(this, delayS -> {
-                    if (!beginAutoStart(delayS * 1_000)) {
-                        Log.e(TAG, "Failed to initiate auto workout start sequence from popup menu");
-                    } else {
-                        Log.d(TAG, "Auto start from popup menu with delay of " + delayS + "s");
-                    }
-                }, (int) autoStartWorkout.getLastStartCountdownMs() / AUTO_START_DELAY_MULTIPLIER);
-                autoStartDelayDialog.show();
+                Log.d(TAG, "Auto start with custom settings from popup menu selected");
+
+                // show the delay picker dialog first and then the mode picker dialog
+                // they'll be preset with either last selected value or the default from preferences
+                autoStartSettingsDialog = new ChooseAutoStartDelayDialog(this, delayS -> {
+                    autoStartSettingsDialog = new ChooseAutoStartModeDialog(this, mode -> {
+                        if (!beginAutoStart(delayS * 1_000, mode)) {
+                            Log.e(TAG, "Failed to initiate auto workout start sequence from " +
+                                    "popup menu");
+                        } else {
+                            Log.d(TAG, "Auto start from popup menu with delay of " + delayS +
+                                    "s and mode " + mode);
+                        }
+                    }, autoStartWorkout.getLastStartConfig().mode);
+                    autoStartSettingsDialog.show();
+                }, (int) autoStartWorkout.getLastStartConfig().countdownMs / AUTO_START_DELAY_MULTIPLIER);
+                autoStartSettingsDialog.show();
             } else {
                 return false;
             }
@@ -1108,18 +1129,41 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     /**
      * Start the auto start sequence if enabled in settings.
      * @param delayMs the delay in milliseconds after which the workout should be started
+     * @param mode the auto start mode with which the workout should be started
      * @return whether it has been started successfully or not
      */
-    public boolean beginAutoStart(long delayMs) {
+    public boolean beginAutoStart(long delayMs, AutoStartWorkout.Mode mode) {
         if (useAutoStart) {
             // show the countdown overlay (at least, if we're actually counting down)
             if (autoStartCountdownOverlay == null) {
                 autoStartCountdownOverlay = findViewById(R.id.recorderAutoStartOverlay);
             }
-            EventBus.getDefault().post(new AutoStartWorkout.BeginEvent(delayMs));
+            AutoStartWorkout.Config config;
+            if (mode == null) {
+                config = new AutoStartWorkout.Config(delayMs);
+            } else if (delayMs == Long.MIN_VALUE) {
+                config = new AutoStartWorkout.Config(mode);
+            } else {
+                config = new AutoStartWorkout.Config(delayMs, mode);
+            }
+            EventBus.getDefault().post(new AutoStartWorkout.BeginEvent(config));
             return true;
         }
         return false;
+    }
+
+    /**
+     * Start the auto start sequence in default mode.
+     */
+    public boolean beginAutoStart(long delayMs) {
+        return beginAutoStart(delayMs, null);
+    }
+
+    /**
+     * Start the auto start sequence with default delay.
+     */
+    public boolean beginAutoStart(AutoStartWorkout.Mode mode) {
+        return beginAutoStart(Long.MIN_VALUE, mode);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

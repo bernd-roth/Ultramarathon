@@ -23,9 +23,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import de.tadris.fitness.model.AutoStartWorkout;
+
 public class UserPreferences {
     private static final String USE_NFC_START_VARIABLE = "nfcStart";
     private static final String AUTO_START_DELAY_VARIABLE = "autoStartDelayPeriod";
+    private static final String AUTO_START_MODE_VARIABLE = "autoStartMode";
     private static final String AUTO_TIMEOUT_VARIABLE = "autoTimeoutPeriod";
     private static final String USE_AUTO_PAUSE_VARIABLE = "autoPause";
     private static final String ANNOUNCE_SUPPRESS_DURING_CALL_VARIABLE = "announcementSuppressDuringCall";
@@ -40,6 +43,11 @@ public class UserPreferences {
      * Default auto start delay in seconds if no other has been chosen
      */
     public static final int DEFAULT_AUTO_START_DELAY_S = AutoStartWorkout.DEFAULT_DELAY_S;
+
+    /**
+     * Default auto start delay in seconds if no other has been chosen
+     */
+    public static final String DEFAULT_AUTO_START_MODE = AutoStartWorkout.Mode.getDefault().toString();
 
     /**
      * Default auto workout stop timeout in minutes if no other has been chosen
@@ -157,6 +165,28 @@ public class UserPreferences {
      */
     public void setAutoStartDelay(int delayS) {
         preferences.edit().putInt(AUTO_START_DELAY_VARIABLE, delayS).apply();
+    }
+
+    /**
+     * Get the currently configured auto start mode
+     * @return auto start mode
+     */
+    public AutoStartWorkout.Mode getAutoStartMode() {
+        try {
+            return AutoStartWorkout.Mode.valueOf(preferences.getString(AUTO_START_MODE_VARIABLE,
+                    DEFAULT_AUTO_START_MODE));
+        } catch (IllegalArgumentException ex) {
+            // use default mode instead if preferences are broken
+            return AutoStartWorkout.Mode.getDefault();
+        }
+    }
+
+    /**
+     * Change the currently configured auto start mode
+     * @param mode new auto start mode
+     */
+    public void setAutoStartMode(AutoStartWorkout.Mode mode) {
+        preferences.edit().putString(AUTO_START_MODE_VARIABLE, mode.toString()).apply();
     }
 
     /**

@@ -28,12 +28,66 @@ public class AutoStartWorkout implements EventBusMember {
             ABORTED_ALREADY_STARTED,
     }
 
+    /**
+     * The different auto start modes. They can all be used together with a countdown timer.
+     *
+     * @implNote {@link #ON_MOVE} is not implemented yet and will fall back to {@link #WAIT_FOR_GPS}
+     */
+    public enum Mode {
+        /** start recording immediately **/
+        INSTANT,
+        /** start recording once the user starts moving around **/
+        ON_MOVE,
+        /** wait for the GPS position to be accurate enough before starting **/
+        WAIT_FOR_GPS;
+
+        /**
+         * Get the default auto start mode.
+         */
+        public static Mode getDefault() {
+            return INSTANT;
+        }
+    }
+
+    /**
+     * A configuration structure that specifies how auto start should behave.
+     */
+    public static class Config {
+        /**
+         * Countdown length.
+         * @implNote This might actually be ignored depending on {@link Config#mode}.
+         * @apiNote If you don't set this field, the {@link #DEFAULT_DELAY_S default} will be used.
+         */
+        public final long countdownMs;
+
+        /**
+         * Auto start mode.
+         * @apiNote If you don't set this field, the {@link Mode#getDefault()} default} will be used.
+         */
+        public final Mode mode;
+
+        public Config(long countdownMs) {
+            this.countdownMs = countdownMs;
+            this.mode = Mode.getDefault();
+        }
+
+        public Config(Mode mode) {
+            this.countdownMs = DEFAULT_DELAY_S * 1_000;
+            this.mode = mode;
+        }
+
+        public Config(long countdownMs, Mode mode) {
+            this.countdownMs = countdownMs;
+            this.mode = mode;
+        }
+    }
+
     private static final String TAG = "AutoStartWorkoutModel";
 
     private State state = State.IDLE;
     private long countdownMs;
-    private long lastStartCountdownMs;
-    private long defaultStartCountdownMs;
+    private Config lastStartConfig;
+    private Config defaultStartConfig;
     private CountDownTimer autoStartCountdownTimer;
     private final Timer autoStartOnGpsOkayTimer = new Timer("AutoStartOnGpsOkay");
     private TimerTask autoStartOnGpsOkayTask;
@@ -41,12 +95,12 @@ public class AutoStartWorkout implements EventBusMember {
     private boolean gpsOkay = false;
 
     /**
-     * Creates a AutoStartWorkout instance.
-     * @param defaultStartCountdownMs the default to start the countdown with (e.g. taken from preferences)
+     * Creates an {@link AutoStartWorkout} instance.
+     * @param defaultConfig the default config for this instance (e.g. taken from preferences)
      */
-    public AutoStartWorkout(long defaultStartCountdownMs) {
-        lastStartCountdownMs = defaultStartCountdownMs;
-        this.defaultStartCountdownMs = defaultStartCountdownMs;
+    public AutoStartWorkout(Config defaultConfig) {
+        this.lastStartConfig = defaultConfig;
+        this.defaultStartConfig = defaultConfig;
     }
 
     @Override
@@ -92,9 +146,9 @@ public class AutoStartWorkout implements EventBusMember {
      * This event must be posted to EventBus to start the auto start sequence
      */
     public static class BeginEvent {
-        public long countdownMs;
-        public BeginEvent(long countdownMs) {
-            this.countdownMs = countdownMs;
+        public Config config;
+        public BeginEvent(Config config) {
+            this.config = config;
         }
     }
 
@@ -168,19 +222,17 @@ public class AutoStartWorkout implements EventBusMember {
     }
 
     /**
-     * Get the last initial countdown value
-     * @return last initial countdown value in milliseconds
+     * Get the last initial configuration
      */
-    public long getLastStartCountdownMs() {
-        return lastStartCountdownMs;
+    public Config getLastStartConfig() {
+        return lastStartConfig;
     }
 
     /**
-     * Get the default countdown value
-     * @return default countdown value in milliseconds
+     * Get the default auto start config
      */
-    public long getDefaultStartCountdownMs() {
-        return defaultStartCountdownMs;
+    public Config getDefaultStartConfig() {
+        return defaultStartConfig;
     }
 
     /**
@@ -207,24 +259,40 @@ public class AutoStartWorkout implements EventBusMember {
             public void onFinish() {
                 // show 0s left...
                 onTick(0);
-
-                // ...and start recording the workout
-                if (gpsOkay) {
-                    setState(State.AUTO_START_REQUESTED);
-                    return;
-                }
-                // whoops, no GPS yet, wait for it before start recording
-                Log.w(TAG, "Cannot start workout yet, no GPS fix or bad signal quality");
-
-                waitForGps();
+                startWithMode();
             }
         }.start();
+    }
+
+    /**
+     * When the countdown expired, this function initiates the next steps to auto start depending on
+     * the configured mode.
+     */
+    private void startWithMode() {
+        switch (lastStartConfig.mode) {
+            case ON_MOVE:
+            case WAIT_FOR_GPS:
+                waitForGps();
+                break;
+            case INSTANT:
+                setState(State.AUTO_START_REQUESTED);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + lastStartConfig.mode);
+        }
     }
 
     /**
      * Wait for GPS before starting the workout automatically
      */
     private void waitForGps() {
+        // early exit when GPS position is good enough
+        if (gpsOkay) {
+            setState(State.AUTO_START_REQUESTED);
+            return;
+        }
+
+        // otherwise, wait for that to happen
         if (state != State.WAITING_FOR_GPS) {
             setState(State.WAITING_FOR_GPS);
         }
@@ -258,13 +326,13 @@ public class AutoStartWorkout implements EventBusMember {
             autoStartOnGpsOkayTask.cancel();
         }
 
-        setCountdownMs(beginEvent.countdownMs);
-        lastStartCountdownMs = countdownMs;
+        setCountdownMs(beginEvent.config.countdownMs);
+        lastStartConfig = beginEvent.config;
 
         if (countdownMs > 0) {
             startCountdown();
         } else {
-            waitForGps();
+            startWithMode();
         }
     }
 
