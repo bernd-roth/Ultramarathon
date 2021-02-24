@@ -29,12 +29,14 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.InputType;
 import android.util.Log;
@@ -107,6 +109,11 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     public static final int REQUEST_CODE_BACKGROUND_LOCATION_PERMISSION = 11;
     public static final int REQUEST_CODE_ENABLE_BLUETOOTH = 12;
 
+
+    // used to convert auto start time timebase from/to ms
+    private static final int AUTO_START_DELAY_MULTIPLIER = 1_000; // s to ms
+    private static final int DEFAULT_WORKOUT_AUTO_START_DELAY = 0;
+
     public WorkoutType activity;
 
     private MapView mapView;
@@ -128,12 +135,21 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     private Thread updater;
     private boolean finished;
 
+    private long autoStartDelay;    // in ms
+    private boolean useAutoStart;   // did the user enable auto start in settings?
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         instance = Instance.getInstance(this);
         boolean wasAlreadyRunning = false;
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        this.autoStartDelay = prefs.getInt("autoStartDelayPeriod", DEFAULT_WORKOUT_AUTO_START_DELAY) * AUTO_START_DELAY_MULTIPLIER;
+        this.useAutoStart = prefs.getBoolean("autoStart", false);
+        Log.d("RecordWorkoutActivity", "auto start enabled:" + this.useAutoStart + ", auto start delay: " + this.autoStartDelay);
+
         activity = WorkoutType.getWorkoutTypeById(this, WorkoutType.WORKOUT_TYPE_ID_OTHER);
         if (LAUNCH_ACTION.equals(intent.getAction())) {
             Serializable workoutType = intent.getSerializableExtra(WORKOUT_TYPE_EXTRA);
