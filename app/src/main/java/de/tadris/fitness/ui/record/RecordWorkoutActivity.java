@@ -29,7 +29,6 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -37,7 +36,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.InputType;
 import android.util.Log;
@@ -84,7 +82,6 @@ import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.IntervalSet;
-import de.tadris.fitness.data.UserPreferences;
 import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.map.MapManager;
@@ -166,10 +163,9 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         instance = Instance.getInstance(this);
         boolean wasAlreadyRunning = false;
 
-        UserPreferences prefs = Instance.getInstance(this).userPreferences;
-        this.autoStartDelayMs = prefs.getAutoStartDelay() * AUTO_START_DELAY_MULTIPLIER;
+        this.autoStartDelayMs = instance.userPreferences.getAutoStartDelay() * AUTO_START_DELAY_MULTIPLIER;
         this.lastAutoStartDelayMs = autoStartDelayMs;
-        this.useAutoStart = prefs.getUseAutoStart();
+        this.useAutoStart = instance.userPreferences.getUseAutoStart();
         Log.d("RecordWorkoutActivity", "auto start enabled:" + this.useAutoStart + ", auto start delay: " + this.autoStartDelayMs);
 
         activity = WorkoutType.getWorkoutTypeById(this, WorkoutType.WORKOUT_TYPE_ID_OTHER);
