@@ -101,6 +101,7 @@ import de.tadris.fitness.ui.dialog.SelectIntervalSetDialog;
 import de.tadris.fitness.ui.dialog.SelectWorkoutInformationDialog;
 import de.tadris.fitness.util.BluetoothDevicePreferences;
 import de.tadris.fitness.util.VibratorController;
+import de.tadris.fitness.util.event.EventBusMember;
 
 public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIntervalSetDialog.IntervalSetSelectListener,
         InfoViewHolder.InfoViewClickListener, SelectWorkoutInformationDialog.WorkoutInformationSelectListener,
@@ -207,7 +208,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
             vibratorController = new VibratorController(this, instance);
             autoStartVibratorFeedback = new AutoStartVibratorFeedback(vibratorController);
             autoStartVibratorFeedback.registerTo(EventBus.getDefault());
-                if (!autoStartWorkout.init()) {
+            if (!autoStartWorkout.registerTo(EventBus.getDefault())) {
                 Log.e(TAG, "onCreate: Failed to setup auto start helper, not using auto start");
                 useAutoStart = false;
                 startPopupButton.setVisibility(View.GONE);
@@ -895,7 +896,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     }
 
     private synchronized void activityFinish() {
-        autoStartWorkout.deInit();  // tare down properly
+        autoStartWorkout.unregisterFromBus();  // tare down properly
         autoStartVibratorFeedback.unregisterFromBus();
         if (!this.finished) {
             this.finished = true;

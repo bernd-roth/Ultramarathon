@@ -3,6 +3,8 @@ package de.tadris.fitness.model;
 import android.os.CountDownTimer;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -11,8 +13,10 @@ import java.util.TimerTask;
 
 import de.tadris.fitness.recording.WorkoutRecorder;
 import de.tadris.fitness.recording.event.WorkoutGPSStateChanged;
+import de.tadris.fitness.util.event.EventBusHelper;
+import de.tadris.fitness.util.event.EventBusMember;
 
-public class AutoStartWorkout {
+public class AutoStartWorkout implements EventBusMember {
     public enum State {
             IDLE,
             COUNTDOWN,
@@ -40,41 +44,22 @@ public class AutoStartWorkout {
     public AutoStartWorkout(long defaultStartCountdownMs) {
         lastStartCountdownMs = defaultStartCountdownMs;
         this.defaultStartCountdownMs = defaultStartCountdownMs;
-        this.eventBus = EventBus.getDefault();
     }
 
-    /**
-     * Initialize the instance.
-     *
-     * This will register the instance to default {@link EventBus} and setup event handling.
-     *
-     * @return whether initialization was successful
-     */
-    public boolean init() {
-        if (!eventBus.isRegistered(this)) {
-            eventBus.register(this);
+    @Override
+    public boolean registerTo(@NonNull EventBus eventBus) {
+        unregisterFromBus();
+        if(!EventBusHelper.saveRegisterTo(eventBus, this)) {
+            return false;
         }
+        this.eventBus = eventBus;
         return true;
     }
 
-    /**
-     * De-Initialize the instance.
-     *
-     * This will unregister the instance from {@link EventBus} and thus stop future handling of
-     * events.
-     *
-     * @apiNote If a countdown is currently running, you need to post an {@link AbortEvent} first to
-     * properly stop it.
-     *
-     * @return whether de-initialization was successful
-     */
-    public boolean deInit() {
-        if (eventBus.isRegistered(this)) {
-            eventBus.unregister(this);
-        }
-        return true;
+    @Override
+    public void unregisterFromBus() {
+        EventBusHelper.saveUnregisterFrom(eventBus, this);
     }
-
 
     /**
      * This event will be posted to EventBus when the internal state changes.
