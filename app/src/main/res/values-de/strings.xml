@@ -412,7 +412,8 @@
     <string name="ttsMinuteSecondCountdownAnnouncement">
         Noch <xliff:g id="mins" example="2">%1$d</xliff:g> Minuten und <xliff:g id="secs" example="7">%2$d</xliff:g> Sekunden
     </string>
-    <string name="autoStartCountdownMsgGps">Starte Workout sobald die GPS Position genau genug ist</string>
+    <string name="autoStartCountdownMsgGps">Starte Workout, sobald die GPS Position genau genug ist</string>
+    <string name="autoStartCountdownMsgMove">Starte Workout, sobald du dich bewegst</string>
     <string name="manageAutoStartModeSummary">Wähle, wann das Aufnehmen deines Workouts beginnen soll</string>
     <string name="intervalAutoStartModeTraining">Workout Auto-Start Modus</string>
     <string name="pref_auto_start_mode_title">Auto-Start Modus</string>

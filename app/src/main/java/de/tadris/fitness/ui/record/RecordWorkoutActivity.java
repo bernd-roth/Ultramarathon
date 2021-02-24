@@ -86,6 +86,8 @@ import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.map.MapManager;
 import de.tadris.fitness.model.AutoStartWorkout;
+import de.tadris.fitness.recording.DefaultMovementDetector;
+import de.tadris.fitness.recording.MovementDetector;
 import de.tadris.fitness.recording.RecorderService;
 import de.tadris.fitness.recording.WorkoutRecorder;
 import de.tadris.fitness.recording.announcement.TTSController;
@@ -163,6 +165,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     private View autoStartCountdownOverlay;
     private AlertDialogWrapper autoStartDelayDialog;
     private ChooseAutoStartModeDialog autoStartModeDialog;
+    private MovementDetector movementDetector;
     private AutoStartWorkout autoStartWorkout;
     private VibratorController vibratorController;
     private AutoStartVibratorFeedback autoStartVibratorFeedback;
@@ -239,8 +242,11 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
             // instantiate TTSController in app context to be able to completely play the auto start
             // abort announcement even when this activity has been destroyed already
             ttsController = new TTSController(getApplicationContext(), TTS_CONTROLLER_ID);
+            movementDetector = new DefaultMovementDetector(this, instance.recorder.getWorkout());
             autoStartWorkout = new AutoStartWorkout(new AutoStartWorkout.Config(autoStartDelayMs,
-                    autoStartMode));
+                    autoStartMode), movementDetector);
+            movementDetector.registerTo(EventBus.getDefault());
+            movementDetector.start();
             vibratorController = new VibratorController(this, instance);
             autoStartVibratorFeedback = new AutoStartVibratorFeedback(vibratorController);
             toneGeneratorController = new ToneGeneratorController(this, instance,
@@ -777,6 +783,8 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
             // once that's done, make sure no one stays registered to its event bus thereby creating
             // a stale process
+            movementDetector.stop();
+            movementDetector.unregisterFromBus();
             autoStartWorkout.unregisterFromBus();
             autoStartVibratorFeedback.unregisterFromBus();
             autoStartSoundFeedback.unregisterFromBus();
@@ -1175,6 +1183,11 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
             case WAITING_FOR_GPS:
                 ((TextView) findViewById(R.id.autoStartCountdownVal)).setText("");
                 ((TextView) findViewById(R.id.autoStartCountdownMsg)).setText(getString(R.string.autoStartCountdownMsgGps));
+                showAutoStartCountdownOverlay();
+                break;
+            case WAITING_FOR_MOVE:
+                ((TextView) findViewById(R.id.autoStartCountdownVal)).setText("");
+                ((TextView) findViewById(R.id.autoStartCountdownMsg)).setText(getString(R.string.autoStartCountdownMsgMove));
                 showAutoStartCountdownOverlay();
                 break;
             case AUTO_START_REQUESTED:

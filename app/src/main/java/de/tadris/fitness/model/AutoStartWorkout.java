@@ -3,17 +3,15 @@ package de.tadris.fitness.model;
 import android.os.CountDownTimer;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
+import de.tadris.fitness.recording.MovementDetector;
 import de.tadris.fitness.recording.WorkoutRecorder;
 import de.tadris.fitness.recording.event.WorkoutGPSStateChanged;
-import de.tadris.fitness.util.event.EventBusHelper;
 import de.tadris.fitness.util.event.EventBusMember;
 
 public class AutoStartWorkout implements EventBusMember {
@@ -23,6 +21,7 @@ public class AutoStartWorkout implements EventBusMember {
             IDLE,
             COUNTDOWN,
             WAITING_FOR_GPS,
+            WAITING_FOR_MOVE,
             AUTO_START_REQUESTED,
             ABORTED_BY_USER,
             ABORTED_ALREADY_STARTED,
@@ -88,9 +87,10 @@ public class AutoStartWorkout implements EventBusMember {
     private long countdownMs;
     private Config lastStartConfig;
     private Config defaultStartConfig;
+    private MovementDetector movementDetector;
     private CountDownTimer autoStartCountdownTimer;
-    private final Timer autoStartOnGpsOkayTimer = new Timer("AutoStartOnGpsOkay");
-    private TimerTask autoStartOnGpsOkayTask;
+    private final Timer autoStartWaitTimer = new Timer("AutoStartOnGpsOkay");
+    private TimerTask autoStartWaitTask;
     private EventBus eventBus;
     private boolean gpsOkay = false;
 
@@ -98,9 +98,10 @@ public class AutoStartWorkout implements EventBusMember {
      * Creates an {@link AutoStartWorkout} instance.
      * @param defaultConfig the default config for this instance (e.g. taken from preferences)
      */
-    public AutoStartWorkout(Config defaultConfig) {
+    public AutoStartWorkout(Config defaultConfig, MovementDetector movementDetector) {
         this.lastStartConfig = defaultConfig;
         this.defaultStartConfig = defaultConfig;
+        this.movementDetector = movementDetector;
     }
 
     @Override
@@ -266,6 +267,8 @@ public class AutoStartWorkout implements EventBusMember {
     private void startWithMode() {
         switch (lastStartConfig.mode) {
             case ON_MOVE:
+                waitForMove();
+                break;
             case WAIT_FOR_GPS:
                 waitForGps();
                 break;
@@ -293,7 +296,7 @@ public class AutoStartWorkout implements EventBusMember {
         }
 
         // start as soon as GPS position is accurate enough
-        autoStartOnGpsOkayTask = new TimerTask() {
+        autoStartWaitTask = new TimerTask() {
             @Override
             public void run() {
                 if (gpsOkay) {  // request auto start
@@ -305,7 +308,42 @@ public class AutoStartWorkout implements EventBusMember {
                 }
             }
         };
-        autoStartOnGpsOkayTimer.scheduleAtFixedRate(autoStartOnGpsOkayTask, 500, 500);
+        autoStartWaitTimer.scheduleAtFixedRate(autoStartWaitTask, 500, 500);
+    }
+    /**
+     * Wait for the user starting move before starting the workout automatically
+     */
+    private void waitForMove() {
+        // otherwise, wait for that to happen
+        if (state != State.WAITING_FOR_MOVE) {
+            setState(State.WAITING_FOR_MOVE);
+        }
+
+        // start as soon as user moves
+        autoStartWaitTask = new TimerTask() {
+            @Override
+            public void run() {
+                if (!movementDetector.isStarted()) {
+                    Log.w(TAG, "Waiting for user to start moving, but detector is not " +
+                            "started. Will do this now.");
+                    if (!movementDetector.start()) {
+                        Log.e(TAG, "Failed to start movement detector. Cannot determine " +
+                                "whether user is moving.");
+                        return;
+                    }
+                }
+                if (movementDetector.isStarted() && // might not be ready yet, if just started
+                        movementDetector.getDetectionState() ==
+                                MovementDetector.DetectionState.MOVING) {  // request auto start
+                    this.cancel();  // no need to run again
+                    Log.d(TAG, "user is moving -> finally able to start workout");
+                    setState(State.AUTO_START_REQUESTED);
+                } else {    // continue waiting
+                    Log.d(TAG, "Still no movement...");
+                }
+            }
+        };
+        autoStartWaitTimer.scheduleAtFixedRate(autoStartWaitTask, 500, 500);
     }
 
     /**
@@ -317,8 +355,8 @@ public class AutoStartWorkout implements EventBusMember {
         if (autoStartCountdownTimer != null) {
             autoStartCountdownTimer.cancel();
         }
-        if (autoStartOnGpsOkayTask != null) {
-            autoStartOnGpsOkayTask.cancel();
+        if (autoStartWaitTask != null) {
+            autoStartWaitTask.cancel();
         }
 
         setCountdownMs(beginEvent.config.countdownMs);
@@ -340,8 +378,8 @@ public class AutoStartWorkout implements EventBusMember {
         if (autoStartCountdownTimer != null) {
             autoStartCountdownTimer.cancel();
         }
-        if (autoStartOnGpsOkayTask != null) {
-            autoStartOnGpsOkayTask.cancel();
+        if (autoStartWaitTask != null) {
+            autoStartWaitTask.cancel();
         }
 
         if (abortEvent.reason == AbortEvent.Reason.USER_REQ) {

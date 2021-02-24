@@ -343,6 +343,7 @@
     <string name="customAutoStartDelay">Other</string>
     <string name="autoStartCountdownMsg">Starting workout in</string>
     <string name="autoStartCountdownMsgGps">Starting workout once GPS position is accurate enough</string>
+    <string name="autoStartCountdownMsgMove">Starting workout once you start moving</string>
     <string name="autoStartCountdownVal" translatable="false">%1$d%2$s</string>
     <string name="workoutAutoStarted">Workout started automatically</string>
     <string name="popup_auto_start_delay">With custom settings</string>

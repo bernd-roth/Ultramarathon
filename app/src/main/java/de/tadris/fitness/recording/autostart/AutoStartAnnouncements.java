@@ -132,6 +132,15 @@ public class AutoStartAnnouncements implements EventBusMember {
                         }
                     });
                     break;
+                case WAITING_FOR_MOVE:
+                    // tell the user we're waiting for more a accurate GPS position
+                    ttsController.speak(recorder, new CountdownAnnouncement(instance) {
+                        @Override
+                        public String getSpokenText(WorkoutRecorder recorder) {
+                            return context.getString(R.string.autoStartCountdownMsgMove);
+                        }
+                    });
+                    break;
                 case ABORTED_BY_USER:
                     if (event.oldState == AutoStartWorkout.State.COUNTDOWN ||
                             event.oldState == AutoStartWorkout.State.WAITING_FOR_GPS) {
