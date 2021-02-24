@@ -31,6 +31,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -85,6 +86,7 @@ import de.tadris.fitness.map.MapManager;
 import de.tadris.fitness.model.AutoStartWorkout;
 import de.tadris.fitness.recording.RecorderService;
 import de.tadris.fitness.recording.WorkoutRecorder;
+import de.tadris.fitness.recording.autostart.AutoStartSoundFeedback;
 import de.tadris.fitness.recording.autostart.AutoStartVibratorFeedback;
 import de.tadris.fitness.recording.event.HeartRateConnectionChangeEvent;
 import de.tadris.fitness.recording.event.LocationChangeEvent;
@@ -100,6 +102,7 @@ import de.tadris.fitness.ui.dialog.ChooseBluetoothDeviceDialog;
 import de.tadris.fitness.ui.dialog.SelectIntervalSetDialog;
 import de.tadris.fitness.ui.dialog.SelectWorkoutInformationDialog;
 import de.tadris.fitness.util.BluetoothDevicePreferences;
+import de.tadris.fitness.util.ToneGeneratorController;
 import de.tadris.fitness.util.VibratorController;
 import de.tadris.fitness.util.event.EventBusMember;
 
@@ -149,8 +152,10 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     private boolean useAutoStart;   // did the user enable auto start in settings?
     private View autoStartCountdownOverlay;
     private AutoStartWorkout autoStartWorkout;
-    private AutoStartVibratorFeedback autoStartVibratorFeedback;
     private VibratorController vibratorController;
+    private AutoStartVibratorFeedback autoStartVibratorFeedback;
+    private ToneGeneratorController toneGeneratorController;
+    private AutoStartSoundFeedback autoStartSoundFeedback;
 
     /**
      * This ensures that the workout is only started once. Different threads (user input, auto start)
@@ -207,7 +212,10 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
             autoStartWorkout = new AutoStartWorkout(autoStartDelayMs);
             vibratorController = new VibratorController(this, instance);
             autoStartVibratorFeedback = new AutoStartVibratorFeedback(vibratorController);
+            toneGeneratorController = new ToneGeneratorController(this, instance, AudioManager.STREAM_NOTIFICATION);
+            autoStartSoundFeedback = new AutoStartSoundFeedback(toneGeneratorController);
             autoStartVibratorFeedback.registerTo(EventBus.getDefault());
+            autoStartSoundFeedback.registerTo(EventBus.getDefault());
             if (!autoStartWorkout.registerTo(EventBus.getDefault())) {
                 Log.e(TAG, "onCreate: Failed to setup auto start helper, not using auto start");
                 useAutoStart = false;
@@ -898,6 +906,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     private synchronized void activityFinish() {
         autoStartWorkout.unregisterFromBus();  // tare down properly
         autoStartVibratorFeedback.unregisterFromBus();
+        autoStartSoundFeedback.unregisterFromBus();
         if (!this.finished) {
             this.finished = true;
             this.finish();
