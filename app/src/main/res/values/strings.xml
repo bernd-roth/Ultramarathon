@@ -16,7 +16,8 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources>
+  -->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
     <string name="workout_add">Add</string>
     <string name="stop">Stop</string>
@@ -339,6 +340,7 @@
     <string name="manageAutoStartDelaySummary">Choose a default countdown for automatic workout start</string>
     <string name="pref_auto_start_delay_title">Auto Start Countdown</string>
     <string name="noAutoStartDelay">None</string>
+    <string name="customAutoStartDelay">Other</string>
     <string name="autoStartCountdownMsg">Starting workout in</string>
     <string name="autoStartCountdownMsgGps">Starting workout once GPS position is accurate enough</string>
     <string name="autoStartCountdownVal" translatable="false">%1$d%2$s</string>
@@ -353,7 +355,18 @@
     <string name="dialog_nfc_disabled">In order to use NFC tags to start and stop workouts you need to enable NFC in device settings first</string>
     <string name="action_nfc_settings">Go to NFC settings</string>
     <string name="announcementCountdown">Auto Start Actions (countdown, state, etc.)</string>
-    <string name="ttsLongCountdownAnnouncement">%1$d seconds until start</string>
+    <!-- countdown announcement -->
+    <string name="ttsLongSecondCountdownAnnouncement">
+        <xliff:g id="secs" example="5">%1$d</xliff:g> seconds until start
+    </string>
+    <!-- countdown announcement -->
+    <string name="ttsMinuteCountdownAnnouncement">
+        <xliff:g id="mins" example="12">%1$d</xliff:g> minutes until start
+    </string>
+    <!-- countdown announcement -->
+    <string name="ttsMinuteSecondCountdownAnnouncement">
+        <xliff:g id="mins" example="2">%1$d</xliff:g> minutes and <xliff:g id="secs" example="7">%2$d</xliff:g> seconds until start
+    </string>
     <string name="manageAutoStartModeSummary">Change the mode of automatic workout start</string>
     <string name="intervalAutoStartModeTraining">Auto Start Workout Mode</string>
     <string name="pref_auto_start_mode_title">Auto-Start Mode</string>

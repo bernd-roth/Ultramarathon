@@ -10,9 +10,9 @@ import de.tadris.fitness.R;
  */
 public class ChooseAutoStartDelayDialog extends NumberPickerDialog<Integer> {
 
-    private static final int STEP_WIDTH = 5;
     private static final int NO_DELAY = 0;
-    private static final int MAX_VALUE = 60;
+
+    private static final int[] delaysS = {NO_DELAY, 5, 10, 20, 30, 45, 60, 90, 120, 180, 300, 600};
 
     private final AutoStartDelaySelectListener listener;
     private final int initialDelayS;
@@ -20,12 +20,15 @@ public class ChooseAutoStartDelayDialog extends NumberPickerDialog<Integer> {
     /**
      * @param context       The context this dialog should be shown in
      * @param listener      The listener that is called when the user selects a delay
-     * @param initialDelayS Initially selected auto start delay in seconds
+     * @param initialDelayMs Initially selected auto start delay in seconds
      */
-    public ChooseAutoStartDelayDialog(Activity context, AutoStartDelaySelectListener listener, int initialDelayS) {
-        super(context, context.getString(R.string.pref_auto_start_delay_title));
+
+    public ChooseAutoStartDelayDialog(Activity context, AutoStartDelaySelectListener listener,
+                                      long initialDelayMs) {
+        super(context, context.getString(R.string.pref_auto_start_delay_title),
+                context.getString(R.string.customAutoStartDelay));
         this.listener = listener;
-        this.initialDelayS = initialDelayS;
+        this.initialDelayS = (int) initialDelayMs / 1_000;
     }
 
     /**
@@ -34,14 +37,15 @@ public class ChooseAutoStartDelayDialog extends NumberPickerDialog<Integer> {
      * @param listener      The listener that is called when the user selects a delay
      */
     public ChooseAutoStartDelayDialog(Activity context, AutoStartDelaySelectListener listener) {
-        super(context, context.getString(R.string.pref_auto_start_delay_title));
+        super(context, context.getString(R.string.pref_auto_start_delay_title),
+                context.getString(R.string.customAutoStartDelay));
         this.listener = listener;
         this.initialDelayS = Instance.getInstance(context).userPreferences.getAutoStartDelay();
     }
 
     @Override
     protected int getOptionCount() {
-        return (MAX_VALUE - NO_DELAY) / STEP_WIDTH + 1;
+        return delaysS.length;
     }
 
     @Override
@@ -51,26 +55,37 @@ public class ChooseAutoStartDelayDialog extends NumberPickerDialog<Integer> {
 
     @Override
     protected String format(Integer delayS) {
-        return delayS == NO_DELAY
-                ? context.getText(R.string.noAutoStartDelay).toString()
-                : delayS + " " + context.getText(R.string.timeSecondsShort);
-    }
-
-    @Override
-    protected int toOptionNum(Integer delayS) {
-        int res = delayS / STEP_WIDTH;
-        if (res < 0) {
-            return 0;
-        } else if (res >= getOptionCount()) {
-            return getOptionCount() - 1;
+        if (delayS < 60) {
+            return delayS == NO_DELAY
+                    ? context.getText(R.string.noAutoStartDelay).toString()
+                    : delayS + " " + context.getText(R.string.timeSecondsShort);
         } else {
-            return res;
+            return Instance.getInstance(context).distanceUnitUtils.getMinuteSecondTime(delayS * 1_000, true);
         }
     }
 
     @Override
+    protected int toOptionNum(Integer delayS) {
+        // if the user selected a custom delay, it might not be a perfect fit, so instead preselect
+        // the next greater from the provided options
+        int num = 0;
+        for (int delay : delaysS) {
+            if (delayS <= delay) {
+                return num;
+            }
+            num++;
+        }
+        return delaysS.length - 1;
+    }
+
+    @Override
     protected Integer fromOptionNum(int optionNum) {
-        return optionNum * STEP_WIDTH;
+        if (optionNum < 0) {
+            optionNum = 0;
+        } else if (optionNum >= delaysS.length) {
+            optionNum = delaysS.length - 1;
+        }
+        return delaysS[optionNum];
     }
 
     @Override
@@ -83,5 +98,11 @@ public class ChooseAutoStartDelayDialog extends NumberPickerDialog<Integer> {
          * @param delayS Selected auto pause timeout in seconds
          */
         void onSelectAutoStartDelay(int delayS);
+    }
+
+    @Override
+    protected void onNeutral() {
+        new AutoStartDelayPickerDialogFragment(context,
+                listener::onSelectAutoStartDelay, initialDelayS * 1_000).show();
     }
 }

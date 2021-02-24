@@ -19,7 +19,7 @@
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
     <string name="backup">Sichern</string>
     <string name="cancel">Abbrechen</string>
@@ -387,6 +387,7 @@
     <string name="manageAutoStartDelaySummary">Wähle einen Countdown zum automatischen Starten deines Workouts</string>
     <string name="pref_auto_start_delay_title">Auto-Start Countdown</string>
     <string name="noAutoStartDelay">Keiner</string>
+    <string name="customAutoStartDelay">Anderer</string>
     <string name="autoStartCountdownMsg">Starte Workout in</string>
     <string name="workoutAutoStarted">Workout automatisch gestartet</string>
     <string name="popup_auto_start_delay">Mit speziellen Einstellungen</string>
@@ -399,7 +400,18 @@
     <string name="dialog_nfc_disabled">Um mit Hilfe von NFC-Tags Workouts starten bzw. stoppen zu können, musst du zuerst NFC in den Geräte-Einstellungen aktivieren</string>
     <string name="action_nfc_settings">Zu den NFC Einstellungen</string>
     <string name="announcementCountdown">Auto Start Aktionen (Countdown, Status, etc.)</string>
-    <string name="ttsLongCountdownAnnouncement">Noch %1$d Sekunden</string>
+    <!-- Countdown announcement -->
+    <string name="ttsLongSecondCountdownAnnouncement">
+        Noch <xliff:g id="secs" example="5">%1$d</xliff:g> Sekunden
+    </string>
+    <!-- Countdown announcement -->
+    <string name="ttsMinuteCountdownAnnouncement">
+        Noch <xliff:g id="mins" example="12">%1$d</xliff:g> Minuten
+    </string>
+    <!-- Countdown announcement -->
+    <string name="ttsMinuteSecondCountdownAnnouncement">
+        Noch <xliff:g id="mins" example="2">%1$d</xliff:g> Minuten und <xliff:g id="secs" example="7">%2$d</xliff:g> Sekunden
+    </string>
     <string name="autoStartCountdownMsgGps">Starte Workout sobald die GPS Position genau genug ist</string>
     <string name="manageAutoStartModeSummary">Wähle, wann das Aufnehmen deines Workouts beginnen soll</string>
     <string name="intervalAutoStartModeTraining">Workout Auto-Start Modus</string>

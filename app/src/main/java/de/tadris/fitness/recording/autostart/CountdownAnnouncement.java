@@ -7,7 +7,7 @@ import de.tadris.fitness.recording.announcement.Announcement;
  * Base class for all auto start countdown related voice announcements.
  */
 public abstract class CountdownAnnouncement implements Announcement {
-    private final Instance instance;
+    protected final Instance instance;
 
     public CountdownAnnouncement(Instance instance) {
         this.instance = instance;

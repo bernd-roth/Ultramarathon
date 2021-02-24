@@ -9,11 +9,12 @@ import de.tadris.fitness.recording.WorkoutRecorder;
  * This class provides short countdown time announcements, i.e. only the amount of seconds left will
  * be spoken.
  *
- * @apiNote Use this announcement type when the time between announcements is short (e.g. <2 seconds)
+ * @apiNote Use this announcement type when the time between announcements is short (e.g. <2 seconds).<p>
+ *     Only the plain number will be spoken, nothing else.
  */
-public class ShortCountdownTimeAnnouncement extends CountdownTimeAnnouncement {
+public class ShortSecondCountdownTimeAnnouncement extends CountdownTimeAnnouncement {
 
-    public ShortCountdownTimeAnnouncement(Instance instance, int countdownS) {
+    public ShortSecondCountdownTimeAnnouncement(Instance instance, int countdownS) {
         super(instance, countdownS);
     }
 

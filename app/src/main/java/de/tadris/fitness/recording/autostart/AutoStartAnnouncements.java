@@ -54,10 +54,25 @@ public class AutoStartAnnouncements implements EventBusMember {
 
         // initialize default set of announcements
         for (int i = 10; i > 0; i--) {
-            countdownTimeAnnouncementList.add(new ShortCountdownTimeAnnouncement(instance, i));
+            countdownTimeAnnouncementList.add(new ShortSecondCountdownTimeAnnouncement(instance, i));
         }
         for (int i = 15; i <= 60; i += 5) {
-            countdownTimeAnnouncementList.add(new LongCountdownTimeAnnouncement(context, instance,  i));
+            countdownTimeAnnouncementList.add(new LongSecondCountdownTimeAnnouncement(context, instance,  i));
+        }
+        for (int i = 75; i <= 600; i += 15) {
+            // TODO fix grammatically wrong announcement for 1mXXs. The resource string uses minutes (plural).
+            if (i % 60 == 0) {
+                countdownTimeAnnouncementList.add(new MinuteCountdownTimeAnnouncement(context, instance,  i));
+            } else {
+                countdownTimeAnnouncementList.add(new MinuteSecondCountdownTimeAnnouncement(context, instance, i));
+            }
+        }
+        for (int i = 10 * 60 + 30; i < 61 * 30; i += 30) {
+            if (i % 60 == 0) {
+                countdownTimeAnnouncementList.add(new MinuteCountdownTimeAnnouncement(context, instance,  i));
+            } else {
+                countdownTimeAnnouncementList.add(new MinuteSecondCountdownTimeAnnouncement(context, instance,  i));
+            }
         }
     }
 

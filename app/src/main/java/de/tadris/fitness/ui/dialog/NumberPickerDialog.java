@@ -11,11 +11,13 @@ import de.tadris.fitness.util.NumberPickerUtils;
 /**
  * Base class for building a number picker dialog
  */
-public abstract class NumberPickerDialog<T> {
+public abstract class NumberPickerDialog<T> implements AlertDialogWrapper {
 
     protected final Activity context;
     private final String title;
     private AlertDialog dialog;
+    private boolean useNeutral;
+    private String neutralText;
 
     /**
      *
@@ -25,6 +27,21 @@ public abstract class NumberPickerDialog<T> {
     public NumberPickerDialog(Activity context, String title) {
         this.context = context;
         this.title = title;
+        this.useNeutral = false;
+    }
+
+    /**
+     * Using this constructor will add the neutral button to the dialog.<p>
+     * Make sure to overwrite {@link #onNeutral()}, if you need to do something in this case.
+     * @param context       The context this dialog should be shown in
+     * @param title         The dialog's title
+     * @param neutralText   The neutral button's text
+     */
+    public NumberPickerDialog(Activity context, String title, String neutralText) {
+        this.context = context;
+        this.title = title;
+        this.useNeutral = true;
+        this.neutralText = neutralText;
     }
 
     /**
@@ -46,6 +63,9 @@ public abstract class NumberPickerDialog<T> {
         d.setView(v);
 
         d.setNegativeButton(R.string.cancel, null);
+        if (useNeutral) {
+            d.setNeutralButton(neutralText, (dialog, which) -> onNeutral());
+        }
         d.setPositiveButton(R.string.okay, (dialog, which) ->
                 onSelectOption(fromOptionNum(npT.getValue())));
         dialog = d.create();
@@ -93,4 +113,9 @@ public abstract class NumberPickerDialog<T> {
      * Provide the selected option
      */
     protected abstract void onSelectOption(T option);
+
+    /**
+     * Will be called, when the neutral button gets pressed
+     */
+    protected void onNeutral() { }
 }

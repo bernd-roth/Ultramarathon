@@ -32,6 +32,7 @@ import de.tadris.fitness.R;
 import de.tadris.fitness.model.AutoStartWorkout;
 import de.tadris.fitness.recording.announcement.TTSController;
 import de.tadris.fitness.recording.event.TTSReadyEvent;
+import de.tadris.fitness.ui.dialog.AutoStartDelayPickerDialogFragment;
 import de.tadris.fitness.ui.dialog.ChooseAutoStartDelayDialog;
 import de.tadris.fitness.ui.dialog.ChooseAutoStartModeDialog;
 import de.tadris.fitness.ui.dialog.ChooseAutoTimeoutDialog;
@@ -43,10 +44,14 @@ public class RecordingSettingsActivity
         ChooseAutoStartDelayDialog.AutoStartDelaySelectListener,
         ChooseAutoTimeoutDialog.AutoTimeoutSelectListener {
 
+    Instance instance;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActionBar();
+
+        instance = Instance.getInstance(this);
 
         setTitle(R.string.preferencesRecordingTitle);
 
@@ -126,7 +131,9 @@ public class RecordingSettingsActivity
     }
 
     private void showAutoStartDelayConfig() {
-        new ChooseAutoStartDelayDialog(this, this).show();
+        int initialDelayS = instance.userPreferences.getAutoStartDelay();
+        new ChooseAutoStartDelayDialog(this, this,
+                (long) initialDelayS * 1_000).show();
     }
 
     private void showAutoTimeoutConfig() {

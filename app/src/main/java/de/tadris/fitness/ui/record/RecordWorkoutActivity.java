@@ -101,10 +101,10 @@ import de.tadris.fitness.recording.information.InformationDisplay;
 import de.tadris.fitness.recording.information.RecordingInformation;
 import de.tadris.fitness.ui.FitoTrackActivity;
 import de.tadris.fitness.ui.LauncherActivity;
+import de.tadris.fitness.ui.dialog.AlertDialogWrapper;
 import de.tadris.fitness.ui.dialog.ChooseAutoStartDelayDialog;
 import de.tadris.fitness.ui.dialog.ChooseAutoStartModeDialog;
 import de.tadris.fitness.ui.dialog.ChooseBluetoothDeviceDialog;
-import de.tadris.fitness.ui.dialog.NumberPickerDialog;
 import de.tadris.fitness.ui.dialog.SelectIntervalSetDialog;
 import de.tadris.fitness.ui.dialog.SelectWorkoutInformationDialog;
 import de.tadris.fitness.util.BluetoothDevicePreferences;
@@ -161,7 +161,8 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     private AutoStartWorkout.Mode autoStartMode;
     private boolean useAutoStart = true;   // always enable auto start mode
     private View autoStartCountdownOverlay;
-    private NumberPickerDialog autoStartSettingsDialog;
+    private AlertDialogWrapper autoStartDelayDialog;
+    private ChooseAutoStartModeDialog autoStartModeDialog;
     private AutoStartWorkout autoStartWorkout;
     private VibratorController vibratorController;
     private AutoStartVibratorFeedback autoStartVibratorFeedback;
@@ -523,10 +524,9 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         // take care of auto start (hide stuff and/or abort it whatever's necessary)
         cancelAutoStart(false);
 
-        // remove the auto start delay dialog, if it is visible at the moment
-        if (autoStartSettingsDialog != null) {
-            autoStartSettingsDialog.getDialog().cancel();
-            autoStartSettingsDialog = null;
+        if (autoStartDelayDialog != null) {
+            autoStartDelayDialog.getDialog().cancel();
+            autoStartDelayDialog = null;
         }
 
         // show workout timer
@@ -787,10 +787,9 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
                 ttsController.destroyWhenDone();
             }
 
-            // remove the auto start delay dialog, if it is visible at the moment
-            if (autoStartSettingsDialog != null) {
-                autoStartSettingsDialog.getDialog().cancel();
-                autoStartSettingsDialog = null;
+            if (autoStartDelayDialog != null) {
+                autoStartDelayDialog.getDialog().cancel();
+                autoStartDelayDialog = null;
             }
         }
         // Clear map
@@ -1096,11 +1095,12 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
                 }
             } else if (itemId == R.id.auto_start_delay) {
                 Log.d(TAG, "Auto start with custom settings from popup menu selected");
-
-                // show the delay picker dialog first and then the mode picker dialog
-                // they'll be preset with either last selected value or the default from preferences
-                autoStartSettingsDialog = new ChooseAutoStartDelayDialog(this, delayS -> {
-                    autoStartSettingsDialog = new ChooseAutoStartModeDialog(this, mode -> {
+                // show the reduced delay picker dialog first (then, if selected, the custom ine)
+                // and lastly the mode picker dialog
+                // they'll be preloaded with either the last selected or the default value from
+                // preferences
+                autoStartDelayDialog = new ChooseAutoStartDelayDialog(this, delayS -> {
+                    autoStartDelayDialog = new ChooseAutoStartModeDialog(this, mode -> {
                         if (!beginAutoStart(delayS * 1_000, mode)) {
                             Log.e(TAG, "Failed to initiate auto workout start sequence from " +
                                     "popup menu");
@@ -1109,9 +1109,9 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
                                     "s and mode " + mode);
                         }
                     }, autoStartWorkout.getLastStartConfig().mode);
-                    autoStartSettingsDialog.show();
-                }, (int) autoStartWorkout.getLastStartConfig().countdownMs / AUTO_START_DELAY_MULTIPLIER);
-                autoStartSettingsDialog.show();
+                    autoStartDelayDialog.show();
+                }, autoStartWorkout.getLastStartConfig().countdownMs);
+                autoStartDelayDialog.show();
             } else {
                 return false;
             }
@@ -1192,9 +1192,14 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onCountdownChange (AutoStartWorkout.CountdownChangeEvent countdownChangeEvent) {
         ((TextView) findViewById(R.id.autoStartCountdownMsg)).setText(getString(R.string.autoStartCountdownMsg));
-        String text = String.format(getString(R.string.autoStartCountdownVal),
-                (countdownChangeEvent.countdownMs + 500) / 1000,
-                getText(R.string.timeSecondsShort));
+        String text;
+        if (countdownChangeEvent.countdownS > 60) {
+            // use countdownS because that is rounded properly already
+            text = instance.distanceUnitUtils.getMinuteSecondTime(countdownChangeEvent.countdownS * 1_000);
+        } else {
+            text = String.format(getString(R.string.autoStartCountdownVal),
+                    countdownChangeEvent.countdownS, getText(R.string.timeSecondsShort));
+        }
         Log.d(TAG, "Updating auto start countdown: " + text + " (" +
                 countdownChangeEvent.countdownMs + ")");
         ((TextView) findViewById(R.id.autoStartCountdownVal)).setText(text);

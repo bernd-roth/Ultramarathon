@@ -91,6 +91,33 @@ public class DistanceUnitUtils extends UnitUtils {
         return hours + ":" + minStr + ":" + sekStr;
     }
 
+    public String getMinuteSecondTime(long time) {
+        long totalSecs = time / 1000;
+        long totalMins = totalSecs / 60;
+        long mins = totalMins % 60;
+        long secs = totalSecs % 60;
+        String minStr = (mins < 10 ? "0" : "") + mins;
+        String sekStr = (secs < 10 ? "0" : "") + secs;
+        return minStr + ":" + sekStr;
+    }
+
+    public String getMinuteSecondTime(long time, boolean useLongTime) {
+        if (!useLongTime) {
+            return getMinuteSecondTime(time);
+        }
+        long totalSecs = time / 1000;
+        long totalMins = totalSecs / 60;
+        long mins = totalMins % 60;
+        long secs = totalSecs % 60;
+        String minStr = "" + mins + " " + context.getText(R.string.timeMinuteShort);
+        String sekStr = "" + secs + " " + context.getText(R.string.timeSecondsShort);
+        if (secs > 0) {
+            return minStr + " " + sekStr;
+        } else {
+            return minStr;
+        }
+    }
+
     public String getPace(double metricPace) {
         return getPace(metricPace, false);
     }
