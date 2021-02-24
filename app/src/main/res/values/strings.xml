@@ -336,9 +336,9 @@
     <string name="chooseMapHint">Please choose a map file</string>
     <string name="downloading">Downloading…</string>
     <string name="intervalAutoStartDelayTraining">Auto Start Workout Delay</string>
-    <string name="manageAutoStartDelaySummary">Edit the delay for automatic workout start</string>
-    <string name="pref_auto_start_delay_title">Delay for Auto-Start</string>
-    <string name="noAutoStartDelay">Start immediately</string>
+    <string name="manageAutoStartDelaySummary">Choose a default countdown for automatic workout start</string>
+    <string name="pref_auto_start_delay_title">Auto Start Countdown</string>
+    <string name="noAutoStartDelay">None</string>
     <string name="autoStartCountdownMsg">Starting workout in</string>
     <string name="autoStartCountdownMsgGps">Starting workout once GPS position is accurate enough</string>
     <string name="autoStartCountdownVal" translatable="false">%1$d%2$s</string>

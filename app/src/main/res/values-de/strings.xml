@@ -384,9 +384,9 @@
     <string name="chooseMapHint">Bitte eine Kartendatei auswählen</string>
     <string name="downloading">Herunterladen</string>
     <string name="intervalAutoStartDelayTraining">Workout Auto-Start Verzögerung</string>
-    <string name="manageAutoStartDelaySummary">Einstellung zum automatisch Starten des Workouts</string>
-    <string name="pref_auto_start_delay_title">Zeitspanne bis Auto-Start</string>
-    <string name="noAutoStartDelay">Sofort starten</string>
+    <string name="manageAutoStartDelaySummary">Wähle einen Countdown zum automatischen Starten deines Workouts</string>
+    <string name="pref_auto_start_delay_title">Auto-Start Countdown</string>
+    <string name="noAutoStartDelay">Keiner</string>
     <string name="autoStartCountdownMsg">Starte Workout in</string>
     <string name="workoutAutoStarted">Workout automatisch gestartet</string>
     <string name="popup_auto_start_delay">Mit Verzögerung</string>
