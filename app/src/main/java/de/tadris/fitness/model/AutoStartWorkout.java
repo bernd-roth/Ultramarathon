@@ -17,6 +17,8 @@ import de.tadris.fitness.util.event.EventBusHelper;
 import de.tadris.fitness.util.event.EventBusMember;
 
 public class AutoStartWorkout implements EventBusMember {
+    public static final int DEFAULT_DELAY_S = 20;
+
     public enum State {
             IDLE,
             COUNTDOWN,

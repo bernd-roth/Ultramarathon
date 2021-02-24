@@ -39,7 +39,7 @@ public class UserPreferences {
     /**
      * Default auto start delay in seconds if no other has been chosen
      */
-    public static final int DEFAULT_AUTO_START_DELAY_S = 20;
+    public static final int DEFAULT_AUTO_START_DELAY_S = AutoStartWorkout.DEFAULT_DELAY_S;
 
     /**
      * Default auto workout stop timeout in minutes if no other has been chosen

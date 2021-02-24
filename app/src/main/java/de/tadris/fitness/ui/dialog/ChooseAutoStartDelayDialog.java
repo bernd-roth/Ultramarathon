@@ -10,8 +10,6 @@ import de.tadris.fitness.R;
  */
 public class ChooseAutoStartDelayDialog extends NumberPickerDialog<Integer> {
 
-    public static final int DEFAULT_DELAY_S = 20;
-
     private static final int STEP_WIDTH = 5;
     private static final int NO_DELAY = 0;
     private static final int MAX_VALUE = 60;
