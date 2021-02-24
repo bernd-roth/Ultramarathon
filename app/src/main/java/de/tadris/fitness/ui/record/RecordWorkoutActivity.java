@@ -436,7 +436,6 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
                 || view.getId() == startPopupButton.getId())) {
             startPopupMenu.dismiss();
         }
-        // TODO prevent popup from showing again if the user clicks the button before it is hidden
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             int cx = view.getWidth() / 2;
@@ -489,8 +488,6 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
         // start the workout
         start();
-        // TODO (jofrev):
-        // - sound notification
         Toast.makeText(this, R.string.workoutAutoStarted, Toast.LENGTH_SHORT).show();
     }
 
