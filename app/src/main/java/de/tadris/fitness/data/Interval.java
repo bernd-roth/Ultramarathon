@@ -37,7 +37,7 @@ public class Interval {
     @PrimaryKey
     public long id;
 
-    @ColumnInfo(name = "set_id")
+    @ColumnInfo(name = "set_id", index = true)
     public long setId;
 
     public String name;
