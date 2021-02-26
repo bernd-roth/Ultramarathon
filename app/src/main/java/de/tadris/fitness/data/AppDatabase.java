@@ -28,7 +28,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(version = 11, entities = {Workout.class, WorkoutSample.class, Interval.class, IntervalSet.class, WorkoutType.class})
+@Database(version = 11, entities = {Workout.class, WorkoutSample.class, Interval.class, IntervalSet.class, WorkoutType.class}, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "fito-track";
