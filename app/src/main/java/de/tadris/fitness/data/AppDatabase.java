@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -28,7 +28,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(version = 11, entities = {Workout.class, WorkoutSample.class, Interval.class, IntervalSet.class, WorkoutType.class}, exportSchema = false)
+@Database(version = 12, entities = {Workout.class, WorkoutSample.class, Interval.class, IntervalSet.class, WorkoutType.class}, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "fito-track";
@@ -257,6 +257,20 @@ public abstract class AppDatabase extends RoomDatabase {
                                     "    color integer NOT NULL,\n" +
                                     "    met integer NOT NULL\n" +
                                     ");");
+
+                            database.setTransactionSuccessful();
+                        } finally {
+                            database.endTransaction();
+                        }
+                    }
+                }, new Migration(11, 12) {
+                    @Override
+                    public void migrate(@NonNull SupportSQLiteDatabase database) {
+                        try {
+                            database.beginTransaction();
+
+                            database.execSQL("create index index_workout_sample_workout_id on workout_sample (workout_id)");
+                            database.execSQL("create index index_interval_set_id on interval (set_id)");
 
                             database.setTransactionSuccessful();
                         } finally {
