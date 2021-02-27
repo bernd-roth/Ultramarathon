@@ -44,7 +44,7 @@ public class WorkoutSample{
     @PrimaryKey
     public long id;
 
-    @ColumnInfo(name = "workout_id")
+    @ColumnInfo(name = "workout_id", index = true)
     public long workoutId;
 
     public long absoluteTime;
