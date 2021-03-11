@@ -58,7 +58,6 @@ public class GpxExporter implements IWorkoutExporter {
         XmlMapper mapper = new XmlMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         mapper.enable(ToXmlGenerator.Feature.WRITE_XML_DECLARATION);
-        mapper.enable(ToXmlGenerator.Feature.WRITE_XML_1_1);
         mapper.writeValue(fileStream, getGpxFromWorkout(workout, samples));
     }
 
