@@ -106,7 +106,7 @@
     <string name="enable">Activer</string>
     <string name="comment">Commentaire</string>
     <string name="enterComment">Entrez un commentaire</string>
-    <string name="okay">Okay</string>
+    <string name="okay">Ok</string>
     <string name="stopRecordingQuestion">Arrêter l\'enregistrement \?</string>
     <string name="stopRecordingQuestionMessage">Voulez-vous vraiment arrêter l\'entraînement \?</string>
     <!-- leave the underscore because "continue" is a java command -->
@@ -360,4 +360,21 @@
     <string name="actionImportMultiple">Imports multiples</string>
     <string name="actionImport">Importer</string>
     <string name="importWorkoutMultipleQuestion">Voulez-vous importer un ou plusieurs fichiers GPX \?</string>
+    <string name="cancelDownloadConfirmation">Voulez-vous annuler le téléchargement en cours \?</string>
+    <string name="downloadMapConfirmation">Voulez-vous télécharger la carte %s \?</string>
+    <string name="overwriteMapConfirmation">Voulez-vous écraser le fichier de carte existant %s \?</string>
+    <string name="workoutTypeAll">Tout</string>
+    <string name="downloading">Téléchargement…</string>
+    <string name="chooseMapHint">Veuillez choisir une carte</string>
+    <string name="downloadCanceled">Téléchargement annulé</string>
+    <string name="downloadFailed">Échec du téléchargement</string>
+    <string name="downloadSuccess">Téléchargé</string>
+    <string name="actionCancelDownload">Annuler le téléchargement</string>
+    <string name="alreadyDownloading">Un fichier est déjà en cours de téléchargement</string>
+    <string name="actionDownloadMap">Télécharger la carte</string>
+    <string name="downloadMapsSpecifyDirectory">Veuillez d\'abord spécifier un répertoire pour les cartes hors ligne</string>
+    <string name="downloadMapsTitle">Télécharger des cartes</string>
+    <string name="pref_map_file">Répertoire de cartes hors ligne</string>
+    <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack collecte également des données de localisation en arrière-plan pour enregistrer l\'entraînement lorsque l\'écran est éteint. Par conséquent, veuillez autoriser FitoTrack à accéder à votre position à tout moment.</string>
+    <string name="recordingPermissionNotGrantedMessage">FitoTrack a besoin d\'une autorisation de localisation pour suivre vos mouvements pendant votre entraînement. FitoTrack collecte également des données de localisation lorsque l\'application est en arrière-plan ou que l\'écran est éteint pour enregistrer vos entraînements. Les données de localisation restent toujours sur votre téléphone sans votre consentement clair pour les partager.</string>
 </resources>
