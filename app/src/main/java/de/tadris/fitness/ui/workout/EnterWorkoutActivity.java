@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -24,7 +24,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -93,6 +92,8 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
                     int pos = distanceEditText.getText().length();
                     distanceEditText.setSelection(pos);
                 }
+
+                workoutBuilder.setWasEdited();
             }
         });
         distanceEditText.setOnEditorActionListener((v, actionId, event) -> {
@@ -209,6 +210,7 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
     @Override
     public void onDatePick(int year, int month, int day) {
         workoutBuilder.getStart().set(year, month, day);
+        workoutBuilder.setWasEdited();
         updateTextViews();
         showTimeSelection();
     }
@@ -224,6 +226,7 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
         workoutBuilder.getStart().set(Calendar.HOUR_OF_DAY, hour);
         workoutBuilder.getStart().set(Calendar.MINUTE, minute);
         workoutBuilder.getStart().set(Calendar.SECOND, 0);
+        workoutBuilder.setWasEdited();
         updateTextViews();
         showDurationSelection();
     }
@@ -238,6 +241,7 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
     @Override
     public void onDurationPick(long duration) {
         workoutBuilder.setDuration(duration);
+        workoutBuilder.setWasEdited();
         updateTextViews();
         requestKeyboard(commentEditText);
     }
@@ -254,10 +258,9 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch (id) {
-            case R.id.actionEnterWorkoutAdd:
-                saveWorkout();
-                return true;
+        if (id == R.id.actionEnterWorkoutAdd) {
+            saveWorkout();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

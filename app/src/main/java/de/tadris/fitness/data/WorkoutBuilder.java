@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -39,6 +39,8 @@ public class WorkoutBuilder {
 
     private Workout existingWorkout;
     private boolean fromExistingWorkout = false;
+
+    private boolean wasEdited = false;
 
     public WorkoutBuilder(Context context) {
         workoutType = WorkoutType.getWorkoutTypeById(context, WorkoutType.WORKOUT_TYPE_ID_RUNNING);
@@ -82,7 +84,7 @@ public class WorkoutBuilder {
         workout.calorie = CalorieCalculator.calculateCalories(context, workout, Instance.getInstance(context).userPreferences.getUserWeight());
         workout.comment = comment;
 
-        workout.edited = true;
+        workout.edited = wasEdited;
 
         return workout;
     }
@@ -145,6 +147,10 @@ public class WorkoutBuilder {
         this.comment = comment;
     }
 
+    public void setWasEdited() {
+        wasEdited = true;
+    }
+
     public boolean isFromExistingWorkout() {
         return fromExistingWorkout;
     }
@@ -153,6 +159,7 @@ public class WorkoutBuilder {
         WorkoutBuilder builder = new WorkoutBuilder(context);
         builder.fromExistingWorkout = true;
         builder.existingWorkout = workout;
+        builder.wasEdited = workout.edited;
         builder.workoutType = workout.getWorkoutType(context);
         builder.start.setTimeInMillis(workout.start);
         builder.duration = workout.duration;
