@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -123,6 +123,10 @@ public class DistanceUnitUtils extends UnitUtils {
     }
 
     public String getPace(double metricPace, boolean useLongUnits) {
+        return getPace(metricPace, useLongUnits, true);
+    }
+
+    public String getPace(double metricPace, boolean useLongUnits, boolean appendUnit) {
         if (!Double.isInfinite(metricPace)) {
             double one = distanceUnitSystem.getDistanceFromKilometers(1);
             double secondsTotal = 60 * metricPace / one;
@@ -133,12 +137,20 @@ public class DistanceUnitUtils extends UnitUtils {
                         " " + getSecondsText(seconds) + " " + getString(R.string.per) +
                         " " + getString(distanceUnitSystem.getLongDistanceUnitTitle(false));
             } else {
-                return minutes + ":" + (seconds < 10 ? "0" : "") + seconds + " min/" + distanceUnitSystem.getLongDistanceUnit();
+                String withoutUnit = minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+                if (appendUnit) {
+                    return withoutUnit + " " + getPaceUnit();
+                } else {
+                    return withoutUnit;
+                }
             }
-        }
-        else {
+        } else {
             return "-";
         }
+    }
+
+    public String getPaceUnit() {
+        return "min/" + distanceUnitSystem.getLongDistanceUnit();
     }
 
     public String getDistance(int distanceInMeters) {
@@ -185,12 +197,16 @@ public class DistanceUnitUtils extends UnitUtils {
      * @return speed in km/h
      */
     public String getSpeed(double speed, boolean useLongNames) {
-        String value = round(distanceUnitSystem.getSpeedFromMeterPerSecond(speed), 1);
+        String value = getSpeedWithoutUnit(speed);
         if (useLongNames) {
             return value + " " + getString(distanceUnitSystem.getSpeedUnitTitle());
         } else {
             return value + " " + distanceUnitSystem.getSpeedUnit();
         }
+    }
+
+    public String getSpeedWithoutUnit(double speed) {
+        return round(distanceUnitSystem.getSpeedFromMeterPerSecond(speed), 1);
     }
 
     private String getHourText(int hours) {
