@@ -344,4 +344,5 @@
     <string name="workoutTypeEditId">ID</string>
     <string name="hintManageWorkoutTypes">Fare clic sul plus per aggiungere tipi di allenamento personalizzati.</string>
     <string name="workoutTypeAdd">Aggiungere</string>
+    <string name="workoutTypeAll">Tutto</string>
 </resources>
