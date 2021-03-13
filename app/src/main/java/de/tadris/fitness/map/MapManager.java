@@ -62,7 +62,7 @@ public class MapManager {
         new Thread(() -> {
             TileCache tileCache = AndroidUtil.createTileCache(mapView.getContext(), chosenTileLayer,
                     mapView.getModel().displayModel.getTileSize(), 1f,
-                    mapView.getModel().frameBufferModel.getOverdrawFactor(), true);
+                    mapView.getModel().frameBufferModel.getOverdrawFactor(), !isOffline);
             if (isOffline) {
                 setupOfflineMap(mapView, tileCache);
             } else {
