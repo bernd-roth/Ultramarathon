@@ -19,7 +19,7 @@
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
     <string name="backup">Sichern</string>
     <string name="cancel">Abbrechen</string>
@@ -383,4 +383,55 @@
     <string name="downloadCanceled">Herunterladen abgebrochen</string>
     <string name="chooseMapHint">Bitte eine Kartendatei auswählen</string>
     <string name="downloading">Herunterladen</string>
+    <string name="intervalAutoStartDelayTraining">Workout Auto-Start Verzögerung</string>
+    <string name="manageAutoStartDelaySummary">Wähle einen Countdown zum automatischen Starten deines Workouts</string>
+    <string name="pref_auto_start_delay_title">Auto-Start Countdown</string>
+    <string name="noAutoStartDelay">Keiner</string>
+    <string name="customAutoStartDelay">Anderer</string>
+    <string name="autoStartCountdownMsg">Starte Workout in</string>
+    <string name="workoutAutoStarted">Workout automatisch gestartet</string>
+    <string name="popup_auto_start_delay">Mit anderem Countdown</string>
+    <string name="popup_auto_start">Mit eingestelltem Countdown</string>
+    <string name="popup_auto_start_immediately">Sofort starten</string>
+    <string name="popup_auto_start_on_move">Sobald ich mich bewege</string>
+    <string name="popup_auto_start_wait_for_gps">Sobald meine Position bestimmt ist</string>
+    <string name="abort">Abbrechen</string>
+    <string name="workoutAutoStartAborted">Auto-Start abgebrochen</string>
+    <string name="nfcStartTitle">Starten durch Scannen</string>
+    <string name="nfcStartSummary">Aktiviere diese Option, um Workouts durch Scannen eines NFC-Tags zu starten bzw. stoppen</string>
+    <string name="dialog_nfc_disabled_title">NFC momentan deaktiviert</string>
+    <string name="dialog_nfc_disabled">Um mit Hilfe von NFC-Tags Workouts starten bzw. stoppen zu können, musst du zuerst NFC in den Geräte-Einstellungen aktivieren</string>
+    <string name="action_nfc_settings">Zu den NFC Einstellungen</string>
+    <string name="announcementCountdown">Auto Start Aktionen (Countdown, Status, etc.)</string>
+    <!-- used for countdown voice announcements -->
+    <plurals name="seconds">
+        <item quantity="one"><xliff:g id="secs" example="1">%1$d</xliff:g> Sekunde</item>
+        <item quantity="other"><xliff:g id="secs" example="12">%1$d</xliff:g> Sekunden</item>
+    </plurals>
+    <!-- used for countdown voice announcements -->
+    <plurals name="minutes">
+        <item quantity="one"><xliff:g id="mins" example="1">%1$d</xliff:g> Minute</item>
+        <item quantity="other"><xliff:g id="mins" example="5">%1$d</xliff:g> Minuten</item>
+    </plurals>
+    <!-- countdown announcement -->
+    <string name="ttsLongSecondCountdownAnnouncement">
+        Noch <xliff:g id="secs" example="5 Sekunden">%1$s</xliff:g>
+    </string>
+    <!-- countdown announcement -->
+    <string name="ttsMinuteCountdownAnnouncement">
+        Noch <xliff:g id="mins" example="12 Minuten">%1$s</xliff:g>
+    </string>
+    <!-- countdown announcement -->
+    <string name="ttsMinuteSecondCountdownAnnouncement">
+        Noch <xliff:g id="mins" example="2 Minuten">%1$s</xliff:g> und <xliff:g id="secs" example="7 Sekunden">%2$s</xliff:g>
+    </string>
+    <string name="autoStartCountdownMsgGps">Starte Workout, sobald die GPS Position genau genug ist</string>
+    <string name="autoStartCountdownMsgMove">Starte Workout, sobald du dich bewegst</string>
+    <string name="manageAutoStartModeSummary">Wähle, wann das Aufnehmen deines Workouts beginnen soll</string>
+    <string name="intervalAutoStartModeTraining">Workout Auto-Start Modus</string>
+    <string name="pref_auto_start_mode_title">Auto-Start Modus</string>
+    <string name="pref_auto_start_mode_instant">Sofort starten</string>
+    <string name="pref_auto_start_mode_wait_for_gps">Auf exakte GPS-Position warten</string>
+    <string name="pref_auto_start_mode_on_move">Starten, sobald du dich bewegst</string>
+    <string name="pref_auto_start_mode_unknown">Unbekannter Modus (bitte nicht auswählen)</string>
 </resources>

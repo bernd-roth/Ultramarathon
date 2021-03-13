@@ -23,7 +23,52 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import de.tadris.fitness.model.AutoStartWorkout;
+
 public class UserPreferences {
+    private static final String USE_NFC_START_VARIABLE = "nfcStart";
+    private static final String AUTO_START_DELAY_VARIABLE = "autoStartDelayPeriod";
+    private static final String AUTO_START_MODE_VARIABLE = "autoStartMode";
+    private static final String AUTO_TIMEOUT_VARIABLE = "autoTimeoutPeriod";
+    private static final String USE_AUTO_PAUSE_VARIABLE = "autoPause";
+    private static final String ANNOUNCE_SUPPRESS_DURING_CALL_VARIABLE = "announcementSuppressDuringCall";
+    private static final String ANNOUNCE_AUTO_START_COUNTDOWN = "announcement_countdown";
+
+    /**
+     * Default NFC start enable state if no other has been chosen
+     */
+    public static final boolean DEFAULT_USE_NFC_START = false;
+
+    /**
+     * Default auto start delay in seconds if no other has been chosen
+     */
+    public static final int DEFAULT_AUTO_START_DELAY_S = AutoStartWorkout.DEFAULT_DELAY_S;
+
+    /**
+     * Default auto start mode if no other has been chosen
+     */
+    public static final String DEFAULT_AUTO_START_MODE = AutoStartWorkout.Mode.getDefault().toString();
+
+    /**
+     * Default auto workout stop timeout in minutes if no other has been chosen
+     */
+    public static final int DEFAULT_AUTO_TIMEOUT_M = 20;
+
+    /**
+     * Default auto pause enable state if no other has been chosen
+     */
+    public static final boolean DEFAULT_USE_AUTO_PAUSE = true;
+
+    /**
+     * Default asuppress announcements during call state if no other has been chosen
+     */
+    public static final boolean DEFAULT_ANNOUNCE_SUPPRESS_DURING_CALL = true;
+
+    /**
+     * Default for using auto start countdown TTS announcements if no other has been chosen
+     */
+    public static final boolean DEFAULT_ANNOUNCE_AUTO_START_COUNTDOWN = true;
+
 
     private final SharedPreferences preferences;
 
@@ -96,5 +141,100 @@ public class UserPreferences {
 
     public String getOfflineMapFileName() {
         return preferences.getString("offlineMapFileName", null);
+    }
+
+    /**
+     * Check if NFC start is currently enabled
+     * @return whether NFC start is enabled or not
+     */
+    public boolean getUseNfcStart() {
+        return preferences.getBoolean(USE_NFC_START_VARIABLE, DEFAULT_USE_NFC_START);
+    }
+    
+    /**
+     * Get the currently configured auto start delay
+     * @return auto start delay in seconds
+     */
+    public int getAutoStartDelay() {
+        return preferences.getInt(AUTO_START_DELAY_VARIABLE, DEFAULT_AUTO_START_DELAY_S);
+    }
+
+    /**
+     * Change the currently configured auto start delay
+     * @param delayS new auto start delay in seconds
+     */
+    public void setAutoStartDelay(int delayS) {
+        preferences.edit().putInt(AUTO_START_DELAY_VARIABLE, delayS).apply();
+    }
+
+    /**
+     * Get the currently configured auto start mode
+     * @return auto start mode
+     */
+    public AutoStartWorkout.Mode getAutoStartMode() {
+        try {
+            return AutoStartWorkout.Mode.valueOf(preferences.getString(AUTO_START_MODE_VARIABLE,
+                    DEFAULT_AUTO_START_MODE));
+        } catch (IllegalArgumentException ex) {
+            // use default mode instead if preferences are broken
+            return AutoStartWorkout.Mode.getDefault();
+        }
+    }
+
+    /**
+     * Change the currently configured auto start mode
+     * @param mode new auto start mode
+     */
+    public void setAutoStartMode(AutoStartWorkout.Mode mode) {
+        preferences.edit().putString(AUTO_START_MODE_VARIABLE, mode.toString()).apply();
+    }
+
+    /**
+     * Get the currently configured timeout after which a workout is automatically stopped
+     * @return auto workout stop timeout in minutes
+     */
+    public int getAutoTimeout() {
+        return preferences.getInt(AUTO_TIMEOUT_VARIABLE, DEFAULT_AUTO_TIMEOUT_M);
+    }
+
+    /**
+     * Change the currently configured timeout after which a workout is automatically stopped
+     * @param timeoutM new auto workout stop timeout in minutes
+     */
+    public void setAutoTimeout(int timeoutM) {
+        preferences.edit().putInt(AUTO_TIMEOUT_VARIABLE, timeoutM).apply();
+    }
+
+
+    /**
+     * Check if auto pause is currently enabled
+     * @return whether auto pause is enabled or not
+     */
+    public boolean getUseAutoPause() {
+        return preferences.getBoolean(USE_AUTO_PAUSE_VARIABLE, DEFAULT_USE_AUTO_PAUSE);
+    }
+
+    /**
+     * Change the current state of auto pause
+     * @param useAutoStart new auto pause enable state
+     */
+    public void setUseAutoPause(boolean useAutoStart) {
+        preferences.edit().putBoolean(USE_AUTO_PAUSE_VARIABLE, useAutoStart).apply();
+    }
+
+    /**
+     * Check if voice announcements should be suppressed during calls
+     * @return whether announcements should be suppressed during calls
+     */
+    public boolean getSuppressAnnouncementsDuringCall() {
+        return preferences.getBoolean(ANNOUNCE_SUPPRESS_DURING_CALL_VARIABLE, DEFAULT_ANNOUNCE_SUPPRESS_DURING_CALL);
+    }
+
+    /**
+     * Check if auto start countdown related announcements are enabled
+     * @return whether countdown announcements are enabled
+     */
+    public boolean isAutoStartCountdownAnnouncementsEnabled() {
+        return preferences.getBoolean(ANNOUNCE_AUTO_START_COUNTDOWN, DEFAULT_ANNOUNCE_AUTO_START_COUNTDOWN);
     }
 }

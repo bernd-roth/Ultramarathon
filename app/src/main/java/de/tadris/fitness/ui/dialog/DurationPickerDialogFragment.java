@@ -25,54 +25,110 @@ import android.app.AlertDialog;
 import android.view.View;
 import android.widget.NumberPicker;
 
+import androidx.annotation.StringRes;
+
 import de.tadris.fitness.R;
 import de.tadris.fitness.util.NumberPickerUtils;
 
-public class DurationPickerDialogFragment {
+/**
+ * Build a dialog to choose an arbitrary duration ([hh:]mm:ss)
+ */
+public class DurationPickerDialogFragment implements AlertDialogWrapper {
 
     public Activity context;
     public DurationPickListener listener;
     public long initialDuration;
 
+    private AlertDialog dialog;
+    private @StringRes int title = R.string.setDuration;
+    private boolean showHours;
+
+    /**
+     * @param context           The context this dialog should be shown in
+     * @param listener          The listener that is called when the user selects a duration
+     * @param initialDuration   Initially selected duration in milliseconds
+     *
+     * @apiNote This constructor is provided for convenience reasons, it will use the default title
+     * and make sure the hours picker is shown.
+     * @see #DurationPickerDialogFragment(Activity, DurationPickListener, long, int, boolean)
+     */
     public DurationPickerDialogFragment(Activity context, DurationPickListener listener, long initialDuration) {
         this.context = context;
         this.listener = listener;
         this.initialDuration = initialDuration;
+        this.showHours = true;
     }
 
+    /**
+     *
+     * @param context           The context this dialog should be shown in
+     * @param listener          The listener that is called when the user selects a duration
+     * @param initialDuration   Initially selected duration in milliseconds
+     * @param title             The title this fragment should get
+     * @param showHours         Whether hours picker should be shown
+     */
+    public DurationPickerDialogFragment(Activity context, DurationPickListener listener,
+                                        long initialDuration, @StringRes int title, boolean showHours) {
+        this.context = context;
+        this.listener = listener;
+        this.initialDuration = initialDuration;
+        this.title = title;
+        this.showHours = showHours;
+    }
+
+    /**
+     * Show the duration picker dialog.
+     */
     public void show() {
         final AlertDialog.Builder d = new AlertDialog.Builder(context);
-        d.setTitle(R.string.setDuration);
+        d.setTitle(title);
         View v = context.getLayoutInflater().inflate(R.layout.dialog_duration_picker, null);
         NumberPicker hours = v.findViewById(R.id.durationPickerHours);
         hours.setFormatter(value -> value + " " + context.getString(R.string.timeHourShort));
         hours.setMinValue(0);
         hours.setMaxValue(24);
-        hours.setValue(getInitialHours());
+
+        if (showHours) {
+            hours.setValue(getInitialHours());
+            hours.setVisibility(View.VISIBLE);
+            v.findViewById(R.id.hoursSeparator).setVisibility(View.VISIBLE);
+        } else {
+            hours.setValue(0);
+            hours.setVisibility(View.GONE);
+            v.findViewById(R.id.hoursSeparator).setVisibility(View.GONE);
+        }
         NumberPickerUtils.fixNumberPicker(hours);
 
         NumberPicker minutes = v.findViewById(R.id.durationPickerMinutes);
         minutes.setFormatter(value -> value + " " + context.getString(R.string.timeMinuteShort));
         minutes.setMinValue(0);
-        minutes.setMaxValue(60);
+        minutes.setMaxValue(59);
         minutes.setValue(getInitialMinutes());
         NumberPickerUtils.fixNumberPicker(minutes);
 
         NumberPicker seconds = v.findViewById(R.id.durationPickerSeconds);
         seconds.setFormatter(value -> value + " " + context.getString(R.string.timeSecondsShort));
         seconds.setMinValue(0);
-        seconds.setMaxValue(60);
+        seconds.setMaxValue(59);
         seconds.setValue(getInitialSeconds());
         NumberPickerUtils.fixNumberPicker(seconds);
 
         d.setView(v);
 
         d.setNegativeButton(R.string.cancel, null);
-        d.setPositiveButton(R.string.okay, (dialog, which) -> {
-            listener.onDurationPick(getMillisFromPick(hours.getValue(), minutes.getValue(), seconds.getValue()));
-        });
+        d.setPositiveButton(R.string.okay, (dialog, which) ->
+                listener.onDurationPick(getMillisFromPick(hours.getValue(), minutes.getValue(),
+                        seconds.getValue())));
 
-        d.create().show();
+        dialog = d.create();
+        dialog.show();
+    }
+
+    /**
+     * Get the underlying dialog instance.
+     */
+    public AlertDialog getDialog() {
+        return dialog;
     }
 
     private int getInitialHours() {
@@ -95,6 +151,9 @@ public class DurationPickerDialogFragment {
     }
 
     public interface DurationPickListener {
+        /**
+         * @param duration Selected duration in milliseconds
+         */
         void onDurationPick(long duration);
     }
 

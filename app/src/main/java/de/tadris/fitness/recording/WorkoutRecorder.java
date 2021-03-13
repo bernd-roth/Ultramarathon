@@ -20,12 +20,10 @@
 package de.tadris.fitness.recording;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.hardware.SensorManager;
 import android.location.Location;
 import android.os.SystemClock;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.greenrobot.eventbus.EventBus;
@@ -40,6 +38,7 @@ import de.tadris.fitness.BuildConfig;
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.IntervalSet;
+import de.tadris.fitness.data.UserPreferences;
 import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutData;
 import de.tadris.fitness.data.WorkoutSample;
@@ -60,9 +59,8 @@ public class WorkoutRecorder {
      * Time after which the workout is stopped and saved automatically because there is no activity anymore
      */
     private static final int AUTO_TIMEOUT_MULTIPLIER = 1_000 * 60; // minutes to ms
-    private static final int DEFAULT_WORKOUT_AUTO_TIMEOUT = 20;
 
-    private long autoTimeout;
+    private long autoTimeoutMs;
     private boolean useAutoPause;
     private final Context context;
     private final Workout workout;
@@ -171,9 +169,9 @@ public class WorkoutRecorder {
 
     private void init() {
         EventBus.getDefault().register(this);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        this.autoTimeout = prefs.getInt("autoTimeoutPeriod", DEFAULT_WORKOUT_AUTO_TIMEOUT) * AUTO_TIMEOUT_MULTIPLIER;
-        this.useAutoPause = prefs.getBoolean("autoPause", true);
+        UserPreferences prefs = Instance.getInstance(context).userPreferences;
+        this.autoTimeoutMs = prefs.getAutoTimeout() * AUTO_TIMEOUT_MULTIPLIER;
+        this.useAutoPause = prefs.getUseAutoPause();
     }
 
     public void start() {
@@ -211,14 +209,14 @@ public class WorkoutRecorder {
      */
     boolean handleWatchdog() {
         if (BuildConfig.DEBUG) {
-            Log.d("WorkoutRecorder", "handleWatchdog " + this.getState().toString() + " samples: " + samples.size() + " autoTout: " + autoTimeout + " inst: " + this.toString());
+            Log.d("WorkoutRecorder", "handleWatchdog " + this.getState().toString() + " samples: " + samples.size() + " autoTout: " + autoTimeoutMs + " inst: " + this.toString());
         }
         if (isActive()) {
             checkSignalState();
             synchronized (samples) {
                 if (samples.size() > 2) {
                     long timeDiff = System.currentTimeMillis() - lastSampleTime;
-                    if (autoTimeout > 0 && timeDiff > autoTimeout) {
+                    if (autoTimeoutMs > 0 && timeDiff > autoTimeoutMs) {
                         if (isActive()) {
                             stop();
                             save();

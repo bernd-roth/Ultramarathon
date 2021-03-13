@@ -20,6 +20,25 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <SwitchPreference
+        android:id="@+id/nfcStart"
+        android:defaultValue="false"
+        android:key="nfcStart"
+        android:summary="@string/nfcStartSummary"
+        android:title="@string/nfcStartTitle" />
+
+    <Preference
+        android:id="@+id/autoStartModeConfig"
+        android:key="autoStartModeConfig"
+        android:summary="@string/manageAutoStartModeSummary"
+        android:title="@string/intervalAutoStartModeTraining" />
+
+    <Preference
+        android:id="@+id/autoStartDelayConfig"
+        android:key="autoStartDelayConfig"
+        android:summary="@string/manageAutoStartDelaySummary"
+        android:title="@string/intervalAutoStartDelayTraining" />
+
+    <SwitchPreference
         android:defaultValue="true"
         android:key="autoPause"
         android:summary="@string/autoPauseSummary"

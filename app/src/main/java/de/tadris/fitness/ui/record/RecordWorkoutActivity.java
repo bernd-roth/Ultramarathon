@@ -31,7 +31,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.media.AudioManager;
 import android.net.Uri;
+import android.nfc.NfcAdapter;
+import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -48,11 +51,13 @@ import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 
 import org.greenrobot.eventbus.EventBus;
@@ -71,6 +76,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
@@ -79,8 +85,15 @@ import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.map.MapManager;
+import de.tadris.fitness.model.AutoStartWorkout;
+import de.tadris.fitness.recording.DefaultMovementDetector;
+import de.tadris.fitness.recording.MovementDetector;
 import de.tadris.fitness.recording.RecorderService;
 import de.tadris.fitness.recording.WorkoutRecorder;
+import de.tadris.fitness.recording.announcement.TTSController;
+import de.tadris.fitness.recording.autostart.AutoStartAnnouncements;
+import de.tadris.fitness.recording.autostart.AutoStartSoundFeedback;
+import de.tadris.fitness.recording.autostart.AutoStartVibratorFeedback;
 import de.tadris.fitness.recording.event.HeartRateConnectionChangeEvent;
 import de.tadris.fitness.recording.event.LocationChangeEvent;
 import de.tadris.fitness.recording.event.TTSReadyEvent;
@@ -90,14 +103,24 @@ import de.tadris.fitness.recording.information.InformationDisplay;
 import de.tadris.fitness.recording.information.RecordingInformation;
 import de.tadris.fitness.ui.FitoTrackActivity;
 import de.tadris.fitness.ui.LauncherActivity;
+import de.tadris.fitness.ui.dialog.AlertDialogWrapper;
+import de.tadris.fitness.ui.dialog.ChooseAutoStartDelayDialog;
+import de.tadris.fitness.ui.dialog.ChooseAutoStartModeDialog;
 import de.tadris.fitness.ui.dialog.ChooseBluetoothDeviceDialog;
 import de.tadris.fitness.ui.dialog.SelectIntervalSetDialog;
 import de.tadris.fitness.ui.dialog.SelectWorkoutInformationDialog;
 import de.tadris.fitness.util.BluetoothDevicePreferences;
+import de.tadris.fitness.util.NfcAdapterHelper;
+import de.tadris.fitness.util.ToneGeneratorController;
+import de.tadris.fitness.util.VibratorController;
+import de.tadris.fitness.util.event.EventBusMember;
 
 public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIntervalSetDialog.IntervalSetSelectListener,
         InfoViewHolder.InfoViewClickListener, SelectWorkoutInformationDialog.WorkoutInformationSelectListener,
         ChooseBluetoothDeviceDialog.BluetoothDeviceSelectListener {
+
+    public static final String TAG = "RecordWorkoutActivity";
+    public static final String TTS_CONTROLLER_ID = TAG;
 
     public static final String LAUNCH_ACTION = "de.tadris.fitness.RecordWorkoutActivity.LAUNCH_ACTION";
     public static final String RESUME_ACTION = "de.tadris.fitness.RecordWorkoutActivity.RESUME_ACTION";
@@ -106,6 +129,10 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     public static final int REQUEST_CODE_LOCATION_PERMISSION = 10;
     public static final int REQUEST_CODE_BACKGROUND_LOCATION_PERMISSION = 11;
     public static final int REQUEST_CODE_ENABLE_BLUETOOTH = 12;
+
+
+    // used to convert auto start time timebase from/to ms
+    private static final int AUTO_START_DELAY_MULTIPLIER = 1_000; // s to ms
 
     public WorkoutType activity;
 
@@ -119,6 +146,9 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     private ImageView hrStatusView;
     private View waitingForGPSOverlay;
     private Button startButton;
+    private Button startPopupButton;
+    private PopupMenu startPopupMenu = null;
+    private ConstraintLayout recordStartButtonsRoot;
     private boolean gpsFound = false;
     private boolean isResumed = false;
     private final Handler mHandler = new Handler();
@@ -128,12 +158,45 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     private Thread updater;
     private boolean finished;
 
+    private boolean useNfcStart;
+    private long autoStartDelayMs;    // in ms
+    private AutoStartWorkout.Mode autoStartMode;
+    private boolean useAutoStart = true;   // always enable auto start mode
+    private View autoStartCountdownOverlay;
+    private AlertDialogWrapper autoStartDelayDialog;
+    private ChooseAutoStartModeDialog autoStartModeDialog;
+    private MovementDetector movementDetector;
+    private AutoStartWorkout autoStartWorkout;
+    private VibratorController vibratorController;
+    private AutoStartVibratorFeedback autoStartVibratorFeedback;
+    private ToneGeneratorController toneGeneratorController;
+    private AutoStartSoundFeedback autoStartSoundFeedback;
+    private AutoStartAnnouncements autoStartAnnouncements;
+    private TTSController ttsController;
+
+    /**
+     * This ensures that the workout is only started once. Different threads (user input, auto start)
+     * might otherwise lead to nasty race conditions possibly starting a workout multiple times.
+     */
+    private Semaphore startedSem = new Semaphore(1);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         instance = Instance.getInstance(this);
         boolean wasAlreadyRunning = false;
+
+        // only use NFC when it's enabled in settings AND supported by the device
+        this.useNfcStart = instance.userPreferences.getUseNfcStart() &&
+                NfcAdapterHelper.isNfcPresent(this);
+        Log.d(TAG, "NFC start enabled:" + this.useNfcStart);
+
+        this.autoStartDelayMs = instance.userPreferences.getAutoStartDelay() * AUTO_START_DELAY_MULTIPLIER;
+        this.autoStartMode = instance.userPreferences.getAutoStartMode();
+        Log.d(TAG, "auto start enabled:" + this.useAutoStart + ", auto start delay: " +
+                this.autoStartDelayMs + ", auto start mode: " + autoStartMode);
+
         activity = WorkoutType.getWorkoutTypeById(this, WorkoutType.WORKOUT_TYPE_ID_OTHER);
         if (LAUNCH_ACTION.equals(intent.getAction())) {
             Serializable workoutType = intent.getSerializableExtra(WORKOUT_TYPE_EXTRA);
@@ -162,9 +225,48 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
         setupMap();
 
+        if (useNfcStart) {
+            // ask the user to enable NFC in device settings if it isn't at the moment
+            if (!NfcAdapterHelper.isNfcEnabled(this)) {
+                NfcAdapterHelper.createNfcEnableDialog(this).show();
+            }
+        }
+
         ((ViewGroup) findViewById(R.id.recordMapViewerRoot)).addView(mapView);
         waitingForGPSOverlay = findViewById(R.id.recorderWaitingOverlay);
         waitingForGPSOverlay.setVisibility(View.VISIBLE);
+
+        startPopupButton = findViewById(R.id.recordStartPopup);
+        recordStartButtonsRoot = findViewById(R.id.recordStartButtonsRoot);
+        if (useAutoStart) {
+            // instantiate TTSController in app context to be able to completely play the auto start
+            // abort announcement even when this activity has been destroyed already
+            ttsController = new TTSController(getApplicationContext(), TTS_CONTROLLER_ID);
+            movementDetector = new DefaultMovementDetector(this, instance.recorder.getWorkout());
+            autoStartWorkout = new AutoStartWorkout(new AutoStartWorkout.Config(autoStartDelayMs,
+                    autoStartMode), movementDetector);
+            movementDetector.registerTo(EventBus.getDefault());
+            movementDetector.start();
+            vibratorController = new VibratorController(this, instance);
+            autoStartVibratorFeedback = new AutoStartVibratorFeedback(vibratorController);
+            toneGeneratorController = new ToneGeneratorController(this, instance,
+                    AudioManager.STREAM_NOTIFICATION);
+            autoStartSoundFeedback = new AutoStartSoundFeedback(toneGeneratorController, instance);
+            autoStartVibratorFeedback.registerTo(EventBus.getDefault());
+            autoStartSoundFeedback.registerTo(EventBus.getDefault());
+            autoStartAnnouncements = new AutoStartAnnouncements(this, autoStartWorkout,
+                    instance, instance.recorder, ttsController);
+            autoStartAnnouncements.registerTo(EventBus.getDefault());
+            if (!autoStartWorkout.registerTo(EventBus.getDefault())) {
+                Log.e(TAG, "onCreate: Failed to setup auto start helper, not using auto start");
+                useAutoStart = false;
+                startPopupButton.setVisibility(View.GONE);
+            } else {
+                show(startPopupButton);
+            }
+        } else {
+            startPopupButton.setVisibility(View.GONE);
+        }
 
         startButton = findViewById(R.id.recordStart);
         updateStartButton(false, R.string.cannotStart, null);
@@ -193,7 +295,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
         if (wasAlreadyRunning) {
             if (instance.recorder.getState() != WorkoutRecorder.RecordingState.IDLE) {
-                startButton.setVisibility(View.INVISIBLE);
+                recordStartButtonsRoot.setVisibility(View.INVISIBLE);
                 invalidateOptionsMenu();
             }
 
@@ -229,6 +331,77 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
                 waitingForGPSOverlay.setVisibility(View.GONE);
             }
         }).start();
+    }
+
+    private void showAutoStartCountdownOverlay() {
+        if (useAutoStart && autoStartCountdownOverlay != null) {
+            autoStartCountdownOverlay.clearAnimation();
+
+            // if the view's not visible currently, we should start the animation from full transparency
+            if (autoStartCountdownOverlay.getVisibility() != View.VISIBLE) {
+                autoStartCountdownOverlay.setAlpha(0f);
+            }
+            // animation should take 1s max, if the view's not entirely hidden yet, it needs to be
+            // proportionally shorter of course
+            int durationMs = (int) ((1 - autoStartCountdownOverlay.getAlpha()) * 1000 + 0.5);
+
+            // and finally start the animation
+            autoStartCountdownOverlay.animate().alpha(1f).setDuration(durationMs).setListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animator) {
+                    // don't forget to make the view visible, needs to be done here in case hide
+                    // animation is cancelled prematurely by show animation. There was a race
+                    // condition when it was made visible again outside of the animation.
+                    autoStartCountdownOverlay.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animator) {
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animator) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animator) {
+                }
+            }).start();
+        }
+    }
+
+    private void hideAutoStartCountdownOverlay() {
+        if (useAutoStart && autoStartCountdownOverlay != null &&
+                autoStartCountdownOverlay.getVisibility() != View.GONE) {
+            autoStartCountdownOverlay.clearAnimation();
+
+            // animation should take 1s max, if the view's not entirely shown yet, it needs to be
+            // proportionally shorter of course
+            int durationMs = (int) (autoStartCountdownOverlay.getAlpha() * 1000 + 0.5);
+            autoStartCountdownOverlay.animate().alpha(0f).setDuration(durationMs).setListener(new Animator.AnimatorListener() {
+                private boolean cancelled = false;
+                @Override
+                public void onAnimationStart(Animator animator) {
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animator) {
+                    cancelled = true;
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animator) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animator) {
+                    // prevent screen flickering
+                    if (!cancelled) {
+                        autoStartCountdownOverlay.setVisibility(View.GONE);
+                    }
+                }
+            }).start();
+        }
     }
 
     private void setupMap() {
@@ -282,51 +455,102 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         infoViews[slot].setText(data.getTitle(), data.getValue());
     }
 
-    private void hideStartButton() {
+    private void hide(View view) {
+        if (useAutoStart && startPopupMenu != null
+                && (view.getId() == recordStartButtonsRoot.getId()
+                || view.getId() == startPopupButton.getId())) {
+            startPopupMenu.dismiss();
+        }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            int cx = startButton.getWidth() / 2;
-            int cy = startButton.getHeight() / 2;
+            int cx = view.getWidth() / 2;
+            int cy = view.getHeight() / 2;
             float initialRadius = (float) Math.hypot(cx, cy);
-            Animator anim = ViewAnimationUtils.createCircularReveal(startButton, cx, cy, initialRadius, 0f);
+            Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, initialRadius, 0f);
             anim.setDuration(500);
             anim.setInterpolator(new AccelerateInterpolator());
             anim.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
-                    startButton.setVisibility(View.INVISIBLE);
+                    view.setVisibility(View.INVISIBLE);
                 }
             });
 
             anim.start();
         } else {
-            startButton.animate().alpha(0f).setDuration(500).start();
+            view.animate().alpha(0f).setDuration(500).start();
         }
     }
 
-    private void showStartButton() {
-        startButton.setAlpha(1);
-        if (startButton.getVisibility() != View.VISIBLE) {
-            startButton.clearAnimation();
-            startButton.setAlpha(0);
-            startButton.animate().alpha(1).setDuration(500).start();
+    private void show(View view) {
+        view.setAlpha(1);
+        if (view.getVisibility() != View.VISIBLE) {
+            view.clearAnimation();
+            view.setAlpha(0);
+            view.animate().alpha(1).setDuration(500).start();
         }
-        startButton.setVisibility(View.VISIBLE);
+        view.setVisibility(View.VISIBLE);
     }
 
     private void updateStartButton(boolean enabled, @StringRes int text, View.OnClickListener listener) {
-        showStartButton();
+        show(recordStartButtonsRoot);
         startButton.setEnabled(enabled);
         startButton.setText(text);
         startButton.setOnClickListener(listener);
     }
 
+    /**
+     * Cancel auto start
+     */
+    private void cancelAutoStart(boolean userReq) {
+        // make sure auto start is cancelled
+        EventBus.getDefault().post(new AutoStartWorkout.AbortEvent(userReq ?
+                AutoStartWorkout.AbortEvent.Reason.USER_REQ :
+                AutoStartWorkout.AbortEvent.Reason.STARTED));
+    }
+
+    private void autoStart() {
+        Log.i(TAG, "Starting workout automatically");
+
+        // start the workout
+        start();
+        Toast.makeText(this, R.string.workoutAutoStarted, Toast.LENGTH_SHORT).show();
+    }
+
     private void start() {
+        // some nasty race conditions might occur between auto start and the user pressing the start
+        // button, so better make sure we only start once
+        // TODO is this really necessary or would the flag isStarted be enough
+        if (startedSem.drainPermits() == 0) {   // consuming all permits just to be sure..
+            Log.w(TAG, "Cannot start the workout, it has already been started.");
+            return;
+        }
+
+        // take care of auto start (hide stuff and/or abort it whatever's necessary)
+        cancelAutoStart(false);
+
+        if (autoStartDelayDialog != null) {
+            autoStartDelayDialog.getDialog().cancel();
+            autoStartDelayDialog = null;
+        }
+
+        // show workout timer
+        hide(recordStartButtonsRoot);
+
+        // and start workout recorder
         instance.recorder.start();
         invalidateOptionsMenu();
     }
 
     private void stop() {
+        // allow restarts after stopping
+        // TODO is it save to do this right on entry and not on exit??
+        startedSem.release();
+
+        // cancel auto start if necessary
+        cancelAutoStart(true);
+
         if (instance.recorder.getState() != WorkoutRecorder.RecordingState.IDLE) { // Only Running Records can be stopped
             instance.recorder.stop();
             if (instance.recorder.getSampleCount() > 3) {
@@ -501,7 +725,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
                 startService(locationListener);
             }
         } else {
-            Log.d("RecordWorkoutActivity", "Listener Already Running");
+            Log.d(TAG, "Listener Already Running");
         }
 
         checkGpsStatus();
@@ -553,6 +777,29 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
     @Override
     protected void onDestroy() {
+        if (useAutoStart) {
+            // abort any ongoing auto start procedure
+            cancelAutoStart(true);
+
+            // once that's done, make sure no one stays registered to its event bus thereby creating
+            // a stale process
+            movementDetector.stop();
+            movementDetector.unregisterFromBus();
+            autoStartWorkout.unregisterFromBus();
+            autoStartVibratorFeedback.unregisterFromBus();
+            autoStartSoundFeedback.unregisterFromBus();
+            autoStartAnnouncements.unregisterFromBus();
+
+            // shutdown Text-to-Speech engine
+            if (ttsController != null) {
+                ttsController.destroyWhenDone();
+            }
+
+            if (autoStartDelayDialog != null) {
+                autoStartDelayDialog.getDialog().cancel();
+                autoStartDelayDialog = null;
+            }
+        }
         // Clear map
         mapView.destroyAll();
         AndroidGraphicFactory.clearResourceMemoryCache();
@@ -581,6 +828,15 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
                 ((TileDownloadLayer) layer).onPause();
             }
         }
+
+        // stop intercepting NFC intents
+        if (useNfcStart && NfcAdapterHelper.isNfcEnabled(this)) {
+            if (!NfcAdapterHelper.disableNfcForegroundDispatch(this)) {
+                Log.w(TAG, "onPause: Failed to disable NFC foreground dispatch system. " +
+                        "NFC is not enabled or present in this device.");
+            }
+        }
+
         isResumed = false;
         super.onPause();
     }
@@ -588,6 +844,21 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     @Override
     public void onResume() {
         super.onResume();
+
+        // start intercepting NFC intents
+        if (useNfcStart && NfcAdapterHelper.isNfcEnabled(this)) {
+            if(!NfcAdapterHelper.enableNfcForegroundDispatch(this)) {
+                Log.w(TAG, "onPause: Failed to disable NFC foreground dispatch system. " +
+                        "NFC is not enabled or present in this device.");
+            }
+        }
+
+        // update countdown field if necessary
+        if (useAutoStart && autoStartWorkout != null
+                && autoStartWorkout.getState() == AutoStartWorkout.State.COUNTDOWN) {
+            onCountdownChange(new AutoStartWorkout.CountdownChangeEvent(autoStartWorkout.getCountdownMs()));
+        }
+
         finished = false;
         if (instance.userPreferences.getShowOnLockScreen()) {
             enableLockScreenVisibility();
@@ -645,6 +916,10 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
     private void onManualPauseButtonClick() {
         if (instance.recorder.isResumed()) {
+            if (useAutoStart) {
+                startPopupButton.setVisibility(View.GONE);
+            }
+            show(recordStartButtonsRoot);
             instance.recorder.pause();
             updateStartButton(true, R.string.actionResume, v -> {
                 if (instance.recorder.isPaused()) {
@@ -653,7 +928,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
             });
         } else if (instance.recorder.isPaused()) {
             instance.recorder.resume();
-            hideStartButton();
+            hide(recordStartButtonsRoot);
         }
         invalidateOptionsMenu();
     }
@@ -713,6 +988,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
     @Override
     public void onBackPressed() {
+        cancelAutoStart(true);
         if(instance.recorder.isActive() && instance.recorder.getState() != WorkoutRecorder.RecordingState.IDLE){
             // Still Running Workout
             showAreYouSureToStopDialog();
@@ -735,6 +1011,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onGPSStateChanged(WorkoutGPSStateChanged e) {
+
         WorkoutRecorder.GpsState state = e.newState;
         gpsStatusView.setTextColor(state.color);
 
@@ -744,10 +1021,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
         if (instance.recorder.getState() == WorkoutRecorder.RecordingState.IDLE) {
             if (state == WorkoutRecorder.GpsState.SIGNAL_OKAY) {
-                updateStartButton(true, R.string.start, v -> {
-                    hideStartButton();
-                    start();
-                });
+                updateStartButton(true, R.string.start, v -> start());
             } else {
                 updateStartButton(false, R.string.cannotStart, null);
             }
@@ -776,8 +1050,11 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
     @Subscribe
     public void onVoiceAnnouncementIsReady(TTSReadyEvent e) {
-        this.voiceFeedbackAvailable = e.ttsAvailable;
-        invalidateOptionsMenu();
+        // actually, we only care for the RecorderService's TTS controller here
+        if (e.id.equals(RecorderService.TTS_CONTROLLER_ID)) {
+            this.voiceFeedbackAvailable = e.ttsAvailable;
+            invalidateOptionsMenu();
+        }
     }
 
     @Override
@@ -806,5 +1083,172 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     private boolean isBluetoothSupported() {
         // Check if device has a bluetooth adapter
         return BluetoothAdapter.getDefaultAdapter() != null;
+    }
+
+    public void onStartPopupButtonClicked(View v) {
+        // only show if not started yet
+        // => disables this button for the short time of the hide animation, when a workout has just
+        // started
+        if (isRecordingStarted()) {
+            return;
+        }
+        startPopupMenu = new PopupMenu(this, v);
+        startPopupMenu.setOnMenuItemClickListener(menuItem -> {
+            int itemId = menuItem.getItemId();
+            if(itemId == R.id.auto_start) {
+                Log.d(TAG, "Auto start from popup menu selected");
+                if (useAutoStart) {
+                    AutoStartWorkout.Config config = autoStartWorkout.getDefaultStartConfig();
+                    beginAutoStart(config.countdownMs, config.mode);
+                }
+            } else if(itemId == R.id.auto_start_immediately) {
+                start();
+            } else if(itemId == R.id.auto_start_on_move) {
+                beginAutoStart(0, AutoStartWorkout.Mode.ON_MOVE);
+            } else if(itemId == R.id.auto_start_wait_for_gps) {
+                beginAutoStart(0, AutoStartWorkout.Mode.WAIT_FOR_GPS);
+            } else if (itemId == R.id.auto_start_delay) {
+                Log.d(TAG, "Auto start with custom settings from popup menu selected");
+                // show the reduced delay picker dialog first (then, if selected, the custom ine)
+                // and lastly the mode picker dialog
+                // they'll be preloaded with either the last selected or the default value from
+                // preferences
+                autoStartDelayDialog = new ChooseAutoStartDelayDialog(this, delayS -> {
+                    autoStartDelayDialog = new ChooseAutoStartModeDialog(this, mode -> {
+                        if (!beginAutoStart(delayS * 1_000, mode)) {
+                            Log.e(TAG, "Failed to initiate auto workout start sequence from " +
+                                    "popup menu");
+                        } else {
+                            Log.d(TAG, "Auto start from popup menu with delay of " + delayS +
+                                    "s and mode " + mode);
+                        }
+                    }, autoStartWorkout.getLastStartConfig().mode);
+                    autoStartDelayDialog.show();
+                }, autoStartWorkout.getLastStartConfig().countdownMs);
+                autoStartDelayDialog.show();
+            } else {
+                return false;
+            }
+            return true;
+        });
+        startPopupMenu.inflate(R.menu.start_popup_menu);
+        startPopupMenu.show();
+    }
+
+    public void onAutoStartCountdownAbortButtonClicked(View v) {
+        cancelAutoStart(true);
+        Toast.makeText(this, R.string.workoutAutoStartAborted, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Start the auto start sequence if enabled in settings.
+     * @param delayMs the delay in milliseconds after which the workout should be started
+     * @param mode the auto start mode with which the workout should be started
+     * @return whether it has been started successfully or not
+     */
+    public boolean beginAutoStart(long delayMs, AutoStartWorkout.Mode mode) {
+        if (useAutoStart) {
+            // show the countdown overlay (at least, if we're actually counting down)
+            if (autoStartCountdownOverlay == null) {
+                autoStartCountdownOverlay = findViewById(R.id.recorderAutoStartOverlay);
+            }
+            AutoStartWorkout.Config config;
+            if (mode == null) {
+                config = new AutoStartWorkout.Config(delayMs);
+            } else if (delayMs == Long.MIN_VALUE) {
+                config = new AutoStartWorkout.Config(mode);
+            } else {
+                config = new AutoStartWorkout.Config(delayMs, mode);
+            }
+            EventBus.getDefault().post(new AutoStartWorkout.BeginEvent(config));
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Start the auto start sequence in default mode.
+     */
+    public boolean beginAutoStart(long delayMs) {
+        return beginAutoStart(delayMs, null);
+    }
+
+    /**
+     * Start the auto start sequence with default delay.
+     */
+    public boolean beginAutoStart(AutoStartWorkout.Mode mode) {
+        return beginAutoStart(Long.MIN_VALUE, mode);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onAutoStartWorkoutStateChange(AutoStartWorkout.StateChangeEvent stateChangeEvent) {
+        switch (stateChangeEvent.newState) {
+            case COUNTDOWN:
+                showAutoStartCountdownOverlay();
+                break;
+            case WAITING_FOR_GPS:
+                ((TextView) findViewById(R.id.autoStartCountdownVal)).setText("");
+                ((TextView) findViewById(R.id.autoStartCountdownMsg)).setText(getString(R.string.autoStartCountdownMsgGps));
+                showAutoStartCountdownOverlay();
+                break;
+            case WAITING_FOR_MOVE:
+                ((TextView) findViewById(R.id.autoStartCountdownVal)).setText("");
+                ((TextView) findViewById(R.id.autoStartCountdownMsg)).setText(getString(R.string.autoStartCountdownMsgMove));
+                showAutoStartCountdownOverlay();
+                break;
+            case AUTO_START_REQUESTED:
+                autoStart();
+                break;
+            case ABORTED_BY_USER:
+            case ABORTED_ALREADY_STARTED:
+                hideAutoStartCountdownOverlay();
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onCountdownChange (AutoStartWorkout.CountdownChangeEvent countdownChangeEvent) {
+        ((TextView) findViewById(R.id.autoStartCountdownMsg)).setText(getString(R.string.autoStartCountdownMsg));
+        String text;
+        if (countdownChangeEvent.countdownS > 60) {
+            // use countdownS because that is rounded properly already
+            text = instance.distanceUnitUtils.getMinuteSecondTime(countdownChangeEvent.countdownS * 1_000);
+        } else {
+            text = String.format(getString(R.string.autoStartCountdownVal),
+                    countdownChangeEvent.countdownS, getText(R.string.timeSecondsShort));
+        }
+        Log.d(TAG, "Updating auto start countdown: " + text + " (" +
+                countdownChangeEvent.countdownMs + ")");
+        ((TextView) findViewById(R.id.autoStartCountdownVal)).setText(text);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        // should have only gotten here when an NFC tag has been detected
+        if (useNfcStart) {
+            // above check should actually not be necessary, b/c NFC should only be enabled if we
+            // want to use it. But it's cheep so let's keep it just to be sure..
+
+            // let's see if the intent contains an NFC tag and start/stop recording if it does
+            Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+            if (tag != null) {
+                if (isRecordingStarted()) {
+                    Log.i(TAG, "onNewIntent: NFC tag triggered workout end");
+                    stop();
+                } else {
+                    Log.i(TAG, "onNewIntent: NFC tag triggered workout start");
+                    start();    // start immediately, don't care about signal quality or anything
+                }
+            }
+        }
+    }
+
+    /**
+     * Check whether recording has already been started yet
+     */
+    private boolean isRecordingStarted() {
+        return startedSem.availablePermits() == 0;
     }
 }

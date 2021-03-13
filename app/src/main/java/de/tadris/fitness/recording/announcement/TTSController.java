@@ -30,23 +30,36 @@ import android.util.Log;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import de.tadris.fitness.recording.WorkoutRecorder;
 import de.tadris.fitness.recording.event.TTSReadyEvent;
 
 public class TTSController {
+    public static final String DEFAULT_TTS_CONTROLLER_ID = "TTSController";
 
     private TextToSpeech textToSpeech;
     private boolean ttsAvailable;
+    private String id;
 
-    private final AnnouncementMode currentMode;
+    private AnnouncementMode currentMode;
 
-    private final AudioManager audioManager;
+    private AudioManager audioManager;
 
     public TTSController(Context context) {
+        init(context, DEFAULT_TTS_CONTROLLER_ID);
+    }
+
+    public TTSController(Context context, String id) {
+        init(context, id);
+    }
+
+    private void init(Context context, String id) {
         this.textToSpeech = new TextToSpeech(context, this::ttsReady);
         this.audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         this.currentMode = AnnouncementMode.getCurrentMode(context);
+        this.id = id;
     }
 
     private void ttsReady(int status) {
@@ -54,7 +67,7 @@ public class TTSController {
         if (ttsAvailable) {
             textToSpeech.setOnUtteranceProgressListener(new TextToSpeechListener());
         }
-        EventBus.getDefault().post(new TTSReadyEvent(ttsAvailable));
+        EventBus.getDefault().post(new TTSReadyEvent(ttsAvailable, id));
     }
 
     public void speak(WorkoutRecorder recorder, Announcement announcement) {
@@ -90,8 +103,30 @@ public class TTSController {
         return audioManager.isWiredHeadsetOn() || bluetoothHeadsetConnected;
     }
 
+    /**
+     * Destroys the TTS instance immediately. Ongoing announcements might be aborted.<br>
+     * Use {@link #destroyWhenDone()} instead, if you don't want to abort ongoing announcements.
+     */
     public void destroy() {
         textToSpeech.shutdown();
+    }
+
+    /**
+     * Waits for the end of an ongoing announcement before the TTS instance is destroyed.<br>
+     * Use {@link #destroy()} instead, if you don't care about that.
+     */
+    public void destroyWhenDone() {
+        Timer destroyTimer = new Timer("TTS_Destroy");
+        destroyTimer.scheduleAtFixedRate(new TimerTask() {
+                    @Override
+                    public void run() {
+                        if (!textToSpeech.isSpeaking()) {
+                            destroy();
+                            cancel();
+                            destroyTimer.cancel();
+                        }
+                    }
+                }, 20, 20);
     }
 
     public boolean isTtsAvailable() {

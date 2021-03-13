@@ -19,34 +19,58 @@
 
 package de.tadris.fitness.ui.settings;
 
-import android.app.AlertDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.view.View;
-import android.widget.NumberPicker;
 import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
+import de.tadris.fitness.model.AutoStartWorkout;
 import de.tadris.fitness.recording.announcement.TTSController;
 import de.tadris.fitness.recording.event.TTSReadyEvent;
-import de.tadris.fitness.util.NumberPickerUtils;
+import de.tadris.fitness.ui.dialog.AutoStartDelayPickerDialogFragment;
+import de.tadris.fitness.ui.dialog.ChooseAutoStartDelayDialog;
+import de.tadris.fitness.ui.dialog.ChooseAutoStartModeDialog;
+import de.tadris.fitness.ui.dialog.ChooseAutoTimeoutDialog;
+import de.tadris.fitness.util.NfcAdapterHelper;
 
-public class RecordingSettingsActivity extends FitoTrackSettingsActivity {
+public class RecordingSettingsActivity
+        extends FitoTrackSettingsActivity
+        implements ChooseAutoStartModeDialog.AutoStartModeSelectListener,
+        ChooseAutoStartDelayDialog.AutoStartDelaySelectListener,
+        ChooseAutoTimeoutDialog.AutoTimeoutSelectListener {
+
+    Instance instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActionBar();
 
+        instance = Instance.getInstance(this);
+
         setTitle(R.string.preferencesRecordingTitle);
 
         addPreferencesFromResource(R.xml.preferences_recording);
+
+        // modify NFC option
+        if (!NfcAdapterHelper.isNfcPresent(this)) { // disable the NFC option if the device doesn't support NFC
+            findPreference("nfcStart").setEnabled(false);
+        } else {
+            // ask the user to enable NFC in device settings when they want to use it in the app
+            // but NFC is globally disabled
+            findPreference("nfcStart").setOnPreferenceChangeListener((pref, newValue) -> {
+                if ((Boolean) newValue && !NfcAdapterHelper.isNfcEnabled(this)) {
+                    NfcAdapterHelper.createNfcEnableDialog(this).show();
+                    return false;   // do NOT use NFC yet, user first needs to enable it in device settings
+                }
+                return true;
+            });
+        }
 
         findPreference("speech").setOnPreferenceClickListener(preference -> {
             checkTTS(this::showSpeechConfig);
@@ -54,6 +78,16 @@ public class RecordingSettingsActivity extends FitoTrackSettingsActivity {
         });
         findPreference("intervals").setOnPreferenceClickListener(preference -> {
             checkTTS(this::showIntervalSetManagement);
+            return true;
+        });
+
+        findPreference("autoStartModeConfig").setOnPreferenceClickListener(preference -> {
+            showAutoStartModeConfig();
+            return true;
+        });
+
+        findPreference("autoStartDelayConfig").setOnPreferenceClickListener(preference -> {
+            showAutoStartDelayConfig();
             return true;
         });
 
@@ -92,32 +126,32 @@ public class RecordingSettingsActivity extends FitoTrackSettingsActivity {
         startActivity(new Intent(this, ManageIntervalSetsActivity.class));
     }
 
-    private void showAutoTimeoutConfig() {
-        final AlertDialog.Builder d = new AlertDialog.Builder(this);
-        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        d.setTitle(getString(R.string.pref_auto_timeout_title));
-        View v = getLayoutInflater().inflate(R.layout.dialog_auto_timeout_picker, null);
-
-        int stepWidth = 5; // 5 Min Step Width
-
-        NumberPicker npT = v.findViewById(R.id.autoTimeoutPicker);
-        npT.setMaxValue(60 / stepWidth);
-        npT.setMinValue(0);
-        npT.setFormatter(value -> value == 0 ? getText(R.string.notimeout).toString() : value * stepWidth + " " + getText(R.string.timeMinuteShort));
-        final String autoTimeoutVariable = "autoTimeoutPeriod";
-        npT.setValue(preferences.getInt(autoTimeoutVariable, 20) / stepWidth);
-        npT.setWrapSelectorWheel(false);
-        NumberPickerUtils.fixNumberPicker(npT);
-
-        d.setView(v);
-
-        d.setNegativeButton(R.string.cancel, null);
-        d.setPositiveButton(R.string.okay, (dialog, which) ->
-                preferences.edit()
-                        .putInt(autoTimeoutVariable, npT.getValue() * stepWidth)
-                        .apply());
-
-        d.create().show();
+    private void showAutoStartModeConfig() {
+        new ChooseAutoStartModeDialog(this, this).show();
     }
 
+    private void showAutoStartDelayConfig() {
+        int initialDelayS = instance.userPreferences.getAutoStartDelay();
+        new ChooseAutoStartDelayDialog(this, this,
+                (long) initialDelayS * 1_000).show();
+    }
+
+    private void showAutoTimeoutConfig() {
+        new ChooseAutoTimeoutDialog(this, this).show();
+    }
+
+    @Override
+    public void onSelectAutoStartMode(AutoStartWorkout.Mode mode) {
+        Instance.getInstance(this).userPreferences.setAutoStartMode(mode);
+    }
+
+    @Override
+    public void onSelectAutoStartDelay(int delayS) {
+        Instance.getInstance(this).userPreferences.setAutoStartDelay(delayS);
+    }
+
+    @Override
+    public void onSelectAutoTimeout(int timeoutM) {
+        Instance.getInstance(this).userPreferences.setAutoTimeout(timeoutM);
+    }
 }

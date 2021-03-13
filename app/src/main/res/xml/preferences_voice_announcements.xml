@@ -41,6 +41,11 @@
 
         <CheckBoxPreference
             android:defaultValue="true"
+            android:key="announcement_countdown"
+            android:title="@string/announcementCountdown" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
             android:key="announcement_system_actions"
             android:title="@string/announcementWorkoutActions" />
 
