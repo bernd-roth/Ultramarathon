@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -17,9 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-
-<resources>
+  --><resources>
     <string name="app_name">FitoTrack</string>
     <string name="backup">Sichern</string>
     <string name="cancel">Abbrechen</string>
@@ -378,9 +375,9 @@
     <string name="alreadyDownloading">Eine Datei wird bereits heruntergeladen</string>
     <string name="actionCancelDownload">Download abbrechen</string>
     <string name="cancelDownloadConfirmation">Möchtest du den aktuellen Download abbrechen?</string>
-    <string name="downloadSuccess">Herunterladen erfolgreich</string>
+    <string name="downloadSuccess">Heruntergeladen</string>
     <string name="downloadFailed">Herunterladen fehlgeschlagen</string>
     <string name="downloadCanceled">Herunterladen abgebrochen</string>
     <string name="chooseMapHint">Bitte eine Kartendatei auswählen</string>
-    <string name="downloading">Herunterladen</string>
+    <string name="downloading">Herunterladen …</string>
 </resources>
