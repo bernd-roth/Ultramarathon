@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -378,11 +377,10 @@
     <string name="alreadyDownloading">Eine Datei wird bereits heruntergeladen</string>
     <string name="actionCancelDownload">Download abbrechen</string>
     <string name="cancelDownloadConfirmation">Möchtest du den aktuellen Download abbrechen?</string>
-    <string name="downloadSuccess">Herunterladen erfolgreich</string>
+    <string name="downloadSuccess">Heruntergeladen</string>
     <string name="downloadFailed">Herunterladen fehlgeschlagen</string>
     <string name="downloadCanceled">Herunterladen abgebrochen</string>
     <string name="chooseMapHint">Bitte eine Kartendatei auswählen</string>
-    <string name="downloading">Herunterladen</string>
     <string name="intervalAutoStartDelayTraining">Workout Auto-Start Verzögerung</string>
     <string name="manageAutoStartDelaySummary">Wähle einen Countdown zum automatischen Starten deines Workouts</string>
     <string name="pref_auto_start_delay_title">Auto-Start Countdown</string>
@@ -434,4 +432,5 @@
     <string name="pref_auto_start_mode_wait_for_gps">Auf exakte GPS-Position warten</string>
     <string name="pref_auto_start_mode_on_move">Starten, sobald du dich bewegst</string>
     <string name="pref_auto_start_mode_unknown">Unbekannter Modus (bitte nicht auswählen)</string>
+    <string name="downloading">Herunterladen…</string>
 </resources>
