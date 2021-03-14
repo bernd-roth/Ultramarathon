@@ -16,7 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources>
+  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="stop">Durdur</string>
     <string name="workoutStarted">Egzersiz başlatıldı</string>
     <string name="workoutStopped">Egzersiz durduruldu</string>
@@ -336,4 +336,44 @@
     <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack, ekran kapalıyken egzersizi kaydetmek için arka plandayken de konum verilerini toplar. Bu nedenle, lütfen FitoTrack\'in her zaman konumunuza erişmesine izin verin.</string>
     <string name="recordingPermissionNotGrantedMessage">FitoTrack, egzersiz sırasında hareketinizi takip etmek için konum iznine ihtiyaç duyar. FitoTrack ayrıca uygulama arka plandayken veya egzersizlerinizi kaydetmek için ekran kapalıyken de konum verilerini toplar. Konum verileri, paylaşmak için açık rızanız olmadığı sürece her zaman telefonunuzda kalır.</string>
     <string name="workoutTypeAll">Tümü</string>
+    <string name="intervalAutoStartModeTraining">Otomatik Egzersiz Başlatma Modu</string>
+    <string name="intervalAutoStartDelayTraining">Otomatik Egzersiz Başlatma Gecikmesi</string>
+    <string name="pref_auto_start_mode_unknown">Bilinmeyen mod (lütfen seçmeyin)</string>
+    <string name="pref_auto_start_mode_on_move">Hareket etmeye başlamayı bekle</string>
+    <string name="pref_auto_start_mode_wait_for_gps">Doğru GPS konumunu bekle</string>
+    <string name="pref_auto_start_mode_instant">Hemen başla</string>
+    <string name="pref_auto_start_mode_title">Otomatik Başlatma Modu</string>
+    <string name="manageAutoStartModeSummary">Otomatik egzersiz başlatma modunu değiştirin</string>
+    <string name="ttsMinuteSecondCountdownAnnouncement">" başlayana kadar &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"mins\" example=\"1 minute\"&gt;%1$s&lt;/xliff:g&gt; ve &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"secs\" example=\"7 seconds\"&gt;%2$s&lt;/xliff:g&gt; "</string>
+    <string name="ttsMinuteCountdownAnnouncement">" başlayana kadar &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"mins\" example=\"12 minutes\"&gt;%1$s&lt;/xliff:g&gt; "</string>
+    <string name="ttsLongSecondCountdownAnnouncement">" başlayana kadar &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"secs\" example=\"5 seconds\"&gt;%1$s&lt;/xliff:g&gt; "</string>
+    <plurals name="minutes">
+        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"mins\" example=\"1\"&gt;%1$d&lt;/xliff:g&gt; dakika</item>
+        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"mins\" example=\"5\"&gt;%1$d&lt;/xliff:g&gt; dakika</item>
+    </plurals>
+    <plurals name="seconds">
+        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"secs\" example=\"1\"&gt;%1$d&lt;/xliff:g&gt; saniye</item>
+        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"secs\" example=\"12\"&gt;%1$d&lt;/xliff:g&gt; saniye</item>
+    </plurals>
+    <string name="announcementCountdown">Otomatik Başlatma Eylemleri (geri sayım, durum vs.)</string>
+    <string name="action_nfc_settings">NFC ayarlarına git</string>
+    <string name="dialog_nfc_disabled">Egzersizleri başlatmak ve durdurmak üzere NFC etiketlerini kullanmak için önce aygıt ayarlarında NFC\'yi etkinleştirmeniz gerekir</string>
+    <string name="dialog_nfc_disabled_title">NFC şu anda devre dışı</string>
+    <string name="nfcStartSummary">Etkinleştirilirse, bir NFC etiketi tarayarak egzersizleri başlatabilir ve durdurabilirsiniz</string>
+    <string name="nfcStartTitle">Başlamak için tara</string>
+    <string name="workoutAutoStartAborted">Otomatik başlatma iptal edildi</string>
+    <string name="abort">İptal</string>
+    <string name="popup_auto_start_wait_for_gps">GPS konumu kesin olduğunda</string>
+    <string name="popup_auto_start_on_move">Hareket etmeye başladığımda</string>
+    <string name="popup_auto_start_immediately">Hemen başla</string>
+    <string name="popup_auto_start">Öntanımlı gecikmeyle</string>
+    <string name="popup_auto_start_delay">Özel gecikmeyle</string>
+    <string name="workoutAutoStarted">Egzersiz otomatik olarak başladı</string>
+    <string name="autoStartCountdownMsgMove">Hareket etmeye başladığınızda egzersiz başlayacak</string>
+    <string name="autoStartCountdownMsgGps">GPS konumu yeterince doğru olduğunda egzersiz başlayacak</string>
+    <string name="autoStartCountdownMsg">Egzersiz başlama süresi</string>
+    <string name="customAutoStartDelay">Diğer</string>
+    <string name="noAutoStartDelay">Yok</string>
+    <string name="pref_auto_start_delay_title">Otomatik Başlatma Geri Sayımı</string>
+    <string name="manageAutoStartDelaySummary">Otomatik egzersiz başlatmak için öntanımlı geri sayımı seçin</string>
 </resources>
