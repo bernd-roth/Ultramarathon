@@ -16,7 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources>
+  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="chooseBackupFile">Ficheiro de copia de apoio</string>
     <string name="loadingFile">Cargando arquivo</string>
     <string name="finished">Rematado</string>
@@ -336,4 +336,44 @@
     <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack tamén recolle datos de localización en segundo plano para gravar o adestramento cando a pantalla está apagada. Por tanto, dalle acceso a FitoTrack para acceder á localización de xeito permanente.</string>
     <string name="recordingPermissionNotGrantedMessage">FitoTrack precisa do permiso de acceso á localización para seguir o teu adestramento. FitoTrack tamén recolle datos de localización cando a app está en segundo plano ou a coa pantalla apagada para poder gravar os adestramentos. Os datos de localización permanecen en todo momento no teu dispositivo a non ser que queiras compartilos de xeito explícito.</string>
     <string name="workoutTypeAll">Todo</string>
+    <string name="pref_auto_start_mode_unknown">Modo descoñecido (non selecciones isto)</string>
+    <string name="pref_auto_start_mode_on_move">Agardar a que comeces a moverte</string>
+    <string name="pref_auto_start_mode_wait_for_gps">Agardar pola posición GPS precisa</string>
+    <string name="pref_auto_start_mode_instant">Comezar inmediatamente</string>
+    <string name="pref_auto_start_mode_title">Modo Auto-Inicio</string>
+    <string name="intervalAutoStartModeTraining">Modo de Adestramento de inicio automático</string>
+    <string name="manageAutoStartModeSummary">Cambia o xeito en que se inicia o adestramento automático</string>
+    <string name="ttsMinuteSecondCountdownAnnouncement">" &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"mins\" example=\"1 minute\"&gt;%1$s&lt;/xliff:g&gt; e &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"secs\" example=\"7 seconds\"&gt;%2$s&lt;/xliff:g&gt; para o inicio "</string>
+    <string name="ttsMinuteCountdownAnnouncement">" &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"mins\" example=\"12 minutes\"&gt;%1$s&lt;/xliff:g&gt; ata o inicio "</string>
+    <string name="ttsLongSecondCountdownAnnouncement">" &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"secs\" example=\"5 seconds\"&gt;%1$s&lt;/xliff:g&gt; para o inicio "</string>
+    <plurals name="minutes">
+        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"mins\" example=\"1\"&gt;%1$d&lt;/xliff:g&gt; minuto</item>
+        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"mins\" example=\"5\"&gt;%1$d&lt;/xliff:g&gt; minutos</item>
+    </plurals>
+    <plurals name="seconds">
+        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"secs\" example=\"1\"&gt;%1$d&lt;/xliff:g&gt; segundo</item>
+        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"secs\" example=\"12\"&gt;%1$d&lt;/xliff:g&gt; segundos</item>
+    </plurals>
+    <string name="announcementCountdown">Accións de Inicio automático (contra atrás, estado, etc.)</string>
+    <string name="action_nfc_settings">Ir aos axustes NFC</string>
+    <string name="dialog_nfc_disabled">Para poder usar etiquetas NFC para iniciar e deter adestramentos tes que activar o NFC no dispositivo</string>
+    <string name="dialog_nfc_disabled_title">NFC está desactivado</string>
+    <string name="nfcStartSummary">Se se activa, poderás iniciar e deter os adestramentos escaneando unha etiqueta NFC</string>
+    <string name="nfcStartTitle">Escanear para iniciar</string>
+    <string name="workoutAutoStartAborted">Inicio automático abortado</string>
+    <string name="abort">Cancelar</string>
+    <string name="popup_auto_start_wait_for_gps">Cando a posición GPS sexa precisa</string>
+    <string name="popup_auto_start_on_move">Cando comece a moverme</string>
+    <string name="popup_auto_start_immediately">Iniciar inmediatamente</string>
+    <string name="popup_auto_start">Con retraso por defecto</string>
+    <string name="popup_auto_start_delay">Con retraso personalizado</string>
+    <string name="workoutAutoStarted">Adestramento iniciado automáticamente</string>
+    <string name="autoStartCountdownMsgMove">Inicar adestramento cando te comeces a mover</string>
+    <string name="autoStartCountdownMsgGps">Iniciar adestramento cando a posición GPS sexa precisa abondo</string>
+    <string name="autoStartCountdownMsg">Iniciar adestramento en</string>
+    <string name="customAutoStartDelay">Outro</string>
+    <string name="noAutoStartDelay">Nada</string>
+    <string name="pref_auto_start_delay_title">Conta atrás do Inicio Automático</string>
+    <string name="manageAutoStartDelaySummary">Escolle a conta atrás por defecto para o inicio automático do adestramento</string>
+    <string name="intervalAutoStartDelayTraining">Retraso no Inicio Automático do adestramento</string>
 </resources>
