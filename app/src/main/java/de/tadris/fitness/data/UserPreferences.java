@@ -26,6 +26,8 @@ import android.preference.PreferenceManager;
 import java.util.Calendar;
 
 import de.tadris.fitness.BuildConfig;
+import org.mapsforge.map.rendertheme.XmlRenderThemeStyleMenu;
+
 import de.tadris.fitness.model.AutoStartWorkout;
 
 public class UserPreferences {
@@ -70,7 +72,7 @@ public class UserPreferences {
     public static final boolean DEFAULT_USE_AUTO_PAUSE = true;
 
     /**
-     * Default asuppress announcements during call state if no other has been chosen
+     * Default suppress announcements during call state if no other has been chosen
      */
     public static final boolean DEFAULT_ANNOUNCE_SUPPRESS_DURING_CALL = true;
 
@@ -113,6 +115,7 @@ public class UserPreferences {
 
 
     private final SharedPreferences preferences;
+    private XmlRenderThemeStyleMenu xmlRenderThemeStyleMenu;
 
     public UserPreferences(Context context) {
         this.preferences= PreferenceManager.getDefaultSharedPreferences(context);
@@ -299,6 +302,7 @@ public class UserPreferences {
 
     /**
      * Check if auto start countdown related announcements are enabled
+     *
      * @return whether countdown announcements are enabled
      */
     public boolean isAutoStartCountdownAnnouncementsEnabled() {
@@ -412,4 +416,13 @@ public class UserPreferences {
     public void updateLastVersionCode() {
         preferences.edit().putInt("lastVersion", BuildConfig.VERSION_CODE).apply();
     }
+
+    public XmlRenderThemeStyleMenu getXmlRenderThemeStyleMenu() {
+        return xmlRenderThemeStyleMenu;
+    }
+
+    public void setXmlRenderThemeStyleMenu(XmlRenderThemeStyleMenu xmlRenderThemeStyleMenu) {
+        this.xmlRenderThemeStyleMenu = xmlRenderThemeStyleMenu;
+    }
+
 }

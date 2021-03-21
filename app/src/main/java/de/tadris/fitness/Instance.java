@@ -22,8 +22,6 @@ package de.tadris.fitness;
 import android.content.Context;
 import android.util.Log;
 
-import org.mapsforge.map.rendertheme.XmlRenderThemeStyleMenu;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -60,7 +58,6 @@ public class Instance {
     public final UserDateTimeUtils userDateTimeUtils;
     public final DistanceUnitUtils distanceUnitUtils;
     public final EnergyUnitUtils energyUnitUtils;
-    public XmlRenderThemeStyleMenu xmlRenderThemeStyleMenu;
 
     private Instance(Context context) {
         instance = this;

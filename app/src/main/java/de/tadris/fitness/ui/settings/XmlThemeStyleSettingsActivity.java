@@ -36,7 +36,7 @@ public class XmlThemeStyleSettingsActivity extends FitoTrackSettingsActivity {
         setTitle(R.string.pref_render_theme_style_settings);
         addPreferencesFromResource(R.xml.preferences_render_theme);
         language = Locale.getDefault().getLanguage();
-        styleOptions = Instance.getInstance(this).xmlRenderThemeStyleMenu;
+        styleOptions = Instance.getInstance(this).userPreferences.getXmlRenderThemeStyleMenu();
         setupOptions();
     }
 

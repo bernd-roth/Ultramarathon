@@ -23,7 +23,7 @@ public class MapActivity extends FitoTrackActivity implements XmlRenderThemeMenu
 
     @Override
     public Set<String> getCategories(XmlRenderThemeStyleMenu styleMenu) {
-        Instance.getInstance(this).xmlRenderThemeStyleMenu = styleMenu;
+        Instance.getInstance(this).userPreferences.setXmlRenderThemeStyleMenu(styleMenu);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String id = prefs.getString(PREF_KEY_PREFIX_RENDER_THEME + styleMenu.getId(), styleMenu.getDefaultValue());
         XmlRenderThemeStyleLayer baseLayer = styleMenu.getLayer(id);

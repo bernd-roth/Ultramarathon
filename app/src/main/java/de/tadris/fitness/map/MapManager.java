@@ -93,7 +93,7 @@ public class MapManager {
         mapView.setZoomLevelMax(tileSource.getZoomLevelMax());
     }
 
-    public static void setupOfflineMap(MapView mapView, TileCache tileCache, Activity activity) {
+    private static void setupOfflineMap(MapView mapView, TileCache tileCache, Activity activity) {
         Context context = mapView.getContext();
         MultiMapDataStore multiMapDataStore = new MultiMapDataStore(MultiMapDataStore.DataPolicy.RETURN_ALL);
         XmlRenderTheme theme = null;
