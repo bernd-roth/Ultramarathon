@@ -36,6 +36,7 @@ import org.mapsforge.map.model.DisplayModel;
 import org.mapsforge.map.reader.MapFile;
 import org.mapsforge.map.rendertheme.StreamRenderTheme;
 import org.mapsforge.map.rendertheme.XmlRenderTheme;
+import org.mapsforge.map.rendertheme.XmlRenderThemeMenuCallback;
 
 import java.io.FileInputStream;
 
@@ -64,7 +65,7 @@ public class MapManager {
                     mapView.getModel().displayModel.getTileSize(), 1f,
                     mapView.getModel().frameBufferModel.getOverdrawFactor(), !isOffline);
             if (isOffline) {
-                setupOfflineMap(mapView, tileCache);
+                setupOfflineMap(mapView, tileCache, activity);
             } else {
                 setupOnlineMap(mapView, tileCache, chosenTileLayer);
             }
@@ -92,7 +93,7 @@ public class MapManager {
         mapView.setZoomLevelMax(tileSource.getZoomLevelMax());
     }
 
-    public static void setupOfflineMap(MapView mapView, TileCache tileCache) {
+    public static void setupOfflineMap(MapView mapView, TileCache tileCache, Activity activity) {
         Context context = mapView.getContext();
         MultiMapDataStore multiMapDataStore = new MultiMapDataStore(MultiMapDataStore.DataPolicy.RETURN_ALL);
         XmlRenderTheme theme = null;
@@ -102,7 +103,6 @@ public class MapManager {
             return;
         }
         Uri mapDirectoryUri = Uri.parse(directoryPath);
-
         DocumentFile documentFile = DocumentFile.fromTreeUri(context, mapDirectoryUri);
         DocumentFile[] files = documentFile.listFiles();
         for (DocumentFile file : files) {
@@ -118,7 +118,8 @@ public class MapManager {
                     } else {
                         // For the first xml file: load as XmlRenderTheme
                         if (theme == null) {
-                            theme = new StreamRenderTheme(fileUri.getPath(), context.getContentResolver().openInputStream(fileUri));
+                            theme = new StreamRenderTheme(fileUri.getPath(), context.getContentResolver().openInputStream(fileUri),
+                                                          (XmlRenderThemeMenuCallback) activity);
                         }
                     }
                 } catch (Exception e) {

@@ -48,7 +48,6 @@ import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.MapPosition;
 import org.mapsforge.core.util.LatLongUtils;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
-import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.layer.Layer;
 import org.mapsforge.map.layer.download.TileDownloadLayer;
 import org.mapsforge.map.layer.overlay.FixedPixelCircle;
@@ -127,7 +126,8 @@ public abstract class WorkoutActivity extends InformationActivity implements Map
 
     protected CombinedChart addDiagram(SampleConverter converter) {
         CombinedChart chart = getDiagram(converter);
-        root.addView(chart, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, fullScreenItems ? ViewGroup.LayoutParams.MATCH_PARENT : getMapHeight() / 2));
+        root.addView(chart, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                                       fullScreenItems ? ViewGroup.LayoutParams.MATCH_PARENT : getMapHeight() / 2));
         return chart;
     }
 
@@ -297,7 +297,7 @@ public abstract class WorkoutActivity extends InformationActivity implements Map
     boolean fullScreenItems = false;
     LinearLayout mapRoot;
 
-    void addMap(){
+    void addMap() {
         mapView = MapManager.setupMap(this);
         String trackStyle = Instance.getInstance(this).userPreferences.getTrackStyle();
         // emulate current behaviour

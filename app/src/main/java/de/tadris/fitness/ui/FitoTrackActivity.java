@@ -115,5 +115,4 @@ abstract public class FitoTrackActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
 }

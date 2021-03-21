@@ -67,7 +67,6 @@ import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.graphics.Style;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
-import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.layer.Layer;
 import org.mapsforge.map.layer.download.TileDownloadLayer;
 import org.mapsforge.map.layer.overlay.Polyline;
@@ -101,11 +100,11 @@ import de.tadris.fitness.recording.event.WorkoutAutoStopEvent;
 import de.tadris.fitness.recording.event.WorkoutGPSStateChanged;
 import de.tadris.fitness.recording.information.InformationDisplay;
 import de.tadris.fitness.recording.information.RecordingInformation;
-import de.tadris.fitness.ui.FitoTrackActivity;
 import de.tadris.fitness.ui.LauncherActivity;
 import de.tadris.fitness.ui.dialog.AlertDialogWrapper;
 import de.tadris.fitness.ui.dialog.ChooseAutoStartDelayDialog;
 import de.tadris.fitness.ui.dialog.ChooseAutoStartModeDialog;
+import de.tadris.fitness.ui.MapActivity;
 import de.tadris.fitness.ui.dialog.ChooseBluetoothDeviceDialog;
 import de.tadris.fitness.ui.dialog.SelectIntervalSetDialog;
 import de.tadris.fitness.ui.dialog.SelectWorkoutInformationDialog;
@@ -114,7 +113,7 @@ import de.tadris.fitness.util.NfcAdapterHelper;
 import de.tadris.fitness.util.ToneGeneratorController;
 import de.tadris.fitness.util.VibratorController;
 
-public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIntervalSetDialog.IntervalSetSelectListener,
+public class RecordWorkoutActivity extends MapActivity implements SelectIntervalSetDialog.IntervalSetSelectListener,
         InfoViewHolder.InfoViewClickListener, SelectWorkoutInformationDialog.WorkoutInformationSelectListener,
         ChooseBluetoothDeviceDialog.BluetoothDeviceSelectListener {
 
@@ -135,7 +134,6 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
     public WorkoutType activity;
 
-    private MapView mapView;
     private Instance instance;
     private Polyline polyline;
     private final List<LatLong> latLongList = new ArrayList<>();

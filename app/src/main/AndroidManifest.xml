@@ -90,6 +90,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.settings.XmlThemeStyleSettingsActivity" />
         <activity android:name=".ui.workout.AggregatedWorkoutStatisticsActivity" />
         <activity
             android:name=".ui.workout.ShareWorkoutActivity"

@@ -44,6 +44,11 @@ public class InterfaceSettingsFragment extends FitoTrackSettingFragment {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences_user_interface, rootKey);
 
+        findPreference("xmlThemeStyleMenu").setOnPreferenceClickListener(preference -> {
+            startActivity(new Intent(this, XmlThemeStyleSettingsActivity.class));
+            return true;
+        });
+
         bindPreferenceSummaryToValue(findPreference("unitSystem"));
         bindPreferenceSummaryToValue(findPreference("mapStyle"));
         bindPreferenceSummaryToValue(findPreference("trackStyle"));
@@ -64,7 +69,9 @@ public class InterfaceSettingsFragment extends FitoTrackSettingFragment {
             return true;
         });
 
-        Preference mapFilePref = findPreference("offlineMapFileName");
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        Preference mapFilePref = findPreference("offlineMapDirectoryName");
         bindPreferenceSummaryToValue(mapFilePref);
         mapFilePref.setOnPreferenceClickListener(preference -> {
             showFilePicker();

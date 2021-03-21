@@ -61,10 +61,14 @@
             android:key="trackStyle"
             android:title="@string/trackStyle" />
         <Preference
-            android:key="offlineMapFileName"
+            android:key="offlineMapDirectoryName"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="@string/pref_map_file" />
+            android:title="@string/pref_map_directory" />
+
+        <Preference
+            android:key="xmlThemeStyleMenu"
+            android:title="@string/pref_render_theme_style" />
 
         <Preference
             android:key="offlineMapDownload"
