@@ -85,7 +85,11 @@ public class WorkoutRecorder {
     private float lastPressure = -1;
     private int lastHeartRate = -1;
 
+    private boolean useAverageForCurrentSpeed;
+    private int currentSpeedAverageTime;
+
     public WorkoutRecorder(Context context, WorkoutType workoutType) {
+        UserPreferences preferences = Instance.getInstance(context).userPreferences;
         this.context = context;
         this.state = RecordingState.IDLE;
 
@@ -94,11 +98,14 @@ public class WorkoutRecorder {
 
         // Default values
         this.workout.comment = "";
-        this.workout.intervalSetIncludesPauses = Instance.getInstance(context).userPreferences.intervalsIncludePauses();
+        this.workout.intervalSetIncludesPauses = preferences.intervalsIncludePauses();
 
         this.workout.setWorkoutType(workoutType);
 
         workoutSaver = new WorkoutSaver(this.context, getWorkoutData());
+
+        useAverageForCurrentSpeed = preferences.getUseAverageForCurrentSpeed();
+        currentSpeedAverageTime = preferences.getTimeForCurrentSpeed() * 1000;
 
         init();
     }
@@ -253,6 +260,7 @@ public class WorkoutRecorder {
         } else {
             state = GpsState.SIGNAL_OKAY;
         }
+
         if (state != gpsState) {
             Log.d("Recorder", "GPS State: " + this.gpsState.name() + " -> " + state.name());
             EventBus.getDefault().post(new WorkoutGPSStateChanged(this.gpsState, state));
@@ -453,7 +461,11 @@ public class WorkoutRecorder {
     public double getCurrentSpeed() {
         WorkoutSample lastSample = getLastSample();
         if (lastSample != null) {
-            return lastSample.speed;
+            if (!useAverageForCurrentSpeed || currentSpeedAverageTime == 0 || samples.size() == 1) {
+                return lastSample.speed;
+            } else {
+                return getCurrentSpeed(currentSpeedAverageTime);
+            }
         } else {
             return 0;
         }

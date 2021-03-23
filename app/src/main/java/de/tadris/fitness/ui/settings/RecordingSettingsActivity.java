@@ -19,8 +19,12 @@
 
 package de.tadris.fitness.ui.settings;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.NumberPicker;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
@@ -29,14 +33,15 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
+import de.tadris.fitness.data.UserPreferences;
 import de.tadris.fitness.model.AutoStartWorkout;
 import de.tadris.fitness.recording.announcement.TTSController;
 import de.tadris.fitness.recording.event.TTSReadyEvent;
-import de.tadris.fitness.ui.dialog.AutoStartDelayPickerDialogFragment;
 import de.tadris.fitness.ui.dialog.ChooseAutoStartDelayDialog;
 import de.tadris.fitness.ui.dialog.ChooseAutoStartModeDialog;
 import de.tadris.fitness.ui.dialog.ChooseAutoTimeoutDialog;
 import de.tadris.fitness.util.NfcAdapterHelper;
+import de.tadris.fitness.util.NumberPickerUtils;
 
 public class RecordingSettingsActivity
         extends FitoTrackSettingsActivity
@@ -45,6 +50,7 @@ public class RecordingSettingsActivity
         ChooseAutoTimeoutDialog.AutoTimeoutSelectListener {
 
     Instance instance;
+    UserPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +58,7 @@ public class RecordingSettingsActivity
         setupActionBar();
 
         instance = Instance.getInstance(this);
+        preferences = Instance.getInstance(this).userPreferences;
 
         setTitle(R.string.preferencesRecordingTitle);
 
@@ -95,6 +102,11 @@ public class RecordingSettingsActivity
             showAutoTimeoutConfig();
             return true;
         });
+
+        findPreference("currentSpeedAverageTimeConfig").setOnPreferenceClickListener(preference -> {
+            showCurrentSpeedAverageTimePicker();
+            return true;
+        });
     }
 
     private TTSController TTSController;
@@ -134,6 +146,44 @@ public class RecordingSettingsActivity
         int initialDelayS = instance.userPreferences.getAutoStartDelay();
         new ChooseAutoStartDelayDialog(this, this,
                 (long) initialDelayS * 1_000).show();
+    }
+
+    private void showCurrentSpeedAverageTimePicker() {
+        final AlertDialog.Builder d = new AlertDialog.Builder(this);
+        final float disabledAlpha = 0.3f;
+
+        d.setTitle(getString(R.string.preferenceCurrentSpeedTime));
+        View v = getLayoutInflater().inflate(R.layout.dialog_current_speed, null);
+        Switch sw = v.findViewById(R.id.useAverageForCurrentSpeed);
+
+        // number picker: 0-120 seconds, only enabled when sw is checked, transparent if disabled
+        NumberPicker np = v.findViewById(R.id.currentSpeedAverageTime);
+        sw.setChecked(preferences.getUseAverageForCurrentSpeed());
+        np.setEnabled(sw.isChecked());
+        np.setAlpha(sw.isChecked() ? 1f : disabledAlpha);
+        np.setMaxValue(120);
+        np.setMinValue(0);
+        np.setFormatter(value -> getResources().getQuantityString(R.plurals.seconds, value, value));
+        np.setValue(preferences.getTimeForCurrentSpeed());
+        np.setWrapSelectorWheel(false);
+        NumberPickerUtils.fixNumberPicker(np);
+
+        sw.setOnCheckedChangeListener((view, isChecked) -> {
+            np.setEnabled(isChecked);
+            np.setAlpha(isChecked ? 1f : disabledAlpha);
+        });
+
+        d.setView(v);
+
+        d.setNegativeButton(R.string.cancel, null);
+        d.setPositiveButton(R.string.okay, (dialog, which) -> {
+            preferences.setUseAverageForCurrentSpeed(sw.isChecked());
+            if (sw.isChecked()) {
+                preferences.setTimeForCurrentSpeed(np.getValue());
+            }
+        });
+
+        d.create().show();
     }
 
     private void showAutoTimeoutConfig() {

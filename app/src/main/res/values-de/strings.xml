@@ -209,6 +209,10 @@
     <string name="preferencesCategoryAppearance">Erscheinungsbild</string>
     <string name="preferenceDateFormat">Datumsformat</string>
     <string name="preferenceTimeFormat">Zeitformat</string>
+    <string name="preferenceCurrentSpeedTime">Zeitraum über welchen der Durchschnitt berechnet wird</string>
+    <string name="preferenceCurrentSpeedAverageTimeSummary">Verwende den Durchschnitt über einen eingestellten Zeitraum um die aktuelle Geschwindigkeit zu berechnen.</string>
+    <string name="preferenceCurrentSpeedAverageTimeTitle">Durchschnitt als aktuelle Geschwindingkeit</string>
+    <string name="preferenceUseAverageForCurrentSpeed">Verwende den Durchschnitt über einen Zeitraum anstatt der letzten, einzelnen Geschwindigkeitsmessung um die aktuelle Geschwindigkeit zu berechnen.</string>
     <string name="workoutDiscarded">Workout verworfen</string>
     <string name="timeSecondsSingular">Sekunde</string>
     <string name="timeSecondsPlural">Sekunden</string>
