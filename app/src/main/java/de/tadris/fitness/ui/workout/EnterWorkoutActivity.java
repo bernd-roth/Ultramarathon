@@ -56,6 +56,7 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
     TextView typeTextView, dateTextView, timeTextView, durationTextView;
     EditText distanceEditText, commentEditText;
     private DistanceUnitSystem unitSystem;
+    private boolean activityWasCreated = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +94,9 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
                     distanceEditText.setSelection(pos);
                 }
 
-                workoutBuilder.setWasEdited();
+                if (activityWasCreated) {
+                    workoutBuilder.setWasEdited();
+                }
             }
         });
         distanceEditText.setOnEditorActionListener((v, actionId, event) -> {
@@ -146,6 +149,8 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
         }
 
         updateTextViews();
+
+        activityWasCreated = true;
     }
 
     private void loadFromWorkout(Workout workout) {
