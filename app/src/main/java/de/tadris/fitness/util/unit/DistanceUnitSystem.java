@@ -45,6 +45,8 @@ public interface DistanceUnitSystem {
 
     double getSpeedFromMeterPerSecond(double meterPerSecond);
 
+    double getMeterPerSecondFromSpeed(double speed);
+
 
     String getLongDistanceUnit();
 

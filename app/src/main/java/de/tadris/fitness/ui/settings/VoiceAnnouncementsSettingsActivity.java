@@ -23,14 +23,31 @@ import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.text.method.DigitsKeyListener;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.Locale;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
+import de.tadris.fitness.data.UserPreferences;
 import de.tadris.fitness.util.NumberPickerUtils;
+import de.tadris.fitness.util.unit.DistanceUnitSystem;
+import de.tadris.fitness.util.unit.DistanceUnitUtils;
 
 public class VoiceAnnouncementsSettingsActivity extends FitoTrackSettingsActivity {
+
+    UserPreferences userPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +55,8 @@ public class VoiceAnnouncementsSettingsActivity extends FitoTrackSettingsActivit
         setupActionBar();
 
         setTitle(R.string.voiceAnnouncementsTitle);
+
+        userPreferences = Instance.getInstance(this).userPreferences;
 
         addPreferencesFromResource(R.xml.preferences_voice_announcements);
 
@@ -48,6 +67,10 @@ public class VoiceAnnouncementsSettingsActivity extends FitoTrackSettingsActivit
             return true;
         });
 
+        findPreference("paceControlConfig").setOnPreferenceClickListener(preference -> {
+            showPaceControlConfig();
+            return true;
+        });
     }
 
     private void showSpeechConfig() {
@@ -80,7 +103,7 @@ public class VoiceAnnouncementsSettingsActivity extends FitoTrackSettingsActivit
         npD.setValue(preferences.getInt(updateDistanceVariable, 0));
         npD.setWrapSelectorWheel(false);
         String[] npDValues = new String[11];
-        npDValues[0]=  getString(R.string.speechConfigNoSpeech);
+        npDValues[0] = getString(R.string.speechConfigNoSpeech);
         for (int i=1; i<=10; i++){
             npDValues[i] = i + distanceUnit;
         }
@@ -99,4 +122,106 @@ public class VoiceAnnouncementsSettingsActivity extends FitoTrackSettingsActivit
         d.create().show();
     }
 
+    private void showPaceControlConfig() {
+        DistanceUnitUtils distanceUtils = Instance.getInstance(this).distanceUnitUtils;
+        DistanceUnitSystem unitSystem = distanceUtils.getDistanceUnitSystem();
+        distanceUtils.setUnit();
+
+        final AlertDialog.Builder d = new AlertDialog.Builder(this);
+        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        final String unit = unitSystem.getSpeedUnit();
+
+        d.setTitle(getString(R.string.pref_announcements_pace_control_title));
+        View v = getLayoutInflater().inflate(R.layout.dialog_pace_control_range_picker, null);
+
+        CheckBox enableLowerLimit = v.findViewById(R.id.enableLowerPaceLimit);
+        CheckBox enableUpperLimit = v.findViewById(R.id.enableUpperPaceLimit);
+
+        EditText lowerLimit = v.findViewById(R.id.lowerPaceLimitPicker);
+        EditText upperLimit = v.findViewById(R.id.upperPaceLimitPicker);
+
+        setupPaceControlFields(enableLowerLimit, lowerLimit);
+        setupPaceControlFields(enableUpperLimit, upperLimit);
+
+        ((TextView) v.findViewById(R.id.lowerPaceLimitUnit)).setText(unit);
+        ((TextView) v.findViewById(R.id.upperPaceLimitUnit)).setText(unit);
+
+        lowerLimit.setText(getSpeedString(userPreferences.getLowerTargetSpeedLimit(), unitSystem));
+        upperLimit.setText(getSpeedString(userPreferences.getUpperTargetSpeedLimit(), unitSystem));
+
+        enableLowerLimit.setChecked(userPreferences.hasLowerTargetSpeedLimit());
+        enableUpperLimit.setChecked(userPreferences.hasUpperTargetSpeedLimit());
+
+        d.setView(v);
+
+        d.setNegativeButton(R.string.cancel, null);
+        d.setPositiveButton(R.string.okay, (dialog, which) -> {
+            final boolean enableLower = enableLowerLimit.isChecked();
+            final boolean enableUpper = enableUpperLimit.isChecked();
+            float lower = 0;
+            float upper = 0;
+            try {
+                lower = enableLower ? getSpeed(lowerLimit, unitSystem) : 0;
+                upper = enableUpper ? getSpeed(upperLimit, unitSystem) : Float.POSITIVE_INFINITY;
+            } catch (ParseException e) {
+                Toast.makeText(this, getString(R.string.invalidNumberFormat), Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+            }
+            float upper_tmp = upper;
+            upper = Math.max(lower, upper_tmp);
+            lower = Math.min(lower, upper_tmp);
+            userPreferences.setHasLowerTargetSpeedLimit(enableLower);
+            userPreferences.setHasUpperTargetSpeedLimit(enableUpper);
+            if (enableLower) {
+                userPreferences.setLowerTargetSpeedLimit(lower);
+            }
+            if (enableUpper) {
+                userPreferences.setUpperTargetSpeedLimit(upper);
+            }
+        });
+
+        d.create().show();
+    }
+
+    private float getSpeed(EditText speed, DistanceUnitSystem unit) throws ParseException {
+        Number value = NumberFormat.getInstance(Locale.getDefault()).parse(speed.getText().toString());
+        return new Float(unit.getMeterPerSecondFromSpeed(value.doubleValue()));
+    }
+
+    private String getSpeedString(float speed, DistanceUnitSystem unit) {
+        return String.format(
+                Locale.getDefault(),
+                "%.2f",
+                unit.getSpeedFromMeterPerSecond(speed));
+    }
+
+    // Set the automatic focus, checked change, empty field depending on whether the checkbox
+    // gets checked or the field is empty
+    private void setupPaceControlFields(CheckBox checkBox, EditText limit) {
+        // Thanks, dstibbe (https://stackoverflow.com/a/34256139/1458919)
+        char separator = DecimalFormatSymbols.getInstance().getDecimalSeparator();
+        limit.setKeyListener(DigitsKeyListener.getInstance("0123456789." + separator));
+        if (!checkBox.isChecked()) {
+            limit.setText("");
+        }
+        checkBox.setOnCheckedChangeListener((view, isChecked) -> {
+            if (!isChecked) {
+                limit.setText("");
+            } else {
+                limit.requestFocus();
+            }
+        });
+        limit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int before, int count) {}
+
+            @Override
+            public void onTextChanged(CharSequence text, int start, int count, int after) {
+                checkBox.setChecked(text.length() != 0);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+    }
 }

@@ -59,6 +59,9 @@ public class Metric implements DistanceUnitSystem {
     }
 
     @Override
+    public double getMeterPerSecondFromSpeed(double speed) { return speed / 3.6; }
+
+    @Override
     public String getLongDistanceUnit() {
         return "km";
     }

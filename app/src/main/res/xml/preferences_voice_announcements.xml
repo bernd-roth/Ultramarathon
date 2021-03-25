@@ -25,6 +25,11 @@
         android:summary="@string/pref_announcements_config_summary"
         android:title="@string/pref_announcements_config_title" />
 
+    <Preference
+        android:key="paceControlConfig"
+        android:summary="@string/pref_announcements_pace_control_summary"
+        android:title="@string/pref_announcements_pace_control_title" />
+
     <ListPreference
         android:defaultValue="headphones"
         android:entries="@array/pref_announcement_mode"

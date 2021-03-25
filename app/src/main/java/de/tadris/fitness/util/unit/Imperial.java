@@ -59,6 +59,11 @@ public class Imperial implements DistanceUnitSystem {
     }
 
     @Override
+    public double getMeterPerSecondFromSpeed(double speed) {
+        return speed / (3.6*0.62137d);
+    }
+
+    @Override
     public String getLongDistanceUnit() {
         return "mi";
     }

@@ -87,6 +87,26 @@ public class UserPreferences {
      */
     private static final int DEFAULT_TIME_FOR_CURRENT_SPEED = 15;
 
+    /**
+     * Default whether to warn the user when they are below a specified speed
+     */
+    private static final boolean DEFAULT_HAS_LOWER_TARGET_SPEED_LIMIT = false;
+
+    /**
+     * Default lower target speed range limit (in m/s)
+     */
+    private static final float DEFAULT_LOWER_TARGET_SPEED_LIMIT = 2;
+
+    /**
+     * Default whether to warn the user when they are above a specified speed
+     */
+    private static final boolean DEFAULT_HAS_UPPER_TARGET_SPEED_LIMIT = false;
+
+    /**
+     * Default upper target speed range limit (in m/s)
+     */
+    private static final float DEFAULT_UPPER_TARGET_SPEED_LIMIT = 3;
+
 
     private final SharedPreferences preferences;
 
@@ -288,5 +308,70 @@ public class UserPreferences {
      */
     public void setTimeForCurrentSpeed(int time) {
         preferences.edit().putInt(TIME_FOR_CURRENT_SPEED, time).apply();
+    }
+
+    /**
+     * Get whether to warn the user when they are below a specified speed
+     * @return whether to warn the user
+     */
+    public boolean hasLowerTargetSpeedLimit() {
+        return preferences.getBoolean(HAS_LOWER_TARGET_SPEED_LIMIT, DEFAULT_HAS_LOWER_TARGET_SPEED_LIMIT);
+    }
+
+    /**
+     * Set whether to warn the user when they are below a specified speed
+     * @param hasLowerSpeedLimit whether to warn the user
+     */
+    public void setHasLowerTargetSpeedLimit(boolean hasLowerSpeedLimit) {
+        preferences.edit().putBoolean(HAS_LOWER_TARGET_SPEED_LIMIT, hasLowerSpeedLimit).apply();
+    }
+
+    /**
+     * Get lower target speed range limit (in m/s)
+     * @return lower speed limit (in m/s)
+     */
+    public float getLowerTargetSpeedLimit() {
+        return preferences.getFloat(LOWER_TARGET_SPEED_LIMIT, DEFAULT_LOWER_TARGET_SPEED_LIMIT);
+    }
+
+    /**
+     * Set lower target speed range limit (in m/s)
+     * @param lowerTargetSpeedLimit lower speed limit (in m/s)
+     */
+    public void setLowerTargetSpeedLimit(float lowerTargetSpeedLimit) {
+        preferences.edit().putFloat(LOWER_TARGET_SPEED_LIMIT, lowerTargetSpeedLimit).apply();
+    }
+
+    /**
+     * Get whether to warn the user when they are above a specified speed
+     * @return whether to warn the user
+     */
+    public boolean hasUpperTargetSpeedLimit() {
+        return preferences.getBoolean(HAS_UPPER_TARGET_SPEED_LIMIT, DEFAULT_HAS_UPPER_TARGET_SPEED_LIMIT);
+    }
+
+    /**
+     * Set whether to warn the user when they are above a specified speed
+     * @param hasUpperSpeedLimit whether to warn the user
+     */
+    public void setHasUpperTargetSpeedLimit(boolean hasUpperSpeedLimit) {
+        preferences.edit().putBoolean(HAS_UPPER_TARGET_SPEED_LIMIT, hasUpperSpeedLimit).apply();
+    }
+
+    /**
+     * Get upper target speed range limit (in m/s)
+     * @return upper speed limit (in m/s)
+     */
+    public float getUpperTargetSpeedLimit() {
+        return preferences.getFloat(UPPER_TARGET_SPEED_LIMIT, DEFAULT_UPPER_TARGET_SPEED_LIMIT);
+    }
+
+
+    /**
+     * Set upper target speed range limit (in m/s)
+     * @param upperTargetSpeedLimit upper speed limit (in m/s)
+     */
+    public void setUpperTargetSpeedLimit(float upperTargetSpeedLimit) {
+        preferences.edit().putFloat(UPPER_TARGET_SPEED_LIMIT, upperTargetSpeedLimit).apply();
     }
 }
