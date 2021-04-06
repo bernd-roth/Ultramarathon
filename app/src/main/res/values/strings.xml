@@ -360,6 +360,7 @@
     <string name="action_nfc_settings">Go to NFC settings</string>
     <string name="announcementCountdown">Auto Start Actions (countdown, state, etc.)</string>
     <string name="scanning">Scanning…</string>
+    <string name="scanFailed">Scan failed</string>
     <!-- used for countdown voice announcements -->
     <plurals name="seconds">
         <item quantity="one"><xliff:g id="secs" example="1">%1$d</xliff:g> second</item>

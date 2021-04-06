@@ -29,6 +29,7 @@ import android.bluetooth.le.ScanResult;
 import android.bluetooth.le.ScanSettings;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +72,7 @@ public class ChooseBluetoothDeviceDialog {
                             .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
                             .build(),
                     callback);
+            Toast.makeText(context, R.string.scanning, Toast.LENGTH_LONG).show();
         }
 
 
@@ -130,6 +132,19 @@ public class ChooseBluetoothDeviceDialog {
                 Log.d("DeviceScanner", "Found new device: " + getNameFor(device));
                 addDevice(device);
             }
+        }
+
+        @Override
+        public void onBatchScanResults(List<ScanResult> results) {
+            for (ScanResult result : results) {
+                onScanResult(0, result);
+            }
+        }
+
+        @Override
+        public void onScanFailed(int errorCode) {
+            Log.d("DeviceScanner", "Failed to scan, error code: " + errorCode);
+            Toast.makeText(context, R.string.scanFailed, Toast.LENGTH_LONG).show();
         }
     }
 
