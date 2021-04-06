@@ -194,7 +194,7 @@
     <string name="importWorkout">Import cvičení</string>
     <string name="enterWorkout">Přidat cvičení</string>
     <string name="type">Typ</string>
-    <string name="workoutTypeUnknown">Neznámý</string>
+    <string name="unknown">Neznámý</string>
     <string name="workoutTypeOther">Jiné</string>
     <string name="workoutTypeRowing">Veslování</string>
     <string name="workoutTypeInlineSkating">In-line bruslení</string>

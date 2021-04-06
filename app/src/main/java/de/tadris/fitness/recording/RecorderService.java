@@ -102,6 +102,7 @@ public class RecorderService extends Service {
     private Thread mWatchdogThread = null;
 
     private HRManager hrManager;
+    private HeartRateListener heartRateListener;
 
     private static final int LOCATION_INTERVAL = 1000;
 
@@ -321,6 +322,7 @@ public class RecorderService extends Service {
         mTTSController.destroy();
 
         hrManager.stop();
+        heartRateListener.publishState(HeartRateConnectionState.DISCONNECTED);
 
         if (wakeLock.isHeld()) {
             wakeLock.release();
@@ -349,8 +351,9 @@ public class RecorderService extends Service {
     }
 
     private void initializeHRManager() {
-        hrManager = new HRManager(this, new HeartRateListener());
-        hrManager.setConnectionObserver(new HeartRateListener());
+        heartRateListener = new HeartRateListener();
+        hrManager = new HRManager(this, heartRateListener);
+        hrManager.setConnectionObserver(heartRateListener);
         hrManager.start();
     }
 

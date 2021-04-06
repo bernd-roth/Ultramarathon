@@ -84,7 +84,7 @@
     <string name="workoutTypeHiking">Wandern</string>
     <string name="workoutTypeJogging">Laufen</string>
     <string name="workoutTypeRunning">Laufen</string>
-    <string name="workoutTypeUnknown">Unbekannt</string>
+    <string name="unknown">Unbekannt</string>
     <string name="workoutTypeWalking">Gehen</string>
     <string name="workout_add">Hinzufügen</string>
     <string name="workouts">Workouts</string>

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -198,7 +199,7 @@
     <string name="importWorkout">Importar adestramento</string>
     <string name="enterWorkout">Novo adestramento</string>
     <string name="type">Tipo</string>
-    <string name="workoutTypeUnknown">Descoñecido</string>
+    <string name="unknown">Descoñecido</string>
     <string name="workoutTypeOther">Outro</string>
     <string name="workoutTypeRowing">Remo</string>
     <string name="workoutTypeInlineSkating">Patíns en liña</string>

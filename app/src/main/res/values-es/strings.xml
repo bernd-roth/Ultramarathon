@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -85,7 +86,7 @@
     <string name="workoutTypeJogging">Trotar</string>
     <string name="workoutTypeCycling">Ciclismo</string>
     <string name="workoutTypeHiking">Senderismo</string>
-    <string name="workoutTypeUnknown">Desconocido</string>
+    <string name="unknown">Desconocido</string>
     <string name="recordWorkout">Grabar entrenamiento</string>
     <string name="noGpsTitle">GPS deshabilitado</string>
     <string name="noGpsMessage">Por favor, habilite el GPS para hacer un seguimiento de su entrenamiento.</string>

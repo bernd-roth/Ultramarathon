@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -23,6 +23,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.le.BluetoothLeScanner;
+import android.bluetooth.le.ScanCallback;
+import android.bluetooth.le.ScanResult;
+import android.bluetooth.le.ScanSettings;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
@@ -34,8 +39,11 @@ public class ChooseBluetoothDeviceDialog {
 
     private final Activity context;
     private final BluetoothDeviceSelectListener listener;
-    private List<BluetoothDevice> devices;
+    private final List<BluetoothDevice> devices = new ArrayList<>();
+    private ArrayAdapter<String> arrayAdapter;
     private final BluetoothAdapter adapter;
+    private BluetoothLeScanner scanner;
+    private final ScanCallback callback = new DeviceDialogScanCallback();
 
     public ChooseBluetoothDeviceDialog(Activity context, BluetoothDeviceSelectListener listener) throws BluetoothNotAvailableException {
         this.context = context;
@@ -48,20 +56,81 @@ public class ChooseBluetoothDeviceDialog {
         if (adapter == null || !adapter.isEnabled()) {
             throw new BluetoothNotAvailableException();
         }
-        devices = new ArrayList<>(adapter.getBondedDevices());
+        scanner = adapter.getBluetoothLeScanner();
     }
 
     public void show() {
+        devices.addAll(adapter.getBondedDevices());
+
+        if (scanner != null) {
+            if (adapter.isDiscovering()) {
+                adapter.cancelDiscovery();
+            }
+            scanner.startScan(new ArrayList<>(),
+                    new ScanSettings.Builder()
+                            .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
+                            .build(),
+                    callback);
+        }
+
+
+        adapter.startDiscovery();
+
+        showSelection();
+    }
+
+    private void showSelection() {
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(context);
 
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, R.layout.select_dialog_singlechoice_material);
+        arrayAdapter = new ArrayAdapter<>(context, R.layout.select_dialog_singlechoice_material);
         for (BluetoothDevice device : devices) {
-            arrayAdapter.add(device.getName() + " (" + device.getAddress() + ")");
+            arrayAdapter.add(getNameFor(device));
         }
 
         builderSingle.setTitle(R.string.selectBluetoothDevice);
-        builderSingle.setAdapter(arrayAdapter, (dialog, which) -> listener.onSelectBluetoothDevice(devices.get(which)));
+        builderSingle.setAdapter(arrayAdapter, (dialog, which) -> {
+            stopScan();
+            listener.onSelectBluetoothDevice(devices.get(which));
+        });
+        builderSingle.setOnCancelListener(dialog -> stopScan());
         builderSingle.show();
+    }
+
+    private void addDevice(BluetoothDevice device) {
+        devices.add(device);
+        arrayAdapter.add(getNameFor(device));
+    }
+
+    private String getNameFor(BluetoothDevice device) {
+        return ((device.getName() == null || device.getName().equals("null")) ? context.getString(R.string.unknown) : device.getName()) +
+                " (" + device.getAddress() + ")";
+    }
+
+    private void stopScan() {
+        if (scanner != null) {
+            scanner.stopScan(callback);
+        }
+    }
+
+    private boolean containsDevice(BluetoothDevice device) {
+        for (BluetoothDevice other : devices) {
+            if (other.getAddress().equals(device.getAddress())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private class DeviceDialogScanCallback extends ScanCallback {
+
+        @Override
+        public void onScanResult(int callbackType, ScanResult result) {
+            BluetoothDevice device = result.getDevice();
+            if (device != null && !containsDevice(device)) {
+                Log.d("DeviceScanner", "Found new device: " + getNameFor(device));
+                addDevice(device);
+            }
+        }
     }
 
     public interface BluetoothDeviceSelectListener {

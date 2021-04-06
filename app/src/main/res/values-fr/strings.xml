@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -95,7 +96,7 @@
     <string name="workoutTypeSkateboarding">Skateboard</string>
     <string name="workoutTypeInlineSkating">Roller</string>
     <string name="workoutTypeOther">Autre</string>
-    <string name="workoutTypeUnknown">Inconnu</string>
+    <string name="unknown">Inconnu</string>
     <string name="type">Type</string>
     <string name="enterWorkout">Enregistrer un entraînement</string>
     <string name="importWorkout">Importer un entraînement</string>

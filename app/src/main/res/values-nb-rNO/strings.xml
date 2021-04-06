@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -182,7 +183,7 @@
     <string name="importWorkout">Importer treningsøkt</string>
     <string name="enterWorkout">Skriv inn treningsøkt</string>
     <string name="type">Type</string>
-    <string name="workoutTypeUnknown">Ukjent</string>
+    <string name="unknown">Ukjent</string>
     <string name="workoutTypeOther">Annet</string>
     <string name="workoutTypeInlineSkating">Rulleskøyter</string>
     <string name="workoutTypeSkateboarding">Rullebrett</string>

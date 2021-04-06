@@ -168,7 +168,7 @@
     <string name="enterWorkout">Introduzir Exercício</string>
     <string name="type">Tipo</string>
     <string name="workoutTypeAdd">Adicionar</string>
-    <string name="workoutTypeUnknown">Desconhecido</string>
+    <string name="unknown">Desconhecido</string>
     <string name="workoutTypeOther">Outros</string>
     <string name="workoutTypeRowing">Remar</string>
     <string name="workoutTypeInlineSkating">Andar em Patins-em-linha</string>

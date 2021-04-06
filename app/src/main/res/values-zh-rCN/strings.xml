@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+  ~
+  ~ This file is part of FitoTrack
+  ~
+  ~ FitoTrack is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     FitoTrack is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
 <resources>
     <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack 亦会于 App 在后台运行时，或屏幕关闭后收集位置数据，以便记录您的健身项目。因此，请允许 FitoTrack 随时取用您的位置。</string>
     <string name="recordingPermissionNotGrantedMessage">为了追踪您进行健身项目时的行动，FitoTrack 需要收到位置许可。 FitoTrack 亦会于 App 在后台运行时，或屏幕关闭后收集位置数据，以便记录您的健身项目。除非您明确同意分享位置数据，否则这些资料只会储存于您的手机。</string>
@@ -213,7 +232,7 @@
     <string name="type">类型</string>
     <string name="workoutTypeAll">全部</string>
     <string name="workoutTypeAdd">新增</string>
-    <string name="workoutTypeUnknown">不知名</string>
+    <string name="unknown">不知名</string>
     <string name="workoutTypeOther">其他</string>
     <string name="workoutTypeRowing">划艇</string>
     <string name="workoutTypeInlineSkating">直排轮滑</string>

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -210,7 +211,7 @@
     <string name="importWorkout">Egzersiz İçe Aktar</string>
     <string name="enterWorkout">Egzersiz Gir</string>
     <string name="type">Tür</string>
-    <string name="workoutTypeUnknown">Bilinmeyen</string>
+    <string name="unknown">Bilinmeyen</string>
     <string name="workoutTypeOther">Diğer</string>
     <string name="workoutTypeRowing">Kürek Çekme</string>
     <string name="workoutTypeInlineSkating">Paten Yapma</string>

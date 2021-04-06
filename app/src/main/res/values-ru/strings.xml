@@ -221,7 +221,7 @@
     <string name="setDuration">Установить продолжительность</string>
     <string name="importWorkout">Импортировать тренировку</string>
     <string name="enterWorkout">Добавить тренировку</string>
-    <string name="workoutTypeUnknown">Неизвестно</string>
+    <string name="unknown">Неизвестно</string>
     <string name="workoutTypeOther">Другое</string>
     <string name="workoutTypeRowing">Гребля</string>
     <string name="workoutTypeInlineSkating">Роликовые коньки</string>
