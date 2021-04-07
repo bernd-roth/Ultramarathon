@@ -50,6 +50,7 @@ public class InterfaceSettingsActivity extends FitoTrackSettingsActivity {
 
         bindPreferenceSummaryToValue(findPreference("unitSystem"));
         bindPreferenceSummaryToValue(findPreference("mapStyle"));
+        bindPreferenceSummaryToValue(findPreference("trackStyle"));
         bindPreferenceSummaryToValue(findPreference("themeSetting"));
         bindPreferenceSummaryToValue(findPreference("dateFormat"));
         bindPreferenceSummaryToValue(findPreference("timeFormat"));

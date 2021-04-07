@@ -92,6 +92,10 @@ public class UserPreferences {
         return preferences.getString("mapStyle", "osm.mapnik");
     }
 
+    public String getTrackStyle(){
+        return preferences.getString("trackStyle", "theme_color");
+    }
+
     public boolean intervalsIncludePauses() {
         return preferences.getBoolean("intervalsIncludePause", true);
     }

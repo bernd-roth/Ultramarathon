@@ -139,6 +139,7 @@
     <string name="gps">GPS</string>
     <string name="data">Data</string>
     <string name="mapStyle">Map Style</string>
+    <string name="trackStyle">Track Style</string>
     <string name="waiting_gps">Waiting for GPS</string>
     <string name="actionUploadToOSM">Upload to OSM</string>
     <string name="cut">Cut the first/last 300 Meters</string>
@@ -407,6 +408,15 @@
         <item>Mapnik\nDefault OSM Mapstyle</item>
         <item>Humanitarian\nClean map but sometimes not available</item>
         <item>Offline\nLocal map file with local render theme</item>
+    </string-array>
+    <string-array name="pref_track_style">
+        <item>Theme color(default)</item>
+        <item>Theme color(Alpha)</item>
+        <item>Purple Rain</item>
+        <item>Pink Mist</item>
+        <item>Rainbow Warrior</item>
+        <item>Bright Night</item>
+        <item>Mondriaan (Average speed)</item>
     </string-array>
     <string-array name="pref_theme_setting">
         <item>Light</item>
