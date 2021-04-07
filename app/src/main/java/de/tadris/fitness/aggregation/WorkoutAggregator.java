@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -50,10 +50,16 @@ public class WorkoutAggregator {
         Workout[] workouts = Instance.getInstance(context).db.workoutDao().getWorkouts();
         for (Workout workout : workouts) {
             if (filter.isAccepted(workout)) {
-                results.add(getResultFor(workout));
+                if (isAvailableFor(workout)) {
+                    results.add(getResultFor(workout));
+                }
             }
         }
         return results;
+    }
+
+    private boolean isAvailableFor(Workout workout) {
+        return information.isInformationAvailableFor(workout);
     }
 
     private WorkoutInformationResult getResultFor(Workout workout) {

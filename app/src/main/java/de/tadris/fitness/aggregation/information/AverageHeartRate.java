@@ -21,26 +21,38 @@ package de.tadris.fitness.aggregation.information;
 
 import android.content.Context;
 
-import de.tadris.fitness.Instance;
-import de.tadris.fitness.aggregation.WorkoutInformation;
+import de.tadris.fitness.R;
+import de.tadris.fitness.aggregation.AggregationType;
 import de.tadris.fitness.data.Workout;
-import de.tadris.fitness.util.unit.DistanceUnitUtils;
-import de.tadris.fitness.util.unit.EnergyUnitUtils;
 
-public abstract class AbstractWorkoutInformation implements WorkoutInformation {
+public class AverageHeartRate extends AbstractWorkoutInformation {
 
-    protected Context context;
-    protected DistanceUnitUtils distanceUnitUtils;
-    protected EnergyUnitUtils energyUnitUtils;
-
-    AbstractWorkoutInformation(Context context) {
-        this.context = context;
-        this.distanceUnitUtils = Instance.getInstance(context).distanceUnitUtils;
-        this.energyUnitUtils = Instance.getInstance(context).energyUnitUtils;
+    public AverageHeartRate(Context context) {
+        super(context);
     }
 
+    @Override
+    public int getTitleRes() {
+        return R.string.workoutAvgHeartRate;
+    }
+
+    @Override
+    public String getUnit() {
+        return "bpm";
+    }
+
+    @Override
     public boolean isInformationAvailableFor(Workout workout) {
-        return true;
+        return workout.hasHeartRateData();
     }
 
+    @Override
+    public double getValueFromWorkout(Workout workout) {
+        return workout.avgHeartRate;
+    }
+
+    @Override
+    public AggregationType getAggregationType() {
+        return AggregationType.AVERAGE;
+    }
 }
