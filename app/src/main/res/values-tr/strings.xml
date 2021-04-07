@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -377,4 +376,6 @@
     <string name="noAutoStartDelay">Yok</string>
     <string name="pref_auto_start_delay_title">Otomatik Başlatma Geri Sayımı</string>
     <string name="manageAutoStartDelaySummary">Otomatik egzersiz başlatmak için öntanımlı geri sayımı seçin</string>
+    <string name="scanFailed">Tarama başarısız oldu</string>
+    <string name="scanning">Taranıyor…</string>
 </resources>
