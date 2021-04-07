@@ -16,9 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-
-<resources>
+  --><resources>
     <string name="actionGrant">Conceder</string>
     <string name="editWorkoutType">Editar o tipo de exercício</string>
     <string name="workoutTypeEditIcon">Ícone</string>
@@ -318,4 +316,8 @@
     <string name="voiceAnnouncementsTitle">Anúncios De Voz</string>
     <string name="workoutTypeEditMET">MET</string>
     <string name="preferenceCategoryVoiceFeedback">Feedback de voz</string>
+    <string name="actionImportMultiple">Importar múltiplos</string>
+    <string name="actionImport">Importar</string>
+    <string name="importWorkoutMultipleQuestion">Pretende importar um ficheiro GPX ou múltiplos\?</string>
+    <string name="workoutTypeAll">Todos</string>
 </resources>
