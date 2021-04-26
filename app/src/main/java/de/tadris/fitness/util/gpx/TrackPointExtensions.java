@@ -27,7 +27,7 @@ public class TrackPointExtensions {
 
     private double speed;
 
-    @JacksonXmlProperty(localName = "TrackPointExtension", namespace = "gpxtpx")
+    @JacksonXmlProperty(localName = "gpxtpx:TrackPointExtension")
     private GpxTpxExtension gpxTpxExtension;
 
     public TrackPointExtensions() {
