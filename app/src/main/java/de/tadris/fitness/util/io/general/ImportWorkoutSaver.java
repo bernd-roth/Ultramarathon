@@ -33,18 +33,19 @@ public class ImportWorkoutSaver extends WorkoutSaver {
 
     public void saveWorkout() {
         setIds();
-        setLength();
+
+        setMSLElevationToElevation();
         setSpeed();
-        setTopSpeed();
-
-        setHeartRate();
-
-        setMSLElevation();
-        setAscentAndDescent();
-
-        setCalories();
+        calculateData(false);
 
         storeInDatabase();
+    }
+
+    private void setMSLElevationToElevation() {
+        // Usually the elevation used in GPX files is already the median sea level
+        for (WorkoutSample sample : samples) {
+            sample.elevationMSL = sample.elevation;
+        }
     }
 
     private void setSpeed() {

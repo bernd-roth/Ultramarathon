@@ -69,6 +69,10 @@ import de.tadris.fitness.ui.record.RecordWorkoutActivity;
 import de.tadris.fitness.util.NotificationHelper;
 import no.nordicsemi.android.ble.observer.ConnectionObserver;
 
+/**
+ * The recorder service is responsible for receiving data from the system (Location, Pressure, HeartRate)
+ * It stays alive even when the UI activity classes are destroyed.
+ */
 public class RecorderService extends Service {
 
     public static final String TTS_CONTROLLER_ID = "RecorderService";

@@ -33,13 +33,17 @@ import de.tadris.fitness.data.WorkoutData;
 import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.util.AltitudeCorrection;
 import de.tadris.fitness.util.CalorieCalculator;
+import de.tadris.fitness.util.WorkoutCalculator;
 
+/**
+ * Calculates data for a workout+samples and saves everything to the database.
+ */
 public class WorkoutSaver {
 
     private final Context context;
     protected final Workout workout;
     protected final List<WorkoutSample> samples;
-    private final AppDatabase db;
+    protected final AppDatabase db;
 
     public WorkoutSaver(Context context, WorkoutData data) {
         this.context = context;
@@ -51,7 +55,7 @@ public class WorkoutSaver {
     public void finalizeWorkout() {
         clearSamplesWithSameTime(true);
 
-        calculateData();
+        calculateData(true);
 
         updateWorkoutAndSamples();
     }
@@ -78,7 +82,7 @@ public class WorkoutSaver {
         setIds();
 
         clearSamplesWithSameTime(false);
-        calculateData();
+        calculateData(true);
 
         storeInDatabase();
     }
@@ -93,13 +97,15 @@ public class WorkoutSaver {
         }
     }
 
-    private void calculateData() {
+    protected void calculateData(boolean calculateElevation) {
         setLength();
         setTopSpeed();
 
         setHeartRate();
 
-        setElevation();
+        if (calculateElevation) {
+            setElevation();
+        }
         setAscentAndDescent();
 
         setCalories();
@@ -268,9 +274,29 @@ public class WorkoutSaver {
         }
     }
 
+    // Should only be called when durations aren't there (e.g. when importing or cutting) but not on normal recorder save
+    protected void calculateDurations() {
+        if (samples.size() == 0) {
+            return;
+        }
+        workout.start = samples.get(0).absoluteTime;
+        workout.end = samples.get(samples.size() - 1).absoluteTime;
+
+        long pauseDuration = 0;
+        for (WorkoutCalculator.Pause pause : WorkoutCalculator.getPausesFromWorkout(getWorkoutData())) {
+            pauseDuration += pause.duration;
+        }
+        workout.pauseDuration = pauseDuration;
+        workout.duration = workout.end - workout.start - workout.pauseDuration;
+    }
+
     protected void setCalories() {
         // Ascent has to be set previously
         workout.calorie = CalorieCalculator.calculateCalories(context, workout, Instance.getInstance(context).userPreferences.getUserWeight());
+    }
+
+    protected WorkoutData getWorkoutData() {
+        return new WorkoutData(workout, samples);
     }
 
     protected void storeInDatabase() {
