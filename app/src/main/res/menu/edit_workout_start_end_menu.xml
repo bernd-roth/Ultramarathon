@@ -20,25 +20,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/actionResumeWorkout"
-        android:title="@string/resumeWorkout" />
-
+        android:id="@+id/actionMoveStartHere"
+        android:title="@string/moveStartOfWorkout" />
     <item
-        android:id="@+id/actionEditWorkout"
-        android:title="@string/editWorkout" />
+        android:id="@+id/actionMoveEndHere"
+        android:title="@string/moveEndOfWorkout" />
     <item
-        android:id="@+id/actionEditWorkoutStartEnd"
-        android:title="@string/editWorkoutStartEnd" />
-    <item
-        android:id="@+id/actionExportGpx"
-        android:title="@string/exportAsGpxFile" />
-    <item
-        android:id="@+id/actionUploadOSM"
-        android:title="@string/actionUploadToOSM" />
-    <item
-        android:id="@+id/actionDeleteWorkout"
-        android:title="@string/delete" />
-    <item
-        android:id="@+id/actionShareWorkout"
-        android:title="@string/share" />
+        android:id="@+id/actionMoveApply"
+        android:title="@string/applyWorkoutChanges" />
 </menu>

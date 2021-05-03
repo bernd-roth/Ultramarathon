@@ -33,6 +33,16 @@
         <item>offline</item>
     </string-array>
 
+    <string-array name="pref_track_style_values">
+        <item>theme_color</item>
+        <item>theme_alpha</item>
+        <item>purple_rain</item>
+        <item>pink_mist</item>
+        <item>rainbow_warrior</item>
+        <item>bright_night</item>
+        <item>mondriaan</item>
+    </string-array>
+
     <string-array name="pref_theme_setting_values">
         <item>0</item>
         <item>1</item>

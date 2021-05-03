@@ -50,6 +50,14 @@
             android:key="mapStyle"
             android:title="@string/mapStyle" />
 
+        <ListPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="theme_color"
+            android:entries="@array/pref_track_style"
+            android:entryValues="@array/pref_track_style_values"
+            android:key="trackStyle"
+            android:title="@string/trackStyle" />
         <Preference
             android:key="offlineMapFileName"
             android:selectAllOnFocus="true"

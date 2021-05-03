@@ -139,6 +139,7 @@
     <string name="gps">GPS</string>
     <string name="data">Data</string>
     <string name="mapStyle">Map Style</string>
+    <string name="trackStyle">Track Style</string>
     <string name="waiting_gps">Waiting for GPS</string>
     <string name="actionUploadToOSM">Upload to OSM</string>
     <string name="cut">Cut the first/last 300 Meters</string>
@@ -247,6 +248,7 @@
     <string name="speedLastMinuteSpoken">Speed within the last minute</string>
     <string name="cannotFindWorkout">Cannot find workout</string>
     <string name="editWorkout">Edit Workout</string>
+    <string name="editWorkoutStartEnd">Edit Start/End</string>
     <string name="aboutTitle">About</string>
     <string name="aboutVersion">Version</string>
     <string name="aboutChangelog">Changelog</string>
@@ -361,6 +363,9 @@
     <string name="announcementCountdown">Auto Start Actions (countdown, state, etc.)</string>
     <string name="scanning">Scanning…</string>
     <string name="scanFailed">Scan failed</string>
+    <string name="moveStartOfWorkout">Replace start</string>
+    <string name="moveEndOfWorkout">Replace end</string>
+    <string name="applyWorkoutChanges">Apply</string>
     <!-- used for countdown voice announcements -->
     <plurals name="seconds">
         <item quantity="one"><xliff:g id="secs" example="1">%1$d</xliff:g> second</item>
@@ -407,6 +412,15 @@
         <item>Mapnik\nDefault OSM Mapstyle</item>
         <item>Humanitarian\nClean map but sometimes not available</item>
         <item>Offline\nLocal map file with local render theme</item>
+    </string-array>
+    <string-array name="pref_track_style">
+        <item>Theme color(default)</item>
+        <item>Theme color(Alpha)</item>
+        <item>Purple Rain</item>
+        <item>Pink Mist</item>
+        <item>Rainbow Warrior</item>
+        <item>Bright Night</item>
+        <item>Mondriaan (Average speed)</item>
     </string-array>
     <string-array name="pref_theme_setting">
         <item>Light</item>

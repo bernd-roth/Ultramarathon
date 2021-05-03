@@ -209,6 +209,7 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.show_workout_menu, menu);
         menu.findItem(R.id.actionResumeWorkout).setVisible(isLastWorkout());
+        menu.findItem(R.id.actionEditWorkoutStartEnd).setVisible(hasSamples());
         menu.findItem(R.id.actionUploadOSM).setVisible(hasSamples());
         menu.findItem(R.id.actionExportGpx).setVisible(hasSamples());
         menu.findItem(R.id.actionShareWorkout).setVisible(hasSamples());
@@ -328,11 +329,32 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
         new OsmTraceUploader(this, mHandler, workout, samples, visibility, oAuthConsumer, cut, description).upload();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == EditWorkoutStartEndActivity.INTENT_RESULT_CODE_WORKOUT_MODIFIED){
+            //Restart the activity as the data has changed..
+            final Intent intent = new Intent(this, ShowWorkoutActivity.class);
+            intent.putExtra(ShowWorkoutActivity.WORKOUT_ID_EXTRA, workout.id);
+            startActivity(intent);
+            finish();
+        }
+    }
+
     private void openEditWorkoutActivity() {
         final Intent intent = new Intent(this, EnterWorkoutActivity.class);
         intent.putExtra(EnterWorkoutActivity.WORKOUT_ID_EXTRA, workout.id);
         startActivity(intent);
         finish();
+    }
+
+    private void editWorkoutStartEndActivity() {
+        try {
+            final Intent intent = new Intent(this, EditWorkoutStartEndActivity.class);
+            intent.putExtra(ShowWorkoutActivity.WORKOUT_ID_EXTRA, workout.id);
+            startActivityForResult(intent,3);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void shareWorkoutActivity() {
@@ -351,6 +373,9 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
         switch (id) {
             case R.id.actionDeleteWorkout:
                 showDeleteDialog();
+                return true;
+            case R.id.actionEditWorkoutStartEnd:
+                editWorkoutStartEndActivity();
                 return true;
             case R.id.actionExportGpx:
                 exportToGpx();

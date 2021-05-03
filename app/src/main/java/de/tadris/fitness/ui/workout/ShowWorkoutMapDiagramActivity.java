@@ -25,8 +25,12 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.CombinedChart;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.highlight.Highlight;
 
 import de.tadris.fitness.R;
+import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.ui.dialog.SampleConverterPickerDialog;
 import de.tadris.fitness.ui.workout.diagram.ConverterManager;
 import de.tadris.fitness.ui.workout.diagram.HeartRateConverter;
@@ -65,6 +69,7 @@ public class ShowWorkoutMapDiagramActivity extends WorkoutActivity {
 
         fullScreenItems = true;
         addMap();
+
         mapView.setClickable(true);
 
         diagramsInteractive = true;
@@ -75,6 +80,21 @@ public class ShowWorkoutMapDiagramActivity extends WorkoutActivity {
         findViewById(R.id.showWorkoutDiagramSelector).setOnClickListener(v -> new SampleConverterPickerDialog(this, this::updateChart, converterManager).show());
         showIntervals.setOnCheckedChangeListener((buttonView, isChecked) -> updateChart());
         showIntervals.setVisibility(intervals != null && intervals.length > 0 ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void onSelectionChanged(WorkoutSample sample) {
+
+        if (sample == null) {
+            chart.highlightValue(null);
+        } else {
+            float dataIndex = (sample.relativeTime) / 1000f / 60f;
+            Highlight h = new Highlight((float) dataIndex, 0, -1);
+            h.setDataIndex(0);
+            chart.highlightValue(h);
+            chart.centerViewTo(dataIndex,0, YAxis.AxisDependency.LEFT);
+        }
+        onChartSelectionChanged(sample);
     }
 
     private void initDiagram() {
