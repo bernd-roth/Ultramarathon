@@ -69,13 +69,14 @@ import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.map.GradientColoringStrategy;
 import de.tadris.fitness.map.ColoringStrategy;
 import de.tadris.fitness.map.MapManager;
+import de.tadris.fitness.map.MapSampleSelectionListener;
 import de.tadris.fitness.map.WorkoutLayer;
 import de.tadris.fitness.ui.workout.diagram.SampleConverter;
 import de.tadris.fitness.util.WorkoutCalculator;
 import de.tadris.fitness.util.unit.DistanceUnitUtils;
 import de.tadris.fitness.util.unit.EnergyUnitUtils;
 
-public abstract class WorkoutActivity extends InformationActivity {
+public abstract class WorkoutActivity extends InformationActivity implements MapSampleSelectionListener {
 
     public static final String WORKOUT_ID_EXTRA = "de.tadris.fitness.WorkoutActivity.WORKOUT_ID_EXTRA";
 
@@ -135,6 +136,38 @@ public abstract class WorkoutActivity extends InformationActivity {
         return getDiagram(Collections.singletonList(converter), converter.isIntervalSetVisible());
     }
 
+
+    protected WorkoutSample selectedSample = null;
+
+    @Override
+    public void onSelectionChanged(WorkoutSample sample) {
+        //nada onChartSelectionChanged(sample)
+    }
+
+    protected void onChartSelectionChanged(WorkoutSample sample) {
+        //remove any previous layer
+        if (selectedSample != null){
+            if(highlightingCircle != null){
+                mapView.getLayerManager().getLayers().remove(highlightingCircle);
+            }
+        }
+
+        selectedSample = sample;
+
+        // if a sample was selected show it on the map
+        if (selectedSample != null) {
+            Paint p = AndroidGraphicFactory.INSTANCE.createPaint();
+            p.setColor(0xff693cff);
+            highlightingCircle = new FixedPixelCircle(selectedSample.toLatLong(), 10, p, null);
+            mapView.addLayer(highlightingCircle);
+
+            if (!mapView.getBoundingBox().contains(selectedSample.toLatLong())) {
+                mapView.getModel().mapViewPosition.animateTo(selectedSample.toLatLong());
+            }
+        };
+    }
+
+
     private CombinedChart getDiagram(List<SampleConverter> converters, boolean showIntervalSets) {
         CombinedChart chart = new CombinedChart(this);
 
@@ -144,18 +177,12 @@ public abstract class WorkoutActivity extends InformationActivity {
             chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
                 @Override
                 public void onValueSelected(Entry e, Highlight h) {
-                    onNothingSelected();
-                    WorkoutSample sample = findSample(e);
-                    if (sample != null) {
-                        onDiagramValueSelected(sample.toLatLong());
-                    }
+                    onChartSelectionChanged(findSample(e));
                 }
 
                 @Override
                 public void onNothingSelected() {
-                    if(highlightingCircle != null){
-                        mapView.getLayerManager().getLayers().remove(highlightingCircle);
-                    }
+                    onChartSelectionChanged(null);
                 }
             });
         }
@@ -254,6 +281,7 @@ public abstract class WorkoutActivity extends InformationActivity {
         chart.invalidate();
     }
 
+
     private void onDiagramValueSelected(LatLong latLong) {
         Paint p = AndroidGraphicFactory.INSTANCE.createPaint();
         p.setColor(0xff693cff);
@@ -314,6 +342,9 @@ public abstract class WorkoutActivity extends InformationActivity {
         }
 
         workoutLayer = new WorkoutLayer(samples, coloringStrategy);
+
+        workoutLayer.addMapSampleSelectionListener(this);
+
         mapView.addLayer(workoutLayer);
 
         final BoundingBox bounds= workoutLayer.getBoundingBox().extendMeters(50);
