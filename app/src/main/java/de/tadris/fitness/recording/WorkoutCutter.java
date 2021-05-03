@@ -52,8 +52,7 @@ public class WorkoutCutter extends WorkoutSaver {
             if (sample.id == startSample.id) {
                 break;
             } else {
-                samples.remove(sample);
-
+                deleteSample(sample);
             }
         }
         // Move relative times
