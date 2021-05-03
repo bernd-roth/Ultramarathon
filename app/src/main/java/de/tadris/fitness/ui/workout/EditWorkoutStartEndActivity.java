@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -19,6 +19,7 @@
 
 package de.tadris.fitness.ui.workout;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.Menu;
@@ -29,20 +30,15 @@ import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.layer.overlay.FixedPixelCircle;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
-import de.tadris.fitness.data.AppDatabase;
 import de.tadris.fitness.data.WorkoutData;
 import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.map.ColoringStrategy;
 import de.tadris.fitness.map.GradientColoringStrategy;
 import de.tadris.fitness.map.WorkoutLayer;
 import de.tadris.fitness.recording.WorkoutCutter;
-import de.tadris.fitness.recording.WorkoutRecorder;
-import de.tadris.fitness.recording.WorkoutSaver;
 
 public class EditWorkoutStartEndActivity extends ShowWorkoutMapDiagramActivity {
 
@@ -72,9 +68,17 @@ public class EditWorkoutStartEndActivity extends ShowWorkoutMapDiagramActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+        if (item.getItemId() == R.id.actionMoveHelp) {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.editWorkoutStartEnd)
+                    .setMessage(R.string.editStartEndHelp)
+                    .setPositiveButton(R.string.okay, null)
+                    .show();
+        }
+
         if (item.getItemId() == R.id.actionMoveStartHere) {
-            if (selectedSample != null){
-                if (selectedEndSample != null && selectedSample.relativeTime > selectedEndSample.relativeTime){
+            if (selectedSample != null) {
+                if (selectedEndSample != null && selectedSample.relativeTime > selectedEndSample.relativeTime) {
                     // do not allow to place behind the end marker
 
                 } else {

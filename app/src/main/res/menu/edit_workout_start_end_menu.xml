@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -21,11 +21,23 @@
 
     <item
         android:id="@+id/actionMoveStartHere"
+        android:icon="@drawable/ic_arrow_left"
+        android:showAsAction="always"
         android:title="@string/moveStartOfWorkout" />
     <item
         android:id="@+id/actionMoveEndHere"
+        android:icon="@drawable/ic_arrow_right"
+        android:showAsAction="always"
         android:title="@string/moveEndOfWorkout" />
     <item
         android:id="@+id/actionMoveApply"
-        android:title="@string/applyWorkoutChanges" />
+        android:icon="@drawable/ic_apply"
+        android:showAsAction="always"
+        android:title="@string/actionApply" />
+
+    <item
+        android:id="@+id/actionMoveHelp"
+        android:icon="@drawable/ic_help"
+        android:showAsAction="always"
+        android:title="@string/help" />
 </menu>

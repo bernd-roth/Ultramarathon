@@ -363,9 +363,10 @@
     <string name="announcementCountdown">Auto Start Actions (countdown, state, etc.)</string>
     <string name="scanning">Scanning…</string>
     <string name="scanFailed">Scan failed</string>
-    <string name="moveStartOfWorkout">Replace start</string>
-    <string name="moveEndOfWorkout">Replace end</string>
-    <string name="applyWorkoutChanges">Apply</string>
+    <string name="moveStartOfWorkout">Cut start</string>
+    <string name="moveEndOfWorkout">Cut end</string>
+    <string name="actionApply">Apply</string>
+    <string name="editStartEndHelp">Select a position on the map or the diagram. Then click on one of the arrows to select a new starting or ending point. When you\'re done, click on the save icon to apply the changes.</string>
     <!-- used for countdown voice announcements -->
     <plurals name="seconds">
         <item quantity="one"><xliff:g id="secs" example="1">%1$d</xliff:g> second</item>
