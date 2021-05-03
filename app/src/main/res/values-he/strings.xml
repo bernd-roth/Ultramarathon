@@ -62,7 +62,7 @@
     <string name="workoutResumed">האימון הומשך</string>
     <string name="workoutStopped">האימון נעצר</string>
     <string name="workoutStarted">האימון התחיל</string>
-    <string name="workoutTypeUnknown">לא ידוע</string>
+    <string name="unknown">לא ידוע</string>
     <string name="workoutTypeOther">אחר</string>
     <string name="workoutTypeRowing">חתירה</string>
     <string name="workoutTypeHiking">טיול רגלי</string>

@@ -84,7 +84,7 @@
     <string name="workoutTypeHiking">Wandern</string>
     <string name="workoutTypeJogging">Laufen</string>
     <string name="workoutTypeRunning">Laufen</string>
-    <string name="workoutTypeUnknown">Unbekannt</string>
+    <string name="unknown">Unbekannt</string>
     <string name="workoutTypeWalking">Gehen</string>
     <string name="workout_add">Hinzufügen</string>
     <string name="workouts">Workouts</string>
@@ -448,5 +448,7 @@
     <string name="pref_announcements_pace_control_summary">Warne wenn unter oder über einer bestimmten Geschwindigkeit</string>
     <string name="pref_announcements_pace_control_title">Tempowarnungen</string>
     <string name="downloading">Herunterladen…</string>
+    <string name="scanning">Scannen…</string>
+    <string name="scanFailed">Scan fehlgeschlagen</string>
     <string name="invalidNumberFormat">Ungültiges Zahlenformat.</string>
 </resources>

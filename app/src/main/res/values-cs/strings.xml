@@ -16,9 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-
-<resources>
+  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="data">Data</string>
     <string name="gps">GPS</string>
     <string name="app_name">FitoTrack</string>
@@ -194,7 +192,7 @@
     <string name="importWorkout">Import cvičení</string>
     <string name="enterWorkout">Přidat cvičení</string>
     <string name="type">Typ</string>
-    <string name="workoutTypeUnknown">Neznámý</string>
+    <string name="unknown">Neznámý</string>
     <string name="workoutTypeOther">Jiné</string>
     <string name="workoutTypeRowing">Veslování</string>
     <string name="workoutTypeInlineSkating">In-line bruslení</string>
@@ -318,4 +316,68 @@
     <string name="workoutTypeEditId">ID</string>
     <string name="hintManageWorkoutTypes">Kliknutím na plus přidáte vlastní typy cvičení.</string>
     <string name="workoutTypeAdd">Přidat</string>
+    <string name="downloadFailed">Stahování selhalo</string>
+    <string name="downloadSuccess">Stahováno dokončeno</string>
+    <string name="downloadMapConfirmation">Chcete stáhnout soubor s mapou %s\?</string>
+    <string name="pref_map_file">Složka s offline mapami</string>
+    <string name="pref_auto_start_mode_unknown">Neznámý režim (prosím nevybírejte)</string>
+    <string name="pref_auto_start_mode_on_move">Počkat než se začnete pohybovat</string>
+    <string name="pref_auto_start_mode_wait_for_gps">Počkat na přesnou polohu GPS</string>
+    <string name="pref_auto_start_mode_instant">Začít ihned</string>
+    <string name="pref_auto_start_mode_title">Režim automatického spuštění</string>
+    <string name="intervalAutoStartModeTraining">Režim automatického spuštění tréninku</string>
+    <string name="manageAutoStartModeSummary">Změna režimu automatického spuštění tréninku</string>
+    <string name="ttsMinuteSecondCountdownAnnouncement"> <xliff:g id="mins" example="1 minute">%1$s</xliff:g> a <xliff:g id="secs" example="7 seconds">%2$s</xliff:g> do startu </string>
+    <string name="ttsMinuteCountdownAnnouncement"> <xliff:g id="mins" example="12 minutes">%1$s</xliff:g> do startu </string>
+    <string name="ttsLongSecondCountdownAnnouncement"> <xliff:g id="secs" example="5 seconds">%1$s</xliff:g> do startu </string>
+    <plurals name="minutes">
+        <item quantity="one"><xliff:g id="mins" example="1">%1$d</xliff:g> minuta</item>
+        <item quantity="few"><xliff:g id="mins" example="5">%1$d</xliff:g> minuty</item>
+        <item quantity="other"><xliff:g id="mins" example="5">%1$d</xliff:g> minut</item>
+    </plurals>
+    <plurals name="seconds">
+        <item quantity="one"><xliff:g id="secs" example="1">%1$d</xliff:g> sekunda</item>
+        <item quantity="few"><xliff:g id="secs" example="12">%1$d</xliff:g> sekundy</item>
+        <item quantity="other"><xliff:g id="secs" example="12">%1$d</xliff:g> sekund</item>
+    </plurals>
+    <string name="scanFailed">Skenování se nezdařilo</string>
+    <string name="scanning">Skenování…</string>
+    <string name="announcementCountdown">Akce automatického spuštění (odpočítávání, stav atd.)</string>
+    <string name="action_nfc_settings">Přejít do nastavení NFC</string>
+    <string name="dialog_nfc_disabled">Abyste mohli používat značky NFC ke spuštění a zastavení tréninku, musíte nejprve povolit NFC v nastavení zařízení</string>
+    <string name="dialog_nfc_disabled_title">Funkce NFC je momentálně vypnutá</string>
+    <string name="nfcStartSummary">Pokud je aktivováno, budete moci zahájit a ukončit trénink naskenováním štítku NFC</string>
+    <string name="nfcStartTitle">Spuštění skenování</string>
+    <string name="workoutAutoStartAborted">Automatické spuštění přerušeno</string>
+    <string name="abort">Zrušit</string>
+    <string name="popup_auto_start_wait_for_gps">Když je poloha GPS přesná</string>
+    <string name="popup_auto_start_on_move">Když se začnu pohybovat</string>
+    <string name="popup_auto_start_immediately">Začít ihned</string>
+    <string name="popup_auto_start">S výchozím zpožděním</string>
+    <string name="popup_auto_start_delay">S vlastním zpožděním</string>
+    <string name="workoutAutoStarted">Trénink byl zahájen automaticky</string>
+    <string name="autoStartCountdownMsgMove">Zahájení tréninku, jakmile se začnete pohybovat</string>
+    <string name="autoStartCountdownMsgGps">Zahájení tréninku, jakmile je pozice GPS dostatečně přesná</string>
+    <string name="autoStartCountdownMsg">Zahájení tréninku za</string>
+    <string name="customAutoStartDelay">Jiné</string>
+    <string name="noAutoStartDelay">Žádný</string>
+    <string name="pref_auto_start_delay_title">Automatické odpočítávání startu</string>
+    <string name="manageAutoStartDelaySummary">Zvolte výchozí odpočítávání pro automatické spuštění tréninku</string>
+    <string name="intervalAutoStartDelayTraining">Zpoždění automatického spuštění tréninku</string>
+    <string name="downloading">Stahování…</string>
+    <string name="chooseMapHint">Vyberte prosím soubor s mapou</string>
+    <string name="downloadCanceled">Stahování zrušeno</string>
+    <string name="cancelDownloadConfirmation">Chcete zrušit aktuální stahování\?</string>
+    <string name="actionCancelDownload">Zrušit stahování</string>
+    <string name="alreadyDownloading">Soubor se již stahuje</string>
+    <string name="actionDownloadMap">Stáhnout mapu</string>
+    <string name="overwriteMapConfirmation">Chcete přepsat stávající soubor mapy %s\?</string>
+    <string name="downloadMapsSpecifyDirectory">Nejprve zadejte adresář pro offline mapy</string>
+    <string name="downloadMapsTitle">Stáhnout mapy</string>
+    <string name="actionImportMultiple">Importovat více</string>
+    <string name="actionImport">Importovat</string>
+    <string name="importWorkoutMultipleQuestion">Chcete importovat jeden soubor GPX nebo více souborů\?</string>
+    <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack také shromažďuje údaje o poloze na pozadí během záznamu tréninku, i když je obrazovka vypnutá. Proto prosím povolte FitoTracku přístup k vaší poloze.</string>
+    <string name="recordingPermissionNotGrantedMessage">FitoTrack vyžaduje povolení přístupu k vaší poloze aby mohl sledovat váš pohyb během tréninku. FitoTrack také může sbírat údaje o vaší poloze při běhu aplikace na pozadí nebo když je obrazovka vypnutá během záznamu tréninku. Údaje o poloze vždy zůstávají na vašem zařízení pokud neudělíte souhlas s jejich sdílením.</string>
+    <string name="workoutTypeAll">Vše</string>
 </resources>

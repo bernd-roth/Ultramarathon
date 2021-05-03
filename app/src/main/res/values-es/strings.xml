@@ -16,7 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources>
+  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
     <string name="workout_add">Agregar</string>
     <string name="stop">Detener</string>
@@ -85,7 +85,7 @@
     <string name="workoutTypeJogging">Trotar</string>
     <string name="workoutTypeCycling">Ciclismo</string>
     <string name="workoutTypeHiking">Senderismo</string>
-    <string name="workoutTypeUnknown">Desconocido</string>
+    <string name="unknown">Desconocido</string>
     <string name="recordWorkout">Grabar entrenamiento</string>
     <string name="noGpsTitle">GPS deshabilitado</string>
     <string name="noGpsMessage">Por favor, habilite el GPS para hacer un seguimiento de su entrenamiento.</string>
@@ -355,4 +355,63 @@
     <string name="actionImportMultiple">Importar múltiples</string>
     <string name="actionImport">Importar</string>
     <string name="importWorkoutMultipleQuestion">¿Desea importar un archivo GPX o múltiples archivos\?</string>
+    <string name="pref_auto_start_mode_unknown">Modo desconocido (no seleccionar)</string>
+    <string name="pref_auto_start_mode_on_move">Esperar a que comience a moverse</string>
+    <string name="pref_auto_start_mode_wait_for_gps">Esperar una posición GPS precisa</string>
+    <string name="pref_auto_start_mode_instant">Comenzar inmediatamente</string>
+    <string name="pref_auto_start_mode_title">Modo de inicio automático</string>
+    <string name="intervalAutoStartModeTraining">Modo de inicio automático del entrenamiento</string>
+    <string name="manageAutoStartModeSummary">Cambiar el modo de inicio automático del entrenamiento</string>
+    <string name="ttsMinuteSecondCountdownAnnouncement"> <xliff:g id="mins" example="1 minute">%1$s</xliff:g> y <xliff:g id="secs" example="7 seconds">%2$s</xliff:g> para el inicio </string>
+    <string name="ttsMinuteCountdownAnnouncement"> <xliff:g id="mins" example="12 minutes">%1$s</xliff:g> para el inicio </string>
+    <string name="ttsLongSecondCountdownAnnouncement"> <xliff:g id="secs" example="5 seconds">%1$s</xliff:g> para el inicio </string>
+    <plurals name="minutes">
+        <item quantity="one"><xliff:g id="mins" example="1">%1$d</xliff:g> minuto</item>
+        <item quantity="other"><xliff:g id="mins" example="5">%1$d</xliff:g> minutos</item>
+    </plurals>
+    <plurals name="seconds">
+        <item quantity="one"><xliff:g id="secs" example="1">%1$d</xliff:g> segundo</item>
+        <item quantity="other"><xliff:g id="secs" example="12">%1$d</xliff:g> segundos</item>
+    </plurals>
+    <string name="scanFailed">Escaneo fallido</string>
+    <string name="scanning">Escaneando…</string>
+    <string name="announcementCountdown">Acciones de inicio automático (cuenta atrás, estado, etc.)</string>
+    <string name="action_nfc_settings">Ir a la configuración de NFC</string>
+    <string name="dialog_nfc_disabled">Para usar etiquetas NFC para iniciar y detener entrenamientos, primero debe habilitar NFC en la configuración del dispositivo</string>
+    <string name="dialog_nfc_disabled_title">NFC está actualmente deshabilitado</string>
+    <string name="nfcStartSummary">Si está activado, podrá iniciar y detener los entrenamientos escaneando una etiqueta NFC</string>
+    <string name="nfcStartTitle">Escanear para comenzar</string>
+    <string name="workoutAutoStartAborted">Inicio automático abortado</string>
+    <string name="abort">Cancelar</string>
+    <string name="popup_auto_start_wait_for_gps">Cuando la ubicación GPS sea precisa</string>
+    <string name="popup_auto_start_on_move">Cuando comienzo a moverme</string>
+    <string name="popup_auto_start_immediately">Comenzar inmediatamente</string>
+    <string name="popup_auto_start">Con retraso predeterminado</string>
+    <string name="popup_auto_start_delay">Con retraso personalizado</string>
+    <string name="workoutAutoStarted">El entrenamiento comenzó automáticamente</string>
+    <string name="autoStartCountdownMsgMove">Iniciando entrenamiento una vez que empiece a moverse</string>
+    <string name="autoStartCountdownMsgGps">Iniciando entrenamiento una vez que la posición del GPS sea lo suficientemente precisa</string>
+    <string name="autoStartCountdownMsg">Iniciando entrenamiento en</string>
+    <string name="customAutoStartDelay">Otro</string>
+    <string name="noAutoStartDelay">Ninguna</string>
+    <string name="pref_auto_start_delay_title">Cuenta regresiva de inicio automático</string>
+    <string name="manageAutoStartDelaySummary">Elija una cuenta regresiva predeterminada para el inicio automático del entrenamiento</string>
+    <string name="intervalAutoStartDelayTraining">Retraso de inicio automático del entrenamiento</string>
+    <string name="downloading">Descargando…</string>
+    <string name="chooseMapHint">Por favor elija un archivo de mapa</string>
+    <string name="downloadCanceled">Descarga cancelada</string>
+    <string name="downloadFailed">Descarga fallida</string>
+    <string name="downloadSuccess">Descargado</string>
+    <string name="cancelDownloadConfirmation">¿Quiere cancelar la descarga actual\?</string>
+    <string name="actionCancelDownload">Cancelar descarga</string>
+    <string name="alreadyDownloading">Ya se está descargando un archivo</string>
+    <string name="downloadMapConfirmation">¿Quiere descargar el archivo de mapa %s\?</string>
+    <string name="actionDownloadMap">Descargar mapa</string>
+    <string name="overwriteMapConfirmation">¿Quiere sobrescribir el archivo de mapa existente %s\?</string>
+    <string name="downloadMapsSpecifyDirectory">Por favor, primero especifique un directorio para mapas sin conexión</string>
+    <string name="downloadMapsTitle">Descargar mapas</string>
+    <string name="pref_map_file">Directorio de mapas sin conexión</string>
+    <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack también recopila datos de ubicación en segundo plano para registrar el entrenamiento cuando la pantalla está apagada. Por lo tanto, permita que FitoTrack tenga acceso a su ubicación todo el tiempo.</string>
+    <string name="recordingPermissionNotGrantedMessage">FitoTrack necesita permiso de ubicación para rastrear su movimiento durante su entrenamiento. FitoTrack también recopila datos de ubicación mientras la aplicación está en segundo plano o la pantalla está apagada para registrar sus entrenamientos. Los datos de ubicación siempre permanecen en su teléfono sin su claro consentimiento para compartirlos.</string>
+    <string name="workoutTypeAll">Todos</string>
 </resources>

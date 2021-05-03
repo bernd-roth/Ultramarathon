@@ -198,7 +198,7 @@
     <string name="importWorkout">Importar adestramento</string>
     <string name="enterWorkout">Novo adestramento</string>
     <string name="type">Tipo</string>
-    <string name="workoutTypeUnknown">Descoñecido</string>
+    <string name="unknown">Descoñecido</string>
     <string name="workoutTypeOther">Outro</string>
     <string name="workoutTypeRowing">Remo</string>
     <string name="workoutTypeInlineSkating">Patíns en liña</string>
@@ -376,4 +376,6 @@
     <string name="pref_auto_start_delay_title">Conta atrás do Inicio Automático</string>
     <string name="manageAutoStartDelaySummary">Escolle a conta atrás por defecto para o inicio automático do adestramento</string>
     <string name="intervalAutoStartDelayTraining">Retraso no Inicio Automático do adestramento</string>
+    <string name="scanFailed">Fallo o escaneo</string>
+    <string name="scanning">Escaneando…</string>
 </resources>

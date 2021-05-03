@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+  ~
+  ~ This file is part of FitoTrack
+  ~
+  ~ FitoTrack is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     FitoTrack is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
 <resources>
     <string name="downloading">下載中</string>
     <string name="noGpsMessage">請允許 GPS (導航系統) 追蹤您的健身項目。</string>
@@ -169,7 +188,7 @@
     <string name="importWorkout">導入健身項目</string>
     <string name="timeMinuteShort">分鐘</string>
     <string name="timeHourShort">小時</string>
-    <string name="workoutTypeUnknown">不知名</string>
+    <string name="unknown">不知名</string>
     <string name="workoutTypeInlineSkating">直排輪滑</string>
     <string name="workoutDescent">下降</string>
     <string name="workoutAscent">上升</string>

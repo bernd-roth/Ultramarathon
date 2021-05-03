@@ -69,6 +69,10 @@ import de.tadris.fitness.ui.record.RecordWorkoutActivity;
 import de.tadris.fitness.util.NotificationHelper;
 import no.nordicsemi.android.ble.observer.ConnectionObserver;
 
+/**
+ * The recorder service is responsible for receiving data from the system (Location, Pressure, HeartRate)
+ * It stays alive even when the UI activity classes are destroyed.
+ */
 public class RecorderService extends Service {
 
     public static final String TTS_CONTROLLER_ID = "RecorderService";
@@ -102,6 +106,7 @@ public class RecorderService extends Service {
     private Thread mWatchdogThread = null;
 
     private HRManager hrManager;
+    private HeartRateListener heartRateListener;
 
     private static final int LOCATION_INTERVAL = 1000;
 
@@ -321,6 +326,7 @@ public class RecorderService extends Service {
         mTTSController.destroy();
 
         hrManager.stop();
+        heartRateListener.publishState(HeartRateConnectionState.DISCONNECTED);
 
         if (wakeLock.isHeld()) {
             wakeLock.release();
@@ -349,8 +355,9 @@ public class RecorderService extends Service {
     }
 
     private void initializeHRManager() {
-        hrManager = new HRManager(this, new HeartRateListener());
-        hrManager.setConnectionObserver(new HeartRateListener());
+        heartRateListener = new HeartRateListener();
+        hrManager = new HRManager(this, heartRateListener);
+        hrManager.setConnectionObserver(heartRateListener);
         hrManager.start();
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -24,6 +24,7 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.tadris.fitness.aggregation.information.AverageHeartRate;
 import de.tadris.fitness.aggregation.information.AverageMotionSpeed;
 import de.tadris.fitness.aggregation.information.AveragePace;
 import de.tadris.fitness.aggregation.information.AverageTotalSpeed;
@@ -53,6 +54,7 @@ public class WorkoutInformationManager {
         information.add(new TopSpeed(context));
         information.add(new BurnedEnergy(context));
         information.add(new EnergyConsumption(context));
+        information.add(new AverageHeartRate(context));
         information.add(new WorkoutCount(context));
 
     }

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -16,7 +17,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources>
+  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
     <string name="workout_add">Hozzáadás</string>
     <string name="stop">Leállítás</string>
@@ -93,7 +94,7 @@
     <string name="workoutTypeCycling">Kerékpározás</string>
     <string name="workoutTypeHiking">Túrázás</string>
     <string name="workoutTypeOther">Egyéb</string>
-    <string name="workoutTypeUnknown">Ismeretlen</string>
+    <string name="unknown">Ismeretlen</string>
     <string name="type">Típus</string>
     <string name="enterWorkout">Edzés megadása</string>
     <string name="setDuration">Időtartam beállítása</string>
@@ -190,7 +191,7 @@
     <string name="hintEditIntervalSet">Intervallumok hozzáadása, amelyek ki lesznek mondva.</string>
     <string name="unitKcalLong">Kalóriák</string>
     <string name="dayInMonth">Hónap napja</string>
-    <string name="hintAddWorkout">Kattintson a plusz ikonra a rögzítéshez vagy adjon meg egy edzést.</string>
+    <string name="hintAddWorkout">Kattintson a plusz ikonra a rögzítéshez, vagy adjon meg egy edzést.</string>
     <string name="help">Súgó</string>
     <string name="year">Év</string>
     <string name="editWorkout">Edzés szerkesztése</string>
@@ -222,7 +223,7 @@
     <string name="unitFootPlural">Láb</string>
     <string name="manageAutoTimeoutSummary">Az intervallum szerkesztése az automatikus edzésleállításhoz</string>
     <string name="editDisplayedInformation">Megjelenített információk szerkesztése</string>
-    <string name="sendEmail">Ímél küldése</string>
+    <string name="sendEmail">E-mail küldése</string>
     <string name="merge">Egyesítés</string>
     <string name="per">/</string>
     <string name="workoutTypeSkateboarding">Gördeszkázás</string>
@@ -252,7 +253,7 @@
     <string name="unitMilesSingular">Mérföld</string>
     <string name="timeSecondsSingular">Másodperc</string>
     <string name="announcementSuppressDuringCall">Elnyomás hívás közben</string>
-    <string name="intervalsIncludePauseSummary">Ha be van kapcsolva, akkor az intervallumok akkor is folytatódnak, ha nem szünetelteti az edzést.</string>
+    <string name="intervalsIncludePauseSummary">Ha be van kapcsolva, akkor az intervallumok akkor is folytatódnak, ha szünetelteti az edzést.</string>
     <string name="unitKilometersPerHour">Kilométer per óra</string>
     <string name="unitFootSingular">Gyaloglás</string>
     <string name="intervalSets">Intervallumsorozatok</string>
@@ -282,52 +283,112 @@
     <string name="importedWorkouts">%d edzés importálva</string>
     <string name="importingFiles">Fájlok importálása</string>
     <string name="bulkActions">Tömeges műveletek</string>
-    <string name="importMultipleGpxFilesSummary">Egyszerre több GPX fájlt importálhat a fájlrendszerből</string>
+    <string name="importMultipleGpxFilesSummary">Egyszerre több GPX-fájl importálása a fájlrendszerről</string>
     <string name="importMultipleMessageSelectFolder">Válasszon egy mappát, amely tartalmazza az összes importálni kívánt GPX-fájlt.</string>
     <string name="importMultipleGpxFiles">Több GPX-fájl importálása</string>
-    <string name="actionGrant">Grant</string>
+    <string name="actionGrant">Megadás</string>
     <string name="aboutPrivacyPolicy">Adatvédelmi irányelvek</string>
-    <string name="inclination">Dőlésszög</string>
-    <string name="nothingSelected">Nincs kiválasztva</string>
+    <string name="inclination">Lejtő</string>
+    <string name="nothingSelected">Semmi sincs kiválasztva</string>
     <string name="showIntervals">Intervallumok megjelenítése</string>
-    <string name="connectHeartRateDevice">Csatlakoztassa a pulzusmérőt</string>
-    <string name="selectBluetoothDevice">Válassza ki a Bluetooth eszközt</string>
-    <string name="workoutAvgHeartRate">Avg. Pulzusszám</string>
-    <string name="workoutMaxHeartRate">Max Pulzusszám</string>
+    <string name="connectHeartRateDevice">Pulzusmérő csatlakoztatása</string>
+    <string name="selectBluetoothDevice">Bluetooth eszköz kiválasztása</string>
+    <string name="workoutAvgHeartRate">Átlagos pulzusszám</string>
+    <string name="workoutMaxHeartRate">Legnagyobb pulzusszám</string>
     <string name="workoutHeartRate">Pulzusszám</string>
-    <string name="workoutStarted">Edzés kezdődött</string>
-    <string name="workoutStopped">Az edzés leállt</string>
-    <string name="workoutResumed">Az edzés folytatódik</string>
-    <string name="workoutPaused">Az edzés szünetelt</string>
+    <string name="workoutStarted">Edzés elindítva</string>
+    <string name="workoutStopped">Edzés leállítva</string>
+    <string name="workoutResumed">Edzés folytatva</string>
+    <string name="workoutPaused">Edzés szüneteltetve</string>
     <string name="actionResume">Folytatás</string>
-    <string name="actionPause">Szünet</string>
+    <string name="actionPause">Szüneteltetés</string>
     <string name="autoPauseSummary">Az edzések automatikus szüneteltetése és folytatása</string>
-    <string name="autoPauseTitle">Automatikus szünet</string>
-    <string name="resumeWorkout">Folytatás Edzés</string>
-    <string name="heartRateNotAvailable">A pulzusszám jelenleg nem áll rendelkezésre.</string>
+    <string name="autoPauseTitle">Automatikus szüneteltetés</string>
+    <string name="resumeWorkout">Edzés folytatása</string>
+    <string name="heartRateNotAvailable">A pulzusszám jelenleg nem érhető el.</string>
     <string name="intervals">Intervallumok</string>
-    <string name="announcementWorkoutActions">Edzésműveletek (Szünet, Folytatás stb.)</string>
-    <string name="resumeWorkoutConfirmation">Tényleg szeretné folytatni ezt az edzést\? Ez is hozzá egy szünet az idő az edzés leállt.</string>
+    <string name="announcementWorkoutActions">Edzésműveletek (szünet, folytatás stb.)</string>
+    <string name="resumeWorkoutConfirmation">Valóban folytatni szeretné ezt az edzést\? Ez egy szünetet is hozzá fog adni attól az időtől kezdve, amikor az edzést leállították.</string>
     <string name="prefShowOnLockScreenSummary">Edzésinformációk megjelenítése akkor is, ha a telefon zárolva van.</string>
-    <string name="prefShowOnLockScreenTitle">Látható a zár képernyőn</string>
-    <string name="notimeout">Nincs Időtúllépés</string>
+    <string name="prefShowOnLockScreenTitle">Látható a zárolási képernyőn</string>
+    <string name="notimeout">Nincs időkorlát</string>
     <string name="workoutTypeEditMET">MET</string>
     <string name="editWorkoutType">Edit edzés típusa</string>
     <string name="workoutTypeEditIcon">Ikon</string>
-    <string name="deleteWorkoutTypeConfirmation">Tényleg törölni szeretné ezt az edzéstípust\?</string>
-    <string name="deleteWorkoutType">Az Edzés Típusának Törlése</string>
+    <string name="deleteWorkoutTypeConfirmation">Valóban törölni szeretné ezt az edzéstípust\?</string>
+    <string name="deleteWorkoutType">Edzéstípus törlése</string>
     <string name="actionSave">Mentés</string>
-    <string name="customWorkoutTypesTitle">Egyéni Edzés Típusok</string>
-    <string name="preferenceCategoryVoiceFeedback">Hang visszacsatolás</string>
-    <string name="workoutTypeEditMETHint">Az energiafogyasztásra vonatkozó intézkedés</string>
-    <string name="workoutTypeEditMinDistanceHint">Két GPS-minta közötti minimális távolság</string>
-    <string name="workoutTypeEditMinDistance">Minta távolság</string>
-    <string name="workoutTypeEditNameError">Kérjük, adjon meg egy nevet</string>
+    <string name="customWorkoutTypesTitle">Egyéni edzéstípusok</string>
+    <string name="preferenceCategoryVoiceFeedback">Hangos visszajelzés</string>
+    <string name="workoutTypeEditMETHint">Az energiafogyasztás mérése</string>
+    <string name="workoutTypeEditMinDistanceHint">Legkisebb távolság két GPS-minta között</string>
+    <string name="workoutTypeEditMinDistance">Mintatávolság</string>
+    <string name="workoutTypeEditNameError">Adjon meg egy nevet</string>
     <string name="workoutTypeEditName">Név</string>
-    <string name="workoutTypeEditIdErrorUnique">Már van egy edzés típusa használja ezt az azonosítót</string>
-    <string name="workoutTypeEditIdErrorEmpty">Kérjük, adjon meg egy azonosítót</string>
+    <string name="workoutTypeEditIdErrorUnique">Már van egy ezt az azonosítót használó edzéstípus</string>
+    <string name="workoutTypeEditIdErrorEmpty">Adjon meg egy azonosítót</string>
     <string name="workoutTypeEditIdErrorCharacters">Engedélyezett karakterek: a–z, A–Z, 0–9, _, -</string>
-    <string name="workoutTypeEditId">ID</string>
+    <string name="workoutTypeEditId">Azonosító</string>
     <string name="hintManageWorkoutTypes">Kattintson a pluszra az egyéni edzéstípusok hozzáadásához.</string>
     <string name="workoutTypeAdd">Hozzáadás</string>
+    <string name="pref_auto_start_mode_unknown">Ismeretlen mód (ne válassza)</string>
+    <string name="pref_auto_start_mode_on_move">Várakozás, amíg elkezd mozogni</string>
+    <string name="pref_auto_start_mode_wait_for_gps">Várakozás pontos GPS-helyzetre</string>
+    <string name="pref_auto_start_mode_instant">Indítás azonnal</string>
+    <string name="pref_auto_start_mode_title">Automatikus indítás módja</string>
+    <string name="intervalAutoStartModeTraining">Automatikusan indított edzés módja</string>
+    <string name="manageAutoStartModeSummary">Az automatikus edzésindítás módjának megváltoztatása</string>
+    <string name="ttsMinuteSecondCountdownAnnouncement"> <xliff:g id="mins" example="1 minute">%1$s</xliff:g> és <xliff:g id="secs" example="7 seconds">%2$s</xliff:g> a kezdésig </string>
+    <string name="ttsMinuteCountdownAnnouncement"> <xliff:g id="mins" example="12 minutes">%1$s</xliff:g> a kezdésig </string>
+    <string name="ttsLongSecondCountdownAnnouncement"> <xliff:g id="secs" example="5 seconds">%1$s</xliff:g> a kezdésig </string>
+    <plurals name="minutes">
+        <item quantity="one"><xliff:g id="mins" example="1">%1$d</xliff:g> perc</item>
+        <item quantity="other"><xliff:g id="mins" example="5">%1$d</xliff:g> perc</item>
+    </plurals>
+    <plurals name="seconds">
+        <item quantity="one"><xliff:g id="secs" example="1">%1$d</xliff:g> másodperc</item>
+        <item quantity="other"><xliff:g id="secs" example="12">%1$d</xliff:g> másodperc</item>
+    </plurals>
+    <string name="announcementCountdown">Automatikus indítási műveletek (visszaszámlálás, állapot stb.)</string>
+    <string name="action_nfc_settings">Ugrás az NFC beállításokhoz</string>
+    <string name="dialog_nfc_disabled">Annak érdekében, hogy edzéseket indíthasson és állíthasson le NFC-tokenek használatával, először engedélyeznie kell az NFC-t az eszköz beállításaiban</string>
+    <string name="dialog_nfc_disabled_title">Az NFC jelenleg le van tiltva</string>
+    <string name="nfcStartSummary">Ha be van kapcsolva, akkor képes lesz elindítani és leállítani az edzéseket egy NFC-token beolvasásával</string>
+    <string name="nfcStartTitle">Beolvasás az indításhoz</string>
+    <string name="workoutAutoStartAborted">Automatikus indítás megszakítva</string>
+    <string name="abort">Mégse</string>
+    <string name="popup_auto_start_wait_for_gps">Ha a GPS-hely pontos</string>
+    <string name="popup_auto_start_on_move">Ha elkezdek mozogni</string>
+    <string name="popup_auto_start_immediately">Indítás azonnal</string>
+    <string name="popup_auto_start">Alapértelmezett késleltetéssel</string>
+    <string name="popup_auto_start_delay">Egyéni késleltetéssel</string>
+    <string name="workoutAutoStarted">Edzés automatikusan elindítva</string>
+    <string name="autoStartCountdownMsgMove">Edzés indítása, ha elkezd mozogni</string>
+    <string name="autoStartCountdownMsgGps">Edzés indítása, ha a GPS-helyzet eléggé pontos</string>
+    <string name="autoStartCountdownMsg">Edzés indítása ekkor</string>
+    <string name="customAutoStartDelay">Egyéb</string>
+    <string name="noAutoStartDelay">Nincs</string>
+    <string name="pref_auto_start_delay_title">Automatikus indítás visszaszámlálása</string>
+    <string name="manageAutoStartDelaySummary">Válasszon egy alapértelmezett visszaszámlálást az automatikus edzésindításhoz</string>
+    <string name="intervalAutoStartDelayTraining">Automatikusan indított edzés késleltetése</string>
+    <string name="downloading">Letöltés…</string>
+    <string name="chooseMapHint">Válasszon egy térképfájlt</string>
+    <string name="downloadCanceled">Letöltés megszakítva</string>
+    <string name="downloadFailed">Letöltés sikertelen</string>
+    <string name="downloadSuccess">Letöltve</string>
+    <string name="cancelDownloadConfirmation">Meg szeretné szakítani a jelenlegi letöltést\?</string>
+    <string name="actionCancelDownload">Letöltés megszakítása</string>
+    <string name="alreadyDownloading">Egy fájl már letöltés alatt van</string>
+    <string name="downloadMapConfirmation">Le szeretné tölteni a(z) %s térképfájlt\?</string>
+    <string name="actionDownloadMap">Térkép letöltése</string>
+    <string name="overwriteMapConfirmation">Felül szeretné írni a meglévő %s térképfájlt\?</string>
+    <string name="downloadMapsSpecifyDirectory">Először adjon meg egy könyvtárat a kapcsolat nélküli térképekhez</string>
+    <string name="downloadMapsTitle">Térképek letöltése</string>
+    <string name="pref_map_file">Kapcsolat nélküli térképkönyvtár</string>
+    <string name="actionImportMultiple">Több importálása</string>
+    <string name="actionImport">Importálás</string>
+    <string name="importWorkoutMultipleQuestion">Szeretne egy vagy több GPX-fájlt importálni\?</string>
+    <string name="recordingBackgroundPermissionNotGrantedMessage">A FitoTrack helyadatokat is gyűjt a háttérben az edzés rögzítéséhez, ha a képernyő ki van kapcsolva. Emiatt engedélyezze a FitoTrack számára, hogy mindig hozzáférése legyen a helyzetéhez.</string>
+    <string name="recordingPermissionNotGrantedMessage">A FitoTrack alkalmazásnak szüksége van a helyengedélyére az edzés közbeni mozgás követéséhez. A FitoTrack helyadatokat is gyűjt, miközben az alkalmazás a háttérben van vagy a képernyő ki van kapcsolva, hogy rögzítse az edzéseit. A helyadatok mindig a telefonján maradnak, és csak akkor lesznek megosztva, ha egyértelműen beleegyezik.</string>
+    <string name="workoutTypeAll">Összes</string>
 </resources>

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -93,7 +94,7 @@
     <string name="workoutTypeCycling">Bicicletta</string>
     <string name="workoutTypeHiking">Escursione</string>
     <string name="workoutTypeOther">Altro</string>
-    <string name="workoutTypeUnknown">Sconosciuto</string>
+    <string name="unknown">Sconosciuto</string>
     <string name="type">Tipo</string>
     <string name="enterWorkout">Inserisci allenamento</string>
     <string name="setDuration">Stabilisci durata</string>
