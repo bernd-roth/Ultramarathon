@@ -66,10 +66,11 @@ import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutData;
 import de.tadris.fitness.data.WorkoutSample;
-import de.tadris.fitness.map.GradientColoringStrategy;
 import de.tadris.fitness.map.ColoringStrategy;
+import de.tadris.fitness.map.GradientColoringStrategy;
 import de.tadris.fitness.map.MapManager;
 import de.tadris.fitness.map.MapSampleSelectionListener;
+import de.tadris.fitness.map.SimpleColoringStrategy;
 import de.tadris.fitness.map.WorkoutLayer;
 import de.tadris.fitness.ui.workout.diagram.SampleConverter;
 import de.tadris.fitness.util.WorkoutCalculator;
@@ -83,7 +84,8 @@ public abstract class WorkoutActivity extends InformationActivity implements Map
     List<WorkoutSample> samples;
     Workout workout;
     private Resources.Theme theme;
-    MapView mapView;
+    protected MapView mapView;
+    protected WorkoutLayer workoutLayer;
     private FixedPixelCircle highlightingCircle;
     final Handler mHandler = new Handler();
     protected IntervalSet usedIntervalSet;
@@ -310,7 +312,6 @@ public abstract class WorkoutActivity extends InformationActivity implements Map
         mapView = MapManager.setupMap(this);
         String trackStyle = Instance.getInstance(mapView.getContext()).userPreferences.getTrackStyle();
         // emulate current behaviour
-        WorkoutLayer workoutLayer;
 
 
         ColoringStrategy coloringStrategy;
@@ -318,36 +319,43 @@ public abstract class WorkoutActivity extends InformationActivity implements Map
         // predefined set of settings that play with the colors, the mapping of the color to some
         // value and whether to blend or not. In the future it would be nice to have a nice editor
         // in the settings to tweak the numbers here and possibly create good looking colors.
-        if(trackStyle.equals("theme_alpha")){
-            /* use theme color but with alpha */
-            int[] c1 = { (getThemePrimaryColor() & 0xffffff) ^ 0x55000000, getThemePrimaryColor()};
-            coloringStrategy = new GradientColoringStrategy(c1, 0, workout.topSpeed, true);
-        } else  if(trackStyle.equals("purple_rain")){
-            /* a nice set of colors generated from colorbrewer */
-            coloringStrategy= GradientColoringStrategy.fromPattern(GradientColoringStrategy.PATTERN_PURPLE, workout.avgSpeed * 0.8, workout.avgSpeed * 1.2, true);
-        } else if (trackStyle.equals("pink_mist")){
-            /* Pink is nice */
-            coloringStrategy = GradientColoringStrategy.fromPattern(GradientColoringStrategy.PATTERN_PINK, 0 , workout.topSpeed, false);
-        } else if (trackStyle.equals("rainbow_warrior")){
-            /* Attempt to use different colors, this would be best suited for a fixed scale e.g. green is target value , red is to fast , yellow it to slow */
-            coloringStrategy = GradientColoringStrategy.fromPattern(GradientColoringStrategy.PATTERN_MAP, workout.avgSpeed * 0.6, workout.avgSpeed * 1.4, true);
-        } else if (trackStyle.equals("bright_night")){
-            coloringStrategy = GradientColoringStrategy.fromPattern(GradientColoringStrategy.PATTERN_BRIGHT, 0 , workout.topSpeed, false);
-        } else if (trackStyle.equals("mondriaan")){
-            coloringStrategy = GradientColoringStrategy.fromPattern(GradientColoringStrategy.PATTERN_YELLOW_RED_BLUE, workout.avgSpeed * 0.98, workout.avgSpeed * 1.02, false);
-        } else {// theme_color
-            /* default: original color based on theme*/
-            int[] c2 = {getThemePrimaryColor() , getThemePrimaryColor()};
-            coloringStrategy = new GradientColoringStrategy(c2, 0, workout.topSpeed, false);
+        switch (trackStyle) {
+            case "theme_alpha":
+                /* use theme color but with alpha */
+                int[] c1 = {(getThemePrimaryColor() & 0xffffff) ^ 0x55000000, getThemePrimaryColor()};
+                coloringStrategy = new GradientColoringStrategy(c1, true);
+                break;
+            case "purple_rain":
+                /* a nice set of colors generated from colorbrewer */
+                coloringStrategy = GradientColoringStrategy.fromPattern(GradientColoringStrategy.PATTERN_PURPLE, true);
+                break;
+            case "pink_mist":
+                /* Pink is nice */
+                coloringStrategy = GradientColoringStrategy.fromPattern(GradientColoringStrategy.PATTERN_PINK, false);
+                break;
+            case "rainbow_warrior":
+                /* Attempt to use different colors, this would be best suited for a fixed scale e.g. green is target value , red is to fast , yellow it to slow */
+                coloringStrategy = GradientColoringStrategy.fromPattern(GradientColoringStrategy.PATTERN_MAP, true);
+                break;
+            case "bright_night":
+                coloringStrategy = GradientColoringStrategy.fromPattern(GradientColoringStrategy.PATTERN_BRIGHT, false);
+                break;
+            case "mondriaan":
+                coloringStrategy = GradientColoringStrategy.fromPattern(GradientColoringStrategy.PATTERN_YELLOW_RED_BLUE, false);
+                break;
+            default: // theme_color
+                /* default: original color based on theme*/
+                coloringStrategy = new SimpleColoringStrategy(getThemePrimaryColor());
+                break;
         }
 
-        workoutLayer = new WorkoutLayer(samples, coloringStrategy);
+        workoutLayer = new WorkoutLayer(samples, new SimpleColoringStrategy(getThemePrimaryColor()), coloringStrategy);
 
         workoutLayer.addMapSampleSelectionListener(this);
 
         mapView.addLayer(workoutLayer);
 
-        final BoundingBox bounds= workoutLayer.getBoundingBox().extendMeters(50);
+        final BoundingBox bounds = workoutLayer.getBoundingBox().extendMeters(50);
         mHandler.postDelayed(() -> {
             mapView.getModel().mapViewPosition.setMapPosition(new MapPosition(bounds.getCenterPoint(),
                                                                               (LatLongUtils.zoomForBounds(mapView.getDimension(), bounds,

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -19,6 +19,8 @@
 
 package de.tadris.fitness.map;
 
+import androidx.annotation.Nullable;
+
 import org.mapsforge.core.graphics.Canvas;
 import org.mapsforge.core.graphics.GraphicFactory;
 import org.mapsforge.core.graphics.Paint;
@@ -37,7 +39,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutSample;
+import de.tadris.fitness.ui.workout.diagram.SampleConverter;
 
 public class WorkoutLayer extends Layer {
 
@@ -45,24 +49,29 @@ public class WorkoutLayer extends Layer {
     private final GraphicFactory graphicFactory;
     private final boolean keepAligned;
     private Paint paintStroke;
-    private int paintColor;
     private double strokeIncrease = 1;
     private BoundingBox boundingBox;
     private final List<WorkoutSample> samples;
-    private ColoringStrategy coloringStrategy;
     private Set<MapSampleSelectionListener> listeners;
 
+    private ColoringStrategy fallbackColoringStrategy; // if workout is displayed without coloring this will be used
+
+    @Nullable
+    private SampleConverter sampleConverter; // get values from samples
+    private ColoringStrategy coloringStrategy; // get colors from values
+
     private static Paint getDEFAULT_PAINT_STROKE() {
-        Paint paint= AndroidGraphicFactory.INSTANCE.createPaint();
+        Paint paint = AndroidGraphicFactory.INSTANCE.createPaint();
         paint.setStyle(Style.STROKE);
         paint.setStrokeWidth(14f);
         return paint;
     }
 
-    public WorkoutLayer(List<WorkoutSample> samples, ColoringStrategy coloringStrategy) {
+    public WorkoutLayer(List<WorkoutSample> samples, ColoringStrategy fallbackColoringStrategy, ColoringStrategy coloringStrategy) {
         this(getDEFAULT_PAINT_STROKE(), samples);
+        this.fallbackColoringStrategy = fallbackColoringStrategy;
         this.coloringStrategy = coloringStrategy;
-        listeners = new HashSet<MapSampleSelectionListener>();
+        listeners = new HashSet<>();
     }
 
     public void addMapSampleSelectionListener(MapSampleSelectionListener listener){
@@ -77,7 +86,7 @@ public class WorkoutLayer extends Layer {
         this.samples = samples;
 
         //We need to calculate the Bounding box hence need to still convert the items to lotLongs
-        List<LatLong> points = new ArrayList<LatLong>();
+        List<LatLong> points = new ArrayList<>();
         for(WorkoutSample sample : samples){
             points.add(sample.toLatLong());
         }
@@ -166,18 +175,35 @@ public class WorkoutLayer extends Layer {
         }
 
         Path path = this.graphicFactory.createPath();
-        paintStroke.setColor(paintColor);
         while (sampleIterator.hasNext()) {
             path.moveTo(x, y);
             sample = sampleIterator.next();
             x = (float) (MercatorProjection.longitudeToPixelX(sample.lon, mapSize) - topLeftPoint.x);
             y = (float) (MercatorProjection.latitudeToPixelY(sample.lat, mapSize) - topLeftPoint.y);
-            paintStroke.setColor( coloringStrategy.getColor(sample.speed));
+            paintStroke.setColor(getColorFromSample(sample));
             path.lineTo(x, y);
             canvas.drawPath(path, this.paintStroke);
             path.clear();
         }
         this.paintStroke.setStrokeWidth(strokeWidth);
+    }
+
+    private int getColorFromSample(WorkoutSample sample) {
+        if (sampleConverter != null) {
+            double value = sampleConverter.getValue(sample);
+            return coloringStrategy.getColor(value);
+        } else {
+            return fallbackColoringStrategy.getColor(0);
+        }
+    }
+
+    public void setSampleConverter(Workout workout, @Nullable SampleConverter sampleConverter) {
+        this.sampleConverter = sampleConverter;
+        if (sampleConverter != null) {
+            coloringStrategy.setMin(sampleConverter.getMinValue(workout));
+            coloringStrategy.setMax(sampleConverter.getMaxValue(workout));
+        }
+        requestRedraw();
     }
 
     public BoundingBox getBoundingBox() {

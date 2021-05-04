@@ -37,6 +37,7 @@ import de.tadris.fitness.data.WorkoutData;
 import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.map.ColoringStrategy;
 import de.tadris.fitness.map.GradientColoringStrategy;
+import de.tadris.fitness.map.SimpleColoringStrategy;
 import de.tadris.fitness.map.WorkoutLayer;
 import de.tadris.fitness.recording.WorkoutCutter;
 
@@ -126,10 +127,10 @@ public class EditWorkoutStartEndActivity extends ShowWorkoutMapDiagramActivity {
             }
         }
         //Draw new track
-        if (selectedStartSample != null || selectedEndSample != null){
-            int[] c2 = {getThemePrimaryColor() , getThemePrimaryColor()};
-            ColoringStrategy coloringStrategy = new GradientColoringStrategy(c2, 0, workout.topSpeed, false);
-            newWorkoutLayer = new WorkoutLayer(newWorkoutSamples, coloringStrategy);
+        if (selectedStartSample != null || selectedEndSample != null) {
+            int[] c2 = {getThemePrimaryColor(), getThemePrimaryColor()};
+            ColoringStrategy coloringStrategy = new GradientColoringStrategy(c2, false);
+            newWorkoutLayer = new WorkoutLayer(newWorkoutSamples, new SimpleColoringStrategy(getThemePrimaryColor()), coloringStrategy);
             mapView.addLayer(newWorkoutLayer);
         }
         //Draw "new" start

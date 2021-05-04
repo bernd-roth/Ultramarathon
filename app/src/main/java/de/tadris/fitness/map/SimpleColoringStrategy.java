@@ -19,11 +19,23 @@
 
 package de.tadris.fitness.map;
 
-public interface ColoringStrategy {
+public class SimpleColoringStrategy implements ColoringStrategy {
 
-    void setMin(double value);
+    int color;
 
-    void setMax(double value);
+    public SimpleColoringStrategy(int color) {
+        this.color = color;
+    }
 
-    int getColor(double value);
+    public int getColor(double value) {
+        return color;
+    }
+
+    @Override
+    public void setMin(double value) {
+    }
+
+    @Override
+    public void setMax(double value) {
+    }
 }
