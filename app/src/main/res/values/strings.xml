@@ -218,6 +218,7 @@
     <string name="unitKilometersSingular">Kilometer</string>
     <string name="unitKilometersPerHour">Kilometers per hour</string>
     <string name="unitMetersPerSecond">Meters per second</string>
+    <string name="unitHeartBeatsPerMinute">bpm</string>
     <string name="unitKcalLong">Calories</string>
     <string name="unitKJoule">Kilojoule</string>
     <string name="pref_energy_unit">Energy unit</string>

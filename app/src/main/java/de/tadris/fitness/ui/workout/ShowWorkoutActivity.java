@@ -116,8 +116,8 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
 
         if (workout.hasHeartRateData()) {
             addTitle(getString(R.string.workoutHeartRate));
-            addKeyValue(getString(R.string.workoutAvgHeartRate), workout.avgHeartRate + " bpm",
-                    getString(R.string.workoutMaxHeartRate), workout.maxHeartRate + " bpm");
+            addKeyValue(getString(R.string.workoutAvgHeartRate), workout.avgHeartRate +" "+ getString(R.string.unitHeartBeatsPerMinute),
+                    getString(R.string.workoutMaxHeartRate), workout.maxHeartRate +" "+ getString(R.string.unitHeartBeatsPerMinute));
 
             addDiagram(new HeartRateConverter(this), ShowWorkoutMapDiagramActivity.DIAGRAM_TYPE_HEART_RATE);
         }
