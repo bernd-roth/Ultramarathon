@@ -91,6 +91,8 @@
     <string name="uploadFailedOsmNotAuthorized">Not authorized, try again</string>
     <string name="workoutAscent">Ascent</string>
     <string name="workoutDescent">Descent</string>
+    <string name="workoutMinHeight">Min height</string>
+    <string name="workoutMaxHeight">Max height</string>
     <string name="height">Height</string>
     <string name="workoutTypeRunning">Running</string>
     <string name="workoutTypeWalking">Walking</string>
@@ -139,6 +141,8 @@
     <string name="gps">GPS</string>
     <string name="data">Data</string>
     <string name="mapStyle">Map Style</string>
+    <string name="trackStyle">Track Style</string>
+    <string name="prefTrackStyleUsageTitle">Use track coloring automatically</string>
     <string name="waiting_gps">Waiting for GPS</string>
     <string name="actionUploadToOSM">Upload to OSM</string>
     <string name="cut">Cut the first/last 300 Meters</string>
@@ -192,6 +196,7 @@
     <string name="preferencesBackupTitle">Database</string>
     <string name="preferencesBackupSummary">Backup/Restore your workout data</string>
     <string name="preferencesCategoryAppearance">Appearance</string>
+    <string name="preferencesCategoryMap">Map</string>
     <string name="preferenceDateFormat">Date Format</string>
     <string name="preferenceTimeFormat">Time Format</string>
     <string name="preferenceCurrentSpeedTime">Time span for average calculation</string>
@@ -251,6 +256,7 @@
     <string name="speedLastMinuteSpoken">Speed within the last minute</string>
     <string name="cannotFindWorkout">Cannot find workout</string>
     <string name="editWorkout">Edit Workout</string>
+    <string name="editWorkoutStartEnd">Edit Start/End</string>
     <string name="aboutTitle">About</string>
     <string name="aboutVersion">Version</string>
     <string name="aboutChangelog">Changelog</string>
@@ -365,6 +371,10 @@
     <string name="announcementCountdown">Auto Start Actions (countdown, state, etc.)</string>
     <string name="scanning">Scanning…</string>
     <string name="scanFailed">Scan failed</string>
+    <string name="moveStartOfWorkout">Cut start</string>
+    <string name="moveEndOfWorkout">Cut end</string>
+    <string name="actionApply">Apply</string>
+    <string name="editStartEndHelp">Select a position on the map or the diagram. Then click on one of the arrows to select a new starting or ending point. When you\'re done, click on the save icon to apply the changes.</string>
     <!-- used for countdown voice announcements -->
     <plurals name="seconds">
         <item quantity="one"><xliff:g id="secs" example="1">%1$d</xliff:g> second</item>
@@ -403,6 +413,9 @@
     <string name="pref_auto_start_mode_wait_for_gps">Wait for accurate GPS position</string>
     <string name="pref_auto_start_mode_on_move">Wait for you to start moving</string>
     <string name="pref_auto_start_mode_unknown">Unknown mode (please do not select)</string>
+    <string name="selectColoring">Select coloring</string>
+    <string name="auto">Auto</string>
+    <string name="noColoring">No coloring</string>
     <string name="pref_announcements_pace_control_summary">Warn when below or above a specified speed</string>
     <string name="pref_announcements_pace_control_title">Pace Control Warnings</string>
     <string name="invalidNumberFormat">Invalid number format.</string>
@@ -423,6 +436,19 @@
         <item>Mapnik\nDefault OSM Mapstyle</item>
         <item>Humanitarian\nClean map but sometimes not available</item>
         <item>Offline\nLocal map file with local render theme</item>
+    </string-array>
+    <string-array name="pref_track_style_usage">
+        <item>Always</item>
+        <item>In the diagram screen</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_track_style">
+        <item>Theme color(Alpha)</item>
+        <item>Purple Rain</item>
+        <item>Pink Mist</item>
+        <item>Rainbow Warrior</item>
+        <item>Bright Night</item>
+        <item>Mondriaan (Average speed)</item>
     </string-array>
     <string-array name="pref_theme_setting">
         <item>Light</item>

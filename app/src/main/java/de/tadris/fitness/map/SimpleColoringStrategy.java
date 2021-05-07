@@ -17,37 +17,25 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.ui.workout.diagram;
+package de.tadris.fitness.map;
 
-import androidx.annotation.ColorRes;
+public class SimpleColoringStrategy implements ColoringStrategy {
 
-import com.github.mikephil.charting.charts.CombinedChart;
+    int color;
 
-import de.tadris.fitness.data.Workout;
-import de.tadris.fitness.data.WorkoutData;
-import de.tadris.fitness.data.WorkoutSample;
+    public SimpleColoringStrategy(int color) {
+        this.color = color;
+    }
 
-public interface SampleConverter {
+    public int getColor(double value) {
+        return color;
+    }
 
-    void onCreate(WorkoutData data);
+    @Override
+    public void setMin(double value) {
+    }
 
-    float getMinValue(Workout workout);
-
-    float getMaxValue(Workout workout);
-
-    float getValue(WorkoutSample sample);
-
-    String getName();
-
-    String getDescription();
-
-    boolean isIntervalSetVisible();
-
-    void afterAdd(CombinedChart chart);
-
-    @ColorRes
-    int getColor();
-
-    String getUnit();
-
+    @Override
+    public void setMax(double value) {
+    }
 }

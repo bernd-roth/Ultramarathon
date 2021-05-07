@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -22,6 +22,7 @@ package de.tadris.fitness.ui.workout.diagram;
 import android.content.Context;
 
 import de.tadris.fitness.R;
+import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutData;
 import de.tadris.fitness.data.WorkoutSample;
 
@@ -55,4 +56,13 @@ public class HeightConverter extends AbstractSampleConverter {
         return R.color.diagramHeight;
     }
 
+    @Override
+    public float getMinValue(Workout workout) {
+        return (float) distanceUnitUtils.getDistanceUnitSystem().getElevationFromMeters(workout.minElevationMSL);
+    }
+
+    @Override
+    public float getMaxValue(Workout workout) {
+        return (float) distanceUnitUtils.getDistanceUnitSystem().getElevationFromMeters(workout.maxElevationMSL);
+    }
 }

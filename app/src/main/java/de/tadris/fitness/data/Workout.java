@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -82,6 +82,18 @@ public class Workout{
     @ColumnInfo(name = "workoutType")
     @JsonProperty(value = "workoutType")
     public String workoutTypeId;
+
+    /**
+     * Minimum elevation over the media sea level in meters
+     */
+    @ColumnInfo(name = "min_elevation_msl")
+    public float minElevationMSL;
+
+    /**
+     * Maximum elevation over the media sea level in meters
+     */
+    @ColumnInfo(name = "max_elevation_msl")
+    public float maxElevationMSL;
 
     public float ascent;
 

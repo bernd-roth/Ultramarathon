@@ -17,37 +17,13 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.ui.workout.diagram;
+package de.tadris.fitness.map;
 
-import androidx.annotation.ColorRes;
+public interface ColoringStrategy {
 
-import com.github.mikephil.charting.charts.CombinedChart;
+    void setMin(double value);
 
-import de.tadris.fitness.data.Workout;
-import de.tadris.fitness.data.WorkoutData;
-import de.tadris.fitness.data.WorkoutSample;
+    void setMax(double value);
 
-public interface SampleConverter {
-
-    void onCreate(WorkoutData data);
-
-    float getMinValue(Workout workout);
-
-    float getMaxValue(Workout workout);
-
-    float getValue(WorkoutSample sample);
-
-    String getName();
-
-    String getDescription();
-
-    boolean isIntervalSetVisible();
-
-    void afterAdd(CombinedChart chart);
-
-    @ColorRes
-    int getColor();
-
-    String getUnit();
-
+    int getColor(double value);
 }

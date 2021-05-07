@@ -28,7 +28,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(version = 12, entities = {Workout.class, WorkoutSample.class, Interval.class, IntervalSet.class, WorkoutType.class}, exportSchema = false)
+@Database(version = 13, entities = {Workout.class, WorkoutSample.class, Interval.class, IntervalSet.class, WorkoutType.class}, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "fito-track";
@@ -271,6 +271,30 @@ public abstract class AppDatabase extends RoomDatabase {
 
                             database.execSQL("create index index_workout_sample_workout_id on workout_sample (workout_id)");
                             database.execSQL("create index index_interval_set_id on interval (set_id)");
+
+                            database.setTransactionSuccessful();
+                        } finally {
+                            database.endTransaction();
+                        }
+                    }
+                }, new Migration(12, 13) {
+                    @Override
+                    public void migrate(@NonNull SupportSQLiteDatabase database) {
+                        try {
+                            database.beginTransaction();
+
+                            // Add new columns
+                            database.execSQL("ALTER table workout add COLUMN min_elevation_msl REAL not null default 0;");
+                            database.execSQL("ALTER table workout add COLUMN max_elevation_msl REAL not null default 0;");
+
+                            // Calculate min and max elevation for the new columns
+                            // What it does: take the min/max value from samples. If no samples exist for the workout, then it's 0
+                            database.execSQL("update workout set min_elevation_msl = " +
+                                    "(select min(elevation_msl) from workout_sample where workout_id = workout.id) " +
+                                    "where min_elevation_msl=0 and (select count(id) from workout_sample where workout_id = workout.id) > 0");
+                            database.execSQL("update workout set max_elevation_msl = " +
+                                    "(select max(elevation_msl) from workout_sample where workout_id = workout.id) " +
+                                    "where max_elevation_msl=0 and (select count(id) from workout_sample where workout_id = workout.id) > 0");
 
                             database.setTransactionSuccessful();
                         } finally {

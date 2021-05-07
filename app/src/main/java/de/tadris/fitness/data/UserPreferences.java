@@ -126,8 +126,20 @@ public class UserPreferences {
         return preferences.getInt("spokenUpdateDistancePeriod", 0);
     }
 
-    public String getMapStyle(){
+    public String getMapStyle() {
         return preferences.getString("mapStyle", "osm.mapnik");
+    }
+
+    public String getTrackStyle() {
+        return preferences.getString("trackStyle", "purple_rain");
+    }
+
+    public static final String STYLE_USAGE_ALWAYS = "always";
+    public static final String STYLE_USAGE_DIAGRAM = "diagram";
+    public static final String STYLE_USAGE_NEVER = "never";
+
+    public String getTrackStyleMode() {
+        return preferences.getString("trackStyleUsage", STYLE_USAGE_DIAGRAM);
     }
 
     public boolean intervalsIncludePauses() {
