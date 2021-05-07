@@ -31,7 +31,7 @@
         android:title="@string/moveEndOfWorkout" />
     <item
         android:id="@+id/actionMoveApply"
-        android:icon="@drawable/ic_apply"
+        android:icon="@drawable/ic_save"
         android:showAsAction="always"
         android:title="@string/actionApply" />
 

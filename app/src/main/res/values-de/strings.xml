@@ -451,4 +451,18 @@
     <string name="scanning">Scannen…</string>
     <string name="scanFailed">Scan fehlgeschlagen</string>
     <string name="invalidNumberFormat">Ungültiges Zahlenformat.</string>
+    <string name="workoutMinHeight">Min Höhe</string>
+    <string name="workoutMaxHeight">Max Höhe</string>
+    <string name="trackStyle">Routenstil</string>
+    <string name="prefTrackStyleUsageTitle">Routenfärbung automatisch nutzen</string>
+    <string name="preferencesCategoryMap">Karte</string>
+    <string name="editWorkoutStartEnd">Start/Ende bearbeiten</string>
+    <string name="runningMigrations">Migrationen ausführen</string>
+    <string name="moveStartOfWorkout">Start abschneiden</string>
+    <string name="moveEndOfWorkout">Ende abschneiden</string>
+    <string name="actionApply">Übernehmen</string>
+    <string name="editStartEndHelp">Markiere eine Position auf der Karte oder dem Diagramm. Klicke dann auf einen der Pfeile, um einen neuen Start oder ein neues Ende auszuwählen. Wenn du fertig bist, drücke auf das Speichern-Symbol zum Übernehmen der Änderungen.</string>
+    <string name="selectColoring">Färbung auswählen</string>
+    <string name="auto">Auto</string>
+    <string name="noColoring">Keine Färbung</string>
 </resources>
