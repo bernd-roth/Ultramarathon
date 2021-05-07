@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -20,7 +20,6 @@
 package de.tadris.fitness.recording.announcement;
 
 import android.content.Context;
-import android.util.Log;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
@@ -40,14 +39,14 @@ public class InformationAnnouncements {
     private int lastSpokenUpdateDistance = 0;
     private long lastSpokenSpeedWarningTime = 0;
 
-    private Float lowerTargetSpeedLimit = null;
-    private Float upperTargetSpeedLimit = null;
+    private float lowerTargetSpeedLimit;
+    private float upperTargetSpeedLimit;
 
     private final long intervalTime;
     private final int intervalInMeters;
     private final long speedWarningIntervalTime;
 
-    public InformationAnnouncements(Context context, WorkoutRecorder recorder, TTSController TTSController){
+    public InformationAnnouncements(Context context, WorkoutRecorder recorder, TTSController TTSController) {
         this.recorder = recorder;
         this.TTSController = TTSController;
         this.manager = new InformationManager(context);
@@ -94,13 +93,13 @@ public class InformationAnnouncements {
         if (speedWarningIntervalTime == 0 || recorder.getDuration() - lastSpokenSpeedWarningTime <= speedWarningIntervalTime) {
             return;
         }
-        Float speed = new Float(recorder.getCurrentSpeed());
-        if (lowerTargetSpeedLimit != null && lowerTargetSpeedLimit > speed) {
-            TTSController.speak(context.getString(R.string.ttsBelowTargetSpeed));
+        float speed = (float) recorder.getCurrentSpeed();
+        if (lowerTargetSpeedLimit != 0 && lowerTargetSpeedLimit > speed) {
+            TTSController.speak(context.getString(R.string.ttsBelowTargetSpeed) + ".");
             TTSController.speak(new CurrentSpeed(context).getSpokenText(recorder));
             lastSpokenSpeedWarningTime = recorder.getDuration();
-        } else if (upperTargetSpeedLimit != null && upperTargetSpeedLimit < speed) {
-            TTSController.speak(context.getString(R.string.ttsAboveTargetSpeed));
+        } else if (upperTargetSpeedLimit != 0 && upperTargetSpeedLimit < speed) {
+            TTSController.speak(context.getString(R.string.ttsAboveTargetSpeed) + ".");
             TTSController.speak(new CurrentSpeed(context).getSpokenText(recorder));
             lastSpokenSpeedWarningTime = recorder.getDuration();
         }
