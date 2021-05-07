@@ -161,7 +161,7 @@ public class DistanceUnitUtils extends UnitUtils {
         if (distanceInMeters >= 1000) {
             String lengthInLongUnit = round(distanceUnitSystem.getDistanceFromKilometers((double) distanceInMeters / 1000d), 2);
             if (useLongUnitNames) {
-                return lengthInLongUnit + " " + getString(distanceUnitSystem.getLongDistanceUnitTitle(false));
+                return lengthInLongUnit + " " + getString(distanceUnitSystem.getLongDistanceUnitTitle(distanceInMeters> 1000 ));
             } else {
                 return lengthInLongUnit + " " + distanceUnitSystem.getLongDistanceUnit();
             }
