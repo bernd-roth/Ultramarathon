@@ -25,7 +25,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class GpxTpxExtension {
 
-    @JacksonXmlProperty(localName = "hr", namespace = "gpxtpx")
+    @JacksonXmlProperty(localName = "gpxtpx:hr")
     private int hr;
 
     public GpxTpxExtension() {
