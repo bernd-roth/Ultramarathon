@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -20,6 +20,7 @@
 package de.tadris.fitness.ui;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -46,9 +47,19 @@ public class LauncherActivity extends Activity {
     }
 
     private void init() {
-        Instance.getInstance(this);
-        MapManager.initMapProvider(this);
-        start();
+        try {
+            Instance.getInstance(this);
+            MapManager.initMapProvider(this);
+            start();
+        } catch (Exception e) {
+            e.printStackTrace();
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.launchError)
+                    .setMessage(e.getMessage())
+                    .setPositiveButton(R.string.okay, null)
+                    .setOnDismissListener(dialog -> finish())
+                    .show();
+        }
     }
 
     private void start() {

@@ -375,6 +375,7 @@
     <string name="moveStartOfWorkout">Cut start</string>
     <string name="moveEndOfWorkout">Cut end</string>
     <string name="actionApply">Apply</string>
+    <string name="launchError">Could not launch application</string>
     <string name="editStartEndHelp">Select a position on the map or the diagram. Then click on one of the arrows to select a new starting or ending point. When you\'re done, click on the save icon to apply the changes.</string>
     <!-- used for countdown voice announcements -->
     <plurals name="seconds">
