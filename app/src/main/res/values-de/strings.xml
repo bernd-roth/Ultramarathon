@@ -161,6 +161,7 @@
         <item>Privat</item>
     </string-array>
     <string-array name="pref_theme_setting">
+        <item>System</item>
         <item>Hell</item>
         <item>Dunkel</item>
     </string-array>

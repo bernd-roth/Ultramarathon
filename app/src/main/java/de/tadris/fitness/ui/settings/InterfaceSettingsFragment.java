@@ -19,34 +19,30 @@
 
 package de.tadris.fitness.ui.settings;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.NumberPicker;
 import android.widget.Toast;
 
 import androidx.documentfile.provider.DocumentFile;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceManager;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.util.NumberPickerUtils;
 import de.tadris.fitness.util.unit.DistanceUnitSystem;
 
-public class InterfaceSettingsActivity extends FitoTrackSettingsActivity {
+public class InterfaceSettingsFragment extends FitoTrackSettingFragment {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setupActionBar();
-
-        setTitle(R.string.preferencesUserInterfaceTitle);
-
-        addPreferencesFromResource(R.xml.preferences_user_interface);
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        setPreferencesFromResource(R.xml.preferences_user_interface, rootKey);
 
         bindPreferenceSummaryToValue(findPreference("unitSystem"));
         bindPreferenceSummaryToValue(findPreference("mapStyle"));
@@ -58,7 +54,7 @@ public class InterfaceSettingsActivity extends FitoTrackSettingsActivity {
         bindPreferenceSummaryToValue(findPreference("energyUnit"));
         findPreference("themeSetting").setOnPreferenceChangeListener((preference, newValue) -> {
             sBindPreferenceSummaryToValueListener.onPreferenceChange(preference, newValue);
-            Toast.makeText(InterfaceSettingsActivity.this, R.string.hintRestart, Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), R.string.hintRestart, Toast.LENGTH_LONG).show();
             return true;
         });
 
@@ -66,8 +62,6 @@ public class InterfaceSettingsActivity extends FitoTrackSettingsActivity {
             showWeightPicker();
             return true;
         });
-
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         Preference mapFilePref = findPreference("offlineMapFileName");
         bindPreferenceSummaryToValue(mapFilePref);
@@ -83,11 +77,11 @@ public class InterfaceSettingsActivity extends FitoTrackSettingsActivity {
     }
 
     private void showWeightPicker() {
-        Instance.getInstance(this).distanceUnitUtils.setUnit(); // Maybe the user changed unit system
-        DistanceUnitSystem unitSystem = Instance.getInstance(this).distanceUnitUtils.getDistanceUnitSystem();
+        Instance.getInstance(getContext()).distanceUnitUtils.setUnit(); // Maybe the user changed unit system
+        DistanceUnitSystem unitSystem = Instance.getInstance(getContext()).distanceUnitUtils.getDistanceUnitSystem();
 
-        final AlertDialog.Builder d = new AlertDialog.Builder(this);
-        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        final AlertDialog.Builder d = new AlertDialog.Builder(requireActivity());
+        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
         d.setTitle(getString(R.string.pref_weight));
         View v = getLayoutInflater().inflate(R.layout.dialog_weight_picker, null);
         NumberPicker np = v.findViewById(R.id.weightPicker);
@@ -119,9 +113,9 @@ public class InterfaceSettingsActivity extends FitoTrackSettingsActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK && requestCode == FOLDER_IMPORT_SELECT_CODE) {
-            final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK && requestCode == FOLDER_IMPORT_SELECT_CODE) {
+            final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
             preferences.edit().putString("offlineMapFileName", data.getData().toString()).apply();
             findPreference("offlineMapFileName").setSummary(data.getData().toString());
         }
@@ -129,11 +123,11 @@ public class InterfaceSettingsActivity extends FitoTrackSettingsActivity {
     }
 
     private void openMapDownloader() {
-        String mapFileName = Instance.getInstance(this).userPreferences.getOfflineMapFileName();
-        if (mapFileName != null && DocumentFile.fromTreeUri(this, Uri.parse(mapFileName)).canWrite()) {
-            startActivity(new Intent(this, DownloadMapsActivity.class));
+        String mapFileName = Instance.getInstance(getContext()).userPreferences.getOfflineMapFileName();
+        if (mapFileName != null && DocumentFile.fromTreeUri(requireContext(), Uri.parse(mapFileName)).canWrite()) {
+            startActivity(new Intent(requireContext(), DownloadMapsActivity.class));
         } else {
-            Toast.makeText(this, R.string.downloadMapsSpecifyDirectory, Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), R.string.downloadMapsSpecifyDirectory, Toast.LENGTH_LONG).show();
         }
     }
 

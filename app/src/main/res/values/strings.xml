@@ -453,6 +453,7 @@
         <item>Mondriaan (Average speed)</item>
     </string-array>
     <string-array name="pref_theme_setting">
+        <item>System</item>
         <item>Light</item>
         <item>Dark</item>
     </string-array>

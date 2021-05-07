@@ -54,7 +54,7 @@ import de.tadris.fitness.ui.dialog.ProgressDialogController;
 import de.tadris.fitness.ui.dialog.SelectWorkoutTypeDialog;
 import de.tadris.fitness.ui.dialog.ThreadSafeProgressDialogController;
 import de.tadris.fitness.ui.record.RecordWorkoutActivity;
-import de.tadris.fitness.ui.settings.MainSettingsActivity;
+import de.tadris.fitness.ui.settings.FitoTrackSettingsActivity;
 import de.tadris.fitness.ui.workout.AggregatedWorkoutStatisticsActivity;
 import de.tadris.fitness.ui.workout.EnterWorkoutActivity;
 import de.tadris.fitness.ui.workout.ShowWorkoutActivity;
@@ -248,7 +248,7 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
                     .setTitle(R.string.setPreferencesTitle)
                     .setMessage(R.string.setPreferencesMessage)
                     .setNegativeButton(R.string.cancel, null)
-                    .setPositiveButton(R.string.settings, (dialog, which) -> startActivity(new Intent(ListWorkoutsActivity.this, MainSettingsActivity.class)))
+                    .setPositiveButton(R.string.settings, (dialog, which) -> startActivity(new Intent(ListWorkoutsActivity.this, FitoTrackSettingsActivity.class)))
                     .create().show();
         }
     }
@@ -348,7 +348,7 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
         int id = item.getItemId();
 
         if (id == R.id.actionOpenSettings) {
-            startActivity(new Intent(this, MainSettingsActivity.class));
+            startActivity(new Intent(this, FitoTrackSettingsActivity.class));
             return true;
         }
 

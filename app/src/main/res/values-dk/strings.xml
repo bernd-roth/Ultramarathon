@@ -17,7 +17,9 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources>
+  -->
+
+<resources>
     <string name="app_name">FitoTrack</string>
     <string name="workout_add">Tilføj</string>
     <string name="stop">Stop</string>
@@ -249,6 +251,7 @@
         <item>Kun i hovedtelefoner</item>
     </string-array>
     <string-array name="pref_theme_setting">
+        <item>System</item>
         <item>Lys</item>
         <item>Mørk</item>
     </string-array>

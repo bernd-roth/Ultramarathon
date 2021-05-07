@@ -64,8 +64,7 @@
         <activity android:name=".ui.settings.AboutActivity" />
         <activity android:name=".ui.settings.EditIntervalSetActivity" />
         <activity android:name=".ui.settings.ManageIntervalSetsActivity" />
-        <activity android:name=".ui.settings.VoiceAnnouncementsSettingsActivity" />
-        <activity android:name=".ui.settings.MainSettingsActivity" />
+        <activity android:name=".ui.settings.FitoTrackSettingsActivity" />
         <activity android:name=".ui.workout.EnterWorkoutActivity" />
         <activity
             android:name=".ui.workout.ShowWorkoutMapActivity"
@@ -91,9 +90,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.settings.InterfaceSettingsActivity" />
-        <activity android:name=".ui.settings.RecordingSettingsActivity" />
-        <activity android:name=".ui.settings.BackupSettingsActivity" />
         <activity android:name=".ui.workout.AggregatedWorkoutStatisticsActivity" />
         <activity
             android:name=".ui.workout.ShareWorkoutActivity"

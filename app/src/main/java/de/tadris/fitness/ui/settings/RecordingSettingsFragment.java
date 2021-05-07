@@ -43,8 +43,8 @@ import de.tadris.fitness.ui.dialog.ChooseAutoTimeoutDialog;
 import de.tadris.fitness.util.NfcAdapterHelper;
 import de.tadris.fitness.util.NumberPickerUtils;
 
-public class RecordingSettingsActivity
-        extends FitoTrackSettingsActivity
+public class RecordingSettingsFragment
+        extends FitoTrackSettingFragment
         implements ChooseAutoStartModeDialog.AutoStartModeSelectListener,
         ChooseAutoStartDelayDialog.AutoStartDelaySelectListener,
         ChooseAutoTimeoutDialog.AutoTimeoutSelectListener {
@@ -53,36 +53,32 @@ public class RecordingSettingsActivity
     UserPreferences preferences;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setupActionBar();
-
-        instance = Instance.getInstance(this);
-        preferences = Instance.getInstance(this).userPreferences;
-
-        setTitle(R.string.preferencesRecordingTitle);
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        instance = Instance.getInstance(getContext());
+        preferences = Instance.getInstance(requireContext()).userPreferences;
 
         addPreferencesFromResource(R.xml.preferences_recording);
 
         // modify NFC option
-        if (!NfcAdapterHelper.isNfcPresent(this)) { // disable the NFC option if the device doesn't support NFC
+        if (!NfcAdapterHelper.isNfcPresent(requireContext())) { // disable the NFC option if the device doesn't support NFC
             findPreference("nfcStart").setEnabled(false);
         } else {
             // ask the user to enable NFC in device settings when they want to use it in the app
             // but NFC is globally disabled
             findPreference("nfcStart").setOnPreferenceChangeListener((pref, newValue) -> {
-                if ((Boolean) newValue && !NfcAdapterHelper.isNfcEnabled(this)) {
-                    NfcAdapterHelper.createNfcEnableDialog(this).show();
+                if ((Boolean) newValue && !NfcAdapterHelper.isNfcEnabled(requireContext())) {
+                    NfcAdapterHelper.createNfcEnableDialog(requireContext()).show();
                     return false;   // do NOT use NFC yet, user first needs to enable it in device settings
                 }
                 return true;
             });
         }
 
-        findPreference("speech").setOnPreferenceClickListener(preference -> {
-            checkTTS(this::showSpeechConfig);
-            return true;
-        });
+        findPreference("speech").setVisible(false);
+        findPreference("intervals").setVisible(false);
+
+        checkTTS(this::showSpeechConfig);
+
         findPreference("intervals").setOnPreferenceClickListener(preference -> {
             checkTTS(this::showIntervalSetManagement);
             return true;
@@ -109,10 +105,11 @@ public class RecordingSettingsActivity
         });
     }
 
+
     private TTSController TTSController;
 
     private void checkTTS(Runnable onTTSAvailable) {
-        TTSController = new TTSController(this);
+        TTSController = new TTSController(requireContext());
         EventBus.getDefault().register(new Object() {
             @Subscribe(threadMode = ThreadMode.MAIN)
             public void onTTSReady(TTSReadyEvent e) {
@@ -120,7 +117,7 @@ public class RecordingSettingsActivity
                     onTTSAvailable.run();
                 } else {
                     // TextToSpeech is not available
-                    Toast.makeText(RecordingSettingsActivity.this, R.string.ttsNotAvailable, Toast.LENGTH_LONG).show();
+                    Toast.makeText(requireContext(), R.string.ttsNotAvailable, Toast.LENGTH_LONG).show();
                 }
                 if (TTSController != null) {
                     TTSController.destroy();
@@ -131,25 +128,26 @@ public class RecordingSettingsActivity
     }
 
     private void showSpeechConfig() {
-        startActivity(new Intent(this, VoiceAnnouncementsSettingsActivity.class));
+        findPreference("speech").setVisible(true);
+        findPreference("intervals").setVisible(true);
     }
 
     private void showIntervalSetManagement() {
-        startActivity(new Intent(this, ManageIntervalSetsActivity.class));
+        startActivity(new Intent(requireContext(), ManageIntervalSetsActivity.class));
     }
 
     private void showAutoStartModeConfig() {
-        new ChooseAutoStartModeDialog(this, this).show();
+        new ChooseAutoStartModeDialog(requireActivity(), this).show();
     }
 
     private void showAutoStartDelayConfig() {
         int initialDelayS = instance.userPreferences.getAutoStartDelay();
-        new ChooseAutoStartDelayDialog(this, this,
+        new ChooseAutoStartDelayDialog(requireActivity(), this,
                 (long) initialDelayS * 1_000).show();
     }
 
     private void showCurrentSpeedAverageTimePicker() {
-        final AlertDialog.Builder d = new AlertDialog.Builder(this);
+        final AlertDialog.Builder d = new AlertDialog.Builder(requireActivity());
         final float disabledAlpha = 0.3f;
 
         d.setTitle(getString(R.string.preferenceCurrentSpeedTime));
@@ -187,21 +185,21 @@ public class RecordingSettingsActivity
     }
 
     private void showAutoTimeoutConfig() {
-        new ChooseAutoTimeoutDialog(this, this).show();
+        new ChooseAutoTimeoutDialog(requireActivity(), this).show();
     }
 
     @Override
     public void onSelectAutoStartMode(AutoStartWorkout.Mode mode) {
-        Instance.getInstance(this).userPreferences.setAutoStartMode(mode);
+        Instance.getInstance(getContext()).userPreferences.setAutoStartMode(mode);
     }
 
     @Override
     public void onSelectAutoStartDelay(int delayS) {
-        Instance.getInstance(this).userPreferences.setAutoStartDelay(delayS);
+        Instance.getInstance(getContext()).userPreferences.setAutoStartDelay(delayS);
     }
 
     @Override
     public void onSelectAutoTimeout(int timeoutM) {
-        Instance.getInstance(this).userPreferences.setAutoTimeout(timeoutM);
+        Instance.getInstance(getContext()).userPreferences.setAutoTimeout(timeoutM);
     }
 }

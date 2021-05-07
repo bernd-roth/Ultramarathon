@@ -17,27 +17,28 @@
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/actionMoveStartHere"
         android:icon="@drawable/ic_arrow_left"
-        android:showAsAction="always"
-        android:title="@string/moveStartOfWorkout" />
+        android:title="@string/moveStartOfWorkout"
+        app:showAsAction="always" />
     <item
         android:id="@+id/actionMoveEndHere"
         android:icon="@drawable/ic_arrow_right"
-        android:showAsAction="always"
-        android:title="@string/moveEndOfWorkout" />
+        android:title="@string/moveEndOfWorkout"
+        app:showAsAction="always" />
     <item
         android:id="@+id/actionMoveApply"
         android:icon="@drawable/ic_save"
-        android:showAsAction="always"
-        android:title="@string/actionApply" />
+        android:title="@string/actionApply"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/actionMoveHelp"
         android:icon="@drawable/ic_help"
-        android:showAsAction="always"
-        android:title="@string/help" />
+        android:title="@string/help"
+        app:showAsAction="always" />
 </menu>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -17,17 +17,20 @@
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Preference
         android:key="userInterface"
         android:summary="@string/preferencesUserInterfaceSummary"
-        android:title="@string/preferencesUserInterfaceTitle" />
+        android:title="@string/preferencesUserInterfaceTitle"
+        app:fragment="de.tadris.fitness.ui.settings.InterfaceSettingsFragment" />
 
     <Preference
         android:key="recordingSettings"
         android:summary="@string/preferencesRecordingSummary"
-        android:title="@string/preferencesRecordingTitle" />
+        android:title="@string/preferencesRecordingTitle"
+        app:fragment="de.tadris.fitness.ui.settings.RecordingSettingsFragment" />
 
     <Preference
         android:key="workoutTypeSettings"
@@ -36,7 +39,8 @@
     <Preference
         android:key="backupSettings"
         android:summary="@string/preferencesBackupSummary"
-        android:title="@string/preferencesBackupTitle" />
+        android:title="@string/preferencesBackupTitle"
+        app:fragment="de.tadris.fitness.ui.settings.BackupSettingsFragment" />
 
     <Preference
         android:key="about"

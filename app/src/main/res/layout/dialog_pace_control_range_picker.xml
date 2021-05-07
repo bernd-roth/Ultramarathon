@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Moritz Bock <mvb1996@gmail.com>
+  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -25,7 +25,7 @@
 
    <LinearLayout
        android:layout_width="match_parent"
-       android:layout_height="match_parent"
+       android:layout_height="wrap_content"
        android:orientation="horizontal">
       <CheckBox
           android:id="@+id/enableLowerPaceLimit"
@@ -33,8 +33,9 @@
           android:layout_height="wrap_content" />
       <EditText
           android:id="@+id/lowerPaceLimitPicker"
-          android:layout_width="wrap_content"
+          android:layout_width="0dp"
           android:layout_height="wrap_content"
+          android:layout_weight="1"
           android:hint="@string/lowerPaceLimit"
           android:inputType="numberDecimal" />
       <TextView
@@ -53,8 +54,9 @@
           android:layout_height="wrap_content" />
       <EditText
           android:id="@+id/upperPaceLimitPicker"
-          android:layout_width="wrap_content"
+          android:layout_width="0dp"
           android:layout_height="wrap_content"
+          android:layout_weight="1"
           android:hint="@string/upperPaceLimit"
           android:inputType="numberDecimal" />
       <TextView

@@ -20,6 +20,7 @@
 package de.tadris.fitness.ui.settings;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -41,18 +42,13 @@ import de.tadris.fitness.ui.ShareFileActivity;
 import de.tadris.fitness.ui.dialog.ProgressDialogController;
 import de.tadris.fitness.util.DataManager;
 
-public class BackupSettingsActivity extends FitoTrackSettingsActivity {
+public class BackupSettingsFragment extends FitoTrackSettingFragment {
 
     private final Handler mHandler = new Handler();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setupActionBar();
-
-        setTitle(R.string.preferencesBackupTitle);
-
-        addPreferencesFromResource(R.xml.preferences_backup);
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        setPreferencesFromResource(R.xml.preferences_backup, rootKey);
 
         findPreference("import").setOnPreferenceClickListener(preference -> {
             showImportDialog();
@@ -62,7 +58,6 @@ public class BackupSettingsActivity extends FitoTrackSettingsActivity {
             showExportDialog();
             return true;
         });
-
     }
 
     private void showExportDialog() {
@@ -70,7 +65,7 @@ public class BackupSettingsActivity extends FitoTrackSettingsActivity {
             requestPermissions();
             return;
         }
-        new AlertDialog.Builder(this)
+        new AlertDialog.Builder(requireActivity())
                 .setTitle(R.string.exportData)
                 .setMessage(R.string.exportDataSummary)
                 .setNegativeButton(R.string.cancel, null)
@@ -78,23 +73,23 @@ public class BackupSettingsActivity extends FitoTrackSettingsActivity {
     }
 
     private void exportBackup() {
-        ProgressDialogController dialogController = new ProgressDialogController(this, getString(R.string.backup));
+        ProgressDialogController dialogController = new ProgressDialogController(requireActivity(), getString(R.string.backup));
         dialogController.show();
         new Thread(() -> {
             try {
-                String file = DataManager.getSharedDirectory(this) + "/backup" + System.currentTimeMillis() + ".ftb";
+                String file = DataManager.getSharedDirectory(requireContext()) + "/backup" + System.currentTimeMillis() + ".ftb";
                 File parent = new File(file).getParentFile();
                 if (!parent.exists() && !parent.mkdirs()) {
                     throw new IOException("Cannot write");
                 }
-                Uri uri = FileProvider.getUriForFile(getBaseContext(), BuildConfig.APPLICATION_ID + ".fileprovider", new File(file));
+                Uri uri = FileProvider.getUriForFile(requireContext(), BuildConfig.APPLICATION_ID + ".fileprovider", new File(file));
 
-                BackupController backupController = new BackupController(getBaseContext(), new File(file), (progress, action) -> mHandler.post(() -> dialogController.setProgress(progress, action)));
+                BackupController backupController = new BackupController(requireContext(), new File(file), (progress, action) -> mHandler.post(() -> dialogController.setProgress(progress, action)));
                 backupController.exportData();
 
                 mHandler.post(() -> {
                     dialogController.cancel();
-                    Intent intent = new Intent(this, ShareFileActivity.class);
+                    Intent intent = new Intent(getContext(), ShareFileActivity.class);
                     intent.putExtra(ShareFileActivity.EXTRA_FILE_URI, uri.toString());
                     startActivity(intent);
                 });
@@ -113,7 +108,7 @@ public class BackupSettingsActivity extends FitoTrackSettingsActivity {
             requestPermissions();
             return;
         }
-        new AlertDialog.Builder(this)
+        new AlertDialog.Builder(requireActivity())
                 .setTitle(R.string.importBackup)
                 .setMessage(R.string.replaceOrMergeMessage)
                 .setPositiveButton(R.string.replace, ((dialog, which) -> {
@@ -128,14 +123,14 @@ public class BackupSettingsActivity extends FitoTrackSettingsActivity {
 
     private void requestPermissions() {
         if (!hasPermission()) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE}, 10);
         }
     }
 
     private boolean hasPermission() {
-        return ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+        return ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
     }
 
     private static final int FILE_REPLACE_SELECT_CODE = 21;
@@ -146,7 +141,7 @@ public class BackupSettingsActivity extends FitoTrackSettingsActivity {
     }
 
     private void showReplaceImport() {
-        new AlertDialog.Builder(this)
+        new AlertDialog.Builder(requireActivity())
                 .setTitle(R.string.importBackup)
                 .setMessage(R.string.importBackupMessage)
                 .setNegativeButton(R.string.cancel, null)
@@ -164,8 +159,8 @@ public class BackupSettingsActivity extends FitoTrackSettingsActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case FILE_REPLACE_SELECT_CODE:
                     importBackup(data.getData(), true);
@@ -179,11 +174,11 @@ public class BackupSettingsActivity extends FitoTrackSettingsActivity {
     }
 
     private void importBackup(Uri uri, boolean replace) {
-        ProgressDialogController dialogController = new ProgressDialogController(this, getString(R.string.backup));
+        ProgressDialogController dialogController = new ProgressDialogController(requireActivity(), getString(R.string.backup));
         dialogController.show();
         new Thread(() -> {
             try {
-                RestoreController restoreController = new RestoreController(getBaseContext(), uri, replace,
+                RestoreController restoreController = new RestoreController(requireContext(), uri, replace,
                         (progress, action) -> mHandler.post(() -> dialogController.setProgress(progress, action)));
                 restoreController.restoreData();
 

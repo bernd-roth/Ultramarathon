@@ -120,9 +120,7 @@ public abstract class WorkoutActivity extends InformationActivity implements Map
     }
 
     void initAfterContent() {
-        if (getActionBar() != null) {
-            getActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+        setupActionBar();
         setTitle(workout.getWorkoutType(this).title);
 
         theme = getTheme();

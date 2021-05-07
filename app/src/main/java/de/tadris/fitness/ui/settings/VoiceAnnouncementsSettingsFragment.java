@@ -45,21 +45,14 @@ import de.tadris.fitness.util.NumberPickerUtils;
 import de.tadris.fitness.util.unit.DistanceUnitSystem;
 import de.tadris.fitness.util.unit.DistanceUnitUtils;
 
-public class VoiceAnnouncementsSettingsActivity extends FitoTrackSettingsActivity {
+public class VoiceAnnouncementsSettingsFragment extends FitoTrackSettingFragment {
 
     UserPreferences userPreferences;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setupActionBar();
-
-        setTitle(R.string.voiceAnnouncementsTitle);
-
-        userPreferences = Instance.getInstance(this).userPreferences;
-
-        addPreferencesFromResource(R.xml.preferences_voice_announcements);
-
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        userPreferences = Instance.getInstance(getContext()).userPreferences;
+        setPreferencesFromResource(R.xml.preferences_voice_announcements, rootKey);
         bindPreferenceSummaryToValue(findPreference("announcementMode"));
 
         findPreference("speechConfig").setOnPreferenceClickListener(preference -> {
@@ -74,10 +67,10 @@ public class VoiceAnnouncementsSettingsActivity extends FitoTrackSettingsActivit
     }
 
     private void showSpeechConfig() {
-        Instance.getInstance(this).distanceUnitUtils.setUnit();
+        Instance.getInstance(getContext()).distanceUnitUtils.setUnit();
 
-        final AlertDialog.Builder d = new AlertDialog.Builder(this);
-        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        final AlertDialog.Builder d = new AlertDialog.Builder(requireActivity());
+        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
         d.setTitle(getString(R.string.pref_announcements_config_title));
         View v = getLayoutInflater().inflate(R.layout.dialog_spoken_updates_picker, null);
 
@@ -95,7 +88,7 @@ public class VoiceAnnouncementsSettingsActivity extends FitoTrackSettingsActivit
         npT.setDisplayedValues(npTValues);
         NumberPickerUtils.fixNumberPicker(npT);
 
-        final String distanceUnit = " " + Instance.getInstance(this).distanceUnitUtils.getDistanceUnitSystem().getLongDistanceUnit();
+        final String distanceUnit = " " + Instance.getInstance(getContext()).distanceUnitUtils.getDistanceUnitSystem().getLongDistanceUnit();
         NumberPicker npD = v.findViewById(R.id.spokenUpdatesDistancePicker);
         npD.setMaxValue(10);
         npD.setMinValue(0);
@@ -123,12 +116,12 @@ public class VoiceAnnouncementsSettingsActivity extends FitoTrackSettingsActivit
     }
 
     private void showPaceControlConfig() {
-        DistanceUnitUtils distanceUtils = Instance.getInstance(this).distanceUnitUtils;
+        DistanceUnitUtils distanceUtils = Instance.getInstance(getContext()).distanceUnitUtils;
         DistanceUnitSystem unitSystem = distanceUtils.getDistanceUnitSystem();
         distanceUtils.setUnit();
 
-        final AlertDialog.Builder d = new AlertDialog.Builder(this);
-        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        final AlertDialog.Builder d = new AlertDialog.Builder(requireActivity());
+        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
         final String unit = unitSystem.getSpeedUnit();
 
         d.setTitle(getString(R.string.pref_announcements_pace_control_title));
@@ -164,7 +157,7 @@ public class VoiceAnnouncementsSettingsActivity extends FitoTrackSettingsActivit
                 lower = enableLower ? getSpeed(lowerLimit, unitSystem) : 0;
                 upper = enableUpper ? getSpeed(upperLimit, unitSystem) : Float.POSITIVE_INFINITY;
             } catch (ParseException e) {
-                Toast.makeText(this, getString(R.string.invalidNumberFormat), Toast.LENGTH_LONG).show();
+                Toast.makeText(requireContext(), getString(R.string.invalidNumberFormat), Toast.LENGTH_LONG).show();
                 e.printStackTrace();
             }
             float upper_tmp = upper;
@@ -185,7 +178,7 @@ public class VoiceAnnouncementsSettingsActivity extends FitoTrackSettingsActivit
 
     private float getSpeed(EditText speed, DistanceUnitSystem unit) throws ParseException {
         Number value = NumberFormat.getInstance(Locale.getDefault()).parse(speed.getText().toString());
-        return new Float(unit.getMeterPerSecondFromSpeed(value.doubleValue()));
+        return (float) unit.getMeterPerSecondFromSpeed(value.doubleValue());
     }
 
     private String getSpeedString(float speed, DistanceUnitSystem unit) {

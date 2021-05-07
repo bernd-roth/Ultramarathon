@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -24,42 +24,21 @@ import android.os.Bundle;
 
 import de.tadris.fitness.R;
 
-public class MainSettingsActivity extends FitoTrackSettingsActivity {
+public class MainSettingsFragment extends FitoTrackSettingFragment {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setupActionBar();
-
-        setTitle(R.string.settings);
-
-        addPreferencesFromResource(R.xml.preferences_main);
-
-        findPreference("userInterface").setOnPreferenceClickListener(preference -> {
-            startActivity(new Intent(this, InterfaceSettingsActivity.class));
-            return true;
-        });
-
-        findPreference("recordingSettings").setOnPreferenceClickListener(preference -> {
-            startActivity(new Intent(this, RecordingSettingsActivity.class));
-            return true;
-        });
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        setPreferencesFromResource(R.xml.preferences_main, rootKey);
 
         findPreference("workoutTypeSettings").setOnPreferenceClickListener(preference -> {
-            startActivity(new Intent(this, ManageWorkoutTypesActivity.class));
+            startActivity(new Intent(requireContext(), ManageWorkoutTypesActivity.class));
             return true;
         });
-
-        findPreference("backupSettings").setOnPreferenceClickListener(preference -> {
-            startActivity(new Intent(this, BackupSettingsActivity.class));
-            return true;
-        });
-
         findPreference("about").setOnPreferenceClickListener(preference -> {
-            startActivity(new Intent(this, AboutActivity.class));
+            startActivity(new Intent(requireContext(), AboutActivity.class));
             return true;
         });
-
     }
+
 
 }

@@ -48,7 +48,8 @@ public class LauncherActivity extends Activity {
 
     private void init() {
         try {
-            Instance.getInstance(this);
+            Instance.getInstance(this); // Initially load instance class
+            Instance.getInstance(this).themes.updateDarkModeSetting();
             MapManager.initMapProvider(this);
             start();
         } catch (Exception e) {

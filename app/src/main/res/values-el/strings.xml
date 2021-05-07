@@ -123,7 +123,6 @@
     <string name="workoutTypeAdd">Προσθήκη</string>
     <string name="workoutTypeOther">Άλλα αθλήματα</string>
     <string name="workoutTypeRowing">Κωπηλασία</string>
-    <string name="workoutTypeJogging"></string>
     <string name="workoutTypeWalking">Περπάτημα</string>
     <string name="workoutTypeHiking">Πορεία</string>
     <string name="workoutTypeCycling">Ποδηλασία</string>
