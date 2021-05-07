@@ -20,39 +20,59 @@
 package de.tadris.fitness.recording.announcement;
 
 import android.content.Context;
+import android.util.Log;
 
 import de.tadris.fitness.Instance;
+import de.tadris.fitness.R;
 import de.tadris.fitness.data.UserPreferences;
 import de.tadris.fitness.recording.WorkoutRecorder;
+import de.tadris.fitness.recording.information.CurrentSpeed;
 import de.tadris.fitness.recording.information.InformationManager;
 import de.tadris.fitness.recording.information.RecordingInformation;
 
 public class InformationAnnouncements {
 
+    private final Context context;
     private final WorkoutRecorder recorder;
     private final TTSController TTSController;
     private final InformationManager manager;
     private long lastSpokenUpdateTime = 0;
     private int lastSpokenUpdateDistance = 0;
+    private long lastSpokenSpeedWarningTime = 0;
+
+    private Float lowerTargetSpeedLimit = null;
+    private Float upperTargetSpeedLimit = null;
 
     private final long intervalTime;
     private final int intervalInMeters;
+    private final long speedWarningIntervalTime;
 
     public InformationAnnouncements(Context context, WorkoutRecorder recorder, TTSController TTSController){
-        this.recorder= recorder;
+        this.recorder = recorder;
         this.TTSController = TTSController;
         this.manager = new InformationManager(context);
+        this.context = context;
 
         UserPreferences prefs = Instance.getInstance(context).userPreferences;
         this.intervalTime = 60 * 1000 * prefs.getSpokenUpdateTimePeriod();
         this.intervalInMeters = (int) (1000.0 / Instance.getInstance(context).distanceUnitUtils.getDistanceUnitSystem().getDistanceFromKilometers(1)
                 * prefs.getSpokenUpdateDistancePeriod());
+        this.speedWarningIntervalTime = 1000 * 10;
+
+        if (prefs.hasLowerTargetSpeedLimit()) {
+            lowerTargetSpeedLimit = prefs.getLowerTargetSpeedLimit();
+        }
+        if (prefs.hasUpperTargetSpeedLimit()) {
+            upperTargetSpeedLimit = prefs.getUpperTargetSpeedLimit();
+        }
     }
 
     public void check() {
         if (!TTSController.isTtsAvailable()) {
             return;
         } // Cannot speak
+
+        this.checkSpeed();
 
         boolean shouldSpeak = false;
 
@@ -70,6 +90,22 @@ public class InformationAnnouncements {
         }
     }
 
+    private void checkSpeed() {
+        if (speedWarningIntervalTime == 0 || recorder.getDuration() - lastSpokenSpeedWarningTime <= speedWarningIntervalTime) {
+            return;
+        }
+        Float speed = new Float(recorder.getCurrentSpeed());
+        if (lowerTargetSpeedLimit != null && lowerTargetSpeedLimit > speed) {
+            TTSController.speak(context.getString(R.string.ttsBelowTargetSpeed));
+            TTSController.speak(new CurrentSpeed(context).getSpokenText(recorder));
+            lastSpokenSpeedWarningTime = recorder.getDuration();
+        } else if (upperTargetSpeedLimit != null && upperTargetSpeedLimit < speed) {
+            TTSController.speak(context.getString(R.string.ttsAboveTargetSpeed));
+            TTSController.speak(new CurrentSpeed(context).getSpokenText(recorder));
+            lastSpokenSpeedWarningTime = recorder.getDuration();
+        }
+    }
+
     private void speak() {
         speakAnnouncements(true);
 
@@ -84,5 +120,4 @@ public class InformationAnnouncements {
             }
         }
     }
-
 }

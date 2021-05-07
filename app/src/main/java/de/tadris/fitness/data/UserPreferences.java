@@ -33,6 +33,12 @@ public class UserPreferences {
     private static final String USE_AUTO_PAUSE_VARIABLE = "autoPause";
     private static final String ANNOUNCE_SUPPRESS_DURING_CALL_VARIABLE = "announcementSuppressDuringCall";
     private static final String ANNOUNCE_AUTO_START_COUNTDOWN = "announcement_countdown";
+    private static final String USE_AVERAGE_FOR_CURRENT_SPEED = "useAverageForCurrentSpeed";
+    private static final String TIME_FOR_CURRENT_SPEED = "timeForCurrentSpeed";
+    private static final String HAS_LOWER_TARGET_SPEED_LIMIT = "hasLowerTargetSpeedLimit";
+    private static final String LOWER_TARGET_SPEED_LIMIT = "lowerTargetSpeedLimit";
+    private static final String HAS_UPPER_TARGET_SPEED_LIMIT = "hasUpperTargetSpeedLimit";
+    private static final String UPPER_TARGET_SPEED_LIMIT = "upperTargetSpeedLimit";
 
     /**
      * Default NFC start enable state if no other has been chosen
@@ -68,6 +74,38 @@ public class UserPreferences {
      * Default for using auto start countdown TTS announcements if no other has been chosen
      */
     public static final boolean DEFAULT_ANNOUNCE_AUTO_START_COUNTDOWN = true;
+
+    /**
+     * Default for using an average over a certain time instead of the last record for calculating
+     * the current speed
+     */
+    private static final boolean DEFAULT_USE_AVERAGE_FOR_CURRENT_SPEED = false;
+
+    /**
+     * Default time for calculating the current speed when using average (i.e. when
+     * DEFAULT_USE_AVERAGE_FOR_CURRENT_SPEED is true)
+     */
+    private static final int DEFAULT_TIME_FOR_CURRENT_SPEED = 15;
+
+    /**
+     * Default whether to warn the user when they are below a specified speed
+     */
+    private static final boolean DEFAULT_HAS_LOWER_TARGET_SPEED_LIMIT = false;
+
+    /**
+     * Default lower target speed range limit (in m/s)
+     */
+    private static final float DEFAULT_LOWER_TARGET_SPEED_LIMIT = 2;
+
+    /**
+     * Default whether to warn the user when they are above a specified speed
+     */
+    private static final boolean DEFAULT_HAS_UPPER_TARGET_SPEED_LIMIT = false;
+
+    /**
+     * Default upper target speed range limit (in m/s)
+     */
+    private static final float DEFAULT_UPPER_TARGET_SPEED_LIMIT = 3;
 
 
     private final SharedPreferences preferences;
@@ -236,5 +274,104 @@ public class UserPreferences {
      */
     public boolean isAutoStartCountdownAnnouncementsEnabled() {
         return preferences.getBoolean(ANNOUNCE_AUTO_START_COUNTDOWN, DEFAULT_ANNOUNCE_AUTO_START_COUNTDOWN);
+    }
+
+    /**
+     * Check if the average speed over a certain time shall be used to calculate the current speed
+     * (instead of the last record only)
+     * @return whether the average shall be used
+     */
+    public boolean getUseAverageForCurrentSpeed() {
+        return preferences.getBoolean(USE_AVERAGE_FOR_CURRENT_SPEED, DEFAULT_USE_AVERAGE_FOR_CURRENT_SPEED);
+    }
+
+    /**
+     * Set if the average speed over a certain time shall be used to calculate the current speed
+     * (instead of the last record only)
+     * @param useAverage whether the average shall be used
+     */
+    public void setUseAverageForCurrentSpeed(boolean useAverage) {
+        preferences.edit().putBoolean(USE_AVERAGE_FOR_CURRENT_SPEED, useAverage).apply();
+    }
+
+    /**
+     * The time (in seconds) to take the average speed over when calculating the current speed
+     * @return the time (in seconds) over which to take the average speed
+     */
+    public int getTimeForCurrentSpeed() {
+        return preferences.getInt(TIME_FOR_CURRENT_SPEED, DEFAULT_TIME_FOR_CURRENT_SPEED);
+    }
+
+    /**
+     * Set the time (in seconds) to take the average speed over when calculating the current speed
+     * @param time the time (in seconds) over which to take the average speed
+     */
+    public void setTimeForCurrentSpeed(int time) {
+        preferences.edit().putInt(TIME_FOR_CURRENT_SPEED, time).apply();
+    }
+
+    /**
+     * Get whether to warn the user when they are below a specified speed
+     * @return whether to warn the user
+     */
+    public boolean hasLowerTargetSpeedLimit() {
+        return preferences.getBoolean(HAS_LOWER_TARGET_SPEED_LIMIT, DEFAULT_HAS_LOWER_TARGET_SPEED_LIMIT);
+    }
+
+    /**
+     * Set whether to warn the user when they are below a specified speed
+     * @param hasLowerSpeedLimit whether to warn the user
+     */
+    public void setHasLowerTargetSpeedLimit(boolean hasLowerSpeedLimit) {
+        preferences.edit().putBoolean(HAS_LOWER_TARGET_SPEED_LIMIT, hasLowerSpeedLimit).apply();
+    }
+
+    /**
+     * Get lower target speed range limit (in m/s)
+     * @return lower speed limit (in m/s)
+     */
+    public float getLowerTargetSpeedLimit() {
+        return preferences.getFloat(LOWER_TARGET_SPEED_LIMIT, DEFAULT_LOWER_TARGET_SPEED_LIMIT);
+    }
+
+    /**
+     * Set lower target speed range limit (in m/s)
+     * @param lowerTargetSpeedLimit lower speed limit (in m/s)
+     */
+    public void setLowerTargetSpeedLimit(float lowerTargetSpeedLimit) {
+        preferences.edit().putFloat(LOWER_TARGET_SPEED_LIMIT, lowerTargetSpeedLimit).apply();
+    }
+
+    /**
+     * Get whether to warn the user when they are above a specified speed
+     * @return whether to warn the user
+     */
+    public boolean hasUpperTargetSpeedLimit() {
+        return preferences.getBoolean(HAS_UPPER_TARGET_SPEED_LIMIT, DEFAULT_HAS_UPPER_TARGET_SPEED_LIMIT);
+    }
+
+    /**
+     * Set whether to warn the user when they are above a specified speed
+     * @param hasUpperSpeedLimit whether to warn the user
+     */
+    public void setHasUpperTargetSpeedLimit(boolean hasUpperSpeedLimit) {
+        preferences.edit().putBoolean(HAS_UPPER_TARGET_SPEED_LIMIT, hasUpperSpeedLimit).apply();
+    }
+
+    /**
+     * Get upper target speed range limit (in m/s)
+     * @return upper speed limit (in m/s)
+     */
+    public float getUpperTargetSpeedLimit() {
+        return preferences.getFloat(UPPER_TARGET_SPEED_LIMIT, DEFAULT_UPPER_TARGET_SPEED_LIMIT);
+    }
+
+
+    /**
+     * Set upper target speed range limit (in m/s)
+     * @param upperTargetSpeedLimit upper speed limit (in m/s)
+     */
+    public void setUpperTargetSpeedLimit(float upperTargetSpeedLimit) {
+        preferences.edit().putFloat(UPPER_TARGET_SPEED_LIMIT, upperTargetSpeedLimit).apply();
     }
 }

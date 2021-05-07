@@ -55,6 +55,12 @@
         android:summary="@string/prefShowOnLockScreenSummary"
         android:title="@string/prefShowOnLockScreenTitle" />
 
+    <Preference
+        android:id="@+id/currentSpeedAverageTimeConfig"
+        android:key="currentSpeedAverageTimeConfig"
+        android:summary="@string/preferenceCurrentSpeedAverageTimeSummary"
+        android:title="@string/preferenceCurrentSpeedAverageTimeTitle" />
+
     <PreferenceCategory android:title="@string/preferenceCategoryVoiceFeedback">
 
         <Preference

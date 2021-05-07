@@ -81,6 +81,7 @@ public class WorkoutRecorder {
     private long lastResume;
     private long lastPause = 0;
     private long lastSampleTime = 0;
+    // private long lastGpsTime = 0;
     private double distance = 0;
 
     private boolean saved = false;
@@ -94,7 +95,11 @@ public class WorkoutRecorder {
     private float lastPressure = -1;
     private int lastHeartRate = -1;
 
+    private boolean useAverageForCurrentSpeed;
+    private int currentSpeedAverageTime;
+
     public WorkoutRecorder(Context context, WorkoutType workoutType) {
+        UserPreferences preferences = Instance.getInstance(context).userPreferences;
         this.context = context;
         this.state = RecordingState.IDLE;
 
@@ -103,11 +108,14 @@ public class WorkoutRecorder {
 
         // Default values
         this.workout.comment = "";
-        this.workout.intervalSetIncludesPauses = Instance.getInstance(context).userPreferences.intervalsIncludePauses();
+        this.workout.intervalSetIncludesPauses = preferences.intervalsIncludePauses();
 
         this.workout.setWorkoutType(workoutType);
 
         workoutSaver = new WorkoutSaver(this.context, getWorkoutData());
+
+        useAverageForCurrentSpeed = preferences.getUseAverageForCurrentSpeed();
+        currentSpeedAverageTime = preferences.getTimeForCurrentSpeed() * 1000;
 
         init();
     }
@@ -259,9 +267,12 @@ public class WorkoutRecorder {
             state = GpsState.SIGNAL_LOST;
         } else if (lastFix.getAccuracy() > SIGNAL_BAD_THRESHOLD) {
             state = GpsState.SIGNAL_BAD;
+            // lastGpsTime = System.currentTimeMillis();
         } else {
             state = GpsState.SIGNAL_OKAY;
+            // lastGpsTime = System.currentTimeMillis();
         }
+
         if (state != gpsState) {
             Log.d("Recorder", "GPS State: " + this.gpsState.name() + " -> " + state.name());
             EventBus.getDefault().post(new WorkoutGPSStateChanged(this.gpsState, state));
@@ -462,7 +473,11 @@ public class WorkoutRecorder {
     public double getCurrentSpeed() {
         WorkoutSample lastSample = getLastSample();
         if (lastSample != null) {
-            return lastSample.speed;
+            if (!useAverageForCurrentSpeed || currentSpeedAverageTime == 0 || samples.size() == 1) {
+                return lastSample.speed;
+            } else {
+                return getCurrentSpeed(currentSpeedAverageTime);
+            }
         } else {
             return 0;
         }
@@ -478,6 +493,7 @@ public class WorkoutRecorder {
             long minTime = currentTime - time;
             double distance = 0;
             WorkoutSample lastSample = samples.get(samples.size() - 1);
+            WorkoutSample firstSample = lastSample;
             for (int i = samples.size() - 1; i >= 0; i--) { // Go backwards
                 WorkoutSample currentSample = samples.get(i);
                 if (currentSample.relativeTime > minTime) {
@@ -487,8 +503,10 @@ public class WorkoutRecorder {
                 }
                 lastSample = currentSample;
             }
-            minTime = lastSample.relativeTime; // Set minTime to the time of the last sample that was added
-            long timeDiff = currentTime - minTime;
+            // Keep last speed even when losing GPS signal
+            // long timeDiff = lastGpsTime - lastSample.absoluteTime;
+            // long timeDiff = currentTime - lastSample.relativeTime;
+            long timeDiff = firstSample.relativeTime - lastSample.relativeTime;
             return distance / (timeDiff / 1000d);
         }
     }

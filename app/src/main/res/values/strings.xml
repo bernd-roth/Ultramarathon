@@ -194,6 +194,10 @@
     <string name="preferencesCategoryAppearance">Appearance</string>
     <string name="preferenceDateFormat">Date Format</string>
     <string name="preferenceTimeFormat">Time Format</string>
+    <string name="preferenceCurrentSpeedTime">Time span for average calculation</string>
+    <string name="preferenceCurrentSpeedAverageTimeSummary">Replace the current speed calculation by an average calculation.</string>
+    <string name="preferenceCurrentSpeedAverageTimeTitle">Current Speed by Average</string>
+    <string name="preferenceUseAverageForCurrentSpeed">Use the average speed over a certain time instead of the last single speed record for the current speed calculation.</string>
     <string name="workoutDiscarded">Workout discarded</string>
     <string name="timeSecondsSingular">Second</string>
     <string name="timeSecondsPlural">Seconds</string>
@@ -371,6 +375,15 @@
         <item quantity="one"><xliff:g id="mins" example="1">%1$d</xliff:g> minute</item>
         <item quantity="other"><xliff:g id="mins" example="5">%1$d</xliff:g> minutes</item>
     </plurals>
+    <string name="upperPaceLimit">Upper pace limit</string>
+    <string name="lowerPaceLimit">Lower pace limit</string>
+    <!-- speed warning announcements -->
+    <string name="ttsBelowTargetSpeed">
+        Too slow
+    </string>
+    <string name="ttsAboveTargetSpeed">
+        Too fast
+    </string>
     <!-- countdown announcement -->
     <string name="ttsLongSecondCountdownAnnouncement">
         <xliff:g id="secs" example="5 seconds">%1$s</xliff:g> until start
@@ -390,6 +403,9 @@
     <string name="pref_auto_start_mode_wait_for_gps">Wait for accurate GPS position</string>
     <string name="pref_auto_start_mode_on_move">Wait for you to start moving</string>
     <string name="pref_auto_start_mode_unknown">Unknown mode (please do not select)</string>
+    <string name="pref_announcements_pace_control_summary">Warn when below or above a specified speed</string>
+    <string name="pref_announcements_pace_control_title">Pace Control Warnings</string>
+    <string name="invalidNumberFormat">Invalid number format.</string>
     <string-array name="osm_track_visibility">
         <item>Identifiable</item>
         <item>Trackable</item>
