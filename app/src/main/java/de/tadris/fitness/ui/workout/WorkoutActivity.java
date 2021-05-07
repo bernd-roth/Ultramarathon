@@ -63,6 +63,7 @@ import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.IntervalSet;
+import de.tadris.fitness.data.UserPreferences;
 import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutData;
 import de.tadris.fitness.data.WorkoutSample;
@@ -73,6 +74,7 @@ import de.tadris.fitness.map.MapSampleSelectionListener;
 import de.tadris.fitness.map.SimpleColoringStrategy;
 import de.tadris.fitness.map.WorkoutLayer;
 import de.tadris.fitness.ui.workout.diagram.SampleConverter;
+import de.tadris.fitness.ui.workout.diagram.SpeedConverter;
 import de.tadris.fitness.util.WorkoutCalculator;
 import de.tadris.fitness.util.unit.DistanceUnitUtils;
 import de.tadris.fitness.util.unit.EnergyUnitUtils;
@@ -310,7 +312,7 @@ public abstract class WorkoutActivity extends InformationActivity implements Map
     static int myCounter =1;
     void addMap(){
         mapView = MapManager.setupMap(this);
-        String trackStyle = Instance.getInstance(mapView.getContext()).userPreferences.getTrackStyle();
+        String trackStyle = Instance.getInstance(this).userPreferences.getTrackStyle();
         // emulate current behaviour
 
 
@@ -350,16 +352,20 @@ public abstract class WorkoutActivity extends InformationActivity implements Map
         }
 
         workoutLayer = new WorkoutLayer(samples, new SimpleColoringStrategy(getThemePrimaryColor()), coloringStrategy);
-
         workoutLayer.addMapSampleSelectionListener(this);
+
+        if (Instance.getInstance(this).userPreferences.getTrackStyleMode().equals(UserPreferences.STYLE_USAGE_ALWAYS)) {
+            // Always show coloring
+            workoutLayer.setSampleConverter(workout, new SpeedConverter(this));
+        }
 
         mapView.addLayer(workoutLayer);
 
         final BoundingBox bounds = workoutLayer.getBoundingBox().extendMeters(50);
         mHandler.postDelayed(() -> {
             mapView.getModel().mapViewPosition.setMapPosition(new MapPosition(bounds.getCenterPoint(),
-                                                                              (LatLongUtils.zoomForBounds(mapView.getDimension(), bounds,
-                                                                                                          mapView.getModel().displayModel.getTileSize()))));
+                    (LatLongUtils.zoomForBounds(mapView.getDimension(), bounds,
+                            mapView.getModel().displayModel.getTileSize()))));
             mapView.animate().alpha(1f).setDuration(1000).start();
         }, 1000);
 

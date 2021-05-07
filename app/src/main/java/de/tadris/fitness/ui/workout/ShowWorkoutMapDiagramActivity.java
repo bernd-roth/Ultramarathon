@@ -34,7 +34,9 @@ import com.github.mikephil.charting.highlight.Highlight;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
+import de.tadris.fitness.data.UserPreferences;
 import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.ui.dialog.SampleConverterPickerDialog;
 import de.tadris.fitness.ui.workout.diagram.ConverterManager;
@@ -95,6 +97,13 @@ public class ShowWorkoutMapDiagramActivity extends WorkoutActivity {
         findViewById(R.id.showWorkoutDiagramSelector).setOnClickListener(v -> new SampleConverterPickerDialog(this, this::updateChart, converterManager).show());
         showIntervals.setOnCheckedChangeListener((buttonView, isChecked) -> updateChart());
         showIntervals.setVisibility(intervals != null && intervals.length > 0 ? View.VISIBLE : View.GONE);
+
+        String coloringMode = Instance.getInstance(this).userPreferences.getTrackStyleMode();
+        if (coloringMode.equals(UserPreferences.STYLE_USAGE_ALWAYS) || coloringMode.equals(UserPreferences.STYLE_USAGE_DIAGRAM)) {
+            coloringPropertyMode = COLORING_PROPERTY_AUTO;
+        } else {
+            coloringPropertyMode = COLORING_PROPERTY_NONE;
+        }
 
         refreshColoring();
     }

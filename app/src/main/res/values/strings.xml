@@ -140,6 +140,7 @@
     <string name="data">Data</string>
     <string name="mapStyle">Map Style</string>
     <string name="trackStyle">Track Style</string>
+    <string name="prefTrackStyleUsageTitle">Use track coloring automatically</string>
     <string name="waiting_gps">Waiting for GPS</string>
     <string name="actionUploadToOSM">Upload to OSM</string>
     <string name="cut">Cut the first/last 300 Meters</string>
@@ -193,6 +194,7 @@
     <string name="preferencesBackupTitle">Database</string>
     <string name="preferencesBackupSummary">Backup/Restore your workout data</string>
     <string name="preferencesCategoryAppearance">Appearance</string>
+    <string name="preferencesCategoryMap">Map</string>
     <string name="preferenceDateFormat">Date Format</string>
     <string name="preferenceTimeFormat">Time Format</string>
     <string name="workoutDiscarded">Workout discarded</string>
@@ -416,6 +418,11 @@
         <item>Mapnik\nDefault OSM Mapstyle</item>
         <item>Humanitarian\nClean map but sometimes not available</item>
         <item>Offline\nLocal map file with local render theme</item>
+    </string-array>
+    <string-array name="pref_track_style_usage">
+        <item>Always</item>
+        <item>In the diagram screen</item>
+        <item>Never</item>
     </string-array>
     <string-array name="pref_track_style">
         <item>Theme color(Alpha)</item>

@@ -34,14 +34,7 @@
         android:summary="@string/pref_weight_summary"
         android:title="@string/pref_weight" />
 
-    <PreferenceCategory android:title="@string/preferencesCategoryAppearance">
-
-        <ListPreference
-            android:defaultValue="0"
-            android:entries="@array/pref_theme_setting"
-            android:entryValues="@array/pref_theme_setting_values"
-            android:key="themeSetting"
-            android:title="@string/theme" />
+    <PreferenceCategory android:title="@string/preferencesCategoryMap">
 
         <ListPreference
             android:defaultValue="osm.mapnik"
@@ -53,7 +46,16 @@
         <ListPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:defaultValue="theme_color"
+            android:defaultValue="diagram"
+            android:entries="@array/pref_track_style_usage"
+            android:entryValues="@array/pref_track_style_usage_values"
+            android:key="trackStyleUsage"
+            android:title="@string/prefTrackStyleUsageTitle" />
+
+        <ListPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="purple_rain"
             android:entries="@array/pref_track_style"
             android:entryValues="@array/pref_track_style_values"
             android:key="trackStyle"
@@ -67,6 +69,17 @@
         <Preference
             android:key="offlineMapDownload"
             android:title="@string/downloadMapsTitle" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/preferencesCategoryAppearance">
+
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/pref_theme_setting"
+            android:entryValues="@array/pref_theme_setting_values"
+            android:key="themeSetting"
+            android:title="@string/theme" />
 
         <ListPreference
             android:defaultValue="system"
