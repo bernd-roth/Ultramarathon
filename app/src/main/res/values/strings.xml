@@ -91,6 +91,8 @@
     <string name="uploadFailedOsmNotAuthorized">Not authorized, try again</string>
     <string name="workoutAscent">Ascent</string>
     <string name="workoutDescent">Descent</string>
+    <string name="workoutMinHeight">Min height</string>
+    <string name="workoutMaxHeight">Max height</string>
     <string name="height">Height</string>
     <string name="workoutTypeRunning">Running</string>
     <string name="workoutTypeWalking">Walking</string>

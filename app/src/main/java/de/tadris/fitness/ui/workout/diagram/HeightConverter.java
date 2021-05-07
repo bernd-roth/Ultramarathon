@@ -58,11 +58,11 @@ public class HeightConverter extends AbstractSampleConverter {
 
     @Override
     public float getMinValue(Workout workout) {
-        return (float) distanceUnitUtils.getDistanceUnitSystem().getElevationFromMeters(0); // TODO
+        return (float) distanceUnitUtils.getDistanceUnitSystem().getElevationFromMeters(workout.minElevationMSL);
     }
 
     @Override
     public float getMaxValue(Workout workout) {
-        return (float) distanceUnitUtils.getDistanceUnitSystem().getElevationFromMeters(1); // TODO
+        return (float) distanceUnitUtils.getDistanceUnitSystem().getElevationFromMeters(workout.maxElevationMSL);
     }
 }

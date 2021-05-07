@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -129,8 +129,11 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
         if (hasSamples()) {
             addTitle(getString(R.string.height));
 
-            addKeyValue(getString(R.string.workoutAscent), distanceUnitUtils.getElevation((int) workout.ascent),
-                    getString(R.string.workoutDescent), distanceUnitUtils.getElevation((int) workout.descent));
+            addKeyValue(getString(R.string.workoutMinHeight), distanceUnitUtils.getElevation(Math.round(workout.minElevationMSL)),
+                    getString(R.string.workoutMaxHeight), distanceUnitUtils.getElevation(Math.round(workout.maxElevationMSL)));
+
+            addKeyValue(getString(R.string.workoutAscent), distanceUnitUtils.getElevation(Math.round(workout.ascent)),
+                    getString(R.string.workoutDescent), distanceUnitUtils.getElevation(Math.round(workout.descent)));
 
             addDiagram(new HeightConverter(this), ShowWorkoutMapDiagramActivity.DIAGRAM_TYPE_HEIGHT);
 

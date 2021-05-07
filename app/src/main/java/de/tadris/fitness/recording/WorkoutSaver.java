@@ -106,7 +106,7 @@ public class WorkoutSaver {
         if (calculateElevation) {
             setElevation();
         }
-        setAscentAndDescent();
+        setAscentAndDescentMinMax();
 
         setCalories();
     }
@@ -244,7 +244,7 @@ public class WorkoutSaver {
         }
     }
 
-    protected void setAscentAndDescent() {
+    protected void setAscentAndDescentMinMax() {
         workout.ascent = 0f;
         workout.descent = 0f;
 
@@ -253,7 +253,11 @@ public class WorkoutSaver {
 
         // Now sum up the ascent/descent
         if (samples.size() > 1) {
-            WorkoutSample prevSample = samples.get(0);
+            WorkoutSample firstSample = samples.get(0);
+            workout.minElevationMSL = (float) firstSample.elevationMSL;
+            workout.maxElevationMSL = (float) firstSample.elevationMSL;
+
+            WorkoutSample prevSample = firstSample;
             for (int i = 1; i < samples.size(); i++) {
                 WorkoutSample sample = samples.get(i);
                 // Use Rounded Elevations
