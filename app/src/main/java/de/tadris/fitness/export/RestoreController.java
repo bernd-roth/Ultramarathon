@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -82,6 +82,7 @@ public class RestoreController {
             restoreSamples();
             restoreIntervalSets();
             restoreWorkoutTypes();
+            runMigrations();
         });
     }
 
@@ -90,7 +91,7 @@ public class RestoreController {
     }
 
     private void restoreWorkouts() {
-        listener.onStatusChanged(60, context.getString(R.string.workouts));
+        listener.onStatusChanged(40, context.getString(R.string.workouts));
         if (dataContainer.getWorkouts() != null) {
             for (Workout workout : dataContainer.getWorkouts()) {
                 // Only Import Unknown Workouts on merge
@@ -102,7 +103,7 @@ public class RestoreController {
     }
 
     private void restoreSamples() {
-        listener.onStatusChanged(70, context.getString(R.string.locationData));
+        listener.onStatusChanged(50, context.getString(R.string.locationData));
         if (dataContainer.getSamples() != null) {
             for (WorkoutSample sample : dataContainer.getSamples()) {
                 // Only import unknown samples with known workout on merge
@@ -116,7 +117,7 @@ public class RestoreController {
     }
 
     private void restoreIntervalSets() {
-        listener.onStatusChanged(90, context.getString(R.string.intervalSets));
+        listener.onStatusChanged(70, context.getString(R.string.intervalSets));
         if (dataContainer.getIntervalSets() != null) {
             for (IntervalSetContainer container : dataContainer.getIntervalSets()) {
                 restoreIntervalSet(container);
@@ -141,7 +142,7 @@ public class RestoreController {
     }
 
     private void restoreWorkoutTypes() {
-        listener.onStatusChanged(95, context.getString(R.string.customWorkoutTypesTitle));
+        listener.onStatusChanged(80, context.getString(R.string.customWorkoutTypesTitle));
         if (dataContainer.getWorkoutTypes() != null) {
             for (WorkoutType type : dataContainer.getWorkoutTypes()) {
                 // Only import unknown workout types
@@ -152,6 +153,26 @@ public class RestoreController {
         }
     }
 
+    private void runMigrations() {
+        listener.onStatusChanged(90, context.getString(R.string.runningMigrations));
+        if (dataContainer.getVersion() <= 1) {
+            for (Workout workout : dataContainer.getWorkouts()) {
+                float minHeight = 0f;
+                float maxHeight = 0f;
+                for (WorkoutSample sample : database.workoutDao().getAllSamplesOfWorkout(workout.id)) {
+                    if (minHeight == 0) {
+                        minHeight = (float) sample.elevationMSL;
+                        maxHeight = (float) sample.elevationMSL;
+                    }
+                    minHeight = Math.min(minHeight, (float) sample.elevationMSL);
+                    maxHeight = Math.max(maxHeight, (float) sample.elevationMSL);
+                }
+                workout.minElevationMSL = minHeight;
+                workout.maxElevationMSL = maxHeight;
+                database.workoutDao().updateWorkout(workout);
+            }
+        }
+    }
 
     public interface ImportStatusListener {
         void onStatusChanged(int progress, String action);
