@@ -97,15 +97,15 @@ public class GradientColoringStrategy implements ColoringStrategy {
 
     public int getColor(double value){
         //find out in what bin to map the value
-        double offset = value - value_max;
-        double max_offset = value_min - value_max;
-        double index = ((offset / max_offset)) * colorPalette.length;
+        double offset = value - value_min ;
+        double max_offset = value_max - value_min;
+        int index = (int)((offset / max_offset) * colorPalette.length);
 
         // index can become negative or higher compared to the amount of control points
         // in such situation we take the edge value
         index = Math.min(index, colorPalette.length - 1);//if the scale is smaller than the actual speed -> use the largest
         index = Math.max(index, 0);//same for smaller scale
-        return colorPalette[(int) index];
+        return colorPalette[index];
     }
 
     @Override
