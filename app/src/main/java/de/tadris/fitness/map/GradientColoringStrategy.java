@@ -35,6 +35,8 @@ public class GradientColoringStrategy implements ColoringStrategy {
     public final static String PATTERN_MAP = "#ed5f53 #ede553 #53ede5 #1a1ee0 #e01a2e";
     public final static String PATTERN_BRIGHT = "#f0f2cd #c9f28c #a4f4ef #cfd6f7 #e4cbf4 #f4c1e7 #ddb8c2";
     public final static String PATTERN_YELLOW_RED_BLUE = "#f2f215 #f2f215 #800000 #000080";/* best used with no blending */
+    // http://geoffair.org/fg/map-test2/colormap.html
+    public final static String PATTERN_HEIGHT_MAP ="#000080 #c1ffff #d2ffff #e3ffff #c8ffed #c8ffc0 #c8ff9a #c8ff6a #c8ff14 #b1ff14 #9dff14 #86ff14 #60ff14 #23ff14 #00f200 #64e400 #00dc00 #8bde00 #c5f300 #ffff63 #fff85d #fff200 #ffe857 #ffd851 #ffc84b #ffb845 #ffa83f #ff9839 #ff8833 #ff782d #ff6827 #fa5821 #f2481b #ea3815 #e2280f #da1809 #d20803 #c80000 #bc0000 #b00000 #a40000 #980000 #8c0000 #800000 #740000 #680000 #5c0000 #500000 #440000 #380000 #2c0000 #200000 #200000";
 
     double value_min;
     double value_max;
