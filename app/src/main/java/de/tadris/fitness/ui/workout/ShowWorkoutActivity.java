@@ -340,7 +340,8 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == EditWorkoutStartEndActivity.INTENT_RESULT_CODE_WORKOUT_MODIFIED){
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == EditWorkoutStartEndActivity.INTENT_RESULT_CODE_WORKOUT_MODIFIED) {
             //Restart the activity as the data has changed..
             final Intent intent = new Intent(this, ShowWorkoutActivity.class);
             intent.putExtra(ShowWorkoutActivity.WORKOUT_ID_EXTRA, workout.id);
