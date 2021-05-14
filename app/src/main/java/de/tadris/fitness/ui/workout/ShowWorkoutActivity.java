@@ -242,7 +242,13 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
         dialogController.show();
         new Thread(() -> {
             try {
-                String file = DataManager.getSharedDirectory(this) + String.format("/workout-%s-%s.gpx", workout.getSafeDateString(), workout.getSafeComment());
+                final String filename;
+                if (!workout.getSafeComment().isEmpty()) {
+                    filename = String.format("workout-%s-%s.gpx", workout.getSafeDateString(), workout.getSafeComment());
+                } else {
+                    filename = String.format("workout-%s.gpx", workout.getSafeDateString());
+                }
+                String file = DataManager.getSharedDirectory(this) + "/" + filename;
                 File parent = new File(file).getParentFile();
                 if (!parent.exists() && !parent.mkdirs()) {
                     throw new IOException("Cannot write to " + file);
