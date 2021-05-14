@@ -86,7 +86,7 @@ public class WorkoutLayer extends Layer {
         this.graphicFactory = AndroidGraphicFactory.INSTANCE;
         this.samples = samples;
 
-        //We need to calculate the Bounding box hence need to still convert the items to lotLongs
+        //We need to calculate the Bounding box hence need to still convert the items to latLongs
         List<LatLong> points = new ArrayList<>();
         for(WorkoutSample sample : samples){
             points.add(sample.toLatLong());

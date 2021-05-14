@@ -327,6 +327,10 @@ public abstract class WorkoutActivity extends InformationActivity implements Map
                 /* Attempt to use different colors, this would be best suited for a fixed scale e.g. green is target value , red is to fast , yellow it to slow */
                 coloringStrategy = GradientColoringStrategy.fromPattern(GradientColoringStrategy.PATTERN_MAP, true);
                 break;
+            case "height_map":
+                /* based on height map colors from green till almost black*/
+                coloringStrategy = GradientColoringStrategy.fromPattern(GradientColoringStrategy.PATTERN_HEIGHT_MAP, true);
+                break;
             case "bright_night":
                 coloringStrategy = GradientColoringStrategy.fromPattern(GradientColoringStrategy.PATTERN_BRIGHT, false);
                 break;
