@@ -229,6 +229,7 @@
     <string name="unitKcalLong">Calorías</string>
     <string name="unitMetersPerSecond">Metros por segundo</string>
     <string name="unitKilometersPerHour">Kilómetros por hora</string>
+    <string name="unitHeartBeatsPerMinute">ppm</string>
     <string name="unitKilometersSingular">Kilómetro</string>
     <string name="unitKilometersPlural">Kilómetros</string>
     <string name="unitMetersSingular">Metro</string>
