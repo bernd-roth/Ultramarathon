@@ -203,6 +203,7 @@
     <string name="preferenceCurrentSpeedAverageTimeSummary">Replace the current speed calculation by an average calculation.</string>
     <string name="preferenceCurrentSpeedAverageTimeTitle">Current Speed by Average</string>
     <string name="preferenceUseAverageForCurrentSpeed">Use the average speed over a certain time instead of the last single speed record for the current speed calculation.</string>
+    <string name="preferenceFirstDayOfWeek">Start of the week</string>
     <string name="workoutDiscarded">Workout discarded</string>
     <string name="timeSecondsSingular">Second</string>
     <string name="timeSecondsPlural">Seconds</string>
@@ -480,5 +481,15 @@
         <item>24.07.2001</item>
         <item>24/07/2001</item>
         <item>07/24/2001</item>
+    </string-array>
+    <string-array name="pref_first_day_of_week">
+        <item>System Default</item>
+        <item>Sunday</item>
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
     </string-array>
 </resources>
