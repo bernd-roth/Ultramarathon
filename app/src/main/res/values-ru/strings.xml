@@ -407,4 +407,6 @@
     <string name="preferenceUseAverageForCurrentSpeed">Для расчета текущей скорости используйте среднюю скорость за определенное время вместо последней единичной записи скорости.</string>
     <string name="preferenceCurrentSpeedAverageTimeTitle">Текущая скорость по средней</string>
     <string name="preferenceCurrentSpeedTime">Временной интервал для расчета среднего значения</string>
+    <string name="preferenceCurrentSpeedAverageTimeSummary">Заменить расчёт текущей скорости на расчёт средней.</string>
+    <string name="prefTrackStyleUsageTitle">Использовать автоматическую окраску трека</string>
 </resources>
