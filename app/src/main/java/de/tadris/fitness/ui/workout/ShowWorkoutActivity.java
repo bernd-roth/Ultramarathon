@@ -238,8 +238,8 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
             return;
         }
         ProgressDialogController dialogController = new ProgressDialogController(this, getString(R.string.exporting));
-        dialogController.setIndeterminate(true);
         dialogController.show();
+        dialogController.setIndeterminate(true);
         new Thread(() -> {
             try {
                 final String filename;
