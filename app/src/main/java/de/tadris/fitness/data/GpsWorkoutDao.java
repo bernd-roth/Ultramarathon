@@ -26,7 +26,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 @Dao
-public interface WorkoutDao {
+public interface GpsWorkoutDao {
 
     @Query("SELECT * FROM workout WHERE id = :id")
     GpsWorkout findById(long id);

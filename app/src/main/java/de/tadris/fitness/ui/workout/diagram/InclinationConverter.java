@@ -24,7 +24,7 @@ import android.content.Context;
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.GpsWorkout;
-import de.tadris.fitness.data.WorkoutData;
+import de.tadris.fitness.data.GpsWorkoutData;
 import de.tadris.fitness.data.WorkoutManager;
 
 public class InclinationConverter extends AbstractSampleConverter {
@@ -34,7 +34,7 @@ public class InclinationConverter extends AbstractSampleConverter {
     }
 
     @Override
-    public void onCreate(WorkoutData data) {
+    public void onCreate(GpsWorkoutData data) {
         WorkoutManager.calculateInclination(data.getSamples());
     }
 

@@ -75,10 +75,6 @@ public class GpsWorkout extends BaseWorkout {
 
     public float descent;
 
-    // No foreign key is intended
-    @ColumnInfo(name = "interval_set_used_id")
-    public long intervalSetUsedId = 0;
-
     public String toString() {
         if (comment != null && comment.length() > 2) {
             return comment;

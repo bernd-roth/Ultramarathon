@@ -133,7 +133,7 @@ public class AggregatedWorkoutStatisticsActivity extends FitoTrackActivity imple
     }
 
     private GpsWorkout getLastWorkout() {
-        return Instance.getInstance(this).db.workoutDao().getLastWorkout();
+        return Instance.getInstance(this).db.gpsWorkoutDao().getLastWorkout();
     }
 
     private void initInformationSpinner() {
@@ -371,7 +371,7 @@ public class AggregatedWorkoutStatisticsActivity extends FitoTrackActivity imple
     }
 
     private void openWorkoutAt(long time) {
-        GpsWorkout workout = Instance.getInstance(this).db.workoutDao().getWorkoutByStart(time);
+        GpsWorkout workout = Instance.getInstance(this).db.gpsWorkoutDao().getWorkoutByStart(time);
         if (workout != null) {
             final Intent intent = new Intent(this, ShowWorkoutActivity.class);
             intent.putExtra(ShowWorkoutActivity.WORKOUT_ID_EXTRA, workout.id);

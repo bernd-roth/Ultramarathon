@@ -30,7 +30,7 @@ import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.GpsWorkout;
 import de.tadris.fitness.data.UserPreferences;
 import de.tadris.fitness.data.WorkoutType;
-import de.tadris.fitness.recording.WorkoutRecorder;
+import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
 import de.tadris.fitness.util.DataManager;
 import de.tadris.fitness.util.FitoTrackThemes;
 import de.tadris.fitness.util.UserDateTimeUtils;
@@ -52,7 +52,7 @@ public class Instance {
 
 
     public final AppDatabase db;
-    public WorkoutRecorder recorder;
+    public GpsWorkoutRecorder recorder;
     public final UserPreferences userPreferences;
     public final FitoTrackThemes themes;
     public final UserDateTimeUtils userDateTimeUtils;
@@ -77,17 +77,17 @@ public class Instance {
         DataManager.cleanFilesASync(context);
     }
 
-    private WorkoutRecorder restoreRecorder(Context context) {
-        GpsWorkout lastWorkout = db.workoutDao().getLastWorkout();
+    private GpsWorkoutRecorder restoreRecorder(Context context) {
+        GpsWorkout lastWorkout = db.gpsWorkoutDao().getLastWorkout();
         if (lastWorkout != null && lastWorkout.end == -1) {
             return restoreRecorder(context, lastWorkout);
         }
-        return new WorkoutRecorder(context, WorkoutType.getWorkoutTypeById(context, WorkoutType.WORKOUT_TYPE_ID_OTHER));
+        return new GpsWorkoutRecorder(context, WorkoutType.getWorkoutTypeById(context, WorkoutType.WORKOUT_TYPE_ID_OTHER));
     }
 
-    private WorkoutRecorder restoreRecorder(Context context, GpsWorkout workout) {
-        List<GpsSample> samples = Arrays.asList(db.workoutDao().getAllSamplesOfWorkout(workout.id));
-        return new WorkoutRecorder(context, workout, samples);
+    private GpsWorkoutRecorder restoreRecorder(Context context, GpsWorkout workout) {
+        List<GpsSample> samples = Arrays.asList(db.gpsWorkoutDao().getAllSamplesOfWorkout(workout.id));
+        return new GpsWorkoutRecorder(context, workout, samples);
     }
 
     public void prepareResume(Context context, GpsWorkout workout) {

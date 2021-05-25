@@ -25,7 +25,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import de.tadris.fitness.R;
-import de.tadris.fitness.recording.WorkoutRecorder;
+import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
 
 public class CurrentTime extends RecordingInformation {
 
@@ -44,7 +44,7 @@ public class CurrentTime extends RecordingInformation {
     }
 
     @Override
-    public String getSpokenText(WorkoutRecorder recorder) {
+    public String getSpokenText(GpsWorkoutRecorder recorder) {
         return getString(R.string.currentTime) + ": " + getSpokenTime(Calendar.getInstance(Locale.getDefault())) + ".";
     }
 
@@ -74,7 +74,7 @@ public class CurrentTime extends RecordingInformation {
     }
 
     @Override
-    String getDisplayedText(WorkoutRecorder recorder) {
+    String getDisplayedText(GpsWorkoutRecorder recorder) {
         return null;
     }
 }

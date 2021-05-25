@@ -181,7 +181,7 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
 
     private void changeComment(String comment) {
         workout.comment = comment;
-        Instance.getInstance(this).db.workoutDao().updateWorkout(workout);
+        Instance.getInstance(this).db.gpsWorkoutDao().updateWorkout(workout);
         updateCommentText();
     }
 
@@ -220,11 +220,11 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
     }
 
     private boolean isLastWorkout() {
-        return Instance.getInstance(this).db.workoutDao().getLastWorkout().id == workout.id;
+        return Instance.getInstance(this).db.gpsWorkoutDao().getLastWorkout().id == workout.id;
     }
 
     public void deleteWorkout() {
-        Instance.getInstance(this).db.workoutDao().deleteWorkout(workout);
+        Instance.getInstance(this).db.gpsWorkoutDao().deleteWorkout(workout);
         finish();
     }
 

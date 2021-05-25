@@ -22,11 +22,11 @@ package de.tadris.fitness.recording.information;
 import android.content.Context;
 
 import de.tadris.fitness.R;
-import de.tadris.fitness.recording.WorkoutRecorder;
+import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
 
 public class SystemActions extends RecordingInformation {
 
-    private WorkoutRecorder.RecordingState lastState = WorkoutRecorder.RecordingState.IDLE;
+    private GpsWorkoutRecorder.RecordingState lastState = GpsWorkoutRecorder.RecordingState.IDLE;
 
     public SystemActions(Context context) {
         super(context);
@@ -43,7 +43,7 @@ public class SystemActions extends RecordingInformation {
     }
 
     @Override
-    public String getSpokenText(WorkoutRecorder recorder) {
+    public String getSpokenText(GpsWorkoutRecorder recorder) {
         String text = "";
         if (lastState != recorder.getState()) {
             text = speakState(recorder.getState());
@@ -52,8 +52,8 @@ public class SystemActions extends RecordingInformation {
         return text;
     }
 
-    private String speakState(WorkoutRecorder.RecordingState newState) {
-        if (lastState == WorkoutRecorder.RecordingState.IDLE) {
+    private String speakState(GpsWorkoutRecorder.RecordingState newState) {
+        if (lastState == GpsWorkoutRecorder.RecordingState.IDLE) {
             return getSpokenStarted();
         }
         switch (newState) {
@@ -94,7 +94,7 @@ public class SystemActions extends RecordingInformation {
     }
 
     @Override
-    String getDisplayedText(WorkoutRecorder recorder) {
+    String getDisplayedText(GpsWorkoutRecorder recorder) {
         return null;
     }
 

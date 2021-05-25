@@ -33,8 +33,8 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import de.tadris.fitness.recording.WorkoutRecorder;
 import de.tadris.fitness.recording.event.TTSReadyEvent;
+import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
 
 public class TTSController {
     public static final String DEFAULT_TTS_CONTROLLER_ID = "TTSController";
@@ -70,7 +70,7 @@ public class TTSController {
         EventBus.getDefault().post(new TTSReadyEvent(ttsAvailable, id));
     }
 
-    public void speak(WorkoutRecorder recorder, Announcement announcement) {
+    public void speak(GpsWorkoutRecorder recorder, Announcement announcement) {
         if (!announcement.isAnnouncementEnabled()) {
             return;
         }

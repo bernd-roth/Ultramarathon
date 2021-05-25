@@ -23,7 +23,7 @@ import android.content.Context;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.data.UserPreferences;
-import de.tadris.fitness.recording.WorkoutRecorder;
+import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
 
 public class InformationDisplay {
 
@@ -35,7 +35,7 @@ public class InformationDisplay {
         this.manager = new InformationManager(context);
     }
 
-    public DisplaySlot getDisplaySlot(WorkoutRecorder recorder, int slot) {
+    public DisplaySlot getDisplaySlot(GpsWorkoutRecorder recorder, int slot) {
         String informationId = preferences.getIdOfDisplayedInformation(slot);
         RecordingInformation information = manager.getInformationById(informationId);
         if (information != null) {

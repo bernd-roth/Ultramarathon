@@ -26,17 +26,17 @@ import java.util.List;
 
 import de.tadris.fitness.Instance;
 
-public class WorkoutData {
+public class GpsWorkoutData {
 
-    public static WorkoutData fromWorkout(Context context, GpsWorkout workout) {
+    public static GpsWorkoutData fromWorkout(Context context, GpsWorkout workout) {
         AppDatabase database = Instance.getInstance(context).db;
-        return new WorkoutData(workout, Arrays.asList(database.workoutDao().getAllSamplesOfWorkout(workout.id)));
+        return new GpsWorkoutData(workout, Arrays.asList(database.gpsWorkoutDao().getAllSamplesOfWorkout(workout.id)));
     }
 
     private GpsWorkout workout;
     private List<GpsSample> samples;
 
-    public WorkoutData(GpsWorkout workout, List<GpsSample> samples) {
+    public GpsWorkoutData(GpsWorkout workout, List<GpsSample> samples) {
         this.workout = workout;
         this.samples = samples;
     }

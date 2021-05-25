@@ -35,10 +35,10 @@ import java.util.List;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.GpsSample;
-import de.tadris.fitness.data.WorkoutData;
+import de.tadris.fitness.data.GpsWorkoutData;
 import de.tadris.fitness.map.SimpleColoringStrategy;
 import de.tadris.fitness.map.WorkoutLayer;
-import de.tadris.fitness.recording.WorkoutCutter;
+import de.tadris.fitness.recording.gps.WorkoutCutter;
 
 public class EditWorkoutStartEndActivity extends ShowWorkoutMapDiagramActivity {
 
@@ -158,7 +158,7 @@ public class EditWorkoutStartEndActivity extends ShowWorkoutMapDiagramActivity {
             if (selectedStartSample != null || selectedEndSample != null){
                 ArrayList<GpsSample> samples = new ArrayList<GpsSample>();
                 samples.addAll(getWorkoutData().getSamples());
-                WorkoutCutter cutter = new WorkoutCutter(this,new WorkoutData(getWorkoutData().getWorkout(),samples));
+                WorkoutCutter cutter = new WorkoutCutter(this, new GpsWorkoutData(getWorkoutData().getWorkout(), samples));
                 cutter.cutWorkout(selectedStartSample,selectedEndSample);
 
 

@@ -2,8 +2,6 @@ package de.tadris.fitness.recording.autostart;
 
 import android.content.Context;
 
-import androidx.annotation.NonNull;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -12,10 +10,9 @@ import java.util.ArrayList;
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.model.AutoStartWorkout;
-import de.tadris.fitness.recording.WorkoutRecorder;
 import de.tadris.fitness.recording.announcement.TTSController;
+import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
 import de.tadris.fitness.util.TelephonyHelper;
-import de.tadris.fitness.util.event.EventBusHelper;
 import de.tadris.fitness.util.event.EventBusMember;
 
 /**
@@ -34,7 +31,7 @@ public class AutoStartAnnouncements implements EventBusMember {
     private EventBus eventBus;
     private AutoStartWorkout autoStartWorkout;
     private Instance instance;
-    private WorkoutRecorder recorder;
+    private GpsWorkoutRecorder recorder;
     private TTSController ttsController;
     private ArrayList<CountdownTimeAnnouncement> countdownTimeAnnouncementList = new ArrayList<>();
     private CountdownTimeAnnouncement lastSpoken;
@@ -42,7 +39,7 @@ public class AutoStartAnnouncements implements EventBusMember {
     boolean suppressOnCall;
 
     public AutoStartAnnouncements(Context context, AutoStartWorkout autoStartWorkout,
-                                  Instance instance, WorkoutRecorder recorder,
+                                  Instance instance, GpsWorkoutRecorder recorder,
                                   TTSController ttsController) {
         this.context = context;
         this.autoStartWorkout = autoStartWorkout;
@@ -126,7 +123,7 @@ public class AutoStartAnnouncements implements EventBusMember {
                     // tell the user we're waiting for more a accurate GPS position
                     ttsController.speak(recorder, new CountdownAnnouncement(instance) {
                         @Override
-                        public String getSpokenText(WorkoutRecorder recorder) {
+                        public String getSpokenText(GpsWorkoutRecorder recorder) {
                             return context.getString(R.string.autoStartCountdownMsgGps);
                         }
                     });
@@ -135,7 +132,7 @@ public class AutoStartAnnouncements implements EventBusMember {
                     // tell the user we're waiting for more a accurate GPS position
                     ttsController.speak(recorder, new CountdownAnnouncement(instance) {
                         @Override
-                        public String getSpokenText(WorkoutRecorder recorder) {
+                        public String getSpokenText(GpsWorkoutRecorder recorder) {
                             return context.getString(R.string.autoStartCountdownMsgMove);
                         }
                     });
@@ -145,7 +142,7 @@ public class AutoStartAnnouncements implements EventBusMember {
                             event.oldState == AutoStartWorkout.State.WAITING_FOR_GPS) {
                         ttsController.speak(recorder, new CountdownAnnouncement(instance) {
                             @Override
-                            public String getSpokenText(WorkoutRecorder recorder) {
+                            public String getSpokenText(GpsWorkoutRecorder recorder) {
                                 return context.getString(R.string.workoutAutoStartAborted);
                             }
                         });

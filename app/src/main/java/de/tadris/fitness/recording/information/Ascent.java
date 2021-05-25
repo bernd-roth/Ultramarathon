@@ -22,7 +22,7 @@ package de.tadris.fitness.recording.information;
 import android.content.Context;
 
 import de.tadris.fitness.R;
-import de.tadris.fitness.recording.WorkoutRecorder;
+import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
 
 public class Ascent extends RecordingInformation {
 
@@ -51,12 +51,12 @@ public class Ascent extends RecordingInformation {
     }
 
     @Override
-    String getDisplayedText(WorkoutRecorder recorder) {
+    String getDisplayedText(GpsWorkoutRecorder recorder) {
         return getDistanceUnitUtils().getDistance(recorder.getAscent());
     }
 
     @Override
-    public String getSpokenText(WorkoutRecorder recorder) {
+    public String getSpokenText(GpsWorkoutRecorder recorder) {
         return getString(R.string.workoutAscent) + ": " + getDistanceUnitUtils().getElevation(recorder.getAscent(), true) + ".";
     }
 }

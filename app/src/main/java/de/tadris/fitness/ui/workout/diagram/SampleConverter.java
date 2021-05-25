@@ -25,11 +25,11 @@ import com.github.mikephil.charting.charts.CombinedChart;
 
 import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.GpsWorkout;
-import de.tadris.fitness.data.WorkoutData;
+import de.tadris.fitness.data.GpsWorkoutData;
 
 public interface SampleConverter {
 
-    void onCreate(WorkoutData data);
+    void onCreate(GpsWorkoutData data);
 
     float getMinValue(GpsWorkout workout);
 

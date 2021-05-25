@@ -25,8 +25,8 @@ import android.preference.PreferenceManager;
 import androidx.annotation.StringRes;
 
 import de.tadris.fitness.Instance;
-import de.tadris.fitness.recording.WorkoutRecorder;
 import de.tadris.fitness.recording.announcement.Announcement;
+import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
 import de.tadris.fitness.util.unit.DistanceUnitUtils;
 import de.tadris.fitness.util.unit.EnergyUnitUtils;
 
@@ -62,6 +62,6 @@ public abstract class RecordingInformation implements Announcement {
 
     public abstract String getTitle();
 
-    abstract String getDisplayedText(WorkoutRecorder recorder);
+    abstract String getDisplayedText(GpsWorkoutRecorder recorder);
 
 }

@@ -97,8 +97,8 @@ public class RestoreController {
         if (dataContainer.getWorkouts() != null) {
             for (GpsWorkout workout : dataContainer.getWorkouts()) {
                 // Only Import Unknown Workouts on merge
-                if (replace || database.workoutDao().findById(workout.id) == null) {
-                    database.workoutDao().insertWorkout(workout);
+                if (replace || database.gpsWorkoutDao().findById(workout.id) == null) {
+                    database.gpsWorkoutDao().insertWorkout(workout);
                 }
             }
         }
@@ -110,9 +110,9 @@ public class RestoreController {
             for (GpsSample sample : dataContainer.getSamples()) {
                 // Only import unknown samples with known workout on merge
                 // Query not necessary on replace because data was cleared
-                if (replace || (database.workoutDao().findById(sample.workoutId) != null &&
-                        database.workoutDao().findSampleById(sample.id) == null)) {
-                    database.workoutDao().insertSample(sample);
+                if (replace || (database.gpsWorkoutDao().findById(sample.workoutId) != null &&
+                        database.gpsWorkoutDao().findSampleById(sample.id) == null)) {
+                    database.gpsWorkoutDao().insertSample(sample);
                 }
             }
         }
@@ -161,7 +161,7 @@ public class RestoreController {
             for (GpsWorkout workout : dataContainer.getWorkouts()) {
                 float minHeight = 0f;
                 float maxHeight = 0f;
-                for (GpsSample sample : database.workoutDao().getAllSamplesOfWorkout(workout.id)) {
+                for (GpsSample sample : database.gpsWorkoutDao().getAllSamplesOfWorkout(workout.id)) {
                     if (minHeight == 0) {
                         minHeight = (float) sample.elevationMSL;
                         maxHeight = (float) sample.elevationMSL;
@@ -171,7 +171,7 @@ public class RestoreController {
                 }
                 workout.minElevationMSL = minHeight;
                 workout.maxElevationMSL = maxHeight;
-                database.workoutDao().updateWorkout(workout);
+                database.gpsWorkoutDao().updateWorkout(workout);
             }
         }
         if (dataContainer.getVersion() <= 2) {

@@ -78,11 +78,11 @@ public class BackupController {
     }
 
     private void saveWorkoutsToContainer(){
-        dataContainer.getWorkouts().addAll(Arrays.asList(database.workoutDao().getWorkouts()));
+        dataContainer.getWorkouts().addAll(Arrays.asList(database.gpsWorkoutDao().getWorkouts()));
     }
 
     private void saveSamplesToContainer(){
-        dataContainer.getSamples().addAll(Arrays.asList(database.workoutDao().getSamples()));
+        dataContainer.getSamples().addAll(Arrays.asList(database.gpsWorkoutDao().getSamples()));
     }
 
     private void saveIntervalsToContainer() {

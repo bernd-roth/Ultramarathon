@@ -25,11 +25,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.tadris.fitness.data.GpsSample;
-import de.tadris.fitness.data.WorkoutData;
+import de.tadris.fitness.data.GpsWorkoutData;
 
 public class WorkoutCalculator {
 
-    public static List<Pause> getPausesFromWorkout(WorkoutData data) {
+    public static List<Pause> getPausesFromWorkout(GpsWorkoutData data) {
         List<Pause> result = new ArrayList<>();
         List<GpsSample> samples = data.getSamples();
 
@@ -81,7 +81,7 @@ public class WorkoutCalculator {
     /**
      * Returns a list of relative times when intervals were triggered
      */
-    public static List<Long> getIntervalSetTimesFromWorkout(WorkoutData data) {
+    public static List<Long> getIntervalSetTimesFromWorkout(GpsWorkoutData data) {
         List<Long> result = new ArrayList<>();
         List<GpsSample> samples = data.getSamples();
 

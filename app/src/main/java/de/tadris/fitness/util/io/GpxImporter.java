@@ -31,7 +31,7 @@ import java.util.List;
 
 import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.GpsWorkout;
-import de.tadris.fitness.data.WorkoutData;
+import de.tadris.fitness.data.GpsWorkoutData;
 import de.tadris.fitness.util.gpx.Gpx;
 import de.tadris.fitness.util.gpx.Track;
 import de.tadris.fitness.util.gpx.TrackPoint;
@@ -53,7 +53,7 @@ public class GpxImporter implements IWorkoutImporter {
             throw new IllegalArgumentException("given GPX file does not contain location data");
         }
 
-        List<WorkoutData> workouts = new ArrayList<>();
+        List<GpsWorkoutData> workouts = new ArrayList<>();
         for (Track track : gpx.getTrk()) {
             workouts.add(getWorkoutDataFromTrack(track));
         }
@@ -67,7 +67,7 @@ public class GpxImporter implements IWorkoutImporter {
         gpx = mapper.readValue(input, Gpx.class);
     }
 
-    private WorkoutData getWorkoutDataFromTrack(Track track) {
+    private GpsWorkoutData getWorkoutDataFromTrack(Track track) {
         TrackSegment firstSegment = track.getTrkseg().get(0);
         TrackPoint firstPoint = firstSegment.getTrkpt().get(0);
 
@@ -100,7 +100,7 @@ public class GpxImporter implements IWorkoutImporter {
 
         List<GpsSample> samples = getSamplesFromTrack(workout.start, gpx.getTrk().get(0));
 
-        return new WorkoutData(workout, samples);
+        return new GpsWorkoutData(workout, samples);
     }
 
     private static List<GpsSample> getSamplesFromTrack(long startTime, Track track) {

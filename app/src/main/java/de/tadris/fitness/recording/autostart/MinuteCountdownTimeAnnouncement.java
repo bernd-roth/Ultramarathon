@@ -4,7 +4,7 @@ import android.content.Context;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
-import de.tadris.fitness.recording.WorkoutRecorder;
+import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
 
 /**
  * This class provides countdown time announcements for even minutes, i.e. the amount of minutes
@@ -24,7 +24,7 @@ public class MinuteCountdownTimeAnnouncement extends CountdownTimeAnnouncement {
     }
 
     @Override
-    public String getSpokenText(WorkoutRecorder recorder) {
+    public String getSpokenText(GpsWorkoutRecorder recorder) {
         int minutes = getCountdownS() / 60;
         String mins = context.getResources().getQuantityString(R.plurals.minutes, minutes, minutes);
         return context.getString(R.string.ttsMinuteCountdownAnnouncement, mins);

@@ -40,9 +40,6 @@ import static androidx.room.ForeignKey.CASCADE;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class GpsSample extends BaseSample {
 
-    @ColumnInfo(name = "workout_id", index = true)
-    public long workoutId;
-
     public double lat;
 
     public double lon;
@@ -62,13 +59,6 @@ public class GpsSample extends BaseSample {
     public double speed;
 
     public float pressure;
-
-    /**
-     * -1 -> No interval was triggered
-     * greater than 0 -> Interval with this id was triggered at this sample
-     */
-    @ColumnInfo(name = "interval_triggered")
-    public long intervalTriggered = -1;
 
     @JsonIgnore
     @Ignore

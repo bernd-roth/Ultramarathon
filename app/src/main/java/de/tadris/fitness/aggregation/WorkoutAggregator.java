@@ -47,7 +47,7 @@ public class WorkoutAggregator {
 
     private List<WorkoutInformationResult> getResults() {
         List<WorkoutInformationResult> results = new ArrayList<>();
-        GpsWorkout[] workouts = Instance.getInstance(context).db.workoutDao().getWorkouts();
+        GpsWorkout[] workouts = Instance.getInstance(context).db.gpsWorkoutDao().getWorkouts();
         for (GpsWorkout workout : workouts) {
             if (filter.isAccepted(workout)) {
                 if (isAvailableFor(workout)) {

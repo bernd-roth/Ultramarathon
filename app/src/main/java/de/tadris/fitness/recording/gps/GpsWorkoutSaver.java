@@ -17,7 +17,7 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.recording;
+package de.tadris.fitness.recording.gps;
 
 import android.content.Context;
 import android.hardware.SensorManager;
@@ -30,7 +30,7 @@ import de.tadris.fitness.Instance;
 import de.tadris.fitness.data.AppDatabase;
 import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.GpsWorkout;
-import de.tadris.fitness.data.WorkoutData;
+import de.tadris.fitness.data.GpsWorkoutData;
 import de.tadris.fitness.util.AltitudeCorrection;
 import de.tadris.fitness.util.CalorieCalculator;
 import de.tadris.fitness.util.WorkoutCalculator;
@@ -38,14 +38,14 @@ import de.tadris.fitness.util.WorkoutCalculator;
 /**
  * Calculates data for a workout+samples and saves everything to the database.
  */
-public class WorkoutSaver {
+public class GpsWorkoutSaver {
 
     private final Context context;
     protected final GpsWorkout workout;
     protected final List<GpsSample> samples;
     protected final AppDatabase db;
 
-    public WorkoutSaver(Context context, WorkoutData data) {
+    public GpsWorkoutSaver(Context context, GpsWorkoutData data) {
         this.context = context;
         this.workout = data.getWorkout();
         this.samples = data.getSamples();
@@ -71,7 +71,7 @@ public class WorkoutSaver {
             sample.id = getLastSample().id + 1;
         }
         sample.workoutId = this.workout.id;
-        db.workoutDao().insertSample(sample);
+        db.gpsWorkoutDao().insertSample(sample);
     }
 
     private GpsSample getLastSample() {
@@ -118,7 +118,7 @@ public class WorkoutSaver {
             if (sample.absoluteTime == lastSample.absoluteTime) {
                 samples.remove(lastSample);
                 if (delete) {
-                    db.workoutDao().deleteSample(lastSample); // delete sample also from DB
+                    db.gpsWorkoutDao().deleteSample(lastSample); // delete sample also from DB
                 }
                 Log.i("WorkoutManager", "Removed samples at " + sample.absoluteTime + " rel: " + sample.relativeTime + "; " + lastSample.relativeTime);
             }
@@ -299,16 +299,16 @@ public class WorkoutSaver {
         workout.calorie = CalorieCalculator.calculateCalories(context, workout, Instance.getInstance(context).userPreferences.getUserWeight());
     }
 
-    protected WorkoutData getWorkoutData() {
-        return new WorkoutData(workout, samples);
+    protected GpsWorkoutData getWorkoutData() {
+        return new GpsWorkoutData(workout, samples);
     }
 
     protected void storeInDatabase() {
-        db.workoutDao().insertWorkoutAndSamples(workout, samples.toArray(new GpsSample[0]));
+        db.gpsWorkoutDao().insertWorkoutAndSamples(workout, samples.toArray(new GpsSample[0]));
     }
 
     protected void storeWorkoutInDatabase() {
-        db.workoutDao().insertWorkout(workout);
+        db.gpsWorkoutDao().insertWorkout(workout);
     }
 
     protected void updateWorkoutAndSamples() {
@@ -317,14 +317,14 @@ public class WorkoutSaver {
     }
 
     protected void updateSamples() {
-        db.workoutDao().updateSamples(samples.toArray(new GpsSample[0]));
+        db.gpsWorkoutDao().updateSamples(samples.toArray(new GpsSample[0]));
     }
 
     protected void updateWorkoutInDatabase() {
-        db.workoutDao().updateWorkout(workout);
+        db.gpsWorkoutDao().updateWorkout(workout);
     }
 
     protected void deleteWorkoutAndSamples() {
-        db.workoutDao().deleteWorkoutAndSamples(workout, samples.toArray(new GpsSample[0]));
+        db.gpsWorkoutDao().deleteWorkoutAndSamples(workout, samples.toArray(new GpsSample[0]));
     }
 }

@@ -22,7 +22,7 @@ package de.tadris.fitness.recording.information;
 import android.content.Context;
 
 import de.tadris.fitness.R;
-import de.tadris.fitness.recording.WorkoutRecorder;
+import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
 
 public class SpeedLastMinute extends RecordingInformation {
 
@@ -53,12 +53,12 @@ public class SpeedLastMinute extends RecordingInformation {
     }
 
     @Override
-    String getDisplayedText(WorkoutRecorder recorder) {
+    String getDisplayedText(GpsWorkoutRecorder recorder) {
         return getDistanceUnitUtils().getSpeed(recorder.getCurrentSpeed(TIME));
     }
 
     @Override
-    public String getSpokenText(WorkoutRecorder recorder) {
+    public String getSpokenText(GpsWorkoutRecorder recorder) {
         return getString(R.string.speedLastMinuteSpoken) + ": " + getDistanceUnitUtils().getSpeed(recorder.getCurrentSpeed(TIME), true) + ".";
     }
 }

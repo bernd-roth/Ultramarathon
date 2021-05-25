@@ -25,8 +25,8 @@ import java.util.List;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.data.Interval;
-import de.tadris.fitness.recording.WorkoutRecorder;
 import de.tadris.fitness.recording.announcement.interval.IntervalAnnouncements;
+import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
 import de.tadris.fitness.util.TelephonyHelper;
 
 public class VoiceAnnouncements {
@@ -36,7 +36,7 @@ public class VoiceAnnouncements {
     private final Context context;
     private final boolean suppressOnCall;
 
-    public VoiceAnnouncements(Context context, WorkoutRecorder recorder, TTSController ttsController, List<Interval> intervals) {
+    public VoiceAnnouncements(Context context, GpsWorkoutRecorder recorder, TTSController ttsController, List<Interval> intervals) {
         this.context = context;
         this.suppressOnCall = Instance.getInstance(context).userPreferences.getSuppressAnnouncementsDuringCall();
         this.informationAnnouncements = new InformationAnnouncements(context, recorder, ttsController);

@@ -40,6 +40,10 @@ public abstract class BaseWorkout {
 
     public boolean edited;
 
+    // No foreign key is intended
+    @ColumnInfo(name = "interval_set_used_id")
+    public long intervalSetUsedId = 0;
+
     @JsonIgnore
     public String getDateString() {
         return SimpleDateFormat.getDateTimeInstance().format(new Date(start));

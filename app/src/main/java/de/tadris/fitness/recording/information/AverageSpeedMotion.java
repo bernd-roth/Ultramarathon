@@ -22,7 +22,7 @@ package de.tadris.fitness.recording.information;
 import android.content.Context;
 
 import de.tadris.fitness.R;
-import de.tadris.fitness.recording.WorkoutRecorder;
+import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
 
 public class AverageSpeedMotion extends RecordingInformation {
 
@@ -51,12 +51,12 @@ public class AverageSpeedMotion extends RecordingInformation {
     }
 
     @Override
-    String getDisplayedText(WorkoutRecorder recorder) {
+    String getDisplayedText(GpsWorkoutRecorder recorder) {
         return getDistanceUnitUtils().getSpeed(recorder.getAvgSpeed());
     }
 
     @Override
-    public String getSpokenText(WorkoutRecorder recorder) {
+    public String getSpokenText(GpsWorkoutRecorder recorder) {
         String avgSpeed = getDistanceUnitUtils().getSpeed(recorder.getAvgSpeed(), true);
         return getString(R.string.workoutAvgSpeedLong) + ": " + avgSpeed + ".";
     }

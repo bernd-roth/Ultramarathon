@@ -22,7 +22,7 @@ package de.tadris.fitness.recording.information;
 import android.content.Context;
 
 import de.tadris.fitness.R;
-import de.tadris.fitness.recording.WorkoutRecorder;
+import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
 
 public class CurrentHeartRate extends RecordingInformation {
 
@@ -51,24 +51,24 @@ public class CurrentHeartRate extends RecordingInformation {
     }
 
     @Override
-    String getDisplayedText(WorkoutRecorder recorder) {
+    String getDisplayedText(GpsWorkoutRecorder recorder) {
         if (isHeartRateAvailable(recorder)) {
-            return recorder.getCurrentHeartRate()  +" "+ getString(R.string.unitHeartBeatsPerMinute);
+            return recorder.getCurrentHeartRate() + " " + getString(R.string.unitHeartBeatsPerMinute);
         } else {
             return "-"; // No heart rate data available
         }
     }
 
     @Override
-    public String getSpokenText(WorkoutRecorder recorder) {
+    public String getSpokenText(GpsWorkoutRecorder recorder) {
         if (isHeartRateAvailable(recorder)) {
-            return getTitle() + ": " + getDisplayedText(recorder) ;
+            return getTitle() + ": " + getDisplayedText(recorder);
         } else {
             return getString(R.string.heartRateNotAvailable);
         }
     }
 
-    private boolean isHeartRateAvailable(WorkoutRecorder recorder) {
+    private boolean isHeartRateAvailable(GpsWorkoutRecorder recorder) {
         return recorder.getCurrentHeartRate() > 0;
     }
 }

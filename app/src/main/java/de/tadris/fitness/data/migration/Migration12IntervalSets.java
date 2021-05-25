@@ -29,8 +29,8 @@ import de.tadris.fitness.Instance;
 import de.tadris.fitness.data.AppDatabase;
 import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.GpsWorkout;
+import de.tadris.fitness.data.GpsWorkoutData;
 import de.tadris.fitness.data.Interval;
-import de.tadris.fitness.data.WorkoutData;
 
 /**
  * Before release 12 interval data was reconstructed from the interval sets.
@@ -51,7 +51,7 @@ public class Migration12IntervalSets extends Migration {
 
     @Override
     public void migrate() {
-        GpsWorkout[] workouts = database.workoutDao().getWorkouts();
+        GpsWorkout[] workouts = database.gpsWorkoutDao().getWorkouts();
         int i = 0;
         for (GpsWorkout workout : workouts) {
             migrateWorkout(workout);
@@ -63,7 +63,7 @@ public class Migration12IntervalSets extends Migration {
 
     public void migrateWorkout(GpsWorkout workout) {
         if (workout.intervalSetUsedId > 0) {
-            WorkoutData workoutData = WorkoutData.fromWorkout(context, workout);
+            GpsWorkoutData workoutData = GpsWorkoutData.fromWorkout(context, workout);
             List<GpsSample> samples = new ArrayList<>(workoutData.getSamples());
             for (Pair<Long, Interval> pair : getIntervalSetTimesFromWorkout(workoutData)) {
                 long relativeTime = pair.first;
@@ -72,7 +72,7 @@ public class Migration12IntervalSets extends Migration {
                     GpsSample sample = samples.remove(0);
                     if (sample.relativeTime >= relativeTime) {
                         sample.intervalTriggered = interval.id;
-                        database.workoutDao().updateSample(sample);
+                        database.gpsWorkoutDao().updateSample(sample);
                         break;
                     }
                 }
@@ -80,7 +80,7 @@ public class Migration12IntervalSets extends Migration {
         }
     }
 
-    private List<Pair<Long, Interval>> getIntervalSetTimesFromWorkout(WorkoutData data) {
+    private List<Pair<Long, Interval>> getIntervalSetTimesFromWorkout(GpsWorkoutData data) {
         List<Pair<Long, Interval>> result = new ArrayList<>();
         Interval[] intervals = database.intervalDao().getAllIntervalsOfSet(data.getWorkout().intervalSetUsedId);
         if (intervals == null || intervals.length == 0) {

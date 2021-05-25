@@ -19,13 +19,13 @@
 
 package de.tadris.fitness.recording.announcement;
 
-import de.tadris.fitness.recording.WorkoutRecorder;
+import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
 
 public interface Announcement {
 
     boolean isAnnouncementEnabled();
 
-    String getSpokenText(WorkoutRecorder recorder);
+    String getSpokenText(GpsWorkoutRecorder recorder);
 
     default boolean isPlayedAlways() {
         return false;

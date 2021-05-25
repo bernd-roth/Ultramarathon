@@ -86,10 +86,6 @@ import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.map.MapManager;
 import de.tadris.fitness.model.AutoStartWorkout;
-import de.tadris.fitness.recording.DefaultMovementDetector;
-import de.tadris.fitness.recording.MovementDetector;
-import de.tadris.fitness.recording.RecorderService;
-import de.tadris.fitness.recording.WorkoutRecorder;
 import de.tadris.fitness.recording.announcement.TTSController;
 import de.tadris.fitness.recording.autostart.AutoStartAnnouncements;
 import de.tadris.fitness.recording.autostart.AutoStartSoundFeedback;
@@ -99,6 +95,10 @@ import de.tadris.fitness.recording.event.LocationChangeEvent;
 import de.tadris.fitness.recording.event.TTSReadyEvent;
 import de.tadris.fitness.recording.event.WorkoutAutoStopEvent;
 import de.tadris.fitness.recording.event.WorkoutGPSStateChanged;
+import de.tadris.fitness.recording.gps.DefaultMovementDetector;
+import de.tadris.fitness.recording.gps.GpsRecorderService;
+import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
+import de.tadris.fitness.recording.gps.MovementDetector;
 import de.tadris.fitness.recording.information.InformationDisplay;
 import de.tadris.fitness.recording.information.RecordingInformation;
 import de.tadris.fitness.ui.FitoTrackActivity;
@@ -206,11 +206,11 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
                 // Save Possibly Running Recorder...
                 // TODO Add Dialog, prefere Resume or Delete
                 if (instance.recorder != null &&
-                        instance.recorder.getState() != WorkoutRecorder.RecordingState.IDLE) {
+                        instance.recorder.getState() != GpsWorkoutRecorder.RecordingState.IDLE) {
                     instance.recorder.stop();
                     saveIfNotSaved();
                 }
-                instance.recorder = new WorkoutRecorder(getApplicationContext(), activity);
+                instance.recorder = new GpsWorkoutRecorder(getApplicationContext(), activity);
             }
         } else {
             activity = instance.recorder.getWorkout().getWorkoutType(this);
@@ -290,12 +290,12 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
         updateDescription();
 
-        onGPSStateChanged(new WorkoutGPSStateChanged(WorkoutRecorder.GpsState.SIGNAL_LOST, WorkoutRecorder.GpsState.SIGNAL_LOST));
+        onGPSStateChanged(new WorkoutGPSStateChanged(GpsWorkoutRecorder.GpsState.SIGNAL_LOST, GpsWorkoutRecorder.GpsState.SIGNAL_LOST));
 
         startListener();
 
         if (wasAlreadyRunning) {
-            if (instance.recorder.getState() != WorkoutRecorder.RecordingState.IDLE) {
+            if (instance.recorder.getState() != GpsWorkoutRecorder.RecordingState.IDLE) {
                 recordStartButtonsRoot.setVisibility(View.INVISIBLE);
                 timeView.setVisibility(View.VISIBLE);
                 invalidateOptionsMenu();
@@ -308,7 +308,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
             }
             updateLine();
 
-            WorkoutRecorder.GpsState gpsState = instance.recorder.getGpsState();
+            GpsWorkoutRecorder.GpsState gpsState = instance.recorder.getGpsState();
             onGPSStateChanged(new WorkoutGPSStateChanged(gpsState, gpsState));
         }
     }
@@ -563,7 +563,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         // cancel auto start if necessary
         cancelAutoStart(true);
 
-        if (instance.recorder.getState() != WorkoutRecorder.RecordingState.IDLE) { // Only Running Records can be stopped
+        if (instance.recorder.getState() != GpsWorkoutRecorder.RecordingState.IDLE) { // Only Running Records can be stopped
             instance.recorder.stop();
             if (instance.recorder.getSampleCount() > 3) {
                 showEnterDescriptionDialog();
@@ -583,7 +583,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     }
 
     private boolean save() {
-        if(instance.recorder.getState() != WorkoutRecorder.RecordingState.IDLE) {
+        if (instance.recorder.getState() != GpsWorkoutRecorder.RecordingState.IDLE) {
             if (instance.recorder.getSampleCount() > 3) {
                 instance.recorder.save();
                 return true;
@@ -600,7 +600,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
     private void saveIfNotSaved() {
         // ONLY SAVE WHEN WAS ONCE ACTIVE and Not Already Saved
-        if (instance.recorder.getState() != WorkoutRecorder.RecordingState.IDLE &&
+        if (instance.recorder.getState() != GpsWorkoutRecorder.RecordingState.IDLE &&
                 !instance.recorder.isSaved()) {
             save();
         }
@@ -729,8 +729,8 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     }
 
     private void startListener() {
-        if (!isServiceRunning(RecorderService.class)) {
-            Intent locationListener = new Intent(getApplicationContext(), RecorderService.class);
+        if (!isServiceRunning(GpsRecorderService.class)) {
+            Intent locationListener = new Intent(getApplicationContext(), GpsRecorderService.class);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 startForegroundService(locationListener);
             } else {
@@ -744,8 +744,8 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     }
 
     private void stopListener() {
-        if (isServiceRunning(RecorderService.class)) {
-            Intent locationListener = new Intent(getApplicationContext(), RecorderService.class);
+        if (isServiceRunning(GpsRecorderService.class)) {
+            Intent locationListener = new Intent(getApplicationContext(), GpsRecorderService.class);
             stopService(locationListener);
         }
     }
@@ -770,10 +770,10 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
     @Subscribe
     public void onLocationChange(LocationChangeEvent e) {
-        LatLong latLong = RecorderService.locationToLatLong(e.location);
+        LatLong latLong = GpsRecorderService.locationToLatLong(e.location);
         mapView.getModel().mapViewPosition.animateTo(latLong);
 
-        if (instance.recorder.getState() == WorkoutRecorder.RecordingState.RUNNING) {
+        if (instance.recorder.getState() == GpsWorkoutRecorder.RecordingState.RUNNING) {
             latLongList.add(latLong);
             updateLine();
         }
@@ -819,12 +819,12 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
         EventBus.getDefault().unregister(this);
 
         // Kill Service on Finished or not Started Recording
-        if (instance.recorder.getState() == WorkoutRecorder.RecordingState.STOPPED ||
-                instance.recorder.getState() == WorkoutRecorder.RecordingState.IDLE) {
+        if (instance.recorder.getState() == GpsWorkoutRecorder.RecordingState.STOPPED ||
+                instance.recorder.getState() == GpsWorkoutRecorder.RecordingState.IDLE) {
             //ONLY SAVE WHEN STOPPED
             saveIfNotSaved();
             stopListener();
-            if (instance.recorder.getState() == WorkoutRecorder.RecordingState.IDLE) {
+            if (instance.recorder.getState() == GpsWorkoutRecorder.RecordingState.IDLE) {
                 // Inform the user
                 Toast.makeText(this, R.string.noWorkoutStarted, Toast.LENGTH_LONG).show();
             }
@@ -984,7 +984,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        boolean preparationPhase = instance.recorder.getState() == WorkoutRecorder.RecordingState.IDLE;
+        boolean preparationPhase = instance.recorder.getState() == GpsWorkoutRecorder.RecordingState.IDLE;
         menu.findItem(R.id.actionSelectIntervalSet).setVisible(preparationPhase && voiceFeedbackAvailable);
         menu.findItem(R.id.actionEditHint).setVisible(preparationPhase);
         menu.findItem(R.id.actionConnectHR).setVisible(isBluetoothSupported());
@@ -1001,7 +1001,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     @Override
     public void onBackPressed() {
         cancelAutoStart(true);
-        if(instance.recorder.isActive() && instance.recorder.getState() != WorkoutRecorder.RecordingState.IDLE){
+        if (instance.recorder.isActive() && instance.recorder.getState() != GpsWorkoutRecorder.RecordingState.IDLE) {
             // Still Running Workout
             showAreYouSureToStopDialog();
         } else {
@@ -1024,15 +1024,15 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onGPSStateChanged(WorkoutGPSStateChanged e) {
 
-        WorkoutRecorder.GpsState state = e.newState;
+        GpsWorkoutRecorder.GpsState state = e.newState;
         gpsStatusView.setTextColor(state.color);
 
-        if (state != WorkoutRecorder.GpsState.SIGNAL_LOST) {
+        if (state != GpsWorkoutRecorder.GpsState.SIGNAL_LOST) {
             foundGPS();
         }
 
-        if (instance.recorder.getState() == WorkoutRecorder.RecordingState.IDLE) {
-            if (state == WorkoutRecorder.GpsState.SIGNAL_OKAY) {
+        if (instance.recorder.getState() == GpsWorkoutRecorder.RecordingState.IDLE) {
+            if (state == GpsWorkoutRecorder.GpsState.SIGNAL_OKAY) {
                 updateStartButton(true, R.string.start, v -> start());
             } else {
                 updateStartButton(false, R.string.cannotStart, null);
@@ -1063,7 +1063,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
     @Subscribe
     public void onVoiceAnnouncementIsReady(TTSReadyEvent e) {
         // actually, we only care for the RecorderService's TTS controller here
-        if (e.id.equals(RecorderService.TTS_CONTROLLER_ID)) {
+        if (e.id.equals(GpsRecorderService.TTS_CONTROLLER_ID)) {
             this.voiceFeedbackAvailable = e.ttsAvailable;
             invalidateOptionsMenu();
         }
@@ -1071,7 +1071,7 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
 
     @Override
     public void onInfoViewClick(int slot) {
-        if (instance.recorder.getState() == WorkoutRecorder.RecordingState.IDLE) {
+        if (instance.recorder.getState() == GpsWorkoutRecorder.RecordingState.IDLE) {
             new SelectWorkoutInformationDialog(this, slot, this).show();
         }
     }

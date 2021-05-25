@@ -100,11 +100,11 @@ public class WorkoutBuilder {
     }
 
     private void updateWorkout(Context context, GpsWorkout workout) {
-        Instance.getInstance(context).db.workoutDao().updateWorkout(workout);
+        Instance.getInstance(context).db.gpsWorkoutDao().updateWorkout(workout);
     }
 
     private void insertWorkout(Context context, GpsWorkout workout) {
-        Instance.getInstance(context).db.workoutDao().insertWorkout(workout);
+        Instance.getInstance(context).db.gpsWorkoutDao().insertWorkout(workout);
     }
 
     public WorkoutType getWorkoutType() {

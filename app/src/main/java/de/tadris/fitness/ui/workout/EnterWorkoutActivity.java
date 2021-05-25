@@ -139,7 +139,7 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
         Intent intent = getIntent();
         long workoutId = intent.getLongExtra(WORKOUT_ID_EXTRA, 0);
         if (workoutId != 0) {
-            GpsWorkout workout = Instance.getInstance(this).db.workoutDao().getWorkoutById(workoutId);
+            GpsWorkout workout = Instance.getInstance(this).db.gpsWorkoutDao().getWorkoutById(workoutId);
             if (workout != null) {
                 loadFromWorkout(workout);
             } else {

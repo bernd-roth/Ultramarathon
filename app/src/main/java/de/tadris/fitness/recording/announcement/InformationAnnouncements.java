@@ -24,7 +24,7 @@ import android.content.Context;
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.UserPreferences;
-import de.tadris.fitness.recording.WorkoutRecorder;
+import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
 import de.tadris.fitness.recording.information.CurrentSpeed;
 import de.tadris.fitness.recording.information.InformationManager;
 import de.tadris.fitness.recording.information.RecordingInformation;
@@ -32,7 +32,7 @@ import de.tadris.fitness.recording.information.RecordingInformation;
 public class InformationAnnouncements {
 
     private final Context context;
-    private final WorkoutRecorder recorder;
+    private final GpsWorkoutRecorder recorder;
     private final TTSController TTSController;
     private final InformationManager manager;
     private long lastSpokenUpdateTime = 0;
@@ -46,7 +46,7 @@ public class InformationAnnouncements {
     private final int intervalInMeters;
     private final long speedWarningIntervalTime;
 
-    public InformationAnnouncements(Context context, WorkoutRecorder recorder, TTSController TTSController) {
+    public InformationAnnouncements(Context context, GpsWorkoutRecorder recorder, TTSController TTSController) {
         this.recorder = recorder;
         this.TTSController = TTSController;
         this.manager = new InformationManager(context);

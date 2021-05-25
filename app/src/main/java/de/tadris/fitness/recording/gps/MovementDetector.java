@@ -1,6 +1,7 @@
-package de.tadris.fitness.recording;
+package de.tadris.fitness.recording.gps;
 
 import org.greenrobot.eventbus.EventBus;
+
 import de.tadris.fitness.util.event.EventBusMember;
 
 /**

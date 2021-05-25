@@ -62,10 +62,10 @@ import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.GpsWorkout;
+import de.tadris.fitness.data.GpsWorkoutData;
 import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.data.UserPreferences;
-import de.tadris.fitness.data.WorkoutData;
 import de.tadris.fitness.map.ColoringStrategy;
 import de.tadris.fitness.map.GradientColoringStrategy;
 import de.tadris.fitness.map.MapManager;
@@ -102,7 +102,7 @@ public abstract class WorkoutActivity extends InformationActivity implements Map
         Intent intent = getIntent();
         long workoutId = intent.getLongExtra(WORKOUT_ID_EXTRA, 0);
         if (workoutId != 0) {
-            workout = Instance.getInstance(this).db.workoutDao().getWorkoutById(workoutId);
+            workout = Instance.getInstance(this).db.gpsWorkoutDao().getWorkoutById(workoutId);
         }
         if (workout == null) {
             Toast.makeText(this, R.string.cannotFindWorkout, Toast.LENGTH_LONG).show();
@@ -110,7 +110,7 @@ public abstract class WorkoutActivity extends InformationActivity implements Map
             return;
         }
 
-        samples = Arrays.asList(Instance.getInstance(this).db.workoutDao().getAllSamplesOfWorkout(workout.id));
+        samples = Arrays.asList(Instance.getInstance(this).db.gpsWorkoutDao().getAllSamplesOfWorkout(workout.id));
         if (workout.intervalSetUsedId != 0) {
             usedIntervalSet = Instance.getInstance(this).db.intervalDao().getSet(workout.intervalSetUsedId);
             intervals = Instance.getInstance(this).db.intervalDao().getAllIntervalsOfSet(usedIntervalSet.id);
@@ -394,8 +394,8 @@ public abstract class WorkoutActivity extends InformationActivity implements Map
         return samples.size() > 1;
     }
 
-    protected WorkoutData getWorkoutData() {
-        return new WorkoutData(workout, samples);
+    protected GpsWorkoutData getWorkoutData() {
+        return new GpsWorkoutData(workout, samples);
     }
 
     @Override

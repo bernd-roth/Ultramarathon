@@ -17,7 +17,7 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.recording;
+package de.tadris.fitness.recording.gps;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -38,16 +38,13 @@ import de.tadris.fitness.BuildConfig;
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.GpsWorkout;
-import de.tadris.fitness.data.Interval;
+import de.tadris.fitness.data.GpsWorkoutData;
 import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.data.UserPreferences;
-import de.tadris.fitness.data.WorkoutData;
 import de.tadris.fitness.data.WorkoutType;
-import de.tadris.fitness.recording.event.HeartRateChangeEvent;
-import de.tadris.fitness.recording.event.HeartRateConnectionChangeEvent;
+import de.tadris.fitness.recording.BaseWorkoutRecorder;
 import de.tadris.fitness.recording.event.LocationChangeEvent;
 import de.tadris.fitness.recording.event.PressureChangeEvent;
-import de.tadris.fitness.recording.event.WorkoutAutoStopEvent;
 import de.tadris.fitness.recording.event.WorkoutGPSStateChanged;
 import de.tadris.fitness.util.CalorieCalculator;
 
@@ -60,28 +57,11 @@ import de.tadris.fitness.util.CalorieCalculator;
  * <p>
  * It gets locations, pressure data, etc. from the RecorderService via the EventBus
  */
-public class WorkoutRecorder {
+public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
 
-    private static final int PAUSE_TIME = 10_000; // 10 Seconds
-
-    /**
-     * Time after which the workout is stopped and saved automatically because there is no activity anymore
-     */
-    private static final int AUTO_TIMEOUT_MULTIPLIER = 1_000 * 60; // minutes to ms
-
-    private long autoTimeoutMs;
-    private boolean useAutoPause;
-    private final Context context;
     private final GpsWorkout workout;
     private final List<GpsSample> samples = new ArrayList<>();
-    private final WorkoutSaver workoutSaver;
-    private RecordingState state;
-    private long time = 0;
-    private long pauseTime = 0;
-    private long lastResume;
-    private long lastPause = 0;
-    private long lastSampleTime = 0;
-    // private long lastGpsTime = 0;
+    private final GpsWorkoutSaver workoutSaver;
     private double distance = 0;
 
     private boolean saved = false;
@@ -91,21 +71,14 @@ public class WorkoutRecorder {
     private Location lastFix = null;
     private GpsState gpsState = GpsState.SIGNAL_LOST;
 
-    private List<Interval> intervalList;
-
-    // Temporarily saved the last interval that was triggered.
-    // It will be added to the next recorded sample.
-    private long lastTriggeredInterval = -1;
-
     private float lastPressure = -1;
-    private int lastHeartRate = -1;
 
     private boolean useAverageForCurrentSpeed;
     private int currentSpeedAverageTime;
 
-    public WorkoutRecorder(Context context, WorkoutType workoutType) {
+    public GpsWorkoutRecorder(Context context, WorkoutType workoutType) {
+        super(context);
         UserPreferences preferences = Instance.getInstance(context).userPreferences;
-        this.context = context;
         this.state = RecordingState.IDLE;
 
         this.workout = new GpsWorkout();
@@ -116,16 +89,14 @@ public class WorkoutRecorder {
 
         this.workout.setWorkoutType(workoutType);
 
-        workoutSaver = new WorkoutSaver(this.context, getWorkoutData());
+        workoutSaver = new GpsWorkoutSaver(this.context, getWorkoutData());
 
         useAverageForCurrentSpeed = preferences.getUseAverageForCurrentSpeed();
         currentSpeedAverageTime = preferences.getTimeForCurrentSpeed() * 1000;
-
-        init();
     }
 
-    public WorkoutRecorder(Context context, GpsWorkout workout, List<GpsSample> samples) {
-        this.context = context;
+    public GpsWorkoutRecorder(Context context, GpsWorkout workout, List<GpsSample> samples) {
+        super(context);
         this.state = RecordingState.PAUSED;
 
         this.workout = workout;
@@ -139,8 +110,7 @@ public class WorkoutRecorder {
         // distance = 0; x
         reconstructBySamples();
 
-        workoutSaver = new WorkoutSaver(this.context, getWorkoutData());
-        init();
+        workoutSaver = new GpsWorkoutSaver(this.context, getWorkoutData());
     }
 
     private void reconstructBySamples() {
@@ -184,82 +154,39 @@ public class WorkoutRecorder {
         return this.samples;
     }
 
-    public WorkoutData getWorkoutData() {
-        return new WorkoutData(getWorkout(), getSamples());
+    public GpsWorkoutData getWorkoutData() {
+        return new GpsWorkoutData(getWorkout(), getSamples());
     }
 
-    private void init() {
-        EventBus.getDefault().register(this);
-        UserPreferences prefs = Instance.getInstance(context).userPreferences;
-        this.autoTimeoutMs = prefs.getAutoTimeout() * AUTO_TIMEOUT_MULTIPLIER;
-        this.useAutoPause = prefs.getUseAutoPause();
+    @Override
+    protected void onStart() {
+        workout.id = System.nanoTime();
+        workout.start = System.currentTimeMillis();
+        //Init Workout To Be able to Save
+        workout.end = -1L;
+        workout.avgSpeed = -1d;
+        workout.topSpeed = -1d;
+        workout.ascent = -1f;
+        workout.descent = -1f;
+        workoutSaver.storeWorkoutInDatabase(); // Already Persist Workout
     }
 
-    public void start() {
-        if (state == RecordingState.IDLE) {
-            Log.i("Recorder", "Start");
-            workout.id = System.nanoTime();
-            workout.start = System.currentTimeMillis();
-            //Init Workout To Be able to Save
-            workout.end = -1L;
-            workout.avgSpeed = -1d;
-            workout.topSpeed = -1d;
-            workout.ascent = -1f;
-            workout.descent = -1f;
-            workoutSaver.storeWorkoutInDatabase(); // Already Persist Workout
-            resume();
-        } else if (state == RecordingState.PAUSED) {
-            resume();
-        } else if (state != RecordingState.RUNNING) {
-            throw new IllegalStateException("Cannot start or resume recording. state = " + state);
-        }
+    @Override
+    protected boolean hasRecordedSomething() {
+        return samples.size() > 2;
     }
 
-    public boolean isActive() {
-        return state == RecordingState.IDLE || state == RecordingState.RUNNING || state == RecordingState.PAUSED;
-    }
-
-    public boolean isResumed() {
-        return state == RecordingState.RUNNING;
-    }
-
-    /**
-     * Handles the Record Watchdog, for GPS Check, Pause Detection and Auto Timeout
-     *
-     * @return is still active workout
-     */
-    boolean handleWatchdog() {
+    @Override
+    protected void onWatchdog() {
         if (BuildConfig.DEBUG) {
             Log.d("WorkoutRecorder", "handleWatchdog " + this.getState().toString() + " samples: " + samples.size() + " autoTout: " + autoTimeoutMs + " inst: " + this.toString());
         }
-        if (isActive()) {
-            checkSignalState();
-            synchronized (samples) {
-                if (samples.size() > 2) {
-                    long timeDiff = System.currentTimeMillis() - lastSampleTime;
-                    if (autoTimeoutMs > 0 && timeDiff > autoTimeoutMs) {
-                        if (isActive()) {
-                            stop();
-                            save();
-                            EventBus.getDefault().post(new WorkoutAutoStopEvent());
-                        }
-                    } else if (useAutoPause) {
-                        if (timeDiff > PAUSE_TIME) {
-                            if (state == RecordingState.RUNNING && gpsState != GpsState.SIGNAL_LOST) {
-                                pause();
-                            }
-                        } else {
-                            if (state == RecordingState.PAUSED) {
-                                resume();
-                            }
-                        }
-                    }
-                }
-            }
-            return true;
-        } else {
-            return false;
-        }
+        checkSignalState();
+    }
+
+    @Override
+    protected boolean autoPausePossible() {
+        return gpsState != GpsWorkoutRecorder.GpsState.SIGNAL_LOST;
     }
 
     private void checkSignalState() {
@@ -284,37 +211,15 @@ public class WorkoutRecorder {
         }
     }
 
-    public void resume() {
-        Log.i("Recorder", "Resume");
-        state = RecordingState.RUNNING;
-        lastResume = System.currentTimeMillis();
-        if (lastPause != 0) {
-            pauseTime += System.currentTimeMillis() - lastPause;
-        }
-    }
-
-    public void pause() {
-        if (state == RecordingState.RUNNING) {
-            Log.i("Recorder", "Pause");
-            state = RecordingState.PAUSED;
-            time += System.currentTimeMillis() - lastResume;
-            lastPause = System.currentTimeMillis();
-        }
-    }
-
-    public void stop() {
-        if (state == RecordingState.PAUSED) {
-            resume();
-        }
-        pause();
+    @Override
+    protected void onStop() {
         workout.end = System.currentTimeMillis();
         workout.duration = time;
         workout.pauseDuration = pauseTime;
-        state = RecordingState.STOPPED;
-        EventBus.getDefault().unregister(this);
         Log.i("Recorder", "Stop with " + getSampleCount() + " Samples");
     }
 
+    @Override
     public void save() {
         if (state != RecordingState.STOPPED) {
             throw new IllegalStateException("Cannot save recording, recorder was not stopped. state = " + state);
@@ -328,10 +233,6 @@ public class WorkoutRecorder {
 
     public boolean isSaved() {
         return saved;
-    }
-
-    public boolean isAutoPauseEnabled() {
-        return useAutoPause;
     }
 
     public int getSampleCount() {
@@ -351,7 +252,7 @@ public class WorkoutRecorder {
                 // and if the time difference to the last sample is too small
                 synchronized (samples) {
                     GpsSample lastSample = samples.get(samples.size() - 1);
-                    distance = Math.abs(RecorderService.locationToLatLong(location).sphericalDistance(lastSample.toLatLong()));
+                    distance = Math.abs(GpsRecorderService.locationToLatLong(location).sphericalDistance(lastSample.toLatLong()));
                     long timediff = Math.abs(lastSample.absoluteTime - location.getTime());
                     if (distance < workout.getWorkoutType(context).minDistance || timediff < 500) {
                         return;
@@ -408,23 +309,6 @@ public class WorkoutRecorder {
     @Subscribe
     public void onPressureChange(PressureChangeEvent e) {
         lastPressure = e.pressure;
-    }
-
-    @Subscribe
-    public void onHeartRateChange(HeartRateChangeEvent event) {
-        lastHeartRate = event.heartRate;
-    }
-
-    @Subscribe
-    public void onHeartRateConnectionChange(HeartRateConnectionChangeEvent event) {
-        if (event.state != RecorderService.HeartRateConnectionState.CONNECTED) {
-            // If heart rate sensor currently not available
-            lastHeartRate = -1;
-        }
-    }
-
-    public void onIntervalWasTriggered(Interval interval) {
-        lastTriggeredInterval = interval.id;
     }
 
     private int maxCalories = 0;
@@ -521,34 +405,6 @@ public class WorkoutRecorder {
         }
     }
 
-    public long getTimeSinceStart() {
-        if (workout.start != 0) {
-            return System.currentTimeMillis() - workout.start;
-        } else {
-            return 0;
-        }
-    }
-
-    public long getPauseDuration() {
-        if (state == RecordingState.PAUSED) {
-            return pauseTime + (System.currentTimeMillis() - lastPause);
-        } else {
-            return pauseTime;
-        }
-    }
-
-    public long getDuration() {
-        if (state == RecordingState.RUNNING) {
-            return time + (System.currentTimeMillis() - lastResume);
-        } else {
-            return time;
-        }
-    }
-
-    public int getCurrentHeartRate() {
-        return lastHeartRate;
-    }
-
     public void setComment(String comment) {
         workout.comment = comment;
     }
@@ -557,24 +413,8 @@ public class WorkoutRecorder {
         return state == RecordingState.PAUSED;
     }
 
-    public RecordingState getState() {
-        return state;
-    }
-
-    public void setIntervalList(List<Interval> intervalList) {
-        this.intervalList = intervalList;
-    }
-
-    public List<Interval> getIntervalList() {
-        return intervalList;
-    }
-
     public void discard() {
         workoutSaver.discardWorkout();
-    }
-
-    public enum RecordingState {
-        IDLE, RUNNING, PAUSED, STOPPED
     }
 
     public enum GpsState {

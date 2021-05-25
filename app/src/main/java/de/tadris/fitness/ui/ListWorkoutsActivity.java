@@ -296,7 +296,7 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
     @Override
     public void onItemLongClick(int pos, GpsWorkout workout) {
         DialogUtils.showDeleteWorkoutDialog(this, () -> {
-            Instance.getInstance(ListWorkoutsActivity.this).db.workoutDao().deleteWorkout(workout);
+            Instance.getInstance(ListWorkoutsActivity.this).db.gpsWorkoutDao().deleteWorkout(workout);
             refresh();
         });
     }
@@ -314,7 +314,7 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
     }
 
     private void loadData() {
-        workouts = Instance.getInstance(this).db.workoutDao().getWorkouts();
+        workouts = Instance.getInstance(this).db.gpsWorkoutDao().getWorkouts();
         hintText.setVisibility(workouts.length == 0 ? View.VISIBLE : View.INVISIBLE);
         adapter.setWorkouts(workouts);
     }

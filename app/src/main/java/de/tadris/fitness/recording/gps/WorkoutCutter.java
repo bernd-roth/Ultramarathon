@@ -17,7 +17,7 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.recording;
+package de.tadris.fitness.recording.gps;
 
 import android.content.Context;
 
@@ -26,11 +26,11 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
 import de.tadris.fitness.data.GpsSample;
-import de.tadris.fitness.data.WorkoutData;
+import de.tadris.fitness.data.GpsWorkoutData;
 
-public class WorkoutCutter extends WorkoutSaver {
+public class WorkoutCutter extends GpsWorkoutSaver {
 
-    public WorkoutCutter(Context context, WorkoutData data) {
+    public WorkoutCutter(Context context, GpsWorkoutData data) {
         super(context, data);
     }
 
@@ -75,7 +75,7 @@ public class WorkoutCutter extends WorkoutSaver {
 
     private void deleteSample(GpsSample sample) {
         samples.remove(sample);
-        db.workoutDao().deleteSample(sample);
+        db.gpsWorkoutDao().deleteSample(sample);
     }
 
 }

@@ -1,8 +1,8 @@
 package de.tadris.fitness.recording.announcement.interval;
 
 import de.tadris.fitness.data.Interval;
-import de.tadris.fitness.recording.WorkoutRecorder;
 import de.tadris.fitness.recording.announcement.Announcement;
+import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
 
 public class IntervalAnnouncement implements Announcement {
 
@@ -18,7 +18,7 @@ public class IntervalAnnouncement implements Announcement {
     }
 
     @Override
-    public String getSpokenText(WorkoutRecorder recorder) {
+    public String getSpokenText(GpsWorkoutRecorder recorder) {
         return interval.name;
     }
 

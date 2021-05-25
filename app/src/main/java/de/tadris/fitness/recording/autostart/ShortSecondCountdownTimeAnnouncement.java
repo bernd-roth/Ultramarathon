@@ -1,9 +1,7 @@
 package de.tadris.fitness.recording.autostart;
 
-import android.content.Context;
-
 import de.tadris.fitness.Instance;
-import de.tadris.fitness.recording.WorkoutRecorder;
+import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
 
 /**
  * This class provides short countdown time announcements, i.e. only the amount of seconds left will
@@ -19,7 +17,7 @@ public class ShortSecondCountdownTimeAnnouncement extends CountdownTimeAnnouncem
     }
 
     @Override
-    public String getSpokenText(WorkoutRecorder recorder) {
+    public String getSpokenText(GpsWorkoutRecorder recorder) {
         return String.valueOf(getCountdownS());
     }
 }

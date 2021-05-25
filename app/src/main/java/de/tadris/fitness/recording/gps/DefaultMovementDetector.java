@@ -1,4 +1,4 @@
-package de.tadris.fitness.recording;
+package de.tadris.fitness.recording.gps;
 
 import android.content.Context;
 import android.location.Location;
@@ -67,8 +67,8 @@ public class DefaultMovementDetector extends MovementDetector {
                 Log.d(TAG, "onLocationChange: last present");
                 // Checks whether the minimum distance to last sample was reached
                 // and if the time difference to the last sample is too small
-                distance = Math.abs(RecorderService.locationToLatLong(lastLocation).
-                        sphericalDistance(RecorderService.locationToLatLong(location)));
+                distance = Math.abs(GpsRecorderService.locationToLatLong(lastLocation).
+                        sphericalDistance(GpsRecorderService.locationToLatLong(location)));
                 long timeDiff = (location.getElapsedRealtimeNanos() -
                         lastLocation.getElapsedRealtimeNanos()) / 1_000_000L;
                 if (distance < workout.getWorkoutType(context).minDistance || timeDiff < 500) {

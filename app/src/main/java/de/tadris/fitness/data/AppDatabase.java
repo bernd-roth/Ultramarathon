@@ -33,7 +33,9 @@ public abstract class AppDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "fito-track";
 
-    public abstract WorkoutDao workoutDao();
+    public abstract GpsWorkoutDao gpsWorkoutDao();
+
+    public abstract IndoorWorkoutDao indoorWorkoutDao();
 
     public abstract WorkoutTypeDao workoutTypeDao();
 
