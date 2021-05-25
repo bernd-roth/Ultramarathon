@@ -161,7 +161,7 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
     }
 
     private void startFullscreenMapActivity() {
-        final Intent intent = new Intent(this, ShowWorkoutMapActivity.class);
+        final Intent intent = new Intent(this, ShowWorkoutFullscreenMapActivity.class);
         intent.putExtra(ShowWorkoutActivity.WORKOUT_ID_EXTRA, workout.id);
         startActivity(intent);
     }
