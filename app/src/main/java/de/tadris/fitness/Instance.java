@@ -26,9 +26,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import de.tadris.fitness.data.AppDatabase;
+import de.tadris.fitness.data.GpsSample;
+import de.tadris.fitness.data.GpsWorkout;
 import de.tadris.fitness.data.UserPreferences;
-import de.tadris.fitness.data.Workout;
-import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.recording.WorkoutRecorder;
 import de.tadris.fitness.util.DataManager;
@@ -78,19 +78,19 @@ public class Instance {
     }
 
     private WorkoutRecorder restoreRecorder(Context context) {
-        Workout lastWorkout = db.workoutDao().getLastWorkout();
+        GpsWorkout lastWorkout = db.workoutDao().getLastWorkout();
         if (lastWorkout != null && lastWorkout.end == -1) {
             return restoreRecorder(context, lastWorkout);
         }
         return new WorkoutRecorder(context, WorkoutType.getWorkoutTypeById(context, WorkoutType.WORKOUT_TYPE_ID_OTHER));
     }
 
-    private WorkoutRecorder restoreRecorder(Context context, Workout workout) {
-        List<WorkoutSample> samples = Arrays.asList(db.workoutDao().getAllSamplesOfWorkout(workout.id));
+    private WorkoutRecorder restoreRecorder(Context context, GpsWorkout workout) {
+        List<GpsSample> samples = Arrays.asList(db.workoutDao().getAllSamplesOfWorkout(workout.id));
         return new WorkoutRecorder(context, workout, samples);
     }
 
-    public void prepareResume(Context context, Workout workout) {
+    public void prepareResume(Context context, GpsWorkout workout) {
         recorder = restoreRecorder(context, workout);
     }
 }

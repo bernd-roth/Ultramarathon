@@ -28,9 +28,9 @@ import java.util.List;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.data.AppDatabase;
-import de.tadris.fitness.data.Workout;
+import de.tadris.fitness.data.GpsSample;
+import de.tadris.fitness.data.GpsWorkout;
 import de.tadris.fitness.data.WorkoutData;
-import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.util.AltitudeCorrection;
 import de.tadris.fitness.util.CalorieCalculator;
 import de.tadris.fitness.util.WorkoutCalculator;
@@ -41,8 +41,8 @@ import de.tadris.fitness.util.WorkoutCalculator;
 public class WorkoutSaver {
 
     private final Context context;
-    protected final Workout workout;
-    protected final List<WorkoutSample> samples;
+    protected final GpsWorkout workout;
+    protected final List<GpsSample> samples;
     protected final AppDatabase db;
 
     public WorkoutSaver(Context context, WorkoutData data) {
@@ -64,7 +64,7 @@ public class WorkoutSaver {
         deleteWorkoutAndSamples();
     }
 
-    public synchronized void addSample(WorkoutSample sample) {
+    public synchronized void addSample(GpsSample sample) {
         if (samples.size() == 0) {
             sample.id = this.workout.id + this.samples.size();
         } else {
@@ -74,7 +74,7 @@ public class WorkoutSaver {
         db.workoutDao().insertSample(sample);
     }
 
-    private WorkoutSample getLastSample() {
+    private GpsSample getLastSample() {
         return samples.get(samples.size() - 1);
     }
 
@@ -90,7 +90,7 @@ public class WorkoutSaver {
     protected void setIds() {
         workout.id = System.nanoTime();
         int i = 0;
-        for (WorkoutSample sample : samples) {
+        for (GpsSample sample : samples) {
             i++;
             sample.id = workout.id + i;
             sample.workoutId = workout.id;
@@ -113,8 +113,8 @@ public class WorkoutSaver {
 
     private void clearSamplesWithSameTime(boolean delete) {
         for (int i = samples.size() - 2; i >= 0; i--) {
-            WorkoutSample sample = samples.get(i);
-            WorkoutSample lastSample = samples.get(i + 1);
+            GpsSample sample = samples.get(i);
+            GpsSample lastSample = samples.get(i + 1);
             if (sample.absoluteTime == lastSample.absoluteTime) {
                 samples.remove(lastSample);
                 if (delete) {
@@ -128,8 +128,8 @@ public class WorkoutSaver {
     protected void setLength() {
         double length = 0;
         for (int i = 1; i < samples.size(); i++) {
-            WorkoutSample currentSample = samples.get(i);
-            WorkoutSample lastSample = samples.get(i - 1);
+            GpsSample currentSample = samples.get(i);
+            GpsSample lastSample = samples.get(i - 1);
             double sampleLength = lastSample.toLatLong().sphericalDistance(currentSample.toLatLong());
             length += sampleLength;
         }
@@ -140,7 +140,7 @@ public class WorkoutSaver {
 
     protected void setTopSpeed() {
         double topSpeed = 0;
-        for (WorkoutSample sample : samples) {
+        for (GpsSample sample : samples) {
             if (sample.speed > topSpeed) {
                 topSpeed = sample.speed;
             }
@@ -151,7 +151,7 @@ public class WorkoutSaver {
     protected void setHeartRate() {
         int heartRateSum = 0;
         int maxHeartRate = -1;
-        for (WorkoutSample sample : samples) {
+        for (GpsSample sample : samples) {
             heartRateSum += sample.heartRate;
             if (sample.heartRate > maxHeartRate) {
                 maxHeartRate = sample.heartRate;
@@ -180,7 +180,7 @@ public class WorkoutSaver {
         double avgPressure = getAveragePressure();
 
         for (int i = 0; i < samples.size(); i++) {
-            WorkoutSample sample = samples.get(i);
+            GpsSample sample = samples.get(i);
 
             // Altitude Difference to Average Elevation in meters
             float altitude_difference =
@@ -194,9 +194,9 @@ public class WorkoutSaver {
         return getAverageElevation(samples);
     }
 
-    private double getAverageElevation(List<WorkoutSample> samples) {
+    private double getAverageElevation(List<GpsSample> samples) {
         double elevationSum = 0; // Sum of elevation
-        for (WorkoutSample sample : samples) {
+        for (GpsSample sample : samples) {
             elevationSum += sample.elevation;
         }
 
@@ -205,7 +205,7 @@ public class WorkoutSaver {
 
     private double getAveragePressure() {
         double pressureSum = 0;
-        for (WorkoutSample sample : samples) {
+        for (GpsSample sample : samples) {
             pressureSum += sample.pressure;
         }
         return pressureSum / samples.size();
@@ -214,7 +214,7 @@ public class WorkoutSaver {
     private void setRoundedSampleElevation() {
         // Should only be done on newly recorded samples
         roundSampleElevation();
-        for (WorkoutSample sample : samples) {
+        for (GpsSample sample : samples) {
             sample.elevation = sample.tmpElevation;
         }
     }
@@ -235,7 +235,7 @@ public class WorkoutSaver {
             int lat = (int) Math.round(samples.get(0).lat);
             int lon = (int) Math.round(samples.get(0).lon);
             AltitudeCorrection correction = new AltitudeCorrection(context, lat, lon);
-            for (WorkoutSample sample : samples) {
+            for (GpsSample sample : samples) {
                 sample.elevationMSL = correction.getHeightOverSeaLevel(sample.elevation);
             }
         } catch (IOException e) {
@@ -250,13 +250,13 @@ public class WorkoutSaver {
 
         // Now sum up the ascent/descent
         if (samples.size() > 1) {
-            WorkoutSample firstSample = samples.get(0);
+            GpsSample firstSample = samples.get(0);
             workout.minElevationMSL = (float) firstSample.elevationMSL;
             workout.maxElevationMSL = (float) firstSample.elevationMSL;
 
-            WorkoutSample prevSample = firstSample;
+            GpsSample prevSample = firstSample;
             for (int i = 1; i < samples.size(); i++) {
-                WorkoutSample sample = samples.get(i);
+                GpsSample sample = samples.get(i);
 
                 workout.minElevationMSL = Math.min(workout.minElevationMSL, (float) sample.elevationMSL);
                 workout.maxElevationMSL = Math.max(workout.maxElevationMSL, (float) sample.elevationMSL);
@@ -304,7 +304,7 @@ public class WorkoutSaver {
     }
 
     protected void storeInDatabase() {
-        db.workoutDao().insertWorkoutAndSamples(workout, samples.toArray(new WorkoutSample[0]));
+        db.workoutDao().insertWorkoutAndSamples(workout, samples.toArray(new GpsSample[0]));
     }
 
     protected void storeWorkoutInDatabase() {
@@ -317,7 +317,7 @@ public class WorkoutSaver {
     }
 
     protected void updateSamples() {
-        db.workoutDao().updateSamples(samples.toArray(new WorkoutSample[0]));
+        db.workoutDao().updateSamples(samples.toArray(new GpsSample[0]));
     }
 
     protected void updateWorkoutInDatabase() {
@@ -325,6 +325,6 @@ public class WorkoutSaver {
     }
 
     protected void deleteWorkoutAndSamples() {
-        db.workoutDao().deleteWorkoutAndSamples(workout, samples.toArray(new WorkoutSample[0]));
+        db.workoutDao().deleteWorkoutAndSamples(workout, samples.toArray(new GpsSample[0]));
     }
 }

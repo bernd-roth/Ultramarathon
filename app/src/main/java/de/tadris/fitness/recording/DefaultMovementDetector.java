@@ -3,12 +3,11 @@ package de.tadris.fitness.recording;
 import android.content.Context;
 import android.location.Location;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import de.tadris.fitness.data.Workout;
+import de.tadris.fitness.data.GpsWorkout;
 import de.tadris.fitness.recording.event.LocationChangeEvent;
 
 /**
@@ -20,10 +19,10 @@ public class DefaultMovementDetector extends MovementDetector {
 
     private boolean started;
     private Context context;
-    private Workout workout;
+    private GpsWorkout workout;
     private Location lastLocation;
 
-    public DefaultMovementDetector(Context context, Workout workout) {
+    public DefaultMovementDetector(Context context, GpsWorkout workout) {
         super();
         started = false;
         this.context = context;

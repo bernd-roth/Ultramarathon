@@ -23,7 +23,6 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -34,22 +33,15 @@ import static androidx.room.ForeignKey.CASCADE;
 
 @Entity(tableName = "workout_sample",
         foreignKeys = @ForeignKey(
-                entity = Workout.class,
+                entity = GpsWorkout.class,
                 parentColumns = "id",
                 childColumns = "workout_id",
                 onDelete = CASCADE))
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class WorkoutSample{
-
-    @PrimaryKey
-    public long id;
+public class GpsSample extends BaseSample {
 
     @ColumnInfo(name = "workout_id", index = true)
     public long workoutId;
-
-    public long absoluteTime;
-
-    public long relativeTime;
 
     public double lat;
 
@@ -70,9 +62,6 @@ public class WorkoutSample{
     public double speed;
 
     public float pressure;
-
-    @ColumnInfo(name = "heart_rate")
-    public int heartRate; // in bpm
 
     /**
      * -1 -> No interval was triggered

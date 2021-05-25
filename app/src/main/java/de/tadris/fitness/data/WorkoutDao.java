@@ -29,59 +29,59 @@ import androidx.room.Update;
 public interface WorkoutDao {
 
     @Query("SELECT * FROM workout WHERE id = :id")
-    Workout findById(long id);
+    GpsWorkout findById(long id);
 
     @Query("SELECT * FROM workout_sample WHERE id = :id")
-    WorkoutSample findSampleById(long id);
+    GpsSample findSampleById(long id);
 
     @Query("SELECT * FROM workout_sample WHERE workout_id = :workout_id")
-    WorkoutSample[] getAllSamplesOfWorkout(long workout_id);
+    GpsSample[] getAllSamplesOfWorkout(long workout_id);
 
     @Query("SELECT * FROM workout ORDER BY start DESC")
-    Workout[] getWorkouts();
+    GpsWorkout[] getWorkouts();
 
     @Query("SELECT * FROM workout ORDER BY start DESC LIMIT 1")
-    Workout getLastWorkout();
+    GpsWorkout getLastWorkout();
 
     @Query("SELECT * FROM workout ORDER BY start ASC")
-    Workout[] getAllWorkoutsHistorically();
+    GpsWorkout[] getAllWorkoutsHistorically();
 
     @Query("SELECT * FROM workout WHERE workoutType = :workout_type ORDER BY start ASC ")
-    Workout[] getWorkoutsHistorically(String workout_type);
+    GpsWorkout[] getWorkoutsHistorically(String workout_type);
 
     @Query("SELECT * FROM workout WHERE start = :start")
-    Workout getWorkoutByStart(long start);
+    GpsWorkout getWorkoutByStart(long start);
 
     @Query("SELECT * FROM workout WHERE id = :id")
-    Workout getWorkoutById(long id);
+    GpsWorkout getWorkoutById(long id);
 
-    @Query("SELECT * FROM workout_sample")
-    WorkoutSample[] getSamples();
-
-    @Insert
-    void insertWorkoutAndSamples(Workout workout, WorkoutSample[] samples);
-
-    @Delete
-    void deleteWorkoutAndSamples(Workout workout, WorkoutSample[] toArray);
+    @Query("SELECT * FROM GpsSample")
+    GpsSample[] getSamples();
 
     @Insert
-    void insertWorkout(Workout workout);
+    void insertWorkoutAndSamples(GpsWorkout workout, GpsSample[] samples);
 
     @Delete
-    void deleteWorkout(Workout workout);
-
-    @Update
-    void updateWorkout(Workout workout);
+    void deleteWorkoutAndSamples(GpsWorkout workout, GpsSample[] toArray);
 
     @Insert
-    void insertSample(WorkoutSample sample);
+    void insertWorkout(GpsWorkout workout);
 
     @Delete
-    void deleteSample(WorkoutSample sample);
+    void deleteWorkout(GpsWorkout workout);
 
     @Update
-    void updateSamples(WorkoutSample[] samples);
+    void updateWorkout(GpsWorkout workout);
+
+    @Insert
+    void insertSample(GpsSample sample);
+
+    @Delete
+    void deleteSample(GpsSample sample);
 
     @Update
-    void updateSample(WorkoutSample sample);
+    void updateSamples(GpsSample[] samples);
+
+    @Update
+    void updateSample(GpsSample sample);
 }

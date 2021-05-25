@@ -25,8 +25,8 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.tadris.fitness.data.Workout;
-import de.tadris.fitness.data.WorkoutSample;
+import de.tadris.fitness.data.GpsSample;
+import de.tadris.fitness.data.GpsWorkout;
 import de.tadris.fitness.data.WorkoutType;
 
 @JacksonXmlRootElement(localName = "fito-track")
@@ -34,12 +34,13 @@ import de.tadris.fitness.data.WorkoutType;
 class FitoTrackDataContainer {
 
     private int version;
-    private List<Workout> workouts = new ArrayList<>();
-    private List<WorkoutSample> samples = new ArrayList<>();
+    private List<GpsWorkout> workouts = new ArrayList<>();
+    private List<GpsSample> samples = new ArrayList<>();
     private List<IntervalSetContainer> intervalSets = new ArrayList<>();
     private List<WorkoutType> workoutTypes = new ArrayList<>();
 
-    public FitoTrackDataContainer(){}
+    public FitoTrackDataContainer() {
+    }
 
     public int getVersion() {
         return version;
@@ -49,19 +50,19 @@ class FitoTrackDataContainer {
         this.version = version;
     }
 
-    public List<Workout> getWorkouts() {
+    public List<GpsWorkout> getWorkouts() {
         return workouts;
     }
 
-    public void setWorkouts(List<Workout> workouts) {
+    public void setWorkouts(List<GpsWorkout> workouts) {
         this.workouts = workouts;
     }
 
-    public List<WorkoutSample> getSamples() {
+    public List<GpsSample> getSamples() {
         return samples;
     }
 
-    public void setSamples(List<WorkoutSample> samples) {
+    public void setSamples(List<GpsSample> samples) {
         this.samples = samples;
     }
 

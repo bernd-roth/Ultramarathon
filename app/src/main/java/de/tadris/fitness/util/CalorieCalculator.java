@@ -21,7 +21,7 @@ package de.tadris.fitness.util;
 
 import android.content.Context;
 
-import de.tadris.fitness.data.Workout;
+import de.tadris.fitness.data.GpsWorkout;
 
 public class CalorieCalculator {
 
@@ -32,7 +32,7 @@ public class CalorieCalculator {
      * @param weight  the weight of the person in kilogram
      * @return calories burned
      */
-    public static int calculateCalories(Context context, Workout workout, double weight) {
+    public static int calculateCalories(Context context, GpsWorkout workout, double weight) {
         double mins = (double) (workout.duration / 1000) / 60;
         int ascent = (int) workout.ascent; // 1 calorie per meter
         return (int) (mins * (getMET(context, workout) * 3.5 * weight) / 200) + ascent;
@@ -52,7 +52,7 @@ public class CalorieCalculator {
      *
      * @return MET
      */
-    private static double getMET(Context context, Workout workout) {
+    private static double getMET(Context context, GpsWorkout workout) {
         double speedInKmh = workout.avgSpeed * 3.6;
 
         switch (workout.workoutTypeId) {

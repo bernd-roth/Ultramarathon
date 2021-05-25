@@ -43,7 +43,7 @@ import java.util.List;
 import de.tadris.fitness.BuildConfig;
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
-import de.tadris.fitness.data.WorkoutSample;
+import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.osm.OAuthAuthentication;
 import de.tadris.fitness.osm.OsmTraceUploader;
 import de.tadris.fitness.ui.ShareFileActivity;
@@ -334,7 +334,7 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
     }
 
     private void uploadToOsm(boolean cut, GpsTraceDetails.Visibility visibility, String description) {
-        List<WorkoutSample> samples = new ArrayList<>(this.samples);
+        List<GpsSample> samples = new ArrayList<>(this.samples);
         new OsmTraceUploader(this, mHandler, workout, samples, visibility, oAuthConsumer, cut, description).upload();
     }
 

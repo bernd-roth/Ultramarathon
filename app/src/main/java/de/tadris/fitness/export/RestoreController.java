@@ -30,10 +30,10 @@ import java.io.IOException;
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.AppDatabase;
+import de.tadris.fitness.data.GpsSample;
+import de.tadris.fitness.data.GpsWorkout;
 import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.IntervalSet;
-import de.tadris.fitness.data.Workout;
-import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.data.migration.Migration;
 import de.tadris.fitness.data.migration.Migration12IntervalSets;
@@ -95,7 +95,7 @@ public class RestoreController {
     private void restoreWorkouts() {
         listener.onStatusChanged(40, context.getString(R.string.workouts));
         if (dataContainer.getWorkouts() != null) {
-            for (Workout workout : dataContainer.getWorkouts()) {
+            for (GpsWorkout workout : dataContainer.getWorkouts()) {
                 // Only Import Unknown Workouts on merge
                 if (replace || database.workoutDao().findById(workout.id) == null) {
                     database.workoutDao().insertWorkout(workout);
@@ -107,7 +107,7 @@ public class RestoreController {
     private void restoreSamples() {
         listener.onStatusChanged(50, context.getString(R.string.locationData));
         if (dataContainer.getSamples() != null) {
-            for (WorkoutSample sample : dataContainer.getSamples()) {
+            for (GpsSample sample : dataContainer.getSamples()) {
                 // Only import unknown samples with known workout on merge
                 // Query not necessary on replace because data was cleared
                 if (replace || (database.workoutDao().findById(sample.workoutId) != null &&
@@ -158,10 +158,10 @@ public class RestoreController {
     private void runMigrations() {
         listener.onStatusChanged(90, context.getString(R.string.runningMigrations));
         if (dataContainer.getVersion() <= 1) {
-            for (Workout workout : dataContainer.getWorkouts()) {
+            for (GpsWorkout workout : dataContainer.getWorkouts()) {
                 float minHeight = 0f;
                 float maxHeight = 0f;
-                for (WorkoutSample sample : database.workoutDao().getAllSamplesOfWorkout(workout.id)) {
+                for (GpsSample sample : database.workoutDao().getAllSamplesOfWorkout(workout.id)) {
                     if (minHeight == 0) {
                         minHeight = (float) sample.elevationMSL;
                         maxHeight = (float) sample.elevationMSL;
@@ -176,7 +176,7 @@ public class RestoreController {
         }
         if (dataContainer.getVersion() <= 2) {
             Migration12IntervalSets migration = new Migration12IntervalSets(context, Migration.DUMMY_LISTENER);
-            for (Workout workout : dataContainer.getWorkouts()) {
+            for (GpsWorkout workout : dataContainer.getWorkouts()) {
                 migration.migrateWorkout(workout);
             }
         }

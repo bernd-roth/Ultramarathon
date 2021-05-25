@@ -23,7 +23,7 @@ import android.content.Context;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationType;
-import de.tadris.fitness.data.Workout;
+import de.tadris.fitness.data.GpsWorkout;
 
 public class Distance extends AbstractWorkoutInformation {
     public Distance(Context context) {
@@ -41,7 +41,7 @@ public class Distance extends AbstractWorkoutInformation {
     }
 
     @Override
-    public double getValueFromWorkout(Workout workout) {
+    public double getValueFromWorkout(GpsWorkout workout) {
         return distanceUnitUtils.getDistanceUnitSystem().getDistanceFromKilometers(workout.length / 1000d);
     }
 

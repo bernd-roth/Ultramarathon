@@ -24,20 +24,20 @@ import org.mapsforge.core.model.LatLong;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.WorkoutData;
-import de.tadris.fitness.data.WorkoutSample;
 
 public class WorkoutCalculator {
 
     public static List<Pause> getPausesFromWorkout(WorkoutData data) {
         List<Pause> result = new ArrayList<>();
-        List<WorkoutSample> samples = data.getSamples();
+        List<GpsSample> samples = data.getSamples();
 
         long absoluteTime = data.getWorkout().start;
         long relativeTime = 0;
         boolean lastWasPause = false;
 
-        for (WorkoutSample sample : samples) {
+        for (GpsSample sample : samples) {
             long absoluteDiff = sample.absoluteTime - absoluteTime;
             long relativeDiff = sample.relativeTime - relativeTime;
             long diff = absoluteDiff - relativeDiff;
@@ -83,9 +83,9 @@ public class WorkoutCalculator {
      */
     public static List<Long> getIntervalSetTimesFromWorkout(WorkoutData data) {
         List<Long> result = new ArrayList<>();
-        List<WorkoutSample> samples = data.getSamples();
+        List<GpsSample> samples = data.getSamples();
 
-        for (WorkoutSample sample : samples) {
+        for (GpsSample sample : samples) {
             if (sample.intervalTriggered > 0) {
                 result.add(sample.relativeTime);
             }

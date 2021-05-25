@@ -23,7 +23,7 @@ import android.content.Context;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationType;
-import de.tadris.fitness.data.Workout;
+import de.tadris.fitness.data.GpsWorkout;
 
 public class AverageHeartRate extends AbstractWorkoutInformation {
 
@@ -42,12 +42,12 @@ public class AverageHeartRate extends AbstractWorkoutInformation {
     }
 
     @Override
-    public boolean isInformationAvailableFor(Workout workout) {
+    public boolean isInformationAvailableFor(GpsWorkout workout) {
         return workout.hasHeartRateData();
     }
 
     @Override
-    public double getValueFromWorkout(Workout workout) {
+    public double getValueFromWorkout(GpsWorkout workout) {
         return workout.avgHeartRate;
     }
 

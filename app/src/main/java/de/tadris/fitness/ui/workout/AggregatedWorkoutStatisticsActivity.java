@@ -63,7 +63,7 @@ import de.tadris.fitness.aggregation.WorkoutAggregator;
 import de.tadris.fitness.aggregation.WorkoutInformation;
 import de.tadris.fitness.aggregation.WorkoutInformationManager;
 import de.tadris.fitness.aggregation.WorkoutTypeFilter;
-import de.tadris.fitness.data.Workout;
+import de.tadris.fitness.data.GpsWorkout;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.ui.FitoTrackActivity;
 import de.tadris.fitness.ui.dialog.SelectWorkoutTypeDialog;
@@ -132,7 +132,7 @@ public class AggregatedWorkoutStatisticsActivity extends FitoTrackActivity imple
         }
     }
 
-    private Workout getLastWorkout() {
+    private GpsWorkout getLastWorkout() {
         return Instance.getInstance(this).db.workoutDao().getLastWorkout();
     }
 
@@ -371,7 +371,7 @@ public class AggregatedWorkoutStatisticsActivity extends FitoTrackActivity imple
     }
 
     private void openWorkoutAt(long time) {
-        Workout workout = Instance.getInstance(this).db.workoutDao().getWorkoutByStart(time);
+        GpsWorkout workout = Instance.getInstance(this).db.workoutDao().getWorkoutByStart(time);
         if (workout != null) {
             final Intent intent = new Intent(this, ShowWorkoutActivity.class);
             intent.putExtra(ShowWorkoutActivity.WORKOUT_ID_EXTRA, workout.id);

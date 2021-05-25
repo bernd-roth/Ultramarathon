@@ -80,9 +80,9 @@ import java.util.concurrent.Semaphore;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
+import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.IntervalSet;
-import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.map.MapManager;
 import de.tadris.fitness.model.AutoStartWorkout;
@@ -302,8 +302,8 @@ public class RecordWorkoutActivity extends FitoTrackActivity implements SelectIn
             }
 
             latLongList.clear();
-            List<WorkoutSample> samples = instance.recorder.getSamples();
-            for (WorkoutSample sample : samples) {
+            List<GpsSample> samples = instance.recorder.getSamples();
+            for (GpsSample sample : samples) {
                 latLongList.add(sample.toLatLong());
             }
             updateLine();

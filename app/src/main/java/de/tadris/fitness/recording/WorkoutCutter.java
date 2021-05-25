@@ -25,8 +25,8 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
+import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.WorkoutData;
-import de.tadris.fitness.data.WorkoutSample;
 
 public class WorkoutCutter extends WorkoutSaver {
 
@@ -34,7 +34,7 @@ public class WorkoutCutter extends WorkoutSaver {
         super(context, data);
     }
 
-    public void cutWorkout(@Nullable WorkoutSample startSample, @Nullable WorkoutSample endSample) {
+    public void cutWorkout(@Nullable GpsSample startSample, @Nullable GpsSample endSample) {
         if (startSample != null) {
             cutStart(startSample);
         }
@@ -47,8 +47,8 @@ public class WorkoutCutter extends WorkoutSaver {
         updateWorkoutAndSamples();
     }
 
-    private void cutStart(WorkoutSample startSample) {
-        for (WorkoutSample sample : new ArrayList<>(samples)) {
+    private void cutStart(GpsSample startSample) {
+        for (GpsSample sample : new ArrayList<>(samples)) {
             if (sample.id == startSample.id) {
                 break;
             } else {
@@ -57,14 +57,14 @@ public class WorkoutCutter extends WorkoutSaver {
         }
         // Move relative times
         long startTime = startSample.relativeTime;
-        for (WorkoutSample sample : samples) {
+        for (GpsSample sample : samples) {
             sample.relativeTime -= startTime;
         }
     }
 
-    private void cutEnd(WorkoutSample endSample) {
+    private void cutEnd(GpsSample endSample) {
         boolean found = false;
-        for (WorkoutSample sample : new ArrayList<>(samples)) {
+        for (GpsSample sample : new ArrayList<>(samples)) {
             if (found) {
                 deleteSample(sample);
             } else if (sample.id == endSample.id) {
@@ -73,7 +73,7 @@ public class WorkoutCutter extends WorkoutSaver {
         }
     }
 
-    private void deleteSample(WorkoutSample sample) {
+    private void deleteSample(GpsSample sample) {
         samples.remove(sample);
         db.workoutDao().deleteSample(sample);
     }

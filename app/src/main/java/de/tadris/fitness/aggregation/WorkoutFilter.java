@@ -19,10 +19,10 @@
 
 package de.tadris.fitness.aggregation;
 
-import de.tadris.fitness.data.Workout;
+import de.tadris.fitness.data.GpsWorkout;
 
 public interface WorkoutFilter {
 
-    boolean isAccepted(Workout workout);
+    boolean isAccepted(GpsWorkout workout);
 
 }

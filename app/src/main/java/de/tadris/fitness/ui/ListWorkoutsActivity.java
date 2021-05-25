@@ -47,7 +47,7 @@ import java.io.InputStream;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
-import de.tadris.fitness.data.Workout;
+import de.tadris.fitness.data.GpsWorkout;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.ui.adapter.WorkoutAdapter;
 import de.tadris.fitness.ui.dialog.ProgressDialogController;
@@ -68,7 +68,7 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
     private WorkoutAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private FloatingActionMenu menu;
-    private Workout[] workouts;
+    private GpsWorkout[] workouts;
     private TextView hintText;
     private int listSize;
     private int lastClickedIndex;
@@ -286,7 +286,7 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
     }
 
     @Override
-    public void onItemClick(int pos, Workout workout) {
+    public void onItemClick(int pos, GpsWorkout workout) {
         final Intent intent = new Intent(this, ShowWorkoutActivity.class);
         intent.putExtra(ShowWorkoutActivity.WORKOUT_ID_EXTRA, workout.id);
         startActivity(intent);
@@ -294,7 +294,7 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
     }
 
     @Override
-    public void onItemLongClick(int pos, Workout workout) {
+    public void onItemLongClick(int pos, GpsWorkout workout) {
         DialogUtils.showDeleteWorkoutDialog(this, () -> {
             Instance.getInstance(ListWorkoutsActivity.this).db.workoutDao().deleteWorkout(workout);
             refresh();

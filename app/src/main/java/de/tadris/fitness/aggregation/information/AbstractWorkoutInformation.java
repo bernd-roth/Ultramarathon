@@ -23,7 +23,7 @@ import android.content.Context;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.aggregation.WorkoutInformation;
-import de.tadris.fitness.data.Workout;
+import de.tadris.fitness.data.GpsWorkout;
 import de.tadris.fitness.util.unit.DistanceUnitUtils;
 import de.tadris.fitness.util.unit.EnergyUnitUtils;
 
@@ -39,7 +39,7 @@ public abstract class AbstractWorkoutInformation implements WorkoutInformation {
         this.energyUnitUtils = Instance.getInstance(context).energyUnitUtils;
     }
 
-    public boolean isInformationAvailableFor(Workout workout) {
+    public boolean isInformationAvailableFor(GpsWorkout workout) {
         return true;
     }
 

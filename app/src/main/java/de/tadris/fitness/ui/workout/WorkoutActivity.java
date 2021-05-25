@@ -60,12 +60,12 @@ import java.util.List;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
+import de.tadris.fitness.data.GpsSample;
+import de.tadris.fitness.data.GpsWorkout;
 import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.data.UserPreferences;
-import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutData;
-import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.map.ColoringStrategy;
 import de.tadris.fitness.map.GradientColoringStrategy;
 import de.tadris.fitness.map.MapManager;
@@ -82,8 +82,8 @@ public abstract class WorkoutActivity extends InformationActivity implements Map
 
     public static final String WORKOUT_ID_EXTRA = "de.tadris.fitness.WorkoutActivity.WORKOUT_ID_EXTRA";
 
-    List<WorkoutSample> samples;
-    Workout workout;
+    List<GpsSample> samples;
+    GpsWorkout workout;
     private Resources.Theme theme;
     protected MapView mapView;
     protected WorkoutLayer workoutLayer;
@@ -138,17 +138,17 @@ public abstract class WorkoutActivity extends InformationActivity implements Map
     }
 
 
-    protected WorkoutSample selectedSample = null;
+    protected GpsSample selectedSample = null;
 
     @Override
-    public void onMapSelectionChanged(WorkoutSample sample) {
+    public void onMapSelectionChanged(GpsSample sample) {
         //nada onChartSelectionChanged(sample)
     }
 
-    protected void onChartSelectionChanged(WorkoutSample sample) {
+    protected void onChartSelectionChanged(GpsSample sample) {
         //remove any previous layer
-        if (selectedSample != null){
-            if(highlightingCircle != null){
+        if (selectedSample != null) {
+            if (highlightingCircle != null) {
                 mapView.getLayerManager().getLayers().remove(highlightingCircle);
             }
         }
@@ -229,7 +229,7 @@ public abstract class WorkoutActivity extends InformationActivity implements Map
             converter.onCreate(getWorkoutData());
 
             List<Entry> entries = new ArrayList<>();
-            for (WorkoutSample sample : samples) {
+            for (GpsSample sample : samples) {
                 // turn data into Entry objects
                 Entry e = new Entry((float) (sample.relativeTime) / 1000f / 60f, converter.getValue(sample), sample);
                 entries.add(e);
@@ -285,9 +285,9 @@ public abstract class WorkoutActivity extends InformationActivity implements Map
         chart.invalidate();
     }
 
-    private WorkoutSample findSample(Entry entry) {
-        if (entry.getData() instanceof WorkoutSample) {
-            return (WorkoutSample) entry.getData();
+    private GpsSample findSample(Entry entry) {
+        if (entry.getData() instanceof GpsSample) {
+            return (GpsSample) entry.getData();
         } else {
             return null;
         }
@@ -297,7 +297,7 @@ public abstract class WorkoutActivity extends InformationActivity implements Map
     boolean fullScreenItems = false;
     LinearLayout mapRoot;
 
-    void addMap(){
+    void addMap() {
         mapView = MapManager.setupMap(this);
         String trackStyle = Instance.getInstance(this).userPreferences.getTrackStyle();
         // emulate current behaviour

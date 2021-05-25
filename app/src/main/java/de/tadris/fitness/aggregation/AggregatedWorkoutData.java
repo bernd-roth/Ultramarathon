@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.tadris.fitness.Instance;
-import de.tadris.fitness.data.Workout;
+import de.tadris.fitness.data.GpsWorkout;
 
 public class AggregatedWorkoutData {
 
@@ -74,7 +74,7 @@ public class AggregatedWorkoutData {
         dataPoint.setCount(dataPoint.getCount() + 1);
     }
 
-    private AggregatedInformationDataPoint getDataPoint(Workout workout) {
+    private AggregatedInformationDataPoint getDataPoint(GpsWorkout workout) {
         long key = getDataPointDateFromWorkout(workout);
         if (!dataPoints.containsKey(key)) {
             dataPoints.put(key, new AggregatedInformationDataPoint(new Date(key), 0, 0));
@@ -82,7 +82,7 @@ public class AggregatedWorkoutData {
         return dataPoints.get(key);
     }
 
-    private long getDataPointDateFromWorkout(Workout workout) {
+    private long getDataPointDateFromWorkout(GpsWorkout workout) {
         Calendar calendar = Calendar.getInstance();
 
         // attempt to get the Instance an use the app preferences

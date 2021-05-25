@@ -19,19 +19,19 @@
 
 package de.tadris.fitness.aggregation;
 
-import de.tadris.fitness.data.Workout;
+import de.tadris.fitness.data.GpsWorkout;
 
 public class WorkoutInformationResult {
 
-    private final Workout workout;
+    private final GpsWorkout workout;
     private final double value;
 
-    public WorkoutInformationResult(Workout workout, double value) {
+    public WorkoutInformationResult(GpsWorkout workout, double value) {
         this.workout = workout;
         this.value = value;
     }
 
-    public Workout getWorkout() {
+    public GpsWorkout getWorkout() {
         return workout;
     }
 

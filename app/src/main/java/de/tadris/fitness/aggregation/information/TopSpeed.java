@@ -23,7 +23,7 @@ import android.content.Context;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationType;
-import de.tadris.fitness.data.Workout;
+import de.tadris.fitness.data.GpsWorkout;
 
 public class TopSpeed extends AbstractWorkoutInformation {
     public TopSpeed(Context context) {
@@ -41,7 +41,7 @@ public class TopSpeed extends AbstractWorkoutInformation {
     }
 
     @Override
-    public double getValueFromWorkout(Workout workout) {
+    public double getValueFromWorkout(GpsWorkout workout) {
         return distanceUnitUtils.getDistanceUnitSystem().getSpeedFromMeterPerSecond(workout.topSpeed);
     }
 

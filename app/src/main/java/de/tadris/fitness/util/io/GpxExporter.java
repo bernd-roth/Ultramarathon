@@ -33,8 +33,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-import de.tadris.fitness.data.Workout;
-import de.tadris.fitness.data.WorkoutSample;
+import de.tadris.fitness.data.GpsSample;
+import de.tadris.fitness.data.GpsWorkout;
 import de.tadris.fitness.util.gpx.Gpx;
 import de.tadris.fitness.util.gpx.GpxTpxExtension;
 import de.tadris.fitness.util.gpx.Metadata;
@@ -54,14 +54,14 @@ public class GpxExporter implements IWorkoutExporter {
     }
 
     @Override
-    public void exportWorkout(Workout workout, List<WorkoutSample> samples, OutputStream fileStream) throws IOException {
+    public void exportWorkout(GpsWorkout workout, List<GpsSample> samples, OutputStream fileStream) throws IOException {
         XmlMapper mapper = new XmlMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         mapper.enable(ToXmlGenerator.Feature.WRITE_XML_DECLARATION);
         mapper.writeValue(fileStream, getGpxFromWorkout(workout, samples));
     }
 
-    private Gpx getGpxFromWorkout(Workout workout, List<WorkoutSample> samples) {
+    private Gpx getGpxFromWorkout(GpsWorkout workout, List<GpsSample> samples) {
         Track track = getTrackFromWorkout(workout, samples, 0);
         ArrayList<Track> tracks = new ArrayList<>();
         tracks.add(track);
@@ -69,7 +69,7 @@ public class GpxExporter implements IWorkoutExporter {
         return new Gpx("1.0", "FitoTrack", meta, workout.toString(), workout.comment, tracks);
     }
 
-    private Track getTrackFromWorkout(Workout workout, List<WorkoutSample> samples, int number) {
+    private Track getTrackFromWorkout(GpsWorkout workout, List<GpsSample> samples, int number) {
         Track track = new Track();
         track.setNumber(number);
         track.setName(workout.toString());
@@ -82,7 +82,7 @@ public class GpxExporter implements IWorkoutExporter {
         TrackSegment segment = new TrackSegment();
         ArrayList<TrackPoint> trkpt = new ArrayList<>();
 
-        for(WorkoutSample sample : samples){
+        for (GpsSample sample : samples) {
             trkpt.add(new TrackPoint(sample.lat, sample.lon, sample.elevation,
                     getDateTime(sample.absoluteTime), new TrackPointExtensions(sample.speed, new GpxTpxExtension(sample.heartRate))));
         }

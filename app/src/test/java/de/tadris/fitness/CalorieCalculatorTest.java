@@ -22,14 +22,14 @@ package de.tadris.fitness;
 import org.junit.Assert;
 import org.junit.Test;
 
-import de.tadris.fitness.data.Workout;
+import de.tadris.fitness.data.GpsWorkout;
 import de.tadris.fitness.util.CalorieCalculator;
 
 public class CalorieCalculatorTest {
 
     @Test
     public void testCalculation() {
-        Workout workout = new Workout();
+        GpsWorkout workout = new GpsWorkout();
         workout.avgSpeed = 2.7d;
         workout.workoutTypeId = "running";
         workout.duration = 1000L * 60 * 10;

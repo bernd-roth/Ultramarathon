@@ -36,12 +36,12 @@ import java.util.List;
 
 import de.tadris.fitness.BuildConfig;
 import de.tadris.fitness.Instance;
+import de.tadris.fitness.data.GpsSample;
+import de.tadris.fitness.data.GpsWorkout;
 import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.data.UserPreferences;
-import de.tadris.fitness.data.Workout;
 import de.tadris.fitness.data.WorkoutData;
-import de.tadris.fitness.data.WorkoutSample;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.recording.event.HeartRateChangeEvent;
 import de.tadris.fitness.recording.event.HeartRateConnectionChangeEvent;
@@ -72,8 +72,8 @@ public class WorkoutRecorder {
     private long autoTimeoutMs;
     private boolean useAutoPause;
     private final Context context;
-    private final Workout workout;
-    private final List<WorkoutSample> samples = new ArrayList<>();
+    private final GpsWorkout workout;
+    private final List<GpsSample> samples = new ArrayList<>();
     private final WorkoutSaver workoutSaver;
     private RecordingState state;
     private long time = 0;
@@ -108,7 +108,7 @@ public class WorkoutRecorder {
         this.context = context;
         this.state = RecordingState.IDLE;
 
-        this.workout = new Workout();
+        this.workout = new GpsWorkout();
         workout.edited = false;
 
         // Default values
@@ -124,7 +124,7 @@ public class WorkoutRecorder {
         init();
     }
 
-    public WorkoutRecorder(Context context, Workout workout, List<WorkoutSample> samples) {
+    public WorkoutRecorder(Context context, GpsWorkout workout, List<GpsSample> samples) {
         this.context = context;
         this.state = RecordingState.PAUSED;
 
@@ -147,7 +147,7 @@ public class WorkoutRecorder {
         lastResume = workout.start;
         lastSampleTime = workout.start;
         LatLong prefLocation = null;
-        for (WorkoutSample sample : samples) {
+        for (GpsSample sample : samples) {
             long timeDiff = sample.absoluteTime - lastSampleTime;
             if (timeDiff > PAUSE_TIME) { // Handle Pause
                 lastPause = lastSampleTime + PAUSE_TIME; // Also add the Minimal Pause Time ;D
@@ -172,7 +172,7 @@ public class WorkoutRecorder {
         lastSampleTime = System.currentTimeMillis(); // prevent automatic stop
     }
 
-    public Workout getWorkout() {
+    public GpsWorkout getWorkout() {
         return this.workout;
     }
 
@@ -180,7 +180,7 @@ public class WorkoutRecorder {
         return this.gpsState;
     }
 
-    public List<WorkoutSample> getSamples() {
+    public List<GpsSample> getSamples() {
         return this.samples;
     }
 
@@ -350,7 +350,7 @@ public class WorkoutRecorder {
                 // Checks whether the minimum distance to last sample was reached
                 // and if the time difference to the last sample is too small
                 synchronized (samples) {
-                    WorkoutSample lastSample = samples.get(samples.size() - 1);
+                    GpsSample lastSample = samples.get(samples.size() - 1);
                     distance = Math.abs(RecorderService.locationToLatLong(location).sphericalDistance(lastSample.toLatLong()));
                     long timediff = Math.abs(lastSample.absoluteTime - location.getTime());
                     if (distance < workout.getWorkoutType(context).minDistance || timediff < 500) {
@@ -367,7 +367,7 @@ public class WorkoutRecorder {
     }
 
     private void addToSamples(Location location) {
-        WorkoutSample sample = new WorkoutSample();
+        GpsSample sample = new GpsSample();
         sample.lat = location.getLatitude();
         sample.lon = location.getLongitude();
         sample.elevation = location.getAltitude();
@@ -387,7 +387,7 @@ public class WorkoutRecorder {
         }
     }
 
-    private WorkoutSample getLastSample() {
+    private GpsSample getLastSample() {
         synchronized (samples) {
             if (samples.size() > 0) {
                 return samples.get(samples.size() - 1);
@@ -446,7 +446,7 @@ public class WorkoutRecorder {
                 return 0;
             }
             double lastElevation = -1;
-            for (WorkoutSample sample : samples) {
+            for (GpsSample sample : samples) {
                 double elevation = SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, sample.pressure);
                 if (lastElevation == -1) lastElevation = elevation;
                 elevation = (elevation + lastElevation * 9) / 10; // Slow floating average
@@ -481,7 +481,7 @@ public class WorkoutRecorder {
 
     // in m/s
     public double getCurrentSpeed() {
-        WorkoutSample lastSample = getLastSample();
+        GpsSample lastSample = getLastSample();
         if (lastSample != null) {
             if (!useAverageForCurrentSpeed || currentSpeedAverageTime == 0 || samples.size() == 1) {
                 return lastSample.speed;
@@ -502,10 +502,10 @@ public class WorkoutRecorder {
             long currentTime = getDuration();
             long minTime = currentTime - time;
             double distance = 0;
-            WorkoutSample lastSample = samples.get(samples.size() - 1);
-            WorkoutSample firstSample = lastSample;
+            GpsSample lastSample = samples.get(samples.size() - 1);
+            GpsSample firstSample = lastSample;
             for (int i = samples.size() - 1; i >= 0; i--) { // Go backwards
-                WorkoutSample currentSample = samples.get(i);
+                GpsSample currentSample = samples.get(i);
                 if (currentSample.relativeTime > minTime) {
                     distance += currentSample.toLatLong().sphericalDistance(lastSample.toLatLong());
                 } else {

@@ -22,9 +22,9 @@ package de.tadris.fitness.ui.workout.diagram;
 import android.content.Context;
 
 import de.tadris.fitness.R;
-import de.tadris.fitness.data.Workout;
+import de.tadris.fitness.data.GpsSample;
+import de.tadris.fitness.data.GpsWorkout;
 import de.tadris.fitness.data.WorkoutData;
-import de.tadris.fitness.data.WorkoutSample;
 
 public class HeightConverter extends AbstractSampleConverter {
 
@@ -37,7 +37,7 @@ public class HeightConverter extends AbstractSampleConverter {
     }
 
     @Override
-    public float getValue(WorkoutSample sample) {
+    public float getValue(GpsSample sample) {
         return (float) distanceUnitUtils.getDistanceUnitSystem().getElevationFromMeters(sample.elevationMSL);
     }
 
@@ -57,12 +57,12 @@ public class HeightConverter extends AbstractSampleConverter {
     }
 
     @Override
-    public float getMinValue(Workout workout) {
+    public float getMinValue(GpsWorkout workout) {
         return (float) distanceUnitUtils.getDistanceUnitSystem().getElevationFromMeters(workout.minElevationMSL);
     }
 
     @Override
-    public float getMaxValue(Workout workout) {
+    public float getMaxValue(GpsWorkout workout) {
         return (float) distanceUnitUtils.getDistanceUnitSystem().getElevationFromMeters(workout.maxElevationMSL);
     }
 }
