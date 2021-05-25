@@ -25,6 +25,7 @@ import android.preference.PreferenceManager;
 
 import java.util.Calendar;
 
+import de.tadris.fitness.BuildConfig;
 import de.tadris.fitness.model.AutoStartWorkout;
 
 public class UserPreferences {
@@ -397,9 +398,18 @@ public class UserPreferences {
 
     /**
      * Set upper target speed range limit (in m/s)
+     *
      * @param upperTargetSpeedLimit upper speed limit (in m/s)
      */
     public void setUpperTargetSpeedLimit(float upperTargetSpeedLimit) {
         preferences.edit().putFloat(UPPER_TARGET_SPEED_LIMIT, upperTargetSpeedLimit).apply();
+    }
+
+    public int getLastVersionCode() {
+        return preferences.getInt("lastVersion", 1100); // TODO: change 1100 to BuildConfig.VERSION_CODE after 12.0 release
+    }
+
+    public void updateLastVersionCode() {
+        preferences.edit().putInt("lastVersion", BuildConfig.VERSION_CODE).apply();
     }
 }
