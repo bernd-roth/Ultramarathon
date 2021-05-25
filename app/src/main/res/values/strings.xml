@@ -164,6 +164,7 @@
     <string name="cannotStart">Cannot start</string>
     <string name="add">Add</string>
     <string name="add_interval">Add Interval</string>
+    <string name="edit_interval">Edit Interval</string>
     <string name="manageIntervalSets">Manage Interval Sets</string>
     <string name="manageIntervalsSummary">Edit the interval sets you will be able to use during the workout using voice feedback.</string>
     <string name="workoutRecording">Workout Recording</string>

@@ -173,7 +173,8 @@
     <string name="start">Starten</string>
     <string name="cannotStart">Starten unmöglich</string>
     <string name="add">Hinzufügen</string>
-    <string name="add_interval">Interval Hinzufügen</string>
+    <string name="add_interval">Interval hinzufügen</string>
+    <string name="edit_interval">Interval bearbeiten</string>
     <string name="manageIntervalSets">Intervallsätze bearbeiten</string>
     <string name="manageIntervalsSummary">Bearbeite die Intervalsätze, die du dann während des Workouts über Sprachansagen nutzen kannst.</string>
     <string name="workoutRecording">Workout-Aufzeichnung</string>
