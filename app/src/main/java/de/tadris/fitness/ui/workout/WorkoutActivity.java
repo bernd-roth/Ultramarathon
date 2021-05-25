@@ -141,7 +141,7 @@ public abstract class WorkoutActivity extends InformationActivity implements Map
     protected WorkoutSample selectedSample = null;
 
     @Override
-    public void onSelectionChanged(WorkoutSample sample) {
+    public void onMapSelectionChanged(WorkoutSample sample) {
         //nada onChartSelectionChanged(sample)
     }
 
@@ -263,7 +263,7 @@ public abstract class WorkoutActivity extends InformationActivity implements Map
         if (showIntervalSets && intervals != null && intervals.length > 0) {
             List<BarEntry> barEntries = new ArrayList<>();
 
-            for (long relativeTime : WorkoutCalculator.getIntervalSetTimesFromWorkout(getWorkoutData(), intervals)) {
+            for (long relativeTime : WorkoutCalculator.getIntervalSetTimesFromWorkout(getWorkoutData())) {
                 barEntries.add(new BarEntry((float) (relativeTime) / 1000f / 60f, yMax));
             }
 

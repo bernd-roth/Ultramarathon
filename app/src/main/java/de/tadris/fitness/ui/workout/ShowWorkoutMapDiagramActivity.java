@@ -84,7 +84,7 @@ public class ShowWorkoutMapDiagramActivity extends ShowWorkoutColoredMapActivity
     }
 
     @Override
-    public void onSelectionChanged(WorkoutSample sample) {
+    public void onMapSelectionChanged(WorkoutSample sample) {
 
         if (sample == null) {
             chart.highlightValue(null);
@@ -93,7 +93,7 @@ public class ShowWorkoutMapDiagramActivity extends ShowWorkoutColoredMapActivity
             Highlight h = new Highlight((float) dataIndex, 0, -1);
             h.setDataIndex(0);
             chart.highlightValue(h);
-            chart.centerViewTo(dataIndex,0, YAxis.AxisDependency.LEFT);
+            chart.centerViewTo(dataIndex, 0, YAxis.AxisDependency.LEFT);
         }
         onChartSelectionChanged(sample);
     }

@@ -96,7 +96,7 @@ public class WorkoutLayer extends Layer {
 
     private void onSampleSelected(WorkoutSample sample){
         for (MapSampleSelectionListener listener: listeners ) {
-            listener.onSelectionChanged(sample);
+            listener.onMapSelectionChanged(sample);
         }
     }
 
