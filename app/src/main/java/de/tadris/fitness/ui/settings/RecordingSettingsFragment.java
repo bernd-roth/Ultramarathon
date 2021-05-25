@@ -113,16 +113,18 @@ public class RecordingSettingsFragment
         EventBus.getDefault().register(new Object() {
             @Subscribe(threadMode = ThreadMode.MAIN)
             public void onTTSReady(TTSReadyEvent e) {
-                if (e.ttsAvailable) {
-                    onTTSAvailable.run();
-                } else {
-                    // TextToSpeech is not available
-                    Toast.makeText(requireContext(), R.string.ttsNotAvailable, Toast.LENGTH_LONG).show();
+                if (getContext() != null) {
+                    if (e.ttsAvailable) {
+                        onTTSAvailable.run();
+                    } else {
+                        // TextToSpeech is not available
+                        Toast.makeText(requireContext(), R.string.ttsNotAvailable, Toast.LENGTH_LONG).show();
+                    }
+                    if (TTSController != null) {
+                        TTSController.destroy();
+                    }
+                    EventBus.getDefault().unregister(this);
                 }
-                if (TTSController != null) {
-                    TTSController.destroy();
-                }
-                EventBus.getDefault().unregister(this);
             }
         });
     }

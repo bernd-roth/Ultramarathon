@@ -40,7 +40,6 @@
     </string-array>
 
     <string-array name="pref_track_style_values">
-        <item>theme_alpha</item>
         <item>purple_rain</item>
         <item>pink_mist</item>
         <item>rainbow_warrior</item>

@@ -448,13 +448,12 @@
         <item>Never</item>
     </string-array>
     <string-array name="pref_track_style">
-        <item>Theme color(Alpha)</item>
         <item>Purple Rain</item>
         <item>Pink Mist</item>
         <item>Rainbow Warrior</item>
         <item>Height Map</item>
         <item>Bright Night</item>
-        <item>Mondriaan (Average speed)</item>
+        <item>Mondriaan</item>
     </string-array>
     <string-array name="pref_theme_setting">
         <item>System</item>
