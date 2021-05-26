@@ -28,7 +28,7 @@ import androidx.room.Update;
 @Dao
 public interface IndoorWorkoutDao {
 
-    @Query("SELECT * FROM workout WHERE id = :id")
+    @Query("SELECT * FROM indoor_workout WHERE id = :id")
     IndoorWorkout findById(long id);
 
     @Query("SELECT * FROM indoor_sample WHERE id = :id")
@@ -37,22 +37,22 @@ public interface IndoorWorkoutDao {
     @Query("SELECT * FROM indoor_sample WHERE workout_id = :workout_id")
     IndoorSample[] getAllSamplesOfWorkout(long workout_id);
 
-    @Query("SELECT * FROM workout ORDER BY start DESC")
+    @Query("SELECT * FROM indoor_workout ORDER BY start DESC")
     IndoorWorkout[] getWorkouts();
 
-    @Query("SELECT * FROM workout ORDER BY start DESC LIMIT 1")
+    @Query("SELECT * FROM indoor_workout ORDER BY start DESC LIMIT 1")
     IndoorWorkout getLastWorkout();
 
-    @Query("SELECT * FROM workout ORDER BY start ASC")
+    @Query("SELECT * FROM indoor_workout ORDER BY start ASC")
     IndoorWorkout[] getAllWorkoutsHistorically();
 
-    @Query("SELECT * FROM workout WHERE workoutType = :workout_type ORDER BY start ASC ")
+    @Query("SELECT * FROM indoor_workout WHERE workoutType = :workout_type ORDER BY start ASC ")
     IndoorWorkout[] getWorkoutsHistorically(String workout_type);
 
-    @Query("SELECT * FROM workout WHERE start = :start")
+    @Query("SELECT * FROM indoor_workout WHERE start = :start")
     IndoorWorkout getWorkoutByStart(long start);
 
-    @Query("SELECT * FROM workout WHERE id = :id")
+    @Query("SELECT * FROM indoor_workout WHERE id = :id")
     IndoorWorkout getWorkoutById(long id);
 
     @Query("SELECT * FROM indoor_sample")

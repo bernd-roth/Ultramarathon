@@ -16,23 +16,23 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package de.tadris.fitness.recording.announcement
 
-package de.tadris.fitness.recording.announcement;
+import android.content.Context
+import android.preference.PreferenceManager
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+enum class AnnouncementMode {
+    ALWAYS, HEADPHONES;
 
-import de.tadris.fitness.recording.BaseWorkoutRecorder;
+    companion object {
 
-public interface Announcement {
-
-    boolean isAnnouncementEnabled();
-
-    @Nullable
-    String getSpokenText(@NotNull BaseWorkoutRecorder recorder);
-
-    default boolean isPlayedAlways() {
-        return false;
+        fun getCurrentMode(context: Context?): AnnouncementMode {
+            return when (PreferenceManager.getDefaultSharedPreferences(context)
+                .getString("announcementMode", "headphones")!!) {
+                "always" -> ALWAYS
+                "headphones" -> HEADPHONES
+                else -> HEADPHONES
+            }
+        }
     }
-
 }

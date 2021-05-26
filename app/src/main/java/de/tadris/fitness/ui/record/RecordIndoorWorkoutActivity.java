@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -17,26 +17,28 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.recording.announcement;
+package de.tadris.fitness.ui.record;
 
-import android.content.Context;
-import android.preference.PreferenceManager;
+import android.os.Bundle;
 
-public enum AnnouncementMode {
+import de.tadris.fitness.R;
+import de.tadris.fitness.recording.BaseRecorderService;
 
-    ALWAYS,
-    HEADPHONES;
+public class RecordIndoorWorkoutActivity extends RecordWorkoutActivity {
 
-    static AnnouncementMode getCurrentMode(Context context) {
-        String mode = PreferenceManager.getDefaultSharedPreferences(context).getString("announcementMode", "headphones");
-        assert mode != null;
-        switch (mode) {
-            case "always":
-                return ALWAYS;
-            default:
-            case "headphones":
-                return HEADPHONES;
-        }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_record_indoor_workout);
     }
 
+    @Override
+    Class<? extends BaseRecorderService> getServiceClass() {
+        return null; // TODO
+    }
+
+    @Override
+    protected void onListenerStart() {
+        // TODO
+    }
 }

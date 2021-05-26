@@ -16,23 +16,28 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package de.tadris.fitness.recording.information
 
-package de.tadris.fitness.recording.announcement;
+import android.content.Context
+import de.tadris.fitness.R
+import de.tadris.fitness.recording.gps.GpsWorkoutRecorder
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+class Ascent(context: Context) : GpsRecordingInformation(context) {
 
-import de.tadris.fitness.recording.BaseWorkoutRecorder;
+    override val id = "ascent"
+    override val isEnabledByDefault = false
+    override fun canBeDisplayed() = true
 
-public interface Announcement {
+    override fun getTitle(): String = getString(R.string.workoutAscent)
 
-    boolean isAnnouncementEnabled();
-
-    @Nullable
-    String getSpokenText(@NotNull BaseWorkoutRecorder recorder);
-
-    default boolean isPlayedAlways() {
-        return false;
+    override fun getDisplayedText(recorder: GpsWorkoutRecorder): String {
+        return distanceUnitUtils.getDistance(recorder.ascent)
     }
 
+    override fun getSpokenText(recorder: GpsWorkoutRecorder): String {
+        return getString(R.string.workoutAscent) + ": " + distanceUnitUtils.getElevation(
+            recorder.ascent,
+            true
+        ) + "."
+    }
 }

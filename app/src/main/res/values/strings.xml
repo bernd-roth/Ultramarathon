@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
@@ -382,13 +381,13 @@
     <string name="editStartEndHelp">Select a position on the map or the diagram. Then click on one of the arrows to select a new starting or ending point. When you\'re done, click on the save icon to apply the changes.</string>
     <!-- used for countdown voice announcements -->
     <plurals name="seconds">
-        <item quantity="one"><xliff:g id="secs" example="1">%1$d</xliff:g> second</item>
-        <item quantity="other"><xliff:g id="secs" example="12">%1$d</xliff:g> seconds</item>
+        <item quantity="one"><xliff:g example="1" id="secs">%1$d</xliff:g> second</item>
+        <item quantity="other"><xliff:g example="12" id="secs">%1$d</xliff:g> seconds</item>
     </plurals>
     <!-- used for countdown voice announcements -->
     <plurals name="minutes">
-        <item quantity="one"><xliff:g id="mins" example="1">%1$d</xliff:g> minute</item>
-        <item quantity="other"><xliff:g id="mins" example="5">%1$d</xliff:g> minutes</item>
+        <item quantity="one"><xliff:g example="1" id="mins">%1$d</xliff:g> minute</item>
+        <item quantity="other"><xliff:g example="5" id="mins">%1$d</xliff:g> minutes</item>
     </plurals>
     <string name="upperPaceLimit">Upper pace limit</string>
     <string name="lowerPaceLimit">Lower pace limit</string>
@@ -401,15 +400,15 @@
     </string>
     <!-- countdown announcement -->
     <string name="ttsLongSecondCountdownAnnouncement">
-        <xliff:g id="secs" example="5 seconds">%1$s</xliff:g> until start
+        <xliff:g example="5 seconds" id="secs">%1$s</xliff:g> until start
     </string>
     <!-- countdown announcement -->
     <string name="ttsMinuteCountdownAnnouncement">
-        <xliff:g id="mins" example="12 minutes">%1$s</xliff:g> until start
+        <xliff:g example="12 minutes" id="mins">%1$s</xliff:g> until start
     </string>
     <!-- countdown announcement -->
     <string name="ttsMinuteSecondCountdownAnnouncement">
-        <xliff:g id="mins" example="1 minute">%1$s</xliff:g> and <xliff:g id="secs" example="7 seconds">%2$s</xliff:g> until start
+        <xliff:g example="1 minute" id="mins">%1$s</xliff:g> and <xliff:g example="7 seconds" id="secs">%2$s</xliff:g> until start
     </string>
     <string name="manageAutoStartModeSummary">Change the mode of automatic workout start</string>
     <string name="intervalAutoStartModeTraining">Auto Start Workout Mode</string>

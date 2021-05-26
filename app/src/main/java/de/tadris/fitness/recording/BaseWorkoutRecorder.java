@@ -1,3 +1,22 @@
+/*
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ *
+ * This file is part of FitoTrack
+ *
+ * FitoTrack is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     FitoTrack is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package de.tadris.fitness.recording;
 
 import android.content.Context;
@@ -9,13 +28,16 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.List;
 
 import de.tadris.fitness.Instance;
+import de.tadris.fitness.data.BaseWorkout;
 import de.tadris.fitness.data.Interval;
+import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.data.UserPreferences;
 import de.tadris.fitness.recording.event.HeartRateChangeEvent;
 import de.tadris.fitness.recording.event.HeartRateConnectionChangeEvent;
 import de.tadris.fitness.recording.event.WorkoutAutoStopEvent;
 import de.tadris.fitness.recording.gps.GpsRecorderService;
 import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
+import de.tadris.fitness.ui.record.RecordWorkoutActivity;
 
 public abstract class BaseWorkoutRecorder {
 
@@ -127,7 +149,7 @@ public abstract class BaseWorkoutRecorder {
         EventBus.getDefault().unregister(this);
     }
 
-    protected abstract boolean hasRecordedSomething();
+    public abstract boolean hasRecordedSomething();
 
     protected abstract void onWatchdog();
 
@@ -137,7 +159,25 @@ public abstract class BaseWorkoutRecorder {
 
     protected abstract void onStop();
 
-    protected abstract void save();
+    public abstract void save();
+
+    public abstract boolean isSaved();
+
+    public void setComment(String comment) {
+        getWorkout().comment = comment;
+    }
+
+    public abstract void discard();
+
+    public abstract BaseWorkout getWorkout();
+
+    public abstract int getCalories();
+
+    public void setUsedIntervalSet(IntervalSet set) {
+        getWorkout().intervalSetUsedId = set.id;
+    }
+
+    public abstract Class<? extends RecordWorkoutActivity> getActivityClass();
 
     public void onIntervalWasTriggered(Interval interval) {
         lastTriggeredInterval = interval.id;
@@ -206,6 +246,10 @@ public abstract class BaseWorkoutRecorder {
 
     public boolean isResumed() {
         return state == GpsWorkoutRecorder.RecordingState.RUNNING;
+    }
+
+    public boolean isPaused() {
+        return state == RecordingState.PAUSED;
     }
 
     public enum RecordingState {

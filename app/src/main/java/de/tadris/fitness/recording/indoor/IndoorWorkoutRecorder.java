@@ -24,15 +24,20 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.tadris.fitness.data.BaseWorkout;
 import de.tadris.fitness.data.IndoorSample;
 import de.tadris.fitness.data.IndoorWorkout;
+import de.tadris.fitness.data.IndoorWorkoutData;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.recording.BaseWorkoutRecorder;
+import de.tadris.fitness.ui.record.RecordIndoorWorkoutActivity;
+import de.tadris.fitness.ui.record.RecordWorkoutActivity;
 
 public class IndoorWorkoutRecorder extends BaseWorkoutRecorder {
 
     IndoorWorkout workout;
     List<IndoorSample> samples = new ArrayList<>();
+    private boolean saved = false;
 
     public IndoorWorkoutRecorder(Context context, WorkoutType workoutType) {
         super(context);
@@ -42,7 +47,7 @@ public class IndoorWorkoutRecorder extends BaseWorkoutRecorder {
     }
 
     @Override
-    protected boolean hasRecordedSomething() {
+    public boolean hasRecordedSomething() {
         return samples.size() > 2;
     }
 
@@ -71,8 +76,37 @@ public class IndoorWorkoutRecorder extends BaseWorkoutRecorder {
         workout.pauseDuration = pauseTime;
     }
 
+    private IndoorWorkoutData getWorkoutData() {
+        return new IndoorWorkoutData(workout, samples);
+    }
+
     @Override
-    protected void save() {
-        // TODO: save workout
+    public void save() {
+        new IndoorWorkoutSaver(context, getWorkoutData()).save();
+        saved = true;
+    }
+
+    @Override
+    public boolean isSaved() {
+        return saved;
+    }
+
+    @Override
+    public void discard() {
+    }
+
+    @Override
+    public BaseWorkout getWorkout() {
+        return workout;
+    }
+
+    @Override
+    public int getCalories() {
+        return 0; // TODO
+    }
+
+    @Override
+    public Class<? extends RecordWorkoutActivity> getActivityClass() {
+        return RecordIndoorWorkoutActivity.class;
     }
 }

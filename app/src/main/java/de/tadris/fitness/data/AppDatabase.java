@@ -28,7 +28,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(version = 14, entities = {GpsWorkout.class, GpsSample.class, Interval.class, IntervalSet.class, WorkoutType.class}, exportSchema = false)
+@Database(version = 15, entities = {GpsWorkout.class, GpsSample.class, IndoorWorkout.class, IndoorSample.class, Interval.class, IntervalSet.class, WorkoutType.class}, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "fito-track";
@@ -339,6 +339,52 @@ public abstract class AppDatabase extends RoomDatabase {
                             database.execSQL("DROP TABLE workout2");
 
                             database.execSQL("ALTER table workout_sample add COLUMN interval_triggered INTEGER not null default -1;");
+
+                            database.setTransactionSuccessful();
+                        } finally {
+                            database.endTransaction();
+                        }
+                    }
+                }, new Migration(14, 15) {
+                    @Override
+                    public void migrate(@NonNull SupportSQLiteDatabase database) {
+                        try {
+                            database.beginTransaction();
+
+                            database.execSQL("CREATE TABLE indoor_workout (" +
+                                    "id INTEGER NOT NULL DEFAULT NULL PRIMARY KEY," +
+                                    "start INTEGER NOT NULL DEFAULT 0," +
+                                    "`end` INTEGER NOT NULL DEFAULT 0," +
+                                    "duration INTEGER NOT NULL DEFAULT 0," +
+                                    "pauseDuration INTEGER NOT NULL DEFAULT 0," +
+                                    "comment TEXT DEFAULT NULL," +
+                                    "workoutType TEXT DEFAULT NULL," +
+                                    "calorie INTEGER NOT NULL DEFAULT 0," +
+                                    "edited INTEGER NOT NULL DEFAULT 0," +
+                                    "amount INTEGER NOT NULL DEFAULT 0," +
+                                    "avgFrequency REAL NOT NULL DEFAULT 0," +
+                                    "maxFrequency REAL NOT NULL DEFAULT 0," +
+                                    "avgIntensity REAL NOT NULL DEFAULT 0," +
+                                    "maxIntensity REAL NOT NULL DEFAULT 0," +
+                                    "interval_set_used_id INTEGER NOT NULL DEFAULT 0," +
+                                    "avg_heart_rate INTEGER NOT NULL DEFAULT 0," +
+                                    "max_heart_rate INTEGER NOT NULL DEFAULT 0);");
+
+                            database.execSQL("CREATE TABLE indoor_sample (" +
+                                    "id INTEGER NOT NULL DEFAULT NULL PRIMARY KEY," +
+                                    "absoluteTime INTEGER NOT NULL DEFAULT 0," +
+                                    "relativeTime INTEGER NOT NULL DEFAULT 0," +
+                                    "heart_rate INTEGER NOT NULL DEFAULT 0," +
+                                    "interval_triggered INTEGER NOT NULL DEFAULT 0," +
+                                    "workout_id INTEGER NOT NULL DEFAULT 0," +
+                                    "intensity REAL NOT NULL DEFAULT 0," +
+                                    "   FOREIGN KEY (workout_id) \n" +
+                                    "      REFERENCES indoor_workout (id) \n" +
+                                    "         ON DELETE CASCADE \n" +
+                                    "         ON UPDATE NO ACTION" +
+                                    ");");
+
+                            database.execSQL("create index index_indoor_sample_workout_id on indoor_sample (workout_id)");
 
                             database.setTransactionSuccessful();
                         } finally {

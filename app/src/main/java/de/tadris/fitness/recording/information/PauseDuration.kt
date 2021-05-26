@@ -16,23 +16,27 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package de.tadris.fitness.recording.information
 
-package de.tadris.fitness.recording.announcement;
+import android.content.Context
+import de.tadris.fitness.R
+import de.tadris.fitness.recording.BaseWorkoutRecorder
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+class PauseDuration(context: Context) : RecordingInformation(context) {
 
-import de.tadris.fitness.recording.BaseWorkoutRecorder;
+    override val id = "pause_duration"
+    override val isEnabledByDefault = false
+    override fun canBeDisplayed() = true
 
-public interface Announcement {
-
-    boolean isAnnouncementEnabled();
-
-    @Nullable
-    String getSpokenText(@NotNull BaseWorkoutRecorder recorder);
-
-    default boolean isPlayedAlways() {
-        return false;
+    override fun getTitle(): String {
+        return getString(R.string.workoutPauseDuration)
     }
 
+    override fun getDisplayedText(recorder: BaseWorkoutRecorder): String {
+        return distanceUnitUtils.getHourMinuteSecondTime(recorder.pauseDuration)
+    }
+
+    override fun getSpokenText(recorder: BaseWorkoutRecorder): String? {
+        return null
+    }
 }

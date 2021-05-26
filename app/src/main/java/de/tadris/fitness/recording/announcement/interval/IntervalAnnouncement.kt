@@ -17,22 +17,15 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.recording.announcement;
+package de.tadris.fitness.recording.announcement.interval
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import de.tadris.fitness.data.Interval
+import de.tadris.fitness.recording.BaseWorkoutRecorder
+import de.tadris.fitness.recording.announcement.Announcement
 
-import de.tadris.fitness.recording.BaseWorkoutRecorder;
+class IntervalAnnouncement(private val interval: Interval) : Announcement {
 
-public interface Announcement {
+    override fun isAnnouncementEnabled() = true
 
-    boolean isAnnouncementEnabled();
-
-    @Nullable
-    String getSpokenText(@NotNull BaseWorkoutRecorder recorder);
-
-    default boolean isPlayedAlways() {
-        return false;
-    }
-
+    override fun getSpokenText(recorder: BaseWorkoutRecorder): String = interval.name
 }

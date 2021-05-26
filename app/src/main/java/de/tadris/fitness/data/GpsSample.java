@@ -40,6 +40,9 @@ import static androidx.room.ForeignKey.CASCADE;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class GpsSample extends BaseSample {
 
+    @ColumnInfo(name = "workout_id", index = true)
+    public long workoutId;
+
     public double lat;
 
     public double lon;

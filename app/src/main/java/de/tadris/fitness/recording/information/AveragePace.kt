@@ -16,23 +16,25 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package de.tadris.fitness.recording.information
 
-package de.tadris.fitness.recording.announcement;
+import android.content.Context
+import de.tadris.fitness.R
+import de.tadris.fitness.recording.gps.GpsWorkoutRecorder
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+class AveragePace(context: Context) : GpsRecordingInformation(context) {
 
-import de.tadris.fitness.recording.BaseWorkoutRecorder;
+    override val id = "avg_pace"
+    override val isEnabledByDefault = false
+    override fun canBeDisplayed() = true
 
-public interface Announcement {
+    override fun getTitle(): String = getString(R.string.workoutPace)
 
-    boolean isAnnouncementEnabled();
-
-    @Nullable
-    String getSpokenText(@NotNull BaseWorkoutRecorder recorder);
-
-    default boolean isPlayedAlways() {
-        return false;
+    override fun getDisplayedText(recorder: GpsWorkoutRecorder): String {
+        return distanceUnitUtils.getPace(recorder.avgPace)
     }
 
+    override fun getSpokenText(recorder: GpsWorkoutRecorder): String {
+        return getTitle() + ": " + distanceUnitUtils.getPace(recorder.avgPace, true)
+    }
 }

@@ -39,13 +39,14 @@ import de.tadris.fitness.Instance;
 import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.GpsWorkout;
 import de.tadris.fitness.data.GpsWorkoutData;
-import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.data.UserPreferences;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.recording.BaseWorkoutRecorder;
 import de.tadris.fitness.recording.event.LocationChangeEvent;
 import de.tadris.fitness.recording.event.PressureChangeEvent;
 import de.tadris.fitness.recording.event.WorkoutGPSStateChanged;
+import de.tadris.fitness.ui.record.RecordGpsWorkoutActivity;
+import de.tadris.fitness.ui.record.RecordWorkoutActivity;
 import de.tadris.fitness.util.CalorieCalculator;
 
 /**
@@ -142,6 +143,7 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
         lastSampleTime = System.currentTimeMillis(); // prevent automatic stop
     }
 
+    @Override
     public GpsWorkout getWorkout() {
         return this.workout;
     }
@@ -172,8 +174,13 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
     }
 
     @Override
-    protected boolean hasRecordedSomething() {
+    public boolean hasRecordedSomething() {
         return samples.size() > 2;
+    }
+
+    @Override
+    public Class<? extends RecordWorkoutActivity> getActivityClass() {
+        return RecordGpsWorkoutActivity.class;
     }
 
     @Override
@@ -298,10 +305,6 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
         }
     }
 
-    public void setUsedIntervalSet(IntervalSet set) {
-        workout.intervalSetUsedId = set.id;
-    }
-
     public int getDistanceInMeters() {
         return (int) distance;
     }
@@ -313,6 +316,7 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
 
     private int maxCalories = 0;
 
+    @Override
     public int getCalories() {
         workout.avgSpeed = getAvgSpeed();
         workout.duration = getDuration();
@@ -405,14 +409,7 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
         }
     }
 
-    public void setComment(String comment) {
-        workout.comment = comment;
-    }
-
-    public boolean isPaused() {
-        return state == RecordingState.PAUSED;
-    }
-
+    @Override
     public void discard() {
         workoutSaver.discardWorkout();
     }

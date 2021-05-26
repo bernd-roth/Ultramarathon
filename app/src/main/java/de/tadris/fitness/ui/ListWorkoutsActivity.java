@@ -53,7 +53,7 @@ import de.tadris.fitness.ui.adapter.WorkoutAdapter;
 import de.tadris.fitness.ui.dialog.ProgressDialogController;
 import de.tadris.fitness.ui.dialog.SelectWorkoutTypeDialog;
 import de.tadris.fitness.ui.dialog.ThreadSafeProgressDialogController;
-import de.tadris.fitness.ui.record.RecordWorkoutActivity;
+import de.tadris.fitness.ui.record.RecordGpsWorkoutActivity;
 import de.tadris.fitness.ui.settings.FitoTrackSettingsActivity;
 import de.tadris.fitness.ui.workout.AggregatedWorkoutStatisticsActivity;
 import de.tadris.fitness.ui.workout.EnterWorkoutActivity;
@@ -266,9 +266,9 @@ public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAd
 
     private void startRecording(WorkoutType activity) {
         menu.close(true);
-        final Intent intent = new Intent(this, RecordWorkoutActivity.class);
-        intent.setAction(RecordWorkoutActivity.LAUNCH_ACTION);
-        intent.putExtra(RecordWorkoutActivity.WORKOUT_TYPE_EXTRA, activity);
+        final Intent intent = new Intent(this, RecordGpsWorkoutActivity.class);
+        intent.setAction(RecordGpsWorkoutActivity.LAUNCH_ACTION);
+        intent.putExtra(RecordGpsWorkoutActivity.WORKOUT_TYPE_EXTRA, activity);
         startActivity(intent);
     }
 

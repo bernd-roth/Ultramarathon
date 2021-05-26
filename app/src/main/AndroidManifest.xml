@@ -57,7 +57,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.settings.DownloadMapsActivity"></activity>
+        <activity android:name=".ui.record.RecordIndoorWorkoutActivity"></activity>
+        <activity android:name=".ui.settings.DownloadMapsActivity" />
         <activity android:name=".ui.settings.EditWorkoutTypeActivity" />
         <activity android:name=".ui.settings.ManageWorkoutTypesActivity" />
         <activity android:name=".ui.ShareFileActivity" />
@@ -74,7 +75,7 @@
             android:name=".ui.workout.ShowWorkoutActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.record.RecordWorkoutActivity"
+            android:name=".ui.record.RecordGpsWorkoutActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:showOnLockScreen="true" />

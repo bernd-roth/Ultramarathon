@@ -48,7 +48,7 @@ import de.tadris.fitness.osm.OAuthAuthentication;
 import de.tadris.fitness.osm.OsmTraceUploader;
 import de.tadris.fitness.ui.ShareFileActivity;
 import de.tadris.fitness.ui.dialog.ProgressDialogController;
-import de.tadris.fitness.ui.record.RecordWorkoutActivity;
+import de.tadris.fitness.ui.record.RecordGpsWorkoutActivity;
 import de.tadris.fitness.ui.workout.diagram.HeartRateConverter;
 import de.tadris.fitness.ui.workout.diagram.HeightConverter;
 import de.tadris.fitness.ui.workout.diagram.SampleConverter;
@@ -420,9 +420,9 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
         Instance.getInstance(this).prepareResume(this, workout);
 
         // Start recording activity
-        Intent recorderActivityIntent = new Intent(this, RecordWorkoutActivity.class);
+        Intent recorderActivityIntent = new Intent(this, RecordGpsWorkoutActivity.class);
         recorderActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        recorderActivityIntent.setAction(RecordWorkoutActivity.RESUME_ACTION);
+        recorderActivityIntent.setAction(RecordGpsWorkoutActivity.RESUME_ACTION);
         startActivity(recorderActivityIntent);
         finish();
     }

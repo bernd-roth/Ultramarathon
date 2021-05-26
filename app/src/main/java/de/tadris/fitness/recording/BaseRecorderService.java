@@ -1,3 +1,22 @@
+/*
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ *
+ * This file is part of FitoTrack
+ *
+ * FitoTrack is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     FitoTrack is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package de.tadris.fitness.recording;
 
 import android.app.Notification;
@@ -35,7 +54,7 @@ import de.tadris.fitness.recording.event.HeartRateConnectionChangeEvent;
 import de.tadris.fitness.recording.gps.GpsRecorderService;
 import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
 import de.tadris.fitness.recording.sensors.HRManager;
-import de.tadris.fitness.ui.record.RecordWorkoutActivity;
+import de.tadris.fitness.ui.record.RecordGpsWorkoutActivity;
 import de.tadris.fitness.util.NotificationHelper;
 import no.nordicsemi.android.ble.observer.ConnectionObserver;
 
@@ -195,8 +214,8 @@ public abstract class BaseRecorderService extends Service {
             builder.setChannelId(NotificationHelper.CHANNEL_WORKOUT);
         }
 
-        Intent recorderActivityIntent = new Intent(this, RecordWorkoutActivity.class);
-        recorderActivityIntent.setAction(RecordWorkoutActivity.RESUME_ACTION);
+        Intent recorderActivityIntent = new Intent(this, RecordGpsWorkoutActivity.class);
+        recorderActivityIntent.setAction(RecordGpsWorkoutActivity.RESUME_ACTION);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, recorderActivityIntent, 0);
         builder.setContentIntent(pendingIntent);
 

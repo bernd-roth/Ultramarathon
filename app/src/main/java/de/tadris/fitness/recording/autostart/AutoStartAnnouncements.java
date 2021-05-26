@@ -1,6 +1,27 @@
+/*
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ *
+ * This file is part of FitoTrack
+ *
+ * FitoTrack is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     FitoTrack is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package de.tadris.fitness.recording.autostart;
 
 import android.content.Context;
+
+import androidx.annotation.NonNull;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -10,8 +31,8 @@ import java.util.ArrayList;
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.model.AutoStartWorkout;
+import de.tadris.fitness.recording.BaseWorkoutRecorder;
 import de.tadris.fitness.recording.announcement.TTSController;
-import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
 import de.tadris.fitness.util.TelephonyHelper;
 import de.tadris.fitness.util.event.EventBusMember;
 
@@ -31,7 +52,7 @@ public class AutoStartAnnouncements implements EventBusMember {
     private EventBus eventBus;
     private AutoStartWorkout autoStartWorkout;
     private Instance instance;
-    private GpsWorkoutRecorder recorder;
+    private BaseWorkoutRecorder recorder;
     private TTSController ttsController;
     private ArrayList<CountdownTimeAnnouncement> countdownTimeAnnouncementList = new ArrayList<>();
     private CountdownTimeAnnouncement lastSpoken;
@@ -39,7 +60,7 @@ public class AutoStartAnnouncements implements EventBusMember {
     boolean suppressOnCall;
 
     public AutoStartAnnouncements(Context context, AutoStartWorkout autoStartWorkout,
-                                  Instance instance, GpsWorkoutRecorder recorder,
+                                  Instance instance, BaseWorkoutRecorder recorder,
                                   TTSController ttsController) {
         this.context = context;
         this.autoStartWorkout = autoStartWorkout;
@@ -123,7 +144,7 @@ public class AutoStartAnnouncements implements EventBusMember {
                     // tell the user we're waiting for more a accurate GPS position
                     ttsController.speak(recorder, new CountdownAnnouncement(instance) {
                         @Override
-                        public String getSpokenText(GpsWorkoutRecorder recorder) {
+                        public String getSpokenText(@NonNull BaseWorkoutRecorder recorder) {
                             return context.getString(R.string.autoStartCountdownMsgGps);
                         }
                     });
@@ -132,7 +153,7 @@ public class AutoStartAnnouncements implements EventBusMember {
                     // tell the user we're waiting for more a accurate GPS position
                     ttsController.speak(recorder, new CountdownAnnouncement(instance) {
                         @Override
-                        public String getSpokenText(GpsWorkoutRecorder recorder) {
+                        public String getSpokenText(@NonNull BaseWorkoutRecorder recorder) {
                             return context.getString(R.string.autoStartCountdownMsgMove);
                         }
                     });
@@ -142,7 +163,7 @@ public class AutoStartAnnouncements implements EventBusMember {
                             event.oldState == AutoStartWorkout.State.WAITING_FOR_GPS) {
                         ttsController.speak(recorder, new CountdownAnnouncement(instance) {
                             @Override
-                            public String getSpokenText(GpsWorkoutRecorder recorder) {
+                            public String getSpokenText(@NonNull BaseWorkoutRecorder recorder) {
                                 return context.getString(R.string.workoutAutoStartAborted);
                             }
                         });

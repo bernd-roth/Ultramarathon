@@ -55,7 +55,7 @@ public interface GpsWorkoutDao {
     @Query("SELECT * FROM workout WHERE id = :id")
     GpsWorkout getWorkoutById(long id);
 
-    @Query("SELECT * FROM GpsSample")
+    @Query("SELECT * FROM workout_sample")
     GpsSample[] getSamples();
 
     @Insert

@@ -16,23 +16,33 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package de.tadris.fitness.recording.information
 
-package de.tadris.fitness.recording.announcement;
+import android.content.Context
+import de.tadris.fitness.R
+import de.tadris.fitness.recording.gps.GpsWorkoutRecorder
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+class GPSStatus(context: Context) : GpsRecordingInformation(context) {
 
-import de.tadris.fitness.recording.BaseWorkoutRecorder;
+    override val id = "gps-lost"
+    override val isEnabledByDefault = true
+    override fun canBeDisplayed() = false
 
-public interface Announcement {
+    val spokenGPSLost: String
+        get() = getString(R.string.gpsLost)
+    val spokenGPSFound: String
+        get() = getString(R.string.gpsFound)
 
-    boolean isAnnouncementEnabled();
 
-    @Nullable
-    String getSpokenText(@NotNull BaseWorkoutRecorder recorder);
-
-    default boolean isPlayedAlways() {
-        return false;
+    override fun getDisplayedText(recorder: GpsWorkoutRecorder): String {
+        return ""
     }
 
+    override fun getSpokenText(recorder: GpsWorkoutRecorder): String {
+        return ""
+    }
+
+    override fun getTitle(): String {
+        return ""
+    }
 }

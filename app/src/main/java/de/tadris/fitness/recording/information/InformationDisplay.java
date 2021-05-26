@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -23,7 +23,7 @@ import android.content.Context;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.data.UserPreferences;
-import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
+import de.tadris.fitness.recording.BaseWorkoutRecorder;
 
 public class InformationDisplay {
 
@@ -35,7 +35,7 @@ public class InformationDisplay {
         this.manager = new InformationManager(context);
     }
 
-    public DisplaySlot getDisplaySlot(GpsWorkoutRecorder recorder, int slot) {
+    public DisplaySlot getDisplaySlot(BaseWorkoutRecorder recorder, int slot) {
         String informationId = preferences.getIdOfDisplayedInformation(slot);
         RecordingInformation information = manager.getInformationById(informationId);
         if (information != null) {
