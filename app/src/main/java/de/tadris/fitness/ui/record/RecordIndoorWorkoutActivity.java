@@ -23,18 +23,23 @@ import android.os.Bundle;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.recording.BaseRecorderService;
+import de.tadris.fitness.recording.indoor.IndoorRecorderService;
 
 public class RecordIndoorWorkoutActivity extends RecordWorkoutActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initBeforeContent();
         setContentView(R.layout.activity_record_indoor_workout);
+        initAfterContent();
+
+        // TODO setTitle();
     }
 
     @Override
     Class<? extends BaseRecorderService> getServiceClass() {
-        return null; // TODO
+        return IndoorRecorderService.class;
     }
 
     @Override

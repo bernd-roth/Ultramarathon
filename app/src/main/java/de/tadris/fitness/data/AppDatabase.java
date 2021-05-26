@@ -28,7 +28,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(version = 15, entities = {GpsWorkout.class, GpsSample.class, IndoorWorkout.class, IndoorSample.class, Interval.class, IntervalSet.class, WorkoutType.class}, exportSchema = false)
+@Database(version = 16, entities = {GpsWorkout.class, GpsSample.class, IndoorWorkout.class, IndoorSample.class, Interval.class, IntervalSet.class, WorkoutType.class}, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "fito-track";
@@ -385,6 +385,19 @@ public abstract class AppDatabase extends RoomDatabase {
                                     ");");
 
                             database.execSQL("create index index_indoor_sample_workout_id on indoor_sample (workout_id)");
+
+                            database.setTransactionSuccessful();
+                        } finally {
+                            database.endTransaction();
+                        }
+                    }
+                }, new Migration(15, 16) {
+                    @Override
+                    public void migrate(@NonNull SupportSQLiteDatabase database) {
+                        try {
+                            database.beginTransaction();
+
+                            database.execSQL("ALTER table workout_type add COLUMN type TEXT default 'gps';");
 
                             database.setTransactionSuccessful();
                         } finally {

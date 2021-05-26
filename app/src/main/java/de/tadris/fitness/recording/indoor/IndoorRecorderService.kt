@@ -16,21 +16,11 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package de.tadris.fitness.recording.indoor
 
-package de.tadris.fitness.ui.dialog;
+import de.tadris.fitness.recording.BaseRecorderService
 
-import de.tadris.fitness.R;
-import de.tadris.fitness.aggregation.WorkoutTypeFilter;
-import de.tadris.fitness.data.WorkoutType;
-import de.tadris.fitness.ui.FitoTrackActivity;
+class IndoorRecorderService : BaseRecorderService() {
 
-public class SelectWorkoutTypeDialogAll extends SelectWorkoutTypeDialog {
-
-    public SelectWorkoutTypeDialogAll(FitoTrackActivity context, WorkoutTypeSelectListener listener) {
-        super(context, listener);
-        this.options.add(0, new WorkoutType(WorkoutTypeFilter.ID_ALL,
-                context.getString(R.string.workoutTypeAll), 0,
-                context.getThemePrimaryColor(), "list", 0, WorkoutType.RecordingType.GPS.id));
-    }
 
 }

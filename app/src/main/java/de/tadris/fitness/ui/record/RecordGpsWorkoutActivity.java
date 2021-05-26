@@ -76,6 +76,7 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         boolean wasAlreadyRunning = false;
         if (LAUNCH_ACTION.equals(intent.getAction())) {
@@ -97,8 +98,6 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
             activity = instance.recorder.getWorkout().getWorkoutType(this);
             wasAlreadyRunning = true;
         }
-
-        super.onCreate(savedInstanceState);
 
         initBeforeContent();
         setContentView(R.layout.activity_record_workout);

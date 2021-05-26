@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -27,6 +27,8 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,11 +36,16 @@ import java.util.List;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
+import de.tadris.fitness.ui.record.RecordGpsWorkoutActivity;
+import de.tadris.fitness.ui.record.RecordIndoorWorkoutActivity;
+import de.tadris.fitness.ui.record.RecordWorkoutActivity;
+import de.tadris.fitness.util.Icon;
 
 @Entity(tableName = "workout_type")
 public class WorkoutType implements Serializable {
 
     public static final String WORKOUT_TYPE_ID_OTHER = "other";
+    public static final String WORKOUT_TYPE_ID_OTHER_INDOOR = "other-indoor";
     public static final String WORKOUT_TYPE_ID_RUNNING = "running";
 
     @PrimaryKey
@@ -57,17 +64,27 @@ public class WorkoutType implements Serializable {
     @ColumnInfo(name = "met")
     public int MET;
 
+    @ColumnInfo(name = "type")
+    public String recordingType;
+
     @Ignore
-    public WorkoutType(@NonNull String id, String title, int minDistance, int color, String icon, int MET) {
+    public WorkoutType(@NonNull String id, String title, int minDistance, int color, String icon, int MET, String recordingType) {
         this.id = id;
         this.title = title;
         this.minDistance = minDistance;
         this.color = color;
         this.icon = icon;
         this.MET = MET;
+        this.recordingType = recordingType;
     }
 
     public WorkoutType() {
+    }
+
+    @Ignore
+    @JsonIgnore
+    public RecordingType getRecordingType() {
+        return RecordingType.findById(this.recordingType);
     }
 
     private static WorkoutType[] PRESETS = null;
@@ -103,49 +120,78 @@ public class WorkoutType implements Serializable {
                         5,
                         context.getResources().getColor(R.color.colorPrimaryRunning),
                         "running",
-                        -1),
+                        -1, RecordingType.GPS.id),
                 new WorkoutType("walking",
                         context.getString(R.string.workoutTypeWalking),
                         5,
                         context.getResources().getColor(R.color.colorPrimaryRunning),
                         "walking",
-                        -1),
+                        -1, RecordingType.GPS.id),
                 new WorkoutType("hiking",
                         context.getString(R.string.workoutTypeHiking),
                         5,
                         context.getResources().getColor(R.color.colorPrimaryHiking),
                         "walking",
-                        -1),
+                        -1, RecordingType.GPS.id),
                 new WorkoutType("cycling",
                         context.getString(R.string.workoutTypeCycling),
                         10,
                         context.getResources().getColor(R.color.colorPrimaryBicycling),
                         "cycling",
-                        -1),
+                        -1, RecordingType.GPS.id),
                 new WorkoutType("inline_skating",
                         context.getString(R.string.workoutTypeInlineSkating),
                         7,
                         context.getResources().getColor(R.color.colorPrimarySkating),
                         "inline_skating",
-                        -1),
+                        -1, RecordingType.GPS.id),
                 new WorkoutType("skateboarding",
                         context.getString(R.string.workoutTypeSkateboarding),
                         7,
                         context.getResources().getColor(R.color.colorPrimarySkating),
                         "skateboarding",
-                        -1),
+                        -1, RecordingType.GPS.id),
                 new WorkoutType("rowing",
                         context.getString(R.string.workoutTypeRowing),
                         7,
                         context.getResources().getColor(R.color.colorPrimaryRowing),
                         "rowing",
-                        -1),
+                        -1, RecordingType.GPS.id),
                 new WorkoutType(WORKOUT_TYPE_ID_OTHER,
                         context.getString(R.string.workoutTypeOther),
                         7,
                         context.getResources().getColor(R.color.colorPrimary),
                         "other",
-                        0),
+                        0, RecordingType.GPS.id),
+                new WorkoutType(WORKOUT_TYPE_ID_OTHER_INDOOR,
+                        context.getString(R.string.workoutTypeOther),
+                        -1,
+                        context.getResources().getColor(R.color.colorPrimary),
+                        Icon.OTHER.name,
+                        0, RecordingType.INDOOR.id),
         };
+    }
+
+    public enum RecordingType {
+
+        INDOOR("indoor", RecordIndoorWorkoutActivity.class),
+        GPS("gps", RecordGpsWorkoutActivity.class);
+
+        public final String id;
+        public final Class<? extends RecordWorkoutActivity> recorderActivityClass;
+
+        RecordingType(String id, Class<? extends RecordWorkoutActivity> recorderActivityClass) {
+            this.id = id;
+            this.recorderActivityClass = recorderActivityClass;
+        }
+
+        static RecordingType findById(String id) {
+            for (RecordingType type : values()) {
+                if (type.id.equals(id)) {
+                    return type;
+                }
+            }
+            return GPS;
+        }
     }
 }
