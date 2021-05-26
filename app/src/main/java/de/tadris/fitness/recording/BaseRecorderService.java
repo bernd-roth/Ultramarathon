@@ -237,7 +237,7 @@ public abstract class BaseRecorderService extends Service {
         hrManager.stop();
         heartRateListener.publishState(HeartRateConnectionState.DISCONNECTED);
 
-        if (wakeLock.isHeld()) {
+        if (wakeLock != null && wakeLock.isHeld()) {
             wakeLock.release();
         }
 
