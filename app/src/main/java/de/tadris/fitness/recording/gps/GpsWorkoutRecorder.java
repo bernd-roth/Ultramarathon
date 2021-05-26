@@ -80,7 +80,6 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
     public GpsWorkoutRecorder(Context context, WorkoutType workoutType) {
         super(context);
         UserPreferences preferences = Instance.getInstance(context).userPreferences;
-        this.state = RecordingState.IDLE;
 
         this.workout = new GpsWorkout();
         workout.edited = false;

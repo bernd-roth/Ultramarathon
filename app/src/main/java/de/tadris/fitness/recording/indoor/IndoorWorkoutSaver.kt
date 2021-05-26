@@ -16,41 +16,90 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package de.tadris.fitness.recording.indoor
 
-package de.tadris.fitness.recording.indoor;
+import android.content.Context
+import de.tadris.fitness.Instance
+import de.tadris.fitness.data.IndoorSample
+import de.tadris.fitness.data.IndoorWorkout
+import de.tadris.fitness.data.IndoorWorkoutData
 
-import android.content.Context;
+class IndoorWorkoutSaver(private val context: Context, workoutData: IndoorWorkoutData) {
 
-import java.util.List;
+    private val workout: IndoorWorkout = workoutData.workout
+    private val samples: List<IndoorSample> = workoutData.samples
 
-import de.tadris.fitness.Instance;
-import de.tadris.fitness.data.IndoorSample;
-import de.tadris.fitness.data.IndoorWorkout;
-import de.tadris.fitness.data.IndoorWorkoutData;
-
-public class IndoorWorkoutSaver {
-
-    private final Context context;
-    private final IndoorWorkout workout;
-    private final List<IndoorSample> samples;
-
-    public IndoorWorkoutSaver(Context context, IndoorWorkoutData workoutData) {
-        this.context = context;
-        this.workout = workoutData.getWorkout();
-        this.samples = workoutData.getSamples();
+    fun save() {
+        calculateData()
+        insertWorkoutAndSamples()
     }
 
-    public void save() {
-        calculateData();
-        insertWorkoutAndSamples();
+    private fun calculateData() {
+        setIds()
+        setRepetitions()
+        setFrequencies()
+        setMaxAvgFrequency()
+        setMaxAvgIntensity()
+        setHeartRate()
+        setCalories()
     }
 
-    private void calculateData() {
-
+    private fun setIds() {
+        workout.id = System.nanoTime()
+        var i = 0
+        for (sample in samples) {
+            i++
+            sample.id = workout.id + i
+            sample.workoutId = workout.id
+        }
     }
 
-    private void insertWorkoutAndSamples() {
-        Instance.getInstance(context).db.indoorWorkoutDao().insertWorkoutAndSamples(workout, samples.toArray(new IndoorSample[0]));
+    private fun setRepetitions() {
+        workout.repetitions = samples.size
+    }
+
+    private fun setFrequencies() {
+        if (samples.size > 2) {
+            var lastTime = samples[0].relativeTime
+            samples.forEach { sample ->
+                val timeDiff = sample.relativeTime - lastTime
+                sample.frequency = if (timeDiff > 0) 1.0 / timeDiff else 0.0
+                lastTime = sample.relativeTime
+            }
+        }
+    }
+
+    private fun setMaxAvgFrequency() {
+        workout.avgFrequency = workout.repetitions.toDouble() / workout.duration
+        workout.maxFrequency = samples.maxOf { it.frequency }
+    }
+
+    private fun setMaxAvgIntensity() {
+        if (samples.isNotEmpty()) {
+            workout.avgIntensity = samples.sumOf { it.intensity } / samples.size
+            workout.maxIntensity = samples.maxOf { it.intensity }
+        }
+    }
+
+    private fun setHeartRate() {
+        var heartRateSum = 0
+        var maxHeartRate = -1
+        for (sample in samples) {
+            heartRateSum += sample.heartRate
+            if (sample.heartRate > maxHeartRate) {
+                maxHeartRate = sample.heartRate
+            }
+        }
+        workout.maxHeartRate = maxHeartRate
+        workout.avgHeartRate = heartRateSum / samples.size
+    }
+
+    private fun setCalories() {
+        // TODO
+    }
+
+    private fun insertWorkoutAndSamples() {
+        Instance.getInstance(context).db.indoorWorkoutDao().insertWorkoutAndSamples(workout, samples.toTypedArray())
     }
 
 }

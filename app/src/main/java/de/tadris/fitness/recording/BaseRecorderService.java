@@ -23,8 +23,8 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.bluetooth.BluetoothDevice;
+import android.content.Context;
 import android.content.Intent;
-import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.IBinder;
 import android.os.PowerManager;
@@ -71,7 +71,6 @@ public abstract class BaseRecorderService extends Service {
     protected PowerManager.WakeLock wakeLock;
 
     protected SensorManager mSensorManager = null;
-    protected Sensor mPressureSensor = null;
     protected Instance instance = null;
 
     protected TTSController mTTSController;
@@ -232,20 +231,20 @@ public abstract class BaseRecorderService extends Service {
         Log.i(TAG, "onCreate");
         this.instance = Instance.getInstance(getBaseContext());
 
+        if (mSensorManager == null) {
+            mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        }
+
         initializeHRManager();
 
         initializeTTS();
 
         initializeWatchdog();
-
-        EventBus.getDefault().register(this);
     }
 
     @Override
     public void onDestroy() {
         Log.i(TAG, "onDestroy");
-
-        EventBus.getDefault().unregister(this);
 
         // Shutdown Watchdog
         mWatchdogRunner.stop();

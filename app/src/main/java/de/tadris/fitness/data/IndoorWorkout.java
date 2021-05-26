@@ -27,17 +27,21 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class IndoorWorkout extends BaseWorkout {
 
-    int amount;
+    public int repetitions;
 
     /**
      * Average frequency in hertz
      */
-    double avgFrequency;
+    public double avgFrequency;
 
-    double maxFrequency;
+    public double maxFrequency;
 
-    double maxIntensity;
+    public double maxIntensity;
 
-    double avgIntensity;
+    public double avgIntensity;
+
+    public boolean hasIntensityValues() {
+        return avgIntensity > 0;
+    }
 
 }

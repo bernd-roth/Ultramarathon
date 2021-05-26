@@ -102,6 +102,11 @@
     <string name="workoutTypeInlineSkating">Inline Skating</string>
     <string name="workoutTypeRowing">Rowing</string>
     <string name="workoutTypeOther">Other</string>
+    <string name="workoutTypeTreadmill">Treadmill</string>
+    <plurals name="workoutStep">
+        <item quantity="one">Step</item>
+        <item quantity="other">Steps</item>
+    </plurals>
     <string name="unknown">Unknown</string>
     <string name="workoutTypeAdd">Add</string>
     <string name="workoutTypeAll">All</string>

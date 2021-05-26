@@ -39,6 +39,8 @@ public class IndoorSample extends BaseSample {
     @ColumnInfo(name = "workout_id", index = true)
     public long workoutId;
 
-    double intensity;
+    public double intensity;
+
+    public double frequency;
 
 }

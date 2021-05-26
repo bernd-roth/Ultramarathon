@@ -67,6 +67,7 @@ public abstract class BaseWorkoutRecorder {
 
     public BaseWorkoutRecorder(Context context) {
         this.context = context;
+        this.state = RecordingState.IDLE;
 
         EventBus.getDefault().register(this);
         UserPreferences prefs = Instance.getInstance(context).userPreferences;

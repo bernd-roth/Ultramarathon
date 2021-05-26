@@ -20,6 +20,9 @@
 package de.tadris.fitness.recording.indoor;
 
 import android.content.Context;
+import android.util.Log;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,14 +33,17 @@ import de.tadris.fitness.data.IndoorWorkout;
 import de.tadris.fitness.data.IndoorWorkoutData;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.recording.BaseWorkoutRecorder;
+import de.tadris.fitness.recording.indoor.exercise.ExerciseRecognizer;
 import de.tadris.fitness.ui.record.RecordIndoorWorkoutActivity;
 import de.tadris.fitness.ui.record.RecordWorkoutActivity;
 
 public class IndoorWorkoutRecorder extends BaseWorkoutRecorder {
 
     IndoorWorkout workout;
-    List<IndoorSample> samples = new ArrayList<>();
+    final List<IndoorSample> samples = new ArrayList<>();
     private boolean saved = false;
+
+    private int repetitions = 0;
 
     public IndoorWorkoutRecorder(Context context, WorkoutType workoutType) {
         super(context);
@@ -74,6 +80,25 @@ public class IndoorWorkoutRecorder extends BaseWorkoutRecorder {
         workout.end = System.currentTimeMillis();
         workout.duration = time;
         workout.pauseDuration = pauseTime;
+    }
+
+    @Subscribe
+    public void onRepetitionRecognized(ExerciseRecognizer.RepetitionRecognizedEvent event) {
+        Log.d("Recorder", "repetition recognized with intensity " + event.getIntensity());
+        IndoorSample sample = new IndoorSample();
+        sample.absoluteTime = event.getTimestamp();
+        sample.relativeTime = event.getTimestamp() - startTime - getPauseDuration();
+        sample.intensity = event.getIntensity();
+        sample.heartRate = lastHeartRate;
+        sample.intervalTriggered = lastTriggeredInterval;
+        lastTriggeredInterval = -1;
+        samples.add(sample);
+
+        repetitions++;
+    }
+
+    public int getRepetitionsTotal() {
+        return repetitions;
     }
 
     private IndoorWorkoutData getWorkoutData() {

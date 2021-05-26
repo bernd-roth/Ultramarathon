@@ -54,6 +54,7 @@ public class GpsRecorderService extends BaseRecorderService {
         return new LatLong(location.getLatitude(), location.getLongitude());
     }
 
+    private Sensor mPressureSensor = null;
     private LocationManager mLocationManager = null;
 
     private static final int LOCATION_INTERVAL = 1000;
@@ -125,6 +126,8 @@ public class GpsRecorderService extends BaseRecorderService {
         } else {
             Log.i(TAG, "no Pressure Sensor Available");
         }
+
+        EventBus.getDefault().register(this);
     }
 
     private void initializeLocationManager() {
@@ -136,9 +139,6 @@ public class GpsRecorderService extends BaseRecorderService {
 
     private void initializePressureSensor() {
         Log.i(TAG, "initializePressureSensor");
-        if (mSensorManager == null) {
-            mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        }
         if (mPressureSensor == null) {
             mPressureSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
         }
@@ -166,6 +166,8 @@ public class GpsRecorderService extends BaseRecorderService {
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+        EventBus.getDefault().unregister(this);
 
         if (mLocationManager != null) {
             mLocationManager.removeUpdates(gpsListener);

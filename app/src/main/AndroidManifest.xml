@@ -110,6 +110,8 @@
         <service
             android:name=".recording.gps.GpsRecorderService"
             android:foregroundServiceType="location" />
+
+        <service android:name=".recording.indoor.IndoorRecorderService" />
     </application>
 
 </manifest>

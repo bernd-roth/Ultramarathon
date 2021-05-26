@@ -22,6 +22,7 @@ package de.tadris.fitness.data;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.PluralsRes;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -45,7 +46,6 @@ import de.tadris.fitness.util.Icon;
 public class WorkoutType implements Serializable {
 
     public static final String WORKOUT_TYPE_ID_OTHER = "other";
-    public static final String WORKOUT_TYPE_ID_OTHER_INDOOR = "other-indoor";
     public static final String WORKOUT_TYPE_ID_RUNNING = "running";
 
     @PrimaryKey
@@ -68,7 +68,18 @@ public class WorkoutType implements Serializable {
     public String recordingType;
 
     @Ignore
+    @PluralsRes
+    // Only for indoor workouts
+    // treadmill -> "steps"
+    public int repeatingExerciseName;
+
+    @Ignore
     public WorkoutType(@NonNull String id, String title, int minDistance, int color, String icon, int MET, String recordingType) {
+        this(id, title, minDistance, color, icon, MET, recordingType, -1);
+    }
+
+    @Ignore
+    public WorkoutType(@NonNull String id, String title, int minDistance, int color, String icon, int MET, String recordingType, int repeatingExerciseName) {
         this.id = id;
         this.title = title;
         this.minDistance = minDistance;
@@ -76,6 +87,7 @@ public class WorkoutType implements Serializable {
         this.icon = icon;
         this.MET = MET;
         this.recordingType = recordingType;
+        this.repeatingExerciseName = repeatingExerciseName;
     }
 
     public WorkoutType() {
@@ -163,12 +175,13 @@ public class WorkoutType implements Serializable {
                         context.getResources().getColor(R.color.colorPrimary),
                         "other",
                         0, RecordingType.GPS.id),
-                new WorkoutType(WORKOUT_TYPE_ID_OTHER_INDOOR,
-                        context.getString(R.string.workoutTypeOther),
+                new WorkoutType("treadmill",
+                        context.getString(R.string.workoutTypeTreadmill),
                         -1,
-                        context.getResources().getColor(R.color.colorPrimary),
-                        Icon.OTHER.name,
-                        0, RecordingType.INDOOR.id),
+                        context.getResources().getColor(R.color.colorPrimaryRunning),
+                        Icon.RUNNING.name,
+                        -1, RecordingType.INDOOR.id,
+                        R.plurals.workoutStep),
         };
     }
 
