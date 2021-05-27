@@ -93,7 +93,7 @@ public class ShowIndoorWorkoutActivity extends IndoorWorkoutActivity implements 
         addKeyValue(getString(R.string.workoutTotalEnergy), energyUnitUtils.getEnergy(workout.calorie),
                 getString(R.string.workoutEnergyConsumption), energyUnitUtils.getRelativeEnergy((double) workout.calorie / ((double) workout.duration / 1000 / 60)));
 
-        if (hasSamples()) {
+        if (hasSamples() && workout.hasIntensityValues()) {
             addTitle(getString(R.string.workoutIntensity));
 
             addKeyValue(getString(R.string.workoutAvgIntensityShort), UnitUtils.round(workout.avgIntensity, 2),

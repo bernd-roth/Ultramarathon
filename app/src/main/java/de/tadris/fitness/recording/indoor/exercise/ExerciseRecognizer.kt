@@ -46,6 +46,7 @@ abstract class ExerciseRecognizer {
                 "treadmill" -> StepRecognizer()
                 "rope_skipping" -> JumpRecognizer(maxJumpDuration = 1250)
                 "trampoline_jumping" -> JumpRecognizer(maxJumpDuration = 2500)
+                "push-ups" -> ProximityRecognizer()
                 else -> null
             }
         }

@@ -121,6 +121,11 @@
         <item quantity="one">Jump</item>
         <item quantity="other">Jumps</item>
     </plurals>
+    <string name="workoutTypePushUps">Push ups</string>
+    <plurals name="workoutPushUp">
+        <item quantity="one">Push up</item>
+        <item quantity="other">Push ups</item>
+    </plurals>
     <string name="unknown">Unknown</string>
     <string name="workoutTypeAdd">Add</string>
     <string name="workoutTypeAll">All</string>

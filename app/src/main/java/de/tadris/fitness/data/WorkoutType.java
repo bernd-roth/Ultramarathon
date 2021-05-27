@@ -199,6 +199,13 @@ public class WorkoutType implements Serializable {
                         Icon.RUNNING.name,
                         -1, RecordingType.INDOOR.id,
                         R.plurals.workoutJump),
+                new WorkoutType("push-ups",
+                        context.getString(R.string.workoutTypePushUps),
+                        1,
+                        context.getResources().getColor(R.color.colorPrimaryRunning),
+                        Icon.RUNNING.name,
+                        -1, RecordingType.INDOOR.id,
+                        R.plurals.workoutPushUp),
         };
     }
 

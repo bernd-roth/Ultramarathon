@@ -23,7 +23,6 @@ import android.app.AlertDialog
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -208,17 +207,18 @@ class RecordIndoorWorkoutActivity : RecordWorkoutActivity() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onSampleFinalized(sample: IndoorSample) {
-        Log.d("s", "dslkfjkdsölfaöljkds")
         val frequency =
             1000 * sample.repetitions.toDouble() / (sample.absoluteEndTime - lastSampleTime + 1)
         lastSampleTime = System.currentTimeMillis()
         frequencyEntries.add(Entry(sample.relativeTime.toFloat() / 1000 / 60, frequency.toFloat()))
-        intensityEntries.add(
-            Entry(
-                sample.relativeTime.toFloat() / 1000 / 60,
-                sample.intensity.toFloat()
+        if (sample.intensity > 0) {
+            intensityEntries.add(
+                Entry(
+                    sample.relativeTime.toFloat() / 1000 / 60,
+                    sample.intensity.toFloat()
+                )
             )
-        )
+        }
         updateChart()
     }
 

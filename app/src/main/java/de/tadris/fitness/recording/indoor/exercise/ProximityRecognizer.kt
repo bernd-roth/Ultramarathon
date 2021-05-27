@@ -17,13 +17,25 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.recording.indoor
+package de.tadris.fitness.recording.indoor.exercise
 
 import android.hardware.Sensor
+import android.hardware.SensorEvent
+import de.tadris.fitness.recording.indoor.FitoTrackSensorOption
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 
-enum class FitoTrackSensorOption(val sensorType: Int) {
-    ACCELERATION_WITHOUT_G(Sensor.TYPE_LINEAR_ACCELERATION),
-    ACCELERATION(Sensor.TYPE_ACCELEROMETER),
-    STEPS(Sensor.TYPE_STEP_DETECTOR),
-    PROXIMITY(Sensor.TYPE_PROXIMITY)
+class ProximityRecognizer : ExerciseRecognizer() {
+
+    override fun getActivatedSensors() = listOf(FitoTrackSensorOption.PROXIMITY)
+
+    @Subscribe
+    fun onSensorEvent(event: SensorEvent) {
+        if (event.sensor.type == Sensor.TYPE_PROXIMITY) {
+            if (event.values[0] < 2) {
+                EventBus.getDefault().post(RepetitionRecognizedEvent(System.currentTimeMillis()))
+            }
+        }
+    }
+
 }
