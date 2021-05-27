@@ -57,11 +57,12 @@ class IndoorRecorderService : BaseRecorderService(), SensorEventListener {
     override fun onDestroy() {
         super.onDestroy()
         mSensorManager?.unregisterListener(this)
+        exerciseRecognizer?.stop()
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
         if (event == null) return
-        Log.v("RecoderService", "Sensorevent ${event.sensor.name} - ${event.values.contentToString()}")
+        //Log.v("RecoderService", "Sensorevent ${event.sensor.name} - ${event.values.contentToString()}")
         EventBus.getDefault().post(event)
     }
 

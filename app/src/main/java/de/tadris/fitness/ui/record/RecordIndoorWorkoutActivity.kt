@@ -23,18 +23,27 @@ import android.app.AlertDialog
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
+import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.YAxis
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.DefaultValueFormatter
 import de.tadris.fitness.Instance
 import de.tadris.fitness.R
+import de.tadris.fitness.data.IndoorSample
 import de.tadris.fitness.data.WorkoutType
 import de.tadris.fitness.recording.BaseRecorderService
 import de.tadris.fitness.recording.BaseWorkoutRecorder
 import de.tadris.fitness.recording.indoor.IndoorRecorderService
 import de.tadris.fitness.recording.indoor.IndoorWorkoutRecorder
 import de.tadris.fitness.recording.indoor.exercise.ExerciseRecognizer
+import de.tadris.fitness.util.unit.UnitUtils
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -46,6 +55,13 @@ class RecordIndoorWorkoutActivity : RecordWorkoutActivity() {
 
     private lateinit var repetitionsText: TextView
     private lateinit var exerciseText: TextView
+
+    private lateinit var intensityDataSet: LineDataSet
+    private lateinit var frequencyDataSet: LineDataSet
+    private lateinit var chart: LineChart
+
+    private val frequencyEntries = mutableListOf<Entry>()
+    private val intensityEntries = mutableListOf<Entry>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +86,9 @@ class RecordIndoorWorkoutActivity : RecordWorkoutActivity() {
         setContentView(R.layout.activity_record_indoor_workout)
         repetitionsText = findViewById(R.id.indoorRecordingReps)
         exerciseText = findViewById(R.id.indoorRecordingType)
+        chart = findViewById(R.id.recordChart)
+        initChart()
+
         initAfterContent()
 
         checkPermissions()
@@ -84,7 +103,40 @@ class RecordIndoorWorkoutActivity : RecordWorkoutActivity() {
                 timeView.visibility = View.VISIBLE
                 invalidateOptionsMenu()
             }
+            (instance.recorder as IndoorWorkoutRecorder).samples.forEach {
+                onSampleFinalized(it)
+            }
         }
+    }
+
+    private fun initChart() {
+        chart.isScaleXEnabled = false
+        chart.isScaleYEnabled = false
+
+        chart.axisLeft.textColor = themeTextColor
+        chart.axisRight.textColor = themeTextColor
+        chart.xAxis.textColor = themeTextColor
+        chart.legend.textColor = themeTextColor
+        chart.description.textColor = themeTextColor
+
+        chart.isHighlightPerDragEnabled = false
+        chart.isHighlightPerTapEnabled = false
+
+        chart.axisLeft.valueFormatter = object : DefaultValueFormatter(1) {
+            override fun getFormattedValue(value: Float): String {
+                return super.getFormattedValue(value) + " " + UnitUtils.unitHertzShort
+            }
+        }
+        chart.xAxis.valueFormatter = object : DefaultValueFormatter(1) {
+            override fun getFormattedValue(value: Float): String {
+                return super.getFormattedValue(value) + " min"
+            }
+        }
+
+        chart.axisLeft.setDrawGridLines(false)
+        chart.axisRight.setDrawGridLines(false)
+
+        chart.description.text = ""
     }
 
     override fun onResume() {
@@ -141,6 +193,8 @@ class RecordIndoorWorkoutActivity : RecordWorkoutActivity() {
                     .setMessage(R.string.recordingActivityPermissionMessage)
                     .setPositiveButton(R.string.settings) { _, _ -> openSystemSettings() }
                     .create().show()
+            } else {
+                restartListener()
             }
         }
     }
@@ -148,6 +202,60 @@ class RecordIndoorWorkoutActivity : RecordWorkoutActivity() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onRepetitionRecognized(event: ExerciseRecognizer.RepetitionRecognizedEvent) {
         refreshRepetitions()
+    }
+
+    var lastSampleTime = System.currentTimeMillis()
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onSampleFinalized(sample: IndoorSample) {
+        Log.d("s", "dslkfjkdsölfaöljkds")
+        val frequency =
+            1000 * sample.repetitions.toDouble() / (sample.absoluteEndTime - lastSampleTime + 1)
+        lastSampleTime = System.currentTimeMillis()
+        frequencyEntries.add(Entry(sample.relativeTime.toFloat() / 1000 / 60, frequency.toFloat()))
+        intensityEntries.add(
+            Entry(
+                sample.relativeTime.toFloat() / 1000 / 60,
+                sample.intensity.toFloat()
+            )
+        )
+        updateChart()
+    }
+
+    private fun updateChart() {
+        val lineData = LineData()
+
+        frequencyDataSet = createDataset(
+            frequencyEntries,
+            getString(R.string.workoutFrequency),
+            resources.getColor(R.color.diagramFrequency)
+        )
+        intensityDataSet = createDataset(
+            intensityEntries,
+            getString(R.string.workoutIntensity),
+            resources.getColor(R.color.diagramIntensity)
+        )
+
+        frequencyDataSet.axisDependency = YAxis.AxisDependency.LEFT
+        intensityDataSet.axisDependency = YAxis.AxisDependency.RIGHT
+
+        lineData.addDataSet(frequencyDataSet)
+        lineData.addDataSet(intensityDataSet)
+        lineData.setDrawValues(false)
+
+        chart.data = lineData
+        chart.invalidate()
+    }
+
+    private fun createDataset(entries: List<Entry>, name: String, color: Int): LineDataSet {
+        val dataSet = LineDataSet(entries, name)
+        dataSet.color = color
+        dataSet.valueTextColor = color
+        dataSet.setDrawCircles(false)
+        dataSet.lineWidth = 4f
+        dataSet.highlightLineWidth = 2.5f
+        dataSet.mode = LineDataSet.Mode.HORIZONTAL_BEZIER
+        return dataSet
     }
 
     private fun refreshRepetitions() {

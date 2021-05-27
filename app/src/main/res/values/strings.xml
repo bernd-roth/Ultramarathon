@@ -115,6 +115,12 @@
         <item quantity="one">Step</item>
         <item quantity="other">Steps</item>
     </plurals>
+    <string name="workoutTypeRopeSkipping">Rope Skipping</string>
+    <string name="workoutTypeTrampolineJumping">Trampoline Jumping</string>
+    <plurals name="workoutJump">
+        <item quantity="one">Jump</item>
+        <item quantity="other">Jumps</item>
+    </plurals>
     <string name="unknown">Unknown</string>
     <string name="workoutTypeAdd">Add</string>
     <string name="workoutTypeAll">All</string>

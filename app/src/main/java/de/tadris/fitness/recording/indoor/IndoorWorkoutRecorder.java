@@ -22,6 +22,7 @@ package de.tadris.fitness.recording.indoor;
 import android.content.Context;
 import android.util.Log;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
@@ -106,6 +107,11 @@ public class IndoorWorkoutRecorder extends BaseWorkoutRecorder {
     }
 
     private void addNewSample(ExerciseRecognizer.RepetitionRecognizedEvent event) {
+        if (lastSample != null) {
+            // lastSample will not be changed further so we broadcast it
+            EventBus.getDefault().post(lastSample);
+        }
+
         IndoorSample sample = new IndoorSample();
         sample.absoluteTime = event.getTimestamp();
         sample.absoluteEndTime = event.getTimestamp();
@@ -150,6 +156,10 @@ public class IndoorWorkoutRecorder extends BaseWorkoutRecorder {
     @Override
     public int getCalories() {
         return 0; // TODO
+    }
+
+    public List<IndoorSample> getSamples() {
+        return new ArrayList<>(samples);
     }
 
     @Override
