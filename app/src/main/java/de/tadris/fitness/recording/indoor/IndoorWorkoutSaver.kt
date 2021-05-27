@@ -23,6 +23,7 @@ import de.tadris.fitness.Instance
 import de.tadris.fitness.data.IndoorSample
 import de.tadris.fitness.data.IndoorWorkout
 import de.tadris.fitness.data.IndoorWorkoutData
+import de.tadris.fitness.util.CalorieCalculator
 
 class IndoorWorkoutSaver(private val context: Context, workoutData: IndoorWorkoutData) {
 
@@ -96,7 +97,7 @@ class IndoorWorkoutSaver(private val context: Context, workoutData: IndoorWorkou
     }
 
     private fun setCalories() {
-        // TODO
+        workout.calorie = CalorieCalculator.calculateCalories(context, workout)
     }
 
     private fun insertWorkoutAndSamples() {

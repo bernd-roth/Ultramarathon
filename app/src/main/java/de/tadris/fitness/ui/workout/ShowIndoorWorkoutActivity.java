@@ -70,6 +70,13 @@ public class ShowIndoorWorkoutActivity extends IndoorWorkoutActivity implements 
 
         addKeyValue(getString(R.string.workoutRepetitions), String.valueOf(workout.repetitions), getString(R.string.workoutSets), String.valueOf(sets.size()));
 
+        if (workout.hasEstimatedDistance()) {
+            int estimatedDistance = (int) Math.round(workout.estimateDistance(this));
+            double estimatedSpeed = workout.estimateSpeed(this);
+            addKeyValue(getString(R.string.approxSymbol) + getString(R.string.workoutDistance), distanceUnitUtils.getDistance(estimatedDistance),
+                    getString(R.string.approxSymbol) + getString(R.string.workoutSpeed), distanceUnitUtils.getSpeed(estimatedSpeed));
+        }
+
         addTitle(getString(R.string.workoutFrequency));
 
         if (hasSamples()) {

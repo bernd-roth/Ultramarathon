@@ -37,6 +37,7 @@ import de.tadris.fitness.recording.BaseWorkoutRecorder;
 import de.tadris.fitness.recording.indoor.exercise.ExerciseRecognizer;
 import de.tadris.fitness.ui.record.RecordIndoorWorkoutActivity;
 import de.tadris.fitness.ui.record.RecordWorkoutActivity;
+import de.tadris.fitness.util.CalorieCalculator;
 
 public class IndoorWorkoutRecorder extends BaseWorkoutRecorder {
 
@@ -155,7 +156,8 @@ public class IndoorWorkoutRecorder extends BaseWorkoutRecorder {
 
     @Override
     public int getCalories() {
-        return 0; // TODO
+        workout.duration = getDuration();
+        return CalorieCalculator.calculateCalories(context, workout);
     }
 
     public List<IndoorSample> getSamples() {

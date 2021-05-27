@@ -43,6 +43,7 @@ public class UserPreferences {
     private static final String LOWER_TARGET_SPEED_LIMIT = "lowerTargetSpeedLimit";
     private static final String HAS_UPPER_TARGET_SPEED_LIMIT = "hasUpperTargetSpeedLimit";
     private static final String UPPER_TARGET_SPEED_LIMIT = "upperTargetSpeedLimit";
+    public static final String STEP_LENGTH = "stepLength";
 
     /**
      * Default NFC start enable state if no other has been chosen
@@ -389,12 +390,25 @@ public class UserPreferences {
 
     /**
      * Get upper target speed range limit (in m/s)
+     *
      * @return upper speed limit (in m/s)
      */
     public float getUpperTargetSpeedLimit() {
         return preferences.getFloat(UPPER_TARGET_SPEED_LIMIT, DEFAULT_UPPER_TARGET_SPEED_LIMIT);
     }
 
+    /**
+     * users step length in m
+     * <p>
+     * default value taken from https://www.livestrong.com/article/438170-the-average-walking-stride-length/ and converted to meters
+     */
+    public float getStepLength() {
+        return preferences.getFloat(STEP_LENGTH, 0.79f);
+    }
+
+    public void setStepLength(float meters) {
+        preferences.edit().putFloat(STEP_LENGTH, meters).apply();
+    }
 
     /**
      * Set upper target speed range limit (in m/s)

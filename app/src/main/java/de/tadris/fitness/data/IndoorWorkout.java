@@ -19,9 +19,13 @@
 
 package de.tadris.fitness.data;
 
+import android.content.Context;
+
 import androidx.room.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import de.tadris.fitness.Instance;
 
 @Entity(tableName = "indoor_workout")
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -42,6 +46,19 @@ public class IndoorWorkout extends BaseWorkout {
 
     public boolean hasIntensityValues() {
         return avgIntensity > 0;
+    }
+
+    public boolean hasEstimatedDistance() {
+        return workoutTypeId.equals("treadmill");
+    }
+
+    public double estimateDistance(Context context) {
+        float stepLength = Instance.getInstance(context).userPreferences.getStepLength();
+        return repetitions * stepLength;
+    }
+
+    public double estimateSpeed(Context context) {
+        return estimateDistance(context) / (duration / 1000d);
     }
 
 }

@@ -319,7 +319,7 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
     public int getCalories() {
         workout.avgSpeed = getAvgSpeed();
         workout.duration = getDuration();
-        int calories = CalorieCalculator.calculateCalories(context, workout, Instance.getInstance(context).userPreferences.getUserWeight());
+        int calories = CalorieCalculator.calculateCalories(context, workout);
         if (calories > maxCalories) {
             maxCalories = calories;
         }
