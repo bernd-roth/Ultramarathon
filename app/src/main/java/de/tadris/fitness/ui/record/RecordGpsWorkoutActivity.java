@@ -56,6 +56,7 @@ import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.map.MapManager;
 import de.tadris.fitness.recording.BaseRecorderService;
+import de.tadris.fitness.recording.BaseWorkoutRecorder;
 import de.tadris.fitness.recording.event.LocationChangeEvent;
 import de.tadris.fitness.recording.event.WorkoutGPSStateChanged;
 import de.tadris.fitness.recording.gps.GpsRecorderService;
@@ -86,7 +87,7 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
                 // Save Possibly Running Recorder...
                 // TODO Add Dialog, prefere Resume or Delete
                 if (instance.recorder != null &&
-                        instance.recorder.getState() != GpsWorkoutRecorder.RecordingState.IDLE) {
+                        instance.recorder.getState() != BaseWorkoutRecorder.RecordingState.IDLE) {
                     instance.recorder.stop();
                     saveIfNotSaved();
                 }

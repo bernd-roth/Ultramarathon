@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -373,8 +373,8 @@ public class AggregatedWorkoutStatisticsActivity extends FitoTrackActivity imple
     private void openWorkoutAt(long time) {
         GpsWorkout workout = Instance.getInstance(this).db.gpsWorkoutDao().getWorkoutByStart(time);
         if (workout != null) {
-            final Intent intent = new Intent(this, ShowWorkoutActivity.class);
-            intent.putExtra(ShowWorkoutActivity.WORKOUT_ID_EXTRA, workout.id);
+            final Intent intent = new Intent(this, ShowGpsWorkoutActivity.class);
+            intent.putExtra(ShowGpsWorkoutActivity.WORKOUT_ID_EXTRA, workout.id);
             startActivity(intent);
         } else {
             Log.i("DiagramActivity", "Cannot get workout at time=" + time);

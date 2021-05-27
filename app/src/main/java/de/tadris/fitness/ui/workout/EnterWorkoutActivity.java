@@ -182,8 +182,8 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
             return;
         }
         GpsWorkout workout = workoutBuilder.saveWorkout(this);
-        final Intent intent = new Intent(this, ShowWorkoutActivity.class);
-        intent.putExtra(ShowWorkoutActivity.WORKOUT_ID_EXTRA, workout.id);
+        final Intent intent = new Intent(this, ShowGpsWorkoutActivity.class);
+        intent.putExtra(ShowGpsWorkoutActivity.WORKOUT_ID_EXTRA, workout.id);
         startActivity(intent);
         finish();
     }

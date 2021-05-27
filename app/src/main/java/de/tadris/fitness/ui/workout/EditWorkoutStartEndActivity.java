@@ -115,12 +115,12 @@ public class EditWorkoutStartEndActivity extends ShowWorkoutMapDiagramActivity {
             mapView.getLayerManager().getLayers().remove(newWorkoutLayer);
         }
 
-        GpsSample drawStartSample = selectedStartSample != null ? selectedStartSample : getWorkoutData().getSamples().get(0);
-        GpsSample drawEndSample = selectedEndSample != null ? selectedEndSample : getWorkoutData().getSamples().get(getWorkoutData().getSamples().size() - 1);
+        GpsSample drawStartSample = selectedStartSample != null ? selectedStartSample : samples.get(0);
+        GpsSample drawEndSample = selectedEndSample != null ? selectedEndSample : samples.get(samples.size() - 1);
         List<GpsSample> newWorkoutSamples = new ArrayList<GpsSample>();
 
         boolean contained = false;
-        for (GpsSample s : getWorkoutData().getSamples()) {
+        for (GpsSample s : samples) {
             if (!contained && s.id == drawStartSample.id) {
                 contained = true;
             }
@@ -156,9 +156,7 @@ public class EditWorkoutStartEndActivity extends ShowWorkoutMapDiagramActivity {
 
         if (item.getItemId() == R.id.actionMoveApply) {
             if (selectedStartSample != null || selectedEndSample != null){
-                ArrayList<GpsSample> samples = new ArrayList<GpsSample>();
-                samples.addAll(getWorkoutData().getSamples());
-                WorkoutCutter cutter = new WorkoutCutter(this, new GpsWorkoutData(getWorkoutData().getWorkout(), samples));
+                WorkoutCutter cutter = new WorkoutCutter(this, new GpsWorkoutData(workout, new ArrayList<>(samples)));
                 cutter.cutWorkout(selectedStartSample,selectedEndSample);
 
 

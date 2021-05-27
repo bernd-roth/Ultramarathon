@@ -23,6 +23,7 @@ import android.app.AlertDialog
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
@@ -48,14 +49,21 @@ class RecordIndoorWorkoutActivity : RecordWorkoutActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val workoutType = intent.getSerializableExtra(WORKOUT_TYPE_EXTRA)
-        if (workoutType is WorkoutType) {
-            activity = workoutType
-            if (instance.recorder != null && instance.recorder.state != BaseWorkoutRecorder.RecordingState.IDLE) {
-                instance.recorder.stop()
-                saveIfNotSaved()
+
+        var wasAlreadyRunning = false
+        if (LAUNCH_ACTION == intent.action) {
+            val workoutType = intent.getSerializableExtra(WORKOUT_TYPE_EXTRA)
+            if (workoutType is WorkoutType) {
+                activity = workoutType
+                if (instance.recorder != null && instance.recorder.state != BaseWorkoutRecorder.RecordingState.IDLE) {
+                    instance.recorder.stop()
+                    saveIfNotSaved()
+                }
+                instance.recorder = IndoorWorkoutRecorder(applicationContext, activity)
             }
-            instance.recorder = IndoorWorkoutRecorder(applicationContext, activity)
+        } else {
+            activity = instance.recorder.workout.getWorkoutType(this)
+            wasAlreadyRunning = true
         }
 
         initBeforeContent()
@@ -69,6 +77,14 @@ class RecordIndoorWorkoutActivity : RecordWorkoutActivity() {
         updateStartButton(true, R.string.start) { start() }
 
         setTitle(R.string.recordWorkout) // TODO
+
+        if (wasAlreadyRunning) {
+            if (instance.recorder.state != BaseWorkoutRecorder.RecordingState.IDLE) {
+                recordStartButtonsRoot.visibility = View.INVISIBLE
+                timeView.visibility = View.VISIBLE
+                invalidateOptionsMenu()
+            }
+        }
     }
 
     override fun onResume() {

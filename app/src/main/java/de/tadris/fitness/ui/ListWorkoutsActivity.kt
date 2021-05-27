@@ -16,347 +16,376 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package de.tadris.fitness.ui
 
-package de.tadris.fitness.ui;
+import android.Manifest
+import android.app.AlertDialog
+import android.content.ActivityNotFoundException
+import android.content.DialogInterface
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Bundle
+import android.os.Handler
+import android.preference.PreferenceManager
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.view.View.OnLongClickListener
+import android.widget.TextView
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.documentfile.provider.DocumentFile
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.github.clans.fab.FloatingActionButton
+import com.github.clans.fab.FloatingActionMenu
+import de.tadris.fitness.Instance
+import de.tadris.fitness.R
+import de.tadris.fitness.data.BaseWorkout
+import de.tadris.fitness.data.GpsWorkout
+import de.tadris.fitness.data.IndoorWorkout
+import de.tadris.fitness.data.WorkoutType
+import de.tadris.fitness.ui.adapter.WorkoutAdapter
+import de.tadris.fitness.ui.adapter.WorkoutAdapter.WorkoutAdapterListener
+import de.tadris.fitness.ui.dialog.ProgressDialogController
+import de.tadris.fitness.ui.dialog.SelectWorkoutTypeDialog
+import de.tadris.fitness.ui.dialog.ThreadSafeProgressDialogController
+import de.tadris.fitness.ui.record.RecordWorkoutActivity
+import de.tadris.fitness.ui.settings.FitoTrackSettingsActivity
+import de.tadris.fitness.ui.workout.AggregatedWorkoutStatisticsActivity
+import de.tadris.fitness.ui.workout.EnterWorkoutActivity
+import de.tadris.fitness.ui.workout.ShowGpsWorkoutActivity
+import de.tadris.fitness.util.DialogUtils
+import de.tadris.fitness.util.Icon
+import de.tadris.fitness.util.io.general.IOHelper
 
-import android.Manifest;
-import android.app.AlertDialog;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Handler;
-import android.preference.PreferenceManager;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
+class ListWorkoutsActivity : FitoTrackActivity(), WorkoutAdapterListener {
+    private lateinit var listView: RecyclerView
+    private lateinit var adapter: WorkoutAdapter
+    private lateinit var layoutManager: RecyclerView.LayoutManager
+    private lateinit var menu: FloatingActionMenu
+    private lateinit var hintText: TextView
 
-import androidx.core.app.ActivityCompat;
-import androidx.documentfile.provider.DocumentFile;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+    private var workouts: Array<BaseWorkout> = emptyArray()
 
-import com.github.clans.fab.FloatingActionButton;
-import com.github.clans.fab.FloatingActionMenu;
+    private var listSize = 0
+    private var lastClickedIndex = 0
 
-import java.io.InputStream;
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_list_workouts)
 
-import de.tadris.fitness.Instance;
-import de.tadris.fitness.R;
-import de.tadris.fitness.data.GpsWorkout;
-import de.tadris.fitness.data.WorkoutType;
-import de.tadris.fitness.ui.adapter.WorkoutAdapter;
-import de.tadris.fitness.ui.dialog.ProgressDialogController;
-import de.tadris.fitness.ui.dialog.SelectWorkoutTypeDialog;
-import de.tadris.fitness.ui.dialog.ThreadSafeProgressDialogController;
-import de.tadris.fitness.ui.record.RecordWorkoutActivity;
-import de.tadris.fitness.ui.settings.FitoTrackSettingsActivity;
-import de.tadris.fitness.ui.workout.AggregatedWorkoutStatisticsActivity;
-import de.tadris.fitness.ui.workout.EnterWorkoutActivity;
-import de.tadris.fitness.ui.workout.ShowWorkoutActivity;
-import de.tadris.fitness.util.DialogUtils;
-import de.tadris.fitness.util.Icon;
-import de.tadris.fitness.util.io.general.IOHelper;
+        listView = findViewById(R.id.workoutList)
+        listView.setHasFixedSize(true)
+        layoutManager = LinearLayoutManager(this)
+        listView.layoutManager = layoutManager
+        adapter = WorkoutAdapter(workouts, this)
+        listView.adapter = adapter
 
-public class ListWorkoutsActivity extends FitoTrackActivity implements WorkoutAdapter.WorkoutAdapterListener {
-
-    private RecyclerView listView;
-    private WorkoutAdapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
-    private FloatingActionMenu menu;
-    private GpsWorkout[] workouts;
-    private TextView hintText;
-    private int listSize;
-    private int lastClickedIndex;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_workouts);
-
-        listView = findViewById(R.id.workoutList);
-        listView.setHasFixedSize(true);
-
-        layoutManager = new LinearLayoutManager(this);
-        listView.setLayoutManager(layoutManager);
-        adapter = new WorkoutAdapter(workouts, this);
-        listView.setAdapter(adapter);
-
-        menu = findViewById(R.id.workoutListMenu);
-        menu.setOnMenuButtonLongClickListener(v -> {
-            if (workouts.length > 0) {
-                startRecording(workouts[0].getWorkoutType(this));
-                return true;
+        menu = findViewById(R.id.workoutListMenu)
+        menu.setOnMenuButtonLongClickListener(OnLongClickListener {
+            if (workouts.isNotEmpty()) {
+                startRecording(workouts[0].getWorkoutType(this))
+                return@OnLongClickListener true
             } else {
-                return false;
+                return@OnLongClickListener false
             }
-        });
+        })
 
-        hintText = findViewById(R.id.hintAddWorkout);
+        hintText = findViewById(R.id.hintAddWorkout)
 
-        findViewById(R.id.workoutListRecord).setOnClickListener(v -> showWorkoutSelection());
-        findViewById(R.id.workoutListEnter).setOnClickListener(v -> startEnterWorkoutActivity());
-        findViewById(R.id.workoutListImport).setOnClickListener(v -> showImportDialog());
+        findViewById<View>(R.id.workoutListRecord).setOnClickListener { showWorkoutSelection() }
+        findViewById<View>(R.id.workoutListEnter).setOnClickListener { startEnterWorkoutActivity() }
+        findViewById<View>(R.id.workoutListImport).setOnClickListener { showImportDialog() }
 
-        checkFirstStart();
-
-        refresh();
+        checkFirstStart()
+        refresh()
     }
 
-    private final Handler mHandler = new Handler();
+    private val mHandler = Handler()
 
-    private boolean hasPermission() {
-        return ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+    private fun hasPermission(): Boolean {
+        return ActivityCompat.checkSelfPermission(
+            this,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
-    private void requestPermissions() {
+    private fun requestPermissions() {
         if (!hasPermission()) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 10);
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                10
+            )
         }
     }
 
-    private void showImportDialog() {
+    private fun showImportDialog() {
         if (!hasPermission()) {
-            requestPermissions();
-            return;
+            requestPermissions()
+            return
         }
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.importWorkout)
-                .setMessage(R.string.importWorkoutMultipleQuestion)
-                .setPositiveButton(R.string.actionImport, (dialog, which) -> importWorkout())
-                .setNeutralButton(R.string.actionImportMultiple, (dialog, which) -> showMassImportGpx())
-                .show();
-        refresh();
-        menu.close(true);
+        AlertDialog.Builder(this)
+            .setTitle(R.string.importWorkout)
+            .setMessage(R.string.importWorkoutMultipleQuestion)
+            .setPositiveButton(R.string.actionImport) { _: DialogInterface?, _: Int -> importWorkout() }
+            .setNeutralButton(R.string.actionImportMultiple) { _: DialogInterface?, _: Int -> showMassImportGpx() }
+            .show()
+        refresh()
+        menu.close(true)
     }
 
-    private static final int FILE_IMPORT_SELECT_CODE = 21;
-    private static final int FOLDER_IMPORT_SELECT_CODE = 23;
-
-    private void importWorkout() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("*/*");
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
+    private fun importWorkout() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "*/*"
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
         try {
-            startActivityForResult(Intent.createChooser(intent, getString(R.string.importWorkout)), FILE_IMPORT_SELECT_CODE);
-        } catch (android.content.ActivityNotFoundException ignored) {
+            startActivityForResult(
+                Intent.createChooser(intent, getString(R.string.importWorkout)),
+                FILE_IMPORT_SELECT_CODE
+            )
+        } catch (ignored: ActivityNotFoundException) {
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            if (requestCode == FILE_IMPORT_SELECT_CODE) {
-                importFile(data.getData());
-            } else if (requestCode == FOLDER_IMPORT_SELECT_CODE) {
-                massImportGpx(data.getData());
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (data != null) {
+            if (resultCode == RESULT_OK) {
+                if (requestCode == FILE_IMPORT_SELECT_CODE) {
+                    importFile(data.data!!)
+                } else if (requestCode == FOLDER_IMPORT_SELECT_CODE) {
+                    massImportGpx(data.data!!)
+                }
             }
         }
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
-    private void importFile(Uri uri){
-        ProgressDialogController dialogController= new ProgressDialogController(this, getString(R.string.importWorkout));
-        dialogController.show();
-
-        new Thread(() -> {
+    private fun importFile(uri: Uri) {
+        val dialogController = ProgressDialogController(this, getString(R.string.importWorkout))
+        dialogController.show()
+        Thread {
             try {
-                InputStream stream = getContentResolver().openInputStream(uri);
-                IOHelper.GpxImporter.importWorkout(getApplicationContext(), stream);
-                mHandler.post(() -> {
-                    Toast.makeText(this, R.string.workoutImported, Toast.LENGTH_LONG).show();
-                    dialogController.cancel();
-                    refresh();
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-                mHandler.post(() -> {
-                    dialogController.cancel();
-                    showErrorDialog(e, R.string.error, R.string.errorImportFailed);
-                });
+                val stream = contentResolver.openInputStream(uri)
+                IOHelper.GpxImporter.importWorkout(applicationContext, stream)
+                mHandler.post {
+                    Toast.makeText(this, R.string.workoutImported, Toast.LENGTH_LONG).show()
+                    dialogController.cancel()
+                    refresh()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                mHandler.post {
+                    dialogController.cancel()
+                    showErrorDialog(e, R.string.error, R.string.errorImportFailed)
+                }
             }
-        }).start();
+        }.start()
     }
 
-    private void showMassImportGpx() {
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.importMultipleGpxFiles)
-                .setMessage(R.string.importMultipleMessageSelectFolder)
-                .setPositiveButton(R.string.okay, (dialog, which) -> openMassImportFolderSelector())
-                .setNegativeButton(R.string.cancel, null)
-                .show();
+    private fun showMassImportGpx() {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.importMultipleGpxFiles)
+            .setMessage(R.string.importMultipleMessageSelectFolder)
+            .setPositiveButton(R.string.okay) { _: DialogInterface?, _: Int -> openMassImportFolderSelector() }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
     }
 
-    private void openMassImportFolderSelector() {
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-        startActivityForResult(intent, FOLDER_IMPORT_SELECT_CODE);
+    private fun openMassImportFolderSelector() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
+        startActivityForResult(intent, FOLDER_IMPORT_SELECT_CODE)
     }
 
-    private void massImportGpx(Uri dirUri) {
-        Log.d("MassImport", dirUri.toString());
-        ThreadSafeProgressDialogController dialog = new ThreadSafeProgressDialogController(this, getString(R.string.importingFiles));
-        dialog.show();
-        new Thread(() -> {
+    private fun massImportGpx(dirUri: Uri) {
+        Log.d("MassImport", dirUri.toString())
+        val dialog = ThreadSafeProgressDialogController(this, getString(R.string.importingFiles))
+        dialog.show()
+        Thread {
             try {
-                int imported = 0;
-                DocumentFile documentFile = DocumentFile.fromTreeUri(this, dirUri);
-                DocumentFile[] files = documentFile.listFiles();
-                for (int i = 0; i < files.length; i++) {
-                    dialog.setProgress(100 * i / files.length);
-                    DocumentFile file = files[i];
-                    if (file.isFile() && file.canRead()) {
+                var imported = 0
+                val documentFile = DocumentFile.fromTreeUri(this, dirUri)
+                val files = documentFile!!.listFiles()
+                for (i in files.indices) {
+                    dialog.setProgress(100 * i / files.size)
+                    val file = files[i]
+                    if (file.isFile && file.canRead()) {
                         try {
-                            Uri fileUri = file.getUri();
-                            Log.d("MassImport", "Importing " + fileUri.toString());
-                            IOHelper.GpxImporter.importWorkout(this, getContentResolver().openInputStream(fileUri));
-                            imported++;
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            if (imported == 0 && i == files.length - 1) {
+                            val fileUri = file.uri
+                            Log.d("MassImport", "Importing $fileUri")
+                            IOHelper.GpxImporter.importWorkout(
+                                this,
+                                contentResolver.openInputStream(fileUri)
+                            )
+                            imported++
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                            if (imported == 0 && i == files.size - 1) {
                                 // If all workouts failed throw exception so it is shown to the user
-                                throw e;
+                                throw e
                             }
                         }
                     }
                 }
-                dialog.setProgress(100);
-                final int tmpImported = imported; // Needs to be a final variable to use in the handler lambda
-                mHandler.post(() -> {
-                    dialog.cancel();
-                    Toast.makeText(this, String.format(getString(R.string.importedWorkouts), tmpImported), Toast.LENGTH_LONG).show();
-                    refresh();
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-                mHandler.post(() -> {
-                    dialog.cancel();
-                    Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                });
+                dialog.setProgress(100)
+                val tmpImported =
+                    imported // Needs to be a final variable to use in the handler lambda
+                mHandler.post {
+                    dialog.cancel()
+                    Toast.makeText(
+                        this,
+                        String.format(getString(R.string.importedWorkouts), tmpImported),
+                        Toast.LENGTH_LONG
+                    ).show()
+                    refresh()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                mHandler.post {
+                    dialog.cancel()
+                    Toast.makeText(this, e.localizedMessage, Toast.LENGTH_LONG).show()
+                }
             }
-        }).start();
+        }.start()
     }
 
-    private void checkFirstStart() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+    private fun checkFirstStart() {
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         if (preferences.getBoolean("firstStart", true)) {
-            preferences.edit().putBoolean("firstStart", false).apply();
-            new AlertDialog.Builder(this)
-                    .setTitle(R.string.setPreferencesTitle)
-                    .setMessage(R.string.setPreferencesMessage)
-                    .setNegativeButton(R.string.cancel, null)
-                    .setPositiveButton(R.string.settings, (dialog, which) -> startActivity(new Intent(ListWorkoutsActivity.this, FitoTrackSettingsActivity.class)))
-                    .create().show();
+            preferences.edit().putBoolean("firstStart", false).apply()
+            AlertDialog.Builder(this)
+                .setTitle(R.string.setPreferencesTitle)
+                .setMessage(R.string.setPreferencesMessage)
+                .setNegativeButton(R.string.cancel, null)
+                .setPositiveButton(R.string.settings) { _: DialogInterface?, _: Int ->
+                    startActivity(
+                        Intent(this@ListWorkoutsActivity, FitoTrackSettingsActivity::class.java)
+                    )
+                }
+                .create().show()
         }
     }
 
-    private void startEnterWorkoutActivity() {
-        menu.close(true);
-        final Intent intent = new Intent(this, EnterWorkoutActivity.class);
-        new Handler().postDelayed(() -> startActivity(intent), 300);
+    private fun startEnterWorkoutActivity() {
+        menu.close(true)
+        val intent = Intent(this, EnterWorkoutActivity::class.java)
+        Handler().postDelayed({ startActivity(intent) }, 300)
     }
 
-    private void showWorkoutSelection() {
-        menu.close(true);
-        new SelectWorkoutTypeDialog(this, this::startRecording).show();
+    private fun showWorkoutSelection() {
+        menu.close(true)
+        SelectWorkoutTypeDialog(this) { activity: WorkoutType -> startRecording(activity) }.show()
     }
 
-    private void startRecording(WorkoutType activity) {
-        menu.close(true);
-        final Intent intent = new Intent(this, activity.getRecordingType().recorderActivityClass);
-        intent.setAction(RecordWorkoutActivity.LAUNCH_ACTION);
-        intent.putExtra(RecordWorkoutActivity.WORKOUT_TYPE_EXTRA, activity);
-        startActivity(intent);
+    private fun startRecording(activity: WorkoutType) {
+        menu.close(true)
+        val intent = Intent(this, activity.getRecordingType().recorderActivityClass)
+        intent.action = RecordWorkoutActivity.LAUNCH_ACTION
+        intent.putExtra(RecordWorkoutActivity.WORKOUT_TYPE_EXTRA, activity)
+        startActivity(intent)
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        refresh();
+    public override fun onResume() {
+        super.onResume()
+        refresh()
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        menu.close(true);
+    override fun onPause() {
+        super.onPause()
+        menu.close(true)
     }
 
-    @Override
-    public void onItemClick(int pos, GpsWorkout workout) {
-        final Intent intent = new Intent(this, ShowWorkoutActivity.class);
-        intent.putExtra(ShowWorkoutActivity.WORKOUT_ID_EXTRA, workout.id);
-        startActivity(intent);
-        lastClickedIndex = pos;
+    override fun onItemClick(pos: Int, workout: BaseWorkout) {
+        val intent =
+            Intent(this, workout.getWorkoutType(this).getRecordingType().showDetailsActivityClass)
+        intent.putExtra(ShowGpsWorkoutActivity.WORKOUT_ID_EXTRA, workout.id)
+        startActivity(intent)
+        lastClickedIndex = pos
     }
 
-    @Override
-    public void onItemLongClick(int pos, GpsWorkout workout) {
-        DialogUtils.showDeleteWorkoutDialog(this, () -> {
-            Instance.getInstance(ListWorkoutsActivity.this).db.gpsWorkoutDao().deleteWorkout(workout);
-            refresh();
-        });
-    }
-
-    private void refresh() {
-        loadData();
-        if (workouts.length > lastClickedIndex) {
-            adapter.notifyItemChanged(lastClickedIndex, workouts[lastClickedIndex]);
+    override fun onItemLongClick(pos: Int, workout: BaseWorkout) {
+        DialogUtils.showDeleteWorkoutDialog(this) {
+            if (workout is GpsWorkout) {
+                Instance.getInstance(this).db.gpsWorkoutDao().deleteWorkout(workout)
+            } else if (workout is IndoorWorkout) {
+                Instance.getInstance(this).db.indoorWorkoutDao().deleteWorkout(workout)
+            }
+            refresh()
         }
-        if (listSize != workouts.length) {
-            adapter.notifyDataSetChanged();
+    }
+
+    private fun refresh() {
+        loadData()
+        if (workouts.size > lastClickedIndex) {
+            adapter.notifyItemChanged(lastClickedIndex, workouts[lastClickedIndex])
         }
-        listSize = workouts.length;
-        refreshFABMenu();
+        if (listSize != workouts.size) {
+            adapter.notifyDataSetChanged()
+        }
+        listSize = workouts.size
+        refreshFABMenu()
     }
 
-    private void loadData() {
-        workouts = Instance.getInstance(this).db.gpsWorkoutDao().getWorkouts();
-        hintText.setVisibility(workouts.length == 0 ? View.VISIBLE : View.INVISIBLE);
-        adapter.setWorkouts(workouts);
+    private fun loadData() {
+        val workouts: MutableList<BaseWorkout> =
+            Instance.getInstance(this).db.gpsWorkoutDao().workouts.toMutableList()
+        var listIndex = 0
+
+        // Merging indoor workouts into gps workout list
+        Instance.getInstance(this).db.indoorWorkoutDao().workouts.forEach {
+            if (workouts.size <= listIndex || it.start > workouts[listIndex].start) {
+                workouts.add(listIndex, it)
+            }
+            listIndex++
+        }
+
+        this.workouts = workouts.toTypedArray()
+
+        hintText.visibility = if (workouts.size == 0) View.VISIBLE else View.INVISIBLE
+        adapter.setWorkouts(this.workouts)
     }
 
-    private void refreshFABMenu() {
-        FloatingActionButton lastFab = findViewById(R.id.workoutListRecordLast);
-        if (workouts.length > 0) {
-            WorkoutType lastType = workouts[0].getWorkoutType(this);
-            lastFab.setLabelText(lastType.title);
-            lastFab.setImageResource(Icon.getIcon(lastType.icon));
-            lastFab.setColorNormal(lastType.color);
-            lastFab.setColorPressed(lastFab.getColorNormal());
-            lastFab.setOnClickListener(v -> {
-                menu.close(true);
-                new Handler().postDelayed(() -> startRecording(lastType), 300);
-            });
+    private fun refreshFABMenu() {
+        val lastFab = findViewById<FloatingActionButton>(R.id.workoutListRecordLast)
+        if (workouts.isNotEmpty()) {
+            val lastType = workouts[0].getWorkoutType(this)
+            lastFab.labelText = lastType.title
+            lastFab.setImageResource(Icon.getIcon(lastType.icon))
+            lastFab.colorNormal = lastType.color
+            lastFab.colorPressed = lastFab.colorNormal
+            lastFab.setOnClickListener { v: View? ->
+                menu.close(true)
+                Handler().postDelayed({ startRecording(lastType) }, 300)
+            }
         } else {
-            lastFab.setVisibility(View.GONE);
+            lastFab.visibility = View.GONE
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.list_workout_menu, menu);
-        return true;
+        menuInflater.inflate(R.menu.list_workout_menu, menu)
+        return true
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
         if (id == R.id.actionOpenSettings) {
-            startActivity(new Intent(this, FitoTrackSettingsActivity.class));
-            return true;
+            startActivity(Intent(this, FitoTrackSettingsActivity::class.java))
+            return true
         }
-
         if (id == R.id.actionOpenStatisticss) {
-            startActivity(new Intent(this, AggregatedWorkoutStatisticsActivity.class));
-            return true;
+            startActivity(Intent(this, AggregatedWorkoutStatisticsActivity::class.java))
+            return true
         }
+        return super.onOptionsItemSelected(item)
+    }
 
-        return super.onOptionsItemSelected(item);
+    companion object {
+        private const val FILE_IMPORT_SELECT_CODE = 21
+        private const val FOLDER_IMPORT_SELECT_CODE = 23
     }
 }

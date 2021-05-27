@@ -22,9 +22,11 @@ package de.tadris.fitness.ui.workout.diagram;
 import android.content.Context;
 
 import de.tadris.fitness.R;
+import de.tadris.fitness.data.BaseSample;
+import de.tadris.fitness.data.BaseWorkout;
+import de.tadris.fitness.data.BaseWorkoutData;
 import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.GpsWorkout;
-import de.tadris.fitness.data.GpsWorkoutData;
 import de.tadris.fitness.data.WorkoutManager;
 
 public class SpeedConverter extends AbstractSampleConverter {
@@ -34,13 +36,13 @@ public class SpeedConverter extends AbstractSampleConverter {
     }
 
     @Override
-    public void onCreate(GpsWorkoutData data) {
-        WorkoutManager.roundSpeedValues(data.getSamples());
+    public void onCreate(BaseWorkoutData data) {
+        WorkoutManager.roundSpeedValues(data.castToGpsData().getSamples());
     }
 
     @Override
-    public float getValue(GpsSample sample) {
-        return (float) distanceUnitUtils.getDistanceUnitSystem().getSpeedFromMeterPerSecond(sample.tmpRoundedSpeed);
+    public float getValue(BaseSample sample) {
+        return (float) distanceUnitUtils.getDistanceUnitSystem().getSpeedFromMeterPerSecond(((GpsSample) sample).tmpRoundedSpeed);
     }
 
     @Override
@@ -64,12 +66,12 @@ public class SpeedConverter extends AbstractSampleConverter {
     }
 
     @Override
-    public float getMinValue(GpsWorkout workout) {
-        return (float) distanceUnitUtils.getDistanceUnitSystem().getSpeedFromMeterPerSecond(workout.avgSpeed * 0.4);
+    public float getMinValue(BaseWorkout workout) {
+        return (float) distanceUnitUtils.getDistanceUnitSystem().getSpeedFromMeterPerSecond(((GpsWorkout) workout).avgSpeed * 0.4);
     }
 
     @Override
-    public float getMaxValue(GpsWorkout workout) {
-        return (float) distanceUnitUtils.getDistanceUnitSystem().getSpeedFromMeterPerSecond(workout.avgSpeed * 1.6);
+    public float getMaxValue(BaseWorkout workout) {
+        return (float) distanceUnitUtils.getDistanceUnitSystem().getSpeedFromMeterPerSecond(((GpsWorkout) workout).avgSpeed * 1.6);
     }
 }

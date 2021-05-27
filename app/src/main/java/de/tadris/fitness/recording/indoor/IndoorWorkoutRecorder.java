@@ -102,6 +102,7 @@ public class IndoorWorkoutRecorder extends BaseWorkoutRecorder {
     private void addToExistingSample(ExerciseRecognizer.RepetitionRecognizedEvent event) {
         lastSample.intensity = (lastSample.repetitions * lastSample.intensity + event.getIntensity()) / (lastSample.repetitions + 1);
         lastSample.absoluteEndTime = event.getTimestamp();
+        lastSample.repetitions++;
     }
 
     private void addNewSample(ExerciseRecognizer.RepetitionRecognizedEvent event) {
@@ -115,6 +116,7 @@ public class IndoorWorkoutRecorder extends BaseWorkoutRecorder {
         sample.intervalTriggered = lastTriggeredInterval;
         lastTriggeredInterval = -1;
         samples.add(sample);
+        lastSample = sample;
     }
 
     public int getRepetitionsTotal() {

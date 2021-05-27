@@ -24,10 +24,12 @@ import android.hardware.SensorManager;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.data.AppDatabase;
+import de.tadris.fitness.data.BaseWorkoutData;
 import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.GpsWorkout;
 import de.tadris.fitness.data.GpsWorkoutData;
@@ -287,7 +289,7 @@ public class GpsWorkoutSaver {
         workout.end = samples.get(samples.size() - 1).absoluteTime;
 
         long pauseDuration = 0;
-        for (WorkoutCalculator.Pause pause : WorkoutCalculator.getPausesFromWorkout(getWorkoutData())) {
+        for (WorkoutCalculator.Pause pause : WorkoutCalculator.getPausesFromWorkout(getBaseWorkoutData())) {
             pauseDuration += pause.duration;
         }
         workout.pauseDuration = pauseDuration;
@@ -301,6 +303,10 @@ public class GpsWorkoutSaver {
 
     protected GpsWorkoutData getWorkoutData() {
         return new GpsWorkoutData(workout, samples);
+    }
+
+    protected BaseWorkoutData getBaseWorkoutData() {
+        return new BaseWorkoutData(workout, new ArrayList<>(samples));
     }
 
     protected void storeInDatabase() {

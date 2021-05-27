@@ -68,9 +68,17 @@
     <string name="workoutStartTime">Start Time</string>
     <string name="workoutEndTime">End Time</string>
     <string name="workoutDistance">Distance</string>
+    <string name="workoutRepetitions">Repetitions</string>
+    <string name="workoutSets">Sets</string>
     <string name="workoutPace">Pace</string>
     <string name="workoutRoute">Route</string>
     <string name="workoutSpeed">Speed</string>
+    <string name="workoutFrequency">Frequency</string>
+    <string name="workoutAvgFrequencyShort">Avg. Frequency</string>
+    <string name="workoutMaxFrequency">Max Frequency</string>
+    <string name="workoutIntensity">Intensity</string>
+    <string name="workoutAvgIntensityShort">Avg. Intensity</string>
+    <string name="workoutMaxIntensity">Max Intensity</string>
     <string name="workoutAvgSpeedShort">Avg. Speed</string>
     <string name="workoutAvgSpeedLong">Average Speed</string>
     <string name="workoutTopSpeed">Top Speed</string>

@@ -23,19 +23,19 @@ import androidx.annotation.ColorRes;
 
 import com.github.mikephil.charting.charts.CombinedChart;
 
-import de.tadris.fitness.data.GpsSample;
-import de.tadris.fitness.data.GpsWorkout;
-import de.tadris.fitness.data.GpsWorkoutData;
+import de.tadris.fitness.data.BaseSample;
+import de.tadris.fitness.data.BaseWorkout;
+import de.tadris.fitness.data.BaseWorkoutData;
 
 public interface SampleConverter {
 
-    void onCreate(GpsWorkoutData data);
+    void onCreate(BaseWorkoutData data);
 
-    float getMinValue(GpsWorkout workout);
+    float getMinValue(BaseWorkout workout);
 
-    float getMaxValue(GpsWorkout workout);
+    float getMaxValue(BaseWorkout workout);
 
-    float getValue(GpsSample sample);
+    float getValue(BaseSample sample);
 
     String getName();
 

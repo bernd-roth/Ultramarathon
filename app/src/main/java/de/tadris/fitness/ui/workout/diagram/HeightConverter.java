@@ -22,9 +22,11 @@ package de.tadris.fitness.ui.workout.diagram;
 import android.content.Context;
 
 import de.tadris.fitness.R;
+import de.tadris.fitness.data.BaseSample;
+import de.tadris.fitness.data.BaseWorkout;
+import de.tadris.fitness.data.BaseWorkoutData;
 import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.GpsWorkout;
-import de.tadris.fitness.data.GpsWorkoutData;
 
 public class HeightConverter extends AbstractSampleConverter {
 
@@ -33,12 +35,12 @@ public class HeightConverter extends AbstractSampleConverter {
     }
 
     @Override
-    public void onCreate(GpsWorkoutData data) {
+    public void onCreate(BaseWorkoutData data) {
     }
 
     @Override
-    public float getValue(GpsSample sample) {
-        return (float) distanceUnitUtils.getDistanceUnitSystem().getElevationFromMeters(sample.elevationMSL);
+    public float getValue(BaseSample sample) {
+        return (float) distanceUnitUtils.getDistanceUnitSystem().getElevationFromMeters(((GpsSample) sample).elevationMSL);
     }
 
     @Override
@@ -57,12 +59,12 @@ public class HeightConverter extends AbstractSampleConverter {
     }
 
     @Override
-    public float getMinValue(GpsWorkout workout) {
-        return (float) distanceUnitUtils.getDistanceUnitSystem().getElevationFromMeters(workout.minElevationMSL);
+    public float getMinValue(BaseWorkout workout) {
+        return (float) distanceUnitUtils.getDistanceUnitSystem().getElevationFromMeters(((GpsWorkout) workout).minElevationMSL);
     }
 
     @Override
-    public float getMaxValue(GpsWorkout workout) {
-        return (float) distanceUnitUtils.getDistanceUnitSystem().getElevationFromMeters(workout.maxElevationMSL);
+    public float getMaxValue(BaseWorkout workout) {
+        return (float) distanceUnitUtils.getDistanceUnitSystem().getElevationFromMeters(((GpsWorkout) workout).maxElevationMSL);
     }
 }

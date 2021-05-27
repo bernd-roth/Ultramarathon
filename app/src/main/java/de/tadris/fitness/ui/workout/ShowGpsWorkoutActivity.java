@@ -62,7 +62,7 @@ import de.tadris.fitness.util.sections.SectionListView;
 import de.westnordost.osmapi.traces.GpsTraceDetails;
 import oauth.signpost.OAuthConsumer;
 
-public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.WorkoutDeleter {
+public class ShowGpsWorkoutActivity extends GpsWorkoutActivity implements DialogUtils.WorkoutDeleter {
 
     TextView commentView;
 
@@ -155,14 +155,14 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
 
     private void startDiagramActivity(String diagramType) {
         final Intent intent = new Intent(this, ShowWorkoutMapDiagramActivity.class);
-        intent.putExtra(ShowWorkoutActivity.WORKOUT_ID_EXTRA, workout.id);
+        intent.putExtra(ShowGpsWorkoutActivity.WORKOUT_ID_EXTRA, workout.id);
         intent.putExtra(ShowWorkoutMapDiagramActivity.DIAGRAM_TYPE_EXTRA, diagramType);
         startActivity(intent);
     }
 
     private void startFullscreenMapActivity() {
         final Intent intent = new Intent(this, ShowWorkoutFullscreenMapActivity.class);
-        intent.putExtra(ShowWorkoutActivity.WORKOUT_ID_EXTRA, workout.id);
+        intent.putExtra(ShowGpsWorkoutActivity.WORKOUT_ID_EXTRA, workout.id);
         startActivity(intent);
     }
 
@@ -279,7 +279,7 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
         OAuthAuthentication authentication = new OAuthAuthentication(mHandler, this, new OAuthAuthentication.OAuthAuthenticationListener() {
             @Override
             public void authenticationFailed() {
-                new AlertDialog.Builder(ShowWorkoutActivity.this)
+                new AlertDialog.Builder(ShowGpsWorkoutActivity.this)
                         .setTitle(R.string.error)
                         .setMessage(R.string.authenticationFailed)
                         .setPositiveButton(R.string.okay, null)
@@ -343,8 +343,8 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == EditWorkoutStartEndActivity.INTENT_RESULT_CODE_WORKOUT_MODIFIED) {
             //Restart the activity as the data has changed..
-            final Intent intent = new Intent(this, ShowWorkoutActivity.class);
-            intent.putExtra(ShowWorkoutActivity.WORKOUT_ID_EXTRA, workout.id);
+            final Intent intent = new Intent(this, ShowGpsWorkoutActivity.class);
+            intent.putExtra(ShowGpsWorkoutActivity.WORKOUT_ID_EXTRA, workout.id);
             startActivity(intent);
             finish();
         }
@@ -360,8 +360,8 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
     private void editWorkoutStartEndActivity() {
         try {
             final Intent intent = new Intent(this, EditWorkoutStartEndActivity.class);
-            intent.putExtra(ShowWorkoutActivity.WORKOUT_ID_EXTRA, workout.id);
-            startActivityForResult(intent,3);
+            intent.putExtra(ShowGpsWorkoutActivity.WORKOUT_ID_EXTRA, workout.id);
+            startActivityForResult(intent, 3);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -370,7 +370,7 @@ public class ShowWorkoutActivity extends WorkoutActivity implements DialogUtils.
     private void shareWorkoutActivity() {
         try {
             final Intent intent = new Intent(this, ShareWorkoutActivity.class);
-            intent.putExtra(ShowWorkoutActivity.WORKOUT_ID_EXTRA, workout.id);
+            intent.putExtra(ShowGpsWorkoutActivity.WORKOUT_ID_EXTRA, workout.id);
             startActivity(intent);
         } catch (Exception e) {
             e.printStackTrace();

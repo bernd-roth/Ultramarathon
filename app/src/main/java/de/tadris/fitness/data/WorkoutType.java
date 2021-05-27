@@ -40,6 +40,9 @@ import de.tadris.fitness.R;
 import de.tadris.fitness.ui.record.RecordGpsWorkoutActivity;
 import de.tadris.fitness.ui.record.RecordIndoorWorkoutActivity;
 import de.tadris.fitness.ui.record.RecordWorkoutActivity;
+import de.tadris.fitness.ui.workout.ShowGpsWorkoutActivity;
+import de.tadris.fitness.ui.workout.ShowIndoorWorkoutActivity;
+import de.tadris.fitness.ui.workout.WorkoutActivity;
 import de.tadris.fitness.util.Icon;
 
 @Entity(tableName = "workout_type")
@@ -177,7 +180,7 @@ public class WorkoutType implements Serializable {
                         0, RecordingType.GPS.id),
                 new WorkoutType("treadmill",
                         context.getString(R.string.workoutTypeTreadmill),
-                        -1,
+                        5,
                         context.getResources().getColor(R.color.colorPrimaryRunning),
                         Icon.RUNNING.name,
                         -1, RecordingType.INDOOR.id,
@@ -187,15 +190,17 @@ public class WorkoutType implements Serializable {
 
     public enum RecordingType {
 
-        INDOOR("indoor", RecordIndoorWorkoutActivity.class),
-        GPS("gps", RecordGpsWorkoutActivity.class);
+        INDOOR("indoor", RecordIndoorWorkoutActivity.class, ShowIndoorWorkoutActivity.class),
+        GPS("gps", RecordGpsWorkoutActivity.class, ShowGpsWorkoutActivity.class);
 
         public final String id;
         public final Class<? extends RecordWorkoutActivity> recorderActivityClass;
+        public final Class<? extends WorkoutActivity> showDetailsActivityClass;
 
-        RecordingType(String id, Class<? extends RecordWorkoutActivity> recorderActivityClass) {
+        RecordingType(String id, Class<? extends RecordWorkoutActivity> recorderActivityClass, Class<? extends WorkoutActivity> showDetailsActivityClass) {
             this.id = id;
             this.recorderActivityClass = recorderActivityClass;
+            this.showDetailsActivityClass = showDetailsActivityClass;
         }
 
         static RecordingType findById(String id) {

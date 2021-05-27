@@ -19,46 +19,49 @@
 
 package de.tadris.fitness.data;
 
-import android.content.Context;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import de.tadris.fitness.Instance;
+public class BaseWorkoutData {
 
-public class IndoorWorkoutData {
+    protected BaseWorkout workout;
+    protected List<BaseSample> samples;
 
-    public static IndoorWorkoutData fromWorkout(Context context, IndoorWorkout workout) {
-        AppDatabase database = Instance.getInstance(context).db;
-        return new IndoorWorkoutData(workout, Arrays.asList(database.indoorWorkoutDao().getAllSamplesOfWorkout(workout.id)));
-    }
-
-    private IndoorWorkout workout;
-    private List<IndoorSample> samples;
-
-    public IndoorWorkoutData(IndoorWorkout workout, List<IndoorSample> samples) {
+    public BaseWorkoutData(BaseWorkout workout, List<BaseSample> samples) {
         this.workout = workout;
         this.samples = samples;
     }
 
-    public IndoorWorkout getWorkout() {
+    public BaseWorkout getWorkout() {
         return workout;
     }
 
-    public void setWorkout(IndoorWorkout workout) {
+    public void setWorkout(BaseWorkout workout) {
         this.workout = workout;
     }
 
-    public List<IndoorSample> getSamples() {
+    public List<BaseSample> getSamples() {
         return samples;
     }
 
-    public void setSamples(List<IndoorSample> samples) {
+    public void setSamples(List<BaseSample> samples) {
         this.samples = samples;
     }
 
-    public BaseWorkoutData castToBaseWorkoutData() {
-        return new BaseWorkoutData(workout, new ArrayList<>(samples));
+    public GpsWorkoutData castToGpsData() {
+        List<GpsSample> samples = new ArrayList<>();
+        for (BaseSample sample : this.samples) {
+            samples.add((GpsSample) sample);
+        }
+        return new GpsWorkoutData((GpsWorkout) workout, samples);
     }
+
+    public IndoorWorkoutData castToIndoorData() {
+        List<IndoorSample> samples = new ArrayList<>();
+        for (BaseSample sample : this.samples) {
+            samples.add((IndoorSample) sample);
+        }
+        return new IndoorWorkoutData((IndoorWorkout) workout, samples);
+    }
+
 }

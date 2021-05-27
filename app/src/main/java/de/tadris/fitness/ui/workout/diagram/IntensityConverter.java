@@ -25,47 +25,46 @@ import de.tadris.fitness.R;
 import de.tadris.fitness.data.BaseSample;
 import de.tadris.fitness.data.BaseWorkout;
 import de.tadris.fitness.data.BaseWorkoutData;
-import de.tadris.fitness.data.GpsSample;
-import de.tadris.fitness.data.WorkoutManager;
+import de.tadris.fitness.data.IndoorSample;
+import de.tadris.fitness.data.IndoorWorkout;
 
-public class InclinationConverter extends AbstractSampleConverter {
+public class IntensityConverter extends AbstractSampleConverter {
 
-    public InclinationConverter(Context context) {
+    public IntensityConverter(Context context) {
         super(context);
     }
 
     @Override
     public void onCreate(BaseWorkoutData data) {
-        WorkoutManager.calculateInclination(data.castToGpsData().getSamples());
-    }
-
-    @Override
-    public float getValue(BaseSample sample) {
-        return ((GpsSample) sample).tmpInclination;
-    }
-
-    @Override
-    public String getName() {
-        return getString(R.string.inclination);
-    }
-
-    @Override
-    public String getUnit() {
-        return "%";
-    }
-
-    @Override
-    public int getColor() {
-        return R.color.diagramInclination;
     }
 
     @Override
     public float getMinValue(BaseWorkout workout) {
-        return -10;
+        return 0;
     }
 
     @Override
     public float getMaxValue(BaseWorkout workout) {
-        return 10;
+        return (float) ((IndoorWorkout) workout).maxIntensity;
+    }
+
+    @Override
+    public float getValue(BaseSample sample) {
+        return (float) ((IndoorSample) sample).intensity;
+    }
+
+    @Override
+    public String getName() {
+        return getString(R.string.workoutIntensity);
+    }
+
+    @Override
+    public int getColor() {
+        return R.color.diagramIntensity;
+    }
+
+    @Override
+    public String getUnit() {
+        return "";
     }
 }

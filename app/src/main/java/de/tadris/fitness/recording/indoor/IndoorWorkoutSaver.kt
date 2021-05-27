@@ -64,14 +64,14 @@ class IndoorWorkoutSaver(private val context: Context, workoutData: IndoorWorkou
             samples.forEach { sample ->
                 val timeDiff = sample.relativeTime - lastTime
                 sample.frequency =
-                    if (timeDiff > 0) sample.repetitions.toDouble() / timeDiff else 0.0
+                    if (timeDiff > 0) 1000 * sample.repetitions.toDouble() / timeDiff else 0.0
                 lastTime = sample.relativeTime
             }
         }
     }
 
     private fun setMaxAvgFrequency() {
-        workout.avgFrequency = workout.repetitions.toDouble() / workout.duration
+        workout.avgFrequency = 1000 * workout.repetitions.toDouble() / workout.duration
         workout.maxFrequency = samples.maxOf { it.frequency }
     }
 
