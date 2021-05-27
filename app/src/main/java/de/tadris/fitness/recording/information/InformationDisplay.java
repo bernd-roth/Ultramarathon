@@ -27,16 +27,18 @@ import de.tadris.fitness.recording.BaseWorkoutRecorder;
 
 public class InformationDisplay {
 
-    private UserPreferences preferences;
-    private InformationManager manager;
+    private final String mode;
+    private final UserPreferences preferences;
+    private final InformationManager manager;
 
-    public InformationDisplay(Context context) {
+    public InformationDisplay(String mode, Context context) {
+        this.mode = mode;
         this.preferences = Instance.getInstance(context).userPreferences;
         this.manager = new InformationManager(context);
     }
 
     public DisplaySlot getDisplaySlot(BaseWorkoutRecorder recorder, int slot) {
-        String informationId = preferences.getIdOfDisplayedInformation(slot);
+        String informationId = preferences.getIdOfDisplayedInformation(mode, slot);
         RecordingInformation information = manager.getInformationById(informationId);
         if (information != null) {
             return new DisplaySlot(slot, information.getTitle(), information.getDisplayedText(recorder));

@@ -150,7 +150,7 @@ public class UserPreferences {
         return preferences.getBoolean("intervalsIncludePause", true);
     }
 
-    public String getIdOfDisplayedInformation(int slot) {
+    public String getIdOfDisplayedInformation(String mode, int slot) {
         String defValue = "";
         switch (slot) {
             case 0:
@@ -166,11 +166,11 @@ public class UserPreferences {
                 defValue = "pause_duration";
                 break;
         }
-        return preferences.getString("information_display_" + slot, defValue);
+        return preferences.getString("information_display_" + mode + "_" + slot, defValue);
     }
 
-    public void setIdOfDisplayedInformation(int slot, String id) {
-        preferences.edit().putString("information_display_" + slot, id).apply();
+    public void setIdOfDisplayedInformation(String mode, int slot, String id) {
+        preferences.edit().putString("information_display_" + mode + "_" + slot, id).apply();
     }
 
     public String getDateFormatSetting() {

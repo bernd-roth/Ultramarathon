@@ -23,6 +23,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import static androidx.room.ForeignKey.CASCADE;
@@ -39,8 +40,17 @@ public class IndoorSample extends BaseSample {
     @ColumnInfo(name = "workout_id", index = true)
     public long workoutId;
 
+    public int repetitions;
+
+    public long absoluteEndTime;
+
     public double intensity;
 
     public double frequency;
+
+    @JsonIgnore
+    public long getSampleDuration() {
+        return absoluteEndTime - absoluteTime;
+    }
 
 }

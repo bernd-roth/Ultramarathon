@@ -29,11 +29,13 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
+import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
@@ -222,7 +224,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
 
         updateStartButton(false, R.string.cannotStart, null);
 
-        informationDisplay = new InformationDisplay(this);
+        informationDisplay = new InformationDisplay(activity.recordingType, this);
 
         infoViews[0] = new InfoViewHolder(0, this, findViewById(R.id.recordInfo1Title), findViewById(R.id.recordInfo1Value));
         infoViews[1] = new InfoViewHolder(1, this, findViewById(R.id.recordInfo2Title), findViewById(R.id.recordInfo2Value));
@@ -963,7 +965,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
     @Override
     public void onInfoViewClick(int slot) {
         if (instance.recorder.getState() == GpsWorkoutRecorder.RecordingState.IDLE) {
-            new SelectWorkoutInformationDialog(this, slot, this).show();
+            new SelectWorkoutInformationDialog(this, activity.recordingType, slot, this).show();
         }
     }
 
@@ -986,6 +988,13 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
     private boolean isBluetoothSupported() {
         // Check if device has a bluetooth adapter
         return BluetoothAdapter.getDefaultAdapter() != null;
+    }
+
+    protected void openSystemSettings() {
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", getPackageName(), null);
+        intent.setData(uri);
+        startActivity(intent);
     }
 
     /**

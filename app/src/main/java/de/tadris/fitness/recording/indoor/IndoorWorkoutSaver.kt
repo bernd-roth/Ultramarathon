@@ -55,7 +55,7 @@ class IndoorWorkoutSaver(private val context: Context, workoutData: IndoorWorkou
     }
 
     private fun setRepetitions() {
-        workout.repetitions = samples.size
+        workout.repetitions = samples.sumOf { it.repetitions }
     }
 
     private fun setFrequencies() {
@@ -63,7 +63,8 @@ class IndoorWorkoutSaver(private val context: Context, workoutData: IndoorWorkou
             var lastTime = samples[0].relativeTime
             samples.forEach { sample ->
                 val timeDiff = sample.relativeTime - lastTime
-                sample.frequency = if (timeDiff > 0) 1.0 / timeDiff else 0.0
+                sample.frequency =
+                    if (timeDiff > 0) sample.repetitions.toDouble() / timeDiff else 0.0
                 lastTime = sample.relativeTime
             }
         }

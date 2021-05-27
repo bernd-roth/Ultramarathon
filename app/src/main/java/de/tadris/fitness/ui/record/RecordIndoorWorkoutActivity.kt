@@ -18,8 +18,14 @@
  */
 package de.tadris.fitness.ui.record
 
+import android.Manifest
+import android.app.AlertDialog
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.widget.TextView
+import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
 import de.tadris.fitness.Instance
 import de.tadris.fitness.R
 import de.tadris.fitness.data.WorkoutType
@@ -32,6 +38,10 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 class RecordIndoorWorkoutActivity : RecordWorkoutActivity() {
+
+    companion object {
+        const val REQUEST_CODE_ACTIVITY_PERMISSION = 12
+    }
 
     private lateinit var repetitionsText: TextView
     private lateinit var exerciseText: TextView
@@ -54,9 +64,69 @@ class RecordIndoorWorkoutActivity : RecordWorkoutActivity() {
         exerciseText = findViewById(R.id.indoorRecordingType)
         initAfterContent()
 
+        checkPermissions()
+
         updateStartButton(true, R.string.start) { start() }
 
         setTitle(R.string.recordWorkout) // TODO
+    }
+
+    override fun onResume() {
+        super.onResume()
+        refreshRepetitions()
+    }
+
+    private fun checkPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && !hasPermission()) {
+            showActivityPermissionConsent()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private fun showActivityPermissionConsent() {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.recordingPermissionNotGrantedTitle)
+            .setMessage(R.string.recordingActivityPermissionMessage)
+            .setPositiveButton(R.string.actionGrant) { _, _ -> requestActivityPermission() }
+            .setNegativeButton(R.string.cancel) { _, _ -> activityFinish() }
+            .show()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private fun requestActivityPermission() {
+        ActivityCompat.requestPermissions(
+            this, arrayOf(
+                Manifest.permission.ACTIVITY_RECOGNITION
+            ), REQUEST_CODE_ACTIVITY_PERMISSION
+        )
+    }
+
+    private fun hasPermission(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACTIVITY_RECOGNITION
+            ) == PackageManager.PERMISSION_GRANTED
+        } else {
+            true
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_CODE_ACTIVITY_PERMISSION) {
+            if (!hasPermission()) {
+                AlertDialog.Builder(this)
+                    .setTitle(R.string.recordingPermissionNotGrantedTitle)
+                    .setMessage(R.string.recordingActivityPermissionMessage)
+                    .setPositiveButton(R.string.settings) { _, _ -> openSystemSettings() }
+                    .create().show()
+            }
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -67,7 +137,8 @@ class RecordIndoorWorkoutActivity : RecordWorkoutActivity() {
     private fun refreshRepetitions() {
         val recorder = Instance.getInstance(this).recorder as IndoorWorkoutRecorder
         repetitionsText.text = recorder.repetitionsTotal.toString()
-        exerciseText.text = resources.getQuantityString(activity.repeatingExerciseName, recorder.repetitionsTotal)
+        exerciseText.text =
+            resources.getQuantityString(activity.repeatingExerciseName, recorder.repetitionsTotal)
     }
 
     public override fun getServiceClass(): Class<out BaseRecorderService?> {

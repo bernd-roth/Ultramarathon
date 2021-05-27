@@ -26,10 +26,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -248,15 +246,8 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.recordingPermissionNotGrantedTitle)
                 .setMessage(message)
-                .setPositiveButton(R.string.settings, (dialog, which) -> openLocationSettings())
+                .setPositiveButton(R.string.settings, (dialog, which) -> openSystemSettings())
                 .create().show();
-    }
-
-    private void openLocationSettings() {
-        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        Uri uri = Uri.fromParts("package", getPackageName(), null);
-        intent.setData(uri);
-        startActivity(intent);
     }
 
     @Override

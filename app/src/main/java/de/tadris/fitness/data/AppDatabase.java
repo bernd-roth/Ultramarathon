@@ -28,7 +28,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(version = 16, entities = {GpsWorkout.class, GpsSample.class, IndoorWorkout.class, IndoorSample.class, Interval.class, IntervalSet.class, WorkoutType.class}, exportSchema = false)
+@Database(version = 15, entities = {GpsWorkout.class, GpsSample.class, IndoorWorkout.class, IndoorSample.class, Interval.class, IntervalSet.class, WorkoutType.class}, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "fito-track";
@@ -361,7 +361,7 @@ public abstract class AppDatabase extends RoomDatabase {
                                     "workoutType TEXT DEFAULT NULL," +
                                     "calorie INTEGER NOT NULL DEFAULT 0," +
                                     "edited INTEGER NOT NULL DEFAULT 0," +
-                                    "amount INTEGER NOT NULL DEFAULT 0," +
+                                    "repetitions INTEGER NOT NULL DEFAULT 0," +
                                     "avgFrequency REAL NOT NULL DEFAULT 0," +
                                     "maxFrequency REAL NOT NULL DEFAULT 0," +
                                     "avgIntensity REAL NOT NULL DEFAULT 0," +
@@ -378,26 +378,18 @@ public abstract class AppDatabase extends RoomDatabase {
                                     "interval_triggered INTEGER NOT NULL DEFAULT 0," +
                                     "workout_id INTEGER NOT NULL DEFAULT 0," +
                                     "intensity REAL NOT NULL DEFAULT 0," +
+                                    "frequency REAL NOT NULL DEFAULT 0," +
+                                    "repetitions INTEGER NOT NULL DEFAULT 0," +
+                                    "absoluteEndTime INTEGER NOT NULL DEFAULT 0," +
                                     "   FOREIGN KEY (workout_id) \n" +
                                     "      REFERENCES indoor_workout (id) \n" +
                                     "         ON DELETE CASCADE \n" +
                                     "         ON UPDATE NO ACTION" +
                                     ");");
 
-                            database.execSQL("create index index_indoor_sample_workout_id on indoor_sample (workout_id)");
-
-                            database.setTransactionSuccessful();
-                        } finally {
-                            database.endTransaction();
-                        }
-                    }
-                }, new Migration(15, 16) {
-                    @Override
-                    public void migrate(@NonNull SupportSQLiteDatabase database) {
-                        try {
-                            database.beginTransaction();
-
                             database.execSQL("ALTER table workout_type add COLUMN type TEXT default 'gps';");
+
+                            database.execSQL("create index index_indoor_sample_workout_id on indoor_sample (workout_id)");
 
                             database.setTransactionSuccessful();
                         } finally {

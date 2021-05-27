@@ -39,7 +39,9 @@ import de.tadris.fitness.ui.record.RecordWorkoutActivity;
 
 public class IndoorWorkoutRecorder extends BaseWorkoutRecorder {
 
+    WorkoutType type;
     IndoorWorkout workout;
+    IndoorSample lastSample;
     final List<IndoorSample> samples = new ArrayList<>();
     private boolean saved = false;
 
@@ -47,8 +49,9 @@ public class IndoorWorkoutRecorder extends BaseWorkoutRecorder {
 
     public IndoorWorkoutRecorder(Context context, WorkoutType workoutType) {
         super(context);
-        workout = new IndoorWorkout();
-        workout.edited = false;
+        this.type = workoutType;
+        this.workout = new IndoorWorkout();
+        this.workout.edited = false;
         this.workout.setWorkoutType(workoutType);
     }
 
@@ -84,17 +87,34 @@ public class IndoorWorkoutRecorder extends BaseWorkoutRecorder {
 
     @Subscribe
     public void onRepetitionRecognized(ExerciseRecognizer.RepetitionRecognizedEvent event) {
-        Log.d("Recorder", "repetition recognized with intensity " + event.getIntensity());
+        lastSampleTime = System.currentTimeMillis();
+        if (state == RecordingState.RUNNING && event.getTimestamp() > workout.start) {
+            Log.d("Recorder", "repetition recognized with intensity " + event.getIntensity());
+            if (lastSample != null && lastSample.repetitions < type.minDistance && event.getTimestamp() - lastSample.absoluteTime < PAUSE_TIME) {
+                addToExistingSample(event);
+            } else {
+                addNewSample(event);
+            }
+            repetitions++;
+        }
+    }
+
+    private void addToExistingSample(ExerciseRecognizer.RepetitionRecognizedEvent event) {
+        lastSample.intensity = (lastSample.repetitions * lastSample.intensity + event.getIntensity()) / (lastSample.repetitions + 1);
+        lastSample.absoluteEndTime = event.getTimestamp();
+    }
+
+    private void addNewSample(ExerciseRecognizer.RepetitionRecognizedEvent event) {
         IndoorSample sample = new IndoorSample();
         sample.absoluteTime = event.getTimestamp();
+        sample.absoluteEndTime = event.getTimestamp();
+        sample.repetitions = 1;
         sample.relativeTime = event.getTimestamp() - startTime - getPauseDuration();
         sample.intensity = event.getIntensity();
         sample.heartRate = lastHeartRate;
         sample.intervalTriggered = lastTriggeredInterval;
         lastTriggeredInterval = -1;
         samples.add(sample);
-
-        repetitions++;
     }
 
     public int getRepetitionsTotal() {
