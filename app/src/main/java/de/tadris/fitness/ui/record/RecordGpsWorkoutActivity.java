@@ -77,8 +77,19 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
+
         boolean wasAlreadyRunning = false;
-        if (LAUNCH_ACTION.equals(intent.getAction())) {
+        if (!LAUNCH_ACTION.equals(intent.getAction())) {
+            wasAlreadyRunning = true;
+        } else if (instance.recorder != null && instance.recorder.getState() != BaseWorkoutRecorder.RecordingState.IDLE) {
+            wasAlreadyRunning = true;
+        }
+
+
+        if (wasAlreadyRunning) {
+            activity = instance.recorder.getWorkout().getWorkoutType(this);
+            wasAlreadyRunning = true;
+        } else {
             Serializable workoutType = intent.getSerializableExtra(WORKOUT_TYPE_EXTRA);
             if (workoutType instanceof WorkoutType) {
                 activity = (WorkoutType) workoutType;
@@ -88,14 +99,11 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
                 // TODO Add Dialog, prefere Resume or Delete
                 if (instance.recorder != null &&
                         instance.recorder.getState() != BaseWorkoutRecorder.RecordingState.IDLE) {
-                    instance.recorder.stop();
+                    instance.recorder.stop("New activity will be started");
                     saveIfNotSaved();
                 }
                 instance.recorder = new GpsWorkoutRecorder(getApplicationContext(), activity);
             }
-        } else {
-            activity = instance.recorder.getWorkout().getWorkoutType(this);
-            wasAlreadyRunning = true;
         }
 
         initBeforeContent();

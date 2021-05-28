@@ -54,7 +54,7 @@ import de.tadris.fitness.recording.event.HeartRateConnectionChangeEvent;
 import de.tadris.fitness.recording.gps.GpsRecorderService;
 import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
 import de.tadris.fitness.recording.sensors.HRManager;
-import de.tadris.fitness.ui.record.RecordGpsWorkoutActivity;
+import de.tadris.fitness.ui.record.RecordWorkoutActivity;
 import de.tadris.fitness.util.NotificationHelper;
 import no.nordicsemi.android.ble.observer.ConnectionObserver;
 
@@ -118,7 +118,7 @@ public abstract class BaseRecorderService extends Service {
         }
 
         private void publishState(GpsRecorderService.HeartRateConnectionState state) {
-            EventBus.getDefault().post(new HeartRateConnectionChangeEvent(state));
+            EventBus.getDefault().postSticky(new HeartRateConnectionChangeEvent(state));
         }
     }
 
@@ -213,8 +213,8 @@ public abstract class BaseRecorderService extends Service {
             builder.setChannelId(NotificationHelper.CHANNEL_WORKOUT);
         }
 
-        Intent recorderActivityIntent = new Intent(this, RecordGpsWorkoutActivity.class);
-        recorderActivityIntent.setAction(RecordGpsWorkoutActivity.RESUME_ACTION);
+        Intent recorderActivityIntent = new Intent(this, instance.recorder.getActivityClass());
+        recorderActivityIntent.setAction(RecordWorkoutActivity.RESUME_ACTION);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, recorderActivityIntent, 0);
         builder.setContentIntent(pendingIntent);
 

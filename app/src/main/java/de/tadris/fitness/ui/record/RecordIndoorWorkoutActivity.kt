@@ -65,20 +65,18 @@ class RecordIndoorWorkoutActivity : RecordWorkoutActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        var wasAlreadyRunning = false
-        if (LAUNCH_ACTION == intent.action) {
+        val wasAlreadyRunning = if (LAUNCH_ACTION != intent.action) {
+            true
+        } else instance.recorder != null && instance.recorder.state != BaseWorkoutRecorder.RecordingState.IDLE
+
+        if (wasAlreadyRunning) {
+            activity = instance.recorder.workout.getWorkoutType(this)
+        } else {
             val workoutType = intent.getSerializableExtra(WORKOUT_TYPE_EXTRA)
             if (workoutType is WorkoutType) {
                 activity = workoutType
-                if (instance.recorder != null && instance.recorder.state != BaseWorkoutRecorder.RecordingState.IDLE) {
-                    instance.recorder.stop()
-                    saveIfNotSaved()
-                }
                 instance.recorder = IndoorWorkoutRecorder(applicationContext, activity)
             }
-        } else {
-            activity = instance.recorder.workout.getWorkoutType(this)
-            wasAlreadyRunning = true
         }
 
         initBeforeContent()
@@ -94,7 +92,7 @@ class RecordIndoorWorkoutActivity : RecordWorkoutActivity() {
 
         updateStartButton(true, R.string.start) { start() }
 
-        setTitle(R.string.recordWorkout) // TODO
+        setTitle(R.string.recordWorkout)
 
         if (wasAlreadyRunning) {
             if (instance.recorder.state != BaseWorkoutRecorder.RecordingState.IDLE) {
@@ -102,8 +100,12 @@ class RecordIndoorWorkoutActivity : RecordWorkoutActivity() {
                 timeView.visibility = View.VISIBLE
                 invalidateOptionsMenu()
             }
-            (instance.recorder as IndoorWorkoutRecorder).samples.forEach {
-                onSampleFinalized(it)
+            val samples = (instance.recorder as IndoorWorkoutRecorder).samples
+            if (samples.isNotEmpty()) {
+                lastSampleTime = samples.first().absoluteTime
+                samples.subList(0, samples.size - 1).forEach {
+                    onSampleFinalized(it)
+                }
             }
         }
     }
@@ -136,6 +138,7 @@ class RecordIndoorWorkoutActivity : RecordWorkoutActivity() {
         chart.axisRight.setDrawGridLines(false)
 
         chart.description.text = ""
+        chart.setNoDataText("")
     }
 
     override fun onResume() {
@@ -203,13 +206,13 @@ class RecordIndoorWorkoutActivity : RecordWorkoutActivity() {
         refreshRepetitions()
     }
 
-    var lastSampleTime = System.currentTimeMillis()
+    private var lastSampleTime = System.currentTimeMillis()
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onSampleFinalized(sample: IndoorSample) {
         val frequency =
             1000 * sample.repetitions.toDouble() / (sample.absoluteEndTime - lastSampleTime + 1)
-        lastSampleTime = System.currentTimeMillis()
+        lastSampleTime = sample.absoluteEndTime
         frequencyEntries.add(Entry(sample.relativeTime.toFloat() / 1000 / 60, frequency.toFloat()))
         if (sample.intensity > 0) {
             intensityEntries.add(
@@ -269,7 +272,5 @@ class RecordIndoorWorkoutActivity : RecordWorkoutActivity() {
         return IndoorRecorderService::class.java
     }
 
-    override fun onListenerStart() {
-        // TODO
-    }
+    override fun onListenerStart() {}
 }

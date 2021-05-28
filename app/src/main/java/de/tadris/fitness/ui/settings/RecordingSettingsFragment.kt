@@ -50,7 +50,7 @@ class RecordingSettingsFragment : FitoTrackSettingFragment(), AutoStartModeSelec
     lateinit var instance: Instance
     lateinit var preferences: UserPreferences
 
-    override fun onCreatePreferences(savedInstanceState: Bundle, rootKey: String) {
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         instance = Instance.getInstance(context)
         preferences = Instance.getInstance(requireContext()).userPreferences
         addPreferencesFromResource(R.xml.preferences_recording)

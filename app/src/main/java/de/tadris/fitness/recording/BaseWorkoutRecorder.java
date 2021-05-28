@@ -100,7 +100,7 @@ public abstract class BaseWorkoutRecorder {
                 long timeDiff = System.currentTimeMillis() - lastSampleTime;
                 if (autoTimeoutMs > 0 && timeDiff > autoTimeoutMs) {
                     if (isActive()) {
-                        stop();
+                        stop("Auto timeout, timediff: " + timeDiff);
                         save();
                         EventBus.getDefault().post(new WorkoutAutoStopEvent());
                     }
@@ -140,7 +140,8 @@ public abstract class BaseWorkoutRecorder {
         }
     }
 
-    public void stop() {
+    public void stop(String reason) {
+        Log.i("Recorder", "Stopping workout, reason: " + reason);
         if (state == RecordingState.PAUSED) {
             resume();
         }

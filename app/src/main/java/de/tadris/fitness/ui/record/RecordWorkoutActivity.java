@@ -235,8 +235,6 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
             EventBus.getDefault().register(this);
         }
 
-        updateDescription();
-
         startListener();
     }
 
@@ -440,7 +438,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
         invalidateOptionsMenu();
     }
 
-    protected void stop() {
+    protected void stop(String reason) {
         // allow restarts after stopping
         // TODO is it save to do this right on entry and not on exit??
         startedSem.release();
@@ -449,7 +447,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
         cancelAutoStart(true);
 
         if (instance.recorder.getState() != GpsWorkoutRecorder.RecordingState.IDLE) { // Only Running Records can be stopped
-            instance.recorder.stop();
+            instance.recorder.stop(reason);
             if (instance.recorder.hasRecordedSomething()) {
                 showEnterDescriptionDialog();
             } else {
@@ -508,7 +506,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
         new AlertDialog.Builder(this)
                 .setTitle(R.string.stopRecordingQuestion)
                 .setMessage(R.string.stopRecordingQuestionMessage)
-                .setPositiveButton(R.string.stop, (dialog, which) -> stop())
+                .setPositiveButton(R.string.stop, (dialog, which) -> stop("User requested"))
                 .setNegativeButton(R.string.continue_, null)
                 .create().show();
     }
@@ -554,7 +552,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
         }
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onHeartRateConnectionChange(HeartRateConnectionChangeEvent e) {
         hrStatusView.setImageResource(e.state.iconRes);
         hrStatusView.setColorFilter(getResources().getColor(e.state.colorRes));
@@ -625,6 +623,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
         }
         invalidateOptionsMenu();
         isResumed = true;
+        updateDescription();
         startUpdater();
 
         // start intercepting NFC intents
@@ -794,7 +793,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
             if (tag != null) {
                 if (isRecordingStarted()) {
                     Log.i(TAG, "onNewIntent: NFC tag triggered workout end");
-                    stop();
+                    stop("NFC-Tag triggered end");
                 } else {
                     Log.i(TAG, "onNewIntent: NFC tag triggered workout start");
                     start();    // start immediately, don't care about signal quality or anything
@@ -897,7 +896,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
         if (isRestrictedInput()) {
             Toast.makeText(this, R.string.unlockPhoneStopWorkout, Toast.LENGTH_LONG).show();
         } else {
-            stop();
+            stop("Stop button pressed");
         }
     }
 
