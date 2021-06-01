@@ -157,4 +157,17 @@
     <string name="workouts">Träningspass</string>
     <string name="preferences">Egenskaper</string>
     <string name="errorImportFailed">Data-importering har misslyckats.</string>
+    <string name="loadingFile">Laddar fil</string>
+    <string name="converting">Konverterar</string>
+    <string name="locationData">Platsdata</string>
+    <string name="initialising">Initialiserar</string>
+    <string name="shareFile">Dela fil</string>
+    <string name="errorExportFailed">Data-exporten har misslyckats</string>
+    <string name="errorGpxExportFailed">GPX-exporteringen har misslyckats.</string>
+    <string name="error">Fel</string>
+    <string name="exporting">Exporterar</string>
+    <string name="delete">Ta bort</string>
+    <string name="stop">Stopp</string>
+    <string name="workout_add">Lägg till</string>
+    <string name="app_name">FitoTrack</string>
 </resources>
