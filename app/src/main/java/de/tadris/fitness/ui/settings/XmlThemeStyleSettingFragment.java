@@ -1,13 +1,13 @@
 package de.tadris.fitness.ui.settings;
 
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.ListPreference;
-import android.preference.Preference;
-import android.preference.PreferenceCategory;
-import android.preference.PreferenceScreen;
 
 import androidx.annotation.Nullable;
+import androidx.preference.CheckBoxPreference;
+import androidx.preference.ListPreference;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceCategory;
+import androidx.preference.PreferenceScreen;
 
 import org.mapsforge.map.rendertheme.XmlRenderThemeStyleLayer;
 import org.mapsforge.map.rendertheme.XmlRenderThemeStyleMenu;
@@ -20,7 +20,7 @@ import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.ui.MapActivity;
 
-public class XmlThemeStyleSettingsActivity extends FitoTrackSettingsActivity {
+public class XmlThemeStyleSettingFragment extends FitoTrackSettingFragment {
 
     private static final String KEY_PREFIX = MapActivity.PREF_KEY_PREFIX_RENDER_THEME;
     private static final String KEY_OVERLAY_CATEGORY = KEY_PREFIX + "overlayCategories";
@@ -29,19 +29,15 @@ public class XmlThemeStyleSettingsActivity extends FitoTrackSettingsActivity {
     private XmlRenderThemeStyleMenu styleOptions;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setTheme(Instance.getInstance(this).themes.getDefaultTheme());
-        setupActionBar();
-        setTitle(R.string.pref_render_theme_style_settings);
+    public void onCreatePreferences(@Nullable Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.preferences_render_theme);
         language = Locale.getDefault().getLanguage();
-        styleOptions = Instance.getInstance(this).userPreferences.getXmlRenderThemeStyleMenu();
+        styleOptions = Instance.getInstance(requireContext()).userPreferences.getXmlRenderThemeStyleMenu();
         setupOptions();
     }
 
     private void setupOptions() {
-        PreferenceScreen preferenceScreen = this.getPreferenceScreen();
+        PreferenceScreen preferenceScreen = this.getPreferenceManager().getPreferenceScreen();
 
         if (styleOptions == null) {
             Preference infoPreference = new Preference(preferenceScreen.getContext());
@@ -90,7 +86,7 @@ public class XmlThemeStyleSettingsActivity extends FitoTrackSettingsActivity {
         preferenceOverlayCategory.removeAll();
         String layerId = getLayerIdFromSelection(selection);
         for (XmlRenderThemeStyleLayer overlay : styleOptions.getLayer(layerId).getOverlays()) {
-            CheckBoxPreference checkbox = new CheckBoxPreference(this);
+            CheckBoxPreference checkbox = new CheckBoxPreference(requireContext());
             checkbox.setKey(KEY_PREFIX + overlay.getId());
             checkbox.setPersistent(true);
             checkbox.setTitle(overlay.getTitle(language));

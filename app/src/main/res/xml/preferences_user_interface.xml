@@ -18,7 +18,8 @@
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ListPreference
         android:defaultValue="1"
@@ -68,7 +69,8 @@
 
         <Preference
             android:key="xmlThemeStyleMenu"
-            android:title="@string/pref_render_theme_style" />
+            android:title="@string/pref_render_theme_style"
+            app:fragment="de.tadris.fitness.ui.settings.XmlThemeStyleSettingFragment" />
 
         <Preference
             android:key="offlineMapDownload"

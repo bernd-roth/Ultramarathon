@@ -40,14 +40,12 @@ import de.tadris.fitness.util.unit.DistanceUnitSystem;
 
 public class InterfaceSettingsFragment extends FitoTrackSettingFragment {
 
+    private SharedPreferences sharedPreferences;
+
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
         setPreferencesFromResource(R.xml.preferences_user_interface, rootKey);
-
-        findPreference("xmlThemeStyleMenu").setOnPreferenceClickListener(preference -> {
-            startActivity(new Intent(this, XmlThemeStyleSettingsActivity.class));
-            return true;
-        });
 
         bindPreferenceSummaryToValue(findPreference("unitSystem"));
         bindPreferenceSummaryToValue(findPreference("mapStyle"));
@@ -69,8 +67,6 @@ public class InterfaceSettingsFragment extends FitoTrackSettingFragment {
             return true;
         });
 
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-
         Preference mapFilePref = findPreference("offlineMapDirectoryName");
         bindPreferenceSummaryToValue(mapFilePref);
         mapFilePref.setOnPreferenceClickListener(preference -> {
@@ -89,7 +85,6 @@ public class InterfaceSettingsFragment extends FitoTrackSettingFragment {
         DistanceUnitSystem unitSystem = Instance.getInstance(getContext()).distanceUnitUtils.getDistanceUnitSystem();
 
         final AlertDialog.Builder d = new AlertDialog.Builder(requireActivity());
-        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
         d.setTitle(getString(R.string.pref_weight));
         View v = getLayoutInflater().inflate(R.layout.dialog_weight_picker, null);
         NumberPicker np = v.findViewById(R.id.weightPicker);
@@ -97,7 +92,7 @@ public class InterfaceSettingsFragment extends FitoTrackSettingFragment {
         np.setMinValue((int) unitSystem.getWeightFromKilogram(20));
         np.setFormatter(value -> value + " " + unitSystem.getWeightUnit());
         final String preferenceVariable = "weight";
-        np.setValue((int) Math.round(unitSystem.getWeightFromKilogram(preferences.getInt(preferenceVariable, 80))));
+        np.setValue((int) Math.round(unitSystem.getWeightFromKilogram(sharedPreferences.getInt(preferenceVariable, 80))));
         np.setWrapSelectorWheel(false);
         NumberPickerUtils.fixNumberPicker(np);
 
@@ -107,7 +102,7 @@ public class InterfaceSettingsFragment extends FitoTrackSettingFragment {
         d.setPositiveButton(R.string.okay, (dialog, which) -> {
             int unitValue = np.getValue();
             int kilograms = (int) Math.round(unitSystem.getKilogramFromUnit(unitValue));
-            preferences.edit().putInt(preferenceVariable, kilograms).apply();
+            sharedPreferences.edit().putInt(preferenceVariable, kilograms).apply();
         });
 
         d.create().show();
@@ -123,8 +118,7 @@ public class InterfaceSettingsFragment extends FitoTrackSettingFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK && requestCode == FOLDER_IMPORT_SELECT_CODE) {
-            final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
-            preferences.edit().putString("offlineMapFileName", data.getData().toString()).apply();
+            sharedPreferences.edit().putString("offlineMapFileName", data.getData().toString()).apply();
             findPreference("offlineMapFileName").setSummary(data.getData().toString());
         }
         super.onActivityResult(requestCode, resultCode, data);

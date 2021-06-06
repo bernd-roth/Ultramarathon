@@ -48,6 +48,7 @@ import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.MapPosition;
 import org.mapsforge.core.util.LatLongUtils;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
+import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.layer.Layer;
 import org.mapsforge.map.layer.download.TileDownloadLayer;
 import org.mapsforge.map.layer.overlay.FixedPixelCircle;
@@ -165,7 +166,7 @@ public abstract class WorkoutActivity extends InformationActivity implements Map
             if (!mapView.getBoundingBox().contains(selectedSample.toLatLong())) {
                 mapView.getModel().mapViewPosition.animateTo(selectedSample.toLatLong());
             }
-        };
+        }
     }
 
 
