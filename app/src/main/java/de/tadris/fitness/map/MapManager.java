@@ -20,12 +20,14 @@
 package de.tadris.fitness.map;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.net.Uri;
 
 import androidx.documentfile.provider.DocumentFile;
 
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
+import org.mapsforge.map.android.rendertheme.ContentRenderTheme;
 import org.mapsforge.map.android.util.AndroidUtil;
 import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.datastore.MultiMapDataStore;
@@ -34,11 +36,14 @@ import org.mapsforge.map.layer.download.TileDownloadLayer;
 import org.mapsforge.map.layer.renderer.TileRendererLayer;
 import org.mapsforge.map.model.DisplayModel;
 import org.mapsforge.map.reader.MapFile;
-import org.mapsforge.map.rendertheme.StreamRenderTheme;
 import org.mapsforge.map.rendertheme.XmlRenderTheme;
-import org.mapsforge.map.rendertheme.XmlRenderThemeMenuCallback;
+import org.mapsforge.map.rendertheme.ZipRenderTheme;
+import org.mapsforge.map.rendertheme.ZipXmlThemeResourceProvider;
 
+import java.io.BufferedInputStream;
 import java.io.FileInputStream;
+import java.util.List;
+import java.util.zip.ZipInputStream;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.map.tilesource.FitoTrackTileSource;
@@ -61,9 +66,8 @@ public class MapManager {
         mapView.setBuiltInZoomControls(false);
         mapView.setZoomLevel((byte) 18);
         new Thread(() -> {
-            TileCache tileCache = AndroidUtil.createTileCache(mapView.getContext(), chosenTileLayer,
-                    mapView.getModel().displayModel.getTileSize(), 1f,
-                    mapView.getModel().frameBufferModel.getOverdrawFactor(), !isOffline);
+            TileCache tileCache = AndroidUtil.createTileCache(mapView.getContext(), chosenTileLayer, mapView.getModel().displayModel.getTileSize(),
+                                                              1f, mapView.getModel().frameBufferModel.getOverdrawFactor(), !isOffline);
             if (isOffline) {
                 setupOfflineMap(mapView, tileCache, activity);
             } else {
@@ -104,22 +108,35 @@ public class MapManager {
         }
         Uri mapDirectoryUri = Uri.parse(directoryPath);
         DocumentFile documentFile = DocumentFile.fromTreeUri(context, mapDirectoryUri);
+        if (documentFile == null) {
+            return;
+        }
         DocumentFile[] files = documentFile.listFiles();
         for (DocumentFile file : files) {
+            String filename = file.getName();
             // Go through all files in the map directory
-            if (file.isFile() && file.canRead() && (file.getName().endsWith(".map") || file.getName().endsWith(".xml"))) {
+            if (file.isFile() && file.canRead() && filename != null && (filename.endsWith(".map") || filename.endsWith(".xml") || filename.endsWith(
+                    ".zip"))) {
                 try {
                     Uri fileUri = file.getUri();
-                    if (file.getName().endsWith(".map")) {
+                    ContentResolver contentResolver = context.getContentResolver();
+                    if (filename.endsWith(".map")) {
                         // For map files: load as MapFile and add to data store
-                        FileInputStream inputStream = (FileInputStream) context.getContentResolver().openInputStream(fileUri);
+                        FileInputStream inputStream = (FileInputStream) contentResolver.openInputStream(fileUri);
                         MapFile mapFile = new MapFile(inputStream, 0, null);
                         multiMapDataStore.addMapDataStore(mapFile, true, true);
+                    } else if (filename.endsWith(".zip")) {
+                        final List<String> xmlThemes = ZipXmlThemeResourceProvider.scanXmlThemes(
+                                new ZipInputStream(new BufferedInputStream(contentResolver.openInputStream(fileUri))));
+                        // For the first zip file: load first theme of its content as XmlRenderTheme
+                        if (theme == null && !xmlThemes.isEmpty()) {
+                            theme = new ZipRenderTheme(xmlThemes.get(0), new ZipXmlThemeResourceProvider(
+                                    new ZipInputStream(new BufferedInputStream(contentResolver.openInputStream(fileUri)))));
+                        }
                     } else {
                         // For the first xml file: load as XmlRenderTheme
                         if (theme == null) {
-                            theme = new StreamRenderTheme(fileUri.getPath(), context.getContentResolver().openInputStream(fileUri),
-                                                          (XmlRenderThemeMenuCallback) activity);
+                            theme = new ContentRenderTheme(contentResolver, fileUri);
                         }
                     }
                 } catch (Exception e) {
@@ -130,7 +147,8 @@ public class MapManager {
         if (theme == null) {
             theme = InternalRenderTheme.DEFAULT;
         }
-        TileRendererLayer renderLayer = new TileRendererLayer(tileCache, multiMapDataStore, mapView.getModel().mapViewPosition, AndroidGraphicFactory.INSTANCE);
+        TileRendererLayer renderLayer = new TileRendererLayer(tileCache, multiMapDataStore, mapView.getModel().mapViewPosition,
+                                                              AndroidGraphicFactory.INSTANCE);
         renderLayer.setXmlRenderTheme(theme);
         mapView.getLayerManager().getLayers().add(0, renderLayer);
     }
