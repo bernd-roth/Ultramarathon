@@ -26,7 +26,7 @@ public class MapActivity extends FitoTrackActivity implements XmlRenderThemeMenu
         Instance.getInstance(this).userPreferences.setXmlRenderThemeStyleMenu(styleMenu);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String id = prefs.getString(PREF_KEY_PREFIX_RENDER_THEME + styleMenu.getId(), styleMenu.getDefaultValue());
-        XmlRenderThemeStyleLayer baseLayer = styleMenu.getLayer(id);
+        XmlRenderThemeStyleLayer baseLayer = styleMenu.getLayer(id.replace(PREF_KEY_PREFIX_RENDER_THEME, ""));
         if (baseLayer == null) {
             return null;
         }

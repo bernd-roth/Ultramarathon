@@ -37,6 +37,7 @@ import org.mapsforge.map.layer.renderer.TileRendererLayer;
 import org.mapsforge.map.model.DisplayModel;
 import org.mapsforge.map.reader.MapFile;
 import org.mapsforge.map.rendertheme.XmlRenderTheme;
+import org.mapsforge.map.rendertheme.XmlRenderThemeMenuCallback;
 import org.mapsforge.map.rendertheme.ZipRenderTheme;
 import org.mapsforge.map.rendertheme.ZipXmlThemeResourceProvider;
 
@@ -131,12 +132,13 @@ public class MapManager {
                         // For the first zip file: load first theme of its content as XmlRenderTheme
                         if (theme == null && !xmlThemes.isEmpty()) {
                             theme = new ZipRenderTheme(xmlThemes.get(0), new ZipXmlThemeResourceProvider(
-                                    new ZipInputStream(new BufferedInputStream(contentResolver.openInputStream(fileUri)))));
+                                    new ZipInputStream(new BufferedInputStream(contentResolver.openInputStream(fileUri)))),
+                                                       (XmlRenderThemeMenuCallback) activity);
                         }
                     } else {
                         // For the first xml file: load as XmlRenderTheme
                         if (theme == null) {
-                            theme = new ContentRenderTheme(contentResolver, fileUri);
+                            theme = new ContentRenderTheme(contentResolver, fileUri, (XmlRenderThemeMenuCallback) activity);
                         }
                     }
                 } catch (Exception e) {
