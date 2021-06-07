@@ -67,7 +67,7 @@ class RecordIndoorWorkoutActivity : RecordWorkoutActivity() {
 
         val wasAlreadyRunning = if (LAUNCH_ACTION != intent.action) {
             true
-        } else instance.recorder != null && instance.recorder.state != BaseWorkoutRecorder.RecordingState.IDLE
+        } else instance.recorder != null && instance.recorder.isActive && instance.recorder.state != BaseWorkoutRecorder.RecordingState.IDLE
 
         if (wasAlreadyRunning) {
             activity = instance.recorder.workout.getWorkoutType(this)

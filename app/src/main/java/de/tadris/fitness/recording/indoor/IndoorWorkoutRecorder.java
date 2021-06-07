@@ -90,7 +90,9 @@ public class IndoorWorkoutRecorder extends BaseWorkoutRecorder {
     @Subscribe
     public void onRepetitionRecognized(ExerciseRecognizer.RepetitionRecognizedEvent event) {
         lastSampleTime = System.currentTimeMillis();
-        if (state == RecordingState.RUNNING && event.getTimestamp() > workout.start) {
+
+        boolean acceptSamples = useAutoPause ? isPausedOrResumed() : isResumed();
+        if (acceptSamples && event.getTimestamp() > workout.start) {
             Log.d("Recorder", "repetition recognized with intensity " + event.getIntensity());
             if (lastSample != null && lastSample.repetitions < type.minDistance && event.getTimestamp() - lastSample.absoluteTime < PAUSE_TIME) {
                 addToExistingSample(event);

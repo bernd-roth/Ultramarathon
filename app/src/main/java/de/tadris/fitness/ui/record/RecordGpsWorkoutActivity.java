@@ -81,7 +81,7 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
         boolean wasAlreadyRunning = false;
         if (!LAUNCH_ACTION.equals(intent.getAction())) {
             wasAlreadyRunning = true;
-        } else if (instance.recorder != null && instance.recorder.getState() != BaseWorkoutRecorder.RecordingState.IDLE) {
+        } else if (instance.recorder != null && instance.recorder.isActive() && instance.recorder.getState() != BaseWorkoutRecorder.RecordingState.IDLE) {
             wasAlreadyRunning = true;
         }
 

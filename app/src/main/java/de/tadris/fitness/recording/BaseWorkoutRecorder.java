@@ -246,6 +246,10 @@ public abstract class BaseWorkoutRecorder {
         return state == GpsWorkoutRecorder.RecordingState.IDLE || state == GpsWorkoutRecorder.RecordingState.RUNNING || state == GpsWorkoutRecorder.RecordingState.PAUSED;
     }
 
+    public boolean isPausedOrResumed() {
+        return isPaused() || isResumed();
+    }
+
     public boolean isResumed() {
         return state == GpsWorkoutRecorder.RecordingState.RUNNING;
     }
