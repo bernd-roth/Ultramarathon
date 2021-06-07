@@ -688,6 +688,12 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
             return true;
         });
         startPopupMenu.inflate(R.menu.start_popup_menu);
+        if (!(this instanceof RecordGpsWorkoutActivity)) {
+            Menu menu = startPopupMenu.getMenu();
+            menu.findItem(R.id.auto_start_immediately).setVisible(false);
+            menu.findItem(R.id.auto_start_on_move).setVisible(false);
+            menu.findItem(R.id.auto_start_wait_for_gps).setVisible(false);
+        }
         startPopupMenu.show();
     }
 
