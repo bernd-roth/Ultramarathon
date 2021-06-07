@@ -43,6 +43,9 @@ public interface IndoorWorkoutDao {
     @Query("SELECT * FROM indoor_workout ORDER BY start DESC LIMIT 1")
     IndoorWorkout getLastWorkout();
 
+    @Query("SELECT * FROM indoor_workout WHERE workoutType = :type ORDER BY start DESC LIMIT 1")
+    IndoorWorkout getLastWorkoutByType(String type);
+
     @Query("SELECT * FROM indoor_workout ORDER BY start ASC")
     IndoorWorkout[] getAllWorkoutsHistorically();
 

@@ -33,6 +33,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import de.tadris.fitness.Instance;
@@ -117,6 +118,13 @@ public class WorkoutType implements Serializable {
         } else {
             return type;
         }
+    }
+
+    public static List<WorkoutType> getAllTypesSorted(Context context) {
+        List<WorkoutType> list = getAllTypes(context);
+        AppDatabase db = Instance.getInstance(context).db;
+        Collections.sort(list, (o1, o2) -> -Long.compare(db.getLastWorkoutTimeByType(o1.id), db.getLastWorkoutTimeByType(o2.id)));
+        return list;
     }
 
     public static List<WorkoutType> getAllTypes(Context context) {

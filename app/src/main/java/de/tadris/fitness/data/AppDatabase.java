@@ -22,6 +22,7 @@ package de.tadris.fitness.data;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
@@ -40,6 +41,26 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract WorkoutTypeDao workoutTypeDao();
 
     public abstract IntervalDao intervalDao();
+
+    public long getLastWorkoutTimeByType(String type) {
+        BaseWorkout workout = getLastWorkoutByType(type);
+        if (workout != null) {
+            return workout.start;
+        } else {
+            return 0;
+        }
+    }
+
+    @Nullable
+    public BaseWorkout getLastWorkoutByType(String type) {
+        GpsWorkout gpsWorkout = gpsWorkoutDao().getLastWorkoutByType(type);
+        IndoorWorkout indoorWorkout = indoorWorkoutDao().getLastWorkoutByType(type);
+        if (gpsWorkout != null && indoorWorkout != null) {
+            return gpsWorkout.start > indoorWorkout.start ? gpsWorkout : indoorWorkout;
+        } else if (gpsWorkout != null) {
+            return gpsWorkout;
+        } else return indoorWorkout;
+    }
 
     public static AppDatabase provideDatabase(Context context) {
         return Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, DATABASE_NAME)

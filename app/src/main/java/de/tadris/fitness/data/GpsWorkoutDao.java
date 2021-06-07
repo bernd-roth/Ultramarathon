@@ -43,6 +43,9 @@ public interface GpsWorkoutDao {
     @Query("SELECT * FROM workout ORDER BY start DESC LIMIT 1")
     GpsWorkout getLastWorkout();
 
+    @Query("SELECT * FROM workout WHERE workoutType = :type ORDER BY start DESC LIMIT 1")
+    GpsWorkout getLastWorkoutByType(String type);
+
     @Query("SELECT * FROM workout ORDER BY start ASC")
     GpsWorkout[] getAllWorkoutsHistorically();
 
