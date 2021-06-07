@@ -29,11 +29,19 @@ class ProximityRecognizer : ExerciseRecognizer() {
 
     override fun getActivatedSensors() = listOf(FitoTrackSensorOption.PROXIMITY)
 
+    private var lastState = false // true if last sensor value was below the threshold
+
     @Subscribe
     fun onSensorEvent(event: SensorEvent) {
         if (event.sensor.type == Sensor.TYPE_PROXIMITY) {
             if (event.values[0] < 2) {
-                EventBus.getDefault().post(RepetitionRecognizedEvent(System.currentTimeMillis()))
+                if (!lastState) {
+                    EventBus.getDefault()
+                        .post(RepetitionRecognizedEvent(System.currentTimeMillis()))
+                    lastState = true
+                }
+            } else {
+                lastState = false
             }
         }
     }
