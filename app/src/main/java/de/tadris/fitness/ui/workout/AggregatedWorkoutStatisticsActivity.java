@@ -286,6 +286,10 @@ public class AggregatedWorkoutStatisticsActivity extends FitoTrackActivity imple
         chart.invalidate();
         chart.animateY(500, Easing.EaseOutCubic);
         chart.zoomAndCenterAnimated(1, 1, 0, 0, YAxis.AxisDependency.LEFT, 500);
+
+        float minY = selectedInformation.getAggregationType() == AggregationType.SUM ? 0 : chart.getLineData().getYMin();
+        chart.getAxisLeft().setAxisMinimum(minY);
+        chart.getAxisRight().setAxisMinimum(minY);
     }
 
 
