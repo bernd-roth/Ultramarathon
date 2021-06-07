@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -25,7 +25,7 @@ import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationType;
 import de.tadris.fitness.data.GpsWorkout;
 
-public class AveragePace extends AbstractWorkoutInformation {
+public class AveragePace extends GpsWorkoutInformation {
     public AveragePace(Context context) {
         super(context);
     }

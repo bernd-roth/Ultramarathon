@@ -330,21 +330,9 @@ class ListWorkoutsActivity : FitoTrackActivity(), WorkoutAdapterListener {
     }
 
     private fun loadData() {
-        val workouts: MutableList<BaseWorkout> =
-            Instance.getInstance(this).db.gpsWorkoutDao().workouts.toMutableList()
-        var listIndex = 0
+        this.workouts = Instance.getInstance(this).db.allWorkouts.toTypedArray()
 
-        // Merging indoor workouts into gps workout list
-        Instance.getInstance(this).db.indoorWorkoutDao().workouts.forEach {
-            if (workouts.size <= listIndex || it.start > workouts[listIndex].start) {
-                workouts.add(listIndex, it)
-            }
-            listIndex++
-        }
-
-        this.workouts = workouts.toTypedArray()
-
-        hintText.visibility = if (workouts.size == 0) View.VISIBLE else View.INVISIBLE
+        hintText.visibility = if (workouts.isEmpty()) View.VISIBLE else View.INVISIBLE
         adapter.setWorkouts(this.workouts)
     }
 
@@ -356,7 +344,7 @@ class ListWorkoutsActivity : FitoTrackActivity(), WorkoutAdapterListener {
             lastFab.setImageResource(Icon.getIcon(lastType.icon))
             lastFab.colorNormal = lastType.color
             lastFab.colorPressed = lastFab.colorNormal
-            lastFab.setOnClickListener { v: View? ->
+            lastFab.setOnClickListener {
                 menu.close(true)
                 Handler().postDelayed({ startRecording(lastType) }, 300)
             }

@@ -21,32 +21,24 @@ package de.tadris.fitness.aggregation.information;
 
 import android.content.Context;
 
-import de.tadris.fitness.R;
-import de.tadris.fitness.aggregation.AggregationType;
 import de.tadris.fitness.data.BaseWorkout;
+import de.tadris.fitness.data.IndoorWorkout;
 
-public class WorkoutCount extends AbstractWorkoutInformation {
-    public WorkoutCount(Context context) {
+public abstract class IndoorWorkoutInformation extends AbstractWorkoutInformation {
+
+    public IndoorWorkoutInformation(Context context) {
         super(context);
     }
 
     @Override
-    public int getTitleRes() {
-        return R.string.workoutNumber;
-    }
-
-    @Override
-    public String getUnit() {
-        return "";
+    public boolean isInformationAvailableFor(BaseWorkout workout) {
+        return workout instanceof IndoorWorkout;
     }
 
     @Override
     public double getValueFromWorkout(BaseWorkout workout) {
-        return 1;
+        return getValueFromWorkout((IndoorWorkout) workout);
     }
 
-    @Override
-    public AggregationType getAggregationType() {
-        return AggregationType.SUM;
-    }
+    public abstract double getValueFromWorkout(IndoorWorkout workout);
 }

@@ -21,7 +21,7 @@ package de.tadris.fitness.aggregation;
 
 import androidx.annotation.StringRes;
 
-import de.tadris.fitness.data.GpsWorkout;
+import de.tadris.fitness.data.BaseWorkout;
 
 /**
  * general note: this could also be used to display the data in the ShowWorkoutActivity.
@@ -33,9 +33,9 @@ public interface WorkoutInformation {
 
     String getUnit();
 
-    boolean isInformationAvailableFor(GpsWorkout workout);
+    boolean isInformationAvailableFor(BaseWorkout workout);
 
-    double getValueFromWorkout(GpsWorkout workout);
+    double getValueFromWorkout(BaseWorkout workout);
 
     AggregationType getAggregationType();
 

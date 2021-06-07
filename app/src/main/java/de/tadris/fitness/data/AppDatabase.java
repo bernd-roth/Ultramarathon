@@ -29,6 +29,10 @@ import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 @Database(version = 15, entities = {GpsWorkout.class, GpsSample.class, IndoorWorkout.class, IndoorSample.class, Interval.class, IntervalSet.class, WorkoutType.class}, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -41,6 +45,29 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract WorkoutTypeDao workoutTypeDao();
 
     public abstract IntervalDao intervalDao();
+
+    @Nullable
+    public BaseWorkout getWorkoutByStart(long start) {
+        BaseWorkout workout = gpsWorkoutDao().getWorkoutByStart(start);
+        if (workout == null) {
+            workout = indoorWorkoutDao().getWorkoutByStart(start);
+        }
+        return workout;
+    }
+
+    public List<BaseWorkout> getAllWorkouts() {
+        List<BaseWorkout> workouts = new ArrayList<>(Arrays.asList(gpsWorkoutDao().getWorkouts()));
+        int listIndex = 0;
+
+        // Merging indoor workouts into gps workout list
+        for (IndoorWorkout workout : indoorWorkoutDao().getWorkouts()) {
+            if (workouts.size() <= listIndex || workout.start > workouts.get(listIndex).start) {
+                workouts.add(listIndex, workout);
+            }
+            listIndex++;
+        }
+        return workouts;
+    }
 
     public long getLastWorkoutTimeByType(String type) {
         BaseWorkout workout = getLastWorkoutByType(type);
