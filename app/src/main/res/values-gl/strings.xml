@@ -407,4 +407,5 @@
     <string name="unitHeartBeatsPerMinute">ppm</string>
     <string name="preferenceFirstDayOfWeek">Comezo da semana</string>
     <string name="edit_interval">Editar intervalo</string>
+    <string name="fileNotFound">Non se atopa o ficheiro</string>
 </resources>
