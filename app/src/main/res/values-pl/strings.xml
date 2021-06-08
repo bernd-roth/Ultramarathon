@@ -104,7 +104,7 @@
     <string name="day">Dzień</string>
     <string name="workout_statistics">Statystyki treningów</string>
     <string name="no_workouts_recorded_for_this_activity">Brak treningów dla tej aktywności</string>
-    <string name="unlockPhoneStopWorkout">Odblokuj telefon, aby zatrzymać nagrywanie</string>
+    <string name="unlockPhoneStopWorkout">Odblokuj ekran, aby zatrzymać nagrywanie</string>
     <string name="oClock">godzina</string>
     <string name="currentTime">Aktualny czas</string>
     <string name="pref_auto_timeout_title">Czas do automatycznego zatrzymania</string>
@@ -273,7 +273,7 @@
     <string name="workoutDistance">Dystans</string>
     <string name="workoutEndTime">Czas zakończenia</string>
     <string name="workoutStartTime">Czas rozpoczęcia</string>
-    <string name="workoutPauseDuration">Czas trwania pauzy</string>
+    <string name="workoutPauseDuration">Czas trwania wstrzymania</string>
     <string name="workoutDuration">Czas trwania</string>
     <string name="workoutDate">Data</string>
     <string name="workoutTime">Czas</string>
@@ -287,4 +287,22 @@
     <string name="actionImportMultiple">Importuj wiele</string>
     <string name="actionImport">Importuj</string>
     <string name="importMultipleGpxFilesSummary">Importuj jednocześnie więcej niż jeden plik GPX z systemu plików</string>
+    <string name="workoutTypeEditId">ID</string>
+    <string name="hintManageWorkoutTypes">Kliknij ikonę plusa, aby dodać niestandardowe typy treningów.</string>
+    <string name="resumeWorkoutConfirmation">Czy naprawdę chcesz wznowić ten trening\? Spowoduje to również dodanie wstrzymania od momentu zatrzymania treningu.</string>
+    <string name="prefShowOnLockScreenTitle">Widoczne na ekranie blokady</string>
+    <string name="prefShowOnLockScreenSummary">Pokaż informacje o treningu, nawet gdy ekran jest zablokowany.</string>
+    <string name="notimeout">Bez limitu czasu</string>
+    <string name="workoutStarted">Trening rozpoczęty</string>
+    <string name="workoutStopped">Trening zatrzymany</string>
+    <string name="workoutResumed">Trening wznowiony</string>
+    <string name="workoutPaused">Trening wstrzymany</string>
+    <string name="actionResume">Wznów</string>
+    <string name="actionPause">Wstrzymaj</string>
+    <string name="autoPauseSummary">Automatycznie wstrzymuj i kontynuuj treningi</string>
+    <string name="autoPauseTitle">Automatyczne wstrzymanie</string>
+    <string name="heartRateNotAvailable">Tętno jest obecnie niedostępne.</string>
+    <string name="resumeWorkout">Wznów trening</string>
+    <string name="intervals">Interwały</string>
+    <string name="inclination">Nachylenie</string>
 </resources>
