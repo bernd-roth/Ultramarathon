@@ -407,4 +407,5 @@
     <string name="unitHeartBeatsPerMinute">bpm</string>
     <string name="preferenceFirstDayOfWeek">Haftanın başlangıcı</string>
     <string name="edit_interval">Aralık Düzenle</string>
+    <string name="fileNotFound">Dosya bulunamadı</string>
 </resources>
