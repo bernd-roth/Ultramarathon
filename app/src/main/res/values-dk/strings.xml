@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -17,9 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-
-<resources>
+  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
     <string name="workout_add">Tilføj</string>
     <string name="stop">Stop</string>
@@ -297,7 +294,7 @@
     <string name="aboutSendFeedback">Send feedback til udvikleren</string>
     <string name="aboutContributors">Bidragyder</string>
     <string name="aboutAuthor">Forfatter</string>
-    <string name="aboutChangelog">Changelog</string>
+    <string name="aboutChangelog">Ændringslog</string>
     <string name="aboutLinks">Links</string>
     <string name="aboutReportBug">Anmeld en fejl</string>
     <string name="aboutOpenSourceLibraries">Open source-biblioteker</string>
@@ -348,4 +345,96 @@
     <string name="workoutTypeEditId">ID</string>
     <string name="hintManageWorkoutTypes">Klik på plus for at tilføje tilpassede træningstyper.</string>
     <string name="workoutTypeAdd">Tilføje</string>
+    <string name="downloadSuccess">Downloadet</string>
+    <string name="recordingPermissionNotGrantedMessage">FitoTrack har brug for denne tilladelse til at spore dine bevægelser under din træning. FitoTrack indsamler også lokationsdata mens appen kører i baggrunden eller skærmen er slukket for at indsamle dine træninger. Lokationsdata forbliver altid på din enhed uden din tilladelse til at dele det.</string>
+    <string name="actionImportMultiple">Importér flere</string>
+    <string name="actionImport">Importér</string>
+    <string name="auto">Auto</string>
+    <string name="fileNotFound">Fil ikke fundet</string>
+    <string name="invalidNumberFormat">Ugyldig nummer format.</string>
+    <string name="pref_announcements_pace_control_title">Tempo Kontrol Advarsler</string>
+    <string name="pref_announcements_pace_control_summary">Advar når under eller over specificeret hastighed</string>
+    <string name="noColoring">Ingen farve</string>
+    <string name="selectColoring">Vælg farve</string>
+    <string name="pref_auto_start_mode_unknown">Ukendt metode (vælg venligst ikke)</string>
+    <string name="pref_auto_start_mode_on_move">Vent på at du bevæger dig</string>
+    <string name="pref_auto_start_mode_wait_for_gps">Vent på præcis GPS lokation</string>
+    <string name="pref_auto_start_mode_instant">Start med det samme</string>
+    <string name="pref_auto_start_mode_title">Auto-Start Metode</string>
+    <string name="intervalAutoStartModeTraining">Auto Start Træningsmetode</string>
+    <string name="manageAutoStartModeSummary">Ændre metode for automatisk træningsstart</string>
+    <string name="ttsMinuteSecondCountdownAnnouncement"> <xliff:g id="mins" example="1 minute">%1$s</xliff:g> og <xliff:g id="secs" example="7 seconds">%2$s</xliff:g> til start </string>
+    <string name="ttsMinuteCountdownAnnouncement"> <xliff:g id="mins" example="12 minutes">%1$s</xliff:g> til start </string>
+    <string name="ttsLongSecondCountdownAnnouncement"> <xliff:g id="secs" example="5 seconds">%1$s</xliff:g> til start </string>
+    <string name="ttsAboveTargetSpeed">For hurtig</string>
+    <string name="ttsBelowTargetSpeed">For langsom</string>
+    <string name="lowerPaceLimit">nedre tempo grænse</string>
+    <string name="upperPaceLimit">Øvre tempo grænse</string>
+    <plurals name="minutes">
+        <item quantity="one"><xliff:g id="mins" example="1">%1$d</xliff:g> minut</item>
+        <item quantity="other"><xliff:g id="mins" example="5">%1$d</xliff:g> minutter</item>
+    </plurals>
+    <plurals name="seconds">
+        <item quantity="one"><xliff:g id="secs" example="1">%1$d</xliff:g> sekund</item>
+        <item quantity="other"><xliff:g id="secs" example="12">%1$d</xliff:g> sekunder</item>
+    </plurals>
+    <string name="editStartEndHelp">Vælg en lokation på et kort eller diagram. Klik så på en af pilene for at vælge start og slut punkter. Når du er færdig, klik på gem ikonet for at gemme ændringerne.</string>
+    <string name="launchError">Kunne ikke starte applikation</string>
+    <string name="actionApply">Gem</string>
+    <string name="moveEndOfWorkout">Klip slut</string>
+    <string name="moveStartOfWorkout">Klip start</string>
+    <string name="scanFailed">Skan fejlede</string>
+    <string name="scanning">Skanner…</string>
+    <string name="announcementCountdown">Auto Start Handlinger (nedtælling, status, etc.)</string>
+    <string name="action_nfc_settings">Gå til NFC indstillinger</string>
+    <string name="dialog_nfc_disabled">For at bruge NFC tags til at starte of stoppe træninger, skal du aktivere NFC i din enheds indstillinger først</string>
+    <string name="dialog_nfc_disabled_title">NFC er deaktiveret lige nu</string>
+    <string name="nfcStartSummary">Du kan starte og stoppe træning ved at skanne et NFC tag, hvis aktiveret</string>
+    <string name="nfcStartTitle">Skan for at starte</string>
+    <string name="workoutAutoStartAborted">Auto start afbrudt</string>
+    <string name="abort">Annuller</string>
+    <string name="popup_auto_start_wait_for_gps">Når GPS lokation er præcis</string>
+    <string name="popup_auto_start_on_move">Når jeg bevæger mig</string>
+    <string name="popup_auto_start_immediately">Start med det samme</string>
+    <string name="popup_auto_start">Med standard forsinkelse</string>
+    <string name="popup_auto_start_delay">Med brugerdefineret forsinkelse</string>
+    <string name="workoutAutoStarted">Træning startet automatisk</string>
+    <string name="autoStartCountdownMsgMove">Starter træning når du bevæger dig</string>
+    <string name="autoStartCountdownMsgGps">Starter træning når GPS position er nøjagtig nok</string>
+    <string name="autoStartCountdownMsg">Starter træning om</string>
+    <string name="customAutoStartDelay">Andre</string>
+    <string name="noAutoStartDelay">Ingen</string>
+    <string name="pref_auto_start_delay_title">Auto Start Nedtælling</string>
+    <string name="manageAutoStartDelaySummary">Vælg en standard nedtælling for automatisk træning start</string>
+    <string name="intervalAutoStartDelayTraining">Auto Start Træningsforsinkelse</string>
+    <string name="downloading">Downloader…</string>
+    <string name="chooseMapHint">Vælg venligst en kort fil</string>
+    <string name="downloadCanceled">Download annulleret</string>
+    <string name="downloadFailed">Download fejlede</string>
+    <string name="cancelDownloadConfirmation">Vil du gerne annullere den nuværende download\?</string>
+    <string name="actionCancelDownload">Annuller download</string>
+    <string name="alreadyDownloading">En fil er allerede ved at blive downloaded</string>
+    <string name="downloadMapConfirmation">Vil du downloade mappe filen %s\?</string>
+    <string name="actionDownloadMap">Download kort</string>
+    <string name="overwriteMapConfirmation">Vil du overskrive den eksisterende mappe fil %s\?</string>
+    <string name="downloadMapsSpecifyDirectory">Venligst definer en mappe til offline kort først</string>
+    <string name="downloadMapsTitle">Download Kort</string>
+    <string name="pref_map_file">Offline Kort Mappe</string>
+    <string name="runningMigrations">Kørende migrationer</string>
+    <string name="importWorkoutMultipleQuestion">Vil du importere en eller flere GPX filer\?</string>
+    <string name="recordingBackgroundPermissionNotGrantedMessage">Fitotrack indsamler lokationsoplysninger i baggrunden for at spore din træning når skærmen er slukket. Derfor, venligst giv FitoTrack tilladelse til din lokation hele tiden.</string>
+    <string name="editWorkoutStartEnd">Rediger Start/Slut</string>
+    <string name="unitHeartBeatsPerMinute">spm</string>
+    <string name="preferenceFirstDayOfWeek">Start på ugen</string>
+    <string name="preferenceUseAverageForCurrentSpeed">Brug gennemsnitshastighed over en bestemt tid i stedet for den sidste enkelt hastighedsoptegnelse for den nuværende hastighedsudregning.</string>
+    <string name="preferenceCurrentSpeedAverageTimeTitle">Nuværende Hastighed efter Gennemsnit</string>
+    <string name="preferenceCurrentSpeedAverageTimeSummary">Erstat den nuværende hastighedsudregning med en gennemsnitlig udregning.</string>
+    <string name="preferenceCurrentSpeedTime">Tidslængde for gennemsnitsudregninger</string>
+    <string name="preferencesCategoryMap">Kort</string>
+    <string name="edit_interval">Rediger Interval</string>
+    <string name="prefTrackStyleUsageTitle">Brug track farver automatisk</string>
+    <string name="trackStyle">Track stil</string>
+    <string name="workoutTypeAll">Alle</string>
+    <string name="workoutMaxHeight">Maksimum højde</string>
+    <string name="workoutMinHeight">Minimum højde</string>
 </resources>
