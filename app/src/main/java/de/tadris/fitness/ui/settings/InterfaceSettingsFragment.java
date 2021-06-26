@@ -160,8 +160,12 @@ public class InterfaceSettingsFragment extends FitoTrackSettingFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK && requestCode == FOLDER_IMPORT_SELECT_CODE) {
-            sharedPreferences.edit().putString("offlineMapDirectoryName", data.getData().toString()).apply();
-            findPreference("offlineMapDirectoryName").setSummary(data.getData().toString());
+            Uri uri = data.getData();
+            requireActivity().getContentResolver().takePersistableUriPermission(data.getData(),
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION
+                            | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            sharedPreferences.edit().putString("offlineMapDirectoryName", uri.toString()).apply();
+            findPreference("offlineMapDirectoryName").setSummary(uri.toString());
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
