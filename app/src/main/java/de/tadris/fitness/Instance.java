@@ -45,7 +45,7 @@ public class Instance {
             Log.e("Instance", "no Context Provided");
         }
         if(instance == null){
-            instance= new Instance(context);
+            instance = new Instance(context);
         }
         return instance;
     }

@@ -74,7 +74,7 @@ dependencies {
     implementation 'androidx.documentfile:documentfile:1.0.1'
 
     // Maps
-    def mapsforge_version = "0.14.0"
+    def mapsforge_version = "0.16.0"
     implementation "org.mapsforge:mapsforge-core:$mapsforge_version"
     implementation "org.mapsforge:mapsforge-map:$mapsforge_version"
     implementation "org.mapsforge:mapsforge-map-reader:$mapsforge_version"

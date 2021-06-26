@@ -30,9 +30,9 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import de.tadris.fitness.R;
-import de.tadris.fitness.ui.FitoTrackActivity;
+import de.tadris.fitness.ui.MapActivity;
 
-public abstract class InformationActivity extends FitoTrackActivity {
+public abstract class InformationActivity extends MapActivity {
 
     protected ViewGroup root;
 

@@ -127,7 +127,8 @@ public abstract class WorkoutActivity extends InformationActivity implements Map
 
     protected CombinedChart addDiagram(SampleConverter converter) {
         CombinedChart chart = getDiagram(converter);
-        root.addView(chart, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, fullScreenItems ? ViewGroup.LayoutParams.MATCH_PARENT : getMapHeight() / 2));
+        root.addView(chart, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                                       fullScreenItems ? ViewGroup.LayoutParams.MATCH_PARENT : getMapHeight() / 2));
         return chart;
     }
 
@@ -165,7 +166,7 @@ public abstract class WorkoutActivity extends InformationActivity implements Map
             if (!mapView.getBoundingBox().contains(selectedSample.toLatLong())) {
                 mapView.getModel().mapViewPosition.animateTo(selectedSample.toLatLong());
             }
-        };
+        }
     }
 
 
@@ -297,7 +298,7 @@ public abstract class WorkoutActivity extends InformationActivity implements Map
     boolean fullScreenItems = false;
     LinearLayout mapRoot;
 
-    void addMap(){
+    void addMap() {
         mapView = MapManager.setupMap(this);
         String trackStyle = Instance.getInstance(this).userPreferences.getTrackStyle();
         // emulate current behaviour
