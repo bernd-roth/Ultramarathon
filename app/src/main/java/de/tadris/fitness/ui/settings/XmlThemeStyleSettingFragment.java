@@ -188,18 +188,26 @@ public class XmlThemeStyleSettingFragment extends FitoTrackSettingFragment imple
         String selection = (String) value;
         preference.setSummary(styleOptions.getLayer(getLayerIdFromSelection(selection)).getTitle(language));
         addOrReplaceCategories(selection, preferenceOverlayCategory);
+        refreshMapLayers();
         return true;
     };
 
     private final Preference.OnPreferenceChangeListener onStyleEditListener = (preference, value) -> {
+        refreshMapLayers();
+        return true;
+    };
+
+    private void refreshMapLayers() {
         for (Layer layer : mapView.getLayerManager().getLayers()) {
             if (layer instanceof TileLayer) {
                 ((TileLayer<? extends Job>) layer).getTileCache().purge();
             }
         }
-        mapView.repaint();
-        return true;
-    };
+        MapManager mapManager = new MapManager(requireActivity());
+        mapManager.setStyleMenuListener(this);
+        mapManager.refreshOfflineLayer(mapView);
+        mapView.getLayerManager().redrawLayers();
+    }
 
     @Override
     public void onRenderThemeMenuIsAvailable(@NonNull XmlRenderThemeStyleMenu styleMenu) {

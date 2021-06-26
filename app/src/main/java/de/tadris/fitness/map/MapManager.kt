@@ -47,35 +47,47 @@ class MapManager(private val activity: Activity) {
 
     private val userPreferences = Instance.getInstance(activity).userPreferences
     private val contentResolver = activity.contentResolver
-    private val mapView = MapView(activity)
 
+    private lateinit var mapView: MapView
     private lateinit var tileCache: TileCache
 
     private var styleMenuListener: RenderThemeMenuListener? = null
 
     fun setupMap(): MapView {
+        mapView = MapView(activity)
         initMapProvider(activity)
         mapView.setBuiltInZoomControls(false)
         mapView.setZoomLevel(18.toByte())
-        handleSetupLayersThread()
         Thread {
+            handleSetupLayersThread()
         }.start()
         return mapView
+    }
+
+    fun refreshOfflineLayer(mapView: MapView) {
+        this.mapView = mapView
+        initTileCache(false)
+        mapView.layerManager.layers.remove(0)
+        setupOfflineMap()
     }
 
     private fun handleSetupLayersThread() {
         val chosenTileLayer = userPreferences.mapStyle
         val isOffline = chosenTileLayer.startsWith("offline")
-        tileCache = AndroidUtil.createTileCache(
-            mapView.context, chosenTileLayer, mapView.model.displayModel.tileSize,
-            1f, mapView.model.frameBufferModel.overdrawFactor, !isOffline
-        )
+        initTileCache(!isOffline)
         if (isOffline) {
             setupOfflineMap()
         } else {
             setupOnlineMap(chosenTileLayer)
         }
         mapView.layerManager.redrawLayers()
+    }
+
+    private fun initTileCache(persistent: Boolean) {
+        tileCache = AndroidUtil.createTileCache(
+            mapView.context, userPreferences.mapStyle, mapView.model.displayModel.tileSize,
+            1f, mapView.model.frameBufferModel.overdrawFactor, persistent
+        )
     }
 
     private fun setupOnlineMap(chosenTileLayer: String) {
