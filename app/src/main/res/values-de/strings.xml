@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -419,6 +420,18 @@
         <item quantity="one"><xliff:g id="mins" example="1">%1$d</xliff:g> Minute</item>
         <item quantity="other"><xliff:g id="mins" example="5">%1$d</xliff:g> Minuten</item>
     </plurals>
+    <plurals name="workoutStep">
+        <item quantity="one">Schritt</item>
+        <item quantity="other">Schritte</item>
+    </plurals>
+    <plurals name="workoutJump">
+        <item quantity="one">Sprung</item>
+        <item quantity="other">Sprünge</item>
+    </plurals>
+    <plurals name="workoutPushUp">
+        <item quantity="one">Liegestütz</item>
+        <item quantity="other">Liegestütze</item>
+    </plurals>
     <string name="upperPaceLimit">Oberes Tempolimit</string>
     <string name="lowerPaceLimit">Unteres Tempolimit</string>
     <!-- speed warning announcements -->
@@ -470,6 +483,20 @@
     <string name="auto">Auto</string>
     <string name="noColoring">Keine Färbung</string>
     <string name="launchError">Starten der App fehlgeschlagen</string>
+    <string name="workoutRepetitions">Wiederholungen</string>
+    <string name="workoutSets">Sets</string>
+    <string name="workoutFrequency">Frequenz</string>
+    <string name="workoutAvgFrequencyShort">⌀-Frequenz</string>
+    <string name="workoutMaxFrequency">Max Frequenz</string>
+    <string name="workoutIntensity">Intensität</string>
+    <string name="workoutAvgIntensityShort">⌀-Intensität</string>
+    <string name="workoutMaxIntensity">Max Intensität</string>
+    <string name="workoutTypeTreadmill">Laufband</string>
+    <string name="workoutTypeRopeSkipping">Seilspringen</string>
+    <string name="workoutTypeTrampolineJumping">Trampolin-Springen</string>
+    <string name="workoutTypePushUps">Liegestütze</string>
+    <string name="pref_step_length">Schrittlänge</string>
+    <string name="recordingActivityPermissionMessage">FitoTrack braucht die Berechtigung, physische Aktivitäten zu erfassen, um Indoor-Workouts aufzunehmen.</string>
     <string name="unitHeartBeatsPerMinute">bpm</string>
     <string name="preferenceFirstDayOfWeek">Anfang der Woche</string>
     <string name="fileNotFound">Datei nicht gefunden</string>
