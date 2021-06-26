@@ -165,7 +165,7 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
     }
 
     private void setupMap() {
-        mapView = MapManager.setupMap(this);
+        mapView = new MapManager(this).setupMap();
         mapView.setClickable(false);
     }
 

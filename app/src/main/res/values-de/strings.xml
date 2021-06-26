@@ -17,7 +17,9 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  -->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
     <string name="backup">Sichern</string>
     <string name="cancel">Abbrechen</string>
@@ -377,7 +379,7 @@
     <string name="pref_render_theme_style_settings">Lokales Renderthema anpassen</string>
     <string name="pref_render_theme_style">Renderstil</string>
     <string name="preferenceCategoryRenderThemeCategories">Kategorien</string>
-    <string name="pref_render_theme_style_info">Keine Optionen für gewähltes Renderthema verfügbar oder noch keine Kartenansicht geöffnet. Zum Initialisieren der Optionen eine Kartenansicht öffnen!</string>
+    <string name="pref_render_theme_style_info">Keine Optionen für gewähltes Renderthema verfügbar.</string>
     <string name="downloadMapsTitle">Karten herunterladen</string>
     <string name="downloadMapsSpecifyDirectory">Bitte gebe erst ein Verzeichnis für die Karten an</string>
     <string name="overwriteMapConfirmation">Möchtest du die bereits existierende Kartendatei %s überschreiben?</string>

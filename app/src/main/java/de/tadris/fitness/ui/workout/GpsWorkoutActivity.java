@@ -77,11 +77,11 @@ public abstract class GpsWorkoutActivity extends WorkoutActivity implements MapS
 
     @Override
     List<BaseSample> findSamples(long workoutId) {
-        return Arrays.asList(Instance.getInstance(this).db.gpsWorkoutDao().getAllSamplesOfWorkout(workout.id));
+        return Arrays.asList(Instance.getInstance(this).db.gpsWorkoutDao().getAllSamplesOfWorkout(workoutId));
     }
 
     void addMap() {
-        mapView = MapManager.setupMap(this);
+        mapView = new MapManager(this).setupMap();
         String trackStyle = Instance.getInstance(this).userPreferences.getTrackStyle();
         // emulate current behaviour
 

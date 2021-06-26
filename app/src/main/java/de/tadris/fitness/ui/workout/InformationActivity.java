@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -30,9 +30,9 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import de.tadris.fitness.R;
-import de.tadris.fitness.ui.MapActivity;
+import de.tadris.fitness.ui.FitoTrackActivity;
 
-public abstract class InformationActivity extends MapActivity {
+public abstract class InformationActivity extends FitoTrackActivity {
 
     protected ViewGroup root;
 

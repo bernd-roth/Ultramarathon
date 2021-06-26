@@ -365,7 +365,7 @@
     <string name="pref_render_theme_style_settings">Offline Render Theme Settings</string>
     <string name="pref_render_theme_style">Render Style</string>
     <string name="preferenceCategoryRenderThemeCategories">Categories</string>
-    <string name="pref_render_theme_style_info">No render theme style menu available for selected render theme or no map view opened yet. Open a map view to initialize the style menu!</string>
+    <string name="pref_render_theme_style_info">No render theme style menu available for selected render theme.</string>
     <string name="downloadMapsTitle">Download Maps</string>
     <string name="downloadMapsSpecifyDirectory">Please specify a directory for offline maps first</string>
     <string name="overwriteMapConfirmation">Do you want to overwrite the existing map file %s?</string>
