@@ -49,7 +49,6 @@ import de.tadris.fitness.data.IndoorWorkout
 import de.tadris.fitness.data.WorkoutType
 import de.tadris.fitness.ui.adapter.WorkoutAdapter
 import de.tadris.fitness.ui.adapter.WorkoutAdapter.WorkoutAdapterListener
-import de.tadris.fitness.ui.dialog.ProgressDialogController
 import de.tadris.fitness.ui.dialog.SelectWorkoutTypeDialog
 import de.tadris.fitness.ui.dialog.ThreadSafeProgressDialogController
 import de.tadris.fitness.ui.record.RecordWorkoutActivity
@@ -165,25 +164,9 @@ class ListWorkoutsActivity : FitoTrackActivity(), WorkoutAdapterListener {
     }
 
     private fun importFile(uri: Uri) {
-        val dialogController = ProgressDialogController(this, getString(R.string.importWorkout))
-        dialogController.show()
-        Thread {
-            try {
-                val stream = contentResolver.openInputStream(uri)
-                IOHelper.GpxImporter.importWorkout(applicationContext, stream)
-                mHandler.post {
-                    Toast.makeText(this, R.string.workoutImported, Toast.LENGTH_LONG).show()
-                    dialogController.cancel()
-                    refresh()
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-                mHandler.post {
-                    dialogController.cancel()
-                    showErrorDialog(e, R.string.error, R.string.errorImportFailed)
-                }
-            }
-        }.start()
+        val intent = Intent(this, ImportGpxActivity::class.java)
+        intent.data = uri
+        startActivity(intent)
     }
 
     private fun showMassImportGpx() {
