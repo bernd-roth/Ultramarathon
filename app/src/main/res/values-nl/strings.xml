@@ -16,7 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources>
+  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
     <string name="workout_add">Toevoegen</string>
     <string name="stop">Stop</string>
@@ -225,7 +225,7 @@
     <string name="dayInMonth">Dag in maand</string>
     <string name="singleWorkout">Enkele training</string>
     <string name="workoutStatsHelpText">Dit scherm toont historische statistieken van de trainingen. Om het te gebruiken, moet je eerst het trainingstype specificeren door erop te klikken. Stel vervolgens de informatie in waarover je meer wilt weten en de tijdsduur. \n\nE.g. Bijvoorbeeld als je \"Week\" selecteert als tijdsperiode, worden alle trainingen van elke week samengevoegd tot één gegevenspunt, waarbij ofwel het gemiddelde ofwel de som van elke week wordt berekend.</string>
-    <string name="dataSamples">Voorbeelden</string>
+    <string name="dataSamples">Metingen</string>
     <string name="replaceOrMergeMessage">Database vervangen of samenvoegen met back-upbestand?</string>
     <string name="replace">Vervangen</string>
     <string name="merge">Samenvoegen</string>
@@ -333,8 +333,8 @@
     <string name="customWorkoutTypesTitle">Aangepaste Trainingstypes</string>
     <string name="preferenceCategoryVoiceFeedback">Feedback</string>
     <string name="workoutTypeEditMETHint">Een maatregel voor energieverbruik</string>
-    <string name="workoutTypeEditMinDistanceHint">Minimumafstand tussen twee GPS-monsters</string>
-    <string name="workoutTypeEditMinDistance">Monsterafstand</string>
+    <string name="workoutTypeEditMinDistanceHint">Minimumafstand tussen twee GPS-metingen</string>
+    <string name="workoutTypeEditMinDistance">Afstand meting</string>
     <string name="workoutTypeEditNameError">Voer a. U. B. een naam in</string>
     <string name="workoutTypeEditName">Naam</string>
     <string name="workoutTypeEditIdErrorUnique">Er is al een workout type met behulp van deze ID</string>
@@ -420,7 +420,19 @@
     <string name="preferenceCurrentSpeedTime">Tijdspan voor gemiddelde berekening</string>
     <string name="preferencesCategoryMap">Kaart</string>
     <string name="prefTrackStyleUsageTitle">Gebruik trackkleuring automatisch</string>
-    <string name="trackStyle">Track Stijl</string>
-    <string name="workoutMaxHeight">Max. hoogte</string>
-    <string name="workoutMinHeight">Min. hoogte</string>
+    <string name="trackStyle">Track stijl</string>
+    <string name="workoutMaxHeight">Max hoogte</string>
+    <string name="workoutMinHeight">Min hoogte</string>
+    <plurals name="minutes">
+        <item quantity="one"><xliff:g id="mins" example="1">%1$d</xliff:g> minuut</item>
+        <item quantity="other"><xliff:g id="mins" example="5">%1$d</xliff:g> minuten</item>
+    </plurals>
+    <plurals name="seconds">
+        <item quantity="one"><xliff:g id="secs" example="1">%1$d</xliff:g> seconde</item>
+        <item quantity="other"><xliff:g id="secs" example="12">%1$d</xliff:g> seconden</item>
+    </plurals>
+    <string name="fileNotFound">Bestand niet gevonden</string>
+    <string name="ttsMinuteSecondCountdownAnnouncement"> <xliff:g id="mins" example="1 minute">%1$s</xliff:g> en <xliff:g id="secs" example="7 seconds">%2$s</xliff:g> tot begin </string>
+    <string name="ttsMinuteCountdownAnnouncement"> <xliff:g id="mins" example="12 minutes">%1$s</xliff:g> tot begin </string>
+    <string name="ttsLongSecondCountdownAnnouncement"> <xliff:g id="secs" voorbeeld="5 seconde">%1$s</xliff:g> tot begin </string>
 </resources>
