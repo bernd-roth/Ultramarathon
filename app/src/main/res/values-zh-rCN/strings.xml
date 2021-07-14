@@ -382,4 +382,34 @@
     <string name="edit_interval">编辑间隔</string>
     <string name="prefTrackStyleUsageTitle">自动使用跟踪色彩</string>
     <string name="trackStyle">跟踪风格</string>
+    <string name="recordingActivityPermissionMessage">FitoTrack 需要权限跟踪您的身体活动以便记录室内锻炼。</string>
+    <string name="editWorkoutStartEnd">编辑开始/结束</string>
+    <string name="unitHeartBeatsPerMinute">bpm</string>
+    <string name="preferenceFirstDayOfWeek">每周开始</string>
+    <string name="preferenceUseAverageForCurrentSpeed">使用某一时段的平均速度替代该时段最后时刻的瞬时速度。</string>
+    <string name="preferenceCurrentSpeedAverageTimeTitle">当前平均速度</string>
+    <string name="preferenceCurrentSpeedAverageTimeSummary">用平均计算代替当前速度计算。</string>
+    <string name="preferenceCurrentSpeedTime">平均计算的时间跨度</string>
+    <string name="pref_step_length">步长</string>
+    <plurals name="workoutPushUp">
+        <item quantity="other">俯卧撑</item>
+    </plurals>
+    <string name="workoutTypePushUps">俯卧撑</string>
+    <plurals name="workoutJump">
+        <item quantity="other">跳跃</item>
+    </plurals>
+    <string name="workoutTypeTrampolineJumping">蹦床跳</string>
+    <string name="workoutTypeRopeSkipping">跳绳</string>
+    <plurals name="workoutStep">
+        <item quantity="other">步</item>
+    </plurals>
+    <string name="workoutTypeTreadmill">跑步 机</string>
+    <string name="workoutMaxIntensity">最大强度</string>
+    <string name="workoutAvgIntensityShort">平均强度</string>
+    <string name="workoutIntensity">强度</string>
+    <string name="workoutMaxFrequency">最大频率</string>
+    <string name="workoutAvgFrequencyShort">平均频率</string>
+    <string name="workoutFrequency">频率</string>
+    <string name="workoutSets">组</string>
+    <string name="workoutRepetitions">重复次数</string>
 </resources>
