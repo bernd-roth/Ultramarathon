@@ -56,7 +56,7 @@
     <string name="unitFootSingular">Stopa</string>
     <string name="unitFootPlural">Stopy</string>
     <string name="noWorkoutStarted">Brak rozpoczętego treningu</string>
-    <string name="editDisplayedInformationHint">Dopóki trening nie rozpoczął się, możesz edytować wyświetlane wartości, klikając jedno z czterech pól.</string>
+    <string name="editDisplayedInformationHint">Dopóki trening nie rozpoczął się, możesz edytować wyświetlane wartości, naciskając jedno z czterech pól.</string>
     <string name="editDisplayedInformation">Edycja wyświetlanych informacji</string>
     <string name="sendEmail">Wyślij e-mail</string>
     <string name="aboutPrivacyPolicy">Polityka prywatności</string>
@@ -85,9 +85,9 @@
     <string name="replace">Zamień</string>
     <string name="replaceOrMergeMessage">Zamienić czy połączyć bazę danych z plikiem kopii zapasowej\?</string>
     <string name="dataSamples">Próbki</string>
-    <string name="workoutStatsHelpText">Ten ekran pokazuje historyczne statystyki treningów. Aby z niego skorzystać, najpierw potrzebujesz określić typ treningu przez kliknięcie na niego. Następnie ustaw informacje, o których chcesz wiedzieć, i przedział czasu.
+    <string name="workoutStatsHelpText">Ten ekran pokazuje historyczne statystyki treningów. Aby z niego skorzystać, najpierw potrzebujesz określić typ treningu przez naciśnięcie go. Następnie ustaw informacje, o których chcesz wiedzieć, i przedział czasu.
 \n
-\nNp. jeśli wybierzesz \"Tydzień\" jako przedział czasu, wszystkie treningi z każdego tygodnia zostaną połączone w jeden punkt danych, obliczając średnią albo sumę każdego tygodnia.</string>
+\nPrzykładowo, jeśli wybierzesz „Tydzień” jako przedział czasu, wszystkie treningi z każdego tygodnia zostaną połączone w jeden punkt danych, obliczając średnią albo sumę każdego tygodnia.</string>
     <string name="singleWorkout">Pojedynczy trening</string>
     <string name="dayInMonth">Dzień w miesiącu</string>
     <string name="calendarWeekYear">Tydzień / Rok kalendarzowy</string>
@@ -149,7 +149,7 @@
     <string name="avgSpeedTotalShort">Śr. prędkość (całkowita)</string>
     <string name="avgSpeedInMotion">Śr. prędkość (w ruchu)</string>
     <string name="enterDescription">Wprowadź opis</string>
-    <string name="hintAddWorkout">Kliknij ikonę plusa, aby nagrać lub wprowadzić trening.</string>
+    <string name="hintAddWorkout">Naciśnij ikonę plusa, aby nagrać lub wprowadzić trening.</string>
     <string name="currentSpeed">Aktualna prędkość</string>
     <string name="intervalSets">Zestawy interwałów</string>
     <string name="intervalSet">Zestaw interwałów</string>
@@ -288,7 +288,7 @@
     <string name="actionImport">Importuj</string>
     <string name="importMultipleGpxFilesSummary">Importuj jednocześnie więcej niż jeden plik GPX z systemu plików</string>
     <string name="workoutTypeEditId">ID</string>
-    <string name="hintManageWorkoutTypes">Kliknij ikonę plusa, aby dodać niestandardowe typy treningów.</string>
+    <string name="hintManageWorkoutTypes">Naciśnij ikonę plusa, aby dodać niestandardowe typy treningów.</string>
     <string name="resumeWorkoutConfirmation">Czy naprawdę chcesz wznowić ten trening\? Spowoduje to również dodanie wstrzymania od momentu zatrzymania treningu.</string>
     <string name="prefShowOnLockScreenTitle">Widoczne na ekranie blokady</string>
     <string name="prefShowOnLockScreenSummary">Pokaż informacje o treningu, nawet gdy ekran jest zablokowany.</string>
@@ -339,7 +339,7 @@
         <item quantity="other"><xliff:g example="12" id="secs">%1$d</xliff:g> sekund</item>
     </plurals>
     <string name="launchError">Nie można uruchomić aplikacji</string>
-    <string name="editStartEndHelp">Wybierz pozycję na mapie albo diagramie. Następnie kliknij jedną ze strzałek, aby wybrać nowy punkt początkowy albo końcowy. Gdy skończysz, kliknij ikonę zapisu w celu zastosowania zmian.</string>
+    <string name="editStartEndHelp">Wybierz pozycję na mapie albo diagramie. Następnie naciśnij jedną ze strzałek, aby wybrać nowy punkt początkowy albo końcowy. Gdy skończysz, kliknij ikonę zapisu w celu zastosowania zmian.</string>
     <string name="actionApply">Zastosuj</string>
     <string name="moveEndOfWorkout">Wytnij koniec</string>
     <string name="moveStartOfWorkout">Wytnij początek</string>
