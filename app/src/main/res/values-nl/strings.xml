@@ -424,15 +424,47 @@
     <string name="workoutMaxHeight">Max hoogte</string>
     <string name="workoutMinHeight">Min hoogte</string>
     <plurals name="minutes">
-        <item quantity="one"><xliff:g id="mins" example="1">%1$d</xliff:g> minuut</item>
-        <item quantity="other"><xliff:g id="mins" example="5">%1$d</xliff:g> minuten</item>
+        <item quantity="one"><xliff:g example="1" id="mins">%1$d</xliff:g> minuut</item>
+        <item quantity="other"><xliff:g example="5" id="mins">%1$d</xliff:g> minuten</item>
     </plurals>
     <plurals name="seconds">
-        <item quantity="one"><xliff:g id="secs" example="1">%1$d</xliff:g> seconde</item>
-        <item quantity="other"><xliff:g id="secs" example="12">%1$d</xliff:g> seconden</item>
+        <item quantity="one"><xliff:g example="1" id="secs">%1$d</xliff:g> seconde</item>
+        <item quantity="other"><xliff:g example="12" id="secs">%1$d</xliff:g> seconden</item>
     </plurals>
     <string name="fileNotFound">Bestand niet gevonden</string>
-    <string name="ttsMinuteSecondCountdownAnnouncement"> <xliff:g id="mins" example="1 minute">%1$s</xliff:g> en <xliff:g id="secs" example="7 seconds">%2$s</xliff:g> tot begin </string>
-    <string name="ttsMinuteCountdownAnnouncement"> <xliff:g id="mins" example="12 minutes">%1$s</xliff:g> tot begin </string>
-    <string name="ttsLongSecondCountdownAnnouncement"> <xliff:g id="secs" voorbeeld="5 seconde">%1$s</xliff:g> tot begin </string>
+    <string name="ttsMinuteSecondCountdownAnnouncement"> <xliff:g example="1 minuut" id="mins">%1$s</xliff:g> en
+\n<xliff:g example="7 seconden" id="secs">%2$s</xliff:g> tot begin </string>
+    <string name="ttsMinuteCountdownAnnouncement"> <xliff:g example="12 minuten" id="mins">%1$s</xliff:g> tot begin </string>
+    <string name="ttsLongSecondCountdownAnnouncement"> <xliff:g example="5 seconden" id="secs">%1$s</xliff:g> tot begin </string>
+    <string name="pref_render_theme_style_info">Geen thema-stijl beschikbaar voor geselecteerd thema.</string>
+    <string name="preferenceCategoryRenderThemeCategories">Categorieën</string>
+    <string name="pref_render_theme_style">Stijl</string>
+    <string name="pref_render_theme_style_settings">Instellingen offline thema</string>
+    <string name="pref_map_directory">Offline kaartmap</string>
+    <string name="recordingActivityPermissionMessage">FitoTrack heeft toestemming nodig om je fysieke activiteit bij te houden om indoortrainingen op te nemen.</string>
+    <string name="pref_step_length">Stap lengte</string>
+    <plurals name="workoutPushUp">
+        <item quantity="one">Opdrukking</item>
+        <item quantity="other">Opdrukkingen</item>
+    </plurals>
+    <string name="workoutTypePushUps">Opdrukken</string>
+    <plurals name="workoutJump">
+        <item quantity="one">Sprong</item>
+        <item quantity="other">Sprongen</item>
+    </plurals>
+    <string name="workoutTypeTrampolineJumping">Trampoline springen</string>
+    <string name="workoutTypeRopeSkipping">Touwtje springen</string>
+    <plurals name="workoutStep">
+        <item quantity="one">Stap</item>
+        <item quantity="other">Stappen</item>
+    </plurals>
+    <string name="workoutTypeTreadmill">Loopband</string>
+    <string name="workoutMaxIntensity">Max. Intensiteit</string>
+    <string name="workoutAvgIntensityShort">Gem. Intensiteit</string>
+    <string name="workoutIntensity">Intensiteit</string>
+    <string name="workoutMaxFrequency">Max. Frequentie</string>
+    <string name="workoutAvgFrequencyShort">Gem. Frequentie</string>
+    <string name="workoutFrequency">Frequentie</string>
+    <string name="workoutSets">Sets</string>
+    <string name="workoutRepetitions">Herhalingen</string>
 </resources>
