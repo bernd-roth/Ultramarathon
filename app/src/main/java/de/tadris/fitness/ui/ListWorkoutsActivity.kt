@@ -101,7 +101,6 @@ class ListWorkoutsActivity : FitoTrackActivity(), WorkoutAdapterListener {
         findViewById<View>(R.id.workoutListRecord).setOnClickListener { showWorkoutSelection() }
         findViewById<View>(R.id.workoutListEnter).setOnClickListener { startEnterWorkoutActivity() }
         findViewById<View>(R.id.workoutListImport).setOnClickListener { showImportDialog() }
-        //findViewById<View>(R.id.viewpager_short_stats).setOnClickListener { startActivity(Intent(this, AggregatedWorkoutStatisticsActivity::class.java)) }
 
         checkFirstStart()
         refresh()

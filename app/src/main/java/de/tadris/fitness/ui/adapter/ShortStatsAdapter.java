@@ -1,54 +1,60 @@
 package de.tadris.fitness.ui.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.github.mikephil.charting.charts.CombinedChart;
+
 import de.tadris.fitness.R;
+import de.tadris.fitness.ui.workout.AggregatedWorkoutStatisticsActivity;
 
 public class ShortStatsAdapter extends RecyclerView.Adapter<ShortStatsAdapter.ViewHolder> {
-    // Array of images
-    // Adding images from drawable folder
+
     private Context ctx;
 
-    // Constructor of our ViewPager2Adapter class
+    /**
+     * The constructor for the adapter.
+     * @param ctx is the current context
+     */
     public ShortStatsAdapter(Context ctx) {
         this.ctx = ctx;
     }
 
-    // This method returns our layout
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(ctx).inflate(R.layout.short_stats_item, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, ctx);
     }
 
-    // This method binds the screen with the view
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        // This will set the images in imageview
-        holder.text.setText(""+position);
-        holder.text.setBackgroundColor(Color.argb(1, position%2, (position+1)%2, 0));
+
     }
 
-    // This Method returns the size of the Array
     @Override
     public int getItemCount() {
         return 2;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView text;
-        public ViewHolder(@NonNull View itemView) {
+        CombinedChart chart;
+        public ViewHolder(@NonNull View itemView, Context ctx) {
             super(itemView);
-            text = itemView.findViewById(R.id.short_stats_title);
+            chart = itemView.findViewById(R.id.short_stats_chart);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ctx.startActivity(new Intent(ctx, AggregatedWorkoutStatisticsActivity.class));
+                }
+            });
         }
     }
 }
