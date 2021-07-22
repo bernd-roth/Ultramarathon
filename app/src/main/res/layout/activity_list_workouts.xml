@@ -24,13 +24,26 @@
     android:layout_height="match_parent"
     tools:context=".ui.ListWorkoutsActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/workoutList"
-        android:scrollbars="vertical"
+    <LinearLayout
+        android:id="@+id/main_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <include layout="@layout/view_short_stats"
+            android:id="@+id/short_stats_view"
+            android:layout_width="match_parent"
+            android:layout_height="100dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/workoutList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/hintAddWorkout"
