@@ -54,7 +54,6 @@ import de.tadris.fitness.ui.dialog.SelectWorkoutTypeDialog
 import de.tadris.fitness.ui.dialog.ThreadSafeProgressDialogController
 import de.tadris.fitness.ui.record.RecordWorkoutActivity
 import de.tadris.fitness.ui.settings.FitoTrackSettingsActivity
-import de.tadris.fitness.ui.statistics.ViewShortStats
 import de.tadris.fitness.ui.workout.AggregatedWorkoutStatisticsActivity
 import de.tadris.fitness.ui.workout.EnterWorkoutActivity
 import de.tadris.fitness.ui.workout.ShowGpsWorkoutActivity
@@ -80,9 +79,6 @@ class ListWorkoutsActivity : FitoTrackActivity(), WorkoutAdapterListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_workouts)
 
-        main_layout = findViewById(R.id.main_layout)
-        main_layout.addView(ViewShortStats(this), 0)
-
         listView = findViewById(R.id.workoutList)
         listView.setHasFixedSize(true)
         layoutManager = LinearLayoutManager(this)
@@ -105,7 +101,7 @@ class ListWorkoutsActivity : FitoTrackActivity(), WorkoutAdapterListener {
         findViewById<View>(R.id.workoutListRecord).setOnClickListener { showWorkoutSelection() }
         findViewById<View>(R.id.workoutListEnter).setOnClickListener { startEnterWorkoutActivity() }
         findViewById<View>(R.id.workoutListImport).setOnClickListener { showImportDialog() }
-        //findViewById<View>(R.id.short_stats_view).setOnClickListener { startActivity(Intent(this, AggregatedWorkoutStatisticsActivity::class.java)) }
+        //findViewById<View>(R.id.viewpager_short_stats).setOnClickListener { startActivity(Intent(this, AggregatedWorkoutStatisticsActivity::class.java)) }
 
         checkFirstStart()
         refresh()
