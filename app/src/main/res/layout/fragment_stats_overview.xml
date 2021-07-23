@@ -38,13 +38,12 @@
                 android:id="@+id/stats_distances_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/distances" />
+                android:text="@string/workoutDistance" />
 
             <com.github.mikephil.charting.charts.HorizontalBarChart
                 android:id="@+id/stats_distances_chart"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                />
+                android:layout_height="200dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -57,7 +56,7 @@
                 android:id="@+id/stats_duration_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/durations" />
+                android:text="@string/workoutDuration" />
 
             <com.github.mikephil.charting.charts.HorizontalBarChart
                 android:id="@+id/stats_duration_chart"

@@ -30,12 +30,15 @@ public class StatsOverviewFragment extends StatsFragment {
 
         HorizontalBarChart numberOfActivitiesChart = view.findViewById(R.id.stats_number_of_workout_chart);
         numberOfActivitiesChart.setData(statsProvider.numberOfActivities(new StatsDataTypes.TimeSpan(0, Long.MAX_VALUE)));
+        numberOfActivitiesChart.getLegend().setEnabled(false);
 
         HorizontalBarChart distanceChart = view.findViewById(R.id.stats_distances_chart);
-        distanceChart.setData(statsProvider.totalPropertyBarData(WorkoutProperty.LENGTH, new StatsDataTypes.TimeSpan(0, Long.MAX_VALUE)));
+        distanceChart.setData(statsProvider.totalDistances(new StatsDataTypes.TimeSpan(0, Long.MAX_VALUE)));
+        distanceChart.getLegend().setEnabled(false);
 
         HorizontalBarChart durationChart = view.findViewById(R.id.stats_duration_chart);
-        durationChart.setData(statsProvider.totalPropertyBarData(WorkoutProperty.DURATION, new StatsDataTypes.TimeSpan(0, Long.MAX_VALUE)));
+        durationChart.setData(statsProvider.totalDurations(new StatsDataTypes.TimeSpan(0, Long.MAX_VALUE)));
+        durationChart.getLegend().setEnabled(false);
     }
 
     @Override

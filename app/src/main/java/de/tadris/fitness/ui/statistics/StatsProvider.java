@@ -11,8 +11,10 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.StatsDataProvider;
@@ -22,6 +24,8 @@ import de.tadris.fitness.util.Icon;
 import de.tadris.fitness.util.WorkoutProperty;
 
 public class StatsProvider {
+
+    private static final int MINUTES_LIMIT = 2;
 
     Context ctx;
     StatsDataProvider dataProvider;
@@ -38,15 +42,14 @@ public class StatsProvider {
 
         HashMap<WorkoutType, Integer> numberOfWorkouts = new HashMap<>();
 
-        ArrayList<StatsDataTypes.DataPoint> workouts = dataProvider.getData(WorkoutProperty.LENGTH, WorkoutType.getAllTypes(ctx));
+        ArrayList<StatsDataTypes.DataPoint> workouts = dataProvider.getData(WorkoutProperty.LENGTH,
+                WorkoutType.getAllTypes(ctx),
+                timeSpan);
 
         // Count number of workouts of specific WorkoutType in a specific time span
         for (StatsDataTypes.DataPoint dataPoint : workouts) {
-            if (timeSpan.contains(dataPoint.time)) {
-
-                numberOfWorkouts.put(dataPoint.workoutType,
-                        numberOfWorkouts.getOrDefault(dataPoint.workoutType, 0) + 1);
-            }
+            numberOfWorkouts.put(dataPoint.workoutType,
+                    numberOfWorkouts.getOrDefault(dataPoint.workoutType, 0) + 1);
         }
 
         for (Map.Entry<WorkoutType, Integer> entry : numberOfWorkouts.entrySet()) {
@@ -64,23 +67,23 @@ public class StatsProvider {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public BarData totalPropertyBarData(WorkoutProperty workoutProperty , StatsDataTypes.TimeSpan timeSpan) {
+    public BarData totalDistances(StatsDataTypes.TimeSpan timeSpan) {
+        final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.LENGTH;
+
         ArrayList<BarEntry> barEntries = new ArrayList<>();
         int barNumber = 0;
 
-        HashMap<WorkoutType, Float> data = new HashMap<>();
+        HashMap<WorkoutType, Float> distances = new HashMap<>();
 
-        ArrayList<StatsDataTypes.DataPoint> workouts = dataProvider.getData(workoutProperty, WorkoutType.getAllTypes(ctx));
+        ArrayList<StatsDataTypes.DataPoint> workouts = dataProvider.getData(WORKOUT_PROPERTY, WorkoutType.getAllTypes(ctx));
 
         for (StatsDataTypes.DataPoint dataPoint : workouts) {
-            if (timeSpan.contains(dataPoint.time)) {
-                data.put(dataPoint.workoutType,
-                        data.getOrDefault(dataPoint.workoutType, (float)0) + (float)dataPoint.value);
-            }
+            distances.put(dataPoint.workoutType,
+                    distances.getOrDefault(dataPoint.workoutType, (float)0) + (float)dataPoint.value);
         }
 
         //Retrieve data and add to the list
-        for (Map.Entry<WorkoutType, Float> entry : data.entrySet()) {
+        for (Map.Entry<WorkoutType, Float> entry : distances.entrySet()) {
 
             barEntries.add(new BarEntry(
                     (float)barNumber,
@@ -90,9 +93,49 @@ public class StatsProvider {
             barNumber++;
         }
 
-        BarDataSet barDataSet = new BarDataSet(barEntries,
-                WorkoutProperty.getStringRepresentations(ctx).get(workoutProperty.getId()));
+        BarDataSet barDataSet = new BarDataSet(barEntries, WORKOUT_PROPERTY.getStringRepresentation(ctx));
+        return new BarData(barDataSet);
+    }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public BarData totalDurations(StatsDataTypes.TimeSpan timeSpan)
+    {
+        final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.DURATION;
+
+        ArrayList<BarEntry> barEntries = new ArrayList<>();
+        int barNumber = 0;
+
+        HashMap<WorkoutType, Long> durations = new HashMap<>();
+
+        ArrayList<StatsDataTypes.DataPoint> workouts = dataProvider.getData(WORKOUT_PROPERTY, WorkoutType.getAllTypes(ctx));
+
+        for (StatsDataTypes.DataPoint dataPoint : workouts)
+        {
+            durations.put(dataPoint.workoutType,
+                    durations.getOrDefault(dataPoint.workoutType, (long)0) + (long)dataPoint.value);
+        }
+
+        // Check if the durations should be displayed in minutes or hours
+        boolean displayHours = TimeUnit.MILLISECONDS.toMinutes(Collections.max(durations.values())) > MINUTES_LIMIT;
+
+        for (Map.Entry<WorkoutType, Long> entry : durations.entrySet())
+        {
+            long duration;
+            if (displayHours) {
+                duration = TimeUnit.MILLISECONDS.toHours(entry.getValue());
+            } else {
+                duration = TimeUnit.MILLISECONDS.toMinutes(entry.getValue());
+            }
+
+            barEntries.add(new BarEntry(
+                    (float)barNumber,
+                    (float)duration,
+                    AppCompatResources.getDrawable(ctx, Icon.getIcon(entry.getKey().icon))));
+
+            barNumber++;
+        }
+
+        BarDataSet barDataSet = new BarDataSet(barEntries, WORKOUT_PROPERTY.getStringRepresentation(ctx));
         return new BarData(barDataSet);
     }
 }
