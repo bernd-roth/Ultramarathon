@@ -21,7 +21,7 @@ public class StatisticsActivity extends FitoTrackActivity {
         setTitle(getString(R.string.statistics));
         setupActionBar();
 
-        StatisticsAdapter statisticsAdapter = new StatisticsAdapter(getSupportFragmentManager(), getLifecycle());
+        StatisticsAdapter statisticsAdapter = new StatisticsAdapter(getSupportFragmentManager(), getLifecycle(), this);
         ViewPager2 pager = this.findViewById(R.id.statistics_pager);
         pager.setAdapter(statisticsAdapter);
 

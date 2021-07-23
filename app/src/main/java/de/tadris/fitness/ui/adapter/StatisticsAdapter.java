@@ -1,5 +1,7 @@
 package de.tadris.fitness.ui.adapter;
 
+import android.content.Context;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
@@ -17,13 +19,17 @@ import de.tadris.fitness.ui.statistics.Fragments.StatsOverviewFragment;
 
 public class StatisticsAdapter extends FragmentStateAdapter {
 
-    ArrayList<Fragment> fragments = new ArrayList<Fragment>(Arrays.asList(
-            new StatsOverviewFragment(),
-            new StatsHistoryFragment(),
-            new StatsHealthFragment()));
+    Context context;
 
-    public StatisticsAdapter(FragmentManager fragmentManager, Lifecycle lifecycle) {
+    ArrayList<Fragment> fragments;
+
+    public StatisticsAdapter(FragmentManager fragmentManager, Lifecycle lifecycle, Context context) {
         super(fragmentManager, lifecycle);
+        this.context = context;
+        fragments = new ArrayList<>(Arrays.asList(
+                new StatsOverviewFragment(context),
+                new StatsHistoryFragment(context),
+                new StatsHealthFragment(context)));
     }
 
     @Override
