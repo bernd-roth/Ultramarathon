@@ -8,14 +8,8 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.fragment.app.Fragment;
 
-import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.CombinedData;
-
-import org.jetbrains.annotations.NotNull;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.StatsDataTypes;
@@ -23,7 +17,6 @@ import de.tadris.fitness.ui.statistics.StatsProvider;
 import de.tadris.fitness.util.WorkoutProperty;
 
 public class StatsOverviewFragment extends StatsFragment {
-
     StatsProvider statsProvider = new StatsProvider(context);
 
     public StatsOverviewFragment(Context ctx) {
