@@ -10,7 +10,10 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 
+import java.lang.reflect.Array;
+import java.sql.Time;
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +28,11 @@ public class StatsProvider {
     public static class TimeSpan {
         public long startTime;
         public long endTime;
+
+        public TimeSpan(long startTime, long endTime) {
+            this.startTime = startTime;
+            this.endTime = endTime;
+        }
 
         public boolean contains(long time) {
             return startTime <= time && time <= endTime;
@@ -41,6 +49,7 @@ public class StatsProvider {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public BarData numberOfActivities(TimeSpan timeSpan) {
+
         ArrayList<BarEntry> barEntries = new ArrayList<>();
         int barNumber = 0;
 
@@ -99,6 +108,39 @@ public class StatsProvider {
         }
 
         BarDataSet barDataSet = new BarDataSet(barEntries, ctx.getString(R.string.distances));
+        return new BarData(barDataSet);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public BarData durationOfActivities(TimeSpan timeSpan)
+    {
+        ArrayList<BarEntry> barEntries = new ArrayList<>();
+        int barNumber = 0;
+
+        HashMap<WorkoutType, Long> durations = new HashMap<>();
+
+        ArrayList<StatsDataProvider.DataPoint> workouts = dataProvider.getData(WorkoutProperty.DURATION, WorkoutType.getAllTypes(ctx));
+
+        for (StatsDataProvider.DataPoint dataPoint : workouts)
+        {
+            if (timeSpan.contains(dataPoint.time)) {
+                durations.put(dataPoint.workoutType,
+                        durations.getOrDefault(dataPoint.workoutType, (long)0) + (long)dataPoint.value);
+            }
+
+        }
+
+        for (Map.Entry<WorkoutType, Long> entry : durations.entrySet())
+        {
+            barEntries.add(new BarEntry(
+                    (float)barNumber,
+                    (float)entry.getValue(),
+                    AppCompatResources.getDrawable(ctx, Icon.getIcon(entry.getKey().icon))));
+
+            barNumber++;
+        }
+
+        BarDataSet barDataSet = new BarDataSet(barEntries, ctx.getString(R.string.durations));
         return new BarData(barDataSet);
     }
 }
