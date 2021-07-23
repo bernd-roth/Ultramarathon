@@ -3,6 +3,8 @@ package de.tadris.fitness.ui.statistics.Fragments;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -13,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.CombinedData;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -37,6 +40,16 @@ public class StatsOverviewFragment extends StatsFragment {
         CombinedData combinedData = new CombinedData();
         combinedData.setData(barData);
         numberOfActivitiesChart.setData(combinedData);
+
+        numberOfActivitiesChart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ViewPortHandler viewPortHandler = numberOfActivitiesChart.getViewPortHandler();
+                float scaleX = viewPortHandler.getScaleX();
+                float scaleY = viewPortHandler.getScaleY();
+                Log.i(getTag(), ""+scaleX+" "+scaleY );
+            }
+        });
     }
 
     @Override
