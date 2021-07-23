@@ -7,7 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import org.jetbrains.annotations.NotNull;
 
-import de.tadris.fitness.ui.statistics.Fragments.InitialFragment;
+import de.tadris.fitness.ui.statistics.Fragments.StatsOverviewFragment;
 
 public class StatisticsAdapter extends FragmentStateAdapter {
 
@@ -17,7 +17,7 @@ public class StatisticsAdapter extends FragmentStateAdapter {
 
     @Override
     public Fragment createFragment(@NotNull int position) {
-        return new InitialFragment();
+        return new StatsOverviewFragment();
     }
 
     @Override

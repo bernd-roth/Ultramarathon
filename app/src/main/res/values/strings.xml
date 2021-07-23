@@ -409,6 +409,7 @@
     <string name="actionApply">Apply</string>
     <string name="launchError">Could not launch application</string>
     <string name="editStartEndHelp">Select a position on the map or the diagram. Then click on one of the arrows to select a new starting or ending point. When you\'re done, click on the save icon to apply the changes.</string>
+    <string name="statistics">Statistics</string>
     <!-- used for countdown voice announcements -->
     <plurals name="seconds">
         <item quantity="one"><xliff:g example="1" id="secs">%1$d</xliff:g> second</item>
@@ -455,6 +456,9 @@
     <string name="invalidNumberFormat">Invalid number format.</string>
     <string name="fileNotFound">File not found</string>
     <string name="approxSymbol" translatable="false">≈</string>
+    <string name="numberOfWorkouts">Number of workouts</string>
+    <string name="distances">Distances</string>
+    <string name="durations">Durations</string>
     <string-array name="osm_track_visibility">
         <item>Identifiable</item>
         <item>Trackable</item>

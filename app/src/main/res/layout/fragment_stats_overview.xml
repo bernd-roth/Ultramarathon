@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/stats_number_of_workout_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/numberOfWorkouts" />
+
+            <com.github.mikephil.charting.charts.CombinedChart
+                android:id="@+id/stats_number_of_workout_chart"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/stats_distances_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/distances" />
+
+            <com.github.mikephil.charting.charts.CombinedChart
+                android:id="@+id/stats_distances_chart"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/stats_duration_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/durations" />
+
+            <com.github.mikephil.charting.charts.CombinedChart
+                android:id="@+id/stats_duration_chart"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+        </LinearLayout>
+        <com.edmodo.rangebar.RangeBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tickCount="5"/>
+    </LinearLayout>
+</ScrollView>

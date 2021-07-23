@@ -18,6 +18,7 @@ public class StatisticsActivity extends FitoTrackActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
+        setTitle(getString(R.string.statistics));
         setupActionBar();
 
         StatisticsAdapter statisticsAdapter = new StatisticsAdapter(getSupportFragmentManager(), getLifecycle());
