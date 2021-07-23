@@ -300,7 +300,7 @@
     <string name="gpsLost">Utrata sygnału GPS</string>
     <string name="voiceAnnouncementsTitle">Powiadomienia głosowe</string>
     <string name="showIntervals">Pokaż interwały</string>
-    <string name="importedWorkouts">Zaimportowano %d treningi/ów</string>
+    <string name="importedWorkouts">Zaimportowano %d trening(i/ów)</string>
     <string name="bulkActions">Akcje zbiorcze</string>
     <string name="setPreferencesTitle">Ustawianie preferencji</string>
     <string name="actionImportMultiple">Importuj wiele</string>
