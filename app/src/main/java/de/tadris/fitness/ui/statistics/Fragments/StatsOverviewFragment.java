@@ -13,11 +13,14 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.CombinedChart;
+import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.CombinedData;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.ui.statistics.StatsProvider;
@@ -25,6 +28,7 @@ import de.tadris.fitness.ui.statistics.StatsProvider;
 public class StatsOverviewFragment extends StatsFragment {
 
     StatsProvider statsProvider = new StatsProvider(context);
+    ArrayList<HorizontalBarChart> barChartList = new ArrayList<>();
 
     public StatsOverviewFragment(Context ctx) {
         super(R.layout.fragment_stats_overview, ctx);
@@ -41,15 +45,20 @@ public class StatsOverviewFragment extends StatsFragment {
         combinedData.setData(barData);
         numberOfActivitiesChart.setData(combinedData);
 
-        numberOfActivitiesChart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ViewPortHandler viewPortHandler = numberOfActivitiesChart.getViewPortHandler();
-                float scaleX = viewPortHandler.getScaleX();
-                float scaleY = viewPortHandler.getScaleY();
-                Log.i(getTag(), ""+scaleX+" "+scaleY );
-            }
-        });
+
+        for (HorizontalBarChart barChart: barChartList) {
+            barChart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ViewPortHandler viewPortHandler = numberOfActivitiesChart.getViewPortHandler();
+                    float scaleX = viewPortHandler.getScaleX();
+                    float scaleY = viewPortHandler.getScaleY();
+
+                    //change chart type depending on zoom level
+                }
+            });
+        }
+
     }
 
     @Override
