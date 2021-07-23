@@ -459,6 +459,9 @@
     <string name="numberOfWorkouts">Number of workouts</string>
     <string name="distances">Distances</string>
     <string name="durations">Durations</string>
+    <string name="energyExpended">Energy expended</string>
+    <string name="caloriesBurned">Calories burned</string>
+    <string name="heartFrequency">Heart frequency</string>
     <string-array name="osm_track_visibility">
         <item>Identifiable</item>
         <item>Trackable</item>

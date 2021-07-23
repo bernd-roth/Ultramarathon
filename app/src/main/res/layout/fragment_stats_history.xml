@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".StatsHistoryFragment">
+
+    <TextView
+        style="@style/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/workoutSpeed"
+        android:textAppearance="@style/title" />
+
+    <com.github.mikephil.charting.charts.CombinedChart
+        android:id="@+id/stats_speed_chart"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
+    <TextView
+        style="@style/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/workoutDistance"
+        android:textAppearance="@style/title" />
+
+    <com.github.mikephil.charting.charts.CombinedChart
+        android:id="@+id/stats_dist_chart"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
+    <TextView
+        style="@style/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/workoutDuration"
+        android:textAppearance="@style/title" />
+
+    <com.github.mikephil.charting.charts.CombinedChart
+        android:id="@+id/stats_duration_chart"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
+</LinearLayout>

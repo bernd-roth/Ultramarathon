@@ -69,5 +69,14 @@
         <item name="colorPrimaryVariant">@color/colorPrimaryDarkRowing</item>
     </style>
 
-
+    <style name="title" parent="AppTheme">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:paddingTop">20dp</item>
+        <item name="android:paddingBottom">0dp</item>
+    </style>
 </resources>
