@@ -2,22 +2,28 @@ package de.tadris.fitness.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.mikephil.charting.charts.CombinedChart;
+import com.github.mikephil.charting.data.CombinedData;
 
 import de.tadris.fitness.R;
+import de.tadris.fitness.data.StatsDataTypes;
 import de.tadris.fitness.ui.statistics.StatisticsActivity;
+import de.tadris.fitness.ui.statistics.StatsProvider;
 import de.tadris.fitness.ui.workout.AggregatedWorkoutStatisticsActivity;
 
 public class ShortStatsAdapter extends RecyclerView.Adapter<ShortStatsAdapter.ViewHolder> {
 
     private Context ctx;
+    private StatsProvider statsProvider;
 
     /**
      * The constructor for the adapter.
@@ -25,6 +31,7 @@ public class ShortStatsAdapter extends RecyclerView.Adapter<ShortStatsAdapter.Vi
      */
     public ShortStatsAdapter(Context ctx) {
         this.ctx = ctx;
+        statsProvider = new StatsProvider(ctx);
     }
 
     @NonNull
@@ -34,9 +41,21 @@ public class ShortStatsAdapter extends RecyclerView.Adapter<ShortStatsAdapter.Vi
         return new ViewHolder(view, ctx);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+        CombinedData data = new CombinedData();
+        StatsDataTypes.TimeSpan allTime = new StatsDataTypes.TimeSpan(0,Long.MAX_VALUE);
+        switch (position)
+        {
+            case 0:
+                data.setData(statsProvider.numberOfActivities(allTime));
+                break;
+            default:
+                data.setData(statsProvider.totalDistances(allTime));
+                break;
+        }
+        holder.chart.setData(data);
     }
 
     @Override
