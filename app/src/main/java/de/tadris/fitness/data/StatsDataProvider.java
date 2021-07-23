@@ -31,7 +31,7 @@ public class StatsDataProvider {
         ArrayList<StatsDataTypes.DataPoint> data = new ArrayList<>();
         List<BaseWorkout> workouts = Instance.getInstance(context).db.getAllWorkouts();
         for (BaseWorkout workout : workouts) {
-            if (workoutTypes.contains(workout.getWorkoutType(this.context)) && timeSpan.contains(workout.start)) {
+            if (workoutTypes.contains(workout.getWorkoutType(this.context)) && ((timeSpan == null) || timeSpan.contains(workout.start))) {
                 try {
                     if (requestedProperty.isBaseProperty()) {
                         data.add(new StatsDataTypes.DataPoint(workout.getWorkoutType(context),

@@ -2,8 +2,6 @@ package de.tadris.fitness.ui.statistics.Fragments;
 
 import android.content.Context;
 
-import androidx.fragment.app.Fragment;
-
 import de.tadris.fitness.R;
 
 public class StatsHistoryFragment extends StatsFragment {

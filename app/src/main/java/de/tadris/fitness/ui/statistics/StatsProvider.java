@@ -93,4 +93,37 @@ public class StatsProvider {
         BarDataSet barDataSet = new BarDataSet(barEntries, ctx.getString(R.string.distances));
         return new BarData(barDataSet);
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public BarData durationOfActivities(StatsDataTypes.TimeSpan timeSpan)
+    {
+        ArrayList<BarEntry> barEntries = new ArrayList<>();
+        int barNumber = 0;
+
+        HashMap<WorkoutType, Long> durations = new HashMap<>();
+
+        ArrayList<StatsDataTypes.DataPoint> workouts = dataProvider.getData(WorkoutProperty.DURATION, WorkoutType.getAllTypes(ctx));
+
+        for (StatsDataTypes.DataPoint dataPoint : workouts)
+        {
+            if (timeSpan.contains(dataPoint.time)) {
+                durations.put(dataPoint.workoutType,
+                        durations.getOrDefault(dataPoint.workoutType, (long)0) + (long)dataPoint.value);
+            }
+
+        }
+
+        for (Map.Entry<WorkoutType, Long> entry : durations.entrySet())
+        {
+            barEntries.add(new BarEntry(
+                    (float)barNumber,
+                    (float)entry.getValue(),
+                    AppCompatResources.getDrawable(ctx, Icon.getIcon(entry.getKey().icon))));
+
+            barNumber++;
+        }
+
+        BarDataSet barDataSet = new BarDataSet(barEntries, ctx.getString(R.string.durations));
+        return new BarData(barDataSet);
+    }
 }
