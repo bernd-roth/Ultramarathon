@@ -13,10 +13,10 @@ public class StatsDataProvider {
     private final Context context;
 
     public static class DataPoint{
-        WorkoutType workoutType;
-        long workoutID;
-        long time;
-        double value;
+        public WorkoutType workoutType;
+        public long workoutID;
+        public long time;
+        public double value;
 
         public DataPoint(WorkoutType type, long id, long start, double value) {
             this.workoutType = type;
