@@ -64,23 +64,23 @@ public class StatsProvider {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public BarData totalDistances(StatsDataTypes.TimeSpan timeSpan) {
+    public BarData totalPropertyBarData(WorkoutProperty workoutProperty , StatsDataTypes.TimeSpan timeSpan) {
         ArrayList<BarEntry> barEntries = new ArrayList<>();
         int barNumber = 0;
 
-        HashMap<WorkoutType, Float> distances = new HashMap<>();
+        HashMap<WorkoutType, Float> data = new HashMap<>();
 
-        ArrayList<StatsDataTypes.DataPoint> workouts = dataProvider.getData(WorkoutProperty.LENGTH, WorkoutType.getAllTypes(ctx));
+        ArrayList<StatsDataTypes.DataPoint> workouts = dataProvider.getData(workoutProperty, WorkoutType.getAllTypes(ctx));
 
         for (StatsDataTypes.DataPoint dataPoint : workouts) {
             if (timeSpan.contains(dataPoint.time)) {
-                distances.put(dataPoint.workoutType,
-                        distances.getOrDefault(dataPoint.workoutType, (float)0) + (float)dataPoint.value);
+                data.put(dataPoint.workoutType,
+                        data.getOrDefault(dataPoint.workoutType, (float)0) + (float)dataPoint.value);
             }
         }
 
         //Retrieve data and add to the list
-        for (Map.Entry<WorkoutType, Float> entry : distances.entrySet()) {
+        for (Map.Entry<WorkoutType, Float> entry : data.entrySet()) {
 
             barEntries.add(new BarEntry(
                     (float)barNumber,
@@ -90,40 +90,9 @@ public class StatsProvider {
             barNumber++;
         }
 
-        BarDataSet barDataSet = new BarDataSet(barEntries, ctx.getString(R.string.distances));
-        return new BarData(barDataSet);
-    }
+        BarDataSet barDataSet = new BarDataSet(barEntries,
+                WorkoutProperty.getStringRepresentations(ctx).get(workoutProperty.getId()));
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public BarData durationOfActivities(StatsDataTypes.TimeSpan timeSpan)
-    {
-        ArrayList<BarEntry> barEntries = new ArrayList<>();
-        int barNumber = 0;
-
-        HashMap<WorkoutType, Long> durations = new HashMap<>();
-
-        ArrayList<StatsDataTypes.DataPoint> workouts = dataProvider.getData(WorkoutProperty.DURATION, WorkoutType.getAllTypes(ctx));
-
-        for (StatsDataTypes.DataPoint dataPoint : workouts)
-        {
-            if (timeSpan.contains(dataPoint.time)) {
-                durations.put(dataPoint.workoutType,
-                        durations.getOrDefault(dataPoint.workoutType, (long)0) + (long)dataPoint.value);
-            }
-
-        }
-
-        for (Map.Entry<WorkoutType, Long> entry : durations.entrySet())
-        {
-            barEntries.add(new BarEntry(
-                    (float)barNumber,
-                    (float)entry.getValue(),
-                    AppCompatResources.getDrawable(ctx, Icon.getIcon(entry.getKey().icon))));
-
-            barNumber++;
-        }
-
-        BarDataSet barDataSet = new BarDataSet(barEntries, ctx.getString(R.string.durations));
         return new BarData(barDataSet);
     }
 }

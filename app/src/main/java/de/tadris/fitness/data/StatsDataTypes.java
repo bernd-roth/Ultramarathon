@@ -19,6 +19,11 @@ public class StatsDataTypes {
         public long startTime;
         public long endTime;
 
+        public TimeSpan(long start, long end) {
+            this.startTime = start;
+            this.endTime = end;
+        }
+
         public boolean contains(long time) {
             return startTime <= time && time <= endTime;
         }
