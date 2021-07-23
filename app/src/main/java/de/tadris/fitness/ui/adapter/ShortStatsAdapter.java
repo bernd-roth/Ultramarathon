@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.github.mikephil.charting.charts.CombinedChart;
 
 import de.tadris.fitness.R;
+import de.tadris.fitness.ui.statistics.StatisticsActivity;
 import de.tadris.fitness.ui.workout.AggregatedWorkoutStatisticsActivity;
 
 public class ShortStatsAdapter extends RecyclerView.Adapter<ShortStatsAdapter.ViewHolder> {
@@ -49,12 +50,7 @@ public class ShortStatsAdapter extends RecyclerView.Adapter<ShortStatsAdapter.Vi
             super(itemView);
             chart = itemView.findViewById(R.id.short_stats_chart);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ctx.startActivity(new Intent(ctx, AggregatedWorkoutStatisticsActivity.class));
-                }
-            });
+            itemView.setOnClickListener(view -> ctx.startActivity(new Intent(ctx, StatisticsActivity.class)));
         }
     }
 }
