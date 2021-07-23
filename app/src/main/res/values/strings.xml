@@ -462,6 +462,9 @@
     <string name="energyExpended">Energy expended</string>
     <string name="caloriesBurned">Calories burned</string>
     <string name="heartFrequency">Heart frequency</string>
+    <string name="stats_health_title">Health</string>
+    <string name="stats_history_title">History</string>
+    <string name="stats_overview_title">Overview</string>
     <string-array name="osm_track_visibility">
         <item>Identifiable</item>
         <item>Trackable</item>

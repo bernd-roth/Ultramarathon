@@ -26,6 +26,9 @@ public class StatisticsActivity extends FitoTrackActivity {
         pager.setAdapter(statisticsAdapter);
 
         TabLayout tabLayout = this.findViewById(R.id.statistics_tabs);
-        new TabLayoutMediator(tabLayout, pager, (tab, position) -> tab.setText("Hallo" + position)).attach();
+
+        new TabLayoutMediator(tabLayout, pager,
+                (tab, position) -> tab.setText(statisticsAdapter.getTitles().get(position))
+        ).attach();
     }
 }

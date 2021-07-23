@@ -15,6 +15,7 @@
             android:layout_height="wrap_content">
 
             <TextView
+                style="@style/title"
                 android:id="@+id/stats_energy_expended"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -36,6 +37,7 @@
             android:layout_height="wrap_content">
 
             <TextView
+                style="@style/title"
                 android:id="@+id/stats_heart_frequency"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -61,6 +63,7 @@
             android:layout_height="wrap_content">
 
             <TextView
+                style="@style/title"
                 android:id="@+id/stats_calories_burned"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
