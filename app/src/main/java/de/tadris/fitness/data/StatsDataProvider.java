@@ -2,29 +2,18 @@ package de.tadris.fitness.data;
 
 import android.content.Context;
 
+import androidx.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import de.tadris.fitness.Instance;
+import de.tadris.fitness.ui.statistics.StatsProvider;
 import de.tadris.fitness.util.WorkoutProperty;
 
 public class StatsDataProvider {
 
     private final Context context;
-
-    public static class DataPoint{
-        public WorkoutType workoutType;
-        public long workoutID;
-        public long time;
-        public double value;
-
-        public DataPoint(WorkoutType type, long id, long start, double value) {
-            this.workoutType = type;
-            this.workoutID=id;
-            this.time = start;
-            this.value = value;
-        }
-    }
 
     public StatsDataProvider(Context context)
     {
@@ -32,27 +21,32 @@ public class StatsDataProvider {
 
     }
 
-    public ArrayList<DataPoint> getData(WorkoutProperty requestedProperty, List<WorkoutType> workoutTypes)
+    public ArrayList<StatsDataTypes.DataPoint> getData(WorkoutProperty requestedProperty, List<WorkoutType> workoutTypes)
     {
-        ArrayList<DataPoint> data = new ArrayList<>();
+        return getData(requestedProperty, workoutTypes, null);
+    }
+
+    public ArrayList<StatsDataTypes.DataPoint> getData(WorkoutProperty requestedProperty, List<WorkoutType> workoutTypes, @Nullable StatsDataTypes.TimeSpan timeSpan)
+    {
+        ArrayList<StatsDataTypes.DataPoint> data = new ArrayList<>();
         List<BaseWorkout> workouts = Instance.getInstance(context).db.getAllWorkouts();
         for (BaseWorkout workout : workouts) {
-            if (workoutTypes.contains(workout.getWorkoutType(this.context))) {
+            if (workoutTypes.contains(workout.getWorkoutType(this.context)) && timeSpan.contains(workout.start)) {
                 try {
                     if (requestedProperty.isBaseProperty()) {
-                        data.add(new DataPoint(workout.getWorkoutType(context),
+                        data.add(new StatsDataTypes.DataPoint(workout.getWorkoutType(context),
                                 workout.id,
                                 workout.start,
                                 getBasePropertyValue(requestedProperty, workout)));
                     }
                     else if (requestedProperty.isGPSProperty()) {
-                        data.add(new DataPoint(workout.getWorkoutType(context),
+                        data.add(new StatsDataTypes.DataPoint(workout.getWorkoutType(context),
                                 workout.id,
                                 workout.start,
                                 getGPSPropertyValue(requestedProperty, (GpsWorkout)workout)));
                     }
                     else {
-                        data.add(new DataPoint(workout.getWorkoutType(context),
+                        data.add(new StatsDataTypes.DataPoint(workout.getWorkoutType(context),
                                 workout.id,
                                 workout.start,
                                 getIndoorPropertyValue(requestedProperty, (IndoorWorkout) workout)));

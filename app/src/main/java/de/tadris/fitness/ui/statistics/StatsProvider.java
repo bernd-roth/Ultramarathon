@@ -16,20 +16,12 @@ import java.util.Map;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.StatsDataProvider;
+import de.tadris.fitness.data.StatsDataTypes;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.util.Icon;
 import de.tadris.fitness.util.WorkoutProperty;
 
 public class StatsProvider {
-
-    public static class TimeSpan {
-        public long startTime;
-        public long endTime;
-
-        public boolean contains(long time) {
-            return startTime <= time && time <= endTime;
-        }
-    }
 
     Context ctx;
     StatsDataProvider dataProvider;
@@ -40,16 +32,16 @@ public class StatsProvider {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public BarData numberOfActivities(TimeSpan timeSpan) {
+    public BarData numberOfActivities(StatsDataTypes.TimeSpan timeSpan) {
         ArrayList<BarEntry> barEntries = new ArrayList<>();
         int barNumber = 0;
 
         HashMap<WorkoutType, Integer> numberOfWorkouts = new HashMap<>();
 
-        ArrayList<StatsDataProvider.DataPoint> workouts = dataProvider.getData(WorkoutProperty.LENGTH, WorkoutType.getAllTypes(ctx));
+        ArrayList<StatsDataTypes.DataPoint> workouts = dataProvider.getData(WorkoutProperty.LENGTH, WorkoutType.getAllTypes(ctx));
 
         // Count number of workouts of specific WorkoutType in a specific time span
-        for (StatsDataProvider.DataPoint dataPoint : workouts) {
+        for (StatsDataTypes.DataPoint dataPoint : workouts) {
             if (timeSpan.contains(dataPoint.time)) {
 
                 numberOfWorkouts.put(dataPoint.workoutType,
@@ -72,15 +64,15 @@ public class StatsProvider {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public BarData totalDistances(TimeSpan timeSpan) {
+    public BarData totalDistances(StatsDataTypes.TimeSpan timeSpan) {
         ArrayList<BarEntry> barEntries = new ArrayList<>();
         int barNumber = 0;
 
         HashMap<WorkoutType, Float> distances = new HashMap<>();
 
-        ArrayList<StatsDataProvider.DataPoint> workouts = dataProvider.getData(WorkoutProperty.LENGTH, WorkoutType.getAllTypes(ctx));
+        ArrayList<StatsDataTypes.DataPoint> workouts = dataProvider.getData(WorkoutProperty.LENGTH, WorkoutType.getAllTypes(ctx));
 
-        for (StatsDataProvider.DataPoint dataPoint : workouts) {
+        for (StatsDataTypes.DataPoint dataPoint : workouts) {
             if (timeSpan.contains(dataPoint.time)) {
                 distances.put(dataPoint.workoutType,
                         distances.getOrDefault(dataPoint.workoutType, (float)0) + (float)dataPoint.value);
