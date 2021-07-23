@@ -68,7 +68,7 @@ public class ShortStatsAdapter extends RecyclerView.Adapter<ShortStatsAdapter.Vi
         public ViewHolder(@NonNull View itemView, Context ctx) {
             super(itemView);
             chart = itemView.findViewById(R.id.short_stats_chart);
-
+            chart.setOnTouchListener(null);
             itemView.setOnClickListener(view -> ctx.startActivity(new Intent(ctx, StatisticsActivity.class)));
         }
     }

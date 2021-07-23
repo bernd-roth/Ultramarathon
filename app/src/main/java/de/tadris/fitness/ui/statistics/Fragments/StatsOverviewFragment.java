@@ -17,6 +17,7 @@ import com.github.mikephil.charting.data.CombinedData;
 import org.jetbrains.annotations.NotNull;
 
 import de.tadris.fitness.R;
+import de.tadris.fitness.data.StatsDataTypes;
 import de.tadris.fitness.ui.statistics.StatsProvider;
 
 public class StatsOverviewFragment extends StatsFragment {
@@ -33,7 +34,7 @@ public class StatsOverviewFragment extends StatsFragment {
         super.onViewCreated(view, savedInstanceState);
 
         CombinedChart numberOfActivitiesChart = view.findViewById(R.id.stats_number_of_workout_chart);
-        BarData barData = statsProvider.numberOfActivities(new StatsProvider.TimeSpan(0, Long.MAX_VALUE));
+        BarData barData = statsProvider.numberOfActivities(new StatsDataTypes.TimeSpan(0, Long.MAX_VALUE));
         CombinedData combinedData = new CombinedData();
         combinedData.setData(barData);
         numberOfActivitiesChart.setData(combinedData);
