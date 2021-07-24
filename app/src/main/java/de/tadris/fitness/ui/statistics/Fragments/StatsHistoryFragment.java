@@ -3,10 +3,12 @@ package de.tadris.fitness.ui.statistics.Fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import com.github.mikephil.charting.charts.CandleStickChart;
 import com.github.mikephil.charting.charts.CombinedChart;
@@ -25,10 +27,12 @@ import de.tadris.fitness.ui.statistics.StatsProvider;
 
 public class StatsHistoryFragment extends StatsFragment {
 
+    TextView speedTitle;
+    Switch speedSwitch;
+    CombinedChart speedChart;
+
     StatsProvider statsProvider = new StatsProvider(context);
     ArrayList<CombinedChart> combinedChartList = new ArrayList<>();
-    View typeSelector;
-    TextView workoutTypeText;
 
     public StatsHistoryFragment(Context ctx) {
         super(R.layout.fragment_stats_history, ctx);
@@ -38,15 +42,21 @@ public class StatsHistoryFragment extends StatsFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        typeSelector = view.findViewById(R.id.fragmentHistoryTypeSelector);
-        workoutTypeText = view.findViewById(R.id.fragmentHistoryTypeTitle);
+        speedTitle = view.findViewById(R.id.stats_history_speed_title);
+        speedChart = view.findViewById(R.id.stats_speed_chart);
+        speedSwitch = view.findViewById(R.id.speed_switch);
 
-        CombinedData combinedSpeedData = new CombinedData();
-        combinedSpeedData.setData(statsProvider.getSpeedData(AggregationSpan.MONTH,
-                WorkoutType.getWorkoutTypeById(context, WorkoutType.WORKOUT_TYPE_ID_RUNNING)));
-
-        CombinedChart speedChart = view.findViewById(R.id.stats_speed_chart);
-        speedChart.setData(combinedSpeedData);
+        speedSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (speedSwitch.isChecked()) {
+                    speedTitle.setText(R.string.workoutPace);
+                } else {
+                    speedTitle.setText(R.string.workoutSpeed);
+                }
+                updateSpeedChart();
+            }
+        });
 
 
         CombinedData combinedPaceData = new CombinedData();
@@ -55,10 +65,6 @@ public class StatsHistoryFragment extends StatsFragment {
 
         CombinedChart distanceChart = view.findViewById(R.id.stats_dist_chart);
         distanceChart.setData(combinedPaceData);
-        /*
-        CombinedChart speedChart = view.findViewById(R.id.stats_speed_chart);
-        speedChart.setData(statsProvider.(new StatsDataTypes.TimeSpan(0, Long.MAX_VALUE)));
-*/
 
         for (CombinedChart combinedChart: combinedChartList) {
             combinedChart.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +78,23 @@ public class StatsHistoryFragment extends StatsFragment {
                 }
             });
         }
+
+        updateSpeedChart();
+    }
+
+    private void updateSpeedChart() {
+        CombinedData combinedData = new CombinedData();
+
+        if (speedSwitch.isChecked()) {
+            combinedData.setData(statsProvider.getPaceData(AggregationSpan.MONTH,
+                    WorkoutType.getWorkoutTypeById(context, WorkoutType.WORKOUT_TYPE_ID_RUNNING)));
+        }  else {
+            combinedData.setData(statsProvider.getSpeedData(AggregationSpan.MONTH,
+                    WorkoutType.getWorkoutTypeById(context, WorkoutType.WORKOUT_TYPE_ID_RUNNING)));
+        }
+
+        speedChart.setData(combinedData);
+        speedChart.invalidate();
     }
 
     @Override
