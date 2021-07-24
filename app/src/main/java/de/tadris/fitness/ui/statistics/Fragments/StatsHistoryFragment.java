@@ -25,6 +25,7 @@ import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationSpan;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.data.StatsProvider;
+import de.tadris.fitness.util.charts.DataSetStyles;
 
 public class StatsHistoryFragment extends StatsFragment {
 
@@ -91,7 +92,7 @@ public class StatsHistoryFragment extends StatsFragment {
 
         // Create background line data
         LineDataSet distanceLineSet = StatsProvider.convertCandleToMeanLineData(distanceCandleSet);
-        combinedDistanceData.setData(new LineData(statsProvider.applyBackgroundLineStyle(distanceLineSet)));
+        combinedDistanceData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(context, distanceLineSet)));
 
         CombinedChart distanceChart = view.findViewById(R.id.stats_dist_chart);
         distanceChart.setData(combinedDistanceData);
@@ -131,7 +132,7 @@ public class StatsHistoryFragment extends StatsFragment {
 
         // Create background line
         LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);
-        combinedData.setData(new LineData(statsProvider.applyBackgroundLineStyle(lineDataSet)));
+        combinedData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(context, lineDataSet)));
 
         speedChart.setData(combinedData);
         speedChart.invalidate();
@@ -154,7 +155,7 @@ public class StatsHistoryFragment extends StatsFragment {
 
         // Create background line
         LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);
-        combinedData.setData(new LineData(statsProvider.applyBackgroundLineStyle(lineDataSet)));
+        combinedData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(context, lineDataSet)));
 
         durationChart.setData(combinedData);
         durationChart.invalidate();
