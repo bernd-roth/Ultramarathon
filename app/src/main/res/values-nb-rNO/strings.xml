@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -17,9 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-
-<resources>
+  --><resources>
     <string name="sections">Seksjoner</string>
     <string name="workoutStatsHelpText">Denne skjermen viser historisk treningsøktstatistikk. Angi treningsøkten først ved å klikke på den. Sett så infoen du ønsker og tidsrommet.
 \n
@@ -350,4 +347,20 @@
     <string name="unitHeartBeatsPerMinute">spm</string>
     <string name="prefTrackStyleUsageTitle">Bruk sporfargelegging automatisk</string>
     <string name="trackStyle">Sporstil</string>
+    <string name="dialog_nfc_disabled_title">NFC er avskrudd</string>
+    <plurals name="workoutStep">
+        <item quantity="one">Steg</item>
+        <item quantity="other">Steg</item>
+    </plurals>
+    <string name="workoutMaxIntensity">Maks. intensitet</string>
+    <string name="workoutAvgIntensityShort">Gjen. intensitet</string>
+    <string name="workoutIntensity">Intensitet</string>
+    <string name="workoutMaxFrequency">Maks. frekvens</string>
+    <string name="workoutCurrentFrequency">Nåværende frekvens</string>
+    <string name="workoutAvgFrequencyLong">Gjennomsnittlig frekvens</string>
+    <string name="workoutAvgFrequencyShort">Gjen. frekvens</string>
+    <string name="workoutFrequency">Frekvens</string>
+    <string name="workoutRepetitions">Repetisjoner</string>
+    <string name="workoutRecordingTypeIndoor">Innendørstreningsøkter</string>
+    <string name="workoutRecordingTypeGps">GPS-treningsøkter</string>
 </resources>
