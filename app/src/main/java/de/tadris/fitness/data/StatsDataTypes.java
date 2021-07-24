@@ -1,5 +1,7 @@
 package de.tadris.fitness.data;
 
+import java.util.Comparator;
+
 public class StatsDataTypes {
     public static class DataPoint {
         public WorkoutType workoutType;
@@ -13,6 +15,26 @@ public class StatsDataTypes {
             this.time = start;
             this.value = value;
         }
+
+        public static Comparator<DataPoint> timeComparator = (first, second) -> {
+            if (first.time > second.time) {
+                return 1;
+            } else if (first.time < second.time) {
+                return -1;
+            } else {
+                return 0;
+            }
+        };
+
+        public static Comparator<DataPoint> valueComparator = (first, second) -> {
+            if (first.value > second.value) {
+                return 1;
+            } else if (first.value < second.value) {
+                return -1;
+            } else {
+                return 0;
+            }
+        };
     }
 
     public static class TimeSpan {
@@ -26,6 +48,22 @@ public class StatsDataTypes {
 
         public boolean contains(long time) {
             return startTime <= time && time <= endTime;
+        }
+
+        public enum Type {
+            WEEK(0),
+            MONTH(1),
+            YEAR(2);
+
+            private int id;
+
+            Type(int i) {
+                this.id = i;
+            }
+
+            public int getId() {
+                return id;
+            }
         }
     }
 }

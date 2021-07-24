@@ -14,13 +14,16 @@ import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CandleEntry;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import de.tadris.fitness.R;
+import de.tadris.fitness.aggregation.AggregationSpan;
 import de.tadris.fitness.data.StatsDataProvider;
 import de.tadris.fitness.data.StatsDataTypes;
 import de.tadris.fitness.data.WorkoutType;
@@ -141,6 +144,52 @@ public class StatsProvider {
 
         BarDataSet barDataSet = new BarDataSet(barEntries, WORKOUT_PROPERTY.getStringRepresentation(ctx));
         return new BarData(barDataSet);
+    }
+
+    public CandleData getPaceData(AggregationSpan span, WorkoutType workoutType) {
+
+        final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.AVG_PACE;
+
+        ArrayList<StatsDataTypes.DataPoint> data = dataProvider.getData(WORKOUT_PROPERTY,
+                WorkoutType.getAllTypes(ctx));
+
+        long oldestWorkoutTime = Collections.min(data, StatsDataTypes.DataPoint.timeComparator).time;
+        long newestWorkoutTime = Collections.max(data, StatsDataTypes.DataPoint.timeComparator).time;
+
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTimeInMillis(oldestWorkoutTime);
+
+        span.applyToCalendar(calendar);
+
+        ArrayList<CandleEntry> candleEntries = new ArrayList<>();
+
+        while (calendar.getTimeInMillis() < newestWorkoutTime) {
+            ArrayList<StatsDataTypes.DataPoint> intervalData = dataProvider.getData(WORKOUT_PROPERTY,
+                    WorkoutType.getAllTypes(ctx),
+                    new StatsDataTypes.TimeSpan(calendar.getTimeInMillis(), calendar.getTimeInMillis() + span.spanInterval));
+
+            // Calculate average value
+            float mean = 0;
+            for (StatsDataTypes.DataPoint dataPoint : intervalData) {
+                mean += dataPoint.value;
+            }
+            mean /= intervalData.size();
+
+            if (intervalData.size() > 0) {
+                float min = (float) Collections.min(intervalData, StatsDataTypes.DataPoint.valueComparator).value;
+                float max = (float) Collections.max(intervalData, StatsDataTypes.DataPoint.valueComparator).value;
+
+                candleEntries.add(new CandleEntry(calendar.getTimeInMillis(), mean, mean, max, min));
+            }
+
+            // increment
+            int days = (int) TimeUnit.MILLISECONDS.toDays(span.spanInterval);
+            calendar.add(Calendar.DAY_OF_YEAR, days);
+            calendar.add(Calendar.MILLISECOND, (int) (span.spanInterval - TimeUnit.DAYS.toMillis(days)));
+        }
+
+        CandleDataSet candleDataSet = new CandleDataSet(candleEntries, WORKOUT_PROPERTY.getStringRepresentation(ctx));
+        return new CandleData(candleDataSet);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
