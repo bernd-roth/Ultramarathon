@@ -159,10 +159,10 @@ public class UserPreferences {
                     defValue = "avg_frequency";
                     break;
                 case 1:
-                    defValue = "current_frequency";
+                    defValue = "energy_burned";
                     break;
                 case 2:
-                    defValue = "avgSpeedMotion";
+                    defValue = "current_intensity";
                     break;
                 case 3:
                     defValue = "pause_duration";
