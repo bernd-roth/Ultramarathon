@@ -29,51 +29,37 @@ public class ChartStyles {
         chart.getDescription().setEnabled(false);
         chart.getXAxis().setPosition(XAxis.XAxisPosition.TOP);
 
-
-
         chart.setDrawBarShadow(false);
         chart.setDrawValueAboveBar(true);
         chart.getDescription().setEnabled(false);
         chart.setPinchZoom(false);
         chart.setDrawGridBackground(false);
-
-
-        XAxis xAxis = chart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setDrawGridLines(false);
-        xAxis.setGranularity(1f);
-        xAxis.setLabelCount(7);
-        xAxis.setDrawLabels(false);
-
-
-        YAxis leftAxis = chart.getAxisLeft();
-        leftAxis.setAxisLineColor(Color.WHITE);
-        leftAxis.setDrawGridLines(false);
-        leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
-        leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
-
-        YAxis rightAxis = chart.getAxisRight();
-        rightAxis.setEnabled(false);
-        Legend l = chart.getLegend();
-        l.setEnabled(false);
     }
 
-    public static void barChartIconLabel(BarChart chart, BarData data, Context ctx)
+    public static void fixBarChartAxisMinMax(BarChart chart, BarData data)
     {
-        // data.setDrawValues(false);
+        chart.setData(data);
+        chart.getXAxis().setAxisMinimum(-0.5f);
+        chart.getXAxis().setAxisMaximum(chart.getBarData().getXMax()+0.5f);
+    }
+
+    public static void formatValuesNoDecimals(BarData data)
+    {
         data.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
                 return new DecimalFormat("###,##0").format(value);
             }});
-        data.setValueTextSize(15);
+        data.setValueTextSize(12);
+    }
 
-        chart.setData(data);
-        chart.getXAxis().setAxisMinimum(-0.5f);
-        chart.getXAxis().setAxisMaximum(chart.getBarData().getXMax()+0.5f);
+
+    public static void barChartIconLabel(BarChart chart, BarData data, Context ctx)
+    {
+        formatValuesNoDecimals(data);
+        fixBarChartAxisMinMax(chart, data);
 
         ArrayList<Bitmap> imageList = new ArrayList<>();
-
         for(int i = 0; i < data.getDataSets().get(0).getEntryCount(); i++)
         {
             Drawable d = data.getDataSets().get(0).getEntryForIndex(i).getIcon();
@@ -83,7 +69,7 @@ public class ChartStyles {
 
         chart.setRenderer(new BarChartIconRenderer(chart, chart.getAnimator(), chart.getViewPortHandler(), imageList, ctx));
         chart.setScaleEnabled(false);
-        chart.setExtraOffsets(0, 0, 0, 20);
+        chart.setExtraOffsets(0, 0, 0, 25);
 
     }
 }
