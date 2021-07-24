@@ -32,7 +32,8 @@ class BarChartIconRenderer(aChart: BarDataProvider, aAnimator: ChartAnimator,
         }
 
         val datasets = mChart.barData.dataSets
-        val valueOffsetPlus = Utils.convertDpToPixel(22f)
+        val valueOffsetPlus = Utils.convertDpToPixel(3f)
+        val imOffsetPlus = Utils.convertDpToPixel(22f)
         val valueTextHeight = Utils.calcTextHeight(mValuePaint, "8")
 
         for ((index, set) in datasets.withIndex()) {
@@ -53,11 +54,17 @@ class BarChartIconRenderer(aChart: BarDataProvider, aAnimator: ChartAnimator,
             } else {
                 -valueOffsetPlus
             }
+            var negOffsetImLabel = if (mChart.isDrawValueAboveBarEnabled) {
+                valueTextHeight + imOffsetPlus
+            } else {
+                -imOffsetPlus
+            }
 
             val inverted = mChart.isInverted(set.axisDependency)
             if (inverted) {
                 posOffset = -posOffset - valueTextHeight
                 negOffset = -negOffset - valueTextHeight
+                negOffsetImLabel = - negOffsetImLabel - valueTextHeight
             }
 
             val buffer = mBarBuffers[index]
@@ -104,7 +111,7 @@ class BarChartIconRenderer(aChart: BarDataProvider, aAnimator: ChartAnimator,
                 if (bitmap != null) {
                     val scaledBitmap = getScaledBitmap(bitmap)
                     aCanvas.drawBitmap(scaledBitmap, x - scaledBitmap.width / 2f,
-                            (bottom + 0.5f * negOffset) - scaledBitmap.width / 2f, null)
+                            (bottom + 0.5f * negOffsetImLabel) - scaledBitmap.width / 2f, null)
                 }
             }
         }

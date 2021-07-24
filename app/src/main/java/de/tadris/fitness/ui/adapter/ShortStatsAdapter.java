@@ -10,6 +10,7 @@ import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -65,11 +66,11 @@ public class ShortStatsAdapter extends RecyclerView.Adapter<ShortStatsAdapter.Vi
         {
             case 0:
                 data = statsProvider.numberOfActivities(allTime);
-                holder.chart.getDescription().setText(ctx.getString(R.string.numberOfWorkouts));
+                holder.title.setText(ctx.getString(R.string.numberOfWorkouts));
                 break;
             default:
                 data = statsProvider.totalDistances(allTime);
-                holder.chart.getDescription().setText(ctx.getString(R.string.distances));
+                holder.title.setText(ctx.getString(R.string.distances));
                 break;
         }
         ChartStyles.barChartIconLabel(holder.chart, data, ctx);
@@ -82,9 +83,12 @@ public class ShortStatsAdapter extends RecyclerView.Adapter<ShortStatsAdapter.Vi
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         BarChart chart;
+        TextView title;
+
         public ViewHolder(@NonNull View itemView, Context ctx) {
             super(itemView);
             chart = itemView.findViewById(R.id.short_stats_chart);
+            title = itemView.findViewById(R.id.short_stats_title);
             chart.setOnTouchListener(null);
             ChartStyles.defaultBarChart(chart);
 
