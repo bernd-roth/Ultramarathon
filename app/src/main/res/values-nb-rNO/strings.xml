@@ -17,9 +17,10 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources>
+  -->
+
+<resources>
     <string name="sections">Seksjoner</string>
-    <string name="dataSamples">Prøver</string>
     <string name="workoutStatsHelpText">Denne skjermen viser historisk treningsøktstatistikk. Angi treningsøkten først ved å klikke på den. Sett så infoen du ønsker og tidsrommet.
 \n
 \nFor eksempel, hvis du velger \"Uke\", som tidsrom, vil alle treningsøkter for hver uke bli flettet til ett datapunkt som enten er gjennomsnitt eller sum for hver uke.</string>
@@ -40,7 +41,6 @@
     <string name="unitFootPlural">Fot</string>
     <string name="editDisplayedInformationHint">Så lenge treningsøkten ikke har startet, kan du redigere viste verdier ved å klikk på én av de fire feltene.</string>
     <string name="editDisplayedInformation">Rediger vist informasjon</string>
-    <string name="sendEmail">Send e-post</string>
     <string name="aboutSourceCode">Vis kildekode</string>
     <string name="aboutSendFeedback">Send tilbakemelding til utvikler</string>
     <string name="aboutContributors">Bidragsytere</string>
@@ -78,7 +78,6 @@
     <string name="workout_statistics">Treningsøktstatistikk</string>
     <string name="no_workouts_recorded_for_this_activity">Ingen treningsøkter for denne aktiviteten</string>
     <string name="unlockPhoneStopWorkout">Lås opp enheten din for å stoppe opptaket</string>
-    <string name="oClock">o Klokke</string>
     <string name="currentTime">Nåværende tid</string>
     <string name="pref_auto_timeout_title">Tidsperiode for automatisk stopp</string>
     <string name="intervalAutoTimeoutTraining">Automatisk tidsavbrudd for treningsøkt</string>
@@ -127,7 +126,6 @@
     <string name="hintManageIntervalSets">Legg til et intervallsett for å bruke det i dine treningsøkter.</string>
     <string name="create">Opprett</string>
     <string name="createIntervalSet">Opprett nytt intervallsett</string>
-    <string name="workoutRecording">Treningsøktopptak</string>
     <string name="manageIntervalsSummary">Rediger intervallsettene du vil kunne bruke under treningsøkten ved bruk av stemmetilbakemelding.</string>
     <string name="manageIntervalSets">Håndter intervallsett</string>
     <string name="add_interval">Legg til intervall</string>
@@ -143,7 +141,6 @@
     <string name="share">Del</string>
     <string name="save">Lagre</string>
     <string name="pref_announcement_mode">Kunngjøringsmodus</string>
-    <string name="action_edit_comment">Rediger kommentar</string>
     <string name="ttsNotAvailable">Talesyntese ikke tilgjengelig</string>
     <string name="description">Beskrivelse</string>
     <string name="trackVisibilityPref">Sporsynlighet</string>
@@ -151,7 +148,6 @@
     <string name="actionUploadToOSM">Last opp til OSM</string>
     <string name="waiting_gps">Venter på GPS</string>
     <string name="mapStyle">Kartstil</string>
-    <string name="data">Data</string>
     <string name="gps">GPS</string>
     <string name="importBackupSummary">Gjenopprett en sikkerhetskopi</string>
     <string name="importBackup">Importer datasikkerhetskopi</string>
@@ -165,7 +161,6 @@
     <string name="cancel">Avbryt</string>
     <string name="trackingInfoDescription">Info om trackeren som kjører</string>
     <string name="trackingInfo">Sporingsinfo</string>
-    <string name="trackerRunningMessage">Din treningsøkt blir innspilt</string>
     <string name="trackerRunning">Sporer påslått</string>
     <string name="deleteWorkoutMessage">Ønsker du virkelig å slette treningsøkten\?</string>
     <string name="deleteWorkout">Slett treningsøkt</string>
@@ -189,7 +184,6 @@
     <string name="workoutTypeSkateboarding">Rullebrett</string>
     <string name="workoutTypeHiking">Tur</string>
     <string name="workoutTypeCycling">Sykling</string>
-    <string name="workoutTypeJogging">Jogge</string>
     <string name="workoutTypeWalking">Spasering</string>
     <string name="workoutTypeRunning">Løp</string>
     <string name="height">Høyde</string>
@@ -234,7 +228,6 @@
     <string name="timeMinutePlural">Minutter</string>
     <string name="timeMinuteSingular">Minutt</string>
     <string name="setPreferencesTitle">Sett innstillinger</string>
-    <string name="pref_ringtone_silent">Stille</string>
     <string name="backup">Sikkerhetskopier</string>
     <string name="restore">Gjenopprett</string>
     <string name="chooseBackupFile">Velg Backup-File</string>
@@ -243,7 +236,6 @@
     <string name="converting">Konverterer</string>
     <string name="locationData">Posisjonsdata</string>
     <string name="workouts">Treningsøkter</string>
-    <string name="preferences">Innstillinger</string>
     <string name="initialising">Igangsetter</string>
     <string name="shareFile">Del fil</string>
     <string name="errorImportFailed">Dataimporten mislyktes.</string>
@@ -253,7 +245,6 @@
     <string name="exporting">Eksporterer</string>
     <string name="delete">Slett</string>
     <string name="stop">Stopp</string>
-    <string name="workout_add">Legg til</string>
     <string name="app_name">FitoTrack</string>
     <string name="trackerWaitingMessage">Venter på å starte treningsøkt</string>
     <string name="recordingPermissionNotGrantedTitle">Tilganger ikke innvilget</string>
@@ -265,8 +256,6 @@
     <string name="recordingStateIdle">Lediggang</string>
     <string name="speechConfigNoSpeech">Ingen kunngjøring</string>
     <string name="importingFiles">Importerer filer</string>
-    <string name="bulkActions">Massehandlinger</string>
-    <string name="importMultipleGpxFilesSummary">Importer mer enn én GPX-fil fra filsystemet samtidig</string>
     <string name="importMultipleMessageSelectFolder">Velg en mappe inneholdende alle GPX-filer du ønsker å importere.</string>
     <string name="aboutUnlistedContributors">Takk til alle ikke-børsnoterte bidragsytere som hjalp til med å oversette og å utvide FitoTrack!</string>
     <string name="importedWorkouts">Importerte %d treningsøkter</string>
@@ -292,7 +281,6 @@
     <string name="autoPauseTitle">Bilbrudd</string>
     <string name="resumeWorkout">Gjenoppta Trening</string>
     <string name="heartRateNotAvailable">Puls er for øyeblikket ikke tilgjengelig.</string>
-    <string name="intervals">Intervall</string>
     <string name="announcementWorkoutActions">Trening Handlinger (pause, gjenoppta, etc.)</string>
     <string name="resumeWorkoutConfirmation">Tror du virkelig ønsker å fortsette denne treningen\? Dette vil også legge til en pause fra treningen ble stoppet.</string>
     <string name="prefShowOnLockScreenSummary">Vis trening informasjon selv om telefonen er låst.</string>
@@ -306,8 +294,6 @@
     <string name="actionSave">Lagre</string>
     <string name="customWorkoutTypesTitle">Tilpassede Typer Trening</string>
     <string name="preferenceCategoryVoiceFeedback">Stemme tilbakemelding</string>
-    <string name="workoutTypeEditMETHint">Et mål for energiforbruk</string>
-    <string name="workoutTypeEditMinDistanceHint">Minimum avstand mellom to GPS-prøver</string>
     <string name="workoutTypeEditMinDistance">Eksempel avstand</string>
     <string name="workoutTypeEditNameError">Vennligst skriv inn et navn</string>
     <string name="workoutTypeEditName">Navn</string>

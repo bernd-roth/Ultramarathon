@@ -34,15 +34,13 @@ class CurrentTime(context: Context) : RecordingInformation(context) {
     }
 
     private fun getSpokenTime(currentTime: Calendar): String {
-        val spokenTime = StringBuilder()
         val hours = currentTime[Calendar.HOUR_OF_DAY].toLong()
-        spokenTime.append(hours).append(" ")
-        spokenTime.append(getString(R.string.oClock)).append(" ")
-            .append(getString(R.string.and)).append(" ")
         val minutes = currentTime[Calendar.MINUTE].toLong()
-        spokenTime.append(minutes).append(" ")
-        spokenTime.append(getString(if (minutes == 1L) R.string.timeMinuteSingular else R.string.timeMinutePlural))
-        return spokenTime.toString()
+        return context.getString(
+            R.string.currentTimeStructure,
+            hours.toString(),
+            minutes.toString()
+        )
     }
 
     override fun getTitle(): String {

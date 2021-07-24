@@ -48,11 +48,9 @@
     <string name="loadingFile">Datei laden</string>
     <string name="locationData">Positionsdaten</string>
     <string name="okay">Okay</string>
-    <string name="pref_ringtone_silent">Still</string>
     <string name="pref_unit_system">Bevorzugtes Einheitensystem</string>
     <string name="pref_weight">Dein Gewicht</string>
     <string name="pref_weight_summary">Dein Gewicht ist zur Kalorienberechnung wichtig</string>
-    <string name="preferences">Einstellungen</string>
     <string name="recordWorkout">Workout aufzeichnen</string>
     <string name="restore">Wiederherstellen</string>
     <string name="setPreferencesMessage">Setze in den Einstellungen dein bevorzugtes Einheitensystem und Gewicht.</string>
@@ -63,7 +61,6 @@
     <string name="stopRecordingQuestion">Aufzeichnung stoppen?</string>
     <string name="stopRecordingQuestionMessage">Möchtest du die Aufzeichnung wirklich stoppen?</string>
     <string name="trackerRunning">Verfolgung läuft</string>
-    <string name="trackerRunningMessage">Dein Workout wird aufgezeichnet</string>
     <string name="trackingInfo">Informationen zur Aufnahme</string>
     <string name="trackingInfoDescription">Infos über die laufende Verfolgung</string>
     <string name="workoutAvgSpeedShort">⌀-Geschw.</string>
@@ -83,11 +80,9 @@
     <string name="workoutTotalEnergy">Gesamte Energie</string>
     <string name="workoutTypeCycling">Fahrrad fahren</string>
     <string name="workoutTypeHiking">Wandern</string>
-    <string name="workoutTypeJogging">Laufen</string>
     <string name="workoutTypeRunning">Laufen</string>
     <string name="unknown">Unbekannt</string>
     <string name="workoutTypeWalking">Gehen</string>
-    <string name="workout_add">Hinzufügen</string>
     <string name="workouts">Workouts</string>
     <string name="enable">Aktivieren</string>
     <string name="height">Höhe</string>
@@ -95,7 +90,6 @@
     <string name="noGpsMessage">Bitte aktiviere GPS, damit dein Workout aufgezeichnet werden kann.</string>
     <string name="workoutAscent">Aufstieg</string>
     <string name="workoutDescent">Abstieg</string>
-    <string name="data">Daten</string>
     <string name="mapStyle">Kartenstil</string>
     <string name="actionUploadToOSM">Auf OSM hochladen</string>
     <string name="authenticationFailed">Authentifizierung fehlgeschlagen.</string>
@@ -124,7 +118,6 @@
     <string name="timeMinutePlural">Minuten</string>
     <string name="timeMinuteSingular">Minute</string>
     <string name="voiceAnnouncementsTitle">Sprachansagen</string>
-    <string name="action_edit_comment">Kommentar bearbeiten</string>
     <string name="pref_announcement_mode">Modus der Ansagen</string>
     <string name="save">Speichern</string>
     <string name="savingFailed">Speichern fehlgeschlagen</string>
@@ -180,7 +173,6 @@
     <string name="edit_interval">Interval bearbeiten</string>
     <string name="manageIntervalSets">Intervallsätze bearbeiten</string>
     <string name="manageIntervalsSummary">Bearbeite die Intervalsätze, die du dann während des Workouts über Sprachansagen nutzen kannst.</string>
-    <string name="workoutRecording">Workout-Aufzeichnung</string>
     <string name="createIntervalSet">Neuen Intervallsatz erstellen</string>
     <string name="create">Erstellen</string>
     <string name="hintManageIntervalSets">Füge ein Intervall-Set hinzu, um es in deinen Workouts zu verwenden.</string>
@@ -239,7 +231,6 @@
     <string name="intervalAutoTimeoutTraining">Workout Auto-Stop Timer</string>
     <string name="pref_auto_timeout_title">Zeitspanne bis Auto-Stop</string>
     <string name="currentTime">Aktuelle Uhrzeit</string>
-    <string name="oClock">Uhr</string>
     <string name="unlockPhoneStopWorkout">Bitte das Telefon entsperren, um die Aufnahme zu beenden</string>
     <string name="workout_statistics">Workout Statistiken</string>
     <string name="workoutStatsHelpText">Dieser Screen zeigt Statistiken zu den Workouts. Um es zu verwenden, muss man zunächst die Trainingsart angeben, indem man darauf klickt. Dann stellt man die Information, über die man etwas wissen möchte, und die Zeitspanne ein.
@@ -300,14 +291,12 @@
     <string name="aboutContributors">Mitwirkende</string>
     <string name="aboutSendFeedback">Rückmeldung an den Entwickler senden</string>
     <string name="aboutSourceCode">Quellcode ansehen</string>
-    <string name="sendEmail">E-Mail senden</string>
     <string name="editDisplayedInformationHint">Solange das Workout noch nicht gestartet wurde, kannst du die angezeigten Werte bearbeiten, indem du auf eines der vier Felder klickst.</string>
     <string name="editDisplayedInformation">Angezeigte Informationen bearbeiten</string>
     <string name="unitFootPlural">Fuß</string>
     <string name="unitFootSingular">Fuß</string>
     <string name="noWorkoutStarted">Kein Workout gestartet</string>
     <string name="trackerWaitingMessage">Warten auf Beginn des Workouts</string>
-    <string name="dataSamples">Datenpunkte</string>
     <string name="recordingPermissionNotGrantedTitle">Berechtigungen nicht erteilt</string>
     <string name="workoutTypeRowing">Rudern</string>
     <string name="savedSuccessfully">Gespeichert</string>
@@ -320,8 +309,6 @@
     <string name="aboutHelpTranslating">Beim Übersetzen helfen</string>
     <string name="importMultipleGpxFiles">Mehrere GPX-Dateien importieren</string>
     <string name="importMultipleMessageSelectFolder">Bitte wähle einen Ordner, der alle GPX-Dateien enthält, die du importieren möchtest.</string>
-    <string name="importMultipleGpxFilesSummary">Auf einmal mehr als eine GPX-Datei vom Dateisystem importieren</string>
-    <string name="bulkActions">Massenaktionen</string>
     <string name="importingFiles">Dateien importieren</string>
     <string name="importedWorkouts">%d Workouts importiert</string>
     <string name="actionGrant">Gewähren</string>
@@ -335,7 +322,6 @@
     <string name="workoutMaxHeartRate">Max Herzfrequenz</string>
     <string name="workoutHeartRate">Herzfrequenz</string>
     <string name="announcementWorkoutActions">Workout Aktionen (pausieren, fortsetzten, etc.)</string>
-    <string name="intervals">Intervalle</string>
     <string name="heartRateNotAvailable">Herzfrequenz aktuell nicht verfügbar.</string>
     <string name="resumeWorkout">Workout fortsetzen</string>
     <string name="autoPauseTitle">Auto-Pause</string>
@@ -357,9 +343,7 @@
     <string name="actionSave">Speichern</string>
     <string name="customWorkoutTypesTitle">Benutzerdefinierte Workout-Typen</string>
     <string name="preferenceCategoryVoiceFeedback">Sprachfeedback</string>
-    <string name="workoutTypeEditMETHint">Ein Maß für den Energieverbrauch</string>
     <string name="workoutTypeEditMET">MET</string>
-    <string name="workoutTypeEditMinDistanceHint">Minimaler Abstand zwischen zwei GPS-Punkten</string>
     <string name="workoutTypeEditMinDistance">Punkteabstand</string>
     <string name="workoutTypeEditNameError">Bitte gib einen Namen an</string>
     <string name="workoutTypeEditName">Name</string>
@@ -376,7 +360,6 @@
     <string name="recordingPermissionNotGrantedMessage">FitoTrack benötigt die Standortberechtigung, um deine Bewegung während deines Workouts zu erfassen. FitoTrack sammelt auch Standortdaten, während die App im Hintergrund läuft oder der Bildschirm ausgeschaltet ist, um deine Workouts aufzuzeichnen. Standortdaten bleiben immer auf dem Handy, solgang du nicht eindeutig zugestimmt hast, sie zu teilen.</string>
     <string name="recordingBackgroundPermissionNotGrantedMessage">Weiterhin sammelt FitoTrack auch Standortdaten im Hintergrund, wenn der Bildschirm ausgeschaltet ist. Deswegen erlaube FitoTrack bitte den Standortzugriff.</string>
     <string name="pref_map_directory">Lokales Kartenverzeichnis</string>
-    <string name="pref_render_theme_style_settings">Lokales Renderthema anpassen</string>
     <string name="pref_render_theme_style">Renderstil</string>
     <string name="preferenceCategoryRenderThemeCategories">Kategorien</string>
     <string name="pref_render_theme_style_info">Keine Optionen für gewähltes Renderthema verfügbar.</string>
@@ -507,4 +490,5 @@
     <string name="workoutAvgFrequencyLong">Durchschnittliche Frequenz</string>
     <string name="workoutCurrentFrequency">Aktuelle Frequenz</string>
     <string name="unitHertzLong">Hertz</string>
+    <string name="currentTimeStructure">%s Uhr %s</string>
 </resources>

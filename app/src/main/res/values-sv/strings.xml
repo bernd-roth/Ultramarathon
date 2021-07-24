@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+  ~
+  ~ This file is part of FitoTrack
+  ~
+  ~ FitoTrack is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     FitoTrack is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
 <resources>
     <string name="merge">Smällt samman</string>
     <string name="replace">Ersätt</string>
@@ -16,7 +35,6 @@
     <string name="day">Dag</string>
     <string name="no_workouts_recorded_for_this_activity">Inga träningspass för den här aktiviteten</string>
     <string name="unlockPhoneStopWorkout">Vänligen lås upp din telefon för att stoppa inspelningen</string>
-    <string name="oClock">Klockan</string>
     <string name="currentTime">Nuvarande tid</string>
     <string name="pref_auto_timeout_title">Tidsspann för automatiskt stopp</string>
     <string name="pref_energy_unit">Energienhet</string>
@@ -54,7 +72,6 @@
     <string name="length_in_minutes">Varaktighet (minuter):</string>
     <string name="interval_name">Namn:</string>
     <string name="create">Skapa</string>
-    <string name="workoutRecording">Inspelning av träningspass</string>
     <string name="edit_interval">Redigera intervall</string>
     <string name="add_interval">Lägg till intervall</string>
     <string name="add">Lägg till</string>
@@ -69,13 +86,11 @@
     <string name="savedSuccessfully">Sparades</string>
     <string name="share">Dela</string>
     <string name="save">Spara</string>
-    <string name="action_edit_comment">Redigera kommentar</string>
     <string name="ttsNotAvailable">Text-till-tal är inte tillgängligt</string>
     <string name="description">Beskrivning</string>
     <string name="actionUploadToOSM">Ladda upp till OSM</string>
     <string name="waiting_gps">Väntar på GPS</string>
     <string name="mapStyle">Kartstil</string>
-    <string name="data">Data</string>
     <string name="gps">GPS</string>
     <string name="exportData">Exportera data</string>
     <string name="settings">Inställningar</string>
@@ -84,7 +99,6 @@
     <string name="exportAsGpxFile">Exportera som GPX-fil</string>
     <string name="cancel">Avbryt</string>
     <string name="trackerWaitingMessage">Väntar på att starta träningspass</string>
-    <string name="trackerRunningMessage">Ditt träningspass spelas in</string>
     <string name="trackerRunning">Spåraren är startad</string>
     <string name="deleteWorkoutMessage">Vill du verkligen ta bort träningspasset\?</string>
     <string name="deleteWorkout">Ta bort träningspass</string>
@@ -107,7 +121,6 @@
     <string name="workoutTypeOther">Annat</string>
     <string name="workoutTypeRowing">Ror</string>
     <string name="workoutTypeCycling">Cyklar</string>
-    <string name="workoutTypeJogging">Joggar</string>
     <string name="workoutTypeWalking">Går</string>
     <string name="workoutTypeRunning">Kör</string>
     <string name="height">Höjd</string>
@@ -150,12 +163,10 @@
     <string name="timeMinuteShort">min</string>
     <string name="timeMinutePlural">Minuter</string>
     <string name="timeMinuteSingular">Minut</string>
-    <string name="pref_ringtone_silent">Tyst</string>
     <string name="backup">Säkerhetskopiera</string>
     <string name="restore">Återställ</string>
     <string name="finished">Avslutades</string>
     <string name="workouts">Träningspass</string>
-    <string name="preferences">Egenskaper</string>
     <string name="errorImportFailed">Data-importering har misslyckats.</string>
     <string name="loadingFile">Laddar fil</string>
     <string name="converting">Konverterar</string>
@@ -168,6 +179,5 @@
     <string name="exporting">Exporterar</string>
     <string name="delete">Ta bort</string>
     <string name="stop">Stopp</string>
-    <string name="workout_add">Lägg till</string>
     <string name="app_name">FitoTrack</string>
 </resources>

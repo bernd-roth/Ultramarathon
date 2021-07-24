@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+  ~
+  ~ This file is part of FitoTrack
+  ~
+  ~ FitoTrack is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     FitoTrack is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
 <resources>
     <string name="deleteWorkout">Izbriši vježbu</string>
     <string name="continue_">Dalje</string>
@@ -43,7 +62,6 @@
     <string name="workoutTypeSkateboarding">Vožnja Skateboard-a</string>
     <string name="workoutTypeHiking">Planinarenje</string>
     <string name="workoutTypeCycling">Biciklizam</string>
-    <string name="workoutTypeJogging">Jogging</string>
     <string name="workoutTypeWalking">Hodanje</string>
     <string name="workoutTypeRunning">Trčanje</string>
     <string name="height">Visina</string>
@@ -108,7 +126,6 @@
     <string name="timeMinuteSingular">Minuta</string>
     <string name="setPreferencesMessage">U postavkama možete postaviti željeni mjerni sustav i vašu težinu</string>
     <string name="setPreferencesTitle">Izmjenite postavke</string>
-    <string name="pref_ringtone_silent">Utišano</string>
     <string name="backup">Sigurnosna kopija</string>
     <string name="restore">Vrati</string>
     <string name="importBackupMessage">PAŽNJA: Sve postojeće datoteke unutar aplikacije bit će obrisane. Ako ne želite da se to dogodi, napravite još jednu sigurnosnu kopiju. Jeste li sigurni da želite vratiti sigurnosnu kopiju\?</string>
@@ -118,7 +135,6 @@
     <string name="converting">Konverzija</string>
     <string name="locationData">Podaci o lokaciji</string>
     <string name="workouts">Vježbe</string>
-    <string name="preferences">Postavke</string>
     <string name="initialising">Inicijaliziranje</string>
     <string name="shareFile">Podijeli datoteku</string>
     <string name="errorImportFailed">Uvoz podataka nije uspio.</string>
@@ -128,6 +144,5 @@
     <string name="exporting">Izvoz</string>
     <string name="delete">Izbriši</string>
     <string name="stop">Stop</string>
-    <string name="workout_add">Dodati</string>
     <string name="app_name">FitoTrack</string>
 </resources>
