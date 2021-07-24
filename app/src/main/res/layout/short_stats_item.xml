@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginEnd="10dp"
+    android:orientation="vertical">
 
-    <com.github.mikephil.charting.charts.CombinedChart
+    <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/short_stats_chart"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+    </com.github.mikephil.charting.charts.BarChart>
+
+    <TextView
+        android:id="@+id/short_stats_y_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|end"
+        android:layout_weight="0"
+        android:text="@string/distances" />
 
 </LinearLayout>
