@@ -1,33 +1,25 @@
 package de.tadris.fitness.data;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Build;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.core.content.ContextCompat;
 
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.CandleData;
 import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CandleEntry;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
+import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import de.tadris.fitness.R;
@@ -95,7 +87,7 @@ public class StatsProvider {
 
         for (StatsDataTypes.DataPoint dataPoint : workouts) {
             distances.put(dataPoint.workoutType,
-                    distances.getOrDefault(dataPoint.workoutType, (float)0) + (float)dataPoint.value);
+                    distances.getOrDefault(dataPoint.workoutType, (float)0) + (float)dataPoint.value / 1000);
         }
 
         // Sort numberOfWorkouts map
@@ -294,9 +286,17 @@ public class StatsProvider {
         // Iterate all time spans from first workout time to last workout time
         while (calendar.getTimeInMillis() < newestWorkoutTime) {
             // Retrieve the workoutProperty for all workouts in the specific time span
-            ArrayList<StatsDataTypes.DataPoint> intervalData = dataProvider.getData(workoutProperty,
-                    workoutTypes,
-                    new StatsDataTypes.TimeSpan(calendar.getTimeInMillis(), calendar.getTimeInMillis() + span.spanInterval));
+            StatsDataTypes.TimeSpan timeSpan = new StatsDataTypes.TimeSpan(calendar.getTimeInMillis(), calendar.getTimeInMillis() + span.spanInterval);
+            ArrayList<StatsDataTypes.DataPoint> intervalData = new ArrayList<>();
+
+            Iterator<StatsDataTypes.DataPoint> dataPointIterator = data.iterator();
+            while (dataPointIterator.hasNext()) {
+                StatsDataTypes.DataPoint dataPoint = dataPointIterator.next();
+                if (timeSpan.contains(dataPoint.time)) {
+                    intervalData.add(dataPoint);
+                    data.remove(dataPointIterator);
+                }
+            }
 
             if (intervalData.size() > 0) {
                 float min = (float) Collections.min(intervalData, StatsDataTypes.DataPoint.valueComparator).value;
