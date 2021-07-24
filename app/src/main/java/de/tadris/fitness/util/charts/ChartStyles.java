@@ -68,7 +68,7 @@ public class ChartStyles {
             try {
                 WorkoutType w = (WorkoutType) data.getDataSets().get(0).getEntryForIndex(i).getData();
                 Drawable d = ctx.getDrawable(Icon.getIcon(w.icon));
-                d.mutate().setColorFilter(data.getDataSets().get(0).getColor(), PorterDuff.Mode.SRC_IN);
+                d.mutate().setColorFilter(w.color, PorterDuff.Mode.SRC_IN);
                 imageList.add(drawableToBitmap(d));
             }
             catch (Exception e)
