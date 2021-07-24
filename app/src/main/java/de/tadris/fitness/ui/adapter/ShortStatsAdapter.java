@@ -21,20 +21,12 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.formatter.ValueFormatter;
-
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.StatsDataTypes;
+import de.tadris.fitness.data.StatsProvider;
 import de.tadris.fitness.ui.statistics.StatisticsActivity;
-import de.tadris.fitness.ui.statistics.StatsProvider;
-import de.tadris.fitness.util.charts.BarChartIconRenderer;
 import de.tadris.fitness.util.charts.ChartStyles;
-
-import static de.tadris.fitness.util.charts.BitmapHelper.drawableToBitmap;
-import static de.tadris.fitness.util.charts.BitmapHelper.getBitmaps;
 
 public class ShortStatsAdapter extends RecyclerView.Adapter<ShortStatsAdapter.ViewHolder> {
 
@@ -70,7 +62,7 @@ public class ShortStatsAdapter extends RecyclerView.Adapter<ShortStatsAdapter.Vi
                 break;
             default:
                 data = statsProvider.totalDistances(allTime);
-                holder.title.setText(ctx.getString(R.string.distances));
+                holder.title.setText(ctx.getString(R.string.workoutDistance));
                 break;
         }
         ChartStyles.barChartIconLabel(holder.chart, data, ctx);

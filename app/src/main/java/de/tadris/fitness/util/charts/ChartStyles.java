@@ -16,6 +16,9 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.util.Icon;
+
 import static de.tadris.fitness.util.charts.BitmapHelper.drawableToBitmap;
 
 public class ChartStyles {
@@ -62,9 +65,16 @@ public class ChartStyles {
         ArrayList<Bitmap> imageList = new ArrayList<>();
         for(int i = 0; i < data.getDataSets().get(0).getEntryCount(); i++)
         {
-            Drawable d = data.getDataSets().get(0).getEntryForIndex(i).getIcon();
-            d.mutate().setColorFilter(data.getDataSets().get(0).getColor(), PorterDuff.Mode.SRC_IN);
-            imageList.add(drawableToBitmap(d));
+            try {
+                WorkoutType w = (WorkoutType) data.getDataSets().get(0).getEntryForIndex(i).getData();
+                Drawable d = ctx.getDrawable(Icon.getIcon(w.icon));
+                d.mutate().setColorFilter(data.getDataSets().get(0).getColor(), PorterDuff.Mode.SRC_IN);
+                imageList.add(drawableToBitmap(d));
+            }
+            catch (Exception e)
+            {
+                return; // If drawable not available, its not possible...
+            }
         }
 
         chart.setRenderer(new BarChartIconRenderer(chart, chart.getAnimator(), chart.getViewPortHandler(), imageList, ctx));
