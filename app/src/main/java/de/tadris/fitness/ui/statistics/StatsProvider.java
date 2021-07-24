@@ -9,10 +9,14 @@ import androidx.appcompat.content.res.AppCompatResources;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.CandleData;
+import com.github.mikephil.charting.data.CandleDataSet;
+import com.github.mikephil.charting.data.CandleEntry;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -138,4 +142,46 @@ public class StatsProvider {
         BarDataSet barDataSet = new BarDataSet(barEntries, WORKOUT_PROPERTY.getStringRepresentation(ctx));
         return new BarData(barDataSet);
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public CandleData speedCombinedChart(WorkoutProperty workoutProperty , StatsDataTypes.TimeSpan timeSpan, WorkoutType workoutType) {
+        ArrayList<CandleEntry> candleEntries = new ArrayList<>();
+
+        HashMap<Long, ArrayList<Float>> dataPoints = new HashMap<>();
+
+//        ArrayList<Float> timePoints = new ArrayList<>();
+
+        ArrayList<StatsDataTypes.DataPoint> workouts = dataProvider.getData(workoutProperty, (List<WorkoutType>) workoutType);
+
+        for (StatsDataTypes.DataPoint dataPoint : workouts) {
+            if (timeSpan.contains(dataPoint.time)) {
+                ArrayList<Float> pointsList = dataPoints.getOrDefault(dataPoint.time, new ArrayList<>());
+                pointsList.add((float) dataPoint.value);
+                dataPoints.put(dataPoint.time, pointsList);
+            }
+        }
+
+        for (Map.Entry<Long, ArrayList<Float>> entry : dataPoints.entrySet()) {
+
+            candleEntries.add(new CandleEntry(
+                    (float)entry.getKey(), Collections.max(entry.getValue()),
+                    Collections.min(entry.getValue()), calculateAverage(entry.getValue()),
+                    calculateAverage(entry.getValue())));
+        }
+
+        CandleDataSet candleDataSet = new CandleDataSet(candleEntries, workoutProperty.getStringRepresentation(ctx));
+        return new CandleData(candleDataSet);
+    }
+
+    private float calculateAverage(ArrayList<Float> marks) {
+        Float sum = 0f;
+        if(!marks.isEmpty()) {
+            for (Float mark : marks) {
+                sum += mark;
+            }
+            return sum.floatValue() / marks.size();
+        }
+        return sum;
+    }
+
 }
