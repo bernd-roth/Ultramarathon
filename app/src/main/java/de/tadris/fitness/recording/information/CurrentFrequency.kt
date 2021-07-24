@@ -30,11 +30,13 @@ class CurrentFrequency(context: Context) : IndoorRecordingInformation(context) {
     override fun canBeDisplayed() = true
 
     override fun getSpokenText(recorder: IndoorWorkoutRecorder): String {
-        return getString(R.string.workoutFrequency) + ": " + getFrequency(recorder) + "."
+        return getString(R.string.workoutCurrentFrequency) + ": " + getFrequency(recorder) + " " + getString(
+            R.string.unitHertzLong
+        ) + "."
     }
 
     override fun getTitle(): String {
-        return getString(R.string.workoutFrequency)
+        return getString(R.string.workoutCurrentFrequency)
     }
 
     override fun getDisplayedText(recorder: IndoorWorkoutRecorder): String {

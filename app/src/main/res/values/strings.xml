@@ -78,6 +78,7 @@
     <string name="workoutFrequency">Frequency</string>
     <string name="workoutAvgFrequencyShort">Avg. Frequency</string>
     <string name="workoutAvgFrequencyLong">Average Frequency</string>
+    <string name="workoutCurrentFrequency">Current Frequency</string>
     <string name="workoutMaxFrequency">Max Frequency</string>
     <string name="workoutIntensity">Intensity</string>
     <string name="workoutAvgIntensityShort">Avg. Intensity</string>
@@ -249,6 +250,7 @@
     <string name="unitMetersPerSecond">Meters per second</string>
     <string name="unitHeartBeatsPerMinute">bpm</string>
     <string name="unitKcalLong">Calories</string>
+    <string name="unitHertzLong">Hertz</string>
     <string name="unitKJoule">Kilojoule</string>
     <string name="pref_energy_unit">Energy unit</string>
     <string name="manageAutoTimeoutSummary">Edit the interval for automatic workout stop</string>

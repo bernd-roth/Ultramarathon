@@ -124,17 +124,17 @@
 
         <CheckBoxPreference
             android:defaultValue="false"
-            android:key="announcement_current_frequency"
-            android:title="@string/workoutFrequency" />
-
-        <CheckBoxPreference
-            android:defaultValue="false"
             android:key="announcement_avg_frequency"
             android:title="@string/workoutAvgFrequencyShort" />
 
         <CheckBoxPreference
             android:defaultValue="false"
-            android:key="announcement_frequency"
+            android:key="announcement_current_frequency"
+            android:title="@string/workoutCurrentFrequency" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="announcement_current_intensity"
             android:title="@string/workoutIntensity" />
 
     </PreferenceCategory>
