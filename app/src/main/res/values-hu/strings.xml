@@ -387,7 +387,6 @@
     <string name="overwriteMapConfirmation">Felül szeretné írni a meglévő %s térképfájlt\?</string>
     <string name="downloadMapsSpecifyDirectory">Először adjon meg egy könyvtárat a kapcsolat nélküli térképekhez</string>
     <string name="downloadMapsTitle">Térképek letöltése</string>
-    <string name="pref_map_file">Kapcsolat nélküli térképkönyvtár</string>
     <string name="actionImportMultiple">Több importálása</string>
     <string name="actionImport">Importálás</string>
     <string name="importWorkoutMultipleQuestion">Szeretne egy vagy több GPX-fájlt importálni\?</string>

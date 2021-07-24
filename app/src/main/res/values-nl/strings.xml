@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -390,7 +391,6 @@
     <string name="overwriteMapConfirmation">Wil je de bestaande kaart %s overschrijven\?</string>
     <string name="downloadMapsSpecifyDirectory">Geef eerst een locatie op voor offline kaarten</string>
     <string name="downloadMapsTitle">Kaarten downloaden</string>
-    <string name="pref_map_file">Locatie offline kaarten</string>
     <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack verzamelt ook locatiegegevens op de achtergrond om de training op te nemen wanneer het scherm is uitgeschakeld. Geef FitoTrack daarom altijd toegang tot uw locatie.</string>
     <string name="recordingPermissionNotGrantedMessage">FitoTrack heeft locatietoestemming nodig om uw bewegingen tijdens uw training te volgen. FitoTrack verzamelt ook locatiegegevens terwijl de app op de achtergrond is of het scherm is uitgeschakeld om uw trainingen op te nemen. Locatiegegevens blijven altijd op uw telefoon staan zonder uw duidelijke toestemming om deze te delen.</string>
     <string name="workoutTypeAll">Alle</string>

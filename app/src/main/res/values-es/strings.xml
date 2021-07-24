@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -412,7 +413,6 @@
     <string name="overwriteMapConfirmation">¿Quiere sobrescribir el archivo de mapa existente %s\?</string>
     <string name="downloadMapsSpecifyDirectory">Por favor, primero especifique un directorio para mapas sin conexión</string>
     <string name="downloadMapsTitle">Descargar mapas</string>
-    <string name="pref_map_file">Directorio de mapas sin conexión</string>
     <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack también recopila datos de ubicación en segundo plano para registrar el entrenamiento cuando la pantalla está apagada. Por lo tanto, permita que FitoTrack tenga acceso a su ubicación todo el tiempo.</string>
     <string name="recordingPermissionNotGrantedMessage">FitoTrack necesita permiso de ubicación para rastrear su movimiento durante su entrenamiento. FitoTrack también recopila datos de ubicación mientras la aplicación está en segundo plano o la pantalla está apagada para registrar sus entrenamientos. Los datos de ubicación siempre permanecen en su teléfono sin su claro consentimiento para compartirlos.</string>
     <string name="workoutTypeAll">Todos</string>

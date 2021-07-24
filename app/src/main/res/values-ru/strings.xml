@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -377,7 +378,6 @@
     <string name="actionDownloadMap">Скачать карту</string>
     <string name="downloadMapsSpecifyDirectory">Пожалуйста, сначала укажите каталог для хранения автономных карт</string>
     <string name="downloadMapsTitle">Скачать карты</string>
-    <string name="pref_map_file">Каталог для автономных карт</string>
     <string name="actionImportMultiple">Импортировать несколько</string>
     <string name="actionImport">Импортировать</string>
     <string name="importWorkoutMultipleQuestion">Вы хотите импортировать один файл GPX или несколько\?</string>

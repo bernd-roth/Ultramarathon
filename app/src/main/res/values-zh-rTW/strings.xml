@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -28,7 +29,6 @@
     <string name="downloadMapConfirmation">您想下載地圖文件 %s？</string>
     <string name="overwriteMapConfirmation">您想覆蓋現有的地圖文件 %s？</string>
     <string name="downloadMapsSpecifyDirectory">請先指明離線地圖的名錄/指南</string>
-    <string name="pref_map_file">離線地圖名錄/指南</string>
     <string name="preferenceCategoryVoiceFeedback">語音反饋</string>
     <string name="customWorkoutTypesTitle">專門設計的健身項目類型 (custom workout types)</string>
     <string name="workoutTypeEditMETHint">用於計算身體活動代謝/能量消耗的標準</string>

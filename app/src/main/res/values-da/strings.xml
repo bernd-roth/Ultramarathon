@@ -419,7 +419,6 @@
     <string name="overwriteMapConfirmation">Vil du overskrive den eksisterende mappe fil %s\?</string>
     <string name="downloadMapsSpecifyDirectory">Venligst definer en mappe til offline kort først</string>
     <string name="downloadMapsTitle">Download Kort</string>
-    <string name="pref_map_file">Offline Kort Mappe</string>
     <string name="runningMigrations">Kørende migrationer</string>
     <string name="importWorkoutMultipleQuestion">Vil du importere en eller flere GPX filer\?</string>
     <string name="recordingBackgroundPermissionNotGrantedMessage">Fitotrack indsamler lokationsoplysninger i baggrunden for at spore din træning når skærmen er slukket. Derfor, venligst giv FitoTrack tilladelse til din lokation hele tiden.</string>

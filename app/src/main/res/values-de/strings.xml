@@ -502,4 +502,9 @@
     <string name="unitHeartBeatsPerMinute">bpm</string>
     <string name="preferenceFirstDayOfWeek">Anfang der Woche</string>
     <string name="fileNotFound">Datei nicht gefunden</string>
+    <string name="workoutRecordingTypeGps">Gps Workouts</string>
+    <string name="workoutRecordingTypeIndoor">Indoor Workouts</string>
+    <string name="workoutAvgFrequencyLong">Durchschnittliche Frequenz</string>
+    <string name="workoutCurrentFrequency">Aktuelle Frequenz</string>
+    <string name="unitHertzLong">Hertz</string>
 </resources>

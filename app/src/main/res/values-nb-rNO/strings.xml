@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -334,7 +335,6 @@
     <string name="cancelDownloadConfirmation">Er du sikker på at du vil avbryte nåværende nedlasting\?</string>
     <string name="actionCancelDownload">Avbryt nedlasting</string>
     <string name="downloadMapsTitle">Last ned kart</string>
-    <string name="pref_map_file">Mappe for frakoblede kart</string>
     <string name="workoutTypeAll">Alle</string>
     <string name="invalidNumberFormat">Ugyldig nummerformat.</string>
     <string name="noColoring">Ingen fargelegging</string>

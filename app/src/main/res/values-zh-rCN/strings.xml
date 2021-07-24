@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -36,7 +37,6 @@
     <string name="overwriteMapConfirmation">想要覆盖已有的地图文件 %s 吗？</string>
     <string name="downloadMapsSpecifyDirectory">请先指定离线地图目录</string>
     <string name="downloadMapsTitle">下载地图</string>
-    <string name="pref_map_file">离线地图目录</string>
     <string name="editWorkoutType">编辑锻炼类型</string>
     <string name="workoutTypeEditIcon">图标</string>
     <string name="deleteWorkoutTypeConfirmation">真想删除此锻炼类型吗？</string>

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -332,7 +333,6 @@
     <string name="overwriteMapConfirmation">Mevcut %s harita dosyasının üzerine yazmak istiyor musunuz\?</string>
     <string name="downloadMapsSpecifyDirectory">Lütfen önce çevrim dışı haritalar için bir dizin belirtin</string>
     <string name="downloadMapsTitle">Haritaları İndir</string>
-    <string name="pref_map_file">Çevrim Dışı Harita Dizini</string>
     <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack, ekran kapalıyken egzersizi kaydetmek için arka plandayken de konum verilerini toplar. Bu nedenle, lütfen FitoTrack\'in her zaman konumunuza erişmesine izin verin.</string>
     <string name="recordingPermissionNotGrantedMessage">FitoTrack, egzersiz sırasında hareketinizi takip etmek için konum iznine ihtiyaç duyar. FitoTrack ayrıca uygulama arka plandayken veya egzersizlerinizi kaydetmek için ekran kapalıyken de konum verilerini toplar. Konum verileri, paylaşmak için açık rızanız olmadığı sürece her zaman telefonunuzda kalır.</string>
     <string name="workoutTypeAll">Tümü</string>
