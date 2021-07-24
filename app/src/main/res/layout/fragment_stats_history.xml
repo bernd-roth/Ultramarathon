@@ -55,7 +55,7 @@
         </LinearLayout>
 
 
-    <com.github.mikephil.charting.charts.CandleStickChart
+    <com.github.mikephil.charting.charts.CombinedChart
         android:id="@+id/stats_speed_chart"
         android:layout_width="match_parent"
         android:layout_height="200dp" />

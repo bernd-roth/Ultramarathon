@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import com.github.mikephil.charting.charts.CandleStickChart;
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
+import com.github.mikephil.charting.data.CombinedData;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import org.jetbrains.annotations.NotNull;
@@ -40,11 +41,20 @@ public class StatsHistoryFragment extends StatsFragment {
         typeSelector = view.findViewById(R.id.fragmentHistoryTypeSelector);
         workoutTypeText = view.findViewById(R.id.fragmentHistoryTypeTitle);
 
-
-        CandleStickChart candleStickChart = view.findViewById(R.id.stats_speed_chart);
-        candleStickChart.setDrawBorders(true);
-        candleStickChart.setData(statsProvider.getPaceData(AggregationSpan.MONTH,
+        CombinedData combinedSpeedData = new CombinedData();
+        combinedSpeedData.setData(statsProvider.getSpeedData(AggregationSpan.MONTH,
                 WorkoutType.getWorkoutTypeById(context, WorkoutType.WORKOUT_TYPE_ID_RUNNING)));
+
+        CombinedChart speedChart = view.findViewById(R.id.stats_speed_chart);
+        speedChart.setData(combinedSpeedData);
+
+
+        CombinedData combinedPaceData = new CombinedData();
+        combinedPaceData.setData(statsProvider.getPaceData(AggregationSpan.MONTH,
+                WorkoutType.getWorkoutTypeById(context, WorkoutType.WORKOUT_TYPE_ID_RUNNING)));
+
+        CombinedChart distanceChart = view.findViewById(R.id.stats_dist_chart);
+        distanceChart.setData(combinedPaceData);
         /*
         CombinedChart speedChart = view.findViewById(R.id.stats_speed_chart);
         speedChart.setData(statsProvider.(new StatsDataTypes.TimeSpan(0, Long.MAX_VALUE)));
