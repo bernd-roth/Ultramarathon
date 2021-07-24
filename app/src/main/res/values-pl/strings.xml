@@ -16,9 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="restore">Przywróć</string>
     <string name="importBackupMessage">UWAGA: Wszystkie dotychczasowe dane zostaną wyczyszczone. Jeśli chcesz je zachować, zrób najpierw ich kopię. Czy na pewno chcesz kontynuować\?</string>
     <string name="chooseBackupFile">Wybierz plik kopii</string>
@@ -35,7 +33,7 @@
     <string name="error">Błąd</string>
     <string name="exporting">Eksportowanie</string>
     <string name="delete">Usuń</string>
-    <string name="stop">Stop</string>
+    <string name="stop">Zatrzymaj</string>
     <string name="app_name">FitoTrack</string>
     <string name="pref_voice_announcements_summary">Skonfiguruj komunikaty głosowe, które będą Cię informować podczas treningu</string>
     <string name="announcementWorkoutActions">Akcje treningu (wstrzymanie, wznowienie itd.)</string>
@@ -65,7 +63,7 @@
     <string name="recordingStateRunning">Działający</string>
     <string name="recordingStateIdle">Bezczynny</string>
     <string name="speechConfigNoSpeech">Brak powiadom.</string>
-    <string name="actionGrant">Przyznać</string>
+    <string name="actionGrant">Przyznaj</string>
     <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack również zbiera dane o lokalizacji w tle, żeby nagrywać trening, kiedy ekran jest wyłączony. Zatem pozwól, aby FitoTrack miał dostęp do Twojej lokalizacji przez cały czas.</string>
     <string name="recordingPermissionNotGrantedMessage">FitoTrack potrzebuje uprawnień do lokalizacji, aby móc śledzić Twój ruch podczas treningu. FitoTrack również zbiera dane o lokalizacji, kiedy aplikacja działa w tle lub ekran jest wyłączony, żeby nagrywać trening. Dane o lokalizacji pozostają zawsze na telefonie bez Twojej wyraźnej zgody na ich udostępnienie.</string>
     <string name="recordingPermissionNotGrantedTitle">Nie przyznano uprawnień</string>
@@ -186,7 +184,7 @@
     <string name="add_interval">Dodaj interwał</string>
     <string name="add">Dodaj</string>
     <string name="cannotStart">Nie można rozpocząć</string>
-    <string name="start">Start</string>
+    <string name="start">Rozpocznij</string>
     <string name="noComment">Brak komentarza</string>
     <string name="hintRestart">Zrestartuj aplikację, aby zastosować zmiany</string>
     <string name="OpenStreetMapAttribution">© autorzy OpenStreetMap</string>
@@ -433,4 +431,10 @@
     <string name="workoutTypeTrampolineJumping">Skoki na trampolinie</string>
     <string name="workoutTypeRopeSkipping">Skakanie na skakance</string>
     <string name="workoutTypeTreadmill">Bieżnia</string>
+    <string name="currentTimeStructure">%s %s</string>
+    <string name="unitHertzLong">Herc</string>
+    <string name="workoutCurrentFrequency">Aktualna częstotliwość</string>
+    <string name="workoutAvgFrequencyLong">Średnia częstotliwość</string>
+    <string name="workoutRecordingTypeIndoor">Treningi w pomieszczeniach</string>
+    <string name="workoutRecordingTypeGps">Treningi z GPS-em</string>
 </resources>
