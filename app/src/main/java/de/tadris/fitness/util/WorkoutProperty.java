@@ -43,6 +43,10 @@ public enum WorkoutProperty {
     public boolean isGPSProperty() { return CALORIE.getId() < id && id <= DESCENT.getId(); }
     public boolean isIndoorProperty() { return DESCENT.getId() < id && id <=CALORIE.getId(); }
 
+    public String getStringRepresentation(Context ctx) {
+        return getStringRepresentations(ctx).get(id);
+    }
+
     public static List<String> getStringRepresentations(Context context) {
         List<String> criteria = new ArrayList<>();
         criteria.add(context.getString(R.string.workoutStartTime));

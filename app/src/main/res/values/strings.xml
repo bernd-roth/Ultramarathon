@@ -457,8 +457,6 @@
     <string name="fileNotFound">File not found</string>
     <string name="approxSymbol" translatable="false">≈</string>
     <string name="numberOfWorkouts">Number of workouts</string>
-    <string name="distances">Distances</string>
-    <string name="durations">Durations</string>
     <string name="energyExpended">Energy expended</string>
     <string name="caloriesBurned">Calories burned</string>
     <string name="heartFrequency">Heart frequency</string>
