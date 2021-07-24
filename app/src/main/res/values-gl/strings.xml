@@ -343,16 +343,16 @@
     <string name="pref_auto_start_mode_title">Modo Auto-Inicio</string>
     <string name="intervalAutoStartModeTraining">Modo de Adestramento de inicio automático</string>
     <string name="manageAutoStartModeSummary">Cambia o xeito en que se inicia o adestramento automático</string>
-    <string name="ttsMinuteSecondCountdownAnnouncement">" &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"mins\" example=\"1 minute\"&gt;%1$s&lt;/xliff:g&gt; e &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"secs\" example=\"7 seconds\"&gt;%2$s&lt;/xliff:g&gt; para o inicio "</string>
-    <string name="ttsMinuteCountdownAnnouncement">" &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"mins\" example=\"12 minutes\"&gt;%1$s&lt;/xliff:g&gt; ata o inicio "</string>
-    <string name="ttsLongSecondCountdownAnnouncement">" &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"secs\" example=\"5 seconds\"&gt;%1$s&lt;/xliff:g&gt; para o inicio "</string>
+    <string name="ttsMinuteSecondCountdownAnnouncement"> <xliff:g example="1 minute" id="mins">%1$s</xliff:g> e <xliff:g example="7 seconds" id="secs">%2$s</xliff:g> para o inicio </string>
+    <string name="ttsMinuteCountdownAnnouncement"> <xliff:g example="12 minutes" id="mins">%1$s</xliff:g> para o inicio </string>
+    <string name="ttsLongSecondCountdownAnnouncement"> <xliff:g example="5 seconds" id="secs">%1$s</xliff:g> para o inicio </string>
     <plurals name="minutes">
-        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"mins\" example=\"1\"&gt;%1$d&lt;/xliff:g&gt; minuto</item>
-        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"mins\" example=\"5\"&gt;%1$d&lt;/xliff:g&gt; minutos</item>
+        <item quantity="one"><xliff:g example="1" id="mins">%1$d</xliff:g> minuto</item>
+        <item quantity="other"><xliff:g example="5" id="mins">%1$d</xliff:g> minutos</item>
     </plurals>
     <plurals name="seconds">
-        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"secs\" example=\"1\"&gt;%1$d&lt;/xliff:g&gt; segundo</item>
-        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"secs\" example=\"12\"&gt;%1$d&lt;/xliff:g&gt; segundos</item>
+        <item quantity="one"><xliff:g example="1" id="secs">%1$d</xliff:g> segundo</item>
+        <item quantity="other"><xliff:g example="12" id="secs">%1$d</xliff:g> segundos</item>
     </plurals>
     <string name="announcementCountdown">Accións de Inicio automático (contra atrás, estado, etc.)</string>
     <string name="action_nfc_settings">Ir aos axustes NFC</string>
@@ -408,4 +408,35 @@
     <string name="preferenceFirstDayOfWeek">Comezo da semana</string>
     <string name="edit_interval">Editar intervalo</string>
     <string name="fileNotFound">Non se atopa o ficheiro</string>
+    <string name="pref_render_theme_style_info">Sen menú do estilo da aparencia para o decorado seleccionado.</string>
+    <string name="preferenceCategoryRenderThemeCategories">Categorías</string>
+    <string name="pref_render_theme_style">Estilo de debuxado</string>
+    <string name="pref_render_theme_style_settings">Axustes para aparencia sen conexión</string>
+    <string name="pref_map_directory">Directorio de mapas sen conexión</string>
+    <string name="recordingActivityPermissionMessage">FitoTrack require o permiso para rexistrar a túa actividade física e gravar adestramentos en interior.</string>
+    <string name="pref_step_length">Lonx. da zancada</string>
+    <plurals name="workoutPushUp">
+        <item quantity="one">Push up</item>
+        <item quantity="other">Push ups</item>
+    </plurals>
+    <string name="workoutTypePushUps">Push ups</string>
+    <plurals name="workoutJump">
+        <item quantity="one">Salto</item>
+        <item quantity="other">Saltos</item>
+    </plurals>
+    <string name="workoutTypeTrampolineJumping">Salto de trampolín</string>
+    <string name="workoutTypeRopeSkipping">Saltar á corda</string>
+    <plurals name="workoutStep">
+        <item quantity="one">Paso</item>
+        <item quantity="other">Pasos</item>
+    </plurals>
+    <string name="workoutTypeTreadmill">Cinta de correr</string>
+    <string name="workoutMaxIntensity">Intensidade Máx</string>
+    <string name="workoutAvgIntensityShort">Intensidade Med</string>
+    <string name="workoutIntensity">Intensidade</string>
+    <string name="workoutMaxFrequency">Frecuencia Máx</string>
+    <string name="workoutAvgFrequencyShort">Frecuencia Media</string>
+    <string name="workoutFrequency">Frecuencia</string>
+    <string name="workoutSets">Conxuntos</string>
+    <string name="workoutRepetitions">Repeticións</string>
 </resources>

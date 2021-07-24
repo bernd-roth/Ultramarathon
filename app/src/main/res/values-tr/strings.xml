@@ -344,16 +344,16 @@
     <string name="pref_auto_start_mode_instant">Hemen başla</string>
     <string name="pref_auto_start_mode_title">Otomatik Başlatma Modu</string>
     <string name="manageAutoStartModeSummary">Otomatik egzersiz başlatma modunu değiştirin</string>
-    <string name="ttsMinuteSecondCountdownAnnouncement">" başlayana kadar &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"mins\" example=\"1 minute\"&gt;%1$s&lt;/xliff:g&gt; ve &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"secs\" example=\"7 seconds\"&gt;%2$s&lt;/xliff:g&gt; "</string>
-    <string name="ttsMinuteCountdownAnnouncement">" başlayana kadar &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"mins\" example=\"12 minutes\"&gt;%1$s&lt;/xliff:g&gt; "</string>
-    <string name="ttsLongSecondCountdownAnnouncement">" başlayana kadar &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"secs\" example=\"5 seconds\"&gt;%1$s&lt;/xliff:g&gt; "</string>
+    <string name="ttsMinuteSecondCountdownAnnouncement"> başlayana kadar <xliff:g example="1 minute" id="mins">%1$s</xliff:g> ve <xliff:g example="7 seconds" id="secs">%2$s</xliff:g> </string>
+    <string name="ttsMinuteCountdownAnnouncement"> başlayana kadar <xliff:g example="12 minutes" id="mins">%1$s</xliff:g> </string>
+    <string name="ttsLongSecondCountdownAnnouncement"> başlayana kadar <xliff:g example="5 seconds" id="secs">%1$s</xliff:g> </string>
     <plurals name="minutes">
-        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"mins\" example=\"1\"&gt;%1$d&lt;/xliff:g&gt; dakika</item>
-        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"mins\" example=\"5\"&gt;%1$d&lt;/xliff:g&gt; dakika</item>
+        <item quantity="one"><xliff:g example="1" id="mins">%1$d</xliff:g> dakika</item>
+        <item quantity="other"><xliff:g example="1" id="mins">%1$d</xliff:g> dakika</item>
     </plurals>
     <plurals name="seconds">
-        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"secs\" example=\"1\"&gt;%1$d&lt;/xliff:g&gt; saniye</item>
-        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"secs\" example=\"12\"&gt;%1$d&lt;/xliff:g&gt; saniye</item>
+        <item quantity="one"><xliff:g example="1" id="secs">%1$d</xliff:g> saniye</item>
+        <item quantity="other"><xliff:g example="12" id="secs">%1$d</xliff:g> saniye</item>
     </plurals>
     <string name="announcementCountdown">Otomatik Başlatma Eylemleri (geri sayım, durum vs.)</string>
     <string name="action_nfc_settings">NFC ayarlarına git</string>
@@ -408,4 +408,35 @@
     <string name="preferenceFirstDayOfWeek">Haftanın başlangıcı</string>
     <string name="edit_interval">Aralık Düzenle</string>
     <string name="fileNotFound">Dosya bulunamadı</string>
+    <string name="pref_render_theme_style_info">Seçilen oluşturma teması için oluşturma teması tarzı menüsü yok.</string>
+    <string name="preferenceCategoryRenderThemeCategories">Kategoriler</string>
+    <string name="pref_render_theme_style">Oluşturma Tarzı</string>
+    <string name="pref_render_theme_style_settings">Çevrim Dışı Oluşturma Tema Ayarları</string>
+    <string name="pref_map_directory">Çevrim Dışı Harita Dizini</string>
+    <string name="recordingActivityPermissionMessage">FitoTrack, iç mekan egzersizlerini kaydetmek üzere fiziksel etkinliğinizi izlemek için izne ihtiyaç duymaktadır.</string>
+    <string name="pref_step_length">Adım Uzunluğu</string>
+    <plurals name="workoutPushUp">
+        <item quantity="one">Şınav</item>
+        <item quantity="other">Şınav</item>
+    </plurals>
+    <string name="workoutTypePushUps">Şınav</string>
+    <plurals name="workoutJump">
+        <item quantity="one">Atlama</item>
+        <item quantity="other">Atlama</item>
+    </plurals>
+    <string name="workoutTypeTrampolineJumping">Trambolin Atlama</string>
+    <string name="workoutTypeRopeSkipping">İp Atlama</string>
+    <plurals name="workoutStep">
+        <item quantity="one">Adım</item>
+        <item quantity="other">Adım</item>
+    </plurals>
+    <string name="workoutTypeTreadmill">Koşu Bandı</string>
+    <string name="workoutMaxIntensity">Azami Yoğunluk</string>
+    <string name="workoutAvgIntensityShort">Ortalama Yoğunluk</string>
+    <string name="workoutIntensity">Yoğunluk</string>
+    <string name="workoutMaxFrequency">Azami Sıklık</string>
+    <string name="workoutAvgFrequencyShort">Ortalama Sıklık</string>
+    <string name="workoutFrequency">Sıklık</string>
+    <string name="workoutSets">Kümeler</string>
+    <string name="workoutRepetitions">Tekrarlar</string>
 </resources>

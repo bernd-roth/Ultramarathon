@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <plurals name="minutes">
+        <item quantity="one"><xliff:g example="1" id="mins">%1$d</xliff:g> minutė</item>
+        <item quantity="few"><xliff:g example="5" id="mins">%1$d</xliff:g> minutės</item>
+        <item quantity="other"><xliff:g example="5" id="mins">%1$d</xliff:g> minučių</item>
+    </plurals>
+    <string name="upperPaceLimit">Viršutinė tempo riba</string>
+    <string name="lowerPaceLimit">Apatinė tempo riba</string>
+    <string name="ttsBelowTargetSpeed">Per lėtai</string>
+    <string name="ttsAboveTargetSpeed">Per greitai</string>
+    <string name="ttsLongSecondCountdownAnnouncement"> <xliff:g example="5 seconds" id="secs"> %1$s </xliff:g> iki pradžios </string>
+    <string name="ttsMinuteCountdownAnnouncement"> <xliff:g example="12 minutes" id="mins"> %1$s </xliff:g> iki pradžios </string>
+    <string name="ttsMinuteSecondCountdownAnnouncement"> <xliff:g example="1 minute" id="mins">%1$s</xliff:g> ir <xliff:g example="7 seconds" id="secs">%2$s</xliff:g> iki pradžios </string>
+    <string name="manageAutoStartModeSummary">Pakeisti automatinio treniruotės pradžios režimą</string>
+    <string name="intervalAutoStartModeTraining">Automatinio pradėjimo treniruotės režimas</string>
+    <string name="pref_auto_start_mode_title">Automatinio pradėjimo režimas</string>
+    <string name="pref_auto_start_mode_instant">Pradėti iš karto</string>
+    <string name="pref_auto_start_mode_unknown">Nežinomas režimas (prašome nesirinkti)</string>
+    <string name="noColoring">Jokio spalvinimo</string>
+    <string name="selectColoring">Pasirinkite spalvinimą</string>
+    <string name="invalidNumberFormat">Netinkamas skaičiaus formatas.</string>
+    <string name="fileNotFound">Failas nerastas</string>
+    <string name="workoutDistance">Atstumas</string>
+    <string name="workoutDuration">Trukmė</string>
+    <string name="workoutDate">Data</string>
+    <string name="workoutTime">Laikas</string>
+    <string name="and">ir</string>
+    <string name="timeSecondsShort">sek.</string>
+    <string name="timeHourPlural">Valandos</string>
+    <string name="timeHourSingular">Valanda</string>
+    <string name="timeMinuteSingular">Minutė</string>
+    <string name="error">Klaida</string>
+    <string name="delete">Ištrinti</string>
+    <string name="stop">Sustabdyti</string>
+    <string name="workout_add">Pridėti</string>
+    <string name="app_name">FitoTrack</string>
+</resources>

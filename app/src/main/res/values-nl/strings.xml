@@ -17,7 +17,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources>
+  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
     <string name="workout_add">Toevoegen</string>
     <string name="stop">Stop</string>
@@ -226,7 +226,7 @@
     <string name="dayInMonth">Dag in maand</string>
     <string name="singleWorkout">Enkele training</string>
     <string name="workoutStatsHelpText">Dit scherm toont historische statistieken van de trainingen. Om het te gebruiken, moet je eerst het trainingstype specificeren door erop te klikken. Stel vervolgens de informatie in waarover je meer wilt weten en de tijdsduur. \n\nE.g. Bijvoorbeeld als je \"Week\" selecteert als tijdsperiode, worden alle trainingen van elke week samengevoegd tot één gegevenspunt, waarbij ofwel het gemiddelde ofwel de som van elke week wordt berekend.</string>
-    <string name="dataSamples">Voorbeelden</string>
+    <string name="dataSamples">Metingen</string>
     <string name="replaceOrMergeMessage">Database vervangen of samenvoegen met back-upbestand?</string>
     <string name="replace">Vervangen</string>
     <string name="merge">Samenvoegen</string>
@@ -334,8 +334,8 @@
     <string name="customWorkoutTypesTitle">Aangepaste Trainingstypes</string>
     <string name="preferenceCategoryVoiceFeedback">Feedback</string>
     <string name="workoutTypeEditMETHint">Een maatregel voor energieverbruik</string>
-    <string name="workoutTypeEditMinDistanceHint">Minimumafstand tussen twee GPS-monsters</string>
-    <string name="workoutTypeEditMinDistance">Monsterafstand</string>
+    <string name="workoutTypeEditMinDistanceHint">Minimumafstand tussen twee GPS-metingen</string>
+    <string name="workoutTypeEditMinDistance">Afstand meting</string>
     <string name="workoutTypeEditNameError">Voer a. U. B. een naam in</string>
     <string name="workoutTypeEditName">Naam</string>
     <string name="workoutTypeEditIdErrorUnique">Er is al een workout type met behulp van deze ID</string>
@@ -420,7 +420,51 @@
     <string name="preferenceCurrentSpeedTime">Tijdspan voor gemiddelde berekening</string>
     <string name="preferencesCategoryMap">Kaart</string>
     <string name="prefTrackStyleUsageTitle">Gebruik trackkleuring automatisch</string>
-    <string name="trackStyle">Track Stijl</string>
-    <string name="workoutMaxHeight">Max. hoogte</string>
-    <string name="workoutMinHeight">Min. hoogte</string>
+    <string name="trackStyle">Track stijl</string>
+    <string name="workoutMaxHeight">Max hoogte</string>
+    <string name="workoutMinHeight">Min hoogte</string>
+    <plurals name="minutes">
+        <item quantity="one"><xliff:g example="1" id="mins">%1$d</xliff:g> minuut</item>
+        <item quantity="other"><xliff:g example="5" id="mins">%1$d</xliff:g> minuten</item>
+    </plurals>
+    <plurals name="seconds">
+        <item quantity="one"><xliff:g example="1" id="secs">%1$d</xliff:g> seconde</item>
+        <item quantity="other"><xliff:g example="12" id="secs">%1$d</xliff:g> seconden</item>
+    </plurals>
+    <string name="fileNotFound">Bestand niet gevonden</string>
+    <string name="ttsMinuteSecondCountdownAnnouncement"> <xliff:g example="1 minuut" id="mins">%1$s</xliff:g> en
+\n<xliff:g example="7 seconden" id="secs">%2$s</xliff:g> tot begin </string>
+    <string name="ttsMinuteCountdownAnnouncement"> <xliff:g example="12 minuten" id="mins">%1$s</xliff:g> tot begin </string>
+    <string name="ttsLongSecondCountdownAnnouncement"> <xliff:g example="5 seconden" id="secs">%1$s</xliff:g> tot begin </string>
+    <string name="pref_render_theme_style_info">Geen thema-stijl beschikbaar voor geselecteerd thema.</string>
+    <string name="preferenceCategoryRenderThemeCategories">Categorieën</string>
+    <string name="pref_render_theme_style">Stijl</string>
+    <string name="pref_render_theme_style_settings">Instellingen offline thema</string>
+    <string name="pref_map_directory">Offline kaartmap</string>
+    <string name="recordingActivityPermissionMessage">FitoTrack heeft toestemming nodig om je fysieke activiteit bij te houden om indoortrainingen op te nemen.</string>
+    <string name="pref_step_length">Stap lengte</string>
+    <plurals name="workoutPushUp">
+        <item quantity="one">Opdrukking</item>
+        <item quantity="other">Opdrukkingen</item>
+    </plurals>
+    <string name="workoutTypePushUps">Opdrukken</string>
+    <plurals name="workoutJump">
+        <item quantity="one">Sprong</item>
+        <item quantity="other">Sprongen</item>
+    </plurals>
+    <string name="workoutTypeTrampolineJumping">Trampoline springen</string>
+    <string name="workoutTypeRopeSkipping">Touwtje springen</string>
+    <plurals name="workoutStep">
+        <item quantity="one">Stap</item>
+        <item quantity="other">Stappen</item>
+    </plurals>
+    <string name="workoutTypeTreadmill">Loopband</string>
+    <string name="workoutMaxIntensity">Max. Intensiteit</string>
+    <string name="workoutAvgIntensityShort">Gem. Intensiteit</string>
+    <string name="workoutIntensity">Intensiteit</string>
+    <string name="workoutMaxFrequency">Max. Frequentie</string>
+    <string name="workoutAvgFrequencyShort">Gem. Frequentie</string>
+    <string name="workoutFrequency">Frequentie</string>
+    <string name="workoutSets">Sets</string>
+    <string name="workoutRepetitions">Herhalingen</string>
 </resources>

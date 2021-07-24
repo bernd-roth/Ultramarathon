@@ -67,7 +67,7 @@
     <string name="recordingStatePaused">Wstrzymany</string>
     <string name="recordingStateRunning">Działający</string>
     <string name="recordingStateIdle">Bezczynny</string>
-    <string name="speechConfigNoSpeech">Brak powiadomienia</string>
+    <string name="speechConfigNoSpeech">Brak powiadom.</string>
     <string name="actionGrant">Przyznać</string>
     <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack również zbiera dane o lokalizacji w tle, żeby nagrywać trening, kiedy ekran jest wyłączony. Zatem pozwól, aby FitoTrack miał dostęp do Twojej lokalizacji przez cały czas.</string>
     <string name="recordingPermissionNotGrantedMessage">FitoTrack potrzebuje uprawnień do lokalizacji, aby móc śledzić Twój ruch podczas treningu. FitoTrack również zbiera dane o lokalizacji, kiedy aplikacja działa w tle lub ekran jest wyłączony, żeby nagrywać trening. Dane o lokalizacji pozostają zawsze na telefonie bez Twojej wyraźnej zgody na ich udostępnienie.</string>
@@ -75,7 +75,7 @@
     <string name="unitFootSingular">Stopa</string>
     <string name="unitFootPlural">Stopy</string>
     <string name="noWorkoutStarted">Brak rozpoczętego treningu</string>
-    <string name="editDisplayedInformationHint">Dopóki trening nie rozpoczął się, możesz edytować wyświetlane wartości, klikając jedno z czterech pól.</string>
+    <string name="editDisplayedInformationHint">Dopóki trening nie rozpoczął się, możesz edytować wyświetlane wartości, naciskając jedno z czterech pól.</string>
     <string name="editDisplayedInformation">Edycja wyświetlanych informacji</string>
     <string name="sendEmail">Wyślij e-mail</string>
     <string name="aboutPrivacyPolicy">Polityka prywatności</string>
@@ -104,9 +104,9 @@
     <string name="replace">Zamień</string>
     <string name="replaceOrMergeMessage">Zamienić czy połączyć bazę danych z plikiem kopii zapasowej\?</string>
     <string name="dataSamples">Próbki</string>
-    <string name="workoutStatsHelpText">Ten ekran pokazuje historyczne statystyki treningów. Aby z niego skorzystać, najpierw potrzebujesz określić typ treningu przez kliknięcie na niego. Następnie ustaw informacje, o których chcesz wiedzieć, i przedział czasu.
+    <string name="workoutStatsHelpText">Ten ekran pokazuje historyczne statystyki treningów. Aby z niego skorzystać, najpierw potrzebujesz określić typ treningu przez naciśnięcie go. Następnie ustaw informacje, o których chcesz wiedzieć, i przedział czasu.
 \n
-\nNp. jeśli wybierzesz \"Tydzień\" jako przedział czasu, wszystkie treningi z każdego tygodnia zostaną połączone w jeden punkt danych, obliczając średnią albo sumę każdego tygodnia.</string>
+\nPrzykładowo, jeśli wybierzesz „Tydzień” jako przedział czasu, wszystkie treningi z każdego tygodnia zostaną połączone w jeden punkt danych, obliczając średnią albo sumę każdego tygodnia.</string>
     <string name="singleWorkout">Pojedynczy trening</string>
     <string name="dayInMonth">Dzień w miesiącu</string>
     <string name="calendarWeekYear">Tydzień / Rok kalendarzowy</string>
@@ -168,13 +168,13 @@
     <string name="avgSpeedTotalShort">Śr. prędkość (całkowita)</string>
     <string name="avgSpeedInMotion">Śr. prędkość (w ruchu)</string>
     <string name="enterDescription">Wprowadź opis</string>
-    <string name="hintAddWorkout">Kliknij ikonę plusa, aby nagrać lub wprowadzić trening.</string>
+    <string name="hintAddWorkout">Naciśnij ikonę plusa, aby nagrać lub wprowadzić trening.</string>
     <string name="currentSpeed">Aktualna prędkość</string>
     <string name="intervalSets">Zestawy interwałów</string>
     <string name="intervalSet">Zestaw interwałów</string>
     <string name="intervalTraining">Trening interwałowy</string>
     <string name="intervalsIncludePauseSummary">Jeśli włączone, interwały będą kontynuowane nawet podczas postojów w treningu.</string>
-    <string name="intervalsIncludePauseTitle">Uwzględnij czas postoju w treningu interwałowym</string>
+    <string name="intervalsIncludePauseTitle">Uwzględniaj czas postoju w treningu interwałowym</string>
     <string name="intervalSetSelected">Wybrano zestaw interwałów</string>
     <string name="selectIntervalSet">Wybierz zestaw interwałów</string>
     <string name="deleteIntervalSetMessage">Czy chcesz usunąć zestaw interwałów\?</string>
@@ -307,7 +307,7 @@
     <string name="actionImport">Importuj</string>
     <string name="importMultipleGpxFilesSummary">Importuj jednocześnie więcej niż jeden plik GPX z systemu plików</string>
     <string name="workoutTypeEditId">ID</string>
-    <string name="hintManageWorkoutTypes">Kliknij ikonę plusa, aby dodać niestandardowe typy treningów.</string>
+    <string name="hintManageWorkoutTypes">Naciśnij ikonę plusa, aby dodać niestandardowe typy treningów.</string>
     <string name="resumeWorkoutConfirmation">Czy naprawdę chcesz wznowić ten trening\? Spowoduje to również dodanie wstrzymania od momentu zatrzymania treningu.</string>
     <string name="prefShowOnLockScreenTitle">Widoczne na ekranie blokady</string>
     <string name="prefShowOnLockScreenSummary">Pokaż informacje o treningu, nawet gdy ekran jest zablokowany.</string>
@@ -338,27 +338,27 @@
     <string name="pref_auto_start_mode_title">Tryb automatycznego rozpoczęcia</string>
     <string name="intervalAutoStartModeTraining">Tryb automatycznego rozpoczęcia treningu</string>
     <string name="manageAutoStartModeSummary">Zmień tryb automatycznego rozpoczęcia treningu</string>
-    <string name="ttsMinuteSecondCountdownAnnouncement"> <xliff:g id="mins" example="1 minute">%1$s</xliff:g> i <xliff:g id="secs" example="7 seconds">%2$s</xliff:g> do rozpoczęcia </string>
-    <string name="ttsMinuteCountdownAnnouncement"> <xliff:g id="mins" example="12 minutes">%1$s</xliff:g> do rozpoczęcia </string>
-    <string name="ttsLongSecondCountdownAnnouncement"> <xliff:g id="secs" example="5 seconds">%1$s</xliff:g> do rozpoczęcia </string>
+    <string name="ttsMinuteSecondCountdownAnnouncement"> <xliff:g example="1 minute" id="mins">%1$s</xliff:g> i <xliff:g example="7 seconds" id="secs">%2$s</xliff:g> do rozpoczęcia </string>
+    <string name="ttsMinuteCountdownAnnouncement"> <xliff:g example="12 minutes" id="mins">%1$s</xliff:g> do rozpoczęcia </string>
+    <string name="ttsLongSecondCountdownAnnouncement"> <xliff:g example="5 seconds" id="secs">%1$s</xliff:g> do rozpoczęcia </string>
     <string name="ttsAboveTargetSpeed">Za szybko</string>
     <string name="ttsBelowTargetSpeed">Za wolno</string>
     <string name="lowerPaceLimit">Dolna granica tempa</string>
     <string name="upperPaceLimit">Górna granica tempa</string>
     <plurals name="minutes">
-        <item quantity="one"><xliff:g id="mins" example="1">%1$d</xliff:g> minuta</item>
-        <item quantity="few"><xliff:g id="mins" example="22">%1$d</xliff:g> minuty</item>
-        <item quantity="many"><xliff:g id="mins" example="5">%1$d</xliff:g> minut</item>
-        <item quantity="other"><xliff:g id="mins" example="5">%1$d</xliff:g> minut</item>
+        <item quantity="one"><xliff:g example="1" id="mins">%1$d</xliff:g> minuta</item>
+        <item quantity="few"><xliff:g example="22" id="mins">%1$d</xliff:g> minuty</item>
+        <item quantity="many"><xliff:g example="12" id="mins">%1$d</xliff:g> minut</item>
+        <item quantity="other"><xliff:g example="12" id="mins">%1$d</xliff:g> minut</item>
     </plurals>
     <plurals name="seconds">
-        <item quantity="one"><xliff:g id="secs" example="1">%1$d</xliff:g> sekunda</item>
-        <item quantity="few"><xliff:g id="secs" example="22">%1$d</xliff:g> sekundy</item>
-        <item quantity="many"><xliff:g id="secs" example="12">%1$d</xliff:g> sekund</item>
-        <item quantity="other"><xliff:g id="secs" example="12">%1$d</xliff:g> sekund</item>
+        <item quantity="one"><xliff:g example="1" id="secs">%1$d</xliff:g> sekunda</item>
+        <item quantity="few"><xliff:g example="22" id="secs">%1$d</xliff:g> sekundy</item>
+        <item quantity="many"><xliff:g example="12" id="secs">%1$d</xliff:g> sekund</item>
+        <item quantity="other"><xliff:g example="12" id="secs">%1$d</xliff:g> sekund</item>
     </plurals>
     <string name="launchError">Nie można uruchomić aplikacji</string>
-    <string name="editStartEndHelp">Wybierz pozycję na mapie albo diagramie. Następnie kliknij jedną ze strzałek, aby wybrać nowy punkt początkowy albo końcowy. Gdy skończysz, kliknij ikonę zapisu w celu zastosowania zmian.</string>
+    <string name="editStartEndHelp">Wybierz pozycję na mapie albo diagramie. Następnie naciśnij jedną ze strzałek, aby wybrać nowy punkt początkowy albo końcowy. Gdy skończysz, kliknij ikonę zapisu w celu zastosowania zmian.</string>
     <string name="actionApply">Zastosuj</string>
     <string name="moveEndOfWorkout">Wytnij koniec</string>
     <string name="moveStartOfWorkout">Wytnij początek</string>
@@ -369,7 +369,7 @@
     <string name="dialog_nfc_disabled">Aby używać tagów NFC do rozpoczęcia i zakończenia treningów, najpierw potrzebujesz włączyć NFC w ustawieniach urządzenia</string>
     <string name="dialog_nfc_disabled_title">NFC jest obecnie wyłączone</string>
     <string name="nfcStartSummary">Jeśli włączone, będziesz w stanie rozpocząć i zatrzymać treningi, skanując tag NFC</string>
-    <string name="nfcStartTitle">Skanowanie, aby rozpocząć</string>
+    <string name="nfcStartTitle">Skanuj, aby rozpocząć</string>
     <string name="popup_auto_start_wait_for_gps">Gdy pozycja GPS jest dokładna</string>
     <string name="popup_auto_start_on_move">Gdy zacznę się poruszać</string>
     <string name="popup_auto_start_immediately">Rozpocznij natychmiast</string>
@@ -413,4 +413,41 @@
     <string name="workoutTypeEditIdErrorUnique">Istnieje już typ treningu używający tego ID</string>
     <string name="workoutTypeEditIdErrorEmpty">Wprowadź ID</string>
     <string name="workoutTypeEditIdErrorCharacters">Dozwolone znaki: a–z, A–Z, 0–9, _, -</string>
+    <string name="pref_render_theme_style_info">Brak dostępnego menu stylu motywu renderowania dla wybranego motywu renderowania.</string>
+    <string name="pref_render_theme_style_settings">Ustawienia motywu renderowania w trybie offline</string>
+    <string name="pref_map_directory">Katalog map offline</string>
+    <string name="recordingActivityPermissionMessage">FitoTrack potrzebuje uprawnienia do śledzenia Twojej aktywności fizycznej, aby nagrywać treningi w pomieszczeniach.</string>
+    <string name="pref_step_length">Długość kroku</string>
+    <plurals name="workoutPushUp">
+        <item quantity="one">Pompka</item>
+        <item quantity="few">Pompki</item>
+        <item quantity="many">Pompek</item>
+        <item quantity="other">Pompek</item>
+    </plurals>
+    <string name="workoutTypePushUps">Pompki</string>
+    <string name="workoutSets">Zestawy</string>
+    <string name="workoutRepetitions">Powtórzenia</string>
+    <plurals name="workoutJump">
+        <item quantity="one">Skok</item>
+        <item quantity="few">Skoki</item>
+        <item quantity="many">Skoków</item>
+        <item quantity="other">Skoków</item>
+    </plurals>
+    <string name="workoutMaxIntensity">Maks. intensywność</string>
+    <string name="workoutAvgIntensityShort">Śr. intensywność</string>
+    <string name="workoutIntensity">Intensywność</string>
+    <string name="workoutMaxFrequency">Maks. częstotliwość</string>
+    <string name="workoutAvgFrequencyShort">Śr. częstotliwość</string>
+    <string name="workoutFrequency">Częstotliwość</string>
+    <string name="preferenceCategoryRenderThemeCategories">Kategorie</string>
+    <string name="pref_render_theme_style">Styl renderowania</string>
+    <plurals name="workoutStep">
+        <item quantity="one">Krok</item>
+        <item quantity="few">Kroki</item>
+        <item quantity="many">Kroków</item>
+        <item quantity="other">Kroków</item>
+    </plurals>
+    <string name="workoutTypeTrampolineJumping">Skoki na trampolinie</string>
+    <string name="workoutTypeRopeSkipping">Skakanie na skakance</string>
+    <string name="workoutTypeTreadmill">Bieżnia</string>
 </resources>

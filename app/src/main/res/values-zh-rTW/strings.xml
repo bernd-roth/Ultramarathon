@@ -31,7 +31,7 @@
     <string name="downloadMapsSpecifyDirectory">請先指明離線地圖的名錄/指南</string>
     <string name="preferenceCategoryVoiceFeedback">語音反饋</string>
     <string name="customWorkoutTypesTitle">專門設計的健身項目類型 (custom workout types)</string>
-    <string name="workoutTypeEditMETHint">用於計算身體活動代謝/能量消耗的標準</string>
+    <string name="workoutTypeEditMETHint">用於計算身體活動代謝/熱量消耗的標準</string>
     <string name="workoutTypeEditMET">代謝當量商（Metabolic Equivalent of Task, MET）</string>
     <string name="workoutTypeEditMinDistance">GPS 點與點之間的距離</string>
     <string name="workoutTypeEditMinDistanceHint">兩個 GPS 點之間的最短距離</string>
@@ -99,7 +99,7 @@
     <string name="hintAddWorkout">請按一下「加號」圖示，以便記錄或輸入一個健身項目。</string>
     <string name="create">新增</string>
     <string name="cut">剪除首尾各 300 公尺</string>
-    <string name="pref_energy_unit">能量單位</string>
+    <string name="pref_energy_unit">熱量單位</string>
     <string name="unitKJoule">千焦耳</string>
     <string name="workoutDiscarded">已刪除健身項目</string>
     <string name="preferencesRecordingTitle">記錄</string>
@@ -219,14 +219,14 @@
     <string name="restore">還原</string>
     <string name="type">類型</string>
     <string name="editWorkout">編輯健身項目</string>
-    <string name="enterDescription">請輸入描述</string>
-    <string name="enterName">請輸入名稱</string>
-    <string name="enterWorkout">請輸入健身項目</string>
+    <string name="enterDescription">輸入描述</string>
+    <string name="enterName">輸入名稱</string>
+    <string name="enterWorkout">輸入健身項目</string>
     <string name="importBackupMessage">警告！您在應用程式中的所有資料會被清除。如果您不想失去這些資料，請先進行另一個備份。您確定想還原這個備份嗎？</string>
     <string name="chooseBackupFile">選擇備份文件</string>
     <string name="setDuration">設定時長</string>
     <string name="pref_ringtone_silent">靜音</string>
-    <string name="errorEnterValidDuration">請輸入有效的時段</string>
+    <string name="errorEnterValidDuration">輸入有效的時段</string>
     <string name="backup">備份</string>
     <string name="exporting">匯出中</string>
     <string name="error">錯誤</string>
@@ -234,7 +234,7 @@
     <string name="noComment">沒有註記</string>
     <string name="workoutPauseDuration">暫停計時</string>
     <string name="workoutDuration">時長</string>
-    <string name="errorEnterValidNumber">請輸入有效的數字</string>
+    <string name="errorEnterValidNumber">輸入有效的數字</string>
     <string name="errorWorkoutAddFuture">健身項目不能設定在未來</string>
     <string name="gpsFound">鎖定 GPS 訊號</string>
     <string name="gpsLost">失去 GPS 訊號</string>
@@ -252,11 +252,11 @@
     <string name="uploadFailedOsmNotAuthorized">未經授權，請重試</string>
     <string name="height">高度</string>
     <string name="authenticationFailed">驗證失敗。</string>
-    <string name="enterVerificationCode">請輸入驗證碼</string>
+    <string name="enterVerificationCode">輸入驗證碼</string>
     <string name="workoutEdited">這個健身項目已被編輯。</string>
-    <string name="workoutEnergyConsumption">總能量消耗</string>
-    <string name="workoutTotalEnergy">總能量</string>
-    <string name="workoutBurnedEnergy">能量消耗</string>
+    <string name="workoutEnergyConsumption">總熱量消耗</string>
+    <string name="workoutTotalEnergy">總熱量</string>
+    <string name="workoutBurnedEnergy">熱量消耗</string>
     <string name="workoutPace">步伐</string>
     <string name="start">開始</string>
     <string name="save">儲存</string>
@@ -337,7 +337,7 @@
     <string name="popup_auto_start_wait_for_gps">當位置信息精確時</string>
     <string name="popup_auto_start_on_move">當我開始移動時</string>
     <string name="popup_auto_start_immediately">立即開始</string>
-    <string name="popup_auto_start">使用默認延遲</string>
+    <string name="popup_auto_start">使用預設延遲</string>
     <string name="popup_auto_start_delay">使用自動延遲</string>
     <string name="customAutoStartDelay">其他</string>
     <string name="noAutoStartDelay">無</string>
@@ -367,4 +367,27 @@
     <string name="preferencesCategoryMap">地圖</string>
     <string name="workoutMinHeight">最低高度</string>
     <string name="workoutMaxHeight">最高高度</string>
+    <string name="trackStyle">追蹤風格</string>
+    <string name="pref_step_length">步長</string>
+    <plurals name="workoutPushUp">
+        <item quantity="other">伏地挺身</item>
+    </plurals>
+    <string name="workoutTypePushUps">伏地挺身</string>
+    <plurals name="workoutJump">
+        <item quantity="other">跳數</item>
+    </plurals>
+    <string name="workoutTypeTrampolineJumping">跳跳床</string>
+    <string name="workoutTypeRopeSkipping">跳繩</string>
+    <plurals name="workoutStep">
+        <item quantity="other">步數</item>
+    </plurals>
+    <string name="workoutTypeTreadmill">跑步機</string>
+    <string name="workoutMaxIntensity">最大強度</string>
+    <string name="workoutAvgIntensityShort">平均強度</string>
+    <string name="workoutIntensity">強度</string>
+    <string name="workoutMaxFrequency">最大頻率</string>
+    <string name="workoutAvgFrequencyShort">平均頻率</string>
+    <string name="workoutFrequency">頻率</string>
+    <string name="workoutSets">組合</string>
+    <string name="workoutRepetitions">重複</string>
 </resources>
