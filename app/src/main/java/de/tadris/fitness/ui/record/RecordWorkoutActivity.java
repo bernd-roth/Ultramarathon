@@ -224,7 +224,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
 
         updateStartButton(false, R.string.cannotStart, null);
 
-        informationDisplay = new InformationDisplay(activity.recordingType, this);
+        informationDisplay = new InformationDisplay(WorkoutType.RecordingType.findById(activity.recordingType), this);
 
         infoViews[0] = new InfoViewHolder(0, this, findViewById(R.id.recordInfo1Title), findViewById(R.id.recordInfo1Value));
         infoViews[1] = new InfoViewHolder(1, this, findViewById(R.id.recordInfo2Title), findViewById(R.id.recordInfo2Value));
@@ -970,7 +970,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
     @Override
     public void onInfoViewClick(int slot) {
         if (instance.recorder.getState() == GpsWorkoutRecorder.RecordingState.IDLE) {
-            new SelectWorkoutInformationDialog(this, activity.recordingType, slot, this).show();
+            new SelectWorkoutInformationDialog(this, WorkoutType.RecordingType.findById(activity.recordingType), slot, this).show();
         }
     }
 

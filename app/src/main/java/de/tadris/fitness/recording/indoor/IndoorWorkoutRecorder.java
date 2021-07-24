@@ -132,6 +132,26 @@ public class IndoorWorkoutRecorder extends BaseWorkoutRecorder {
         return repetitions;
     }
 
+    public double getAverageFrequency() {
+        return (double) repetitions / Math.max(1, (double) getDuration() / 1000);
+    }
+
+    public double getCurrentFrequency() {
+        if (lastSample != null) {
+            return lastSample.frequency;
+        } else {
+            return 0;
+        }
+    }
+
+    public double getCurrentIntensity() {
+        if (lastSample != null) {
+            return lastSample.intensity;
+        } else {
+            return 0;
+        }
+    }
+
     private IndoorWorkoutData getWorkoutData() {
         return new IndoorWorkoutData(workout, samples);
     }
@@ -169,5 +189,10 @@ public class IndoorWorkoutRecorder extends BaseWorkoutRecorder {
     @Override
     public Class<? extends RecordWorkoutActivity> getActivityClass() {
         return RecordIndoorWorkoutActivity.class;
+    }
+
+    @Override
+    public WorkoutType.RecordingType getRecordingType() {
+        return WorkoutType.RecordingType.INDOOR;
     }
 }

@@ -59,6 +59,8 @@
     <string name="pref_announcements_config_title">Announcement Trigger</string>
     <string name="pref_announcements_config_summary">Choose the time and distance between voice announcements</string>
     <string name="pref_announcements_content">Content of the announcements</string>
+    <string name="workoutRecordingTypeGps">Gps Workouts</string>
+    <string name="workoutRecordingTypeIndoor">Indoor Workouts</string>
     <string name="gpsLost">GPS signal lost</string>
     <string name="gpsFound">GPS signal found</string>
     <string name="workoutTime">Time</string>
@@ -75,6 +77,7 @@
     <string name="workoutSpeed">Speed</string>
     <string name="workoutFrequency">Frequency</string>
     <string name="workoutAvgFrequencyShort">Avg. Frequency</string>
+    <string name="workoutAvgFrequencyLong">Average Frequency</string>
     <string name="workoutMaxFrequency">Max Frequency</string>
     <string name="workoutIntensity">Intensity</string>
     <string name="workoutAvgIntensityShort">Avg. Intensity</string>
