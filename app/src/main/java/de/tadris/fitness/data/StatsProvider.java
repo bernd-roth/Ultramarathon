@@ -1,4 +1,4 @@
-package de.tadris.fitness.ui.statistics;
+package de.tadris.fitness.data;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -66,7 +66,7 @@ public class StatsProvider {
             barEntries.add(new BarEntry(
                     (float)barNumber,
                     entry.getValue(),
-                    AppCompatResources.getDrawable(ctx, Icon.getIcon(entry.getKey().icon))));
+                    entry.getKey()));
 
             barNumber++;
         }
@@ -97,7 +97,7 @@ public class StatsProvider {
             barEntries.add(new BarEntry(
                     (float)barNumber,
                     entry.getValue(),
-                    AppCompatResources.getDrawable(ctx, Icon.getIcon(entry.getKey().icon))));
+                    entry.getKey()));
 
             barNumber++;
         }
@@ -139,7 +139,7 @@ public class StatsProvider {
             barEntries.add(new BarEntry(
                     (float)barNumber,
                     (float)duration,
-                    AppCompatResources.getDrawable(ctx, Icon.getIcon(entry.getKey().icon))));
+                    entry.getKey()));
 
             barNumber++;
         }

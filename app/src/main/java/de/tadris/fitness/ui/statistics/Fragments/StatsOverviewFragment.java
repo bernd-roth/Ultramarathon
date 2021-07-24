@@ -13,8 +13,7 @@ import com.github.mikephil.charting.charts.HorizontalBarChart;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.StatsDataTypes;
-import de.tadris.fitness.ui.statistics.StatsProvider;
-import de.tadris.fitness.util.WorkoutProperty;
+import de.tadris.fitness.data.StatsProvider;
 
 public class StatsOverviewFragment extends StatsFragment {
     StatsProvider statsProvider = new StatsProvider(context);

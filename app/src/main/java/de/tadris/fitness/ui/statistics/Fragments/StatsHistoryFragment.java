@@ -8,22 +8,17 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 
-import com.github.mikephil.charting.charts.CandleStickChart;
 import com.github.mikephil.charting.charts.CombinedChart;
-import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.data.CombinedData;
 import com.github.mikephil.charting.utils.ViewPortHandler;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationSpan;
 import de.tadris.fitness.data.WorkoutType;
-import de.tadris.fitness.ui.statistics.StatsProvider;
+import de.tadris.fitness.data.StatsProvider;
 
 public class StatsHistoryFragment extends StatsFragment {
 

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.tadris.fitness.Instance;
-import de.tadris.fitness.ui.statistics.StatsProvider;
 import de.tadris.fitness.util.WorkoutProperty;
 
 public class StatsDataProvider {
