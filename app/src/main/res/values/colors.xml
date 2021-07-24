@@ -67,4 +67,5 @@
     <color name="colorBgAutoStartCountdownOverlay">#99000000</color>
     <!--    <color name="colorBgAutoStartCountdownAbortButton">#444444</color>-->
     <color name="colorBgAutoStartCountdownAbortButton">#33000000</color>
+    <color name="stats_background_line">#AAAAAAAA</color>
 </resources>

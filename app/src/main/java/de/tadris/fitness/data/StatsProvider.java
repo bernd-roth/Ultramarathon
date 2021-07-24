@@ -4,8 +4,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 
 import com.github.mikephil.charting.data.BarData;
@@ -14,23 +14,26 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.CandleData;
 import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CandleEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationSpan;
-import de.tadris.fitness.data.StatsDataProvider;
-import de.tadris.fitness.data.StatsDataTypes;
-import de.tadris.fitness.data.WorkoutType;
-import de.tadris.fitness.util.Icon;
 import de.tadris.fitness.util.WorkoutProperty;
+import de.tadris.fitness.util.charts.DataSetStyles;
 
 public class StatsProvider {
 
@@ -61,8 +64,12 @@ public class StatsProvider {
                     numberOfWorkouts.getOrDefault(dataPoint.workoutType, 0) + 1);
         }
 
-        for (Map.Entry<WorkoutType, Integer> entry : numberOfWorkouts.entrySet()) {
+        // Sort numberOfWorkouts map
+        ArrayList<Map.Entry<WorkoutType, Integer>> sortedNumberOfWorkouts = new ArrayList<>(numberOfWorkouts.entrySet());
+        Collections.sort(sortedNumberOfWorkouts, (first, second) -> second.getValue().compareTo(first.getValue()));
 
+        // Create Bar Chart
+        for (Map.Entry<WorkoutType, Integer> entry : sortedNumberOfWorkouts) {
             barEntries.add(new BarEntry(
                     (float)barNumber,
                     entry.getValue(),
@@ -91,8 +98,12 @@ public class StatsProvider {
                     distances.getOrDefault(dataPoint.workoutType, (float)0) + (float)dataPoint.value);
         }
 
+        // Sort numberOfWorkouts map
+        ArrayList<Map.Entry<WorkoutType, Float>> sortedDistances = new ArrayList<>(distances.entrySet());
+        Collections.sort(sortedDistances, (first, second) -> second.getValue().compareTo(first.getValue()));
+
         //Retrieve data and add to the list
-        for (Map.Entry<WorkoutType, Float> entry : distances.entrySet()) {
+        for (Map.Entry<WorkoutType, Float> entry : sortedDistances) {
 
             barEntries.add(new BarEntry(
                     (float)barNumber,
@@ -124,10 +135,14 @@ public class StatsProvider {
                     durations.getOrDefault(dataPoint.workoutType, (long)0) + (long)dataPoint.value);
         }
 
+        // Sort numberOfWorkouts map
+        ArrayList<Map.Entry<WorkoutType, Long>> sortedDurations = new ArrayList<>(durations.entrySet());
+        Collections.sort(sortedDurations, (first, second) -> second.getValue().compareTo(first.getValue()));
+
         // Check if the durations should be displayed in minutes or hours
         boolean displayHours = TimeUnit.MILLISECONDS.toMinutes(Collections.max(durations.values())) > MINUTES_LIMIT;
 
-        for (Map.Entry<WorkoutType, Long> entry : durations.entrySet())
+        for (Map.Entry<WorkoutType, Long> entry : sortedDurations)
         {
             long duration;
             if (displayHours) {
@@ -148,27 +163,113 @@ public class StatsProvider {
         return new BarData(barDataSet);
     }
 
-    public CandleData getPaceData(AggregationSpan span, WorkoutType workoutType) {
+    public CandleDataSet getPaceCandleData(AggregationSpan span, WorkoutType workoutType) {
         final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.AVG_PACE;
 
         CandleDataSet candleDataSet = new CandleDataSet(getCombinedData(span, workoutType, WORKOUT_PROPERTY),
                 WORKOUT_PROPERTY.getStringRepresentation(ctx));
 
-        applyDefaultCandleStyle(candleDataSet);
-
-        return new CandleData(candleDataSet);
+        return DataSetStyles.applyDefaultCandleStyle(ctx, candleDataSet);
     }
 
-    public CandleData getSpeedData(AggregationSpan span, WorkoutType workoutType) {
+    public LineDataSet getPaceLineData(AggregationSpan span, WorkoutType workoutType) {
+        return convertCandleToMeanLineData(getPaceCandleData(span, workoutType));
+    }
+
+
+
+    public CandleDataSet getSpeedCandleData(AggregationSpan span, WorkoutType workoutType) {
         final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.AVG_SPEED;
 
         CandleDataSet candleDataSet = new CandleDataSet(getCombinedData(span, workoutType, WORKOUT_PROPERTY),
                 WORKOUT_PROPERTY.getStringRepresentation(ctx));
 
-        applyDefaultCandleStyle(candleDataSet);
-
-        return new CandleData(candleDataSet);
+        return DataSetStyles.applyDefaultCandleStyle(ctx, candleDataSet);
     }
+
+    public LineDataSet getSpeedLineData(AggregationSpan span, WorkoutType workoutType) {
+        return convertCandleToMeanLineData(getSpeedCandleData(span, workoutType));
+    }
+
+
+
+    public CandleDataSet getDistanceCandleData(AggregationSpan span, WorkoutType workoutType) {
+        final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.LENGTH;
+
+        CandleDataSet candleDataSet = new CandleDataSet(getCombinedData(span, workoutType, WORKOUT_PROPERTY),
+                WORKOUT_PROPERTY.getStringRepresentation(ctx));
+
+        // Display distance in kilometers
+        for (CandleEntry entry : candleDataSet.getValues()) {
+            entry.setHigh(entry.getHigh() / 1000);
+            entry.setLow(entry.getLow() / 1000);
+            entry.setOpen(entry.getOpen() / 1000);
+            entry.setClose(entry.getClose() / 1000);
+        }
+
+        // Update Zoom
+        candleDataSet.setValues(candleDataSet.getValues());
+
+        return DataSetStyles.applyDefaultCandleStyle(ctx, candleDataSet);
+    }
+
+    public LineDataSet getDistanceLineData(AggregationSpan span, WorkoutType workoutType) {
+        return convertCandleToMeanLineData(getDistanceCandleData(span, workoutType));
+    }
+
+
+
+    public CandleDataSet getDurationCandleData(AggregationSpan span, WorkoutType workoutType) {
+        final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.DURATION;
+
+        CandleDataSet candleDataSet = new CandleDataSet(getCombinedData(span, workoutType, WORKOUT_PROPERTY),
+                WORKOUT_PROPERTY.getStringRepresentation(ctx));
+
+        // Display durations in minutes
+        for (CandleEntry entry : candleDataSet.getValues()) {
+            entry.setHigh(TimeUnit.MILLISECONDS.toMinutes((long) entry.getHigh()));
+            entry.setLow(TimeUnit.MILLISECONDS.toMinutes((long) entry.getLow()));
+            entry.setOpen(TimeUnit.MILLISECONDS.toMinutes((long) entry.getOpen()));
+            entry.setClose(TimeUnit.MILLISECONDS.toMinutes((long) entry.getClose()));
+        }
+
+        // Update Zoom
+        candleDataSet.setValues(candleDataSet.getValues());
+
+        return DataSetStyles.applyDefaultCandleStyle(ctx, candleDataSet);
+    }
+
+    public LineDataSet getDurationLineData(AggregationSpan span, WorkoutType workoutType) {
+        return convertCandleToMeanLineData(getDurationCandleData(span, workoutType));
+    }
+
+
+
+    public CandleDataSet getPauseDurationCandleData(AggregationSpan span, WorkoutType workoutType) {
+        final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.PAUSE_DURATION;
+
+        CandleDataSet candleDataSet = new CandleDataSet(getCombinedData(span, workoutType, WORKOUT_PROPERTY),
+                WORKOUT_PROPERTY.getStringRepresentation(ctx));
+
+        for (CandleEntry entry : candleDataSet.getValues()) {
+            entry.setHigh(TimeUnit.MILLISECONDS.toMinutes((long) entry.getHigh()));
+            entry.setLow(TimeUnit.MILLISECONDS.toMinutes((long) entry.getLow()));
+            entry.setOpen(TimeUnit.MILLISECONDS.toMinutes((long) entry.getOpen()));
+            entry.setClose(TimeUnit.MILLISECONDS.toMinutes((long) entry.getClose()));
+        }
+
+        candleDataSet.setValues(candleDataSet.getValues());
+
+        return DataSetStyles.applyDefaultCandleStyle(ctx, candleDataSet);
+    }
+
+    public LineDataSet getPauseDurationLineData(AggregationSpan span, WorkoutType workoutType) {
+        return convertCandleToMeanLineData(getPauseDurationCandleData(span, workoutType));
+    }
+
+
+
+
 
     private ArrayList<CandleEntry> getCombinedData(AggregationSpan span, WorkoutType workoutType, WorkoutProperty workoutProperty) {
 
@@ -214,11 +315,14 @@ public class StatsProvider {
         return candleEntries;
     }
 
-    private CandleDataSet applyDefaultCandleStyle(CandleDataSet candleDataSet) {
-        candleDataSet.setShadowColor(Color.GRAY);
-        candleDataSet.setShadowWidth(2f);
-        candleDataSet.setNeutralColor(ContextCompat.getColor(ctx, R.color.colorPrimary));
-        return candleDataSet;
+    public static LineDataSet convertCandleToMeanLineData(CandleDataSet candleDataSet) {
+        ArrayList<Entry> lineData = new ArrayList<>();
+
+        for (CandleEntry entry : candleDataSet.getValues()) {
+            lineData.add(new Entry(entry.getX(), entry.getClose()));
+        }
+
+        return new LineDataSet(lineData, candleDataSet.getLabel());
     }
 
     private float calculateValueAverage(ArrayList<StatsDataTypes.DataPoint> marks) {
