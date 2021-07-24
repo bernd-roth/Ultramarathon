@@ -13,6 +13,9 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.CandleData;
 import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CandleEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -142,29 +145,37 @@ public class StatsProvider {
         return new BarData(barDataSet);
     }
 
-    public CandleData getPaceData(AggregationSpan span, WorkoutType workoutType) {
+    public CandleDataSet getPaceCandleData(AggregationSpan span, WorkoutType workoutType) {
         final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.AVG_PACE;
 
         CandleDataSet candleDataSet = new CandleDataSet(getCombinedData(span, workoutType, WORKOUT_PROPERTY),
                 WORKOUT_PROPERTY.getStringRepresentation(ctx));
 
-        applyDefaultCandleStyle(candleDataSet);
-
-        return new CandleData(candleDataSet);
+        return applyDefaultCandleStyle(candleDataSet);
     }
 
-    public CandleData getSpeedData(AggregationSpan span, WorkoutType workoutType) {
+    public LineDataSet getPaceLineData(AggregationSpan span, WorkoutType workoutType) {
+        return convertCandleToMeanLineData(getPaceCandleData(span, workoutType));
+    }
+
+
+
+    public CandleDataSet getSpeedCandleData(AggregationSpan span, WorkoutType workoutType) {
         final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.AVG_SPEED;
 
         CandleDataSet candleDataSet = new CandleDataSet(getCombinedData(span, workoutType, WORKOUT_PROPERTY),
                 WORKOUT_PROPERTY.getStringRepresentation(ctx));
 
-        applyDefaultCandleStyle(candleDataSet);
-
-        return new CandleData(candleDataSet);
+        return applyDefaultCandleStyle(candleDataSet);
     }
 
-    public CandleData getDistanceData(AggregationSpan span, WorkoutType workoutType) {
+    public LineDataSet getSpeedLineData(AggregationSpan span, WorkoutType workoutType) {
+        return convertCandleToMeanLineData(getSpeedCandleData(span, workoutType));
+    }
+
+
+
+    public CandleDataSet getDistanceCandleData(AggregationSpan span, WorkoutType workoutType) {
         final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.LENGTH;
 
         CandleDataSet candleDataSet = new CandleDataSet(getCombinedData(span, workoutType, WORKOUT_PROPERTY),
@@ -181,12 +192,16 @@ public class StatsProvider {
         // Update Zoom
         candleDataSet.setValues(candleDataSet.getValues());
 
-        applyDefaultCandleStyle(candleDataSet);
-
-        return new CandleData(candleDataSet);
+        return applyDefaultCandleStyle(candleDataSet);
     }
 
-    public CandleData getDurationData(AggregationSpan span, WorkoutType workoutType) {
+    public LineDataSet getDistanceLineData(AggregationSpan span, WorkoutType workoutType) {
+        return convertCandleToMeanLineData(getDistanceCandleData(span, workoutType));
+    }
+
+
+
+    public CandleDataSet getDurationCandleData(AggregationSpan span, WorkoutType workoutType) {
         final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.DURATION;
 
         CandleDataSet candleDataSet = new CandleDataSet(getCombinedData(span, workoutType, WORKOUT_PROPERTY),
@@ -203,12 +218,16 @@ public class StatsProvider {
         // Update Zoom
         candleDataSet.setValues(candleDataSet.getValues());
 
-        applyDefaultCandleStyle(candleDataSet);
-
-        return new CandleData(candleDataSet);
+        return applyDefaultCandleStyle(candleDataSet);
     }
 
-    public CandleData getPauseDurationData(AggregationSpan span, WorkoutType workoutType) {
+    public LineDataSet getDurationLineData(AggregationSpan span, WorkoutType workoutType) {
+        return convertCandleToMeanLineData(getDurationCandleData(span, workoutType));
+    }
+
+
+
+    public CandleDataSet getPauseDurationCandleData(AggregationSpan span, WorkoutType workoutType) {
         final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.PAUSE_DURATION;
 
         CandleDataSet candleDataSet = new CandleDataSet(getCombinedData(span, workoutType, WORKOUT_PROPERTY),
@@ -223,10 +242,16 @@ public class StatsProvider {
 
         candleDataSet.setValues(candleDataSet.getValues());
 
-        applyDefaultCandleStyle(candleDataSet);
-
-        return new CandleData(candleDataSet);
+        return applyDefaultCandleStyle(candleDataSet);
     }
+
+    public LineDataSet getPauseDurationLineData(AggregationSpan span, WorkoutType workoutType) {
+        return convertCandleToMeanLineData(getPauseDurationCandleData(span, workoutType));
+    }
+
+
+
+
 
     private ArrayList<CandleEntry> getCombinedData(AggregationSpan span, WorkoutType workoutType, WorkoutProperty workoutProperty) {
 
@@ -272,11 +297,29 @@ public class StatsProvider {
         return candleEntries;
     }
 
+    static public LineDataSet convertCandleToMeanLineData(CandleDataSet candleDataSet) {
+        ArrayList<Entry> lineData = new ArrayList<>();
+
+        for (CandleEntry entry : candleDataSet.getValues()) {
+            lineData.add(new Entry(entry.getX(), entry.getClose()));
+        }
+
+        return new LineDataSet(lineData, candleDataSet.getLabel());
+    }
+
     private CandleDataSet applyDefaultCandleStyle(CandleDataSet candleDataSet) {
         candleDataSet.setShadowColor(Color.GRAY);
         candleDataSet.setShadowWidth(2f);
         candleDataSet.setNeutralColor(ContextCompat.getColor(ctx, R.color.colorPrimary));
         return candleDataSet;
+    }
+
+    public LineDataSet applyBackgroundLineStyle(LineDataSet lineDataSet) {
+        lineDataSet.setColor(ContextCompat.getColor(ctx, R.color.stats_background_line));
+        lineDataSet.setCircleColor(Color.TRANSPARENT);
+        lineDataSet.setCircleHoleColor(Color.TRANSPARENT);
+        lineDataSet.setValueTextColor(Color.TRANSPARENT);
+        return lineDataSet;
     }
 
     private float calculateValueAverage(ArrayList<StatsDataTypes.DataPoint> marks) {
