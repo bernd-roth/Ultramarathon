@@ -26,6 +26,10 @@ public class StatsHistoryFragment extends StatsFragment {
     Switch speedSwitch;
     CombinedChart speedChart;
 
+    TextView durationTitle;
+    Switch durationSwitch;
+    CombinedChart durationChart;
+
     StatsProvider statsProvider = new StatsProvider(context);
     ArrayList<CombinedChart> combinedChartList = new ArrayList<>();
 
@@ -54,8 +58,25 @@ public class StatsHistoryFragment extends StatsFragment {
         });
 
 
+        durationTitle = view.findViewById(R.id.stats_history_duration_title);
+        durationChart = view.findViewById(R.id.stats_duration_chart);
+        durationSwitch = view.findViewById(R.id.duration_switch);
+
+        durationSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (durationSwitch.isChecked()) {
+                    durationTitle.setText(R.string.workoutPauseDuration);
+                } else {
+                    durationTitle.setText(R.string.workoutDuration);
+                }
+                updateDurationChart();
+            }
+        });
+
+
         CombinedData combinedPaceData = new CombinedData();
-        combinedPaceData.setData(statsProvider.getPaceData(AggregationSpan.MONTH,
+        combinedPaceData.setData(statsProvider.getDistanceData(AggregationSpan.MONTH,
                 WorkoutType.getWorkoutTypeById(context, WorkoutType.WORKOUT_TYPE_ID_RUNNING)));
 
         CombinedChart distanceChart = view.findViewById(R.id.stats_dist_chart);
@@ -75,6 +96,7 @@ public class StatsHistoryFragment extends StatsFragment {
         }
 
         updateSpeedChart();
+        updateDurationChart();
     }
 
     private void updateSpeedChart() {
@@ -90,6 +112,21 @@ public class StatsHistoryFragment extends StatsFragment {
 
         speedChart.setData(combinedData);
         speedChart.invalidate();
+    }
+
+    private void updateDurationChart() {
+        CombinedData combinedData = new CombinedData();
+
+        if (durationSwitch.isChecked()) {
+            combinedData.setData(statsProvider.getPauseDurationData(AggregationSpan.MONTH,
+                    WorkoutType.getWorkoutTypeById(context, WorkoutType.WORKOUT_TYPE_ID_RUNNING)));
+        }  else {
+            combinedData.setData(statsProvider.getDurationData(AggregationSpan.MONTH,
+                    WorkoutType.getWorkoutTypeById(context, WorkoutType.WORKOUT_TYPE_ID_RUNNING)));
+        }
+
+        durationChart.setData(combinedData);
+        durationChart.invalidate();
     }
 
     @Override

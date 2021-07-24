@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 
 import com.github.mikephil.charting.data.BarData;
@@ -20,16 +19,11 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationSpan;
-import de.tadris.fitness.data.StatsDataProvider;
-import de.tadris.fitness.data.StatsDataTypes;
-import de.tadris.fitness.data.WorkoutType;
-import de.tadris.fitness.util.Icon;
 import de.tadris.fitness.util.WorkoutProperty;
 
 public class StatsProvider {
@@ -164,6 +158,70 @@ public class StatsProvider {
 
         CandleDataSet candleDataSet = new CandleDataSet(getCombinedData(span, workoutType, WORKOUT_PROPERTY),
                 WORKOUT_PROPERTY.getStringRepresentation(ctx));
+
+        applyDefaultCandleStyle(candleDataSet);
+
+        return new CandleData(candleDataSet);
+    }
+
+    public CandleData getDistanceData(AggregationSpan span, WorkoutType workoutType) {
+        final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.LENGTH;
+
+        CandleDataSet candleDataSet = new CandleDataSet(getCombinedData(span, workoutType, WORKOUT_PROPERTY),
+                WORKOUT_PROPERTY.getStringRepresentation(ctx));
+
+        // Display distance in kilometers
+        for (CandleEntry entry : candleDataSet.getValues()) {
+            entry.setHigh(entry.getHigh() / 1000);
+            entry.setLow(entry.getLow() / 1000);
+            entry.setOpen(entry.getOpen() / 1000);
+            entry.setClose(entry.getClose() / 1000);
+        }
+
+        // Update Zoom
+        candleDataSet.setValues(candleDataSet.getValues());
+
+        applyDefaultCandleStyle(candleDataSet);
+
+        return new CandleData(candleDataSet);
+    }
+
+    public CandleData getDurationData(AggregationSpan span, WorkoutType workoutType) {
+        final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.DURATION;
+
+        CandleDataSet candleDataSet = new CandleDataSet(getCombinedData(span, workoutType, WORKOUT_PROPERTY),
+                WORKOUT_PROPERTY.getStringRepresentation(ctx));
+
+        // Display durations in minutes
+        for (CandleEntry entry : candleDataSet.getValues()) {
+            entry.setHigh(TimeUnit.MILLISECONDS.toMinutes((long) entry.getHigh()));
+            entry.setLow(TimeUnit.MILLISECONDS.toMinutes((long) entry.getLow()));
+            entry.setOpen(TimeUnit.MILLISECONDS.toMinutes((long) entry.getOpen()));
+            entry.setClose(TimeUnit.MILLISECONDS.toMinutes((long) entry.getClose()));
+        }
+
+        // Update Zoom
+        candleDataSet.setValues(candleDataSet.getValues());
+
+        applyDefaultCandleStyle(candleDataSet);
+
+        return new CandleData(candleDataSet);
+    }
+
+    public CandleData getPauseDurationData(AggregationSpan span, WorkoutType workoutType) {
+        final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.PAUSE_DURATION;
+
+        CandleDataSet candleDataSet = new CandleDataSet(getCombinedData(span, workoutType, WORKOUT_PROPERTY),
+                WORKOUT_PROPERTY.getStringRepresentation(ctx));
+
+        for (CandleEntry entry : candleDataSet.getValues()) {
+            entry.setHigh(TimeUnit.MILLISECONDS.toMinutes((long) entry.getHigh()));
+            entry.setLow(TimeUnit.MILLISECONDS.toMinutes((long) entry.getLow()));
+            entry.setOpen(TimeUnit.MILLISECONDS.toMinutes((long) entry.getOpen()));
+            entry.setClose(TimeUnit.MILLISECONDS.toMinutes((long) entry.getClose()));
+        }
+
+        candleDataSet.setValues(candleDataSet.getValues());
 
         applyDefaultCandleStyle(candleDataSet);
 
