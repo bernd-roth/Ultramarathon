@@ -1,10 +1,13 @@
 package de.tadris.fitness.ui.statistics;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.content.ContextCompat;
 
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -179,7 +182,7 @@ public class StatsProvider {
                 float min = (float) Collections.min(intervalData, StatsDataTypes.DataPoint.valueComparator).value;
                 float max = (float) Collections.max(intervalData, StatsDataTypes.DataPoint.valueComparator).value;
 
-                candleEntries.add(new CandleEntry(calendar.getTimeInMillis(), mean, mean, max, min));
+                candleEntries.add(new CandleEntry((float) (calendar.getTimeInMillis()/1000000000.0), max, min, mean, mean));
             }
 
             // increment
@@ -189,6 +192,10 @@ public class StatsProvider {
         }
 
         CandleDataSet candleDataSet = new CandleDataSet(candleEntries, WORKOUT_PROPERTY.getStringRepresentation(ctx));
+        candleDataSet.setShadowColor(Color.GRAY);
+        candleDataSet.setShadowWidth(2f);
+        candleDataSet.setNeutralColor(ContextCompat.getColor(ctx, R.color.colorPrimary));
+
         return new CandleData(candleDataSet);
     }
 

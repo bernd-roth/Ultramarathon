@@ -42,6 +42,7 @@ public class StatsHistoryFragment extends StatsFragment {
 
 
         CandleStickChart candleStickChart = view.findViewById(R.id.stats_speed_chart);
+        candleStickChart.setDrawBorders(true);
         candleStickChart.setData(statsProvider.getPaceData(AggregationSpan.MONTH,
                 WorkoutType.getWorkoutTypeById(context, WorkoutType.WORKOUT_TYPE_ID_RUNNING)));
         /*
