@@ -33,7 +33,19 @@
         <de.tadris.fitness.ui.statistics.ShortStats
             android:id="@+id/short_stats_view"
             android:layout_width="match_parent"
-            android:layout_height="100dp" />
+            android:layout_height="140dp"
+            android:layout_marginTop="0dp"/>
+
+        <TextView
+            style="@style/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="0dp"
+            android:text="@string/workouts" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/colorPrimary"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/workoutList"
