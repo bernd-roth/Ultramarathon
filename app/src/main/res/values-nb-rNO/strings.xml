@@ -363,4 +363,10 @@
     <string name="workoutRepetitions">Repetisjoner</string>
     <string name="workoutRecordingTypeIndoor">Innendørstreningsøkter</string>
     <string name="workoutRecordingTypeGps">GPS-treningsøkter</string>
+    <string name="ttsAboveTargetSpeed">For rask</string>
+    <string name="ttsBelowTargetSpeed">For treg</string>
+    <plurals name="workoutJump">
+        <item quantity="one">Hopp</item>
+        <item quantity="other">Hopp</item>
+    </plurals>
 </resources>
