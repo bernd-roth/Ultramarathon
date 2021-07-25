@@ -3,6 +3,8 @@ package de.tadris.fitness.ui.statistics.Fragments;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -12,14 +14,19 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import com.github.mikephil.charting.charts.CombinedChart;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.CandleData;
 import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CombinedData;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.listener.ChartTouchListener;
+import com.github.mikephil.charting.listener.OnChartGestureListener;
+import com.github.mikephil.charting.utils.MPPointD;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationSpan;
@@ -43,6 +50,8 @@ public class StatsHistoryFragment extends StatsFragment {
 
     StatsProvider statsProvider = new StatsProvider(context);
     ArrayList<CombinedChart> combinedChartList = new ArrayList<>();
+
+    AggregationSpan aggregationSpan = AggregationSpan.WEEK;
 
     public StatsHistoryFragment(Context ctx) {
         super(R.layout.fragment_stats_history, ctx);
@@ -90,7 +99,66 @@ public class StatsHistoryFragment extends StatsFragment {
             }
         });
 
+        combinedChartList.add(speedChart);
+        combinedChartList.add(durationChart);
+
         for (CombinedChart combinedChart : combinedChartList) {
+            combinedChart.setOnChartGestureListener(new OnChartGestureListener() {
+                @Override
+                public void onChartGestureStart(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
+
+                }
+
+                @Override
+                public void onChartGestureEnd(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
+
+                }
+
+                @Override
+                public void onChartLongPressed(MotionEvent me) {
+
+                }
+
+                @Override
+                public void onChartDoubleTapped(MotionEvent me) {
+
+                }
+
+                @Override
+                public void onChartSingleTapped(MotionEvent me) {
+
+                }
+
+                @Override
+                public void onChartFling(MotionEvent me1, MotionEvent me2, float velocityX, float velocityY) {
+
+                }
+
+                @Override
+                public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
+                    long timeSpan = (long) ((combinedChart.getHighestVisibleX() - combinedChart.getLowestVisibleX()) * R.fraction.stats_time_factor);
+                    AggregationSpan oldAggregationSpan = aggregationSpan;
+
+                    if (TimeUnit.DAYS.toMillis(1095) < timeSpan) {
+                        aggregationSpan = AggregationSpan.YEAR;
+                    } else if (TimeUnit.DAYS.toMillis(93) < timeSpan) {
+                        aggregationSpan = AggregationSpan.MONTH;
+                    } else if (TimeUnit.DAYS.toMillis(21) < timeSpan) {
+                        aggregationSpan = AggregationSpan.WEEK;
+                    } else {
+                        aggregationSpan = AggregationSpan.SINGLE;
+                    }
+
+                    if (oldAggregationSpan != aggregationSpan) {
+                        updateCharts(selection.getSelectedWorkoutType());
+                    }
+                }
+
+                @Override
+                public void onChartTranslate(MotionEvent me, float dX, float dY) {
+
+                }
+            });
             combinedChart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -112,7 +180,7 @@ public class StatsHistoryFragment extends StatsFragment {
         try {
             // Set data for distance chart
             // Retrieve candle data
-            CandleDataSet distanceCandleSet = statsProvider.getDistanceCandleData(AggregationSpan.MONTH, workoutType);
+            CandleDataSet distanceCandleSet = statsProvider.getDistanceCandleData(aggregationSpan, workoutType);
 
             CombinedData combinedDistanceData = new CombinedData();
             combinedDistanceData.setData(new CandleData(distanceCandleSet));
@@ -137,9 +205,9 @@ public class StatsHistoryFragment extends StatsFragment {
         try {
             if (speedSwitch.isChecked()) {
                 // Retrieve candle data
-                candleDataSet = statsProvider.getPaceCandleData(AggregationSpan.MONTH, workoutType);
+                candleDataSet = statsProvider.getPaceCandleData(aggregationSpan, workoutType);
             } else {
-                candleDataSet = statsProvider.getSpeedCandleData(AggregationSpan.MONTH, workoutType);
+                candleDataSet = statsProvider.getSpeedCandleData(aggregationSpan, workoutType);
             }
 
             // Add candle data
@@ -162,9 +230,9 @@ public class StatsHistoryFragment extends StatsFragment {
 
         try {
             if (durationSwitch.isChecked()) {
-                candleDataSet = statsProvider.getPauseDurationCandleData(AggregationSpan.MONTH, workoutType);
+                candleDataSet = statsProvider.getPauseDurationCandleData(aggregationSpan, workoutType);
             } else {
-                candleDataSet = statsProvider.getDurationCandleData(AggregationSpan.MONTH, workoutType);
+                candleDataSet = statsProvider.getDurationCandleData(aggregationSpan, workoutType);
             }
 
             // Add candle data

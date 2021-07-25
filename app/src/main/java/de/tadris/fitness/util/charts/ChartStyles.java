@@ -7,6 +7,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -39,11 +40,17 @@ public class ChartStyles {
         chart.setDrawGridBackground(false);
     }
 
+    public static void defaultBarData(BarChart chart, BarData data) {
+
+    }
+
     public static void fixBarChartAxisMinMax(BarChart chart, BarData data)
     {
-        chart.setData(data);
-        chart.getXAxis().setAxisMinimum(-0.5f);
-        chart.getXAxis().setAxisMaximum(chart.getBarData().getXMax()+0.5f);
+        if (!(chart instanceof HorizontalBarChart)) {
+            chart.setData(data);
+            chart.getXAxis().setAxisMinimum(-0.5f);
+            chart.getXAxis().setAxisMaximum(chart.getBarData().getXMax()+0.5f);
+        }
     }
 
     public static void formatValuesNoDecimals(BarData data)

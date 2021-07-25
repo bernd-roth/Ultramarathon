@@ -265,44 +265,47 @@ public class StatsProvider {
             throw new NoDataException(workoutType);
         }
 
-        long oldestWorkoutTime = Collections.min(data, StatsDataTypes.DataPoint.timeComparator).time;
-        long newestWorkoutTime = Collections.max(data, StatsDataTypes.DataPoint.timeComparator).time;
-
-        GregorianCalendar calendar = new GregorianCalendar();
-        calendar.setTimeInMillis(oldestWorkoutTime);
-
-        span.applyToCalendar(calendar);
-
         ArrayList<CandleEntry> candleEntries = new ArrayList<>();
 
-        // Iterate all time spans from first workout time to last workout time
-        while (calendar.getTimeInMillis() < newestWorkoutTime) {
-            // Retrieve the workoutProperty for all workouts in the specific time span
-            StatsDataTypes.TimeSpan timeSpan = new StatsDataTypes.TimeSpan(calendar.getTimeInMillis(), calendar.getTimeInMillis() + span.spanInterval);
-            ArrayList<StatsDataTypes.DataPoint> intervalData = new ArrayList<>();
 
-            Iterator<StatsDataTypes.DataPoint> dataPointIterator = data.iterator();
-            while (dataPointIterator.hasNext()) {
-                StatsDataTypes.DataPoint dataPoint = dataPointIterator.next();
-                if (timeSpan.contains(dataPoint.time)) {
-                    intervalData.add(dataPoint);
-                    data.remove(dataPointIterator);
+            long oldestWorkoutTime = Collections.min(data, StatsDataTypes.DataPoint.timeComparator).time;
+            long newestWorkoutTime = Collections.max(data, StatsDataTypes.DataPoint.timeComparator).time;
+
+            GregorianCalendar calendar = new GregorianCalendar();
+            calendar.setTimeInMillis(oldestWorkoutTime);
+
+            span.applyToCalendar(calendar);
+
+
+            // Iterate all time spans from first workout time to last workout time
+            while (calendar.getTimeInMillis() < newestWorkoutTime) {
+                // Retrieve the workoutProperty for all workouts in the specific time span
+                StatsDataTypes.TimeSpan timeSpan = new StatsDataTypes.TimeSpan(calendar.getTimeInMillis(), calendar.getTimeInMillis() + span.spanInterval);
+                ArrayList<StatsDataTypes.DataPoint> intervalData = new ArrayList<>();
+
+                Iterator<StatsDataTypes.DataPoint> dataPointIterator = data.iterator();
+                while (dataPointIterator.hasNext()) {
+                    StatsDataTypes.DataPoint dataPoint = dataPointIterator.next();
+                    if (timeSpan.contains(dataPoint.time)) {
+                        intervalData.add(dataPoint);
+                        data.remove(dataPointIterator);
+                    }
                 }
+
+                if (intervalData.size() > 0) {
+                    float min = (float) Collections.min(intervalData, StatsDataTypes.DataPoint.valueComparator).value;
+                    float max = (float) Collections.max(intervalData, StatsDataTypes.DataPoint.valueComparator).value;
+                    float mean = calculateValueAverage(intervalData);
+
+                    candleEntries.add(new CandleEntry((float) calendar.getTimeInMillis() / R.fraction.stats_time_factor, max, min, mean, mean));
+                }
+
+                // increment by time span
+                int days = (int) TimeUnit.MILLISECONDS.toDays(span.spanInterval);
+                calendar.add(Calendar.DAY_OF_YEAR, days);
+                calendar.add(Calendar.MILLISECOND, (int) (span.spanInterval - TimeUnit.DAYS.toMillis(days)));
             }
-
-            if (intervalData.size() > 0) {
-                float min = (float) Collections.min(intervalData, StatsDataTypes.DataPoint.valueComparator).value;
-                float max = (float) Collections.max(intervalData, StatsDataTypes.DataPoint.valueComparator).value;
-                float mean = calculateValueAverage(intervalData);
-
-                candleEntries.add(new CandleEntry((float) (calendar.getTimeInMillis() / 1000000000.0), max, min, mean, mean));
-            }
-
-            // increment by time span
-            int days = (int) TimeUnit.MILLISECONDS.toDays(span.spanInterval);
-            calendar.add(Calendar.DAY_OF_YEAR, days);
-            calendar.add(Calendar.MILLISECOND, (int) (span.spanInterval - TimeUnit.DAYS.toMillis(days)));
-        }
+        //}
 
         return candleEntries;
     }
