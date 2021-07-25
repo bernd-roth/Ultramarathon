@@ -89,4 +89,29 @@ public class ChartStyles {
         chart.setExtraOffsets(0, 0, 0, 25);
 
     }
+
+    public static void horizontalBarChartIconLabel(HorizontalBarChart chart, BarData data, Context ctx)
+    {
+        formatValuesNoDecimals(data);
+        fixBarChartAxisMinMax(chart, data);
+
+        ArrayList<Bitmap> imageList = new ArrayList<>();
+        for(int i = 0; i < data.getDataSets().get(0).getEntryCount(); i++)
+        {
+            try {
+                WorkoutType w = (WorkoutType) data.getDataSets().get(0).getEntryForIndex(i).getData();
+                Drawable d = ctx.getDrawable(Icon.getIcon(w.icon));
+                d.mutate().setColorFilter(w.color, PorterDuff.Mode.SRC_IN);
+                imageList.add(drawableToBitmap(d));
+            }
+            catch (Exception e)
+            {
+                return; // If drawable not available, its not possible...
+            }
+        }
+
+        chart.setRenderer(new HorizontalBarChartIconRenderer(chart, chart.getAnimator(), chart.getViewPortHandler(), imageList, ctx));
+        chart.setScaleEnabled(false);
+        chart.setExtraOffsets(0, 0, 0, 0);
+    }
 }
