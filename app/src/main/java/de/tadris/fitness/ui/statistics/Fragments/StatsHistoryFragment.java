@@ -23,9 +23,13 @@ import java.util.ArrayList;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationSpan;
+import de.tadris.fitness.aggregation.WorkoutTypeFilter;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.data.StatsProvider;
+import de.tadris.fitness.ui.dialog.SelectWorkoutTypeDialog;
+import de.tadris.fitness.ui.statistics.WorkoutTypeSelection;
 import de.tadris.fitness.util.charts.DataSetStyles;
+import de.tadris.fitness.util.exceptions.NoDataException;
 
 public class StatsHistoryFragment extends StatsFragment {
 
@@ -48,6 +52,11 @@ public class StatsHistoryFragment extends StatsFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Register WorkoutType selection listeners
+        WorkoutTypeSelection selection = view.findViewById(R.id.stats_history_workout_type_selector);
+        selection.addOnWorkoutTypeSelectListener(workoutType -> updateCharts(workoutType));
+
+        // Setup switch functionality
         speedTitle = view.findViewById(R.id.stats_history_speed_title);
         speedChart = view.findViewById(R.id.stats_speed_chart);
         speedSwitch = view.findViewById(R.id.speed_switch);
@@ -60,7 +69,7 @@ public class StatsHistoryFragment extends StatsFragment {
                 } else {
                     speedTitle.setText(R.string.workoutSpeed);
                 }
-                updateSpeedChart();
+                updateSpeedChart(selection.getSelectedWorkoutType());
             }
         });
 
@@ -77,27 +86,11 @@ public class StatsHistoryFragment extends StatsFragment {
                 } else {
                     durationTitle.setText(R.string.workoutDuration);
                 }
-                updateDurationChart();
+                updateDurationChart(selection.getSelectedWorkoutType());
             }
         });
 
-
-        // Set data for distance chart
-        // Retrieve candle data
-        CandleDataSet distanceCandleSet = statsProvider.getDistanceCandleData(AggregationSpan.MONTH,
-                WorkoutType.getWorkoutTypeById(context, WorkoutType.WORKOUT_TYPE_ID_RUNNING));
-
-        CombinedData combinedDistanceData = new CombinedData();
-        combinedDistanceData.setData(new CandleData(distanceCandleSet));
-
-        // Create background line data
-        LineDataSet distanceLineSet = StatsProvider.convertCandleToMeanLineData(distanceCandleSet);
-        combinedDistanceData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(context, distanceLineSet)));
-
-        CombinedChart distanceChart = view.findViewById(R.id.stats_dist_chart);
-        distanceChart.setData(combinedDistanceData);
-
-        for (CombinedChart combinedChart: combinedChartList) {
+        for (CombinedChart combinedChart : combinedChartList) {
             combinedChart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -110,54 +103,82 @@ public class StatsHistoryFragment extends StatsFragment {
             });
         }
 
-        updateSpeedChart();
-        updateDurationChart();
+        updateCharts(selection.getSelectedWorkoutType());
     }
 
-    private void updateSpeedChart() {
+    private void updateCharts(WorkoutType workoutType) {
+        CombinedChart distanceChart = getView().findViewById(R.id.stats_dist_chart);
+
+        try {
+            // Set data for distance chart
+            // Retrieve candle data
+            CandleDataSet distanceCandleSet = statsProvider.getDistanceCandleData(AggregationSpan.MONTH, workoutType);
+
+            CombinedData combinedDistanceData = new CombinedData();
+            combinedDistanceData.setData(new CandleData(distanceCandleSet));
+
+            // Create background line data
+            LineDataSet distanceLineSet = StatsProvider.convertCandleToMeanLineData(distanceCandleSet);
+            combinedDistanceData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(context, distanceLineSet)));
+
+            distanceChart.setData(combinedDistanceData);
+        } catch (NoDataException e) {
+            distanceChart.clear();
+        }
+        distanceChart.invalidate();
+
+        updateSpeedChart(workoutType);
+        updateDurationChart(workoutType);
+    }
+
+    private void updateSpeedChart(WorkoutType workoutType) {
         CandleDataSet candleDataSet;
 
-        if (speedSwitch.isChecked()) {
-            // Retrieve candle data
-            candleDataSet = statsProvider.getPaceCandleData(AggregationSpan.MONTH,
-                    WorkoutType.getWorkoutTypeById(context, WorkoutType.WORKOUT_TYPE_ID_RUNNING));
-        }  else {
-            candleDataSet = statsProvider.getSpeedCandleData(AggregationSpan.MONTH,
-                    WorkoutType.getWorkoutTypeById(context, WorkoutType.WORKOUT_TYPE_ID_RUNNING));
+        try {
+            if (speedSwitch.isChecked()) {
+                // Retrieve candle data
+                candleDataSet = statsProvider.getPaceCandleData(AggregationSpan.MONTH, workoutType);
+            } else {
+                candleDataSet = statsProvider.getSpeedCandleData(AggregationSpan.MONTH, workoutType);
+            }
+
+            // Add candle data
+            CombinedData combinedData = new CombinedData();
+            combinedData.setData(new CandleData(candleDataSet));
+
+            // Create background line
+            LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);
+            combinedData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(context, lineDataSet)));
+
+            speedChart.setData(combinedData);
+        } catch (NoDataException e) {
+            speedChart.clear();
         }
-
-        // Add candle data
-        CombinedData combinedData = new CombinedData();
-        combinedData.setData(new CandleData(candleDataSet));
-
-        // Create background line
-        LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);
-        combinedData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(context, lineDataSet)));
-
-        speedChart.setData(combinedData);
         speedChart.invalidate();
     }
 
-    private void updateDurationChart() {
+    private void updateDurationChart(WorkoutType workoutType) {
         CandleDataSet candleDataSet;
 
-        if (durationSwitch.isChecked()) {
-            candleDataSet = statsProvider.getPauseDurationCandleData(AggregationSpan.MONTH,
-                    WorkoutType.getWorkoutTypeById(context, WorkoutType.WORKOUT_TYPE_ID_RUNNING));
-        }  else {
-            candleDataSet = statsProvider.getDurationCandleData(AggregationSpan.MONTH,
-                    WorkoutType.getWorkoutTypeById(context, WorkoutType.WORKOUT_TYPE_ID_RUNNING));
+        try {
+            if (durationSwitch.isChecked()) {
+                candleDataSet = statsProvider.getPauseDurationCandleData(AggregationSpan.MONTH, workoutType);
+            } else {
+                candleDataSet = statsProvider.getDurationCandleData(AggregationSpan.MONTH, workoutType);
+            }
+
+            // Add candle data
+            CombinedData combinedData = new CombinedData();
+            combinedData.setData(new CandleData(candleDataSet));
+
+            // Create background line
+            LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);
+            combinedData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(context, lineDataSet)));
+
+            durationChart.setData(combinedData);
+        } catch (NoDataException e) {
+            durationChart.clear();
         }
-
-        // Add candle data
-        CombinedData combinedData = new CombinedData();
-        combinedData.setData(new CandleData(candleDataSet));
-
-        // Create background line
-        LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);
-        combinedData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(context, lineDataSet)));
-
-        durationChart.setData(combinedData);
         durationChart.invalidate();
     }
 
