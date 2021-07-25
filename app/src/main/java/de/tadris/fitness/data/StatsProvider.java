@@ -5,7 +5,6 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.CandleDataSet;
@@ -42,7 +41,7 @@ public class StatsProvider {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public BarData numberOfActivities(StatsDataTypes.TimeSpan timeSpan) {
+    public BarDataSet numberOfActivities(StatsDataTypes.TimeSpan timeSpan) {
         ArrayList<BarEntry> barEntries = new ArrayList<>();
         int barNumber = 0;
 
@@ -72,12 +71,12 @@ public class StatsProvider {
             barNumber++;
         }
 
-        BarDataSet barDataSet = new BarDataSet(barEntries, ctx.getString(R.string.numberOfWorkouts));
-        return new BarData(barDataSet);
+        return DataSetStyles.applyDefaultBarStyle(ctx, new BarDataSet(barEntries,
+                ctx.getString(R.string.numberOfWorkouts)));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public BarData totalDistances(StatsDataTypes.TimeSpan timeSpan) {
+    public BarDataSet totalDistances(StatsDataTypes.TimeSpan timeSpan) {
         final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.LENGTH;
 
         ArrayList<BarEntry> barEntries = new ArrayList<>();
@@ -107,12 +106,12 @@ public class StatsProvider {
             barNumber++;
         }
 
-        BarDataSet barDataSet = new BarDataSet(barEntries, WORKOUT_PROPERTY.getStringRepresentation(ctx));
-        return new BarData(barDataSet);
+        return DataSetStyles.applyDefaultBarStyle(ctx,
+                new BarDataSet(barEntries, WORKOUT_PROPERTY.getStringRepresentation(ctx)));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public BarData totalDurations(StatsDataTypes.TimeSpan timeSpan) {
+    public BarDataSet totalDurations(StatsDataTypes.TimeSpan timeSpan) {
         final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.DURATION;
 
         ArrayList<BarEntry> barEntries = new ArrayList<>();
@@ -150,8 +149,8 @@ public class StatsProvider {
             barNumber++;
         }
 
-        BarDataSet barDataSet = new BarDataSet(barEntries, WORKOUT_PROPERTY.getStringRepresentation(ctx));
-        return new BarData(barDataSet);
+        return DataSetStyles.applyDefaultBarStyle(ctx,
+                new BarDataSet(barEntries, WORKOUT_PROPERTY.getStringRepresentation(ctx)));
     }
 
     public CandleDataSet getPaceCandleData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {
