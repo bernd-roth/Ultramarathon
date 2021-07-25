@@ -5,6 +5,7 @@ import android.graphics.Color;
 
 import androidx.core.content.ContextCompat;
 
+import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.LineDataSet;
 
@@ -24,5 +25,10 @@ public class DataSetStyles {
         lineDataSet.setCircleHoleColor(Color.TRANSPARENT);
         lineDataSet.setValueTextColor(Color.TRANSPARENT);
         return lineDataSet;
+    }
+
+    public static BarDataSet applyDefaultBarStyle(Context ctx, BarDataSet barDataSet) {
+        barDataSet.setColor(ContextCompat.getColor(ctx, R.color.bar));
+        return barDataSet;
     }
 }

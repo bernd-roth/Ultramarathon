@@ -57,11 +57,11 @@ public class ShortStatsAdapter extends RecyclerView.Adapter<ShortStatsAdapter.Vi
         switch (position)
         {
             case 0:
-                data = statsProvider.numberOfActivities(allTime);
+                data = new BarData(statsProvider.numberOfActivities(allTime));
                 holder.title.setText(ctx.getString(R.string.numberOfWorkouts));
                 break;
             default:
-                data = statsProvider.totalDistances(allTime);
+                data = new BarData(statsProvider.totalDistances(allTime));
                 holder.title.setText(ctx.getString(R.string.workoutDistance));
                 break;
         }
