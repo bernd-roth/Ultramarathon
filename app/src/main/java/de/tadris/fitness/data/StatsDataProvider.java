@@ -31,7 +31,8 @@ public class StatsDataProvider {
         List<BaseWorkout> workouts = Instance.getInstance(context).db.getAllWorkouts();
         for (BaseWorkout workout : workouts) {
             if((timeSpan == null) || timeSpan.contains(workout.start)) {
-                if(workoutTypes.contains(workout.getWorkoutType(context))) { // in separate if cause getWorkoutType is sometimes costly
+                WorkoutType type = workout.getWorkoutType(context);
+                if(workoutTypes.contains(type)) { // in separate if cause getWorkoutType is sometimes costly
                     try {
                         double val;
                         if (requestedProperty.isBaseProperty()) {
@@ -41,7 +42,7 @@ public class StatsDataProvider {
                         } else {
                             val = getIndoorPropertyValue(requestedProperty, (IndoorWorkout) workout);
                         }
-                        data.add(new StatsDataTypes.DataPoint(WorkoutType.getWorkoutTypeById(context, workout.workoutTypeId),
+                        data.add(new StatsDataTypes.DataPoint(type,
                                 workout.id,
                                 workout.start,
                                 val));
