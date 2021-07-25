@@ -9,11 +9,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
+import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
+import com.github.mikephil.charting.data.BarData;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.StatsDataTypes;
 import de.tadris.fitness.data.StatsProvider;
+import de.tadris.fitness.util.charts.ChartStyles;
 
 public class StatsOverviewFragment extends StatsFragment {
     StatsProvider statsProvider = new StatsProvider(context);
@@ -28,16 +31,18 @@ public class StatsOverviewFragment extends StatsFragment {
         super.onViewCreated(view, savedInstanceState);
 
         HorizontalBarChart numberOfActivitiesChart = view.findViewById(R.id.stats_number_of_workout_chart);
-        numberOfActivitiesChart.setData(statsProvider.numberOfActivities(new StatsDataTypes.TimeSpan(0, Long.MAX_VALUE)));
-        numberOfActivitiesChart.getLegend().setEnabled(false);
+        ChartStyles.defaultBarChart(numberOfActivitiesChart);
+
+        BarData numberOfActivitiesData = statsProvider.numberOfActivities(new StatsDataTypes.TimeSpan(0, Long.MAX_VALUE));
+        numberOfActivitiesChart.setData(numberOfActivitiesData);
 
         HorizontalBarChart distanceChart = view.findViewById(R.id.stats_distances_chart);
+        ChartStyles.defaultBarChart(distanceChart);
         distanceChart.setData(statsProvider.totalDistances(new StatsDataTypes.TimeSpan(0, Long.MAX_VALUE)));
-        distanceChart.getLegend().setEnabled(false);
 
         HorizontalBarChart durationChart = view.findViewById(R.id.stats_duration_chart);
+        ChartStyles.defaultBarChart(durationChart);
         durationChart.setData(statsProvider.totalDurations(new StatsDataTypes.TimeSpan(0, Long.MAX_VALUE)));
-        durationChart.getLegend().setEnabled(false);
     }
 
     @Override

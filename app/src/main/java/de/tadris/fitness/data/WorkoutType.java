@@ -51,6 +51,17 @@ public class WorkoutType implements Serializable {
 
     public static final String WORKOUT_TYPE_ID_OTHER = "other";
     public static final String WORKOUT_TYPE_ID_RUNNING = "running";
+    public static final String WORKOUT_TYPE_ID_WALKING = "walking";
+    public static final String WORKOUT_TYPE_ID_HIKING = "hiking";
+    public static final String WORKOUT_TYPE_ID_CYCLING = "cycling";
+    public static final String WORKOUT_TYPE_ID_INLINE_SKATING = "inline_skating";
+    public static final String WORKOUT_TYPE_ID_SKATEBOARDING = "skateboarding";
+    public static final String WORKOUT_TYPE_ID_ROWING = "rowing";
+    public static final String WORKOUT_TYPE_ID_TREADMILL = "treadmill";
+    public static final String WORKOUT_TYPE_ID_ROPE_SKIPPING = "rope_skipping";
+    public static final String WORKOUT_TYPE_ID_TRAMPOLINE_JUMPING = "trampoline_jumping";
+    public static final String WORKOUT_TYPE_ID_PUSH_UPS = "push-ups";
+
 
     @PrimaryKey
     @NonNull
@@ -144,37 +155,37 @@ public class WorkoutType implements Serializable {
                         context.getResources().getColor(R.color.colorPrimaryRunning),
                         Icon.RUNNING.name,
                         -1, RecordingType.GPS.id),
-                new WorkoutType("walking",
+                new WorkoutType(WORKOUT_TYPE_ID_WALKING,
                         context.getString(R.string.workoutTypeWalking),
                         5,
                         context.getResources().getColor(R.color.colorPrimaryRunning),
                         Icon.WALKING.name,
                         -1, RecordingType.GPS.id),
-                new WorkoutType("hiking",
+                new WorkoutType(WORKOUT_TYPE_ID_HIKING,
                         context.getString(R.string.workoutTypeHiking),
                         5,
                         context.getResources().getColor(R.color.colorPrimaryHiking),
                         Icon.WALKING.name,
                         -1, RecordingType.GPS.id),
-                new WorkoutType("cycling",
+                new WorkoutType(WORKOUT_TYPE_ID_CYCLING,
                         context.getString(R.string.workoutTypeCycling),
                         10,
                         context.getResources().getColor(R.color.colorPrimaryBicycling),
                         Icon.CYCLING.name,
                         -1, RecordingType.GPS.id),
-                new WorkoutType("inline_skating",
+                new WorkoutType(WORKOUT_TYPE_ID_INLINE_SKATING,
                         context.getString(R.string.workoutTypeInlineSkating),
                         7,
                         context.getResources().getColor(R.color.colorPrimarySkating),
                         Icon.INLINE_SKATING.name,
                         -1, RecordingType.GPS.id),
-                new WorkoutType("skateboarding",
+                new WorkoutType(WORKOUT_TYPE_ID_SKATEBOARDING,
                         context.getString(R.string.workoutTypeSkateboarding),
                         7,
                         context.getResources().getColor(R.color.colorPrimarySkating),
                         Icon.SKATEBOARDING.name,
                         -1, RecordingType.GPS.id),
-                new WorkoutType("rowing",
+                new WorkoutType(WORKOUT_TYPE_ID_ROWING,
                         context.getString(R.string.workoutTypeRowing),
                         7,
                         context.getResources().getColor(R.color.colorPrimaryRowing),
@@ -186,28 +197,28 @@ public class WorkoutType implements Serializable {
                         context.getResources().getColor(R.color.colorPrimary),
                         Icon.OTHER.name,
                         0, RecordingType.GPS.id),
-                new WorkoutType("treadmill",
+                new WorkoutType(WORKOUT_TYPE_ID_TREADMILL,
                         context.getString(R.string.workoutTypeTreadmill),
                         5,
                         context.getResources().getColor(R.color.colorPrimaryRunning),
                         Icon.RUNNING.name,
                         -1, RecordingType.INDOOR.id,
                         R.plurals.workoutStep),
-                new WorkoutType("rope_skipping",
+                new WorkoutType(WORKOUT_TYPE_ID_ROPE_SKIPPING,
                         context.getString(R.string.workoutTypeRopeSkipping),
                         3,
                         context.getResources().getColor(R.color.colorPrimary),
                         Icon.ROPE_SKIPPING.name,
                         11, RecordingType.INDOOR.id,
                         R.plurals.workoutJump),
-                new WorkoutType("trampoline_jumping",
+                new WorkoutType(WORKOUT_TYPE_ID_TRAMPOLINE_JUMPING,
                         context.getString(R.string.workoutTypeTrampolineJumping),
                         3,
                         context.getResources().getColor(R.color.colorPrimary),
                         Icon.TRAMPOLINE_JUMPING.name,
                         4, RecordingType.INDOOR.id,
                         R.plurals.workoutJump),
-                new WorkoutType("push-ups",
+                new WorkoutType(WORKOUT_TYPE_ID_PUSH_UPS,
                         context.getString(R.string.workoutTypePushUps),
                         1,
                         context.getResources().getColor(R.color.colorPrimary),
