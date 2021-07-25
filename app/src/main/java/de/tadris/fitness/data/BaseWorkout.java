@@ -63,7 +63,7 @@ public abstract class BaseWorkout {
 
     @JsonIgnore
     public WorkoutType getWorkoutType(Context context) {
-        return WorkoutType.getWorkoutTypeById(context, workoutTypeId);
+        return WorkoutTypeManager.getInstance().getWorkoutTypeById(context, workoutTypeId);
     }
 
     @JsonIgnore

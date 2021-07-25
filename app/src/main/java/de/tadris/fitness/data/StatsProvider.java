@@ -48,7 +48,7 @@ public class StatsProvider {
         HashMap<WorkoutType, Integer> numberOfWorkouts = new HashMap<>();
 
         ArrayList<StatsDataTypes.DataPoint> workouts = dataProvider.getData(WorkoutProperty.LENGTH,
-                WorkoutType.getAllTypes(ctx),
+                WorkoutTypeManager.getInstance().getAllTypes(ctx),
                 timeSpan);
 
         // Count number of workouts of specific WorkoutType in a specific time span
@@ -84,7 +84,7 @@ public class StatsProvider {
 
         HashMap<WorkoutType, Float> distances = new HashMap<>();
 
-        ArrayList<StatsDataTypes.DataPoint> workouts = dataProvider.getData(WORKOUT_PROPERTY, WorkoutType.getAllTypes(ctx));
+        ArrayList<StatsDataTypes.DataPoint> workouts = dataProvider.getData(WORKOUT_PROPERTY, WorkoutTypeManager.getInstance().getAllTypes(ctx));
 
         for (StatsDataTypes.DataPoint dataPoint : workouts) {
             distances.put(dataPoint.workoutType,
@@ -119,7 +119,7 @@ public class StatsProvider {
 
         HashMap<WorkoutType, Long> durations = new HashMap<>();
 
-        ArrayList<StatsDataTypes.DataPoint> workouts = dataProvider.getData(WORKOUT_PROPERTY, WorkoutType.getAllTypes(ctx));
+        ArrayList<StatsDataTypes.DataPoint> workouts = dataProvider.getData(WORKOUT_PROPERTY, WorkoutTypeManager.getInstance().getAllTypes(ctx));
 
         for (StatsDataTypes.DataPoint dataPoint : workouts) {
             durations.put(dataPoint.workoutType,
@@ -252,7 +252,7 @@ public class StatsProvider {
 
         // Convert workout type to list (_all) type should be converted to a list with all Workout types
         if (workoutType.id.equals(WorkoutTypeFilter.ID_ALL)) {
-            workoutTypes = (ArrayList<WorkoutType>) WorkoutType.getAllTypes(ctx);
+            workoutTypes = (ArrayList<WorkoutType>) WorkoutTypeManager.getInstance().getAllTypes(ctx);
         } else {
             workoutTypes.add(workoutType);
         }
