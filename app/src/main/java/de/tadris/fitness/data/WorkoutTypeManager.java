@@ -78,18 +78,14 @@ public class WorkoutTypeManager {
     private List<WorkoutType> checkForNewTypes(Context context)
     {
         WorkoutType[] fromDatabase = Instance.getInstance(context).db.workoutTypeDao().findAll();
+        List<String> existingIDs = new ArrayList<>();
+        for (WorkoutType existingType : allWorkoutTypes) {
+            existingIDs.add(existingType.id);
+        }
 
         List<WorkoutType> newTypes = new ArrayList<>();
         for (WorkoutType typeFromDb:fromDatabase) {
-            boolean found = false;
-            for (WorkoutType existingType : allWorkoutTypes) {
-                if (typeFromDb.id == existingType.id) {
-                    found = true;
-                    break;
-                }
-            }
-
-            if (!found) {
+            if (!existingIDs.contains(typeFromDb.id)) {
                 newTypes.add(typeFromDb);
             }
         }
