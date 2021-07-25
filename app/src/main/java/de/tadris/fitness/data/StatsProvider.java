@@ -267,6 +267,13 @@ public class StatsProvider {
 
         ArrayList<CandleEntry> candleEntries = new ArrayList<>();
 
+        if (span == AggregationSpan.SINGLE) {
+            // No aggregation
+            for (StatsDataTypes.DataPoint dataPoint : data) {
+                float value = (float) dataPoint.value;
+                candleEntries.add(new CandleEntry((float) dataPoint.time / R.fraction.stats_time_factor, value, value, value, value));
+            }
+        } else {
 
             long oldestWorkoutTime = Collections.min(data, StatsDataTypes.DataPoint.timeComparator).time;
             long newestWorkoutTime = Collections.max(data, StatsDataTypes.DataPoint.timeComparator).time;
@@ -305,7 +312,7 @@ public class StatsProvider {
                 calendar.add(Calendar.DAY_OF_YEAR, days);
                 calendar.add(Calendar.MILLISECOND, (int) (span.spanInterval - TimeUnit.DAYS.toMillis(days)));
             }
-        //}
+        }
 
         return candleEntries;
     }
