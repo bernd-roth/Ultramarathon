@@ -37,6 +37,8 @@ import de.tadris.fitness.ui.dialog.SelectWorkoutTypeDialog;
 import de.tadris.fitness.ui.statistics.WorkoutTypeSelection;
 import de.tadris.fitness.util.charts.DataSetStyles;
 import de.tadris.fitness.util.exceptions.NoDataException;
+import de.tadris.fitness.util.statistics.ChartSynchronizer;
+import de.tadris.fitness.util.statistics.OnChartGestureMultiListener;
 
 public class StatsHistoryFragment extends StatsFragment {
 
@@ -48,13 +50,19 @@ public class StatsHistoryFragment extends StatsFragment {
     Switch durationSwitch;
     CombinedChart durationChart;
 
-    StatsProvider statsProvider = new StatsProvider(context);
+    CombinedChart distanceChart;
+
+    ChartSynchronizer synchronizer;
+
+    StatsProvider statsProvider;
     ArrayList<CombinedChart> combinedChartList = new ArrayList<>();
 
-    AggregationSpan aggregationSpan = AggregationSpan.WEEK;
+    AggregationSpan aggregationSpan = AggregationSpan.YEAR;
 
     public StatsHistoryFragment(Context ctx) {
         super(R.layout.fragment_stats_history, ctx);
+        synchronizer = new ChartSynchronizer();
+        statsProvider = new StatsProvider(ctx);
     }
 
     @Override
@@ -99,11 +107,16 @@ public class StatsHistoryFragment extends StatsFragment {
             }
         });
 
+        distanceChart = view.findViewById(R.id.stats_dist_chart);
+
         combinedChartList.add(speedChart);
+        combinedChartList.add(distanceChart);
         combinedChartList.add(durationChart);
 
         for (CombinedChart combinedChart : combinedChartList) {
-            combinedChart.setOnChartGestureListener(new OnChartGestureListener() {
+            OnChartGestureMultiListener multiListener = new OnChartGestureMultiListener(new ArrayList<>());
+            multiListener.listeners.add(synchronizer.addChart(combinedChart));
+            multiListener.listeners.add(new OnChartGestureListener() {
                 @Override
                 public void onChartGestureStart(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
 
@@ -159,24 +172,13 @@ public class StatsHistoryFragment extends StatsFragment {
 
                 }
             });
-            combinedChart.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ViewPortHandler viewPortHandler = combinedChart.getViewPortHandler();
-                    float scaleX = viewPortHandler.getScaleX();
-                    float scaleY = viewPortHandler.getScaleY();
-
-                    //change chart type depending on zoom level
-                }
-            });
+            combinedChart.setOnChartGestureListener(multiListener);
         }
 
         updateCharts(selection.getSelectedWorkoutType());
     }
 
     private void updateCharts(WorkoutType workoutType) {
-        CombinedChart distanceChart = getView().findViewById(R.id.stats_dist_chart);
-
         try {
             // Set data for distance chart
             // Retrieve candle data
