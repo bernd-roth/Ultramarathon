@@ -231,7 +231,7 @@ public class StatsHistoryFragment extends StatsFragment {
         speedChart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ctx.startActivity(new Intent(ctx, DetailStatsActivity.class));
+                context.startActivity(new Intent(context, DetailStatsActivity.class));
             }
         });
 
