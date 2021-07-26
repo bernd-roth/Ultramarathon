@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 
 import de.tadris.fitness.R;
@@ -30,18 +31,25 @@ public class StatsOverviewFragment extends StatsFragment {
         HorizontalBarChart numberOfActivitiesChart = view.findViewById(R.id.stats_number_of_workout_chart);
         numberOfActivitiesChart.setData(statsProvider.numberOfActivities(new StatsDataTypes.TimeSpan(0, Long.MAX_VALUE)));
         numberOfActivitiesChart.getLegend().setEnabled(false);
+        animateChart(numberOfActivitiesChart);
 
         HorizontalBarChart distanceChart = view.findViewById(R.id.stats_distances_chart);
         distanceChart.setData(statsProvider.totalDistances(new StatsDataTypes.TimeSpan(0, Long.MAX_VALUE)));
         distanceChart.getLegend().setEnabled(false);
+        animateChart(distanceChart);
 
         HorizontalBarChart durationChart = view.findViewById(R.id.stats_duration_chart);
         durationChart.setData(statsProvider.totalDurations(new StatsDataTypes.TimeSpan(0, Long.MAX_VALUE)));
         durationChart.getLegend().setEnabled(false);
+        animateChart(durationChart);
     }
 
     @Override
     public String getTitle() {
         return context.getString(R.string.stats_overview_title);
+    }
+
+    private void animateChart (HorizontalBarChart chart) {
+        chart.animateY(2000, Easing.EaseInExpo);
     }
 }
