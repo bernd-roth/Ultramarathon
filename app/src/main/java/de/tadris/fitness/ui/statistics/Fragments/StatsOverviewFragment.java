@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
+import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.data.BarData;
@@ -37,22 +39,29 @@ public class StatsOverviewFragment extends StatsFragment {
         BarData numberOfActivitiesData =  new BarData(statsProvider.numberOfActivities(allTime));
         numberOfActivitiesChart.setData(numberOfActivitiesData);
         ChartStyles.horizontalBarChartIconLabel(numberOfActivitiesChart,numberOfActivitiesData, context);
+        animateChart(numberOfActivitiesChart);
 
         HorizontalBarChart distanceChart = view.findViewById(R.id.stats_distances_chart);
         ChartStyles.defaultBarChart(distanceChart);
         BarData distanceData =  new BarData(statsProvider.totalDistances(allTime));
         distanceChart.setData(distanceData);
         ChartStyles.horizontalBarChartIconLabel(distanceChart, distanceData, context);
+        animateChart(distanceChart);
 
         HorizontalBarChart durationChart = view.findViewById(R.id.stats_duration_chart);
         ChartStyles.defaultBarChart(durationChart);
         BarData durationData = new BarData(statsProvider.totalDurations(allTime));
         durationChart.setData(durationData);
         ChartStyles.horizontalBarChartIconLabel(durationChart, durationData, context);
+        animateChart(durationChart);
     }
 
     @Override
     public String getTitle() {
         return context.getString(R.string.stats_overview_title);
+    }
+
+    private void animateChart(BarChart chart) {
+        chart.animateY(2000, Easing.EaseInExpo);
     }
 }
