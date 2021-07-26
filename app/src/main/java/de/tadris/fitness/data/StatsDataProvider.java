@@ -30,29 +30,25 @@ public class StatsDataProvider {
         ArrayList<StatsDataTypes.DataPoint> data = new ArrayList<>();
         List<BaseWorkout> workouts = Instance.getInstance(context).db.getAllWorkouts();
         for (BaseWorkout workout : workouts) {
-            if (workoutTypes.contains(workout.getWorkoutType(this.context)) && ((timeSpan == null) || timeSpan.contains(workout.start))) {
-                try {
-                    if (requestedProperty.isBaseProperty()) {
-                        data.add(new StatsDataTypes.DataPoint(workout.getWorkoutType(context),
+            if((timeSpan == null) || timeSpan.contains(workout.start)) {
+                WorkoutType type = workout.getWorkoutType(context);
+                if(workoutTypes.contains(type)) { // in separate if cause getWorkoutType is sometimes costly
+                    try {
+                        double val;
+                        if (requestedProperty.isBaseProperty()) {
+                            val = getBasePropertyValue(requestedProperty, workout);
+                        } else if (requestedProperty.isGPSProperty()) {
+                            val = getGPSPropertyValue(requestedProperty, (GpsWorkout) workout);
+                        } else {
+                            val = getIndoorPropertyValue(requestedProperty, (IndoorWorkout) workout);
+                        }
+                        data.add(new StatsDataTypes.DataPoint(type,
                                 workout.id,
                                 workout.start,
-                                getBasePropertyValue(requestedProperty, workout)));
+                                val));
+                    } catch (Exception e) {
+                        // This should never happen, cause it is checked by the if clauses above
                     }
-                    else if (requestedProperty.isGPSProperty()) {
-                        data.add(new StatsDataTypes.DataPoint(workout.getWorkoutType(context),
-                                workout.id,
-                                workout.start,
-                                getGPSPropertyValue(requestedProperty, (GpsWorkout)workout)));
-                    }
-                    else {
-                        data.add(new StatsDataTypes.DataPoint(workout.getWorkoutType(context),
-                                workout.id,
-                                workout.start,
-                                getIndoorPropertyValue(requestedProperty, (IndoorWorkout) workout)));
-                    }
-                }
-                catch (Exception e) {
-                    // This should never happen, cause it is checked by the if clauses above
                 }
             }
         }
