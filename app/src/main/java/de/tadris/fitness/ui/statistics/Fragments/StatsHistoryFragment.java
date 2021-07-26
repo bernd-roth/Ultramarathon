@@ -38,6 +38,7 @@ import de.tadris.fitness.ui.statistics.WorkoutTypeSelection;
 import de.tadris.fitness.util.charts.DataSetStyles;
 import de.tadris.fitness.util.exceptions.NoDataException;
 import de.tadris.fitness.util.statistics.ChartSynchronizer;
+import de.tadris.fitness.util.statistics.OnChartGestureMultiListener;
 
 public class StatsHistoryFragment extends StatsFragment {
 
@@ -56,7 +57,7 @@ public class StatsHistoryFragment extends StatsFragment {
     StatsProvider statsProvider;
     ArrayList<CombinedChart> combinedChartList = new ArrayList<>();
 
-    AggregationSpan aggregationSpan = AggregationSpan.WEEK;
+    AggregationSpan aggregationSpan = AggregationSpan.YEAR;
 
     public StatsHistoryFragment(Context ctx) {
         super(R.layout.fragment_stats_history, ctx);
@@ -113,7 +114,65 @@ public class StatsHistoryFragment extends StatsFragment {
         combinedChartList.add(durationChart);
 
         for (CombinedChart combinedChart : combinedChartList) {
-            synchronizer.addChart(combinedChart);
+            OnChartGestureMultiListener multiListener = new OnChartGestureMultiListener(new ArrayList<>());
+            multiListener.listeners.add(synchronizer.addChart(combinedChart));
+            multiListener.listeners.add(new OnChartGestureListener() {
+                @Override
+                public void onChartGestureStart(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
+
+                }
+
+                @Override
+                public void onChartGestureEnd(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
+
+                }
+
+                @Override
+                public void onChartLongPressed(MotionEvent me) {
+
+                }
+
+                @Override
+                public void onChartDoubleTapped(MotionEvent me) {
+
+                }
+
+                @Override
+                public void onChartSingleTapped(MotionEvent me) {
+
+                }
+
+                @Override
+                public void onChartFling(MotionEvent me1, MotionEvent me2, float velocityX, float velocityY) {
+
+                }
+
+                @Override
+                public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
+                    long timeSpan = (long) ((combinedChart.getHighestVisibleX() - combinedChart.getLowestVisibleX()) * R.fraction.stats_time_factor);
+                    AggregationSpan oldAggregationSpan = aggregationSpan;
+
+                    if (TimeUnit.DAYS.toMillis(1095) < timeSpan) {
+                        aggregationSpan = AggregationSpan.YEAR;
+                    } else if (TimeUnit.DAYS.toMillis(93) < timeSpan) {
+                        aggregationSpan = AggregationSpan.MONTH;
+                    } else if (TimeUnit.DAYS.toMillis(21) < timeSpan) {
+                        aggregationSpan = AggregationSpan.WEEK;
+                    } else {
+                        aggregationSpan = AggregationSpan.SINGLE;
+                    }
+
+                    if (oldAggregationSpan != aggregationSpan) {
+                        updateCharts(selection.getSelectedWorkoutType());
+                    }
+                }
+
+                @Override
+                public void onChartTranslate(MotionEvent me, float dX, float dY) {
+
+                }
+            });
+            combinedChart.setOnChartGestureListener(multiListener);
         }
 
         updateCharts(selection.getSelectedWorkoutType());

@@ -23,16 +23,9 @@ public class ChartSynchronizer {
         synchronyCharts = new ArrayList<>();
     }
 
-    public ChartSynchronizer(List<Chart> charts) {
-        synchronyCharts = charts;
-        for (Chart chart : charts) {
-            chart.setOnChartGestureListener(gestureListener(chart));
-        }
-    }
-
-    public void addChart(Chart chart) {
+    public OnChartGestureListener addChart(Chart chart) {
         synchronyCharts.add(chart);
-        chart.setOnChartGestureListener(gestureListener(chart));
+        return gestureListener(chart);
     }
 
     protected void syncCharts(Chart sender, List<Chart> retrievers) {
@@ -56,7 +49,7 @@ public class ChartSynchronizer {
         }
     }
 
-    protected OnChartGestureListener gestureListener(Chart chart) {
+    public OnChartGestureListener gestureListener(Chart chart) {
         return new OnChartGestureListener() {
             @Override
             public void onChartGestureStart(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
