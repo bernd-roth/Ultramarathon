@@ -31,7 +31,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.GpsWorkout;
@@ -44,13 +46,14 @@ import de.tadris.fitness.util.gpx.TrackPointExtensions;
 import de.tadris.fitness.util.gpx.TrackSegment;
 import de.tadris.fitness.util.io.general.IWorkoutExporter;
 
+import static java.lang.Math.abs;
+
 public class GpxExporter implements IWorkoutExporter {
 
     @SuppressLint("SimpleDateFormat") // This has nothing to do with localisation
     public final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 
     public GpxExporter() {
-        formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
 
     @Override
@@ -100,10 +103,17 @@ public class GpxExporter implements IWorkoutExporter {
     }
 
     private String getDateTime(Date date) {
-        // Why adding a 'Z'?
-        // Normally we could use the 'X' char to specify the timezone but this is only available in Android 7+
+        // Calculate time zone offset
+        // Normally we could use the 'X' char in the formatter to specify the timezone but this is only available in Android 7+
         // Since this minSdkVersion is 21 (Android 5) we cannot use it
-        // Solution: add a 'Z'. This indicates a UTC-timestamp and the 'formatter' always returns UTC-timestamps (see constructor)
-        return formatter.format(date) + "Z";
+        long milliseconds = TimeZone.getDefault().getOffset(date.getTime());
+        char sign = '+';
+        if (milliseconds < 0) {
+            sign = '-';
+        }
+        long hours = abs(TimeUnit.MILLISECONDS.toHours(milliseconds));
+        long minutes = abs(TimeUnit.MILLISECONDS.toMinutes(milliseconds) - TimeUnit.HOURS.toMinutes(hours));
+
+        return String.format(Locale.GERMANY,"%s%c%02d:%02d", formatter.format(date), sign, hours, minutes);
     }
 }
