@@ -12,6 +12,7 @@ import androidx.annotation.RequiresApi;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.Chart;
+import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.data.BarData;
 
@@ -61,7 +62,7 @@ public class StatsOverviewFragment extends StatsFragment {
         return context.getString(R.string.stats_overview_title);
     }
 
-    private void animateChart(BarChart chart) {
+    private void animateChart (HorizontalBarChart chart) {
         chart.animateY(2000, Easing.EaseInExpo);
     }
 }
