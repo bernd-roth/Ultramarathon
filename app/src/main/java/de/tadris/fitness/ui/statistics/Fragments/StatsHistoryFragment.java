@@ -1,6 +1,7 @@
 package de.tadris.fitness.ui.statistics.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,6 +36,8 @@ import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.data.StatsProvider;
 import de.tadris.fitness.ui.dialog.SelectWorkoutTypeDialog;
 import de.tadris.fitness.ui.statistics.WorkoutTypeSelection;
+import de.tadris.fitness.ui.statistics.DetailStatsActivity;
+import de.tadris.fitness.ui.statistics.StatisticsActivity;
 import de.tadris.fitness.util.charts.DataSetStyles;
 import de.tadris.fitness.util.exceptions.NoDataException;
 
@@ -223,6 +226,16 @@ public class StatsHistoryFragment extends StatsFragment {
             speedChart.clear();
         }
         speedChart.invalidate();
+        speedChart.setScaleEnabled(false);
+
+        speedChart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ctx.startActivity(new Intent(ctx, DetailStatsActivity.class));
+            }
+        });
+
+
     }
 
     private void updateDurationChart(WorkoutType workoutType) {
