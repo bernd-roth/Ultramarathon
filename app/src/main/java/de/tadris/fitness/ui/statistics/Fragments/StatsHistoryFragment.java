@@ -37,6 +37,7 @@ import de.tadris.fitness.ui.dialog.SelectWorkoutTypeDialog;
 import de.tadris.fitness.ui.statistics.WorkoutTypeSelection;
 import de.tadris.fitness.util.charts.DataSetStyles;
 import de.tadris.fitness.util.exceptions.NoDataException;
+import de.tadris.fitness.util.statistics.ChartSynchronizer;
 
 public class StatsHistoryFragment extends StatsFragment {
 
@@ -48,13 +49,19 @@ public class StatsHistoryFragment extends StatsFragment {
     Switch durationSwitch;
     CombinedChart durationChart;
 
-    StatsProvider statsProvider = new StatsProvider(context);
+    CombinedChart distanceChart;
+
+    ChartSynchronizer synchronizer;
+
+    StatsProvider statsProvider;
     ArrayList<CombinedChart> combinedChartList = new ArrayList<>();
 
     AggregationSpan aggregationSpan = AggregationSpan.WEEK;
 
     public StatsHistoryFragment(Context ctx) {
         super(R.layout.fragment_stats_history, ctx);
+        synchronizer = new ChartSynchronizer();
+        statsProvider = new StatsProvider(ctx);
     }
 
     @Override
@@ -99,84 +106,20 @@ public class StatsHistoryFragment extends StatsFragment {
             }
         });
 
+        distanceChart = view.findViewById(R.id.stats_dist_chart);
+
         combinedChartList.add(speedChart);
+        combinedChartList.add(distanceChart);
         combinedChartList.add(durationChart);
 
         for (CombinedChart combinedChart : combinedChartList) {
-            combinedChart.setOnChartGestureListener(new OnChartGestureListener() {
-                @Override
-                public void onChartGestureStart(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
-
-                }
-
-                @Override
-                public void onChartGestureEnd(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
-
-                }
-
-                @Override
-                public void onChartLongPressed(MotionEvent me) {
-
-                }
-
-                @Override
-                public void onChartDoubleTapped(MotionEvent me) {
-
-                }
-
-                @Override
-                public void onChartSingleTapped(MotionEvent me) {
-
-                }
-
-                @Override
-                public void onChartFling(MotionEvent me1, MotionEvent me2, float velocityX, float velocityY) {
-
-                }
-
-                @Override
-                public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
-                    long timeSpan = (long) ((combinedChart.getHighestVisibleX() - combinedChart.getLowestVisibleX()) * R.fraction.stats_time_factor);
-                    AggregationSpan oldAggregationSpan = aggregationSpan;
-
-                    if (TimeUnit.DAYS.toMillis(1095) < timeSpan) {
-                        aggregationSpan = AggregationSpan.YEAR;
-                    } else if (TimeUnit.DAYS.toMillis(93) < timeSpan) {
-                        aggregationSpan = AggregationSpan.MONTH;
-                    } else if (TimeUnit.DAYS.toMillis(21) < timeSpan) {
-                        aggregationSpan = AggregationSpan.WEEK;
-                    } else {
-                        aggregationSpan = AggregationSpan.SINGLE;
-                    }
-
-                    if (oldAggregationSpan != aggregationSpan) {
-                        updateCharts(selection.getSelectedWorkoutType());
-                    }
-                }
-
-                @Override
-                public void onChartTranslate(MotionEvent me, float dX, float dY) {
-
-                }
-            });
-            combinedChart.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ViewPortHandler viewPortHandler = combinedChart.getViewPortHandler();
-                    float scaleX = viewPortHandler.getScaleX();
-                    float scaleY = viewPortHandler.getScaleY();
-
-                    //change chart type depending on zoom level
-                }
-            });
+            synchronizer.addChart(combinedChart);
         }
 
         updateCharts(selection.getSelectedWorkoutType());
     }
 
     private void updateCharts(WorkoutType workoutType) {
-        CombinedChart distanceChart = getView().findViewById(R.id.stats_dist_chart);
-
         try {
             // Set data for distance chart
             // Retrieve candle data
