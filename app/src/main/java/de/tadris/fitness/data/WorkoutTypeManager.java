@@ -72,7 +72,7 @@ public class WorkoutTypeManager {
     public List<WorkoutType> getAllTypes(Context context) {
         buildPresets(context);
         checkForNewTypes(context);
-        return allWorkoutTypes;
+        return new ArrayList<>(allWorkoutTypes); // Return clone to avoid tampering from outside...
     }
 
     private List<WorkoutType> checkForNewTypes(Context context)
