@@ -17,7 +17,7 @@ public class DetailStatsActivity extends FitoTrackActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_statistics);
+        setContentView(R.layout.activity_statistics_detail);
         setTitle(getString(R.string.details));
         setupActionBar();
 
