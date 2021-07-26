@@ -12,10 +12,14 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.util.Icon;
@@ -31,7 +35,7 @@ public class ChartStyles {
         chart.getXAxis().setEnabled(false);
         chart.getLegend().setEnabled(false);
         chart.getDescription().setEnabled(false);
-        chart.getXAxis().setPosition(XAxis.XAxisPosition.TOP);
+        chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
 
         chart.setDrawBarShadow(false);
         chart.setDrawValueAboveBar(true);
