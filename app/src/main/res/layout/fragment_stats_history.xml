@@ -6,11 +6,9 @@
     android:orientation="vertical" >
 
         <de.tadris.fitness.ui.statistics.WorkoutTypeSelection
+            style="@style/statsBar"
             android:id="@+id/stats_history_workout_type_selector"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:background="@color/colorPrimary"/>
+            android:gravity="center_horizontal" />
 
 <ScrollView
     android:layout_width="match_parent"

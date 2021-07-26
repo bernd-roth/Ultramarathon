@@ -8,6 +8,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+    <de.tadris.fitness.ui.statistics.TimeSpanSelection
+        style="@style/statsBar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <LinearLayout
@@ -67,5 +75,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tickCount="5"/>
+    </LinearLayout>
     </LinearLayout>
 </ScrollView>
