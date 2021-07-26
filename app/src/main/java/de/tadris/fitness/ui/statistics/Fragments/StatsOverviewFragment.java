@@ -59,6 +59,7 @@ public class StatsOverviewFragment extends StatsFragment {
 
     @Override
     public String getTitle() {
+        return context.getString(R.string.stats_overview_title);
     }
 
     private void animateChart (HorizontalBarChart chart) {
