@@ -27,6 +27,7 @@ import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationSpan;
 import de.tadris.fitness.data.StatsProvider;
 import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.data.WorkoutTypeManager;
 import de.tadris.fitness.ui.FitoTrackActivity;
 import de.tadris.fitness.ui.adapter.StatisticsAdapter;
 import de.tadris.fitness.util.charts.DataSetStyles;
@@ -34,12 +35,15 @@ import de.tadris.fitness.util.exceptions.NoDataException;
 
 public class DetailStatsActivity extends FitoTrackActivity {
 
+    Context ctx = this;
+
     CombinedChart chart;
 
-    WorkoutType workoutType = new WorkoutType();
+    WorkoutTypeManager workoutTypeManager = WorkoutTypeManager.getInstance();
+    WorkoutType workoutType;
     AggregationSpan aggregationSpan = AggregationSpan.YEAR;
 
-    StatsProvider statsProvider = new StatsProvider(this);
+    StatsProvider statsProvider = new StatsProvider(ctx);
 
     TextView title;
 
@@ -59,8 +63,14 @@ public class DetailStatsActivity extends FitoTrackActivity {
         super.onStart();
         String chartId = getIntent().getExtras().getString("chart");
         title.setText(chartId);
+        String type = (String) getIntent().getSerializableExtra("type");
 
-        workoutType.id = (String) getIntent().getSerializableExtra("type");
+        if (type.equals("_all")) {
+            workoutType = new WorkoutType();
+            workoutType.id = type;
+        }
+        else
+            workoutType = workoutTypeManager.getWorkoutTypeById(ctx, type);
 
         chart.setOnChartGestureListener(new OnChartGestureListener() {
             @Override
@@ -127,7 +137,7 @@ public class DetailStatsActivity extends FitoTrackActivity {
 
         CandleDataSet candleDataSet = null;
 
-        if (chartId.equals(this.getString(R.string.workoutAvgSpeedShort))) {
+        if (chartId.equals(ctx.getString(R.string.workoutAvgSpeedShort))) {
 
             try {
                 candleDataSet = statsProvider.getSpeedCandleData(aggregationSpan, workoutType);
@@ -135,7 +145,7 @@ public class DetailStatsActivity extends FitoTrackActivity {
                 e.printStackTrace();
             }
         }
-        else if (chartId.equals(this.getString(R.string.workoutDistance))) {
+        else if (chartId.equals(ctx.getString(R.string.workoutDistance))) {
 
             try {
                 candleDataSet = statsProvider.getDistanceCandleData(aggregationSpan, workoutType);
@@ -143,7 +153,7 @@ public class DetailStatsActivity extends FitoTrackActivity {
                 e.printStackTrace();
             }
         }
-        else if (chartId.equals(this.getString(R.string.workoutDuration))) {
+        else if (chartId.equals(ctx.getString(R.string.workoutDuration))) {
 
             try {
                 candleDataSet = statsProvider.getDurationCandleData(aggregationSpan, workoutType);
@@ -151,7 +161,7 @@ public class DetailStatsActivity extends FitoTrackActivity {
                 e.printStackTrace();
             }
         }
-        else if (chartId.equals(this.getString(R.string.workoutPauseDuration))) {
+        else if (chartId.equals(ctx.getString(R.string.workoutPauseDuration))) {
 
             try {
                 candleDataSet = statsProvider.getPauseDurationCandleData(aggregationSpan, workoutType);
@@ -159,7 +169,7 @@ public class DetailStatsActivity extends FitoTrackActivity {
                 e.printStackTrace();
             }
         }
-        else if (chartId.equals(this.getString(R.string.workoutPace))) {
+        else if (chartId.equals(ctx.getString(R.string.workoutPace))) {
 
             try {
                 candleDataSet = statsProvider.getPaceCandleData(aggregationSpan, workoutType);
@@ -177,7 +187,7 @@ public class DetailStatsActivity extends FitoTrackActivity {
 
         // Create background line data
         LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);
-        combinedData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(this, lineDataSet)));
+        combinedData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(ctx, lineDataSet)));
 
         chart.setData(combinedData);
         chart.invalidate();
