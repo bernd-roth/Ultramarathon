@@ -75,8 +75,6 @@ public class StatsHistoryFragment extends StatsFragment {
         speedChart = view.findViewById(R.id.stats_speed_chart);
         speedSwitch = view.findViewById(R.id.speed_switch);
 
-        speedChart.setScaleEnabled(false);
-
         speedSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
