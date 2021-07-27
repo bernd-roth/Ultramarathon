@@ -55,7 +55,6 @@ public class StatsHistoryFragment extends StatsFragment {
 
     WorkoutTypeSelection selection;
 
-    StatsProvider statsProvider = new StatsProvider(context);
     CombinedChart distanceChart;
 
     ChartSynchronizer synchronizer;
@@ -145,7 +144,10 @@ public class StatsHistoryFragment extends StatsFragment {
 
                 @Override
                 public void onChartSingleTapped(MotionEvent me) {
-
+                    Intent i = new Intent(context, DetailStatsActivity.class);
+                    i.putExtra("chart", combinedChart.getData().getDataSetLabels()[0]);
+                    i.putExtra("type", selection.getSelectedWorkoutType().id);
+                    context.startActivity(i);
                 }
 
                 @Override
@@ -231,16 +233,6 @@ public class StatsHistoryFragment extends StatsFragment {
             speedChart.clear();
         }
         speedChart.invalidate();
-
-        speedChart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(context, DetailStatsActivity.class);
-                i.putExtra("chart", 1);
-                i.putExtra("type", selection.getSelectedWorkoutType().id);
-                context.startActivity(i);
-            }
-        });
     }
 
     private void updateDurationChart(WorkoutType workoutType) {

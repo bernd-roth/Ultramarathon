@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.github.mikephil.charting.charts.CombinedChart;
@@ -47,33 +48,26 @@ public class DetailStatsActivity extends FitoTrackActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        int chartId = getIntent().getExtras().getInt("chart");
+        String chartId = getIntent().getExtras().getString("chart");
 
-        switch (chartId) {
-            case 1:
-                workoutType.id = (String) getIntent().getSerializableExtra("type");
-                CandleDataSet dataSet = null;
-                try {
-                    dataSet = statsProvider.getSpeedCandleData(aggregationSpan, workoutType);
-                } catch (NoDataException e) {
-                    e.printStackTrace();
-                }
+        if (chartId.equals(this.getString(R.string.workoutAvgSpeedShort))){
+            workoutType.id = (String) getIntent().getSerializableExtra("type");
+            CandleDataSet dataSet = null;
+            try {
+                dataSet = statsProvider.getSpeedCandleData(aggregationSpan, workoutType);
+            } catch (NoDataException e) {
+                e.printStackTrace();
+            }
 
-                // Add candle data
-                CombinedData combinedData = new CombinedData();
-                combinedData.setData(new CandleData(dataSet));
+            // Add candle data
+            CombinedData combinedData = new CombinedData();
+            combinedData.setData(new CandleData(dataSet));
 
-                // Create background line
-                LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(dataSet);
-                combinedData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(this, lineDataSet)));
-                chart.setData(combinedData);
-                chart.invalidate();
-                break;
-
-            case 2:
-                break;
-            default:
-                break;
+            // Create background line
+            LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(dataSet);
+            combinedData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(this, lineDataSet)));
+            chart.setData(combinedData);
+            chart.invalidate();
         }
     }
 }
