@@ -159,12 +159,17 @@ public class ShowGpsWorkoutActivity extends GpsWorkoutActivity implements Dialog
     private void addIntensityDiagram(){
         BarChart chart = new BarChart(this);
         List<Double> data = new ArrayList<>();
+        double min=samples.get(0).speed, max=min;
         for(GpsSample sample: samples)
         {
             data.add(sample.speed);
+            min = (min < sample.speed) ? min : sample.speed;
+            max = (max > sample.speed) ? max : sample.speed;
         }
-        BarDataSet dataSet = new StatsProvider(this).createHistogramData(data, 10, getString(R.string.workoutSpeed));
+        int nBins = 10;
+        BarDataSet dataSet = new StatsProvider(this).createHistogramData(data, nBins, getString(R.string.workoutSpeed));
         BarData barData = new BarData(dataSet);
+        barData.setBarWidth((float) ((max-min)/(nBins+1)));
         chart.setData(barData);
 
         ChartStyles.defaultBarChart(chart);
