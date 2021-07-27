@@ -51,6 +51,8 @@ public class StatsHistoryFragment extends StatsFragment {
     Switch durationSwitch;
     CombinedChart durationChart;
 
+    WorkoutTypeSelection selection;
+
     StatsProvider statsProvider = new StatsProvider(context);
     ArrayList<CombinedChart> combinedChartList = new ArrayList<>();
 
@@ -65,13 +67,15 @@ public class StatsHistoryFragment extends StatsFragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Register WorkoutType selection listeners
-        WorkoutTypeSelection selection = view.findViewById(R.id.stats_history_workout_type_selector);
+        selection = view.findViewById(R.id.stats_history_workout_type_selector);
         selection.addOnWorkoutTypeSelectListener(workoutType -> updateCharts(workoutType));
 
         // Setup switch functionality
         speedTitle = view.findViewById(R.id.stats_history_speed_title);
         speedChart = view.findViewById(R.id.stats_speed_chart);
         speedSwitch = view.findViewById(R.id.speed_switch);
+
+        speedChart.setScaleEnabled(false);
 
         speedSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -226,16 +230,17 @@ public class StatsHistoryFragment extends StatsFragment {
             speedChart.clear();
         }
         speedChart.invalidate();
-        speedChart.setScaleEnabled(false);
+
 
         speedChart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, DetailStatsActivity.class));
+                Intent i = new Intent(context, DetailStatsActivity.class);
+                i.putExtra("chart", 1);
+                i.putExtra("type", selection.getSelectedWorkoutType().id);
+                context.startActivity(i);
             }
         });
-
-
     }
 
     private void updateDurationChart(WorkoutType workoutType) {

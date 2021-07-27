@@ -115,7 +115,8 @@
         </activity>
         <activity android:name=".ui.workout.AggregatedWorkoutStatisticsActivity" />
         <activity android:name=".ui.statistics.StatisticsActivity" />
-        <activity android:name=".ui.statistics.DetailStatsActivity" />
+        <activity android:name=".ui.statistics.DetailStatsActivity"
+            android:exported="true"/>
         <activity
             android:name=".ui.workout.ShareWorkoutActivity"
             android:screenOrientation="portrait" />
