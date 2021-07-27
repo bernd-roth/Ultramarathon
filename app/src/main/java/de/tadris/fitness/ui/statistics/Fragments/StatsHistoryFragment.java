@@ -1,9 +1,8 @@
 package de.tadris.fitness.ui.statistics.Fragments;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Switch;
@@ -11,10 +10,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 
 import com.github.mikephil.charting.charts.CombinedChart;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.CandleData;
 import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CombinedData;
@@ -22,18 +19,15 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.listener.ChartTouchListener;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
-import com.github.mikephil.charting.utils.MPPointD;
-import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationSpan;
-import de.tadris.fitness.aggregation.WorkoutTypeFilter;
-import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.data.StatsProvider;
-import de.tadris.fitness.ui.dialog.SelectWorkoutTypeDialog;
+import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.ui.statistics.DetailStatsActivity;
 import de.tadris.fitness.ui.statistics.WorkoutTypeSelection;
 import de.tadris.fitness.util.charts.DataSetStyles;
 import de.tadris.fitness.util.exceptions.NoDataException;
@@ -49,6 +43,8 @@ public class StatsHistoryFragment extends StatsFragment {
     TextView durationTitle;
     Switch durationSwitch;
     CombinedChart durationChart;
+
+    WorkoutTypeSelection selection;
 
     CombinedChart distanceChart;
 
@@ -70,7 +66,7 @@ public class StatsHistoryFragment extends StatsFragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Register WorkoutType selection listeners
-        WorkoutTypeSelection selection = view.findViewById(R.id.stats_history_workout_type_selector);
+        selection = view.findViewById(R.id.stats_history_workout_type_selector);
         selection.addOnWorkoutTypeSelectListener(workoutType -> updateCharts(workoutType));
 
         // Setup switch functionality
@@ -139,7 +135,10 @@ public class StatsHistoryFragment extends StatsFragment {
 
                 @Override
                 public void onChartSingleTapped(MotionEvent me) {
-
+                    Intent i = new Intent(context, DetailStatsActivity.class);
+                    i.putExtra("chart", combinedChart.getData().getDataSetLabels()[0]);
+                    i.putExtra("type", selection.getSelectedWorkoutType().id);
+                    context.startActivity(i);
                 }
 
                 @Override

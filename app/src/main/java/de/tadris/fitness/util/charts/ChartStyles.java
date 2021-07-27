@@ -2,15 +2,13 @@ package de.tadris.fitness.util.charts;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 
@@ -31,26 +29,32 @@ public class ChartStyles {
         chart.getXAxis().setEnabled(false);
         chart.getLegend().setEnabled(false);
         chart.getDescription().setEnabled(false);
-        chart.getXAxis().setPosition(XAxis.XAxisPosition.TOP);
+        chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
 
         chart.setDrawBarShadow(false);
         chart.setDrawValueAboveBar(true);
         chart.getDescription().setEnabled(false);
         chart.setPinchZoom(false);
         chart.setDrawGridBackground(false);
+        chart.setFitBars(true);
+    }
+
+    public static void defaultLineChart(CombinedChart chart) {
+        chart.getAxisLeft().setEnabled(true);
+        chart.getAxisLeft().setDrawGridLines(true);
+        chart.getAxisRight().setEnabled(false);
+        chart.getXAxis().setEnabled(true);
+        chart.getLegend().setEnabled(false);
+        chart.getDescription().setEnabled(false);
+        chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+
+        chart.getDescription().setEnabled(false);
+        chart.setPinchZoom(false);
+        chart.setDrawGridBackground(true);
     }
 
     public static void defaultBarData(BarChart chart, BarData data) {
 
-    }
-
-    public static void fixBarChartAxisMinMax(BarChart chart, BarData data)
-    {
-        if (!(chart instanceof HorizontalBarChart)) {
-            chart.setData(data);
-            chart.getXAxis().setAxisMinimum(-0.5f);
-            chart.getXAxis().setAxisMaximum(chart.getBarData().getXMax()+0.5f);
-        }
     }
 
     public static void formatValuesNoDecimals(BarData data)
@@ -67,7 +71,7 @@ public class ChartStyles {
     public static void barChartIconLabel(BarChart chart, BarData data, Context ctx)
     {
         formatValuesNoDecimals(data);
-        fixBarChartAxisMinMax(chart, data);
+        chart.setData(data);
 
         ArrayList<Bitmap> imageList = new ArrayList<>();
         for(int i = 0; i < data.getDataSets().get(0).getEntryCount(); i++)
@@ -93,7 +97,7 @@ public class ChartStyles {
     public static void horizontalBarChartIconLabel(HorizontalBarChart chart, BarData data, Context ctx)
     {
         formatValuesNoDecimals(data);
-        fixBarChartAxisMinMax(chart, data);
+        chart.setData(data);
 
         ArrayList<Bitmap> imageList = new ArrayList<>();
         for(int i = 0; i < data.getDataSets().get(0).getEntryCount(); i++)

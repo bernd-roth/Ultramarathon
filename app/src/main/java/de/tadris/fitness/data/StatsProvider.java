@@ -13,11 +13,13 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -27,6 +29,8 @@ import de.tadris.fitness.aggregation.WorkoutTypeFilter;
 import de.tadris.fitness.util.WorkoutProperty;
 import de.tadris.fitness.util.charts.DataSetStyles;
 import de.tadris.fitness.util.exceptions.NoDataException;
+
+import static java.lang.Math.min;
 
 public class StatsProvider {
 
@@ -163,6 +167,33 @@ public class StatsProvider {
 
         return DataSetStyles.applyDefaultBarStyle(ctx,
                 new BarDataSet(barEntries, WORKOUT_PROPERTY.getStringRepresentation(ctx)));
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public BarDataSet createHistogramData(List<Double> values, int bins, String label) {
+        Collections.sort(values);
+        double min = values.get(0);
+        double max = values.get(values.size()-1);
+        double binWidth = (max-min)/bins;
+        int[] histogram = new int[bins];
+        int binIndex=0;
+
+        for(double val : values)
+        {
+            if(val <= min((binIndex+1)*binWidth+min, max))
+                histogram[binIndex]++;
+            else
+                binIndex++;
+        }
+
+        ArrayList<BarEntry> barEntries = new ArrayList<>();
+        for(int i=0; i<bins; i++)
+        {
+            barEntries.add(new BarEntry((float) ((i+1)*binWidth+min), histogram[i]));
+        }
+
+        return DataSetStyles.applyDefaultBarStyle(ctx,
+                new BarDataSet(barEntries, label));
     }
 
     public CandleDataSet getPaceCandleData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {
