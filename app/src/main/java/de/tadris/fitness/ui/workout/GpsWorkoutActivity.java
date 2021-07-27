@@ -33,7 +33,9 @@ import org.mapsforge.map.layer.Layer;
 import org.mapsforge.map.layer.download.TileDownloadLayer;
 import org.mapsforge.map.layer.overlay.FixedPixelCircle;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import de.tadris.fitness.Instance;
@@ -42,6 +44,7 @@ import de.tadris.fitness.data.BaseWorkout;
 import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.GpsWorkout;
 import de.tadris.fitness.data.GpsWorkoutData;
+import de.tadris.fitness.data.StatsDataTypes;
 import de.tadris.fitness.data.UserPreferences;
 import de.tadris.fitness.map.ColoringStrategy;
 import de.tadris.fitness.map.GradientColoringStrategy;
@@ -233,4 +236,47 @@ public abstract class GpsWorkoutActivity extends WorkoutActivity implements MapS
         return new GpsWorkoutData(workout, samples);
     }
 
+    @Override
+    protected List<BaseSample> aggregatedSamples(long aggregationLength) {
+        long endTime = samples.get(samples.size() - 1).relativeTime;
+        long sampleTime = samples.get(0).relativeTime;
+
+        List<BaseSample> aggregatedSamples = new ArrayList<>();
+        ArrayList<BaseSample> samplesList = new ArrayList<>(samples);
+
+        while (sampleTime < endTime) {
+            GpsSample combinedSample = new GpsSample();
+            ArrayList<Double> lons = new ArrayList<>();
+            ArrayList<Double> lats = new ArrayList<>();
+
+            long numberOfAggregations = 0;
+
+            StatsDataTypes.TimeSpan span = new StatsDataTypes.TimeSpan(sampleTime, sampleTime + aggregationLength);
+
+            Iterator<BaseSample> sampleIterator = samplesList.iterator();
+            while (sampleIterator.hasNext()) {
+                BaseSample sample = sampleIterator.next();
+                if (sample instanceof GpsSample) {
+                    if (span.contains(sample.relativeTime)) {
+                        combinedSample.tmpRoundedSpeed += ((GpsSample) sample).tmpRoundedSpeed;
+                        combinedSample.elevationMSL += ((GpsSample) sample).elevationMSL;
+                        lons.add(((GpsSample) sample).lon);
+                        lats.add(((GpsSample) sample).lat);
+                        numberOfAggregations++;
+                    }
+                }
+            }
+
+            if (numberOfAggregations != 0) {
+                combinedSample.tmpRoundedSpeed /= numberOfAggregations;
+                combinedSample.elevationMSL /= numberOfAggregations;
+                combinedSample.relativeTime = sampleTime;
+                combinedSample.lon = lons.get(lons.size() / 2);
+                combinedSample.lat = lats.get(lats.size() / 2);
+                aggregatedSamples.add(combinedSample);
+            }
+            sampleTime += aggregationLength;
+        }
+        return aggregatedSamples;
+    }
 }

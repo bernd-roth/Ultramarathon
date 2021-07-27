@@ -7,7 +7,10 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.Chart;
+import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -38,6 +41,20 @@ public class ChartStyles {
         chart.getDescription().setEnabled(false);
         chart.setPinchZoom(false);
         chart.setDrawGridBackground(false);
+    }
+
+    public static void defaultLineChart(CombinedChart chart) {
+        chart.getAxisLeft().setEnabled(true);
+        chart.getAxisLeft().setDrawGridLines(true);
+        chart.getAxisRight().setEnabled(false);
+        chart.getXAxis().setEnabled(true);
+        chart.getLegend().setEnabled(false);
+        chart.getDescription().setEnabled(false);
+        chart.getXAxis().setPosition(XAxis.XAxisPosition.TOP);
+
+        chart.getDescription().setEnabled(false);
+        chart.setPinchZoom(false);
+        chart.setDrawGridBackground(true);
     }
 
     public static void defaultBarData(BarChart chart, BarData data) {
