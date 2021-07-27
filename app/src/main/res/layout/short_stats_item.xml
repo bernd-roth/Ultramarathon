@@ -26,7 +26,7 @@
             android:insetTop="0dp"
             android:insetRight="5dp"
             android:insetBottom="0dp"
-            android:text="@string/month"
+            android:text="@string/workoutTypeAll"
             android:textColor="@color/textColorLight" />
 
     </LinearLayout>

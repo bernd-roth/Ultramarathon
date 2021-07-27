@@ -76,6 +76,7 @@ public class ShowGpsWorkoutActivity extends GpsWorkoutActivity implements Dialog
 
     TextView commentView;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
