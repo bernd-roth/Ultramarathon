@@ -169,7 +169,7 @@ public class ShowGpsWorkoutActivity extends GpsWorkoutActivity implements Dialog
         int nBins = 10;
         BarDataSet dataSet = new StatsProvider(this).createHistogramData(data, nBins, getString(R.string.workoutSpeed));
         BarData barData = new BarData(dataSet);
-        barData.setBarWidth((float) ((max-min)/(nBins+1)));
+        barData.setBarWidth((float) ((max-min)/nBins));
         chart.setData(barData);
 
         ChartStyles.defaultBarChart(chart);
