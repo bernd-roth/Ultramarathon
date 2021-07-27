@@ -46,7 +46,7 @@ public class ChartStyles {
         chart.getXAxis().setEnabled(true);
         chart.getLegend().setEnabled(false);
         chart.getDescription().setEnabled(false);
-        chart.getXAxis().setPosition(XAxis.XAxisPosition.TOP);
+        chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
 
         chart.getDescription().setEnabled(false);
         chart.setPinchZoom(false);

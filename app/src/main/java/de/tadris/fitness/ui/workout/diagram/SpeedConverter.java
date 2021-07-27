@@ -37,12 +37,12 @@ public class SpeedConverter extends AbstractSampleConverter {
 
     @Override
     public void onCreate(BaseWorkoutData data) {
-        WorkoutManager.roundSpeedValues(data.castToGpsData().getSamples());
+
     }
 
     @Override
     public float getValue(BaseSample sample) {
-        return (float) distanceUnitUtils.getDistanceUnitSystem().getSpeedFromMeterPerSecond(((GpsSample) sample).tmpRoundedSpeed);
+        return (float) distanceUnitUtils.getDistanceUnitSystem().getSpeedFromMeterPerSecond(((GpsSample) sample).speed);
     }
 
     @Override

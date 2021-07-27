@@ -69,6 +69,7 @@ import de.tadris.fitness.util.unit.EnergyUnitUtils;
 
 public abstract class WorkoutActivity extends InformationActivity {
 
+    public static final int NUMBER_OF_SAMPLES_IN_DIAGRAM = 80;
     public static final String WORKOUT_ID_EXTRA = "de.tadris.fitness.WorkoutActivity.WORKOUT_ID_EXTRA";
 
     List<BaseSample> samples;
@@ -170,6 +171,27 @@ public abstract class WorkoutActivity extends InformationActivity {
             converter.afterAdd(chart);
         }
 
+        return chart;
+    }
+
+    protected void onChartSelectionChanged(BaseSample sample) {
+    }
+
+    protected List<BaseSample> aggregatedSamples(int bins) {
+        long startTime = samples.get(0).relativeTime;
+        long endTime = samples.get(samples.size() - 1).relativeTime;
+
+        return aggregatedSamples((endTime - startTime) / bins);
+    }
+
+    abstract List<BaseSample> aggregatedSamples(long aggregationLength);
+
+    protected void updateChart(CombinedChart chart, List<SampleConverter> converters, boolean showIntervalSets) {
+        boolean hasMultipleConverters = converters.size() > 1;
+        CombinedData combinedData = new CombinedData();
+
+        Description description = new Description();
+
         chart.setOnChartGestureListener(new OnChartGestureListener() {
             @Override
             public void onChartGestureStart(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
@@ -212,27 +234,6 @@ public abstract class WorkoutActivity extends InformationActivity {
             }
         });
 
-        return chart;
-    }
-
-    protected void onChartSelectionChanged(BaseSample sample) {
-    }
-
-    protected List<BaseSample> aggregatedSamples(int bins) {
-        long startTime = samples.get(0).relativeTime;
-        long endTime = samples.get(samples.size() - 1).relativeTime;
-
-        return aggregatedSamples((endTime - startTime) / bins);
-    }
-
-    abstract List<BaseSample> aggregatedSamples(long aggregationLength);
-
-    protected void updateChart(CombinedChart chart, List<SampleConverter> converters, boolean showIntervalSets) {
-        boolean hasMultipleConverters = converters.size() > 1;
-        CombinedData combinedData = new CombinedData();
-
-        Description description = new Description();
-
         if (hasMultipleConverters || converters.size() == 0) {
             description.setText("");
         } else {
@@ -243,9 +244,9 @@ public abstract class WorkoutActivity extends InformationActivity {
         chart.getAxisRight().setValueFormatter(null);
 
         long timeSpan = (long) ((chart.getHighestVisibleX() - chart.getLowestVisibleX()) * 1000f * 60f);
-        timeSpan /= 80;
+        timeSpan /= NUMBER_OF_SAMPLES_IN_DIAGRAM;
         if (timeSpan == 0) {
-            timeSpan = (samples.get(samples.size() - 1).relativeTime - samples.get(0).relativeTime) / 80;
+            timeSpan = (samples.get(samples.size() - 1).relativeTime - samples.get(0).relativeTime) / NUMBER_OF_SAMPLES_IN_DIAGRAM;
         }
 
         LineData lineData = new LineData();

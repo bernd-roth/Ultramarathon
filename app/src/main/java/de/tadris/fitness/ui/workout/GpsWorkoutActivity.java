@@ -258,8 +258,9 @@ public abstract class GpsWorkoutActivity extends WorkoutActivity implements MapS
                 BaseSample sample = sampleIterator.next();
                 if (sample instanceof GpsSample) {
                     if (span.contains(sample.relativeTime)) {
-                        combinedSample.tmpRoundedSpeed += ((GpsSample) sample).tmpRoundedSpeed;
+                        combinedSample.speed += ((GpsSample) sample).speed;
                         combinedSample.elevationMSL += ((GpsSample) sample).elevationMSL;
+                        combinedSample.tmpInclination += ((GpsSample) sample).tmpInclination;
                         lons.add(((GpsSample) sample).lon);
                         lats.add(((GpsSample) sample).lat);
                         numberOfAggregations++;
@@ -268,8 +269,9 @@ public abstract class GpsWorkoutActivity extends WorkoutActivity implements MapS
             }
 
             if (numberOfAggregations != 0) {
-                combinedSample.tmpRoundedSpeed /= numberOfAggregations;
+                combinedSample.speed /= numberOfAggregations;
                 combinedSample.elevationMSL /= numberOfAggregations;
+                combinedSample.tmpInclination /= numberOfAggregations;
                 combinedSample.relativeTime = sampleTime;
                 combinedSample.lon = lons.get(lons.size() / 2);
                 combinedSample.lat = lats.get(lats.size() / 2);
