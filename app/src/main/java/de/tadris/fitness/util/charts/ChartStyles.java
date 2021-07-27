@@ -106,7 +106,7 @@ public class ChartStyles {
             }
             catch (Exception e)
             {
-                return; // If drawable not available, its not possible...
+                return; // If drawable not available, its not possible... //Todo: But it should be possible to draw the other icons
             }
         }
 

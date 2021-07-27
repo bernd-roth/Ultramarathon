@@ -60,7 +60,9 @@ public class TimeSpanSelection extends LinearLayout {
     private void loadAggregationSpanEntries() {
         ArrayList<String> aggregationSpanStrings = new ArrayList<>();
         for (AggregationSpan aggregationSpan : AggregationSpan.values()) {
-            aggregationSpanStrings.add(getContext().getString(aggregationSpan.title));
+            if (aggregationSpan != AggregationSpan.SINGLE) {
+                aggregationSpanStrings.add(getContext().getString(aggregationSpan.title));
+            }
         }
 
         aggregationSpanArrayAdapter = new ArrayAdapter<String>(getContext(),

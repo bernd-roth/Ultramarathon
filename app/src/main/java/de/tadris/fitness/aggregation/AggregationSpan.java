@@ -57,6 +57,13 @@ public enum AggregationSpan {
             super.applyToCalendar(calendar);
             calendar.set(Calendar.DAY_OF_YEAR, 1);
         }
+    },
+    ALL(R.string.workoutTypeAll, R.string.workoutTypeAll, Long.MAX_VALUE, "yyyy") {
+        @Override
+        public void applyToCalendar(Calendar calendar) {
+            super.applyToCalendar(calendar);
+            calendar.set(Calendar.YEAR, 1);
+        }
     };
 
     @StringRes

@@ -88,7 +88,7 @@ public class StatsProvider {
 
         HashMap<WorkoutType, Float> distances = new HashMap<>();
 
-        ArrayList<StatsDataTypes.DataPoint> workouts = dataProvider.getData(WORKOUT_PROPERTY, WorkoutTypeManager.getInstance().getAllTypes(ctx));
+        ArrayList<StatsDataTypes.DataPoint> workouts = dataProvider.getData(WORKOUT_PROPERTY, WorkoutTypeManager.getInstance().getAllTypes(ctx), timeSpan);
 
         if (workouts.isEmpty()) {
             throw new NoDataException();
@@ -127,7 +127,7 @@ public class StatsProvider {
 
         HashMap<WorkoutType, Long> durations = new HashMap<>();
 
-        ArrayList<StatsDataTypes.DataPoint> workouts = dataProvider.getData(WORKOUT_PROPERTY, WorkoutTypeManager.getInstance().getAllTypes(ctx));
+        ArrayList<StatsDataTypes.DataPoint> workouts = dataProvider.getData(WORKOUT_PROPERTY, WorkoutTypeManager.getInstance().getAllTypes(ctx), timeSpan);
 
         if (workouts.isEmpty()) {
             throw new NoDataException();
