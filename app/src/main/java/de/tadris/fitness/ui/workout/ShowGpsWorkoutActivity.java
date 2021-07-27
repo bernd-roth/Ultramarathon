@@ -22,17 +22,24 @@ package de.tadris.fitness.ui.workout;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.content.FileProvider;
+
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,6 +53,7 @@ import de.tadris.fitness.R;
 import de.tadris.fitness.data.BaseSample;
 import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.StatsDataTypes;
+import de.tadris.fitness.data.StatsProvider;
 import de.tadris.fitness.osm.OAuthAuthentication;
 import de.tadris.fitness.osm.OsmTraceUploader;
 import de.tadris.fitness.ui.ShareFileActivity;
@@ -57,6 +65,8 @@ import de.tadris.fitness.ui.workout.diagram.SampleConverter;
 import de.tadris.fitness.ui.workout.diagram.SpeedConverter;
 import de.tadris.fitness.util.DataManager;
 import de.tadris.fitness.util.DialogUtils;
+import de.tadris.fitness.util.charts.ChartStyles;
+import de.tadris.fitness.util.charts.DataSetStyles;
 import de.tadris.fitness.util.io.general.IOHelper;
 import de.tadris.fitness.util.sections.SectionListModel;
 import de.tadris.fitness.util.sections.SectionListPresenter;
@@ -69,6 +79,7 @@ public class ShowGpsWorkoutActivity extends GpsWorkoutActivity implements Dialog
 
     TextView commentView;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,6 +124,9 @@ public class ShowGpsWorkoutActivity extends GpsWorkoutActivity implements Dialog
             addKeyValue(getString(R.string.workoutTopSpeed), distanceUnitUtils.getSpeed(workout.topSpeed));
 
             addDiagram(new SpeedConverter(this), ShowWorkoutMapDiagramActivity.DIAGRAM_TYPE_SPEED);
+
+            addTitle(getString(R.string.workoutIntensity));
+            addIntensityDiagram();
         } else {
             addKeyValue(getString(R.string.workoutAvgSpeedShort), distanceUnitUtils.getSpeed(workout.avgSpeed));
         }
@@ -143,6 +157,28 @@ public class ShowGpsWorkoutActivity extends GpsWorkoutActivity implements Dialog
             addTitle(getString(R.string.sections));
             addSectionList();
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void addIntensityDiagram(){
+        BarChart chart = new BarChart(this);
+        List<Double> data = new ArrayList<>();
+        double min=samples.get(0).speed, max=min;
+        for(GpsSample sample: samples)
+        {
+            data.add(sample.speed);
+            min = (min < sample.speed) ? min : sample.speed;
+            max = (max > sample.speed) ? max : sample.speed;
+        }
+        int nBins = 10;
+        BarDataSet dataSet = new StatsProvider(this).createHistogramData(data, nBins, getString(R.string.workoutSpeed));
+        BarData barData = new BarData(dataSet);
+        barData.setBarWidth((float) ((max-min)/nBins));
+        chart.setData(barData);
+
+        ChartStyles.defaultBarChart(chart);
+        chart.getXAxis().setEnabled(true);
+        root.addView(chart, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getMapHeight() / 2));
     }
 
     private void addSectionList() {
