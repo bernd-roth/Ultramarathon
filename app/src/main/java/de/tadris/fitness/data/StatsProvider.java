@@ -41,7 +41,7 @@ public class StatsProvider {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public BarDataSet numberOfActivities(StatsDataTypes.TimeSpan timeSpan) {
+    public BarDataSet numberOfActivities(StatsDataTypes.TimeSpan timeSpan) throws NoDataException {
         ArrayList<BarEntry> barEntries = new ArrayList<>();
         int barNumber = 0;
 
@@ -50,6 +50,10 @@ public class StatsProvider {
         ArrayList<StatsDataTypes.DataPoint> workouts = dataProvider.getData(WorkoutProperty.LENGTH,
                 WorkoutTypeManager.getInstance().getAllTypes(ctx),
                 timeSpan);
+
+        if (workouts.isEmpty()) {
+            throw new NoDataException();
+        }
 
         // Count number of workouts of specific WorkoutType in a specific time span
         for (StatsDataTypes.DataPoint dataPoint : workouts) {
@@ -76,7 +80,7 @@ public class StatsProvider {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public BarDataSet totalDistances(StatsDataTypes.TimeSpan timeSpan) {
+    public BarDataSet totalDistances(StatsDataTypes.TimeSpan timeSpan) throws NoDataException {
         final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.LENGTH;
 
         ArrayList<BarEntry> barEntries = new ArrayList<>();
@@ -85,6 +89,10 @@ public class StatsProvider {
         HashMap<WorkoutType, Float> distances = new HashMap<>();
 
         ArrayList<StatsDataTypes.DataPoint> workouts = dataProvider.getData(WORKOUT_PROPERTY, WorkoutTypeManager.getInstance().getAllTypes(ctx));
+
+        if (workouts.isEmpty()) {
+            throw new NoDataException();
+        }
 
         for (StatsDataTypes.DataPoint dataPoint : workouts) {
             distances.put(dataPoint.workoutType,
@@ -111,7 +119,7 @@ public class StatsProvider {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public BarDataSet totalDurations(StatsDataTypes.TimeSpan timeSpan) {
+    public BarDataSet totalDurations(StatsDataTypes.TimeSpan timeSpan) throws NoDataException {
         final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.DURATION;
 
         ArrayList<BarEntry> barEntries = new ArrayList<>();
@@ -120,6 +128,10 @@ public class StatsProvider {
         HashMap<WorkoutType, Long> durations = new HashMap<>();
 
         ArrayList<StatsDataTypes.DataPoint> workouts = dataProvider.getData(WORKOUT_PROPERTY, WorkoutTypeManager.getInstance().getAllTypes(ctx));
+
+        if (workouts.isEmpty()) {
+            throw new NoDataException();
+        }
 
         for (StatsDataTypes.DataPoint dataPoint : workouts) {
             durations.put(dataPoint.workoutType,
@@ -262,7 +274,7 @@ public class StatsProvider {
                 workoutTypes);
 
         if (data.isEmpty()) {
-            throw new NoDataException(workoutType);
+            throw new NoDataException();
         }
 
         ArrayList<CandleEntry> candleEntries = new ArrayList<>();

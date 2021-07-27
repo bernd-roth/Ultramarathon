@@ -27,6 +27,7 @@ import de.tadris.fitness.data.StatsDataTypes;
 import de.tadris.fitness.data.StatsProvider;
 import de.tadris.fitness.ui.statistics.StatisticsActivity;
 import de.tadris.fitness.util.charts.ChartStyles;
+import de.tadris.fitness.util.exceptions.NoDataException;
 
 public class ShortStatsAdapter extends RecyclerView.Adapter<ShortStatsAdapter.ViewHolder> {
 
@@ -54,18 +55,22 @@ public class ShortStatsAdapter extends RecyclerView.Adapter<ShortStatsAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         BarData data;
         StatsDataTypes.TimeSpan allTime = new StatsDataTypes.TimeSpan(0,Long.MAX_VALUE);
-        switch (position)
-        {
-            case 0:
-                data = new BarData(statsProvider.numberOfActivities(allTime));
-                holder.title.setText(ctx.getString(R.string.numberOfWorkouts));
-                break;
-            default:
-                data = new BarData(statsProvider.totalDistances(allTime));
-                holder.title.setText(ctx.getString(R.string.workoutDistance));
-                break;
+        try {
+            switch (position)
+            {
+                case 0:
+                    data = new BarData(statsProvider.numberOfActivities(allTime));
+                    holder.title.setText(ctx.getString(R.string.numberOfWorkouts));
+                    break;
+                default:
+                    data = new BarData(statsProvider.totalDistances(allTime));
+                    holder.title.setText(ctx.getString(R.string.workoutDistance));
+                    break;
+            }
+            ChartStyles.barChartIconLabel(holder.chart, data, ctx);
+        } catch (NoDataException e) {
+            holder.chart.clear();
         }
-        ChartStyles.barChartIconLabel(holder.chart, data, ctx);
     }
 
     @Override
