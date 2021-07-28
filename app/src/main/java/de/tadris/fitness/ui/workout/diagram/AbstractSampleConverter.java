@@ -28,8 +28,9 @@ import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.formatter.DefaultValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 
+import java.util.concurrent.TimeUnit;
+
 import de.tadris.fitness.Instance;
-import de.tadris.fitness.util.charts.formatter.MinutesFormatter;
 import de.tadris.fitness.util.charts.formatter.TimeFormatter;
 import de.tadris.fitness.util.unit.DistanceUnitUtils;
 import de.tadris.fitness.util.unit.EnergyUnitUtils;
@@ -57,7 +58,7 @@ public abstract class AbstractSampleConverter implements SampleConverter {
 
     @Override
     public ValueFormatter getXValueFormatter() {
-        return new MinutesFormatter();
+        return new TimeFormatter(TimeUnit.MINUTES);
     }
 
     @Override

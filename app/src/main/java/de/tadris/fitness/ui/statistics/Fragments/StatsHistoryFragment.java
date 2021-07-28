@@ -19,9 +19,11 @@ import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CombinedData;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.DefaultValueFormatter;
 import com.github.mikephil.charting.listener.ChartTouchListener;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -35,6 +37,8 @@ import de.tadris.fitness.ui.statistics.WorkoutTypeSelection;
 import de.tadris.fitness.util.charts.ChartStyles;
 import de.tadris.fitness.util.charts.DataSetStyles;
 import de.tadris.fitness.util.charts.formatter.FractionedDateFormatter;
+import de.tadris.fitness.util.charts.formatter.SpeedFormatter;
+import de.tadris.fitness.util.charts.formatter.TimeFormatter;
 import de.tadris.fitness.util.exceptions.NoDataException;
 import de.tadris.fitness.util.statistics.ChartSynchronizer;
 import de.tadris.fitness.util.statistics.OnChartGestureMultiListener;
@@ -149,6 +153,7 @@ public class StatsHistoryFragment extends StatsFragment {
                     Intent i = new Intent(context, DetailStatsActivity.class);
                     i.putExtra("chart", combinedChart.getData().getDataSetLabels()[0]);
                     i.putExtra("type", selection.getSelectedWorkoutType().id);
+                    i.putExtra("formatter", combinedChart.getAxisLeft().getValueFormatter().getClass());
                     String label = "";
                     if(combinedChart.getLegend().getEntries().length>0)
                         label =combinedChart.getLegend().getEntries()[0].label;
@@ -191,8 +196,11 @@ public class StatsHistoryFragment extends StatsFragment {
 
 
         ChartStyles.setYAxisLabel(speedChart, Instance.getInstance(context).distanceUnitUtils.getDistanceUnitSystem().getSpeedUnit());
+        speedChart.getAxisLeft().setValueFormatter(new SpeedFormatter(Instance.getInstance(context).distanceUnitUtils));
         ChartStyles.setYAxisLabel(distanceChart, Instance.getInstance(context).distanceUnitUtils.getDistanceUnitSystem().getLongDistanceUnit());
+        distanceChart.getAxisLeft().setValueFormatter(new DefaultValueFormatter(1));
         ChartStyles.setYAxisLabel(durationChart, getString(R.string.timeMinuteShort));
+        durationChart.getAxisLeft().setValueFormatter(new TimeFormatter(TimeUnit.MINUTES, true, true, false));
 
         updateCharts(selection.getSelectedWorkoutType());
     }
@@ -231,9 +239,11 @@ public class StatsHistoryFragment extends StatsFragment {
                 // Retrieve candle data
                 candleDataSet = statsProvider.getPaceCandleData(aggregationSpan, workoutType);
                 ChartStyles.setYAxisLabel(speedChart, Instance.getInstance(context).distanceUnitUtils.getPaceUnit());
+                speedChart.getAxisLeft().setValueFormatter(new TimeFormatter(TimeUnit.MINUTES, true, true, false));
             } else {
                 candleDataSet = statsProvider.getSpeedCandleData(aggregationSpan, workoutType);
                 ChartStyles.setYAxisLabel(speedChart, Instance.getInstance(context).distanceUnitUtils.getDistanceUnitSystem().getSpeedUnit());
+                speedChart.getAxisLeft().setValueFormatter(new SpeedFormatter(Instance.getInstance(context).distanceUnitUtils));
             }
 
             // Add candle data

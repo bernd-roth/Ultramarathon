@@ -4,17 +4,16 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.MotionEvent;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
 import com.github.mikephil.charting.charts.CombinedChart;
-import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.data.CandleData;
 import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CombinedData;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.DefaultValueFormatter;
 import com.github.mikephil.charting.listener.ChartTouchListener;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
 
@@ -28,7 +27,9 @@ import de.tadris.fitness.data.WorkoutTypeManager;
 import de.tadris.fitness.ui.FitoTrackActivity;
 import de.tadris.fitness.util.charts.ChartStyles;
 import de.tadris.fitness.util.charts.DataSetStyles;
+import de.tadris.fitness.util.charts.DisplayValueMarker;
 import de.tadris.fitness.util.charts.formatter.FractionedDateFormatter;
+import de.tadris.fitness.util.charts.formatter.TimeFormatter;
 import de.tadris.fitness.util.exceptions.NoDataException;
 
 public class DetailStatsActivity extends FitoTrackActivity {
@@ -65,8 +66,15 @@ public class DetailStatsActivity extends FitoTrackActivity {
         setTitle(chartId);
         String type = (String) getIntent().getSerializableExtra("type");
         String label = (String) getIntent().getSerializableExtra("ylabel");
+        Object formatterClass = (Object) getIntent().getSerializableExtra("formatter");
         ChartStyles.defaultLineChart(chart);
         ChartStyles.setYAxisLabel(chart,label);
+        chart.setMarker(new DisplayValueMarker(this, chart.getAxisLeft().getValueFormatter(), label));
+
+        if(formatterClass == TimeFormatter.class)
+            chart.getAxisLeft().setValueFormatter(new TimeFormatter(TimeUnit.MINUTES, true, true, false));
+        else
+            chart.getAxisLeft().setValueFormatter(new DefaultValueFormatter(2));
 
         if (type.equals("_all")) {
             workoutType = new WorkoutType();
@@ -122,7 +130,7 @@ public class DetailStatsActivity extends FitoTrackActivity {
                 }
 
                 if (oldAggregationSpan != aggregationSpan) {
-                    updateCharts(workoutType, chartId);
+                    updateChart(workoutType, chartId);
                 }
             }
 
@@ -132,11 +140,12 @@ public class DetailStatsActivity extends FitoTrackActivity {
             }
         });
 
-        updateCharts(workoutType, chartId);
+        chart.setMarker(new DisplayValueMarker(this, chart.getAxisLeft().getValueFormatter(), label));
+        updateChart(workoutType, chartId);
     }
 
 
-    private void updateCharts(WorkoutType workoutType, String chartId) {
+    private void updateChart(WorkoutType workoutType, String chartId) {
 
         CandleDataSet candleDataSet = null;
 

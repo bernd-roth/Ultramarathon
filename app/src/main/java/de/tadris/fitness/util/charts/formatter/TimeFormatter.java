@@ -27,7 +27,8 @@ public class TimeFormatter extends ValueFormatter {
      */
     @Override
     public String getFormattedValue(float value) {
-        long s = input.toSeconds((long) value);
+        long multip = 1000000;
+        long s = input.toSeconds((long) (value*multip))/multip; // "Trick" to avoid precision loss
         if(dispSecs)
             return de.tadris.fitness.util.unit.TimeFormatter.formatDuration(s);
         else if (dispHours)
