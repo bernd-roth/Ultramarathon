@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -12,6 +14,8 @@ import androidx.annotation.RequiresApi;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
+
+import java.util.GregorianCalendar;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.StatsDataProvider;
@@ -24,7 +28,6 @@ import de.tadris.fitness.util.exceptions.NoDataException;
 
 public class ShortStatsItemView extends LinearLayout {
     BarChart chart;
-    BarData barData;
     TextView title;
     TimeSpanSelection timeSpanSelection;
 
@@ -32,10 +35,12 @@ public class ShortStatsItemView extends LinearLayout {
 
     public int chartType;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public ShortStatsItemView(Context context) {
         this(context, null);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public ShortStatsItemView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         inflate(context, R.layout.short_stats_item, this);
@@ -55,7 +60,7 @@ public class ShortStatsItemView extends LinearLayout {
         timeSpanSelection.setLimits(firstWorkoutTime, lastWorkoutTime);
         timeSpanSelection.addOnTimeSpanSelectionListener((aggregationSpan, instance) -> updateChart());
 
-        setOnClickListener(view -> context.startActivity(new Intent(context, StatisticsActivity.class)));
+        setOnClickListener(view -> context.startActivity(new Intent(getContext(), StatisticsActivity.class)));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -80,7 +85,8 @@ public class ShortStatsItemView extends LinearLayout {
             }
             ChartStyles.barChartIconLabel(chart, data, getContext());
         } catch (NoDataException e) {
-            chart.clear();
+            chart.clearValues();
         }
+        chart.invalidate();
     }
 }

@@ -45,12 +45,13 @@ public class ShortStatsAdapter extends RecyclerView.Adapter<ShortStatsAdapter.Vi
         this.ctx = ctx;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = new ShortStatsItemView(ctx);
-        view.getLayoutParams().width = parent.getMeasuredWidth();
-        view.getLayoutParams().height = parent.getMeasuredHeight();
+        ViewGroup.LayoutParams parentParams = parent.getLayoutParams();
+        view.setLayoutParams(new ViewGroup.LayoutParams(parentParams.width, parentParams.height));
         return new ViewHolder(view, ctx);
     }
 
@@ -70,7 +71,6 @@ public class ShortStatsAdapter extends RecyclerView.Adapter<ShortStatsAdapter.Vi
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-
         public ViewHolder(@NonNull View itemView, Context ctx) {
             super(itemView);
         }

@@ -18,7 +18,8 @@
             android:id="@+id/aggregationSpanSpinner"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layoutDirection="ltr"/>
+            android:layoutDirection="ltr"
+            android:background="@null"/>
     </LinearLayout>
 
     <LinearLayout

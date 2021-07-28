@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
@@ -66,6 +67,7 @@ public class TimeSpanSelection extends LinearLayout {
 
         if (!isInstanceSelectable) {
             findViewById(R.id.aggregationSpanInstancePickerLayout).getLayoutParams().width = 0;
+            aggregationSpanInstancePicker.getLayoutParams().width = 0;
         }
 
         setAggregationSpan(AggregationSpan.YEAR);
