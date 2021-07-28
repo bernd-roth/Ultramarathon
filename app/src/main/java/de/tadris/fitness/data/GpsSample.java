@@ -65,10 +65,6 @@ public class GpsSample extends BaseSample {
 
     @JsonIgnore
     @Ignore
-    public double tmpRoundedSpeed;
-
-    @JsonIgnore
-    @Ignore
     public double tmpElevation;
 
     @JsonIgnore

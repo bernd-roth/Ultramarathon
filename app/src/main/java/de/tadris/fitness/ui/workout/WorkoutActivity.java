@@ -23,7 +23,9 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Handler;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -40,27 +42,34 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.DefaultAxisValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.ChartTouchListener;
+import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
+import de.tadris.fitness.aggregation.AggregationSpan;
 import de.tadris.fitness.data.BaseSample;
 import de.tadris.fitness.data.BaseWorkout;
 import de.tadris.fitness.data.BaseWorkoutData;
 import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.IntervalSet;
+import de.tadris.fitness.data.StatsDataTypes;
 import de.tadris.fitness.ui.workout.diagram.SampleConverter;
 import de.tadris.fitness.util.WorkoutCalculator;
+import de.tadris.fitness.util.charts.ChartStyles;
 import de.tadris.fitness.util.unit.DistanceUnitUtils;
 import de.tadris.fitness.util.unit.EnergyUnitUtils;
 
 public abstract class WorkoutActivity extends InformationActivity {
 
+    public static final int NUMBER_OF_SAMPLES_IN_DIAGRAM = 80;
     public static final String WORKOUT_ID_EXTRA = "de.tadris.fitness.WorkoutActivity.WORKOUT_ID_EXTRA";
 
     List<BaseSample> samples;
@@ -128,6 +137,7 @@ public abstract class WorkoutActivity extends InformationActivity {
 
     private CombinedChart getDiagram(List<SampleConverter> converters, boolean showIntervalSets) {
         CombinedChart chart = new CombinedChart(this);
+        ChartStyles.defaultLineChart(chart);
 
         chart.setScaleXEnabled(diagramsInteractive);
         chart.setScaleYEnabled(false);
@@ -167,11 +177,62 @@ public abstract class WorkoutActivity extends InformationActivity {
     protected void onChartSelectionChanged(BaseSample sample) {
     }
 
+    protected List<BaseSample> aggregatedSamples(int bins) {
+        long startTime = samples.get(0).relativeTime;
+        long endTime = samples.get(samples.size() - 1).relativeTime;
+
+        return aggregatedSamples((endTime - startTime) / bins);
+    }
+
+    abstract List<BaseSample> aggregatedSamples(long aggregationLength);
+
     protected void updateChart(CombinedChart chart, List<SampleConverter> converters, boolean showIntervalSets) {
         boolean hasMultipleConverters = converters.size() > 1;
         CombinedData combinedData = new CombinedData();
 
         Description description = new Description();
+
+        chart.setOnChartGestureListener(new OnChartGestureListener() {
+            @Override
+            public void onChartGestureStart(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
+
+            }
+
+            @Override
+            public void onChartGestureEnd(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
+
+            }
+
+            @Override
+            public void onChartLongPressed(MotionEvent me) {
+
+            }
+
+            @Override
+            public void onChartDoubleTapped(MotionEvent me) {
+
+            }
+
+            @Override
+            public void onChartSingleTapped(MotionEvent me) {
+
+            }
+
+            @Override
+            public void onChartFling(MotionEvent me1, MotionEvent me2, float velocityX, float velocityY) {
+
+            }
+
+            @Override
+            public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
+                updateChart(chart, converters, showIntervalSets);
+            }
+
+            @Override
+            public void onChartTranslate(MotionEvent me, float dX, float dY) {
+
+            }
+        });
 
         if (hasMultipleConverters || converters.size() == 0) {
             description.setText("");
@@ -182,6 +243,12 @@ public abstract class WorkoutActivity extends InformationActivity {
         chart.getAxisLeft().setValueFormatter(null);
         chart.getAxisRight().setValueFormatter(null);
 
+        long timeSpan = (long) ((chart.getHighestVisibleX() - chart.getLowestVisibleX()) * 1000f * 60f);
+        timeSpan /= NUMBER_OF_SAMPLES_IN_DIAGRAM;
+        if (timeSpan == 0) {
+            timeSpan = (samples.get(samples.size() - 1).relativeTime - samples.get(0).relativeTime) / NUMBER_OF_SAMPLES_IN_DIAGRAM;
+        }
+
         LineData lineData = new LineData();
 
         int converterIndex = 0;
@@ -189,7 +256,7 @@ public abstract class WorkoutActivity extends InformationActivity {
             converter.onCreate(getBaseWorkoutData());
 
             List<Entry> entries = new ArrayList<>();
-            for (BaseSample sample : samples) {
+            for (BaseSample sample : aggregatedSamples(timeSpan)) {
                 // turn data into Entry objects
                 Entry e = new Entry((float) (sample.relativeTime) / 1000f / 60f, converter.getValue(sample), sample);
                 entries.add(e);
@@ -198,9 +265,9 @@ public abstract class WorkoutActivity extends InformationActivity {
             LineDataSet dataSet = new LineDataSet(entries, converter.getName()); // add entries to dataset
             int color = hasMultipleConverters ? getResources().getColor(converter.getColor()) : getThemePrimaryColor();
             dataSet.setColor(color);
-            dataSet.setValueTextColor(color);
+            dataSet.setDrawValues(false);
             dataSet.setDrawCircles(false);
-            dataSet.setLineWidth(4);
+            dataSet.setLineWidth(2);
             dataSet.setHighlightLineWidth(2.5f);
             dataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
             if (converters.size() == 2) {

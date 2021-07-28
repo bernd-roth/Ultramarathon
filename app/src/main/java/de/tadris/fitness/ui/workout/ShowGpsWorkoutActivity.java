@@ -52,7 +52,9 @@ import java.util.concurrent.TimeUnit;
 import de.tadris.fitness.BuildConfig;
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
+import de.tadris.fitness.data.BaseSample;
 import de.tadris.fitness.data.GpsSample;
+import de.tadris.fitness.data.StatsDataTypes;
 import de.tadris.fitness.data.StatsProvider;
 import de.tadris.fitness.osm.OAuthAuthentication;
 import de.tadris.fitness.osm.OsmTraceUploader;
@@ -72,6 +74,7 @@ import de.tadris.fitness.util.sections.SectionListModel;
 import de.tadris.fitness.util.sections.SectionListPresenter;
 import de.tadris.fitness.util.sections.SectionListView;
 import de.tadris.fitness.util.unit.TimeFormatter;
+import de.tadris.fitness.util.statistics.OnChartGestureMultiListener;
 import de.westnordost.osmapi.traces.GpsTraceDetails;
 import oauth.signpost.OAuthConsumer;
 
