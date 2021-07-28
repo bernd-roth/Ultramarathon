@@ -6,6 +6,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.BarLineChartBase;
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
@@ -14,6 +15,7 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.ChartData;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 
@@ -27,38 +29,36 @@ import static de.tadris.fitness.util.charts.BitmapHelper.drawableToBitmap;
 
 public class ChartStyles {
 
-    public static void defaultBarChart(BarChart chart)
+    public static void defaultChart(BarLineChartBase chart)
     {
-        chart.getAxisLeft().setEnabled(false);
-        chart.getAxisLeft().setDrawGridLines(false);
-        chart.getAxisRight().setEnabled(false);
-        chart.getXAxis().setEnabled(false);
-        chart.getLegend().setEnabled(false);
-        chart.getDescription().setEnabled(false);
-        chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
-
-        chart.setDrawBarShadow(false);
-        chart.setDrawValueAboveBar(true);
-        chart.getDescription().setEnabled(false);
-        chart.setPinchZoom(false);
-        chart.setDrawGridBackground(false);
-        chart.setFitBars(true);
-    }
-
-    public static void defaultLineChart(CombinedChart chart) {
         chart.getAxisLeft().setEnabled(true);
         chart.getAxisLeft().setDrawGridLines(true);
         chart.getAxisRight().setEnabled(false);
-        chart.getXAxis().setEnabled(true);
         chart.getLegend().setEnabled(false);
         chart.getDescription().setEnabled(false);
         chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
-
         chart.getDescription().setEnabled(false);
         chart.setPinchZoom(false);
         chart.setDrawGridBackground(false);
     }
 
+    public static void defaultBarChart(BarChart chart)
+    {
+        defaultChart(chart);
+        chart.getAxisLeft().setEnabled(false);
+        chart.getAxisLeft().setDrawGridLines(false);
+        chart.getXAxis().setEnabled(false);
+        chart.setDrawBarShadow(false);
+        chart.setDrawValueAboveBar(true);
+        chart.setFitBars(true);
+    }
+
+    public static void defaultLineChart(BarLineChartBase chart) {
+        defaultChart(chart);
+        chart.getAxisRight().setEnabled(false);
+        chart.getXAxis().setEnabled(true);
+        chart.getXAxis().setDrawGridLines(true);
+    }
 
     public static void setXAxisLabel(Chart chart, String label)
     {
@@ -130,7 +130,7 @@ public class ChartStyles {
 
     }
 
-    public static void setTextAppearance(BarData data)
+    public static void setTextAppearance(ChartData data)
     {
         data.setValueTextSize(12);
     }

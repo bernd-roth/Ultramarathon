@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.github.mikephil.charting.charts.CombinedChart;
+import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.data.CandleData;
 import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CombinedData;
@@ -24,6 +25,7 @@ import de.tadris.fitness.data.StatsProvider;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.data.WorkoutTypeManager;
 import de.tadris.fitness.ui.FitoTrackActivity;
+import de.tadris.fitness.util.charts.ChartStyles;
 import de.tadris.fitness.util.charts.DataSetStyles;
 import de.tadris.fitness.util.exceptions.NoDataException;
 
@@ -58,6 +60,9 @@ public class DetailStatsActivity extends FitoTrackActivity {
         String chartId = getIntent().getExtras().getString("chart");
         title.setText(chartId);
         String type = (String) getIntent().getSerializableExtra("type");
+        String label = (String) getIntent().getSerializableExtra("ylabel");
+        ChartStyles.defaultLineChart(chart);
+        ChartStyles.setYAxisLabel(chart,label);
 
         if (type.equals("_all")) {
             workoutType = new WorkoutType();

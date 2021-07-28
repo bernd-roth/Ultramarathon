@@ -41,4 +41,10 @@ public class TimeFormatter {
                 durationInS / 3600,
                 (durationInS % 3600) / 60);
     }
+
+    public static String formatMinutesOnly(long durationInS) {
+        return String.format(
+                "%d",
+                durationInS/ 60);
+    }
 }

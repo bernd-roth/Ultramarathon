@@ -193,7 +193,7 @@ public class ShowGpsWorkoutActivity extends GpsWorkoutActivity implements Dialog
         chart.setData(barData);
 
         // Create the diagram
-        de.tadris.fitness.util.charts.formatter.TimeFormatter timeFormatter = new de.tadris.fitness.util.charts.formatter.TimeFormatter();
+        de.tadris.fitness.util.charts.formatter.TimeFormatter timeFormatter = new de.tadris.fitness.util.charts.formatter.TimeFormatter(TimeUnit.MILLISECONDS);
         SpeedFormatter speedFormatter = new SpeedFormatter(distanceUnitUtils);
         ChartStyles.defaultHistogram(chart, this, speedFormatter, timeFormatter);
         ChartStyles.setXAxisLabel(chart, distanceUnitUtils.getSpeedUnit());

@@ -25,11 +25,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationSpan;
 import de.tadris.fitness.aggregation.WorkoutTypeFilter;
 import de.tadris.fitness.util.WorkoutProperty;
 import de.tadris.fitness.util.charts.DataSetStyles;
+import de.tadris.fitness.util.charts.formatter.SpeedFormatter;
+import de.tadris.fitness.util.charts.formatter.TimeFormatter;
 import de.tadris.fitness.util.exceptions.NoDataException;
 
 import static java.lang.Math.min;
@@ -151,13 +154,7 @@ public class StatsProvider {
 
         BarDataSet dataSet = DataSetStyles.applyDefaultBarStyle(ctx,
                 new BarDataSet(barEntries, WORKOUT_PROPERTY.getStringRepresentation(ctx)));
-        dataSet.setValueFormatter(new ValueFormatter() {
-            @Override
-            public String getFormattedValue(float value) {
-                long s = TimeUnit.MILLISECONDS.toSeconds((long) value);
-                return de.tadris.fitness.util.unit.TimeFormatter.formatHoursMinutes(s);
-            }
-        });
+        dataSet.setValueFormatter(new TimeFormatter(TimeUnit.MILLISECONDS, false, true, true));
         return dataSet;
     }
 
@@ -201,7 +198,8 @@ public class StatsProvider {
 
         CandleDataSet candleDataSet = new CandleDataSet(getCombinedData(span, workoutType, WORKOUT_PROPERTY),
                 WORKOUT_PROPERTY.getStringRepresentation(ctx));
-
+        CandleDataSet dataSet = DataSetStyles.applyDefaultCandleStyle(ctx, candleDataSet);
+        dataSet.setValueFormatter(new TimeFormatter(TimeUnit.MINUTES, true, true, false));
         return DataSetStyles.applyDefaultCandleStyle(ctx, candleDataSet);
     }
 
@@ -215,7 +213,7 @@ public class StatsProvider {
 
         CandleDataSet candleDataSet = new CandleDataSet(getCombinedData(span, workoutType, WORKOUT_PROPERTY),
                 WORKOUT_PROPERTY.getStringRepresentation(ctx));
-
+        candleDataSet.setValueFormatter(new SpeedFormatter(Instance.getInstance(ctx).distanceUnitUtils));
         return DataSetStyles.applyDefaultCandleStyle(ctx, candleDataSet);
     }
 
@@ -280,8 +278,10 @@ public class StatsProvider {
             entry.setClose(TimeUnit.MILLISECONDS.toMinutes((long) entry.getClose()));
         }
 
-        return DataSetStyles.applyDefaultCandleStyle(ctx, new CandleDataSet(candleEntries,
+        CandleDataSet dataSet = DataSetStyles.applyDefaultCandleStyle(ctx, new CandleDataSet(candleEntries,
                 WORKOUT_PROPERTY.getStringRepresentation(ctx)));
+        dataSet.setValueFormatter(new TimeFormatter(TimeUnit.MINUTES, false, true, false));
+        return dataSet;
     }
 
     public LineDataSet getPauseDurationLineData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {

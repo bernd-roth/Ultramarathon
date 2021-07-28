@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.data.CandleData;
 import com.github.mikephil.charting.data.CandleDataSet;
@@ -23,12 +24,14 @@ import com.github.mikephil.charting.listener.OnChartGestureListener;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationSpan;
 import de.tadris.fitness.data.StatsProvider;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.ui.statistics.DetailStatsActivity;
 import de.tadris.fitness.ui.statistics.WorkoutTypeSelection;
+import de.tadris.fitness.util.charts.ChartStyles;
 import de.tadris.fitness.util.charts.DataSetStyles;
 import de.tadris.fitness.util.exceptions.NoDataException;
 import de.tadris.fitness.util.statistics.ChartSynchronizer;
@@ -110,6 +113,7 @@ public class StatsHistoryFragment extends StatsFragment {
         combinedChartList.add(durationChart);
 
         for (CombinedChart combinedChart : combinedChartList) {
+            ChartStyles.defaultLineChart(combinedChart);
             OnChartGestureMultiListener multiListener = new OnChartGestureMultiListener(new ArrayList<>());
             multiListener.listeners.add(synchronizer.addChart(combinedChart));
             multiListener.listeners.add(new OnChartGestureListener() {
@@ -138,6 +142,10 @@ public class StatsHistoryFragment extends StatsFragment {
                     Intent i = new Intent(context, DetailStatsActivity.class);
                     i.putExtra("chart", combinedChart.getData().getDataSetLabels()[0]);
                     i.putExtra("type", selection.getSelectedWorkoutType().id);
+                    String label = "";
+                    if(combinedChart.getLegend().getEntries().length>0)
+                        label =combinedChart.getLegend().getEntries()[0].label;
+                    i.putExtra("ylabel", label);
                     context.startActivity(i);
                 }
 
@@ -173,6 +181,11 @@ public class StatsHistoryFragment extends StatsFragment {
             });
             combinedChart.setOnChartGestureListener(multiListener);
         }
+
+
+        ChartStyles.setYAxisLabel(speedChart, Instance.getInstance(context).distanceUnitUtils.getDistanceUnitSystem().getSpeedUnit());
+        ChartStyles.setYAxisLabel(distanceChart, Instance.getInstance(context).distanceUnitUtils.getDistanceUnitSystem().getLongDistanceUnit());
+        ChartStyles.setYAxisLabel(durationChart, getString(R.string.timeMinuteShort));
 
         updateCharts(selection.getSelectedWorkoutType());
     }
