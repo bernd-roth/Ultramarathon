@@ -40,12 +40,14 @@ import androidx.core.content.FileProvider;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import de.tadris.fitness.BuildConfig;
 import de.tadris.fitness.Instance;
@@ -66,11 +68,13 @@ import de.tadris.fitness.ui.workout.diagram.SpeedConverter;
 import de.tadris.fitness.util.DataManager;
 import de.tadris.fitness.util.DialogUtils;
 import de.tadris.fitness.util.charts.ChartStyles;
-import de.tadris.fitness.util.charts.DataSetStyles;
+import de.tadris.fitness.util.charts.DisplayValueMarker;
+import de.tadris.fitness.util.charts.formatter.SpeedFormatter;
 import de.tadris.fitness.util.io.general.IOHelper;
 import de.tadris.fitness.util.sections.SectionListModel;
 import de.tadris.fitness.util.sections.SectionListPresenter;
 import de.tadris.fitness.util.sections.SectionListView;
+import de.tadris.fitness.util.unit.TimeFormatter;
 import de.tadris.fitness.util.statistics.OnChartGestureMultiListener;
 import de.westnordost.osmapi.traces.GpsTraceDetails;
 import oauth.signpost.OAuthConsumer;
@@ -125,8 +129,8 @@ public class ShowGpsWorkoutActivity extends GpsWorkoutActivity implements Dialog
 
             addDiagram(new SpeedConverter(this), ShowWorkoutMapDiagramActivity.DIAGRAM_TYPE_SPEED);
 
-            addTitle(getString(R.string.workoutIntensity));
-            addIntensityDiagram();
+            addTitle(getString(R.string.histogram));
+            addSpeedHistogram();
         } else {
             addKeyValue(getString(R.string.workoutAvgSpeedShort), distanceUnitUtils.getSpeed(workout.avgSpeed));
         }
@@ -160,25 +164,43 @@ public class ShowGpsWorkoutActivity extends GpsWorkoutActivity implements Dialog
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void addIntensityDiagram(){
+    private void addSpeedHistogram(){
         BarChart chart = new BarChart(this);
         List<Double> data = new ArrayList<>();
-        double min=samples.get(0).speed, max=min;
-        for(GpsSample sample: samples)
+        List<Double> weights = new ArrayList<>();
+
+        // Gather the data for the histogram
+        SectionListModel sectionListModel = new SectionListModel(workout, samples);
+        sectionListModel.setCriterion(SectionListModel.SectionCriterion.TIME);
+        double sectionTime = 9213;
+        // Yes, this is kinda random. roughly 10 seconds seem like a good timespan for the histogram,
+        // and using this value makes it just a bit less obvious that we don't have more precise values.
+        // The goal here is to depend not to much on outliers but apply the histogram on an averaged
+        // speed diagram.
+        sectionListModel.setSectionLength(sectionTime);
+        List<SectionListModel.Section> sections = sectionListModel.getSectionList();
+        for(SectionListModel.Section section: sections)
         {
-            data.add(sample.speed);
-            min = (min < sample.speed) ? min : sample.speed;
-            max = (max > sample.speed) ? max : sample.speed;
+            weights.add(section.getTime(true));
+            double speed = 1/section.getPace();
+            data.add(speed);
         }
-        int nBins = 10;
-        BarDataSet dataSet = new StatsProvider(this).createHistogramData(data, nBins, getString(R.string.workoutSpeed));
+
+        // create the histogram
+        int nBins = 15;
+        BarDataSet dataSet = new StatsProvider(this).createWeightedHistogramData(data, weights, nBins, "");
         BarData barData = new BarData(dataSet);
-        barData.setBarWidth((float) ((max-min)/nBins));
         chart.setData(barData);
 
-        ChartStyles.defaultBarChart(chart);
-        chart.getXAxis().setEnabled(true);
-        root.addView(chart, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getMapHeight() / 2));
+        // Create the diagram
+        de.tadris.fitness.util.charts.formatter.TimeFormatter timeFormatter = new de.tadris.fitness.util.charts.formatter.TimeFormatter(TimeUnit.MILLISECONDS);
+        SpeedFormatter speedFormatter = new SpeedFormatter(distanceUnitUtils);
+        ChartStyles.defaultHistogram(chart, this, speedFormatter, timeFormatter);
+        ChartStyles.setXAxisLabel(chart, distanceUnitUtils.getSpeedUnit());
+        ChartStyles.setYAxisLabel(chart, getString(R.string.timeMinuteShort));
+        chart.setMarker(new DisplayValueMarker(this, chart.getAxisLeft().getValueFormatter(), chart.getLegend().getEntries()[0].label));
+
+        root.addView(chart, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getMapHeight()/2));
     }
 
     private void addSectionList() {

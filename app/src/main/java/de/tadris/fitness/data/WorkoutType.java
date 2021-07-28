@@ -115,7 +115,7 @@ public class WorkoutType implements Serializable {
             this.showDetailsActivityClass = showDetailsActivityClass;
         }
 
-        static RecordingType findById(String id) {
+        public static RecordingType findById(String id) {
             for (RecordingType type : values()) {
                 if (type.id.equals(id)) {
                     return type;

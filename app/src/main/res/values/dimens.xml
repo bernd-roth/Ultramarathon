@@ -2,4 +2,5 @@
 <resources>
     <dimen name="numberpicher_margin">15dp</dimen>
     <dimen name="dimen_18">18dp</dimen>
+    <item name="stats_time_factor" format="float" type="dimen">1000000000</item>
 </resources>

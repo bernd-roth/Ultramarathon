@@ -43,7 +43,8 @@ public class IndoorWorkoutRecorder extends BaseWorkoutRecorder {
 
     WorkoutType type;
     IndoorWorkout workout;
-    IndoorSample lastSample;
+    IndoorSample lastCompletedSample;
+    IndoorSample currentSample;
     final List<IndoorSample> samples = new ArrayList<>();
     private boolean saved = false;
 
@@ -94,7 +95,7 @@ public class IndoorWorkoutRecorder extends BaseWorkoutRecorder {
         boolean acceptSamples = useAutoPause ? isPausedOrResumed() : isResumed();
         if (acceptSamples && event.getTimestamp() > workout.start) {
             Log.d("Recorder", "repetition recognized with intensity " + event.getIntensity());
-            if (lastSample != null && lastSample.repetitions < type.minDistance && event.getTimestamp() - lastSample.absoluteTime < PAUSE_TIME) {
+            if (currentSample != null && currentSample.repetitions < type.minDistance && event.getTimestamp() - currentSample.absoluteTime < PAUSE_TIME) {
                 addToExistingSample(event);
             } else {
                 addNewSample(event);
@@ -104,15 +105,16 @@ public class IndoorWorkoutRecorder extends BaseWorkoutRecorder {
     }
 
     private void addToExistingSample(ExerciseRecognizer.RepetitionRecognizedEvent event) {
-        lastSample.intensity = (lastSample.repetitions * lastSample.intensity + event.getIntensity()) / (lastSample.repetitions + 1);
-        lastSample.absoluteEndTime = event.getTimestamp();
-        lastSample.repetitions++;
+        currentSample.intensity = (currentSample.repetitions * currentSample.intensity + event.getIntensity()) / (currentSample.repetitions + 1);
+        currentSample.absoluteEndTime = event.getTimestamp();
+        currentSample.repetitions++;
     }
 
     private void addNewSample(ExerciseRecognizer.RepetitionRecognizedEvent event) {
-        if (lastSample != null) {
+        if (currentSample != null) {
             // lastSample will not be changed further so we broadcast it
-            EventBus.getDefault().post(lastSample);
+            EventBus.getDefault().post(currentSample);
+            lastCompletedSample = currentSample;
         }
 
         IndoorSample sample = new IndoorSample();
@@ -125,11 +127,33 @@ public class IndoorWorkoutRecorder extends BaseWorkoutRecorder {
         sample.intervalTriggered = lastTriggeredInterval;
         lastTriggeredInterval = -1;
         samples.add(sample);
-        lastSample = sample;
+        currentSample = sample;
     }
 
     public int getRepetitionsTotal() {
         return repetitions;
+    }
+
+    public double getAverageFrequency() {
+        return (double) repetitions / Math.max(1, (double) getDuration() / 1000);
+    }
+
+    public double getCurrentFrequency() {
+        if (lastCompletedSample != null && currentSample != null) {
+            int repetitions = lastCompletedSample.repetitions + currentSample.repetitions;
+            long time = currentSample.absoluteEndTime - lastCompletedSample.absoluteTime;
+            return repetitions / ((double) time / 1000);
+        } else {
+            return 0;
+        }
+    }
+
+    public double getCurrentIntensity() {
+        if (currentSample != null) {
+            return currentSample.intensity;
+        } else {
+            return 0;
+        }
     }
 
     private IndoorWorkoutData getWorkoutData() {
@@ -169,5 +193,10 @@ public class IndoorWorkoutRecorder extends BaseWorkoutRecorder {
     @Override
     public Class<? extends RecordWorkoutActivity> getActivityClass() {
         return RecordIndoorWorkoutActivity.class;
+    }
+
+    @Override
+    public WorkoutType.RecordingType getRecordingType() {
+        return WorkoutType.RecordingType.INDOOR;
     }
 }

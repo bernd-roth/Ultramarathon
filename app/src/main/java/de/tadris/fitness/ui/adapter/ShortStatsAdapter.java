@@ -22,6 +22,7 @@ import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 
+import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.StatsDataProvider;
 import de.tadris.fitness.data.StatsDataTypes;
@@ -32,6 +33,7 @@ import de.tadris.fitness.ui.statistics.StatisticsActivity;
 import de.tadris.fitness.ui.statistics.TimeSpanSelection;
 import de.tadris.fitness.util.WorkoutProperty;
 import de.tadris.fitness.util.charts.ChartStyles;
+import de.tadris.fitness.util.charts.formatter.TimeFormatter;
 import de.tadris.fitness.util.exceptions.NoDataException;
 
 public class ShortStatsAdapter extends RecyclerView.Adapter<ShortStatsAdapter.ViewHolder> {
@@ -64,10 +66,9 @@ public class ShortStatsAdapter extends RecyclerView.Adapter<ShortStatsAdapter.Vi
         }
     }
 
-    
     @Override
     public int getItemCount() {
-        return 2;
+        return 3;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

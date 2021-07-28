@@ -2,6 +2,7 @@ package de.tadris.fitness.data;
 
 import android.content.Context;
 import android.os.Build;
+import android.util.TypedValue;
 
 import androidx.annotation.RequiresApi;
 
@@ -11,6 +12,8 @@ import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CandleEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.DefaultValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,11 +26,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationSpan;
 import de.tadris.fitness.aggregation.WorkoutTypeFilter;
 import de.tadris.fitness.util.WorkoutProperty;
 import de.tadris.fitness.util.charts.DataSetStyles;
+import de.tadris.fitness.util.charts.formatter.SpeedFormatter;
+import de.tadris.fitness.util.charts.formatter.TimeFormatter;
 import de.tadris.fitness.util.exceptions.NoDataException;
 
 import static java.lang.Math.min;
@@ -117,9 +123,10 @@ public class StatsProvider {
 
             barNumber++;
         }
-
-        return DataSetStyles.applyDefaultBarStyle(ctx,
+        BarDataSet dataSet = DataSetStyles.applyDefaultBarStyle(ctx,
                 new BarDataSet(barEntries, WORKOUT_PROPERTY.getStringRepresentation(ctx)));
+        dataSet.setValueFormatter(new DefaultValueFormatter(0));
+        return dataSet;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -146,16 +153,9 @@ public class StatsProvider {
         ArrayList<Map.Entry<WorkoutType, Long>> sortedDurations = new ArrayList<>(durations.entrySet());
         Collections.sort(sortedDurations, (first, second) -> second.getValue().compareTo(first.getValue()));
 
-        // Check if the durations should be displayed in minutes or hours
-        boolean displayHours = TimeUnit.MILLISECONDS.toMinutes(Collections.max(durations.values())) > MINUTES_LIMIT;
 
         for (Map.Entry<WorkoutType, Long> entry : sortedDurations) {
-            long duration;
-            if (displayHours) {
-                duration = TimeUnit.MILLISECONDS.toHours(entry.getValue());
-            } else {
-                duration = TimeUnit.MILLISECONDS.toMinutes(entry.getValue());
-            }
+            long duration = entry.getValue();
 
             barEntries.add(new BarEntry(
                     (float) barNumber,
@@ -165,31 +165,41 @@ public class StatsProvider {
             barNumber++;
         }
 
-        return DataSetStyles.applyDefaultBarStyle(ctx,
+        BarDataSet dataSet = DataSetStyles.applyDefaultBarStyle(ctx,
                 new BarDataSet(barEntries, WORKOUT_PROPERTY.getStringRepresentation(ctx)));
+        dataSet.setValueFormatter(new TimeFormatter(TimeUnit.MILLISECONDS, false, true, true));
+        return dataSet;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public BarDataSet createHistogramData(List<Double> values, int bins, String label) {
+        Double[] weights = new Double[values.size()];
+        Arrays.fill(weights, 1);
+        return createWeightedHistogramData(values, Arrays.asList(weights), bins, label);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public BarDataSet createWeightedHistogramData(List<Double> values, List<Double> weights, int bins, String label) {
         Collections.sort(values);
         double min = values.get(0);
         double max = values.get(values.size()-1);
         double binWidth = (max-min)/bins;
-        int[] histogram = new int[bins];
+        double[] histogram = new double[bins];
         int binIndex=0;
 
-        for(double val : values)
+        for(int i=0; i<values.size(); i++)
         {
-            if(val <= min((binIndex+1)*binWidth+min, max))
-                histogram[binIndex]++;
-            else
+            if(values.get(i) <= min((binIndex+1)*binWidth+min, max))
+                histogram[binIndex] += weights.get(i);
+            else {
                 binIndex++;
+            }
         }
 
         ArrayList<BarEntry> barEntries = new ArrayList<>();
         for(int i=0; i<bins; i++)
         {
-            barEntries.add(new BarEntry((float) ((i+1)*binWidth+min), histogram[i]));
+            barEntries.add(new BarEntry((float)(min+binWidth*i), (float) histogram[i]));
         }
 
         return DataSetStyles.applyDefaultBarStyle(ctx,
@@ -201,7 +211,8 @@ public class StatsProvider {
 
         CandleDataSet candleDataSet = new CandleDataSet(getCombinedData(span, workoutType, WORKOUT_PROPERTY),
                 WORKOUT_PROPERTY.getStringRepresentation(ctx));
-
+        CandleDataSet dataSet = DataSetStyles.applyDefaultCandleStyle(ctx, candleDataSet);
+        dataSet.setValueFormatter(new TimeFormatter(TimeUnit.MINUTES, true, true, false));
         return DataSetStyles.applyDefaultCandleStyle(ctx, candleDataSet);
     }
 
@@ -215,7 +226,7 @@ public class StatsProvider {
 
         CandleDataSet candleDataSet = new CandleDataSet(getCombinedData(span, workoutType, WORKOUT_PROPERTY),
                 WORKOUT_PROPERTY.getStringRepresentation(ctx));
-
+        candleDataSet.setValueFormatter(new SpeedFormatter(Instance.getInstance(ctx).distanceUnitUtils));
         return DataSetStyles.applyDefaultCandleStyle(ctx, candleDataSet);
     }
 
@@ -280,8 +291,10 @@ public class StatsProvider {
             entry.setClose(TimeUnit.MILLISECONDS.toMinutes((long) entry.getClose()));
         }
 
-        return DataSetStyles.applyDefaultCandleStyle(ctx, new CandleDataSet(candleEntries,
+        CandleDataSet dataSet = DataSetStyles.applyDefaultCandleStyle(ctx, new CandleDataSet(candleEntries,
                 WORKOUT_PROPERTY.getStringRepresentation(ctx)));
+        dataSet.setValueFormatter(new TimeFormatter(TimeUnit.MINUTES, false, true, false));
+        return dataSet;
     }
 
     public LineDataSet getPauseDurationLineData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {
@@ -314,7 +327,9 @@ public class StatsProvider {
             // No aggregation
             for (StatsDataTypes.DataPoint dataPoint : data) {
                 float value = (float) dataPoint.value;
-                candleEntries.add(new CandleEntry((float) dataPoint.time / R.fraction.stats_time_factor, value, value, value, value));
+                TypedValue stats_time_factor = new TypedValue();
+                ctx.getResources().getValue(R.dimen.stats_time_factor, stats_time_factor, true);
+                candleEntries.add(new CandleEntry((float) dataPoint.time / stats_time_factor.getFloat(), value, value, value, value));
             }
         } else {
 
@@ -346,8 +361,9 @@ public class StatsProvider {
                     float min = (float) Collections.min(intervalData, StatsDataTypes.DataPoint.valueComparator).value;
                     float max = (float) Collections.max(intervalData, StatsDataTypes.DataPoint.valueComparator).value;
                     float mean = calculateValueAverage(intervalData);
-
-                    candleEntries.add(new CandleEntry((float) calendar.getTimeInMillis() / R.fraction.stats_time_factor, max, min, mean, mean));
+                    TypedValue stats_time_factor = new TypedValue();
+                    ctx.getResources().getValue(R.dimen.stats_time_factor, stats_time_factor, true);
+                    candleEntries.add(new CandleEntry((float) calendar.getTimeInMillis() / stats_time_factor.getFloat(), max, min, mean, mean));
                 }
 
                 // increment by time span

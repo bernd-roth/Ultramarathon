@@ -21,6 +21,9 @@ package de.tadris.fitness.ui.workout.diagram;
 
 import android.content.Context;
 
+import com.github.mikephil.charting.formatter.ValueFormatter;
+
+import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.BaseSample;
 import de.tadris.fitness.data.BaseWorkout;
@@ -28,6 +31,7 @@ import de.tadris.fitness.data.BaseWorkoutData;
 import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.GpsWorkout;
 import de.tadris.fitness.data.WorkoutManager;
+import de.tadris.fitness.util.charts.formatter.SpeedFormatter;
 
 public class SpeedConverter extends AbstractSampleConverter {
 
@@ -49,6 +53,7 @@ public class SpeedConverter extends AbstractSampleConverter {
     public String getName() {
         return getString(R.string.workoutSpeed);
     }
+
 
     @Override
     public String getUnit() {

@@ -135,7 +135,9 @@ public class GpxImporter implements IWorkoutImporter {
     }
 
     private static Date parseDate(String str) {
-        return DateParserUtils.parseDate(str);
+        // Need parseCalendar because parseDate seems to be corrupted.
+        // The hour is always one lesser then the original time.
+        return DateParserUtils.parseCalendar(str).getTime();
     }
 
     private static String getTypeIdById(String id) {

@@ -17,6 +17,7 @@ import com.github.mikephil.charting.data.BarData;
 
 import java.util.GregorianCalendar;
 
+import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.StatsDataProvider;
 import de.tadris.fitness.data.StatsDataTypes;
@@ -78,9 +79,15 @@ public class ShortStatsItemView extends LinearLayout {
                     data = new BarData(statsProvider.numberOfActivities(span));
                     title.setText(getContext().getString(R.string.numberOfWorkouts));
                     break;
-                default:
+                case 1:
                     data = new BarData(statsProvider.totalDistances(span));
                     title.setText(getContext().getString(R.string.workoutDistance));
+                    ChartStyles.setXAxisLabel(chart, Instance.getInstance(getContext()).distanceUnitUtils.getDistanceUnitSystem().getLongDistanceUnit());
+                    break;
+                default:
+                    data = new BarData(statsProvider.totalDurations(span));
+                    title.setText(getContext().getString(R.string.workoutDuration));
+                    ChartStyles.setXAxisLabel(chart, "h");
                     break;
             }
             ChartStyles.barChartIconLabel(chart, data, getContext());
