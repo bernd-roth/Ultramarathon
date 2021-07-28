@@ -11,6 +11,8 @@ import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CandleEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.DefaultValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -109,9 +111,10 @@ public class StatsProvider {
 
             barNumber++;
         }
-
-        return DataSetStyles.applyDefaultBarStyle(ctx,
+        BarDataSet dataSet = DataSetStyles.applyDefaultBarStyle(ctx,
                 new BarDataSet(barEntries, WORKOUT_PROPERTY.getStringRepresentation(ctx)));
+        dataSet.setValueFormatter(new DefaultValueFormatter(0));
+        return dataSet;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -134,16 +137,9 @@ public class StatsProvider {
         ArrayList<Map.Entry<WorkoutType, Long>> sortedDurations = new ArrayList<>(durations.entrySet());
         Collections.sort(sortedDurations, (first, second) -> second.getValue().compareTo(first.getValue()));
 
-        // Check if the durations should be displayed in minutes or hours
-        boolean displayHours = TimeUnit.MILLISECONDS.toMinutes(Collections.max(durations.values())) > MINUTES_LIMIT;
 
         for (Map.Entry<WorkoutType, Long> entry : sortedDurations) {
-            long duration;
-            if (displayHours) {
-                duration = TimeUnit.MILLISECONDS.toHours(entry.getValue());
-            } else {
-                duration = TimeUnit.MILLISECONDS.toMinutes(entry.getValue());
-            }
+            long duration = entry.getValue();
 
             barEntries.add(new BarEntry(
                     (float) barNumber,
@@ -153,8 +149,16 @@ public class StatsProvider {
             barNumber++;
         }
 
-        return DataSetStyles.applyDefaultBarStyle(ctx,
+        BarDataSet dataSet = DataSetStyles.applyDefaultBarStyle(ctx,
                 new BarDataSet(barEntries, WORKOUT_PROPERTY.getStringRepresentation(ctx)));
+        dataSet.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                long s = TimeUnit.MILLISECONDS.toSeconds((long) value);
+                return de.tadris.fitness.util.unit.TimeFormatter.formatHoursMinutes(s);
+            }
+        });
+        return dataSet;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

@@ -13,10 +13,12 @@ import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.data.BarData;
 
+import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.StatsDataTypes;
 import de.tadris.fitness.data.StatsProvider;
 import de.tadris.fitness.util.charts.ChartStyles;
+import de.tadris.fitness.util.charts.formatter.TimeFormatter;
 
 public class StatsOverviewFragment extends StatsFragment {
     StatsProvider statsProvider = new StatsProvider(context);
@@ -43,6 +45,7 @@ public class StatsOverviewFragment extends StatsFragment {
         ChartStyles.defaultBarChart(distanceChart);
         BarData distanceData =  new BarData(statsProvider.totalDistances(allTime));
         distanceChart.setData(distanceData);
+        ChartStyles.setXAxisLabel(distanceChart, Instance.getInstance(context).distanceUnitUtils.getDistanceUnitSystem().getLongDistanceUnit());
         ChartStyles.horizontalBarChartIconLabel(distanceChart, distanceData, context);
         animateChart(distanceChart);
 
@@ -50,6 +53,7 @@ public class StatsOverviewFragment extends StatsFragment {
         ChartStyles.defaultBarChart(durationChart);
         BarData durationData = new BarData(statsProvider.totalDurations(allTime));
         durationChart.setData(durationData);
+        ChartStyles.setXAxisLabel(durationChart, "h");
         ChartStyles.horizontalBarChartIconLabel(durationChart, durationData, context);
         animateChart(durationChart);
     }

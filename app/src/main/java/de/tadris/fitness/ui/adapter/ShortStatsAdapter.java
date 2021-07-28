@@ -28,6 +28,7 @@ import de.tadris.fitness.data.StatsDataTypes;
 import de.tadris.fitness.data.StatsProvider;
 import de.tadris.fitness.ui.statistics.StatisticsActivity;
 import de.tadris.fitness.util.charts.ChartStyles;
+import de.tadris.fitness.util.charts.formatter.TimeFormatter;
 
 public class ShortStatsAdapter extends RecyclerView.Adapter<ShortStatsAdapter.ViewHolder> {
 
@@ -61,10 +62,15 @@ public class ShortStatsAdapter extends RecyclerView.Adapter<ShortStatsAdapter.Vi
                 data = new BarData(statsProvider.numberOfActivities(allTime));
                 holder.title.setText(ctx.getString(R.string.numberOfWorkouts));
                 break;
-            default:
+            case 1:
                 data = new BarData(statsProvider.totalDistances(allTime));
                 holder.title.setText(ctx.getString(R.string.workoutDistance));
                 ChartStyles.setXAxisLabel(holder.chart, Instance.getInstance(ctx).distanceUnitUtils.getDistanceUnitSystem().getLongDistanceUnit());
+                break;
+            default:
+                data = new BarData(statsProvider.totalDurations(allTime));
+                holder.title.setText(ctx.getString(R.string.workoutDuration));
+                ChartStyles.setXAxisLabel(holder.chart, "h");
                 break;
         }
         ChartStyles.barChartIconLabel(holder.chart, data, ctx);
@@ -72,7 +78,7 @@ public class ShortStatsAdapter extends RecyclerView.Adapter<ShortStatsAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return 2;
+        return 3;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
