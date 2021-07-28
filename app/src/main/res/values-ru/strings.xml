@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -16,15 +17,15 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  -->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
-    <string name="workout_add">Добавить</string>
     <string name="stop">Остановить</string>
     <string name="delete">Удалить</string>
     <string name="error">Ошибка</string>
     <string name="shareFile">Поделиться файлом</string>
     <string name="initialising">Инициализация</string>
-    <string name="preferences">Параметры</string>
     <string name="workouts">Тренировки</string>
     <string name="locationData">Данные о местоположении</string>
     <string name="converting">Преобразование</string>
@@ -62,7 +63,6 @@
     <string name="okay">ОК</string>
     <string name="continue_">Продолжить</string>
     <string name="deleteWorkout">Удалить тренировку</string>
-    <string name="trackerRunningMessage">Ваша тренировка записывается</string>
     <string name="trackerWaitingMessage">Ожидание начала тренировки</string>
     <string name="trackingInfo">Информация для отслеживания</string>
     <string name="cancel">Отмена</string>
@@ -70,7 +70,6 @@
     <string name="pref_weight">Ваш вес</string>
     <string name="settings">Настройки</string>
     <string name="exportData">Экспорт данных</string>
-    <string name="data">Данные</string>
     <string name="recordingStateStopped">Остановлено</string>
     <string name="recordingStatePaused">Пауза</string>
     <string name="recordingStateRunning">Запущено</string>
@@ -82,7 +81,6 @@
     <string name="noWorkoutStarted">Тренировка не началась</string>
     <string name="editDisplayedInformationHint">Пока тренировка не началась, вы можете изменить отображаемые значения, нажав одно из четырех полей.</string>
     <string name="editDisplayedInformation">Изменить отображаемую информацию</string>
-    <string name="sendEmail">Отправить электронное письмо</string>
     <string name="aboutHelpTranslating">Помощь в переводе</string>
     <string name="aboutUnlistedContributors">Спасибо всем участникам, не включенным в список, за помощь с переводом и расширением FitoTrack!</string>
     <string name="aboutSourceCode">Просмотреть исходный код</string>
@@ -105,7 +103,6 @@
     <string name="merge">Объединить</string>
     <string name="replace">Заменить</string>
     <string name="replaceOrMergeMessage">Заменить или объединить базу данных с резервной копией\?</string>
-    <string name="dataSamples">Примеры</string>
     <string name="workoutStatsHelpText">Этот экран показывать историческую статистику тренировок. Для использования необходимо сначала выбрать тип тренировки, нажав на нее. После выбрать информацию, которую хотите узнать, и период времени.
 \n
 \nТ.е. если вы выберете \"Неделя\" в периоде времени, все тренировки каждой недели будут объединены в одну точку данных либо в виде среднего значения, либо суммы за каждую неделю.</string>
@@ -126,7 +123,6 @@
     <string name="workout_statistics">Статистика тренировок</string>
     <string name="no_workouts_recorded_for_this_activity">Нет тренировок этого типа</string>
     <string name="unlockPhoneStopWorkout">Пожалуйста, разблокируйте телефон для остановки записи</string>
-    <string name="oClock">Часов</string>
     <string name="currentTime">Текущее время</string>
     <string name="pref_auto_timeout_title">Период для автоматической остановки</string>
     <string name="intervalAutoTimeoutTraining">Автоматический таймаут тренировки</string>
@@ -180,7 +176,6 @@
     <string name="create">Создать</string>
     <string name="createIntervalSet">Создать новый набор интервалов</string>
     <string name="manageIntervalSets">Управление наборами интервалов</string>
-    <string name="workoutRecording">Запись тренировки</string>
     <string name="add_interval">Добавить интервал</string>
     <string name="add">Добавить</string>
     <string name="cannotStart">Невозможно начать</string>
@@ -195,7 +190,6 @@
     <string name="share">Поделиться</string>
     <string name="save">Сохранить</string>
     <string name="pref_announcement_mode">Режим оповещения</string>
-    <string name="action_edit_comment">Изменить комментарий</string>
     <string name="ttsNotAvailable">Синтезатор речи недоступен</string>
     <string name="description">Описание</string>
     <string name="trackVisibilityPref">Видимость трека</string>
@@ -224,7 +218,6 @@
     <string name="workoutTypeRowing">Гребля</string>
     <string name="workoutTypeInlineSkating">Роликовые коньки</string>
     <string name="workoutTypeCycling">Велосипед</string>
-    <string name="workoutTypeJogging">Бег трусцой</string>
     <string name="workoutTypeRunning">Бег</string>
     <string name="workoutDescent">Убывание</string>
     <string name="workoutAscent">Возрастание</string>
@@ -254,7 +247,6 @@
     <string name="timeMinuteSingular">Минута</string>
     <string name="setPreferencesMessage">Вы можете выставить предпочитаемую систему измерений и ваш вес в настройках.</string>
     <string name="setPreferencesTitle">Установка параметров</string>
-    <string name="pref_ringtone_silent">Без звука</string>
     <string name="importBackupMessage">ВНИМАНИЕ: Все данные приложения будут очищены. Если вы не хотите потерять их, сначала сделайте резервную копию. Вы уверены, что хотите восстановить эту резервную копию\?</string>
     <string name="chooseBackupFile">Выберите файл резервной копии</string>
     <string name="exporting">Экспорт</string>
@@ -264,8 +256,6 @@
     <string name="errorGpxExportFailed">Ошибка в экспорте GPX.</string>
     <string name="importedWorkouts">Импортировано %d тренировок</string>
     <string name="importingFiles">Импорт файлов</string>
-    <string name="bulkActions">Массовые действия</string>
-    <string name="importMultipleGpxFilesSummary">Импортировать более одного GPX-файла из файловой системы одновременно</string>
     <string name="importMultipleMessageSelectFolder">Пожалуйста, выберите папку, содержащую все GPX-файлы, которые вы хотите импортировать.</string>
     <string name="importMultipleGpxFiles">Импортировать несколько GPX-файлов</string>
     <string name="actionGrant">Предоставить</string>
@@ -291,7 +281,6 @@
     <string name="autoPauseTitle">Автоматическая пауза</string>
     <string name="resumeWorkout">Возобновить тренировку</string>
     <string name="heartRateNotAvailable">Частота сердечных сокращений в настоящее время недоступна.</string>
-    <string name="intervals">Интервалы</string>
     <string name="announcementWorkoutActions">Действия тренировки (пауза, возобновление и т. д.)</string>
     <string name="workoutTypeEditMET">MET</string>
     <string name="editWorkoutType">Изменить тип тренировки</string>
@@ -301,8 +290,6 @@
     <string name="actionSave">Сохранить</string>
     <string name="customWorkoutTypesTitle">Пользовательские типы тренировок</string>
     <string name="preferenceCategoryVoiceFeedback">Голосовая обратная связь</string>
-    <string name="workoutTypeEditMETHint">Мера потребления энергии</string>
-    <string name="workoutTypeEditMinDistanceHint">Минимальное расстояние между двумя образцами GPS</string>
     <string name="workoutTypeEditMinDistance">Расстояние выборки</string>
     <string name="workoutTypeEditNameError">Пожалуйста, введите имя</string>
     <string name="workoutTypeEditName">Имя</string>
@@ -377,7 +364,6 @@
     <string name="actionDownloadMap">Скачать карту</string>
     <string name="downloadMapsSpecifyDirectory">Пожалуйста, сначала укажите каталог для хранения автономных карт</string>
     <string name="downloadMapsTitle">Скачать карты</string>
-    <string name="pref_map_file">Каталог для автономных карт</string>
     <string name="actionImportMultiple">Импортировать несколько</string>
     <string name="actionImport">Импортировать</string>
     <string name="importWorkoutMultipleQuestion">Вы хотите импортировать один файл GPX или несколько\?</string>

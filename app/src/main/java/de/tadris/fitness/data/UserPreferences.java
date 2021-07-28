@@ -153,19 +153,36 @@ public class UserPreferences {
 
     public String getIdOfDisplayedInformation(String mode, int slot) {
         String defValue = "";
-        switch (slot) {
-            case 0:
-                defValue = "distance";
-                break;
-            case 1:
-                defValue = "energy_burned";
-                break;
-            case 2:
-                defValue = "avgSpeedMotion";
-                break;
-            case 3:
-                defValue = "pause_duration";
-                break;
+        if (WorkoutType.RecordingType.INDOOR.id.equals(mode)) {
+            switch (slot) {
+                case 0:
+                    defValue = "avg_frequency";
+                    break;
+                case 1:
+                    defValue = "energy_burned";
+                    break;
+                case 2:
+                    defValue = "current_intensity";
+                    break;
+                case 3:
+                    defValue = "pause_duration";
+                    break;
+            }
+        } else {
+            switch (slot) {
+                case 0:
+                    defValue = "distance";
+                    break;
+                case 1:
+                    defValue = "energy_burned";
+                    break;
+                case 2:
+                    defValue = "avgSpeedMotion";
+                    break;
+                case 3:
+                    defValue = "pause_duration";
+                    break;
+            }
         }
         return preferences.getString("information_display_" + mode + "_" + slot, defValue);
     }

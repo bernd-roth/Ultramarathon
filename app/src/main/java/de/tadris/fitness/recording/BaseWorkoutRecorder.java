@@ -32,6 +32,7 @@ import de.tadris.fitness.data.BaseWorkout;
 import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.data.UserPreferences;
+import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.recording.event.HeartRateChangeEvent;
 import de.tadris.fitness.recording.event.HeartRateConnectionChangeEvent;
 import de.tadris.fitness.recording.event.WorkoutAutoStopEvent;
@@ -180,6 +181,8 @@ public abstract class BaseWorkoutRecorder {
     }
 
     public abstract Class<? extends RecordWorkoutActivity> getActivityClass();
+
+    public abstract WorkoutType.RecordingType getRecordingType();
 
     public void onIntervalWasTriggered(Interval interval) {
         lastTriggeredInterval = interval.id;

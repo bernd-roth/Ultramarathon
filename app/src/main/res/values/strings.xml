@@ -18,7 +18,6 @@
   -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
-    <string name="workout_add">Add</string>
     <string name="stop">Stop</string>
     <string name="delete">Delete</string>
     <string name="exporting">Exporting</string>
@@ -28,7 +27,6 @@
     <string name="errorImportFailed">The data import has failed.</string>
     <string name="shareFile">Share file</string>
     <string name="initialising">Initialising</string>
-    <string name="preferences">Preferences</string>
     <string name="workouts">Workouts</string>
     <string name="locationData">Location data</string>
     <string name="converting">Converting</string>
@@ -38,7 +36,6 @@
     <string name="importBackupMessage">WARNING: All your existing data in the app will be cleared. If you don\'t want to loose them, first take another backup. Are you sure, you want to restore this backup?</string>
     <string name="restore">Restore</string>
     <string name="backup">Backup</string>
-    <string name="pref_ringtone_silent">Silent</string>
     <string name="setPreferencesTitle">Set Preferences</string>
     <string name="setPreferencesMessage">You can set your preferred unit system and your weight in the settings.</string>
     <string name="timeMinuteSingular">Minute</string>
@@ -59,6 +56,8 @@
     <string name="pref_announcements_config_title">Announcement Trigger</string>
     <string name="pref_announcements_config_summary">Choose the time and distance between voice announcements</string>
     <string name="pref_announcements_content">Content of the announcements</string>
+    <string name="workoutRecordingTypeGps">Gps Workouts</string>
+    <string name="workoutRecordingTypeIndoor">Indoor Workouts</string>
     <string name="gpsLost">GPS signal lost</string>
     <string name="gpsFound">GPS signal found</string>
     <string name="workoutTime">Time</string>
@@ -75,6 +74,8 @@
     <string name="workoutSpeed">Speed</string>
     <string name="workoutFrequency">Frequency</string>
     <string name="workoutAvgFrequencyShort">Avg. Frequency</string>
+    <string name="workoutAvgFrequencyLong">Average Frequency</string>
+    <string name="workoutCurrentFrequency">Current Frequency</string>
     <string name="workoutMaxFrequency">Max Frequency</string>
     <string name="workoutIntensity">Intensity</string>
     <string name="workoutAvgIntensityShort">Avg. Intensity</string>
@@ -103,7 +104,6 @@
     <string name="height">Height</string>
     <string name="workoutTypeRunning">Running</string>
     <string name="workoutTypeWalking">Walking</string>
-    <string name="workoutTypeJogging">Jogging</string>
     <string name="workoutTypeCycling">Cycling</string>
     <string name="workoutTypeHiking">Hiking</string>
     <string name="workoutTypeSkateboarding">Skateboarding</string>
@@ -147,7 +147,6 @@
     <string name="deleteWorkout">Delete Workout</string>
     <string name="deleteWorkoutMessage">Do you really want to delete the workout?</string>
     <string name="trackerRunning">Tracker is running</string>
-    <string name="trackerRunningMessage">Your workout is being recorded</string>
     <string name="trackerWaitingMessage">Waiting to start workout</string>
     <string name="trackingInfo">Tracking Info</string>
     <string name="trackingInfoDescription">Info about the tracker running</string>
@@ -163,7 +162,6 @@
     <string name="importBackup">Import Data Backup</string>
     <string name="importBackupSummary">Restore a taken backup</string>
     <string name="gps">GPS</string>
-    <string name="data">Data</string>
     <string name="mapStyle">Map Style</string>
     <string name="trackStyle">Track Style</string>
     <string name="prefTrackStyleUsageTitle">Use track coloring automatically</string>
@@ -173,7 +171,6 @@
     <string name="trackVisibilityPref">Track Visibility</string>
     <string name="description">Description</string>
     <string name="ttsNotAvailable">TextToSpeech is not available</string>
-    <string name="action_edit_comment">Edit Comment</string>
     <string name="pref_announcement_mode">Announcement Mode</string>
     <string name="save">Save</string>
     <string name="share">Share</string>
@@ -191,7 +188,6 @@
     <string name="edit_interval">Edit Interval</string>
     <string name="manageIntervalSets">Manage Interval Sets</string>
     <string name="manageIntervalsSummary">Edit the interval sets you will be able to use during the workout using voice feedback.</string>
-    <string name="workoutRecording">Workout Recording</string>
     <string name="createIntervalSet">Create New Interval Set</string>
     <string name="create">Create</string>
     <string name="hintManageIntervalSets">Add an interval set to use it in your workouts.</string>
@@ -246,13 +242,15 @@
     <string name="unitMetersPerSecond">Meters per second</string>
     <string name="unitHeartBeatsPerMinute">bpm</string>
     <string name="unitKcalLong">Calories</string>
+    <string name="unitHertzLong">Hertz</string>
     <string name="unitKJoule">Kilojoule</string>
     <string name="pref_energy_unit">Energy unit</string>
     <string name="manageAutoTimeoutSummary">Edit the interval for automatic workout stop</string>
     <string name="intervalAutoTimeoutTraining">Auto Workout Timeout</string>
     <string name="pref_auto_timeout_title">Timespan for Auto-Stop</string>
     <string name="currentTime">Current Time</string>
-    <string name="oClock">o Clock</string>
+    <!-- The placeholders are hours and minutes in a time string. In English the time 10:34 would be spoken as "10 34" -->
+    <string name="currentTimeStructure">%s %s</string>
     <string name="unlockPhoneStopWorkout">Please unlock your phone to stop the recording</string>
     <string name="no_workouts_recorded_for_this_activity">No workouts for this activity</string>
     <string name="workout_statistics">Workout Statistics</string>
@@ -271,7 +269,6 @@
     <string name="dayInMonth">Day in Month</string>
     <string name="singleWorkout">Single Workout</string>
     <string name="workoutStatsHelpText">This screen shows historical stats of the workouts. To use it you first need to specify the workout type by clicking on it. Then set the information you want to know about and the time span. \n\nE.g. if you select \"Week\" as time span, all workouts of each week will be merged into one data point either calculating the average or sum of each week.</string>
-    <string name="dataSamples">Samples</string>
     <string name="replaceOrMergeMessage">Replace or merge database with backup file?</string>
     <string name="replace">Replace</string>
     <string name="merge">Merge</string>
@@ -297,7 +294,6 @@
     <string name="aboutUnlistedContributors">Thanks to all the unlisted contributors that helped translating and extending FitoTrack!</string>
     <string name="aboutHelpTranslating">Help translating</string>
     <string name="aboutPrivacyPolicy">Privacy Policy</string>
-    <string name="sendEmail">Send Email</string>
     <string name="editDisplayedInformation">Edit displayed information</string>
     <string name="editDisplayedInformationHint">As long as the workout has not started, you can edit the displayed values by clicking on one of the four fields.</string>
     <string name="noWorkoutStarted">No Workout Started</string>
@@ -315,11 +311,9 @@
     <string name="recordingStateStopped">Stopped</string>
     <string name="importMultipleGpxFiles">Import multiple GPX-files</string>
     <string name="importMultipleMessageSelectFolder">Please select a folder containing all the GPX-files you would like to import.</string>
-    <string name="importMultipleGpxFilesSummary">Import more than one GPX-files from the filesystem at once</string>
     <string name="importWorkoutMultipleQuestion">Do you want to import one GPX file or multiple ones?</string>
     <string name="actionImport">Import</string>
     <string name="actionImportMultiple">Import multiple</string>
-    <string name="bulkActions">Bulk actions</string>
     <string name="importingFiles">Importing files</string>
     <string name="importedWorkouts">Imported %d workouts</string>
     <string name="selectBluetoothDevice">Select Bluetooth device</string>
@@ -327,7 +321,6 @@
     <string name="showIntervals">Show intervals</string>
     <string name="nothingSelected">Nothing selected</string>
     <string name="inclination">Inclination</string>
-    <string name="intervals">Intervals</string>
     <string name="heartRateNotAvailable">Heart rate is currently not available.</string>
     <string name="resumeWorkout">Resume Workout</string>
     <string name="autoPauseTitle">Auto pause</string>
@@ -350,9 +343,7 @@
     <string name="workoutTypeEditName">Name</string>
     <string name="workoutTypeEditNameError">Please enter a name</string>
     <string name="workoutTypeEditMinDistance">Sample distance</string>
-    <string name="workoutTypeEditMinDistanceHint">Minimum distance between two GPS samples</string>
     <string name="workoutTypeEditMET">MET</string>
-    <string name="workoutTypeEditMETHint">A measure for energy consumption</string>
     <string name="preferenceCategoryVoiceFeedback">Voice feedback</string>
     <string name="customWorkoutTypesTitle">Custom Workout Types</string>
     <string name="runningMigrations">Running migrations</string>
@@ -362,7 +353,6 @@
     <string name="workoutTypeEditIcon">Icon</string>
     <string name="editWorkoutType">Edit workout type</string>
     <string name="pref_map_directory">Offline Map Directory</string>
-    <string name="pref_render_theme_style_settings">Offline Render Theme Settings</string>
     <string name="pref_render_theme_style">Render Style</string>
     <string name="preferenceCategoryRenderThemeCategories">Categories</string>
     <string name="pref_render_theme_style_info">No render theme style menu available for selected render theme.</string>

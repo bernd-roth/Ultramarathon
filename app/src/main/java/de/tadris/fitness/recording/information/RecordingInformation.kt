@@ -25,7 +25,7 @@ import de.tadris.fitness.Instance
 import de.tadris.fitness.recording.BaseWorkoutRecorder
 import de.tadris.fitness.recording.announcement.Announcement
 
-abstract class RecordingInformation(private val context: Context) : Announcement {
+abstract class RecordingInformation(protected val context: Context) : Announcement {
 
     override fun isAnnouncementEnabled() = PreferenceManager.getDefaultSharedPreferences(context)
         .getBoolean("announcement_$id", isEnabledByDefault)
