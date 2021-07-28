@@ -1,6 +1,7 @@
 package de.tadris.fitness.ui.statistics;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,44 +11,70 @@ import android.widget.NumberPicker;
 import android.widget.Spinner;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationSpan;
-import de.tadris.fitness.util.statistics.AggregationSpanInstance;
+import de.tadris.fitness.util.statistics.InstanceFormatter;
 
 public class TimeSpanSelection extends LinearLayout {
     private Spinner aggregationSpanSpinner;
     private ArrayAdapter<String> aggregationSpanArrayAdapter;
 
-    long firstInstance;
-    long lastInstance;
-
     private NumberPicker aggregationSpanInstancePicker;
 
-    private AggregationSpanInstance selectedInstance;
+    long firstInstance;
+    long lastInstance;
+    long selectedInstance;
+    AggregationSpan selectedAggregationSpan;
+    boolean isInstanceSelectable;
+
+    private InstanceFormatter instanceFormatter;
 
     private ArrayList<OnTimeSpanSelectionListener> listeners;
 
     public TimeSpanSelection(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.TimeSpanSelection);
+        firstInstance = array.getInt(R.styleable.TimeSpanSelection_firstInstance, 0);
+        lastInstance = array.getInt(R.styleable.TimeSpanSelection_lastInstance, 0);
+        selectedInstance = array.getInt(R.styleable.TimeSpanSelection_firstInstance, 0);
+        isInstanceSelectable = array.getBoolean(R.styleable.TimeSpanSelection_isInstanceSelectable, true);
+        array.recycle();
+
+        if (lastInstance == 0) {
+            lastInstance = Long.MAX_VALUE;
+        }
+
+        selectedAggregationSpan = AggregationSpan.YEAR;
         listeners = new ArrayList<>();
-        firstInstance = 0;
-        lastInstance = Long.MAX_VALUE;
+        instanceFormatter = new InstanceFormatter(selectedAggregationSpan);
 
         inflate(context, R.layout.view_time_span_selection, this);
 
 
         // Load views
         aggregationSpanSpinner = findViewById(R.id.aggregationSpanSpinner);
+        aggregationSpanInstancePicker = findViewById(R.id.aggregationSpanInstancePicker);
         loadAggregationSpanEntries();
+
+        if (!isInstanceSelectable) {
+            findViewById(R.id.aggregationSpanInstancePickerLayout).getLayoutParams().width = 0;
+        }
+
+        setAggregationSpan(AggregationSpan.YEAR);
+        setInstance(GregorianCalendar.getInstance().getTimeInMillis());
+
         aggregationSpanSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                specifyAggregationSpanInstance();
+                specifyAggregationSpan();
                 updateLimits();
             }
 
@@ -57,19 +84,9 @@ public class TimeSpanSelection extends LinearLayout {
             }
         });
 
-        aggregationSpanInstancePicker = findViewById(R.id.aggregationSpanInstancePicker);
-        // Set initial selected instance
-        setAggregationSpanInstance(new AggregationSpanInstance(GregorianCalendar.getInstance(),
-                AggregationSpan.YEAR));
-        aggregationSpanInstancePicker.setFormatter(selectedInstance);
-        aggregationSpanInstancePicker.setOnValueChangedListener((numberPicker, i, i1) -> specifyAggregationSpanInstance());
+        aggregationSpanInstancePicker.setFormatter(instanceFormatter);
+        aggregationSpanInstancePicker.setOnValueChangedListener((numberPicker, i, i1) -> specifyInstance());
 
-    }
-
-    private void notifyListener() {
-        for (OnTimeSpanSelectionListener listener : listeners) {
-            listener.onTimeSpanChanged(selectedInstance);
-        }
     }
 
     private void loadAggregationSpanEntries() {
@@ -86,28 +103,70 @@ public class TimeSpanSelection extends LinearLayout {
         aggregationSpanSpinner.setAdapter(aggregationSpanArrayAdapter);
     }
 
-    private void specifyAggregationSpanInstance() {
+    private void specifyAggregationSpan() {
         String selectedString = aggregationSpanArrayAdapter.getItem(aggregationSpanSpinner.getSelectedItemPosition());
 
         for (AggregationSpan aggregationSpan : AggregationSpan.values()) {
             if (selectedString.equals(getContext().getString(aggregationSpan.title))) {
-                selectedInstance.setInstance(aggregationSpanInstancePicker.getValue(), aggregationSpan);
+                selectedAggregationSpan = aggregationSpan;
+                instanceFormatter.aggregationSpan = aggregationSpan;
                 notifyListener();
                 break;
             }
         }
     }
 
-    public void setAggregationSpanInstance(AggregationSpanInstance aggregationSpanInstance) {
-        selectedInstance = aggregationSpanInstance;
-        aggregationSpanSpinner.setSelection(aggregationSpanArrayAdapter.getPosition(
-                getContext().getString(selectedInstance.getAggregationSpan().title)), true);
-        updateLimits();
-        aggregationSpanInstancePicker.setValue((int) selectedInstance.getIndex());
+    private void specifyInstance() {
+        selectedInstance = InstanceFormatter.mapIndexToInstance(aggregationSpanInstancePicker.getValue(), selectedAggregationSpan);
+        notifyListener();
     }
 
-    public AggregationSpanInstance getAggregationSpanInstance() {
-        return selectedInstance;
+    public AggregationSpan getSelectedAggregationSpan() {
+        return selectedAggregationSpan;
+    }
+
+    public long getSelectedInstance() {
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTimeInMillis(selectedInstance);
+        selectedAggregationSpan.applyToCalendar(calendar);
+        return calendar.getTimeInMillis();
+    }
+
+    public void setAggregationSpan(@NotNull AggregationSpan aggregationSpan) {
+        selectedAggregationSpan = aggregationSpan;
+        aggregationSpanSpinner.setSelection(aggregationSpanArrayAdapter.getPosition(getContext().getString(aggregationSpan.title)), true);
+        instanceFormatter.aggregationSpan = aggregationSpan;
+        updateLimits();
+    }
+
+    public void setInstance(long instance) {
+        selectedInstance = instance;
+        aggregationSpanInstancePicker.setValue((int) InstanceFormatter.mapInstanceToIndex(instance, selectedAggregationSpan));
+    }
+
+    public void setLimits(long firstInstance, long lastInstance) {
+        this.firstInstance = firstInstance;
+        this.lastInstance = lastInstance;
+        updateLimits();
+    }
+
+    public long getFirstInstance() {
+        return this.firstInstance;
+    }
+
+    public long getLastInstance() {
+        return this.lastInstance;
+    }
+
+    private void updateLimits() {
+        int min = (int) InstanceFormatter.mapInstanceToIndex(firstInstance, selectedAggregationSpan);
+        int max = (int) InstanceFormatter.mapInstanceToIndex(lastInstance, selectedAggregationSpan);
+        if (min != aggregationSpanInstancePicker.getMinValue()) {
+            aggregationSpanInstancePicker.setMinValue(min);
+        }
+        if (max != aggregationSpanInstancePicker.getMaxValue()) {
+            aggregationSpanInstancePicker.setMaxValue(max);
+        }
     }
 
     public void addOnTimeSpanSelectionListener(OnTimeSpanSelectionListener listener) {
@@ -118,33 +177,14 @@ public class TimeSpanSelection extends LinearLayout {
         listeners.remove(listener);
     }
 
-    public void setLimits(long lowerTimeBound, long upperTimeBound) {
-        this.firstInstance = lowerTimeBound;
-        this.lastInstance = upperTimeBound;
-        updateLimits();
-    }
-
-    public long getLowerTimeBound() {
-        return this.firstInstance;
-    }
-
-    public long getUpperTimeBound() {
-        return this.lastInstance;
-    }
-
-    private void updateLimits() {
-        int min = (int) AggregationSpanInstance.mapInstanceToIndex(firstInstance, selectedInstance.getAggregationSpan());
-        int max = (int) AggregationSpanInstance.mapInstanceToIndex(lastInstance, selectedInstance.getAggregationSpan());
-        if (min != aggregationSpanInstancePicker.getMinValue()) {
-            aggregationSpanInstancePicker.setMinValue(min);
-        }
-        if (max != aggregationSpanInstancePicker.getMaxValue()) {
-            aggregationSpanInstancePicker.setMaxValue(max);
+    private void notifyListener() {
+        for (OnTimeSpanSelectionListener listener : listeners) {
+            listener.onTimeSpanChanged(getSelectedAggregationSpan(), getSelectedInstance());
         }
     }
 
     public interface OnTimeSpanSelectionListener {
-        void onTimeSpanChanged(AggregationSpanInstance aggregationSpanInstance);
+        void onTimeSpanChanged(AggregationSpan aggregationSpan, long instance);
     }
 }
 

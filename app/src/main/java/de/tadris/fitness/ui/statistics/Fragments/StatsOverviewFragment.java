@@ -15,18 +15,17 @@ import com.github.mikephil.charting.data.BarData;
 
 import java.util.GregorianCalendar;
 
-import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
+import de.tadris.fitness.aggregation.AggregationSpan;
 import de.tadris.fitness.data.StatsDataProvider;
 import de.tadris.fitness.data.StatsDataTypes;
 import de.tadris.fitness.data.StatsProvider;
-import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.data.WorkoutTypeManager;
 import de.tadris.fitness.ui.statistics.TimeSpanSelection;
 import de.tadris.fitness.util.WorkoutProperty;
 import de.tadris.fitness.util.charts.ChartStyles;
 import de.tadris.fitness.util.exceptions.NoDataException;
-import de.tadris.fitness.util.statistics.AggregationSpanInstance;
+import de.tadris.fitness.util.statistics.InstanceFormatter;
 
 public class StatsOverviewFragment extends StatsFragment {
     StatsProvider statsProvider;
@@ -52,7 +51,7 @@ public class StatsOverviewFragment extends StatsFragment {
 
         timeSpanSelection = view.findViewById(R.id.time_span_selection);
         timeSpanSelection.setLimits(firstWorkoutTime, lastWorkoutTime);
-        timeSpanSelection.addOnTimeSpanSelectionListener(aggregationSpan -> updateCharts());
+        timeSpanSelection.addOnTimeSpanSelectionListener((aggregationSpan, instance) -> updateCharts());
 
         numberOfActivitiesChart = view.findViewById(R.id.stats_number_of_workout_chart);
         ChartStyles.defaultBarChart(numberOfActivitiesChart);
@@ -66,7 +65,7 @@ public class StatsOverviewFragment extends StatsFragment {
         ChartStyles.defaultBarChart(durationChart);
         animateChart(durationChart);
 
-        //updateCharts();
+        updateCharts();
     }
 
     @Override
@@ -80,10 +79,9 @@ public class StatsOverviewFragment extends StatsFragment {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void updateCharts() {
-        AggregationSpanInstance aggregationSpanInstance = timeSpanSelection.getAggregationSpanInstance();
-        GregorianCalendar start = aggregationSpanInstance.getInstance();
-        StatsDataTypes.TimeSpan span = new StatsDataTypes.TimeSpan(start.getTimeInMillis(),
-                start.getTimeInMillis() + aggregationSpanInstance.getAggregationSpan().spanInterval);
+        long start = timeSpanSelection.getSelectedInstance();
+        StatsDataTypes.TimeSpan span = new StatsDataTypes.TimeSpan(start,
+                start + timeSpanSelection.getSelectedAggregationSpan().spanInterval);
 
         try {
             BarData distanceData = new BarData(statsProvider.totalDistances(span));
