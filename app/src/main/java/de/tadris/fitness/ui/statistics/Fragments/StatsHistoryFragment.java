@@ -220,8 +220,10 @@ public class StatsHistoryFragment extends StatsFragment {
             if (speedSwitch.isChecked()) {
                 // Retrieve candle data
                 candleDataSet = statsProvider.getPaceCandleData(aggregationSpan, workoutType);
+                ChartStyles.setYAxisLabel(speedChart, Instance.getInstance(context).distanceUnitUtils.getPaceUnit());
             } else {
                 candleDataSet = statsProvider.getSpeedCandleData(aggregationSpan, workoutType);
+                ChartStyles.setYAxisLabel(speedChart, Instance.getInstance(context).distanceUnitUtils.getDistanceUnitSystem().getSpeedUnit());
             }
 
             // Add candle data

@@ -13,22 +13,25 @@ import de.tadris.fitness.R;
 
 public class DataSetStyles {
     public static CandleDataSet applyDefaultCandleStyle(Context ctx, CandleDataSet candleDataSet) {
-        candleDataSet.setShadowColor(Color.GRAY);
-        candleDataSet.setShadowWidth(2f);
-        candleDataSet.setNeutralColor(ContextCompat.getColor(ctx, R.color.colorPrimary));
+        candleDataSet.setShadowColor(ContextCompat.getColor(ctx, R.color.complementPrimary));
+        candleDataSet.setShadowWidth(6f);
+        candleDataSet.setNeutralColor(Color.TRANSPARENT);
+        candleDataSet.setDrawValues(false);
         return candleDataSet;
     }
 
     public static LineDataSet applyBackgroundLineStyle(Context ctx, LineDataSet lineDataSet) {
-        lineDataSet.setColor(ContextCompat.getColor(ctx, R.color.stats_background_line));
-        lineDataSet.setCircleColor(Color.TRANSPARENT);
+        lineDataSet.setColor(Color.GRAY);
+        lineDataSet.setLineWidth(3f);
+        lineDataSet.setCircleColor(ContextCompat.getColor(ctx, R.color.colorPrimary));
+        lineDataSet.setCircleRadius(4f);
         lineDataSet.setCircleHoleColor(Color.TRANSPARENT);
         lineDataSet.setValueTextColor(Color.TRANSPARENT);
         return lineDataSet;
     }
 
     public static BarDataSet applyDefaultBarStyle(Context ctx, BarDataSet barDataSet) {
-        barDataSet.setColor(ContextCompat.getColor(ctx, R.color.bar));
+        barDataSet.setColor(ContextCompat.getColor(ctx, R.color.complementPrimary));
         return barDataSet;
     }
 }
