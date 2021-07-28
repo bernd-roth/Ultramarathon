@@ -152,6 +152,7 @@ public class DistanceUnitUtils extends UnitUtils {
     public String getPaceUnit() {
         return "min/" + distanceUnitSystem.getLongDistanceUnit();
     }
+    public String getSpeedUnit(){return distanceUnitSystem.getSpeedUnit();}
 
     public String getDistance(int distanceInMeters) {
         return getDistance(distanceInMeters, false);

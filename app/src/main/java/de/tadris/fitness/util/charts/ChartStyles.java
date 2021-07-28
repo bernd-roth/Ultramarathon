@@ -7,8 +7,10 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -43,6 +45,29 @@ public class ChartStyles {
         chart.setPinchZoom(false);
         chart.setDrawGridBackground(false);
         chart.setFitBars(true);
+    }
+
+
+    public static void setXAxisLabel(Chart chart, String label)
+    {
+        chart.getDescription().setTextSize(10);
+        chart.getDescription().setText(label);
+        chart.getDescription().setEnabled(true);
+    }
+
+    public static void setYAxisLabel(Chart chart, String label)
+    {
+        LegendEntry legend = new LegendEntry();
+        legend.label = label;
+        List<LegendEntry> entries = new ArrayList<>();
+        entries.add(legend);
+        chart.getLegend().setEntries(entries);
+        chart.getLegend().setEnabled(true);
+        chart.getLegend().setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        chart.getLegend().setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+        chart.getLegend().setFormSize(0);
+        chart.getLegend().setFormToTextSpace(-16);
+        chart.getLegend().setForm(Legend.LegendForm.NONE);
     }
 
     public static void defaultBarData(BarChart chart, BarData data) {

@@ -159,25 +159,34 @@ public class StatsProvider {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public BarDataSet createHistogramData(List<Double> values, int bins, String label) {
+        Double[] weights = new Double[values.size()];
+        Arrays.fill(weights, 1);
+        return createWeightedHistogramData(values, Arrays.asList(weights), bins, label);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public BarDataSet createWeightedHistogramData(List<Double> values, List<Double> weights, int bins, String label) {
         Collections.sort(values);
         double min = values.get(0);
         double max = values.get(values.size()-1);
         double binWidth = (max-min)/bins;
-        int[] histogram = new int[bins];
+        double[] histogram = new double[bins];
         int binIndex=0;
 
-        for(double val : values)
+        for(int i=0; i<values.size(); i++)
         {
-            if(val <= min((binIndex+1)*binWidth+min, max))
-                histogram[binIndex]++;
-            else
+            if(values.get(i) <= min((binIndex+1)*binWidth+min, max))
+                histogram[binIndex] += weights.get(i);
+            else {
                 binIndex++;
+            }
         }
+
 
         ArrayList<BarEntry> barEntries = new ArrayList<>();
         for(int i=0; i<bins; i++)
         {
-            barEntries.add(new BarEntry((float) ((i+1)*binWidth+min), histogram[i]));
+            barEntries.add(new BarEntry(i, (float) histogram[i]/60));
         }
 
         return DataSetStyles.applyDefaultBarStyle(ctx,
