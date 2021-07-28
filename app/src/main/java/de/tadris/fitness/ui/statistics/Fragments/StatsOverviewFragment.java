@@ -3,7 +3,6 @@ package de.tadris.fitness.ui.statistics.Fragments;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -16,13 +15,18 @@ import com.github.mikephil.charting.data.BarData;
 
 import java.util.GregorianCalendar;
 
+import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
-import de.tadris.fitness.aggregation.AggregationSpan;
+import de.tadris.fitness.data.StatsDataProvider;
 import de.tadris.fitness.data.StatsDataTypes;
 import de.tadris.fitness.data.StatsProvider;
+import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.data.WorkoutTypeManager;
 import de.tadris.fitness.ui.statistics.TimeSpanSelection;
+import de.tadris.fitness.util.WorkoutProperty;
 import de.tadris.fitness.util.charts.ChartStyles;
 import de.tadris.fitness.util.exceptions.NoDataException;
+import de.tadris.fitness.util.statistics.AggregationSpanInstance;
 
 public class StatsOverviewFragment extends StatsFragment {
     StatsProvider statsProvider;
@@ -42,12 +46,13 @@ public class StatsOverviewFragment extends StatsFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        StatsDataProvider statsDataProvider = new StatsDataProvider(getContext());
+        long firstWorkoutTime = statsDataProvider.getFirstData(WorkoutProperty.LENGTH, WorkoutTypeManager.getInstance().getAllTypes(context)).time;
+        long lastWorkoutTime = statsDataProvider.getLastData(WorkoutProperty.LENGTH, WorkoutTypeManager.getInstance().getAllTypes(context)).time;
+
         timeSpanSelection = view.findViewById(R.id.time_span_selection);
-        timeSpanSelection.setAggregationSpan(AggregationSpan.YEAR);
+        timeSpanSelection.setLimits(firstWorkoutTime, lastWorkoutTime);
         timeSpanSelection.addOnTimeSpanSelectionListener(aggregationSpan -> updateCharts());
-
-        StatsDataTypes.TimeSpan allTime = new StatsDataTypes.TimeSpan(0, Long.MAX_VALUE);
-
 
         numberOfActivitiesChart = view.findViewById(R.id.stats_number_of_workout_chart);
         ChartStyles.defaultBarChart(numberOfActivitiesChart);
@@ -61,7 +66,7 @@ public class StatsOverviewFragment extends StatsFragment {
         ChartStyles.defaultBarChart(durationChart);
         animateChart(durationChart);
 
-        updateCharts();
+        //updateCharts();
     }
 
     @Override
@@ -75,16 +80,14 @@ public class StatsOverviewFragment extends StatsFragment {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void updateCharts() {
-        GregorianCalendar start = new GregorianCalendar();
-        timeSpanSelection.getAggregationSpan().applyToCalendar(start);
+        AggregationSpanInstance aggregationSpanInstance = timeSpanSelection.getAggregationSpanInstance();
+        GregorianCalendar start = aggregationSpanInstance.getInstance();
         StatsDataTypes.TimeSpan span = new StatsDataTypes.TimeSpan(start.getTimeInMillis(),
-                start.getTimeInMillis() + timeSpanSelection.getAggregationSpan().spanInterval);
-
+                start.getTimeInMillis() + aggregationSpanInstance.getAggregationSpan().spanInterval);
 
         try {
             BarData distanceData = new BarData(statsProvider.totalDistances(span));
-            distanceChart.setData(distanceData);
-            //ChartStyles.horizontalBarChartIconLabel(distanceChart, distanceData, context);
+            ChartStyles.horizontalBarChartIconLabel(distanceChart, distanceData, context);
         } catch (NoDataException e) {
             distanceChart.clear();
         }
@@ -92,8 +95,7 @@ public class StatsOverviewFragment extends StatsFragment {
 
         try {
             BarData numberOfActivitiesData = new BarData(statsProvider.numberOfActivities(span));
-            numberOfActivitiesChart.setData(numberOfActivitiesData);
-            //ChartStyles.horizontalBarChartIconLabel(numberOfActivitiesChart,numberOfActivitiesData, context);
+            ChartStyles.horizontalBarChartIconLabel(numberOfActivitiesChart,numberOfActivitiesData, context);
         } catch (NoDataException e) {
             numberOfActivitiesChart.clear();
         }
@@ -101,8 +103,7 @@ public class StatsOverviewFragment extends StatsFragment {
 
         try {
             BarData durationData = new BarData(statsProvider.totalDurations(span));
-            durationChart.setData(durationData);
-            //ChartStyles.horizontalBarChartIconLabel(durationChart, durationData, context);
+            ChartStyles.horizontalBarChartIconLabel(durationChart, durationData, context);
         } catch (NoDataException e) {
             durationChart.clear();
         }

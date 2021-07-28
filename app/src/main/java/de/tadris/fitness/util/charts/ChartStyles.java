@@ -71,7 +71,6 @@ public class ChartStyles {
     public static void barChartIconLabel(BarChart chart, BarData data, Context ctx)
     {
         formatValuesNoDecimals(data);
-        chart.setData(data);
 
         ArrayList<Bitmap> imageList = new ArrayList<>();
         for(int i = 0; i < data.getDataSets().get(0).getEntryCount(); i++)
@@ -92,12 +91,13 @@ public class ChartStyles {
         chart.setScaleEnabled(false);
         chart.setExtraOffsets(0, 0, 0, 25);
 
+        chart.setData(data);
     }
 
     public static void horizontalBarChartIconLabel(HorizontalBarChart chart, BarData data, Context ctx)
     {
         formatValuesNoDecimals(data);
-        chart.setData(data);
+
 
         ArrayList<Bitmap> imageList = new ArrayList<>();
         for(int i = 0; i < data.getDataSets().get(0).getEntryCount(); i++)
@@ -114,8 +114,11 @@ public class ChartStyles {
             }
         }
 
-        chart.setRenderer(new HorizontalBarChartIconRenderer(chart, chart.getAnimator(), chart.getViewPortHandler(), imageList, ctx));
+        HorizontalBarChartIconRenderer renderer = new HorizontalBarChartIconRenderer(chart, chart.getAnimator(), chart.getViewPortHandler(), imageList, ctx);
+        chart.setRenderer(renderer);
         chart.setScaleEnabled(false);
         chart.setExtraOffsets(0, 0, 0, 0);
+
+        chart.setData(data);
     }
 }
