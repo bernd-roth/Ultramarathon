@@ -168,7 +168,11 @@ public class ShowGpsWorkoutActivity extends GpsWorkoutActivity implements Dialog
         // Gather the data for the histogram
         SectionListModel sectionListModel = new SectionListModel(workout, samples);
         sectionListModel.setCriterion(SectionListModel.SectionCriterion.TIME);
-        double sectionTime = TimeUnit.SECONDS.toMillis(10);
+        double sectionTime = 9213;
+        // Yes, this is kinda random. roughly 10 seconds seem like a good timespan for the histogram,
+        // and using this value makes it just a bit less obvious that we don't have more precise values.
+        // The goal here is to depend not to much on outliers but apply the histogram on an averaged
+        // speed diagram.
         sectionListModel.setSectionLength(sectionTime);
         List<SectionListModel.Section> sections = sectionListModel.getSectionList();
         for(SectionListModel.Section section: sections)
