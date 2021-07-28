@@ -23,73 +23,56 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 
 import de.tadris.fitness.R;
+import de.tadris.fitness.data.StatsDataProvider;
 import de.tadris.fitness.data.StatsDataTypes;
 import de.tadris.fitness.data.StatsProvider;
+import de.tadris.fitness.data.WorkoutTypeManager;
+import de.tadris.fitness.ui.statistics.ShortStatsItemView;
 import de.tadris.fitness.ui.statistics.StatisticsActivity;
+import de.tadris.fitness.ui.statistics.TimeSpanSelection;
+import de.tadris.fitness.util.WorkoutProperty;
 import de.tadris.fitness.util.charts.ChartStyles;
 import de.tadris.fitness.util.exceptions.NoDataException;
 
 public class ShortStatsAdapter extends RecyclerView.Adapter<ShortStatsAdapter.ViewHolder> {
 
     private static Context ctx;
-    private StatsProvider statsProvider;
-
     /**
      * The constructor for the adapter.
      * @param ctx is the current context
      */
     public ShortStatsAdapter(Context ctx) {
         this.ctx = ctx;
-        statsProvider = new StatsProvider(ctx);
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(ctx).inflate(R.layout.short_stats_item, parent, false);
+        View view = new ShortStatsItemView(ctx);
+        view.getLayoutParams().width = parent.getMeasuredWidth();
+        view.getLayoutParams().height = parent.getMeasuredHeight();
         return new ViewHolder(view, ctx);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        BarData data;
-        StatsDataTypes.TimeSpan allTime = new StatsDataTypes.TimeSpan(0,Long.MAX_VALUE);
-        try {
-            switch (position)
-            {
-                case 0:
-                    data = new BarData(statsProvider.numberOfActivities(allTime));
-                    holder.title.setText(ctx.getString(R.string.numberOfWorkouts));
-                    break;
-                default:
-                    data = new BarData(statsProvider.totalDistances(allTime));
-                    holder.title.setText(ctx.getString(R.string.workoutDistance));
-                    break;
-            }
-            ChartStyles.barChartIconLabel(holder.chart, data, ctx);
-        } catch (NoDataException e) {
-            holder.chart.clear();
+        if (holder.itemView instanceof ShortStatsItemView) {
+            ((ShortStatsItemView) holder.itemView).chartType = position;
+            ((ShortStatsItemView) holder.itemView).updateChart();
         }
     }
 
+    
     @Override
     public int getItemCount() {
         return 2;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        BarChart chart;
-        TextView title;
 
         public ViewHolder(@NonNull View itemView, Context ctx) {
             super(itemView);
-            chart = itemView.findViewById(R.id.short_stats_chart);
-            title = itemView.findViewById(R.id.short_stats_title);
-            chart.setOnTouchListener(null);
-            ChartStyles.defaultBarChart(chart);
-
-            itemView.setOnClickListener(view -> ctx.startActivity(new Intent(ctx, StatisticsActivity.class)));
         }
     }
 }
