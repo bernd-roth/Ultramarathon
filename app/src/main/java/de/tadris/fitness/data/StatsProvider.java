@@ -2,6 +2,7 @@ package de.tadris.fitness.data;
 
 import android.content.Context;
 import android.os.Build;
+import android.util.TypedValue;
 
 import androidx.annotation.RequiresApi;
 
@@ -314,7 +315,9 @@ public class StatsProvider {
             // No aggregation
             for (StatsDataTypes.DataPoint dataPoint : data) {
                 float value = (float) dataPoint.value;
-                candleEntries.add(new CandleEntry((float) dataPoint.time / R.fraction.stats_time_factor, value, value, value, value));
+                TypedValue stats_time_factor = new TypedValue();
+                ctx.getResources().getValue(R.dimen.stats_time_factor, stats_time_factor, true);
+                candleEntries.add(new CandleEntry((float) dataPoint.time / stats_time_factor.getFloat(), value, value, value, value));
             }
         } else {
 
@@ -346,8 +349,9 @@ public class StatsProvider {
                     float min = (float) Collections.min(intervalData, StatsDataTypes.DataPoint.valueComparator).value;
                     float max = (float) Collections.max(intervalData, StatsDataTypes.DataPoint.valueComparator).value;
                     float mean = calculateValueAverage(intervalData);
-
-                    candleEntries.add(new CandleEntry((float) calendar.getTimeInMillis() / R.fraction.stats_time_factor, max, min, mean, mean));
+                    TypedValue stats_time_factor = new TypedValue();
+                    ctx.getResources().getValue(R.dimen.stats_time_factor, stats_time_factor, true);
+                    candleEntries.add(new CandleEntry((float) calendar.getTimeInMillis() / stats_time_factor.getFloat(), max, min, mean, mean));
                 }
 
                 // increment by time span

@@ -455,6 +455,7 @@
     <string name="stats_overview_title">Overview</string>
     <string name="histogram">Histogram</string>
     <string name="details">Details</string>
+    <string name="monthYear">Month / Year</string>
     <string-array name="osm_track_visibility">
         <item>Identifiable</item>
         <item>Trackable</item>

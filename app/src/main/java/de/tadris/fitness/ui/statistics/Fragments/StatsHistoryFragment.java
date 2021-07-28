@@ -3,6 +3,7 @@ package de.tadris.fitness.ui.statistics.Fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Switch;
@@ -33,6 +34,7 @@ import de.tadris.fitness.ui.statistics.DetailStatsActivity;
 import de.tadris.fitness.ui.statistics.WorkoutTypeSelection;
 import de.tadris.fitness.util.charts.ChartStyles;
 import de.tadris.fitness.util.charts.DataSetStyles;
+import de.tadris.fitness.util.charts.formatter.FractionedDateFormatter;
 import de.tadris.fitness.util.exceptions.NoDataException;
 import de.tadris.fitness.util.statistics.ChartSynchronizer;
 import de.tadris.fitness.util.statistics.OnChartGestureMultiListener;
@@ -46,6 +48,8 @@ public class StatsHistoryFragment extends StatsFragment {
     TextView durationTitle;
     Switch durationSwitch;
     CombinedChart durationChart;
+
+    float stats_time_factor;
 
     WorkoutTypeSelection selection;
 
@@ -62,6 +66,9 @@ public class StatsHistoryFragment extends StatsFragment {
         super(R.layout.fragment_stats_history, ctx);
         synchronizer = new ChartSynchronizer();
         statsProvider = new StatsProvider(ctx);
+        TypedValue stats_time_factor = new TypedValue();
+        context.getResources().getValue(R.dimen.stats_time_factor, stats_time_factor, true);
+        this.stats_time_factor = stats_time_factor.getFloat();
     }
 
     @Override
@@ -156,7 +163,7 @@ public class StatsHistoryFragment extends StatsFragment {
 
                 @Override
                 public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
-                    long timeSpan = (long) ((combinedChart.getHighestVisibleX() - combinedChart.getLowestVisibleX()) * R.fraction.stats_time_factor);
+                    long timeSpan = (long) ((combinedChart.getHighestVisibleX() - combinedChart.getLowestVisibleX()) * stats_time_factor);
                     AggregationSpan oldAggregationSpan = aggregationSpan;
 
                     if (TimeUnit.DAYS.toMillis(1095) < timeSpan) {
@@ -204,6 +211,9 @@ public class StatsHistoryFragment extends StatsFragment {
             combinedDistanceData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(context, distanceLineSet)));
 
             distanceChart.setData(combinedDistanceData);
+            distanceChart.getXAxis().setValueFormatter(new FractionedDateFormatter(context,aggregationSpan));
+            distanceChart.getXAxis().setGranularity((float)aggregationSpan.spanInterval / stats_time_factor);
+            ChartStyles.setXAxisLabel(distanceChart, getString(aggregationSpan.axisLabel));
         } catch (NoDataException e) {
             distanceChart.clear();
         }
@@ -235,6 +245,9 @@ public class StatsHistoryFragment extends StatsFragment {
             combinedData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(context, lineDataSet)));
 
             speedChart.setData(combinedData);
+            speedChart.getXAxis().setValueFormatter(new FractionedDateFormatter(context,aggregationSpan));
+            speedChart.getXAxis().setGranularity((float)aggregationSpan.spanInterval / stats_time_factor);
+            ChartStyles.setXAxisLabel(speedChart, getString(aggregationSpan.axisLabel));
         } catch (NoDataException e) {
             speedChart.clear();
         }
@@ -260,6 +273,9 @@ public class StatsHistoryFragment extends StatsFragment {
             combinedData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(context, lineDataSet)));
 
             durationChart.setData(combinedData);
+            durationChart.getXAxis().setValueFormatter(new FractionedDateFormatter(context,aggregationSpan));
+            durationChart.getXAxis().setGranularity((float)aggregationSpan.spanInterval / stats_time_factor);
+            ChartStyles.setXAxisLabel(durationChart, getString(aggregationSpan.axisLabel));
         } catch (NoDataException e) {
             durationChart.clear();
         }

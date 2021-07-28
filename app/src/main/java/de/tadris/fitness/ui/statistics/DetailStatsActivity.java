@@ -2,6 +2,7 @@ package de.tadris.fitness.ui.statistics;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.widget.TextView;
 
@@ -27,6 +28,7 @@ import de.tadris.fitness.data.WorkoutTypeManager;
 import de.tadris.fitness.ui.FitoTrackActivity;
 import de.tadris.fitness.util.charts.ChartStyles;
 import de.tadris.fitness.util.charts.DataSetStyles;
+import de.tadris.fitness.util.charts.formatter.FractionedDateFormatter;
 import de.tadris.fitness.util.exceptions.NoDataException;
 
 public class DetailStatsActivity extends FitoTrackActivity {
@@ -35,13 +37,13 @@ public class DetailStatsActivity extends FitoTrackActivity {
 
     CombinedChart chart;
 
+    float stats_time_factor;
+
     WorkoutTypeManager workoutTypeManager = WorkoutTypeManager.getInstance();
     WorkoutType workoutType;
     AggregationSpan aggregationSpan = AggregationSpan.YEAR;
 
     StatsProvider statsProvider = new StatsProvider(ctx);
-
-    TextView title;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,7 +51,9 @@ public class DetailStatsActivity extends FitoTrackActivity {
         setContentView(R.layout.activity_statistics_detail);
         setTitle(getString(R.string.details));
         setupActionBar();
-        title = findViewById(R.id.stats_detail_chart_title);
+        TypedValue stats_time_factor = new TypedValue();
+        ctx.getResources().getValue(R.dimen.stats_time_factor, stats_time_factor, true);
+        this.stats_time_factor = stats_time_factor.getFloat();
 
         chart = findViewById(R.id.stats_detail_chart);
     }
@@ -58,7 +62,7 @@ public class DetailStatsActivity extends FitoTrackActivity {
     protected void onStart() {
         super.onStart();
         String chartId = getIntent().getExtras().getString("chart");
-        title.setText(chartId);
+        setTitle(chartId);
         String type = (String) getIntent().getSerializableExtra("type");
         String label = (String) getIntent().getSerializableExtra("ylabel");
         ChartStyles.defaultLineChart(chart);
@@ -104,7 +108,7 @@ public class DetailStatsActivity extends FitoTrackActivity {
 
             @Override
             public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
-                long timeSpan = (long) ((chart.getHighestVisibleX() - chart.getLowestVisibleX()) * R.fraction.stats_time_factor);
+                long timeSpan = (long) ((chart.getHighestVisibleX() - chart.getLowestVisibleX()) * stats_time_factor);
                 AggregationSpan oldAggregationSpan = aggregationSpan;
 
                 if (TimeUnit.DAYS.toMillis(1095) < timeSpan) {
@@ -187,6 +191,10 @@ public class DetailStatsActivity extends FitoTrackActivity {
         // Create background line data
         LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);
         combinedData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(ctx, lineDataSet)));
+
+        chart.getXAxis().setValueFormatter(new FractionedDateFormatter(this,aggregationSpan));
+        chart.getXAxis().setGranularity((float)aggregationSpan.spanInterval / stats_time_factor);
+        ChartStyles.setXAxisLabel(chart, getString(aggregationSpan.axisLabel));
 
         chart.setData(combinedData);
         chart.invalidate();

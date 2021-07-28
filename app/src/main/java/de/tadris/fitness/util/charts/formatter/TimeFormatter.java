@@ -22,8 +22,7 @@ public class TimeFormatter extends ValueFormatter {
     }
 
     /**
-     * Expects time in milliseconds
-     * @param value time
+     * @param value time in the unit defined by TimeInput of the constructor
      * @return
      */
     @Override

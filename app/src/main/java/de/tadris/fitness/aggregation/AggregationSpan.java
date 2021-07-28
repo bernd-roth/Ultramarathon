@@ -31,12 +31,12 @@ import de.tadris.fitness.R;
 
 public enum AggregationSpan {
 
-    SINGLE(R.string.singleWorkout, R.string.month, TimeUnit.MINUTES.toMillis(1), "MMM/yy") {
+    SINGLE(R.string.singleWorkout, R.string.month, TimeUnit.MINUTES.toMillis(1), "dd/MMM/yy") {
         @Override
         public void applyToCalendar(Calendar calendar) {
         }
     },
-    DAY(R.string.day, R.string.dayInMonth, TimeUnit.DAYS.toMillis(1), "dd"),
+    DAY(R.string.day, R.string.dayInMonth, TimeUnit.DAYS.toMillis(1), "dd/mm/yy"),
     WEEK(R.string.week, R.string.calendarWeekYear, TimeUnit.DAYS.toMillis(7), "ww/yy") {
         @Override
         public void applyToCalendar(Calendar calendar) {
@@ -44,7 +44,7 @@ public enum AggregationSpan {
             calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
         }
     },
-    MONTH(R.string.month, R.string.month, TimeUnit.DAYS.toMillis(30), "MMM") {
+    MONTH(R.string.month, R.string.monthYear, TimeUnit.DAYS.toMillis(30), "MMM/yy") {
         @Override
         public void applyToCalendar(Calendar calendar) {
             super.applyToCalendar(calendar);
