@@ -267,7 +267,7 @@ public abstract class WorkoutActivity extends InformationActivity {
             dataSet.setDrawCircles(false);
             dataSet.setLineWidth(2);
             dataSet.setHighlightLineWidth(2.5f);
-            dataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+            dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
             if (converters.size() == 2) {
                 YAxis.AxisDependency axisDependency = converterIndex == 0 ? YAxis.AxisDependency.LEFT : YAxis.AxisDependency.RIGHT;
                 dataSet.setAxisDependency(axisDependency);
