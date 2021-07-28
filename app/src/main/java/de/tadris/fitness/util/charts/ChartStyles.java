@@ -21,10 +21,13 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import de.tadris.fitness.R;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.util.Icon;
+import de.tadris.fitness.util.unit.DistanceUnitUtils;
 
 import static de.tadris.fitness.util.charts.BitmapHelper.drawableToBitmap;
 
@@ -59,15 +62,54 @@ public class ChartStyles {
     {
         LegendEntry legend = new LegendEntry();
         legend.label = label;
-        List<LegendEntry> entries = new ArrayList<>();
-        entries.add(legend);
-        chart.getLegend().setEntries(entries);
+        chart.getLegend().setCustom(Arrays.asList(new LegendEntry[]{legend}));
         chart.getLegend().setEnabled(true);
         chart.getLegend().setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
         chart.getLegend().setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
         chart.getLegend().setFormSize(0);
         chart.getLegend().setFormToTextSpace(-16);
         chart.getLegend().setForm(Legend.LegendForm.NONE);
+    }
+
+    public static void defaultHistogram(BarChart chart, Context ctx, ValueFormatter xValueFormatter, ValueFormatter yValueFormatter)
+    {
+        float min = chart.getBarData().getDataSets().get(0).getEntryForIndex(0).getX();
+        int nBins = chart.getBarData().getDataSets().get(0).getEntryCount();
+        float max = chart.getBarData().getDataSets().get(0).getEntryForIndex(nBins-1).getX();
+
+        // now that we know the meta inf, set the bars to positions between indices, so we can use an IndexAxisValueFormatter
+        // simultaneously construct the new labels
+        String[] labels = new String[nBins+1];
+        float barWidth= (float) ((max-min)/(nBins-1));
+        for(int i=0; i<nBins; i++)
+        {
+            chart.getBarData().getDataSets().get(0).getEntryForIndex(i).setX(i+0.5f);
+            labels[i] = xValueFormatter.getFormattedValue((float) (min+(i+0.5)*barWidth));//distanceUnitUtils.getPace(1/x/60, false, false);
+        }
+        labels[nBins] = xValueFormatter.getFormattedValue((float) (min+(nBins+0.5)*barWidth));
+
+
+        chart.getBarData().setBarWidth(1);
+        chart.getBarData().setDrawValues(false);
+        ChartStyles.defaultBarChart(chart);
+        chart.getXAxis().setEnabled(true);
+        chart.getXAxis().setDrawGridLines(false);
+        chart.getXAxis().setDrawLabels(true);
+        chart.getXAxis().setLabelRotationAngle(-90);
+        chart.getAxisLeft().setEnabled(true);
+        chart.getAxisLeft().setDrawGridLines(true);
+        chart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
+        chart.getXAxis().setGranularity(1);
+        chart.getXAxis().setLabelCount(labels.length);
+        float shiftY = chart.getData().getYMax()/6;
+        chart.getAxisLeft().setAxisMinimum(0-shiftY+0.1f*shiftY);
+        chart.getAxisLeft().setGranularity(shiftY);
+        chart.setScaleEnabled(false);
+        chart.setNestedScrollingEnabled(false);
+        chart.getXAxis().setAxisMinimum(-0.5f);
+        chart.getXAxis().setAxisMaximum(nBins+0.5f);
+        chart.getAxisLeft().setValueFormatter(yValueFormatter);
+        chart.setMarker(new DisplayValueMarker(ctx, chart.getAxisLeft().getValueFormatter()));
     }
 
     public static void defaultBarData(BarChart chart, BarData data) {

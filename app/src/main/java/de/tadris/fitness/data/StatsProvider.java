@@ -182,11 +182,10 @@ public class StatsProvider {
             }
         }
 
-
         ArrayList<BarEntry> barEntries = new ArrayList<>();
         for(int i=0; i<bins; i++)
         {
-            barEntries.add(new BarEntry(i, (float) histogram[i]/60));
+            barEntries.add(new BarEntry((float)(min+binWidth*i), (float) histogram[i]));
         }
 
         return DataSetStyles.applyDefaultBarStyle(ctx,

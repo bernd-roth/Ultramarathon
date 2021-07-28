@@ -38,15 +38,9 @@ import androidx.annotation.RequiresApi;
 import androidx.core.content.FileProvider;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.utils.MPPointD;
-import com.github.mikephil.charting.utils.MPPointF;
-import com.github.mikephil.charting.utils.Transformer;
 
 import java.io.File;
 import java.io.IOException;
@@ -72,11 +66,12 @@ import de.tadris.fitness.ui.workout.diagram.SpeedConverter;
 import de.tadris.fitness.util.DataManager;
 import de.tadris.fitness.util.DialogUtils;
 import de.tadris.fitness.util.charts.ChartStyles;
-import de.tadris.fitness.util.charts.DisplayValueMarker;
+import de.tadris.fitness.util.charts.formatter.SpeedFormatter;
 import de.tadris.fitness.util.io.general.IOHelper;
 import de.tadris.fitness.util.sections.SectionListModel;
 import de.tadris.fitness.util.sections.SectionListPresenter;
 import de.tadris.fitness.util.sections.SectionListView;
+import de.tadris.fitness.util.unit.TimeFormatter;
 import de.westnordost.osmapi.traces.GpsTraceDetails;
 import oauth.signpost.OAuthConsumer;
 
@@ -170,55 +165,31 @@ public class ShowGpsWorkoutActivity extends GpsWorkoutActivity implements Dialog
         List<Double> data = new ArrayList<>();
         List<Double> weights = new ArrayList<>();
 
+        // Gather the data for the histogram
         SectionListModel sectionListModel = new SectionListModel(workout, samples);
         sectionListModel.setCriterion(SectionListModel.SectionCriterion.TIME);
         double sectionTime = TimeUnit.SECONDS.toMillis(10);
         sectionListModel.setSectionLength(sectionTime);
-
         List<SectionListModel.Section> sections = sectionListModel.getSectionList();
-
-        double min=1/sections.get(0).getPace(), max=min;
         for(SectionListModel.Section section: sections)
         {
-            weights.add(section.getTime(true)/1000);
+            weights.add(section.getTime(true));
             double speed = 1/section.getPace();
             data.add(speed);
-            min = (min < speed) ? min : speed;
-            max = (max > speed) ? max : speed;
         }
 
+        // create the histogram
         int nBins = 15;
         BarDataSet dataSet = new StatsProvider(this).createWeightedHistogramData(data, weights, nBins, "");
-        List<BarEntry> values = dataSet.getValues();
-        String[] labels = new String[values.size()];
-        float barWidth= (float) ((max-min)/nBins);
-        for(int i=0; i<values.size(); i++)
-        {
-            labels[i] = distanceUnitUtils.getSpeedWithoutUnit(min+i*barWidth);//distanceUnitUtils.getPace(1/x/60, false, false);
-        }
-
         BarData barData = new BarData(dataSet);
-        barData.setBarWidth(1);
-        barData.setDrawValues(false);
         chart.setData(barData);
 
-        ChartStyles.defaultBarChart(chart);
-        chart.getXAxis().setEnabled(true);
-        chart.getXAxis().setDrawGridLines(false);
-        chart.getXAxis().setDrawLabels(true);
-        chart.getXAxis().setLabelRotationAngle(-90);
-        chart.getAxisLeft().setEnabled(true);
-        chart.getAxisLeft().setDrawGridLines(true);
-        chart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
-        chart.getXAxis().setGranularity(1);
-        chart.getXAxis().setLabelCount(labels.length);
-        chart.getAxisLeft().setAxisMinimum(0-chart.getData().getYMax()/6);
-        chart.setScaleEnabled(false);
-
+        // Create the diagram
+        de.tadris.fitness.util.charts.formatter.TimeFormatter timeFormatter = new de.tadris.fitness.util.charts.formatter.TimeFormatter();
+        SpeedFormatter speedFormatter = new SpeedFormatter(distanceUnitUtils);
+        ChartStyles.defaultHistogram(chart, this, speedFormatter, timeFormatter);
         ChartStyles.setXAxisLabel(chart, distanceUnitUtils.getSpeedUnit());
         ChartStyles.setYAxisLabel(chart, getString(R.string.timeMinuteShort));
-
-        chart.setMarker(new DisplayValueMarker(this, chart.getDefaultValueFormatter()));
 
         root.addView(chart, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getMapHeight()/2));
     }

@@ -22,6 +22,7 @@ import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 
+import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.StatsDataTypes;
 import de.tadris.fitness.data.StatsProvider;
@@ -63,6 +64,7 @@ public class ShortStatsAdapter extends RecyclerView.Adapter<ShortStatsAdapter.Vi
             default:
                 data = new BarData(statsProvider.totalDistances(allTime));
                 holder.title.setText(ctx.getString(R.string.workoutDistance));
+                ChartStyles.setXAxisLabel(holder.chart, Instance.getInstance(ctx).distanceUnitUtils.getDistanceUnitSystem().getLongDistanceUnit());
                 break;
         }
         ChartStyles.barChartIconLabel(holder.chart, data, ctx);
