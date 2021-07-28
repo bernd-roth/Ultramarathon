@@ -25,8 +25,12 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
 import com.github.mikephil.charting.charts.CombinedChart;
+import com.github.mikephil.charting.formatter.DefaultValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import de.tadris.fitness.Instance;
+import de.tadris.fitness.util.charts.formatter.MinutesFormatter;
+import de.tadris.fitness.util.charts.formatter.TimeFormatter;
 import de.tadris.fitness.util.unit.DistanceUnitUtils;
 import de.tadris.fitness.util.unit.EnergyUnitUtils;
 
@@ -47,13 +51,28 @@ public abstract class AbstractSampleConverter implements SampleConverter {
     }
 
     @Override
-    public void afterAdd(CombinedChart chart) {
-    } // Mostly not needed
+    public String getXAxisLabel(){
+        return "min";
+    }
 
     @Override
-    public String getDescription() {
-        return "min - " + getUnit();
+    public ValueFormatter getXValueFormatter() {
+        return new MinutesFormatter();
     }
+
+    @Override
+    public String getYAxisLabel(){
+        return getUnit();
+    }
+
+    @Override
+    public ValueFormatter getYValueFormatter() {
+        return new DefaultValueFormatter(1);
+    }
+
+    @Override
+    public void afterAdd(CombinedChart chart) {
+    } // Mostly not needed
 
     @Override
     public boolean isIntervalSetVisible() {

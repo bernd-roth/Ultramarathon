@@ -68,6 +68,7 @@ import de.tadris.fitness.ui.workout.diagram.SpeedConverter;
 import de.tadris.fitness.util.DataManager;
 import de.tadris.fitness.util.DialogUtils;
 import de.tadris.fitness.util.charts.ChartStyles;
+import de.tadris.fitness.util.charts.DisplayValueMarker;
 import de.tadris.fitness.util.charts.formatter.SpeedFormatter;
 import de.tadris.fitness.util.io.general.IOHelper;
 import de.tadris.fitness.util.sections.SectionListModel;
@@ -197,6 +198,7 @@ public class ShowGpsWorkoutActivity extends GpsWorkoutActivity implements Dialog
         ChartStyles.defaultHistogram(chart, this, speedFormatter, timeFormatter);
         ChartStyles.setXAxisLabel(chart, distanceUnitUtils.getSpeedUnit());
         ChartStyles.setYAxisLabel(chart, getString(R.string.timeMinuteShort));
+        chart.setMarker(new DisplayValueMarker(this, chart.getAxisLeft().getValueFormatter(), chart.getLegend().getEntries()[0].label));
 
         root.addView(chart, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getMapHeight()/2));
     }

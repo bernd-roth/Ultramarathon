@@ -41,6 +41,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.DefaultAxisValueFormatter;
+import com.github.mikephil.charting.formatter.DefaultValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.ChartTouchListener;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
@@ -64,6 +65,7 @@ import de.tadris.fitness.data.StatsDataTypes;
 import de.tadris.fitness.ui.workout.diagram.SampleConverter;
 import de.tadris.fitness.util.WorkoutCalculator;
 import de.tadris.fitness.util.charts.ChartStyles;
+import de.tadris.fitness.util.charts.DisplayValueMarker;
 import de.tadris.fitness.util.unit.DistanceUnitUtils;
 import de.tadris.fitness.util.unit.EnergyUnitUtils;
 
@@ -119,6 +121,8 @@ public abstract class WorkoutActivity extends InformationActivity {
     protected CombinedChart addDiagram(SampleConverter converter) {
         CombinedChart chart = getDiagram(converter);
         root.addView(chart, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, fullScreenItems ? ViewGroup.LayoutParams.MATCH_PARENT : getMapHeight() / 2));
+        chart.getDescription().setEnabled(true); // I don't know where thes two get disabled... Internally for combined charts perhaps? Anyway!
+        chart.getLegend().setEnabled(true);
         return chart;
     }
 
@@ -137,7 +141,6 @@ public abstract class WorkoutActivity extends InformationActivity {
 
     private CombinedChart getDiagram(List<SampleConverter> converters, boolean showIntervalSets) {
         CombinedChart chart = new CombinedChart(this);
-        ChartStyles.defaultLineChart(chart);
 
         chart.setScaleXEnabled(diagramsInteractive);
         chart.setScaleYEnabled(false);
@@ -156,12 +159,6 @@ public abstract class WorkoutActivity extends InformationActivity {
         }
         chart.invalidate();
 
-        chart.getAxisLeft().setTextColor(getThemeTextColor());
-        chart.getAxisRight().setTextColor(getThemeTextColor());
-        chart.getXAxis().setTextColor(getThemeTextColor());
-        chart.getLegend().setTextColor(getThemeTextColor());
-        chart.getDescription().setTextColor(getThemeTextColor());
-
         chart.setHighlightPerDragEnabled(diagramsInteractive);
         chart.setHighlightPerTapEnabled(diagramsInteractive);
 
@@ -171,6 +168,7 @@ public abstract class WorkoutActivity extends InformationActivity {
             converter.afterAdd(chart);
         }
 
+        ChartStyles.defaultLineChart(chart);
         return chart;
     }
 
@@ -189,8 +187,6 @@ public abstract class WorkoutActivity extends InformationActivity {
     protected void updateChart(CombinedChart chart, List<SampleConverter> converters, boolean showIntervalSets) {
         boolean hasMultipleConverters = converters.size() > 1;
         CombinedData combinedData = new CombinedData();
-
-        Description description = new Description();
 
         chart.setOnChartGestureListener(new OnChartGestureListener() {
             @Override
@@ -234,14 +230,15 @@ public abstract class WorkoutActivity extends InformationActivity {
             }
         });
 
-        if (hasMultipleConverters || converters.size() == 0) {
-            description.setText("");
-        } else {
-            description.setText(converters.get(0).getDescription());
+        String xLabel="", yLabel="";
+        if (hasMultipleConverters) {
+            xLabel = converters.get(0).getXAxisLabel();
+        } else if (! (converters.size() == 0)){
+            xLabel = converters.get(0).getXAxisLabel();
+            yLabel = converters.get(0).getYAxisLabel();
         }
-        chart.setDescription(description);
-        chart.getAxisLeft().setValueFormatter(null);
-        chart.getAxisRight().setValueFormatter(null);
+        ChartStyles.setXAxisLabel(chart, xLabel);
+        ChartStyles.setYAxisLabel(chart, yLabel);
 
         long timeSpan = (long) ((chart.getHighestVisibleX() - chart.getLowestVisibleX()) * 1000f * 60f);
         timeSpan /= NUMBER_OF_SAMPLES_IN_DIAGRAM;
@@ -261,6 +258,7 @@ public abstract class WorkoutActivity extends InformationActivity {
                 Entry e = new Entry((float) (sample.relativeTime) / 1000f / 60f, converter.getValue(sample), sample);
                 entries.add(e);
             }
+            chart.getXAxis().setValueFormatter(converter.getXValueFormatter());
 
             LineDataSet dataSet = new LineDataSet(entries, converter.getName()); // add entries to dataset
             int color = hasMultipleConverters ? getResources().getColor(converter.getColor()) : getThemePrimaryColor();
@@ -273,12 +271,17 @@ public abstract class WorkoutActivity extends InformationActivity {
             if (converters.size() == 2) {
                 YAxis.AxisDependency axisDependency = converterIndex == 0 ? YAxis.AxisDependency.LEFT : YAxis.AxisDependency.RIGHT;
                 dataSet.setAxisDependency(axisDependency);
-                chart.getAxis(axisDependency).setValueFormatter(new DefaultAxisValueFormatter(0) {
-                    @Override
-                    public String getFormattedValue(float value) {
-                        return super.getFormattedValue(value) + " " + converter.getUnit();
-                    }
-                });
+                chart.getAxis(axisDependency).setValueFormatter(converter.getYValueFormatter());
+                chart.getAxisRight().setEnabled(true);
+                chart.setMarker(new DisplayValueMarker(this, new DefaultValueFormatter(1), ""));
+                // TODO: Make marker for diagrams with plural datasets work better...
+            }
+            else
+            {
+                chart.getAxisLeft().setValueFormatter(converter.getYValueFormatter());
+                chart.getAxisRight().setValueFormatter(converter.getYValueFormatter());
+                chart.getAxisRight().setEnabled(false);
+                chart.setMarker(new DisplayValueMarker(this, converter.getYValueFormatter(), converter.getUnit()));
             }
             lineData.addDataSet(dataSet);
             converterIndex++;

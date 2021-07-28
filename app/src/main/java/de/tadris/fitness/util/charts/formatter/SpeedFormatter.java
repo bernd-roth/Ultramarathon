@@ -2,8 +2,6 @@ package de.tadris.fitness.util.charts.formatter;
 
 import com.github.mikephil.charting.formatter.ValueFormatter;
 
-import java.util.concurrent.TimeUnit;
-
 import de.tadris.fitness.util.unit.DistanceUnitUtils;
 
 public class SpeedFormatter extends ValueFormatter {

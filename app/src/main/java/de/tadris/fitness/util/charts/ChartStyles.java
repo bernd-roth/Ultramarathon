@@ -10,6 +10,7 @@ import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.components.XAxis;
@@ -33,6 +34,7 @@ import de.tadris.fitness.util.unit.DistanceUnitUtils;
 import static de.tadris.fitness.util.charts.BitmapHelper.drawableToBitmap;
 
 public class ChartStyles {
+
     public static void defaultBarChart(BarChart chart)
     {
         chart.getAxisLeft().setEnabled(false);
@@ -62,15 +64,17 @@ public class ChartStyles {
 
         chart.getDescription().setEnabled(false);
         chart.setPinchZoom(false);
-        chart.setDrawGridBackground(true);
+        chart.setDrawGridBackground(false);
     }
 
 
     public static void setXAxisLabel(Chart chart, String label)
     {
-        chart.getDescription().setTextSize(10);
-        chart.getDescription().setText(label);
-        chart.getDescription().setEnabled(true);
+        Description description = new Description();
+        description.setText(label);
+        description.setTextSize(10);
+        description.setEnabled(true);
+        chart.setDescription(description);
     }
 
     public static void setYAxisLabel(Chart chart, String label)
@@ -124,7 +128,10 @@ public class ChartStyles {
         chart.getXAxis().setAxisMinimum(-0.5f);
         chart.getXAxis().setAxisMaximum(nBins+0.5f);
         chart.getAxisLeft().setValueFormatter(yValueFormatter);
-        chart.setMarker(new DisplayValueMarker(ctx, chart.getAxisLeft().getValueFormatter()));
+
+        LegendEntry[] entries = chart.getLegend().getEntries();
+        String unit = entries.length > 0 ? entries[0].label:"";
+        chart.setMarker(new DisplayValueMarker(ctx, chart.getAxisLeft().getValueFormatter()," "+unit));
     }
 
     public static void defaultBarData(BarChart chart, BarData data) {
