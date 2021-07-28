@@ -183,6 +183,11 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
     }
 
     @Override
+    public WorkoutType.RecordingType getRecordingType() {
+        return WorkoutType.RecordingType.GPS;
+    }
+
+    @Override
     protected void onWatchdog() {
         if (BuildConfig.DEBUG) {
             Log.d("WorkoutRecorder", "handleWatchdog " + this.getState().toString() + " samples: " + samples.size() + " autoTout: " + autoTimeoutMs + " inst: " + this.toString());

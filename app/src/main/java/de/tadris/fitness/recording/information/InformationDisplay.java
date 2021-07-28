@@ -23,22 +23,23 @@ import android.content.Context;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.data.UserPreferences;
+import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.recording.BaseWorkoutRecorder;
 
 public class InformationDisplay {
 
-    private final String mode;
+    private final WorkoutType.RecordingType mode;
     private final UserPreferences preferences;
     private final InformationManager manager;
 
-    public InformationDisplay(String mode, Context context) {
+    public InformationDisplay(WorkoutType.RecordingType mode, Context context) {
         this.mode = mode;
         this.preferences = Instance.getInstance(context).userPreferences;
-        this.manager = new InformationManager(context);
+        this.manager = new InformationManager(mode, context);
     }
 
     public DisplaySlot getDisplaySlot(BaseWorkoutRecorder recorder, int slot) {
-        String informationId = preferences.getIdOfDisplayedInformation(mode, slot);
+        String informationId = preferences.getIdOfDisplayedInformation(mode.id, slot);
         RecordingInformation information = manager.getInformationById(informationId);
         if (information != null) {
             return new DisplaySlot(slot, information.getTitle(), information.getDisplayedText(recorder));

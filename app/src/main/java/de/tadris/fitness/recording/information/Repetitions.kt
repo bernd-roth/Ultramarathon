@@ -20,34 +20,25 @@ package de.tadris.fitness.recording.information
 
 import android.content.Context
 import de.tadris.fitness.R
-import de.tadris.fitness.recording.BaseWorkoutRecorder
-import java.util.*
+import de.tadris.fitness.recording.indoor.IndoorWorkoutRecorder
 
-class CurrentTime(context: Context) : RecordingInformation(context) {
+class Repetitions(context: Context) : IndoorRecordingInformation(context) {
 
-    override val id = "currentTime"
-    override val isEnabledByDefault = false
-    override fun canBeDisplayed() = false
+    override val id = "repetitions"
+    override val isEnabledByDefault = true
+    override fun canBeDisplayed() =
+        false // Useless, because the total rep count is displayed in big on the screen
 
-    override fun getSpokenText(recorder: BaseWorkoutRecorder): String {
-        return getString(R.string.currentTime) + ": " + getSpokenTime(Calendar.getInstance(Locale.getDefault())) + "."
-    }
-
-    private fun getSpokenTime(currentTime: Calendar): String {
-        val hours = currentTime[Calendar.HOUR_OF_DAY].toLong()
-        val minutes = currentTime[Calendar.MINUTE].toLong()
-        return context.getString(
-            R.string.currentTimeStructure,
-            hours.toString(),
-            minutes.toString()
-        )
+    override fun getSpokenText(recorder: IndoorWorkoutRecorder): String {
+        return getString(R.string.workoutRepetitions) + ": " + recorder.repetitionsTotal + "."
     }
 
     override fun getTitle(): String {
-        return ""
+        return getString(R.string.workoutRepetitions)
     }
 
-    override fun getDisplayedText(recorder: BaseWorkoutRecorder): String {
-        return ""
+    override fun getDisplayedText(recorder: IndoorWorkoutRecorder): String {
+        return recorder.repetitionsTotal.toString()
     }
+
 }

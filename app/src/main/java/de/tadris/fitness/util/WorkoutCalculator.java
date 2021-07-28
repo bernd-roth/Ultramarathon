@@ -73,7 +73,7 @@ public class WorkoutCalculator {
             long relativeDiff = sample.relativeTime - relativeTime;
             long diff = absoluteDiff - relativeDiff;
 
-            if (diff > 10000) {
+            if (diff > 1000) {
                 if (lastWasPause) {
                     // Add duration to last pause if there is no sample between detected pauses
                     result.get(result.size() - 1).addDuration(diff);

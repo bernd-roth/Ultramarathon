@@ -32,7 +32,7 @@ class InformationAnnouncements(
     private val TTSController: TTSController
 ) {
 
-    private val manager: InformationManager = InformationManager(context)
+    private val manager: InformationManager = InformationManager(recorder.recordingType, context)
     private var lastSpokenUpdateTime: Long = 0
     private var lastSpokenUpdateDistance = 0
     private var lastSpokenSpeedWarningTime: Long = 0
