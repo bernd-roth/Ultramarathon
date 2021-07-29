@@ -14,12 +14,15 @@ import androidx.annotation.Nullable;
 
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.CombinedChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.CandleData;
 import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CombinedData;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.DefaultValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.listener.ChartTouchListener;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
 
@@ -30,10 +33,12 @@ import java.util.concurrent.TimeUnit;
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationSpan;
+import de.tadris.fitness.data.StatsDataTypes;
 import de.tadris.fitness.data.StatsProvider;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.ui.statistics.DetailStatsActivity;
 import de.tadris.fitness.ui.statistics.WorkoutTypeSelection;
+import de.tadris.fitness.util.WorkoutProperty;
 import de.tadris.fitness.util.charts.ChartStyles;
 import de.tadris.fitness.util.charts.DataSetStyles;
 import de.tadris.fitness.util.charts.formatter.FractionedDateFormatter;
@@ -42,6 +47,7 @@ import de.tadris.fitness.util.charts.formatter.TimeFormatter;
 import de.tadris.fitness.util.exceptions.NoDataException;
 import de.tadris.fitness.util.statistics.ChartSynchronizer;
 import de.tadris.fitness.util.statistics.OnChartGestureMultiListener;
+import de.tadris.fitness.util.unit.DistanceUnitUtils;
 
 public class StatsHistoryFragment extends StatsFragment {
 
@@ -265,22 +271,21 @@ public class StatsHistoryFragment extends StatsFragment {
     }
 
     private void updateDurationChart(WorkoutType workoutType) {
-        CandleDataSet candleDataSet;
+        CombinedData combinedData = new CombinedData();
 
         try {
             if (durationSwitch.isChecked()) {
-                candleDataSet = statsProvider.getPauseDurationCandleData(aggregationSpan, workoutType);
+                BarDataSet barDataSet = statsProvider.getDurationSumData(aggregationSpan, workoutType);
+                combinedData.setData(new BarData(barDataSet));
+                DataSetStyles.applyDefaultBarStyle(context, barDataSet);
+                //candleDataSet = statsProvider.getPauseDurationCandleData(aggregationSpan, workoutType);
             } else {
-                candleDataSet = statsProvider.getDurationCandleData(aggregationSpan, workoutType);
+                CandleDataSet candleDataSet = statsProvider.getDurationCandleData(aggregationSpan, workoutType);
+                combinedData.setData(new CandleData(candleDataSet));
+                // Create background line
+                LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);
+                combinedData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(context, lineDataSet)));
             }
-
-            // Add candle data
-            CombinedData combinedData = new CombinedData();
-            combinedData.setData(new CandleData(candleDataSet));
-
-            // Create background line
-            LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);
-            combinedData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(context, lineDataSet)));
 
             durationChart.setData(combinedData);
             durationChart.getXAxis().setValueFormatter(new FractionedDateFormatter(context,aggregationSpan));
