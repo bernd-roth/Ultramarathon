@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -151,12 +152,14 @@ public class StatsHistoryFragment extends StatsFragment {
             }
         });
 
+
         combinedChartList.add(speedChart);
         combinedChartList.add(distanceChart);
         combinedChartList.add(durationChart);
         combinedChartList.add(pauseDurationChart);
 
         for (CombinedChart combinedChart : combinedChartList) {
+            animateChart(combinedChart);
             ChartStyles.defaultLineChart(combinedChart);
             OnChartGestureMultiListener multiListener = new OnChartGestureMultiListener(new ArrayList<>());
             multiListener.listeners.add(synchronizer.addChart(combinedChart));
@@ -371,6 +374,11 @@ public class StatsHistoryFragment extends StatsFragment {
             pauseDurationChart.clear();
         }
         pauseDurationChart.invalidate();
+    }
+
+
+    private void animateChart (CombinedChart chart) {
+        chart.animateY(500, Easing.EaseInExpo);
     }
 
     @Override
