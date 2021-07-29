@@ -3,82 +3,116 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-
-        <de.tadris.fitness.ui.statistics.WorkoutTypeSelection
-            style="@style/statsBar"
-            android:id="@+id/stats_history_workout_type_selector"
-            android:gravity="center_horizontal" />
-
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <de.tadris.fitness.ui.statistics.WorkoutTypeSelection
+        android:id="@+id/stats_history_workout_type_selector"
+        style="@style/statsBar"
+        android:gravity="center_horizontal" />
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/stats_history_speed_title"
-                style="@style/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/workoutSpeed" />
-
-            <Switch
-                android:id="@+id/speed_switch"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="" />
-        </LinearLayout>
+                android:orientation="horizontal">
 
-    <com.github.mikephil.charting.charts.CombinedChart
-        android:id="@+id/stats_speed_chart"
-        android:layout_width="match_parent"
-        android:layout_height="200dp" />
+                <TextView
+                    android:id="@+id/stats_history_speed_title"
+                    style="@style/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/workoutAvgSpeedLong" />
 
-    <TextView
-        style="@style/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/workoutDistance" />
+                <Switch
+                    android:id="@+id/speed_switch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
-    <com.github.mikephil.charting.charts.CombinedChart
-        android:id="@+id/stats_dist_chart"
-        android:layout_width="match_parent"
-        android:layout_height="200dp" />
+            <com.github.mikephil.charting.charts.CombinedChart
+                android:id="@+id/stats_speed_chart"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-
-            <TextView
-                style="@style/title"
-                android:id="@+id/stats_history_duration_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/workoutDuration" />
-
-            <Switch
-                android:id="@+id/duration_switch"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/stats_history_distance_title"
+                    style="@style/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/workoutAvgDistance" />
+
+                <Switch
+                    android:id="@+id/distance_switch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <com.github.mikephil.charting.charts.CombinedChart
+                android:id="@+id/stats_history_distance_chart"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/stats_history_duration_title"
+                    style="@style/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/workoutAvgDurationLong" />
+
+                <Switch
+                    android:id="@+id/duration_switch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="" />
+            </LinearLayout>
+
+            <com.github.mikephil.charting.charts.CombinedChart
+                android:id="@+id/stats_duration_chart"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/stats_history_pause_duration_title"
+                    style="@style/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/workoutAvgPauseDuration" />
+
+                <Switch
+                    android:id="@+id/pause_duration_switch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <com.github.mikephil.charting.charts.CombinedChart
+                android:id="@+id/stats_pause_duration_chart"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+
         </LinearLayout>
-
-    <com.github.mikephil.charting.charts.CombinedChart
-        android:id="@+id/stats_duration_chart"
-        android:layout_width="match_parent"
-        android:layout_height="200dp" />
-
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
 </LinearLayout>

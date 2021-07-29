@@ -13,7 +13,6 @@ import com.github.mikephil.charting.data.CandleEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.DefaultValueFormatter;
-import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,14 +39,15 @@ import static java.lang.Math.min;
 
 public class StatsProvider {
 
-    private static final int MINUTES_LIMIT = 2;
-
+    static TypedValue stats_time_factor;
     Context ctx;
     StatsDataProvider dataProvider;
 
     public StatsProvider(Context ctx) {
         this.ctx = ctx;
         dataProvider = new StatsDataProvider(ctx);
+        stats_time_factor = new TypedValue();
+        ctx.getResources().getValue(R.dimen.stats_time_factor, stats_time_factor, true);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -211,7 +211,7 @@ public class StatsProvider {
     public CandleDataSet getPaceCandleData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {
         final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.AVG_PACE;
 
-        CandleDataSet candleDataSet = new CandleDataSet(getCombinedData(span, workoutType, WORKOUT_PROPERTY),
+        CandleDataSet candleDataSet = new CandleDataSet(getCombinedCandleData(span, workoutType, WORKOUT_PROPERTY),
                 WORKOUT_PROPERTY.getStringRepresentation(ctx));
         CandleDataSet dataSet = DataSetStyles.applyDefaultCandleStyle(ctx, candleDataSet);
         dataSet.setValueFormatter(new TimeFormatter(TimeUnit.MINUTES, true, true, false));
@@ -226,7 +226,7 @@ public class StatsProvider {
     public CandleDataSet getSpeedCandleData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {
         final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.AVG_SPEED;
 
-        CandleDataSet candleDataSet = new CandleDataSet(getCombinedData(span, workoutType, WORKOUT_PROPERTY),
+        CandleDataSet candleDataSet = new CandleDataSet(getCombinedCandleData(span, workoutType, WORKOUT_PROPERTY),
                 WORKOUT_PROPERTY.getStringRepresentation(ctx));
         candleDataSet.setValueFormatter(new SpeedFormatter(Instance.getInstance(ctx).distanceUnitUtils));
         return DataSetStyles.applyDefaultCandleStyle(ctx, candleDataSet);
@@ -240,7 +240,7 @@ public class StatsProvider {
     public CandleDataSet getDistanceCandleData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {
         final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.LENGTH;
 
-        ArrayList<CandleEntry> candleEntries = getCombinedData(span, workoutType, WORKOUT_PROPERTY);
+        ArrayList<CandleEntry> candleEntries = getCombinedCandleData(span, workoutType, WORKOUT_PROPERTY);
 
         // Display distance in kilometers
         for (CandleEntry entry : candleEntries) {
@@ -258,11 +258,24 @@ public class StatsProvider {
         return convertCandleToMeanLineData(getDistanceCandleData(span, workoutType));
     }
 
+    public BarDataSet getDistanceSumData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {
+        final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.LENGTH;
+
+        ArrayList<BarEntry> barEntries = getCombinedSumData(span, workoutType, WORKOUT_PROPERTY);
+
+        for (BarEntry entry : barEntries) {
+            entry.setY(entry.getY() / 1000);
+        }
+
+        return DataSetStyles.applyDefaultBarStyle(ctx, new BarDataSet(barEntries,
+                WORKOUT_PROPERTY.getStringRepresentation(ctx)));
+    }
+
 
     public CandleDataSet getDurationCandleData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {
         final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.DURATION;
 
-        ArrayList<CandleEntry> candleEntries = getCombinedData(span, workoutType, WORKOUT_PROPERTY);
+        ArrayList<CandleEntry> candleEntries = getCombinedCandleData(span, workoutType, WORKOUT_PROPERTY);
 
         // Display durations in minutes
         for (CandleEntry entry : candleEntries) {
@@ -280,11 +293,26 @@ public class StatsProvider {
         return convertCandleToMeanLineData(getDurationCandleData(span, workoutType));
     }
 
+    public BarDataSet getDurationSumData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {
+        final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.DURATION;
+
+        ArrayList<BarEntry> barEntries = getCombinedSumData(span, workoutType, WORKOUT_PROPERTY);
+
+        for (BarEntry entry : barEntries) {
+            entry.setY(TimeUnit.MILLISECONDS.toMinutes((long) entry.getY()));
+        }
+
+        BarDataSet dataSet = DataSetStyles.applyDefaultBarStyle(ctx, new BarDataSet(barEntries,
+                WORKOUT_PROPERTY.getStringRepresentation(ctx)));
+        dataSet.setValueFormatter(new TimeFormatter(TimeUnit.MINUTES, false, true, false));
+        return dataSet;
+    }
+
 
     public CandleDataSet getPauseDurationCandleData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {
         final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.PAUSE_DURATION;
 
-        ArrayList<CandleEntry> candleEntries = getCombinedData(span, workoutType, WORKOUT_PROPERTY);
+        ArrayList<CandleEntry> candleEntries = getCombinedCandleData(span, workoutType, WORKOUT_PROPERTY);
 
         for (CandleEntry entry : candleEntries) {
             entry.setHigh(TimeUnit.MILLISECONDS.toMinutes((long) entry.getHigh()));
@@ -303,19 +331,59 @@ public class StatsProvider {
         return convertCandleToMeanLineData(getPauseDurationCandleData(span, workoutType));
     }
 
+    public BarDataSet getPauseDurationSumData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {
+        final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.PAUSE_DURATION;
 
-    private ArrayList<CandleEntry> getCombinedData(AggregationSpan span, WorkoutType workoutType, WorkoutProperty workoutProperty) throws NoDataException {
+        ArrayList<BarEntry> barEntries = getCombinedSumData(span, workoutType, WORKOUT_PROPERTY);
 
-        ArrayList<WorkoutType> workoutTypes = new ArrayList<WorkoutType>();
+        for (BarEntry entry : barEntries) {
+            entry.setY(TimeUnit.MILLISECONDS.toMinutes((long) entry.getY()));
+        }
 
-        // Convert workout type to list (_all) type should be converted to a list with all Workout types
+        BarDataSet dataSet = DataSetStyles.applyDefaultBarStyle(ctx, new BarDataSet(barEntries,
+                WORKOUT_PROPERTY.getStringRepresentation(ctx)));
+        dataSet.setValueFormatter(new TimeFormatter(TimeUnit.MINUTES, false, true, false));
+        return dataSet;
+    }
+
+
+    /**
+     * Convert workout type to list (_all) type should be converted to a list with all Workout types
+     * @param workoutType
+     * @return list of workout types
+     */
+    private ArrayList<WorkoutType> createWorkoutTypeList(WorkoutType workoutType) {
+        ArrayList<WorkoutType> workoutTypes = new ArrayList<>();
+        
         if (workoutType.id.equals(WorkoutTypeFilter.ID_ALL)) {
             workoutTypes = (ArrayList<WorkoutType>) WorkoutTypeManager.getInstance().getAllTypes(ctx);
         } else {
             workoutTypes.add(workoutType);
         }
+        return workoutTypes;
+    }
 
-        // Find start and end time of workout
+    private ArrayList<StatsDataTypes.DataPoint> findDataPointsInAggregationSpan(ArrayList<StatsDataTypes.DataPoint> data, Calendar startTime, AggregationSpan span) {
+        // Retrieve the workoutProperty for all workouts in the specific time span
+        StatsDataTypes.TimeSpan timeSpan = new StatsDataTypes.TimeSpan(startTime.getTimeInMillis(), startTime.getTimeInMillis() + span.spanInterval);
+        ArrayList<StatsDataTypes.DataPoint> intervalData = new ArrayList<>();
+
+        // Create list of data points belonging to the same time span
+        Iterator<StatsDataTypes.DataPoint> dataPointIterator = data.iterator();
+        while (dataPointIterator.hasNext()) {
+            StatsDataTypes.DataPoint dataPoint = dataPointIterator.next();
+            if (timeSpan.contains(dataPoint.time)) {
+                intervalData.add(dataPoint);
+                data.remove(dataPointIterator);
+            }
+        }
+        return intervalData;
+    }
+
+
+    private ArrayList<CandleEntry> getCombinedCandleData(AggregationSpan span, WorkoutType workoutType, WorkoutProperty workoutProperty) throws NoDataException {
+
+        ArrayList<WorkoutType> workoutTypes = createWorkoutTypeList(workoutType);
         ArrayList<StatsDataTypes.DataPoint> data = dataProvider.getData(workoutProperty,
                 workoutTypes);
 
@@ -329,12 +397,10 @@ public class StatsProvider {
             // No aggregation
             for (StatsDataTypes.DataPoint dataPoint : data) {
                 float value = (float) dataPoint.value;
-                TypedValue stats_time_factor = new TypedValue();
-                ctx.getResources().getValue(R.dimen.stats_time_factor, stats_time_factor, true);
                 candleEntries.add(new CandleEntry((float) dataPoint.time / stats_time_factor.getFloat(), value, value, value, value));
             }
         } else {
-
+            // Find start and end time of workout
             long oldestWorkoutTime = Collections.min(data, StatsDataTypes.DataPoint.timeComparator).time;
             long newestWorkoutTime = Collections.max(data, StatsDataTypes.DataPoint.timeComparator).time;
 
@@ -346,25 +412,13 @@ public class StatsProvider {
 
             // Iterate all time spans from first workout time to last workout time
             while (calendar.getTimeInMillis() < newestWorkoutTime) {
-                // Retrieve the workoutProperty for all workouts in the specific time span
-                StatsDataTypes.TimeSpan timeSpan = new StatsDataTypes.TimeSpan(calendar.getTimeInMillis(), calendar.getTimeInMillis() + span.spanInterval);
-                ArrayList<StatsDataTypes.DataPoint> intervalData = new ArrayList<>();
+                ArrayList<StatsDataTypes.DataPoint> intervalData = findDataPointsInAggregationSpan(data, calendar, span);
 
-                Iterator<StatsDataTypes.DataPoint> dataPointIterator = data.iterator();
-                while (dataPointIterator.hasNext()) {
-                    StatsDataTypes.DataPoint dataPoint = dataPointIterator.next();
-                    if (timeSpan.contains(dataPoint.time)) {
-                        intervalData.add(dataPoint);
-                        data.remove(dataPointIterator);
-                    }
-                }
-
+                // Calculate min, max and average of the data of the span and store in the candle list
                 if (intervalData.size() > 0) {
                     float min = (float) Collections.min(intervalData, StatsDataTypes.DataPoint.valueComparator).value;
                     float max = (float) Collections.max(intervalData, StatsDataTypes.DataPoint.valueComparator).value;
                     float mean = calculateValueAverage(intervalData);
-                    TypedValue stats_time_factor = new TypedValue();
-                    ctx.getResources().getValue(R.dimen.stats_time_factor, stats_time_factor, true);
                     candleEntries.add(new CandleEntry((float) calendar.getTimeInMillis() / stats_time_factor.getFloat(), max, min, mean, mean));
                 }
 
@@ -378,6 +432,55 @@ public class StatsProvider {
         return candleEntries;
     }
 
+    public ArrayList<BarEntry> getCombinedSumData(AggregationSpan span, WorkoutType workoutType, WorkoutProperty workoutProperty) throws NoDataException {
+        ArrayList<WorkoutType> workoutTypes = createWorkoutTypeList(workoutType);
+        ArrayList<StatsDataTypes.DataPoint> data = dataProvider.getData(workoutProperty,
+                workoutTypes);
+
+        if (data.isEmpty()) {
+            throw new NoDataException();
+        }
+
+        ArrayList<BarEntry> barEntries = new ArrayList<>();
+
+        if (span == AggregationSpan.SINGLE) {
+            // No aggregation
+            for (StatsDataTypes.DataPoint dataPoint : data) {
+                float value = (float) dataPoint.value;
+                barEntries.add(new BarEntry((float) dataPoint.time / stats_time_factor.getFloat(), value));
+            }
+        } else {
+            // Find start and end time of workouts
+            long oldestWorkoutTime = Collections.min(data, StatsDataTypes.DataPoint.timeComparator).time;
+            long newestWorkoutTime = Collections.max(data, StatsDataTypes.DataPoint.timeComparator).time;
+
+            // Find start time of aggregation span
+            GregorianCalendar calendar = new GregorianCalendar();
+            calendar.setTimeInMillis(oldestWorkoutTime);
+            span.applyToCalendar(calendar);
+
+            // Iterate all time spans from first workout time to last workout time
+            while (calendar.getTimeInMillis() < newestWorkoutTime) {
+                ArrayList<StatsDataTypes.DataPoint> intervalData = findDataPointsInAggregationSpan(data, calendar, span);
+
+                // Calculate min, max and average of the data of the span and store in the candle list
+                if (intervalData.size() > 0) {
+                    float sum = calculateValueSum(intervalData);
+                    barEntries.add(new BarEntry((float) calendar.getTimeInMillis() / stats_time_factor.getFloat(), sum));
+                }
+
+                // increment by time span
+                int days = (int) TimeUnit.MILLISECONDS.toDays(span.spanInterval);
+                calendar.add(Calendar.DAY_OF_YEAR, days);
+                calendar.add(Calendar.MILLISECOND, (int) (span.spanInterval - TimeUnit.DAYS.toMillis(days)));
+            }
+        }
+
+        return barEntries;
+    }
+
+
+
     public static LineDataSet convertCandleToMeanLineData(CandleDataSet candleDataSet) {
         ArrayList<Entry> lineData = new ArrayList<>();
 
@@ -389,12 +492,17 @@ public class StatsProvider {
     }
 
     private float calculateValueAverage(ArrayList<StatsDataTypes.DataPoint> marks) {
-        float sum = 0f;
+        float average = 0f;
         if (!marks.isEmpty()) {
-            for (StatsDataTypes.DataPoint mark : marks) {
-                sum += mark.value;
-            }
-            return sum / marks.size();
+            average = calculateValueSum(marks) / marks.size();
+        }
+        return average;
+    }
+
+    private float calculateValueSum(ArrayList<StatsDataTypes.DataPoint> marks) {
+        float sum = 0f;
+        for (StatsDataTypes.DataPoint mark : marks) {
+            sum += mark.value;
         }
         return sum;
     }

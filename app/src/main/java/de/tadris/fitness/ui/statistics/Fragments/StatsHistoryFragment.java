@@ -13,9 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.github.mikephil.charting.animation.Easing;
-import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.CombinedChart;
-import com.github.mikephil.charting.charts.HorizontalBarChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.CandleData;
 import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CombinedData;
@@ -24,8 +24,8 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.DefaultValueFormatter;
 import com.github.mikephil.charting.listener.ChartTouchListener;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
+import com.github.mikephil.charting.renderer.CombinedChartRenderer;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -55,11 +55,17 @@ public class StatsHistoryFragment extends StatsFragment {
     Switch durationSwitch;
     CombinedChart durationChart;
 
+    TextView pauseDurationTitle;
+    Switch pauseDurationSwitch;
+    CombinedChart pauseDurationChart;
+
+    TextView distanceTitle;
+    Switch distanceSwitch;
+    CombinedChart distanceChart;
+
     float stats_time_factor;
 
     WorkoutTypeSelection selection;
-
-    CombinedChart distanceChart;
 
     ChartSynchronizer synchronizer;
 
@@ -89,7 +95,6 @@ public class StatsHistoryFragment extends StatsFragment {
         speedTitle = view.findViewById(R.id.stats_history_speed_title);
         speedChart = view.findViewById(R.id.stats_speed_chart);
         speedSwitch = view.findViewById(R.id.speed_switch);
-
         speedSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,30 +107,59 @@ public class StatsHistoryFragment extends StatsFragment {
             }
         });
 
+        distanceTitle = view.findViewById(R.id.stats_history_distance_title);
+        distanceChart = view.findViewById(R.id.stats_history_distance_chart);
+        distanceSwitch = view.findViewById(R.id.distance_switch);
+        distanceSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (distanceSwitch.isChecked()) {
+                    distanceTitle.setText(R.string.workoutDistanceSum);
+                } else {
+                    distanceTitle.setText(R.string.workoutAvgDistance);
+                }
+                updateDistanceChart(selection.getSelectedWorkoutType());
+            }
+        });
 
         durationTitle = view.findViewById(R.id.stats_history_duration_title);
         durationChart = view.findViewById(R.id.stats_duration_chart);
         durationSwitch = view.findViewById(R.id.duration_switch);
-
         durationSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (durationSwitch.isChecked()) {
-                    durationTitle.setText(R.string.workoutPauseDuration);
+                    durationTitle.setText(R.string.workoutDurationSum);
                 } else {
-                    durationTitle.setText(R.string.workoutDuration);
+                    durationTitle.setText(R.string.workoutAvgDurationLong);
                 }
                 updateDurationChart(selection.getSelectedWorkoutType());
             }
         });
 
-        distanceChart = view.findViewById(R.id.stats_dist_chart);
+        pauseDurationTitle = view.findViewById(R.id.stats_history_pause_duration_title);
+        pauseDurationChart = view.findViewById(R.id.stats_pause_duration_chart);
+        pauseDurationSwitch = view.findViewById(R.id.pause_duration_switch);
+        pauseDurationSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (pauseDurationSwitch.isChecked()) {
+                    pauseDurationTitle.setText(R.string.workoutPauseDurationSum);
+                } else {
+                    pauseDurationTitle.setText(R.string.workoutAvgPauseDuration);
+                }
+                updatePauseDurationChart(selection.getSelectedWorkoutType());
+            }
+        });
+
 
         combinedChartList.add(speedChart);
         combinedChartList.add(distanceChart);
         combinedChartList.add(durationChart);
+        combinedChartList.add(pauseDurationChart);
 
         for (CombinedChart combinedChart : combinedChartList) {
+            animateChart(combinedChart);
             ChartStyles.defaultLineChart(combinedChart);
             OnChartGestureMultiListener multiListener = new OnChartGestureMultiListener(new ArrayList<>());
             multiListener.listeners.add(synchronizer.addChart(combinedChart));
@@ -194,10 +228,6 @@ public class StatsHistoryFragment extends StatsFragment {
                 }
             });
             combinedChart.setOnChartGestureListener(multiListener);
-
-            animateChart(speedChart);
-            animateChart(distanceChart);
-            animateChart(durationChart);
         }
 
 
@@ -207,34 +237,17 @@ public class StatsHistoryFragment extends StatsFragment {
         distanceChart.getAxisLeft().setValueFormatter(new DefaultValueFormatter(1));
         ChartStyles.setYAxisLabel(durationChart, getString(R.string.timeMinuteShort));
         durationChart.getAxisLeft().setValueFormatter(new TimeFormatter(TimeUnit.MINUTES, true, true, false));
+        ChartStyles.setYAxisLabel(pauseDurationChart, getString(R.string.timeMinuteShort));
+        pauseDurationChart.getAxisLeft().setValueFormatter(new TimeFormatter(TimeUnit.MINUTES, true, true, false));
 
         updateCharts(selection.getSelectedWorkoutType());
     }
 
     private void updateCharts(WorkoutType workoutType) {
-        try {
-            // Set data for distance chart
-            // Retrieve candle data
-            CandleDataSet distanceCandleSet = statsProvider.getDistanceCandleData(aggregationSpan, workoutType);
-
-            CombinedData combinedDistanceData = new CombinedData();
-            combinedDistanceData.setData(new CandleData(distanceCandleSet));
-
-            // Create background line data
-            LineDataSet distanceLineSet = StatsProvider.convertCandleToMeanLineData(distanceCandleSet);
-            combinedDistanceData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(context, distanceLineSet)));
-
-            distanceChart.setData(combinedDistanceData);
-            distanceChart.getXAxis().setValueFormatter(new FractionedDateFormatter(context,aggregationSpan));
-            distanceChart.getXAxis().setGranularity((float)aggregationSpan.spanInterval / stats_time_factor);
-            ChartStyles.setXAxisLabel(distanceChart, getString(aggregationSpan.axisLabel));
-        } catch (NoDataException e) {
-            distanceChart.clear();
-        }
-        distanceChart.invalidate();
-
         updateSpeedChart(workoutType);
         updateDurationChart(workoutType);
+        updatePauseDurationChart(workoutType);
+        updateDistanceChart(workoutType);
     }
 
     private void updateSpeedChart(WorkoutType workoutType) {
@@ -270,23 +283,57 @@ public class StatsHistoryFragment extends StatsFragment {
         speedChart.invalidate();
     }
 
+    private void updateDistanceChart(WorkoutType workoutType) {
+        CombinedData combinedData = new CombinedData();
+
+        try {
+            if (distanceSwitch.isChecked()) {
+                BarDataSet barDataSet = statsProvider.getDistanceSumData(aggregationSpan, workoutType);
+                combinedData.setData(new BarData(barDataSet));
+            } else {
+                CandleDataSet candleDataSet = statsProvider.getDistanceCandleData(aggregationSpan, workoutType);
+                combinedData.setData(new CandleData(candleDataSet));
+                // Create background line
+                LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);
+                combinedData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(context, lineDataSet)));
+            }
+
+            // It is very dumb but CombinedChart.setData() calls the initBuffer method of all renderer before resetting the renderer (because the super call is executed before).
+            // In case a bar chart was displayed before but not longer, the activity would crash.
+            // Therefore the following two lines resets all renderers manually.
+            distanceChart.clear();
+            ((CombinedChartRenderer) distanceChart.getRenderer()).createRenderers();
+
+            distanceChart.setData(combinedData);
+            distanceChart.getXAxis().setValueFormatter(new FractionedDateFormatter(context,aggregationSpan));
+            distanceChart.getXAxis().setGranularity((float)aggregationSpan.spanInterval / stats_time_factor);
+            ChartStyles.setXAxisLabel(distanceChart, getString(aggregationSpan.axisLabel));
+        } catch (NoDataException e) {
+            distanceChart.clear();
+        }
+        distanceChart.invalidate();
+    }
+
     private void updateDurationChart(WorkoutType workoutType) {
-        CandleDataSet candleDataSet;
+        CombinedData combinedData = new CombinedData();
 
         try {
             if (durationSwitch.isChecked()) {
-                candleDataSet = statsProvider.getPauseDurationCandleData(aggregationSpan, workoutType);
+                BarDataSet barDataSet = statsProvider.getDurationSumData(aggregationSpan, workoutType);
+                combinedData.setData(new BarData(barDataSet));
             } else {
-                candleDataSet = statsProvider.getDurationCandleData(aggregationSpan, workoutType);
+                CandleDataSet candleDataSet = statsProvider.getDurationCandleData(aggregationSpan, workoutType);
+                combinedData.setData(new CandleData(candleDataSet));
+                // Create background line
+                LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);
+                combinedData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(context, lineDataSet)));
             }
 
-            // Add candle data
-            CombinedData combinedData = new CombinedData();
-            combinedData.setData(new CandleData(candleDataSet));
-
-            // Create background line
-            LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);
-            combinedData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(context, lineDataSet)));
+            // It is very dumb but CombinedChart.setData() calls the initBuffer method of all renderer before resetting the renderer (because the super call is executed before).
+            // In case a bar chart was displayed before but not longer, the activity would crash.
+            // Therefore the following two lines resets all renderers manually.
+            durationChart.clear();
+            ((CombinedChartRenderer) durationChart.getRenderer()).createRenderers();
 
             durationChart.setData(combinedData);
             durationChart.getXAxis().setValueFormatter(new FractionedDateFormatter(context,aggregationSpan));
@@ -296,6 +343,37 @@ public class StatsHistoryFragment extends StatsFragment {
             durationChart.clear();
         }
         durationChart.invalidate();
+    }
+
+    private void updatePauseDurationChart(WorkoutType workoutType) {
+        CombinedData combinedData = new CombinedData();
+
+        try {
+            if (pauseDurationSwitch.isChecked()) {
+                BarDataSet barDataSet = statsProvider.getPauseDurationSumData(aggregationSpan, workoutType);
+                combinedData.setData(new BarData(barDataSet));
+            } else {
+                CandleDataSet candleDataSet = statsProvider.getPauseDurationCandleData(aggregationSpan, workoutType);
+                combinedData.setData(new CandleData(candleDataSet));
+                // Create background line
+                LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);
+                combinedData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(context, lineDataSet)));
+            }
+
+            // It is very dumb but CombinedChart.setData() calls the initBuffer method of all renderer before resetting the renderer (because the super call is executed before).
+            // In case a bar chart was displayed before but not longer, the activity would crash.
+            // Therefore the following two lines resets all renderers manually.
+            pauseDurationChart.clear();
+            ((CombinedChartRenderer) pauseDurationChart.getRenderer()).createRenderers();
+
+            pauseDurationChart.setData(combinedData);
+            pauseDurationChart.getXAxis().setValueFormatter(new FractionedDateFormatter(context,aggregationSpan));
+            pauseDurationChart.getXAxis().setGranularity((float)aggregationSpan.spanInterval / stats_time_factor);
+            ChartStyles.setXAxisLabel(pauseDurationChart, getString(aggregationSpan.axisLabel));
+        } catch (NoDataException e) {
+            pauseDurationChart.clear();
+        }
+        pauseDurationChart.invalidate();
     }
 
 
