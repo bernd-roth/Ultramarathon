@@ -85,8 +85,10 @@ public class StatsProvider {
             barNumber++;
         }
 
-        return DataSetStyles.applyDefaultBarStyle(ctx, new BarDataSet(barEntries,
+        BarDataSet dataSet = DataSetStyles.applyDefaultBarStyle(ctx, new BarDataSet(barEntries,
                 ctx.getString(R.string.numberOfWorkouts)));
+        dataSet.setValueFormatter(new DefaultValueFormatter(0));
+        return dataSet;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -125,7 +127,7 @@ public class StatsProvider {
         }
         BarDataSet dataSet = DataSetStyles.applyDefaultBarStyle(ctx,
                 new BarDataSet(barEntries, WORKOUT_PROPERTY.getStringRepresentation(ctx)));
-        dataSet.setValueFormatter(new DefaultValueFormatter(0));
+        dataSet.setValueFormatter(new DefaultValueFormatter(1));
         return dataSet;
     }
 

@@ -26,6 +26,7 @@ import android.preference.PreferenceManager;
 import java.util.Calendar;
 
 import de.tadris.fitness.BuildConfig;
+import de.tadris.fitness.aggregation.AggregationSpan;
 import de.tadris.fitness.model.AutoStartWorkout;
 
 public class UserPreferences {
@@ -44,6 +45,7 @@ public class UserPreferences {
     private static final String HAS_UPPER_TARGET_SPEED_LIMIT = "hasUpperTargetSpeedLimit";
     private static final String UPPER_TARGET_SPEED_LIMIT = "upperTargetSpeedLimit";
     public static final String STEP_LENGTH = "stepLength";
+    public static final String STATISTICS_AGGREGATION_SPAN = "statisticsAggregationSpan";
 
     /**
      * Default NFC start enable state if no other has been chosen
@@ -112,6 +114,10 @@ public class UserPreferences {
      */
     private static final float DEFAULT_UPPER_TARGET_SPEED_LIMIT = 3;
 
+    /**
+     * Default timespan to show in statistics (ShortStats View etc) value of 2 represents months
+     */
+    private static final int DEFAULT_STATISTICS_SPAN= AggregationSpan.MONTH.toInt();
 
     private final SharedPreferences preferences;
 
@@ -446,4 +452,14 @@ public class UserPreferences {
         preferences.edit().putInt("lastVersion", BuildConfig.VERSION_CODE).apply();
     }
 
+    public AggregationSpan getStatisticsAggregationSpan()
+    {
+        int statsAggregation = preferences.getInt(STATISTICS_AGGREGATION_SPAN, DEFAULT_STATISTICS_SPAN);
+        return AggregationSpan.fromInt(statsAggregation);
+    }
+
+    public void setStatisticsAggregationSpan(AggregationSpan span)
+    {
+        preferences.edit().putInt(STATISTICS_AGGREGATION_SPAN, span.toInt()).apply();
+    }
 }

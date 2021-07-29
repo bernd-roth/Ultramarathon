@@ -13,6 +13,7 @@ import android.widget.Spinner;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -21,7 +22,9 @@ import java.util.GregorianCalendar;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationSpan;
+import de.tadris.fitness.data.UserPreferences;
 import de.tadris.fitness.util.statistics.InstanceFormatter;
+import de.westnordost.osmapi.user.User;
 
 public class TimeSpanSelection extends LinearLayout {
     private Spinner aggregationSpanSpinner;
@@ -34,6 +37,7 @@ public class TimeSpanSelection extends LinearLayout {
     long selectedInstance;
     AggregationSpan selectedAggregationSpan;
     boolean isInstanceSelectable;
+    UserPreferences preferences;
 
     private InstanceFormatter instanceFormatter;
 
@@ -41,6 +45,8 @@ public class TimeSpanSelection extends LinearLayout {
 
     public TimeSpanSelection(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+
+        preferences = new UserPreferences(context);
 
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.TimeSpanSelection);
         firstInstance = array.getInt(R.styleable.TimeSpanSelection_firstInstance, 0);
@@ -53,7 +59,7 @@ public class TimeSpanSelection extends LinearLayout {
             lastInstance = Long.MAX_VALUE;
         }
 
-        selectedAggregationSpan = AggregationSpan.YEAR;
+        selectedAggregationSpan = preferences.getStatisticsAggregationSpan();
         listeners = new ArrayList<>();
         instanceFormatter = new InstanceFormatter(selectedAggregationSpan);
 
@@ -70,7 +76,7 @@ public class TimeSpanSelection extends LinearLayout {
             aggregationSpanInstancePicker.getLayoutParams().width = 0;
         }
 
-        setAggregationSpan(AggregationSpan.YEAR);
+        setAggregationSpan(selectedAggregationSpan);
         setInstance(GregorianCalendar.getInstance().getTimeInMillis());
 
         aggregationSpanSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -112,6 +118,7 @@ public class TimeSpanSelection extends LinearLayout {
             if (selectedString.equals(getContext().getString(aggregationSpan.title))) {
                 selectedAggregationSpan = aggregationSpan;
                 instanceFormatter.aggregationSpan = aggregationSpan;
+                preferences.setStatisticsAggregationSpan(aggregationSpan);
                 notifyListener();
                 break;
             }
@@ -125,6 +132,11 @@ public class TimeSpanSelection extends LinearLayout {
 
     public AggregationSpan getSelectedAggregationSpan() {
         return selectedAggregationSpan;
+    }
+
+    public void loadAggregationSpanFromPreferences()
+    {
+        setAggregationSpan(preferences.getStatisticsAggregationSpan());
     }
 
     public long getSelectedInstance() {
@@ -162,7 +174,9 @@ public class TimeSpanSelection extends LinearLayout {
 
     private void updateLimits() {
         int min = (int) InstanceFormatter.mapInstanceToIndex(firstInstance, selectedAggregationSpan);
+        min = (min >= 0) ? min : 0;
         int max = (int) InstanceFormatter.mapInstanceToIndex(lastInstance, selectedAggregationSpan);
+        max = (max >= 0) ? max : Integer.MAX_VALUE; // Make values safe after cast
         if (min != aggregationSpanInstancePicker.getMinValue()) {
             aggregationSpanInstancePicker.setMinValue(min);
         }

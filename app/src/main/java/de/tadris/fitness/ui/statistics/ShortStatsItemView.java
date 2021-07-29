@@ -19,6 +19,7 @@ import java.util.GregorianCalendar;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
+import de.tadris.fitness.aggregation.AggregationSpan;
 import de.tadris.fitness.data.StatsDataProvider;
 import de.tadris.fitness.data.StatsDataTypes;
 import de.tadris.fitness.data.StatsProvider;
@@ -68,6 +69,7 @@ public class ShortStatsItemView extends LinearLayout {
     public void updateChart() {
         BarData data;
 
+        timeSpanSelection.loadAggregationSpanFromPreferences();
         long start = timeSpanSelection.getSelectedInstance();
         StatsDataTypes.TimeSpan span = new StatsDataTypes.TimeSpan(start,
                 start + timeSpanSelection.getSelectedAggregationSpan().spanInterval);
@@ -76,22 +78,23 @@ public class ShortStatsItemView extends LinearLayout {
             switch (chartType)
             {
                 case 0:
-                    data = new BarData(statsProvider.numberOfActivities(span));
-                    title.setText(getContext().getString(R.string.numberOfWorkouts));
-                    break;
-                case 1:
                     data = new BarData(statsProvider.totalDistances(span));
                     title.setText(getContext().getString(R.string.workoutDistance));
                     ChartStyles.setXAxisLabel(chart, Instance.getInstance(getContext()).distanceUnitUtils.getDistanceUnitSystem().getLongDistanceUnit());
                     break;
-                default:
+                case 1:
                     data = new BarData(statsProvider.totalDurations(span));
                     title.setText(getContext().getString(R.string.workoutDuration));
                     ChartStyles.setXAxisLabel(chart, "h");
                     break;
+                default:
+                    data = new BarData(statsProvider.numberOfActivities(span));
+                    title.setText(getContext().getString(R.string.numberOfWorkouts));
+                    break;
             }
             ChartStyles.barChartIconLabel(chart, data, getContext());
         } catch (NoDataException e) {
+            chart.setData(new BarData()); // Needed in case there is nothing to clear...
             chart.clearValues();
         }
         chart.invalidate();

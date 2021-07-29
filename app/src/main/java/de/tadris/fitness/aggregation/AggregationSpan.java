@@ -90,4 +90,46 @@ public enum AggregationSpan {
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
     }
+
+    public int toInt()
+    {
+        switch (this)
+        {
+            case SINGLE:
+                return 0;
+            case DAY:
+                return 1;
+            case WEEK:
+                return 2;
+            case MONTH:
+                return 3;
+            case YEAR:
+                return 4;
+            case ALL:
+            default:
+                return 5;
+
+        }
+    }
+
+    public static AggregationSpan fromInt(int statsAggregation)
+    {
+        switch (statsAggregation)
+        {
+            case 0:
+                return SINGLE;
+            case 1:
+                return DAY;
+            case 2:
+                return WEEK;
+            case 3:
+                return MONTH;
+            case 4:
+                return YEAR;
+            case 5:
+            default:
+                return ALL;
+        }
+
+    }
 }
