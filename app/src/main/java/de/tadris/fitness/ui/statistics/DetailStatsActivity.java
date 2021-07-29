@@ -35,17 +35,12 @@ import de.tadris.fitness.util.exceptions.NoDataException;
 
 public class DetailStatsActivity extends FitoTrackActivity {
 
-    Context ctx = this;
-
     CombinedChart chart;
-
     float stats_time_factor;
-
-    WorkoutTypeManager workoutTypeManager = WorkoutTypeManager.getInstance();
+    WorkoutTypeManager workoutTypeManager;
     WorkoutType workoutType;
-    AggregationSpan aggregationSpan = AggregationSpan.YEAR;
-
-    StatsProvider statsProvider = new StatsProvider(ctx);
+    AggregationSpan aggregationSpan;
+    StatsProvider statsProvider;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,10 +48,14 @@ public class DetailStatsActivity extends FitoTrackActivity {
         setContentView(R.layout.activity_statistics_detail);
         setTitle(getString(R.string.details));
         setupActionBar();
+
         TypedValue stats_time_factor = new TypedValue();
-        ctx.getResources().getValue(R.dimen.stats_time_factor, stats_time_factor, true);
+        this.getResources().getValue(R.dimen.stats_time_factor, stats_time_factor, true);
         this.stats_time_factor = stats_time_factor.getFloat();
 
+        workoutTypeManager = WorkoutTypeManager.getInstance();
+        aggregationSpan = AggregationSpan.YEAR;
+        statsProvider = new StatsProvider(this);
         chart = findViewById(R.id.stats_detail_chart);
     }
 
@@ -82,7 +81,7 @@ public class DetailStatsActivity extends FitoTrackActivity {
             workoutType.id = type;
         }
         else
-            workoutType = workoutTypeManager.getWorkoutTypeById(ctx, type);
+            workoutType = workoutTypeManager.getWorkoutTypeById(this, type);
 
         chart.setOnChartGestureListener(new OnChartGestureListener() {
             @Override
@@ -152,7 +151,7 @@ public class DetailStatsActivity extends FitoTrackActivity {
 
         CandleDataSet candleDataSet = null;
 
-        if (chartId.equals(ctx.getString(R.string.workoutAvgSpeedShort))) {
+        if (chartId.equals(this.getString(R.string.workoutAvgSpeedShort))) {
 
             try {
                 candleDataSet = statsProvider.getSpeedCandleData(aggregationSpan, workoutType);
@@ -160,7 +159,7 @@ public class DetailStatsActivity extends FitoTrackActivity {
                 e.printStackTrace();
             }
         }
-        else if (chartId.equals(ctx.getString(R.string.workoutDistance))) {
+        else if (chartId.equals(this.getString(R.string.workoutDistance))) {
 
             try {
                 candleDataSet = statsProvider.getDistanceCandleData(aggregationSpan, workoutType);
@@ -168,7 +167,7 @@ public class DetailStatsActivity extends FitoTrackActivity {
                 e.printStackTrace();
             }
         }
-        else if (chartId.equals(ctx.getString(R.string.workoutDuration))) {
+        else if (chartId.equals(this.getString(R.string.workoutDuration))) {
 
             try {
                 candleDataSet = statsProvider.getDurationCandleData(aggregationSpan, workoutType);
@@ -176,7 +175,7 @@ public class DetailStatsActivity extends FitoTrackActivity {
                 e.printStackTrace();
             }
         }
-        else if (chartId.equals(ctx.getString(R.string.workoutPauseDuration))) {
+        else if (chartId.equals(this.getString(R.string.workoutPauseDuration))) {
 
             try {
                 candleDataSet = statsProvider.getPauseDurationCandleData(aggregationSpan, workoutType);
@@ -184,7 +183,7 @@ public class DetailStatsActivity extends FitoTrackActivity {
                 e.printStackTrace();
             }
         }
-        else if (chartId.equals(ctx.getString(R.string.workoutPace))) {
+        else if (chartId.equals(this.getString(R.string.workoutPace))) {
 
             try {
                 candleDataSet = statsProvider.getPaceCandleData(aggregationSpan, workoutType);
@@ -202,7 +201,7 @@ public class DetailStatsActivity extends FitoTrackActivity {
 
         // Create background line data
         LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);
-        combinedData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(ctx, lineDataSet)));
+        combinedData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(this, lineDataSet)));
 
         chart.getXAxis().setValueFormatter(new FractionedDateFormatter(this,aggregationSpan));
         chart.getXAxis().setGranularity((float)aggregationSpan.spanInterval / stats_time_factor);
@@ -211,7 +210,6 @@ public class DetailStatsActivity extends FitoTrackActivity {
         chart.setData(combinedData);
         chart.invalidate();
     }
-
 
     private void animateChart (CombinedChart chart) {
         chart.animateY(500, Easing.EaseInExpo);
