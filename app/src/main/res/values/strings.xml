@@ -63,7 +63,11 @@
     <string name="workoutTime">Time</string>
     <string name="workoutDate">Date</string>
     <string name="workoutDuration">Duration</string>
+    <string name="workoutAvgDurationLong">Average Duration</string>
+    <string name="workoutDurationSum">Duration sum</string>
     <string name="workoutPauseDuration">Pause Duration</string>
+    <string name="workoutAvgPauseDuration">Average Pause Duration</string>
+    <string name="workoutPauseDurationSum">Pause Duration sum</string>
     <string name="workoutStartTime">Start Time</string>
     <string name="workoutEndTime">End Time</string>
     <string name="workoutDistance">Distance</string>
@@ -456,6 +460,7 @@
     <string name="histogram">Histogram</string>
     <string name="details">Details</string>
     <string name="monthYear">Month / Year</string>
+    <string name="workoutAvgDistance">Average Distance</string>
     <string-array name="osm_track_visibility">
         <item>Identifiable</item>
         <item>Trackable</item>

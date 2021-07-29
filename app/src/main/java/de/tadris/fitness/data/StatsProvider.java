@@ -256,6 +256,21 @@ public class StatsProvider {
         return convertCandleToMeanLineData(getDistanceCandleData(span, workoutType));
     }
 
+    public BarDataSet getDistanceSumData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {
+        final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.LENGTH;
+
+        ArrayList<BarEntry> barEntries = getCombinedSumData(span, workoutType, WORKOUT_PROPERTY);
+
+        for (BarEntry entry : barEntries) {
+            entry.setY(entry.getY() / 1000);
+        }
+
+        BarDataSet dataSet = DataSetStyles.applyDefaultBarStyle(ctx, new BarDataSet(barEntries,
+                WORKOUT_PROPERTY.getStringRepresentation(ctx)));
+        dataSet.setValueFormatter(new TimeFormatter(TimeUnit.MINUTES, false, true, false));
+        return dataSet;
+    }
+
 
     public CandleDataSet getDurationCandleData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {
         final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.DURATION;
@@ -276,6 +291,21 @@ public class StatsProvider {
 
     public LineDataSet getDurationLineData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {
         return convertCandleToMeanLineData(getDurationCandleData(span, workoutType));
+    }
+
+    public BarDataSet getDurationSumData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {
+        final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.DURATION;
+
+        ArrayList<BarEntry> barEntries = getCombinedSumData(span, workoutType, WORKOUT_PROPERTY);
+
+        for (BarEntry entry : barEntries) {
+            entry.setY(TimeUnit.MILLISECONDS.toMinutes((long) entry.getY()));
+        }
+
+        BarDataSet dataSet = DataSetStyles.applyDefaultBarStyle(ctx, new BarDataSet(barEntries,
+                WORKOUT_PROPERTY.getStringRepresentation(ctx)));
+        dataSet.setValueFormatter(new TimeFormatter(TimeUnit.MINUTES, false, true, false));
+        return dataSet;
     }
 
 
@@ -301,8 +331,7 @@ public class StatsProvider {
         return convertCandleToMeanLineData(getPauseDurationCandleData(span, workoutType));
     }
 
-
-    public BarDataSet getDurationSumData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {
+    public BarDataSet getPauseDurationSumData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {
         final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.PAUSE_DURATION;
 
         ArrayList<BarEntry> barEntries = getCombinedSumData(span, workoutType, WORKOUT_PROPERTY);
