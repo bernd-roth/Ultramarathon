@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -230,16 +231,6 @@ public class StatsHistoryFragment extends StatsFragment {
             combinedChart.setOnChartGestureListener(multiListener);
         }
 
-
-        ChartStyles.setYAxisLabel(speedChart, Instance.getInstance(context).distanceUnitUtils.getDistanceUnitSystem().getSpeedUnit());
-        speedChart.getAxisLeft().setValueFormatter(new SpeedFormatter(Instance.getInstance(context).distanceUnitUtils));
-        ChartStyles.setYAxisLabel(distanceChart, Instance.getInstance(context).distanceUnitUtils.getDistanceUnitSystem().getLongDistanceUnit());
-        distanceChart.getAxisLeft().setValueFormatter(new DefaultValueFormatter(1));
-        ChartStyles.setYAxisLabel(durationChart, getString(R.string.timeMinuteShort));
-        durationChart.getAxisLeft().setValueFormatter(new TimeFormatter(TimeUnit.MINUTES, true, true, false));
-        ChartStyles.setYAxisLabel(pauseDurationChart, getString(R.string.timeMinuteShort));
-        pauseDurationChart.getAxisLeft().setValueFormatter(new TimeFormatter(TimeUnit.MINUTES, true, true, false));
-
         updateCharts(selection.getSelectedWorkoutType());
     }
 
@@ -273,10 +264,7 @@ public class StatsHistoryFragment extends StatsFragment {
             LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);
             combinedData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(context, lineDataSet)));
 
-            speedChart.setData(combinedData);
-            speedChart.getXAxis().setValueFormatter(new FractionedDateFormatter(context,aggregationSpan));
-            speedChart.getXAxis().setGranularity((float)aggregationSpan.spanInterval / stats_time_factor);
-            ChartStyles.setXAxisLabel(speedChart, getString(aggregationSpan.axisLabel));
+            updateChartToData(speedChart, combinedData);
         } catch (NoDataException e) {
             speedChart.clear();
         }
@@ -303,11 +291,7 @@ public class StatsHistoryFragment extends StatsFragment {
             // Therefore the following two lines resets all renderers manually.
             distanceChart.clear();
             ((CombinedChartRenderer) distanceChart.getRenderer()).createRenderers();
-
-            distanceChart.setData(combinedData);
-            distanceChart.getXAxis().setValueFormatter(new FractionedDateFormatter(context,aggregationSpan));
-            distanceChart.getXAxis().setGranularity((float)aggregationSpan.spanInterval / stats_time_factor);
-            ChartStyles.setXAxisLabel(distanceChart, getString(aggregationSpan.axisLabel));
+            updateChartToData(distanceChart, combinedData);
         } catch (NoDataException e) {
             distanceChart.clear();
         }
@@ -334,11 +318,7 @@ public class StatsHistoryFragment extends StatsFragment {
             // Therefore the following two lines resets all renderers manually.
             durationChart.clear();
             ((CombinedChartRenderer) durationChart.getRenderer()).createRenderers();
-
-            durationChart.setData(combinedData);
-            durationChart.getXAxis().setValueFormatter(new FractionedDateFormatter(context,aggregationSpan));
-            durationChart.getXAxis().setGranularity((float)aggregationSpan.spanInterval / stats_time_factor);
-            ChartStyles.setXAxisLabel(durationChart, getString(aggregationSpan.axisLabel));
+            updateChartToData(durationChart, combinedData);
         } catch (NoDataException e) {
             durationChart.clear();
         }
@@ -365,17 +345,21 @@ public class StatsHistoryFragment extends StatsFragment {
             // Therefore the following two lines resets all renderers manually.
             pauseDurationChart.clear();
             ((CombinedChartRenderer) pauseDurationChart.getRenderer()).createRenderers();
-
-            pauseDurationChart.setData(combinedData);
-            pauseDurationChart.getXAxis().setValueFormatter(new FractionedDateFormatter(context,aggregationSpan));
-            pauseDurationChart.getXAxis().setGranularity((float)aggregationSpan.spanInterval / stats_time_factor);
-            ChartStyles.setXAxisLabel(pauseDurationChart, getString(aggregationSpan.axisLabel));
+            updateChartToData(pauseDurationChart, combinedData);
         } catch (NoDataException e) {
             pauseDurationChart.clear();
         }
         pauseDurationChart.invalidate();
     }
 
+    private void updateChartToData(CombinedChart chart, CombinedData data)
+    {
+        chart.setData(data);
+        chart.getXAxis().setValueFormatter(new FractionedDateFormatter(context,aggregationSpan));
+        chart.getXAxis().setGranularity((float)aggregationSpan.spanInterval / stats_time_factor);
+        chart.getAxisLeft().setValueFormatter(data.getMaxEntryCountSet().getValueFormatter());
+        ChartStyles.setXAxisLabel(chart, getString(aggregationSpan.axisLabel));
+    }
 
     private void animateChart (CombinedChart chart) {
         chart.animateY(500, Easing.EaseInExpo);

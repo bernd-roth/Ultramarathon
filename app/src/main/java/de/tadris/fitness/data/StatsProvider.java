@@ -169,7 +169,7 @@ public class StatsProvider {
 
         BarDataSet dataSet = DataSetStyles.applyDefaultBarStyle(ctx,
                 new BarDataSet(barEntries, WORKOUT_PROPERTY.getStringRepresentation(ctx)));
-        dataSet.setValueFormatter(new TimeFormatter(TimeUnit.MILLISECONDS, false, true, true));
+        dataSet.setValueFormatter(getCorrectTimeFormatter(TimeUnit.MILLISECONDS, (long)dataSet.getYMax()));
         return dataSet;
     }
 
@@ -214,7 +214,7 @@ public class StatsProvider {
         CandleDataSet candleDataSet = new CandleDataSet(getCombinedCandleData(span, workoutType, WORKOUT_PROPERTY),
                 WORKOUT_PROPERTY.getStringRepresentation(ctx));
         CandleDataSet dataSet = DataSetStyles.applyDefaultCandleStyle(ctx, candleDataSet);
-        dataSet.setValueFormatter(new TimeFormatter(TimeUnit.MINUTES, true, true, false));
+        dataSet.setValueFormatter(getCorrectTimeFormatter(TimeUnit.MINUTES, (long)dataSet.getYMax()));
         return DataSetStyles.applyDefaultCandleStyle(ctx, candleDataSet);
     }
 
@@ -277,16 +277,10 @@ public class StatsProvider {
 
         ArrayList<CandleEntry> candleEntries = getCombinedCandleData(span, workoutType, WORKOUT_PROPERTY);
 
-        // Display durations in minutes
-        for (CandleEntry entry : candleEntries) {
-            entry.setHigh(TimeUnit.MILLISECONDS.toMinutes((long) entry.getHigh()));
-            entry.setLow(TimeUnit.MILLISECONDS.toMinutes((long) entry.getLow()));
-            entry.setOpen(TimeUnit.MILLISECONDS.toMinutes((long) entry.getOpen()));
-            entry.setClose(TimeUnit.MILLISECONDS.toMinutes((long) entry.getClose()));
-        }
-
-        return DataSetStyles.applyDefaultCandleStyle(ctx, new CandleDataSet(candleEntries,
+        CandleDataSet dataSet = DataSetStyles.applyDefaultCandleStyle(ctx, new CandleDataSet(candleEntries,
                 WORKOUT_PROPERTY.getStringRepresentation(ctx)));
+        dataSet.setValueFormatter(getCorrectTimeFormatter(TimeUnit.MILLISECONDS, (long)dataSet.getYMax()));
+        return dataSet;
     }
 
     public LineDataSet getDurationLineData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {
@@ -298,13 +292,9 @@ public class StatsProvider {
 
         ArrayList<BarEntry> barEntries = getCombinedSumData(span, workoutType, WORKOUT_PROPERTY);
 
-        for (BarEntry entry : barEntries) {
-            entry.setY(TimeUnit.MILLISECONDS.toMinutes((long) entry.getY()));
-        }
-
         BarDataSet dataSet = DataSetStyles.applyDefaultBarStyle(ctx, new BarDataSet(barEntries,
                 WORKOUT_PROPERTY.getStringRepresentation(ctx)));
-        dataSet.setValueFormatter(new TimeFormatter(TimeUnit.MINUTES, false, true, false));
+        dataSet.setValueFormatter(getCorrectTimeFormatter(TimeUnit.MILLISECONDS, (long) dataSet.getYMax()));
         return dataSet;
     }
 
@@ -323,7 +313,7 @@ public class StatsProvider {
 
         CandleDataSet dataSet = DataSetStyles.applyDefaultCandleStyle(ctx, new CandleDataSet(candleEntries,
                 WORKOUT_PROPERTY.getStringRepresentation(ctx)));
-        dataSet.setValueFormatter(new TimeFormatter(TimeUnit.MINUTES, false, true, false));
+        dataSet.setValueFormatter(getCorrectTimeFormatter(TimeUnit.MINUTES, (long)dataSet.getYMax()));
         return dataSet;
     }
 
@@ -336,16 +326,19 @@ public class StatsProvider {
 
         ArrayList<BarEntry> barEntries = getCombinedSumData(span, workoutType, WORKOUT_PROPERTY);
 
-        for (BarEntry entry : barEntries) {
-            entry.setY(TimeUnit.MILLISECONDS.toMinutes((long) entry.getY()));
-        }
-
         BarDataSet dataSet = DataSetStyles.applyDefaultBarStyle(ctx, new BarDataSet(barEntries,
                 WORKOUT_PROPERTY.getStringRepresentation(ctx)));
-        dataSet.setValueFormatter(new TimeFormatter(TimeUnit.MINUTES, false, true, false));
+        dataSet.setValueFormatter(getCorrectTimeFormatter(TimeUnit.MILLISECONDS, (long)dataSet.getYMax()));
         return dataSet;
     }
 
+    private static TimeFormatter getCorrectTimeFormatter(TimeUnit unit, long maxTime)
+    {
+        if(unit.toMillis(maxTime) > TimeUnit.HOURS.toMillis(1))
+            return new TimeFormatter(unit, false, true, true);
+        else
+            return new TimeFormatter(unit, true, true, false);
+    }
 
     /**
      * Convert workout type to list (_all) type should be converted to a list with all Workout types
@@ -488,7 +481,9 @@ public class StatsProvider {
             lineData.add(new Entry(entry.getX(), entry.getClose()));
         }
 
-        return new LineDataSet(lineData, candleDataSet.getLabel());
+        LineDataSet dataSet = new LineDataSet(lineData, candleDataSet.getLabel());
+        dataSet.setValueFormatter(candleDataSet.getValueFormatter());
+        return dataSet;
     }
 
     private float calculateValueAverage(ArrayList<StatsDataTypes.DataPoint> marks) {
