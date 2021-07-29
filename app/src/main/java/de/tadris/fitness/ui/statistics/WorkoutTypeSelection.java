@@ -28,15 +28,18 @@ import de.tadris.fitness.util.Icon;
 public class WorkoutTypeSelection extends LinearLayout {
 
     private WorkoutType selectedWorkoutType;
-    private ArrayList<SelectWorkoutTypeDialog.WorkoutTypeSelectListener> listeners = new ArrayList<>();
-
-    SelectWorkoutTypeDialog.WorkoutTypeSelectListener selectListener = workoutType -> setSelectedWorkoutType(workoutType);
-    OnClickListener clickListener = view -> new SelectWorkoutTypeDialogAll((FitoTrackActivity) getContext(), selectListener).show();
+    private ArrayList<SelectWorkoutTypeDialog.WorkoutTypeSelectListener> listeners;
 
     public WorkoutTypeSelection(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         inflate(context, R.layout.view_workout_type_selection, this);
 
+        listeners = new ArrayList<>();
+
+        // selectListener forwards the selected entry to setSelectedWorkoutType
+        SelectWorkoutTypeDialog.WorkoutTypeSelectListener selectListener = workoutType -> setSelectedWorkoutType(workoutType);
+        // Setup onClickListener
+        OnClickListener clickListener = view -> new SelectWorkoutTypeDialogAll((FitoTrackActivity) getContext(), selectListener).show();
         this.setOnClickListener(clickListener);
 
         // The init

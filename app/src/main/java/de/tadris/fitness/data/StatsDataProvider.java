@@ -20,6 +20,15 @@ public class StatsDataProvider {
 
     }
 
+    public StatsDataTypes.DataPoint getFirstData(WorkoutProperty requestedProperty, List<WorkoutType> workoutTypes) {
+        ArrayList<StatsDataTypes.DataPoint> points = getData(requestedProperty, workoutTypes);
+        return points.get(points.size() - 1);
+    }
+
+    public StatsDataTypes.DataPoint getLastData(WorkoutProperty requestedProperty, List<WorkoutType> workoutTypes) {
+        return getData(requestedProperty, workoutTypes).get(0);
+    }
+
     public ArrayList<StatsDataTypes.DataPoint> getData(WorkoutProperty requestedProperty, List<WorkoutType> workoutTypes)
     {
         return getData(requestedProperty, workoutTypes, null);

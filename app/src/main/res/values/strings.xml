@@ -262,7 +262,7 @@
     <string name="max">Max</string>
     <string name="avg">Avg</string>
     <string name="sum">Sum</string>
-    <string name="workoutNumber">Number of workouts</string>
+    <string name="workoutNumber">Workout number</string>
     <string name="statsFilter">Filter:</string>
     <string name="help">Help</string>
     <string name="calendarWeekYear">Calendar Week / Year</string>
@@ -446,7 +446,7 @@
     <string name="invalidNumberFormat">Invalid number format.</string>
     <string name="fileNotFound">File not found</string>
     <string name="approxSymbol" translatable="false">≈</string>
-    <string name="numberOfWorkouts">Number of workouts</string>
+    <string name="numberOfWorkouts">Workout number</string>
     <string name="energyExpended">Energy expended</string>
     <string name="caloriesBurned">Calories burned</string>
     <string name="heartFrequency">Heart frequency</string>

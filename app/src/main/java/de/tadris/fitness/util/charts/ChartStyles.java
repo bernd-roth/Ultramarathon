@@ -7,9 +7,7 @@ import android.graphics.drawable.Drawable;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.BarLineChartBase;
-import com.github.mikephil.charting.charts.CandleStickChart;
 import com.github.mikephil.charting.charts.Chart;
-import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
@@ -140,7 +138,6 @@ public class ChartStyles {
     public static void barChartIconLabel(BarChart chart, BarData data, Context ctx)
     {
         setTextAppearance(data);
-        chart.setData(data);
 
         ArrayList<Bitmap> imageList = new ArrayList<>();
         for(int i = 0; i < data.getDataSets().get(0).getEntryCount(); i++)
@@ -161,12 +158,12 @@ public class ChartStyles {
         chart.setScaleEnabled(false);
         chart.setExtraOffsets(0, 0, 0, 25);
 
+        chart.setData(data);
     }
 
     public static void horizontalBarChartIconLabel(HorizontalBarChart chart, BarData data, Context ctx)
     {
         setTextAppearance(data);
-        chart.setData(data);
 
         ArrayList<Bitmap> imageList = new ArrayList<>();
         for(int i = 0; i < data.getDataSets().get(0).getEntryCount(); i++)
@@ -179,12 +176,14 @@ public class ChartStyles {
             }
             catch (Exception e)
             {
-                return; // If drawable not available, its not possible...
+                return; // If drawable not available, its not possible... //Todo: But it should be possible to draw the other icons
             }
         }
 
         chart.setRenderer(new HorizontalBarChartIconRenderer(chart, chart.getAnimator(), chart.getViewPortHandler(), imageList, ctx));
         chart.setScaleEnabled(false);
         chart.setExtraOffsets(0, 0, 0, 0);
+
+        chart.setData(data);
     }
 }

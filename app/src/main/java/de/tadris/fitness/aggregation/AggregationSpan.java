@@ -20,8 +20,10 @@
 package de.tadris.fitness.aggregation;
 
 import android.annotation.SuppressLint;
+import android.widget.NumberPicker;
 
 import androidx.annotation.StringRes;
+import androidx.core.content.ContextCompat;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -55,6 +57,14 @@ public enum AggregationSpan {
         @Override
         public void applyToCalendar(Calendar calendar) {
             super.applyToCalendar(calendar);
+            calendar.set(Calendar.DAY_OF_YEAR, 1);
+        }
+    },
+    ALL(R.string.workoutTypeAll, R.string.workoutTypeAll, Long.MAX_VALUE, "yyyy") {
+        @Override
+        public void applyToCalendar(Calendar calendar) {
+            super.applyToCalendar(calendar);
+            calendar.set(Calendar.YEAR, 1);
             calendar.set(Calendar.DAY_OF_YEAR, 1);
         }
     };
