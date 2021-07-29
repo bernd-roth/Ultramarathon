@@ -249,11 +249,9 @@ public class StatsHistoryFragment extends StatsFragment {
                 // Retrieve candle data
                 candleDataSet = statsProvider.getPaceCandleData(aggregationSpan, workoutType);
                 ChartStyles.setYAxisLabel(speedChart, Instance.getInstance(context).distanceUnitUtils.getPaceUnit());
-                speedChart.getAxisLeft().setValueFormatter(new TimeFormatter(TimeUnit.MINUTES, true, true, false));
             } else {
                 candleDataSet = statsProvider.getSpeedCandleData(aggregationSpan, workoutType);
                 ChartStyles.setYAxisLabel(speedChart, Instance.getInstance(context).distanceUnitUtils.getDistanceUnitSystem().getSpeedUnit());
-                speedChart.getAxisLeft().setValueFormatter(new SpeedFormatter(Instance.getInstance(context).distanceUnitUtils));
             }
 
             // Add candle data
@@ -292,6 +290,7 @@ public class StatsHistoryFragment extends StatsFragment {
             distanceChart.clear();
             ((CombinedChartRenderer) distanceChart.getRenderer()).createRenderers();
             updateChartToData(distanceChart, combinedData);
+            ChartStyles.setYAxisLabel(distanceChart, Instance.getInstance(getContext()).distanceUnitUtils.getDistanceUnitSystem().getLongDistanceUnit());
         } catch (NoDataException e) {
             distanceChart.clear();
         }
@@ -319,6 +318,7 @@ public class StatsHistoryFragment extends StatsFragment {
             durationChart.clear();
             ((CombinedChartRenderer) durationChart.getRenderer()).createRenderers();
             updateChartToData(durationChart, combinedData);
+            ChartStyles.setYAxisLabel(durationChart, ((TimeFormatter)durationChart.getAxisLeft().getValueFormatter()).getUnit(getContext()));
         } catch (NoDataException e) {
             durationChart.clear();
         }
@@ -346,6 +346,7 @@ public class StatsHistoryFragment extends StatsFragment {
             pauseDurationChart.clear();
             ((CombinedChartRenderer) pauseDurationChart.getRenderer()).createRenderers();
             updateChartToData(pauseDurationChart, combinedData);
+            ChartStyles.setYAxisLabel(pauseDurationChart, ((TimeFormatter)combinedData.getMaxEntryCountSet().getValueFormatter()).getUnit(getContext()));
         } catch (NoDataException e) {
             pauseDurationChart.clear();
         }

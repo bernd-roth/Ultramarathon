@@ -66,15 +66,8 @@ public class DetailStatsActivity extends FitoTrackActivity {
         setTitle(chartId);
         String type = (String) getIntent().getSerializableExtra("type");
         String label = (String) getIntent().getSerializableExtra("ylabel");
-        Object formatterClass = (Object) getIntent().getSerializableExtra("formatter");
         ChartStyles.defaultLineChart(chart);
         ChartStyles.setYAxisLabel(chart,label);
-        chart.setMarker(new DisplayValueMarker(this, chart.getAxisLeft().getValueFormatter(), label));
-
-        if(formatterClass == TimeFormatter.class)
-            chart.getAxisLeft().setValueFormatter(new TimeFormatter(TimeUnit.MINUTES, true, true, false));
-        else
-            chart.getAxisLeft().setValueFormatter(new DefaultValueFormatter(2));
 
         if (type.equals("_all")) {
             workoutType = new WorkoutType();
@@ -140,7 +133,6 @@ public class DetailStatsActivity extends FitoTrackActivity {
             }
         });
 
-        chart.setMarker(new DisplayValueMarker(this, chart.getAxisLeft().getValueFormatter(), label));
         updateChart(workoutType, chartId);
 
         animateChart(chart);
@@ -206,6 +198,17 @@ public class DetailStatsActivity extends FitoTrackActivity {
         chart.getXAxis().setValueFormatter(new FractionedDateFormatter(this,aggregationSpan));
         chart.getXAxis().setGranularity((float)aggregationSpan.spanInterval / stats_time_factor);
         ChartStyles.setXAxisLabel(chart, getString(aggregationSpan.axisLabel));
+
+        chart.getAxisLeft().setValueFormatter(combinedData.getMaxEntryCountSet().getValueFormatter());
+
+        if(chart.getLegend().getEntries().length>0) {
+            String yLabel = chart.getLegend().getEntries()[0].label;
+            chart.setMarker(new DisplayValueMarker(this, chart.getAxisLeft().getValueFormatter(), yLabel));
+        }
+        else
+        {
+            chart.setMarker(new DisplayValueMarker(this, chart.getAxisLeft().getValueFormatter(), ""));
+        }
 
         chart.setData(combinedData);
         chart.invalidate();

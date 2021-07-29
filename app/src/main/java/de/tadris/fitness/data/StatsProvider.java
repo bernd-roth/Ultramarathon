@@ -304,16 +304,9 @@ public class StatsProvider {
 
         ArrayList<CandleEntry> candleEntries = getCombinedCandleData(span, workoutType, WORKOUT_PROPERTY);
 
-        for (CandleEntry entry : candleEntries) {
-            entry.setHigh(TimeUnit.MILLISECONDS.toMinutes((long) entry.getHigh()));
-            entry.setLow(TimeUnit.MILLISECONDS.toMinutes((long) entry.getLow()));
-            entry.setOpen(TimeUnit.MILLISECONDS.toMinutes((long) entry.getOpen()));
-            entry.setClose(TimeUnit.MILLISECONDS.toMinutes((long) entry.getClose()));
-        }
-
         CandleDataSet dataSet = DataSetStyles.applyDefaultCandleStyle(ctx, new CandleDataSet(candleEntries,
                 WORKOUT_PROPERTY.getStringRepresentation(ctx)));
-        dataSet.setValueFormatter(getCorrectTimeFormatter(TimeUnit.MINUTES, (long)dataSet.getYMax()));
+        dataSet.setValueFormatter(getCorrectTimeFormatter(TimeUnit.MILLISECONDS, (long)dataSet.getYMax()));
         return dataSet;
     }
 
