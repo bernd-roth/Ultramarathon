@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 
 import androidx.annotation.Nullable;
 
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.data.CandleData;
 import com.github.mikephil.charting.data.CandleDataSet;
@@ -142,6 +143,8 @@ public class DetailStatsActivity extends FitoTrackActivity {
 
         chart.setMarker(new DisplayValueMarker(this, chart.getAxisLeft().getValueFormatter(), label));
         updateChart(workoutType, chartId);
+
+        animateChart(chart);
     }
 
 
@@ -208,5 +211,9 @@ public class DetailStatsActivity extends FitoTrackActivity {
         chart.setData(combinedData);
         chart.invalidate();
     }
-}
 
+
+    private void animateChart (CombinedChart chart) {
+        chart.animateY(500, Easing.EaseInExpo);
+    }
+}
