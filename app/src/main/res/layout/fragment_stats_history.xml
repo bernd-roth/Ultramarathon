@@ -43,14 +43,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
 
-            <TextView
-                style="@style/title"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/workoutAvgDistance" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/stats_history_distance_title"
+                    style="@style/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/workoutAvgDistance" />
+
+                <Switch
+                    android:id="@+id/distance_switch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
             <com.github.mikephil.charting.charts.CombinedChart
-                android:id="@+id/stats_dist_chart"
+                android:id="@+id/stats_history_distance_chart"
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
 

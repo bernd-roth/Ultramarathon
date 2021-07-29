@@ -265,10 +265,8 @@ public class StatsProvider {
             entry.setY(entry.getY() / 1000);
         }
 
-        BarDataSet dataSet = DataSetStyles.applyDefaultBarStyle(ctx, new BarDataSet(barEntries,
+        return DataSetStyles.applyDefaultBarStyle(ctx, new BarDataSet(barEntries,
                 WORKOUT_PROPERTY.getStringRepresentation(ctx)));
-        dataSet.setValueFormatter(new TimeFormatter(TimeUnit.MINUTES, false, true, false));
-        return dataSet;
     }
 
 
