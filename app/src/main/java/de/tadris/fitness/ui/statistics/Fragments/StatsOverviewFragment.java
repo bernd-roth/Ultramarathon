@@ -13,11 +13,8 @@ import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.data.BarData;
 
-import java.util.GregorianCalendar;
-
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
-import de.tadris.fitness.aggregation.AggregationSpan;
 import de.tadris.fitness.data.StatsDataProvider;
 import de.tadris.fitness.data.StatsDataTypes;
 import de.tadris.fitness.data.StatsProvider;
@@ -26,8 +23,6 @@ import de.tadris.fitness.ui.statistics.TimeSpanSelection;
 import de.tadris.fitness.util.WorkoutProperty;
 import de.tadris.fitness.util.charts.ChartStyles;
 import de.tadris.fitness.util.exceptions.NoDataException;
-import de.tadris.fitness.util.statistics.InstanceFormatter;
-import de.tadris.fitness.util.charts.formatter.TimeFormatter;
 
 public class StatsOverviewFragment extends StatsFragment {
     StatsProvider statsProvider;

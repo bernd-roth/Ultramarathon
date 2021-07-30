@@ -23,6 +23,8 @@ import java.util.Arrays;
 
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.util.Icon;
+import de.tadris.fitness.util.charts.marker.DisplayValueMarker;
+import de.tadris.fitness.util.charts.marker.WorkoutDisplayMarker;
 
 import static de.tadris.fitness.util.charts.BitmapHelper.drawableToBitmap;
 
@@ -159,6 +161,7 @@ public class ChartStyles {
         chart.setExtraOffsets(0, 0, 0, 25);
 
         chart.setData(data);
+        chart.setMarker(new WorkoutDisplayMarker(ctx));
     }
 
     public static void horizontalBarChartIconLabel(HorizontalBarChart chart, BarData data, Context ctx)
@@ -185,5 +188,6 @@ public class ChartStyles {
         chart.setExtraOffsets(0, 0, 0, 0);
 
         chart.setData(data);
+        chart.setMarker(new WorkoutDisplayMarker(ctx));
     }
 }
