@@ -30,7 +30,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <de.tadris.fitness.ui.statistics.ShortStats
+        <de.tadris.fitness.ui.statistics.ShortStatsView
             android:id="@+id/short_stats_view"
             android:layout_width="match_parent"
             android:layout_height="140dp"

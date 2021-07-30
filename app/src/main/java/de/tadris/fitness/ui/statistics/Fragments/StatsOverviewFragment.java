@@ -1,9 +1,12 @@
 package de.tadris.fitness.ui.statistics.Fragments;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.NumberPicker;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,6 +46,8 @@ public class StatsOverviewFragment extends StatsFragment {
         super.onViewCreated(view, savedInstanceState);
 
         timeSpanSelection = view.findViewById(R.id.time_span_selection);
+        timeSpanSelection.setForegroundColor(getContext().getColor(R.color.textDarkerWhite));
+
         numberOfActivitiesChart = view.findViewById(R.id.stats_number_of_workout_chart);
         distanceChart = view.findViewById(R.id.stats_distances_chart);
 

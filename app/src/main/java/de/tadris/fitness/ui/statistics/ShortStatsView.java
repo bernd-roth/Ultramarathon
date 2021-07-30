@@ -10,11 +10,11 @@ import androidx.viewpager2.widget.ViewPager2;
 import de.tadris.fitness.R;
 import de.tadris.fitness.ui.adapter.ShortStatsAdapter;
 
-public class ShortStats extends ConstraintLayout {
+public class ShortStatsView extends ConstraintLayout {
     ViewPager2 myViewPager2;
     ShortStatsAdapter adapter;
 
-    public ShortStats(@NonNull Context context, AttributeSet attrs) {
+    public ShortStatsView(@NonNull Context context, AttributeSet attrs) {
         super(context, attrs);
 
         inflate(getContext(), R.layout.view_short_stats, this);
@@ -22,5 +22,10 @@ public class ShortStats extends ConstraintLayout {
         myViewPager2 = findViewById(R.id.viewpager_short_stats);
         adapter = new ShortStatsAdapter(this.getContext());
         myViewPager2.setAdapter(adapter);
+    }
+
+    public void refresh()
+    {
+        myViewPager2.getAdapter().notifyDataSetChanged();
     }
 }

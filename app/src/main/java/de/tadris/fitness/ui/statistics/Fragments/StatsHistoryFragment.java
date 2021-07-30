@@ -28,6 +28,8 @@ import com.github.mikephil.charting.listener.ChartTouchListener;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.renderer.CombinedChartRenderer;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -93,6 +95,7 @@ public class StatsHistoryFragment extends StatsFragment {
 
         // Register WorkoutType selection listeners
         selection = view.findViewById(R.id.stats_history_workout_type_selector);
+        ((TextView)selection.findViewById(R.id.view_workout_type_selection_text)).setTextColor(getContext().getColor(R.color.textDarkerWhite));
         selection.addOnWorkoutTypeSelectListener(workoutType -> updateCharts(workoutType));
 
         // Setup switch functionality

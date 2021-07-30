@@ -2,26 +2,32 @@ package de.tadris.fitness.ui.statistics;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationSpan;
 import de.tadris.fitness.data.UserPreferences;
 import de.tadris.fitness.util.statistics.InstanceFormatter;
-import de.westnordost.osmapi.user.User;
 
 public class TimeSpanSelection extends LinearLayout {
     private Spinner aggregationSpanSpinner;
@@ -35,6 +41,7 @@ public class TimeSpanSelection extends LinearLayout {
     AggregationSpan selectedAggregationSpan;
     boolean isInstanceSelectable;
     UserPreferences preferences;
+    int foregroundColor = getResources().getColor(R.color.textLighterBlack);
 
     private InstanceFormatter instanceFormatter;
 
@@ -92,6 +99,7 @@ public class TimeSpanSelection extends LinearLayout {
         aggregationSpanInstancePicker.setFormatter(instanceFormatter);
         aggregationSpanInstancePicker.setOnValueChangedListener((numberPicker, i, i1) -> specifyInstance());
 
+        aggregationSpanInstancePicker.setTextColor(this.foregroundColor);
     }
 
     private void loadAggregationSpanEntries() {
@@ -103,7 +111,16 @@ public class TimeSpanSelection extends LinearLayout {
         }
 
         aggregationSpanArrayAdapter = new ArrayAdapter<String>(getContext(),
-                R.layout.support_simple_spinner_dropdown_item, aggregationSpanStrings);
+                R.layout.support_simple_spinner_dropdown_item, aggregationSpanStrings)
+        {
+            @NonNull
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                ((TextView)view).setTextColor(foregroundColor);
+                return view;
+            }
+        };
 
         aggregationSpanSpinner.setAdapter(aggregationSpanArrayAdapter);
     }
@@ -198,6 +215,13 @@ public class TimeSpanSelection extends LinearLayout {
 
     public interface OnTimeSpanSelectionListener {
         void onTimeSpanChanged(AggregationSpan aggregationSpan, long instance);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    public void setForegroundColor(int foregroundColor){
+        this.foregroundColor = foregroundColor;
+        aggregationSpanInstancePicker.setTextColor(foregroundColor);
+        ((TextView)aggregationSpanSpinner.getSelectedView()).setTextColor(foregroundColor);
     }
 }
 
