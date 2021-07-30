@@ -19,6 +19,7 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.CandleData;
 import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CombinedData;
+import com.github.mikephil.charting.data.DataSet;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.DefaultValueFormatter;
@@ -186,10 +187,15 @@ public class StatsHistoryFragment extends StatsFragment {
 
                 @Override
                 public void onChartSingleTapped(MotionEvent me) {
+                    float[] viewPortValues = new float[9];
+                    combinedChart.getViewPortHandler().getMatrixTouch().getValues(viewPortValues);
+
                     Intent i = new Intent(context, DetailStatsActivity.class);
-                    i.putExtra("chart", combinedChart.getData().getDataSetLabels()[0]);
+                    i.putExtra("data", combinedChart.getData().getDataSetLabels()[0]);
                     i.putExtra("type", selection.getSelectedWorkoutType().id);
                     i.putExtra("formatter", combinedChart.getAxisLeft().getValueFormatter().getClass());
+                    i.putExtra("viewPort", viewPortValues);
+                    i.putExtra("aggregationSpan", aggregationSpan);
                     String label = "";
                     if(combinedChart.getLegend().getEntries().length>0)
                         label =combinedChart.getLegend().getEntries()[0].label;

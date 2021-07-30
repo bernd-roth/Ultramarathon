@@ -30,7 +30,7 @@
                     style="@style/title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/workoutAvgSpeedLong" />
+                    android:text="@string/workoutSpeed" />
 
                 <Switch
                     android:id="@+id/speed_switch"

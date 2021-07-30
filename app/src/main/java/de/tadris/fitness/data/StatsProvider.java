@@ -4,12 +4,15 @@ import android.content.Context;
 import android.os.Build;
 import android.util.TypedValue;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
+import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CandleEntry;
+import com.github.mikephil.charting.data.DataSet;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.DefaultValueFormatter;
@@ -28,6 +31,7 @@ import java.util.concurrent.TimeUnit;
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationSpan;
+import de.tadris.fitness.aggregation.AggregationType;
 import de.tadris.fitness.aggregation.WorkoutTypeFilter;
 import de.tadris.fitness.util.WorkoutProperty;
 import de.tadris.fitness.util.charts.DataSetStyles;
@@ -38,6 +42,38 @@ import de.tadris.fitness.util.exceptions.NoDataException;
 import static java.lang.Math.min;
 
 public class StatsProvider {
+
+    public enum StatsType {
+        NUMBER_OF_ACTIVITIES(0),
+        TOTAL_DISTANCES(1),
+        TOTAL_DURATIONS(2),
+        PACE_CANDLE_DATA(3),
+        SPEED_CANDLE_DATA(4),
+        DISTANCE_CANDLE_DATA(5),
+        DISTANCE_SUM_DATA(6),
+        DURATION_CANDLE_DATA(7),
+        DURATION_SUM_DATA(8),
+        PAUSE_DURATION_CANDLE_DATA(9),
+        PAUSE_DURATION_SUM_DATA(10);
+
+        int index;
+
+        StatsType(int index) {
+            this.index = index;
+        }
+
+        public int getIndex() {
+            return index;
+        }
+
+        public static StatsType getByIndex(int index) {
+            return StatsType.values()[index];
+        }
+
+        public DataSet getDataSet(Context ctx, StatsDataTypes.TimeSpan timeSpan, @Nullable WorkoutType workoutType) throws NoDataException {
+            return null;
+        }
+    }
 
     static TypedValue stats_time_factor;
     Context ctx;
@@ -86,7 +122,7 @@ public class StatsProvider {
         }
 
         return DataSetStyles.applyDefaultBarStyle(ctx, new BarDataSet(barEntries,
-                ctx.getString(R.string.numberOfWorkouts)));
+                String.valueOf(StatsType.NUMBER_OF_ACTIVITIES.getIndex())));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -124,7 +160,7 @@ public class StatsProvider {
             barNumber++;
         }
         BarDataSet dataSet = DataSetStyles.applyDefaultBarStyle(ctx,
-                new BarDataSet(barEntries, WORKOUT_PROPERTY.getStringRepresentation(ctx)));
+                new BarDataSet(barEntries, String.valueOf(StatsType.TOTAL_DISTANCES.getIndex())));
         dataSet.setValueFormatter(new DefaultValueFormatter(0));
         return dataSet;
     }
@@ -166,7 +202,7 @@ public class StatsProvider {
         }
 
         BarDataSet dataSet = DataSetStyles.applyDefaultBarStyle(ctx,
-                new BarDataSet(barEntries, WORKOUT_PROPERTY.getStringRepresentation(ctx)));
+                new BarDataSet(barEntries, String.valueOf(StatsType.TOTAL_DURATIONS.getIndex())));
         dataSet.setValueFormatter(new TimeFormatter(TimeUnit.MILLISECONDS, false, true, true));
         return dataSet;
     }
@@ -210,7 +246,7 @@ public class StatsProvider {
         final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.AVG_PACE;
 
         CandleDataSet candleDataSet = new CandleDataSet(getCombinedCandleData(span, workoutType, WORKOUT_PROPERTY),
-                WORKOUT_PROPERTY.getStringRepresentation(ctx));
+                String.valueOf(StatsType.PACE_CANDLE_DATA.getIndex()));
         CandleDataSet dataSet = DataSetStyles.applyDefaultCandleStyle(ctx, candleDataSet);
         dataSet.setValueFormatter(new TimeFormatter(TimeUnit.MINUTES, true, true, false));
         return DataSetStyles.applyDefaultCandleStyle(ctx, candleDataSet);
@@ -225,7 +261,7 @@ public class StatsProvider {
         final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.AVG_SPEED;
 
         CandleDataSet candleDataSet = new CandleDataSet(getCombinedCandleData(span, workoutType, WORKOUT_PROPERTY),
-                WORKOUT_PROPERTY.getStringRepresentation(ctx));
+                String.valueOf(StatsType.SPEED_CANDLE_DATA.getIndex()));
         candleDataSet.setValueFormatter(new SpeedFormatter(Instance.getInstance(ctx).distanceUnitUtils));
         return DataSetStyles.applyDefaultCandleStyle(ctx, candleDataSet);
     }
@@ -249,7 +285,7 @@ public class StatsProvider {
         }
 
         return DataSetStyles.applyDefaultCandleStyle(ctx, new CandleDataSet(candleEntries,
-                WORKOUT_PROPERTY.getStringRepresentation(ctx)));
+                String.valueOf(StatsType.DISTANCE_CANDLE_DATA.getIndex())));
     }
 
     public LineDataSet getDistanceLineData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {
@@ -266,7 +302,7 @@ public class StatsProvider {
         }
 
         return DataSetStyles.applyDefaultBarStyle(ctx, new BarDataSet(barEntries,
-                WORKOUT_PROPERTY.getStringRepresentation(ctx)));
+                String.valueOf(StatsType.DISTANCE_SUM_DATA.getIndex())));
     }
 
 
@@ -284,7 +320,7 @@ public class StatsProvider {
         }
 
         return DataSetStyles.applyDefaultCandleStyle(ctx, new CandleDataSet(candleEntries,
-                WORKOUT_PROPERTY.getStringRepresentation(ctx)));
+                String.valueOf(StatsType.DURATION_CANDLE_DATA.getIndex())));
     }
 
     public LineDataSet getDurationLineData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {
@@ -301,7 +337,7 @@ public class StatsProvider {
         }
 
         BarDataSet dataSet = DataSetStyles.applyDefaultBarStyle(ctx, new BarDataSet(barEntries,
-                WORKOUT_PROPERTY.getStringRepresentation(ctx)));
+                String.valueOf(StatsType.DURATION_SUM_DATA.getIndex())));
         dataSet.setValueFormatter(new TimeFormatter(TimeUnit.MINUTES, false, true, false));
         return dataSet;
     }
@@ -320,7 +356,7 @@ public class StatsProvider {
         }
 
         CandleDataSet dataSet = DataSetStyles.applyDefaultCandleStyle(ctx, new CandleDataSet(candleEntries,
-                WORKOUT_PROPERTY.getStringRepresentation(ctx)));
+                String.valueOf(StatsType.PAUSE_DURATION_CANDLE_DATA.getIndex())));
         dataSet.setValueFormatter(new TimeFormatter(TimeUnit.MINUTES, false, true, false));
         return dataSet;
     }
@@ -339,7 +375,7 @@ public class StatsProvider {
         }
 
         BarDataSet dataSet = DataSetStyles.applyDefaultBarStyle(ctx, new BarDataSet(barEntries,
-                WORKOUT_PROPERTY.getStringRepresentation(ctx)));
+                String.valueOf(StatsType.PAUSE_DURATION_SUM_DATA.getIndex())));
         dataSet.setValueFormatter(new TimeFormatter(TimeUnit.MINUTES, false, true, false));
         return dataSet;
     }

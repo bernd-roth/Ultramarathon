@@ -1,6 +1,7 @@
 package de.tadris.fitness.ui.statistics;
 
 import android.content.Context;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.MotionEvent;
@@ -9,6 +10,8 @@ import androidx.annotation.Nullable;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.CombinedChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.CandleData;
 import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CombinedData;
@@ -54,7 +57,6 @@ public class DetailStatsActivity extends FitoTrackActivity {
         this.stats_time_factor = stats_time_factor.getFloat();
 
         workoutTypeManager = WorkoutTypeManager.getInstance();
-        aggregationSpan = AggregationSpan.YEAR;
         statsProvider = new StatsProvider(this);
         chart = findViewById(R.id.stats_detail_chart);
     }
@@ -62,11 +64,13 @@ public class DetailStatsActivity extends FitoTrackActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        String chartId = getIntent().getExtras().getString("chart");
-        setTitle(chartId);
+        int chartIndex = Integer.parseInt(getIntent().getExtras().getString("data"));
         String type = (String) getIntent().getSerializableExtra("type");
         String label = (String) getIntent().getSerializableExtra("ylabel");
         Object formatterClass = (Object) getIntent().getSerializableExtra("formatter");
+        float[] viewPortValues = getIntent().getFloatArrayExtra("viewPort");
+        aggregationSpan = (AggregationSpan) getIntent().getSerializableExtra("aggregationSpan");
+
         ChartStyles.defaultLineChart(chart);
         ChartStyles.setYAxisLabel(chart,label);
         chart.setMarker(new DisplayValueMarker(this, chart.getAxisLeft().getValueFormatter(), label));
@@ -130,7 +134,7 @@ public class DetailStatsActivity extends FitoTrackActivity {
                 }
 
                 if (oldAggregationSpan != aggregationSpan) {
-                    updateChart(workoutType, chartId);
+                    updateChart(workoutType, chartIndex);
                 }
             }
 
@@ -141,67 +145,80 @@ public class DetailStatsActivity extends FitoTrackActivity {
         });
 
         chart.setMarker(new DisplayValueMarker(this, chart.getAxisLeft().getValueFormatter(), label));
-        updateChart(workoutType, chartId);
+        updateChart(workoutType, chartIndex);
+
+        float[] currentViewPortValues = new float[9];
+        chart.getViewPortHandler().getMatrixTouch().getValues(currentViewPortValues);
+
+        currentViewPortValues[Matrix.MSCALE_X] = viewPortValues[Matrix.MSCALE_X];
+        currentViewPortValues[Matrix.MTRANS_X] = viewPortValues[Matrix.MTRANS_X];
 
         animateChart(chart);
     }
 
 
-    private void updateChart(WorkoutType workoutType, String chartId) {
-
-        CandleDataSet candleDataSet = null;
-
-        if (chartId.equals(this.getString(R.string.workoutAvgSpeedShort))) {
-
-            try {
-                candleDataSet = statsProvider.getSpeedCandleData(aggregationSpan, workoutType);
-            } catch (NoDataException e) {
-                e.printStackTrace();
-            }
-        }
-        else if (chartId.equals(this.getString(R.string.workoutDistance))) {
-
-            try {
-                candleDataSet = statsProvider.getDistanceCandleData(aggregationSpan, workoutType);
-            } catch (NoDataException e) {
-                e.printStackTrace();
-            }
-        }
-        else if (chartId.equals(this.getString(R.string.workoutDuration))) {
-
-            try {
-                candleDataSet = statsProvider.getDurationCandleData(aggregationSpan, workoutType);
-            } catch (NoDataException e) {
-                e.printStackTrace();
-            }
-        }
-        else if (chartId.equals(this.getString(R.string.workoutPauseDuration))) {
-
-            try {
-                candleDataSet = statsProvider.getPauseDurationCandleData(aggregationSpan, workoutType);
-            } catch (NoDataException e) {
-                e.printStackTrace();
-            }
-        }
-        else if (chartId.equals(this.getString(R.string.workoutPace))) {
-
-            try {
-                candleDataSet = statsProvider.getPaceCandleData(aggregationSpan, workoutType);
-            } catch (NoDataException e) {
-                e.printStackTrace();
-            }
-        }
-
-
-        // Set data for distance chart
-        // Retrieve candle data
+    private void updateChart(WorkoutType workoutType, int chartIndex) {
 
         CombinedData combinedData = new CombinedData();
-        combinedData.setData(new CandleData(candleDataSet));
 
-        // Create background line data
-        LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);
-        combinedData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(this, lineDataSet)));
+        // Draw candle charts
+        CandleDataSet candleDataSet = null;
+        try {
+            switch (StatsProvider.StatsType.getByIndex(chartIndex)) {
+                case SPEED_CANDLE_DATA:
+                    candleDataSet = statsProvider.getSpeedCandleData(aggregationSpan, workoutType);
+                    setTitle(this.getString(R.string.workoutSpeed));
+                    break;
+                case PACE_CANDLE_DATA:
+                    candleDataSet = statsProvider.getPaceCandleData(aggregationSpan, workoutType);
+                    setTitle(this.getString(R.string.workoutPace));
+                    break;
+                case DISTANCE_CANDLE_DATA:
+                    candleDataSet = statsProvider.getDistanceCandleData(aggregationSpan, workoutType);
+                    setTitle(this.getString(R.string.workoutAvgDistance));
+                    break;
+                case DURATION_CANDLE_DATA:
+                    candleDataSet = statsProvider.getDurationCandleData(aggregationSpan, workoutType);
+                    setTitle(this.getString(R.string.workoutAvgDurationLong));
+                    break;
+                case PAUSE_DURATION_CANDLE_DATA:
+                    candleDataSet = statsProvider.getPauseDurationCandleData(aggregationSpan, workoutType);
+                    setTitle(this.getString(R.string.workoutAvgPauseDuration));
+                    break;
+                default:
+                    break;
+            }
+            if (candleDataSet != null) {
+                combinedData.setData(new CandleData(candleDataSet));
+                // Create background line data
+                LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);
+                combinedData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(this, lineDataSet)));
+            }
+        } catch (NoDataException e) {
+        }
+
+        // Draw bar charts
+        BarDataSet barDataSet = null;
+        try {
+            switch (StatsProvider.StatsType.getByIndex(chartIndex))  {
+                case DISTANCE_SUM_DATA:
+                    barDataSet = statsProvider.getDistanceSumData(aggregationSpan, workoutType);
+                    setTitle(this.getString(R.string.workoutDistanceSum));
+                    break;
+                case DURATION_SUM_DATA:
+                    barDataSet = statsProvider.getDurationSumData(aggregationSpan, workoutType);
+                    setTitle(this.getString(R.string.workoutDurationSum));
+                    break;
+                case PAUSE_DURATION_SUM_DATA:
+                    barDataSet = statsProvider.getPauseDurationSumData(aggregationSpan, workoutType);
+                    setTitle(this.getString(R.string.workoutPauseDurationSum));
+                    break;
+            }
+            if (barDataSet != null) {
+                combinedData.setData(new BarData(barDataSet));
+            }
+        } catch (NoDataException e) {
+        }
 
         chart.getXAxis().setValueFormatter(new FractionedDateFormatter(this,aggregationSpan));
         chart.getXAxis().setGranularity((float)aggregationSpan.spanInterval / stats_time_factor);
