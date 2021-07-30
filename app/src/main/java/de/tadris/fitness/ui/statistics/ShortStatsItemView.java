@@ -57,12 +57,23 @@ public class ShortStatsItemView extends LinearLayout {
         ChartStyles.defaultBarChart(chart);
 
         StatsDataProvider statsDataProvider = new StatsDataProvider(context);
-        long firstWorkoutTime = statsDataProvider.getFirstData(WorkoutProperty.LENGTH, WorkoutTypeManager.getInstance().getAllTypes(context)).time;
-        long lastWorkoutTime = statsDataProvider.getLastData(WorkoutProperty.LENGTH, WorkoutTypeManager.getInstance().getAllTypes(context)).time;
+
+        setOnClickListener(view -> context.startActivity(new Intent(getContext(), StatisticsActivity.class)));
+
+        long firstWorkoutTime;
+        long lastWorkoutTime;
+        try {
+            firstWorkoutTime = statsDataProvider.getFirstData(WorkoutProperty.LENGTH, WorkoutTypeManager.getInstance().getAllTypes(context)).time;
+            lastWorkoutTime = statsDataProvider.getLastData(WorkoutProperty.LENGTH, WorkoutTypeManager.getInstance().getAllTypes(context)).time;
+
+        }
+        catch (NoDataException e)
+        {
+            return;
+        }
         timeSpanSelection.setLimits(firstWorkoutTime, lastWorkoutTime);
         timeSpanSelection.addOnTimeSpanSelectionListener((aggregationSpan, instance) -> updateChart());
 
-        setOnClickListener(view -> context.startActivity(new Intent(getContext(), StatisticsActivity.class)));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

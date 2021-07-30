@@ -42,19 +42,29 @@ public class StatsOverviewFragment extends StatsFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        StatsDataProvider statsDataProvider = new StatsDataProvider(getContext());
-        long firstWorkoutTime = statsDataProvider.getFirstData(WorkoutProperty.LENGTH, WorkoutTypeManager.getInstance().getAllTypes(context)).time;
-        long lastWorkoutTime = statsDataProvider.getLastData(WorkoutProperty.LENGTH, WorkoutTypeManager.getInstance().getAllTypes(context)).time;
-
         timeSpanSelection = view.findViewById(R.id.time_span_selection);
+        numberOfActivitiesChart = view.findViewById(R.id.stats_number_of_workout_chart);
+        distanceChart = view.findViewById(R.id.stats_distances_chart);
+
+        StatsDataProvider statsDataProvider = new StatsDataProvider(getContext());
+        long firstWorkoutTime;
+        long lastWorkoutTime;
+        try {
+            firstWorkoutTime = statsDataProvider.getFirstData(WorkoutProperty.LENGTH, WorkoutTypeManager.getInstance().getAllTypes(context)).time;
+            lastWorkoutTime = statsDataProvider.getLastData(WorkoutProperty.LENGTH, WorkoutTypeManager.getInstance().getAllTypes(context)).time;
+
+        }
+        catch (NoDataException e)
+        {
+            return;
+        }
+
         timeSpanSelection.setLimits(firstWorkoutTime, lastWorkoutTime);
         timeSpanSelection.addOnTimeSpanSelectionListener((aggregationSpan, instance) -> updateCharts());
 
-        numberOfActivitiesChart = view.findViewById(R.id.stats_number_of_workout_chart);
         ChartStyles.defaultBarChart(numberOfActivitiesChart);
         animateChart(numberOfActivitiesChart);
 
-        distanceChart = view.findViewById(R.id.stats_distances_chart);
         ChartStyles.setXAxisLabel(distanceChart, Instance.getInstance(context).distanceUnitUtils.getDistanceUnitSystem().getLongDistanceUnit());
         ChartStyles.defaultBarChart(distanceChart);
         animateChart(distanceChart);
