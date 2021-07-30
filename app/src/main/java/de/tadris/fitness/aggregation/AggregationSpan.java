@@ -20,52 +20,68 @@
 package de.tadris.fitness.aggregation;
 
 import android.annotation.SuppressLint;
-import android.widget.NumberPicker;
 
 import androidx.annotation.StringRes;
-import androidx.core.content.ContextCompat;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
 
 import de.tadris.fitness.R;
 
 public enum AggregationSpan {
 
-    SINGLE(R.string.singleWorkout, R.string.month, TimeUnit.MINUTES.toMillis(1), "dd/MMM/yy") {
+    SINGLE(R.string.singleWorkout, R.string.month, TimeUnit.MINUTES.toMillis(1), Calendar.MILLISECOND, "dd/MMM/yy") {
         @Override
-        public void applyToCalendar(Calendar calendar) {
+        public Calendar setCalendarToAggregationStart(Calendar calendar) {
+            return calendar;
         }
     },
-    DAY(R.string.day, R.string.dayInMonth, TimeUnit.DAYS.toMillis(1), "dd/mm/yy"),
-    WEEK(R.string.week, R.string.calendarWeekYear, TimeUnit.DAYS.toMillis(7), "ww/yy") {
+    DAY(R.string.day, R.string.dayInMonth, TimeUnit.DAYS.toMillis(1), Calendar.DAY_OF_MONTH, "dd/mm/yy"),
+    WEEK(R.string.week, R.string.calendarWeekYear, TimeUnit.DAYS.toMillis(7), Calendar.WEEK_OF_YEAR, "ww/yy") {
         @Override
-        public void applyToCalendar(Calendar calendar) {
-            super.applyToCalendar(calendar);
+        public Calendar setCalendarToAggregationStart(Calendar calendar) {
+            super.setCalendarToAggregationStart(calendar);
             calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
+            return calendar;
         }
     },
-    MONTH(R.string.month, R.string.monthYear, TimeUnit.DAYS.toMillis(30), "MMM/yy") {
+    MONTH(R.string.month, R.string.monthYear, TimeUnit.DAYS.toMillis(30), Calendar.MONTH, "MMM/yy") {
         @Override
-        public void applyToCalendar(Calendar calendar) {
-            super.applyToCalendar(calendar);
+        public Calendar setCalendarToAggregationStart(Calendar calendar) {
+            super.setCalendarToAggregationStart(calendar);
             calendar.set(Calendar.DAY_OF_MONTH, 1);
+            return calendar;
         }
     },
-    YEAR(R.string.year, R.string.year, TimeUnit.DAYS.toMillis(365), "yyyy") {
+    YEAR(R.string.year, R.string.year, TimeUnit.DAYS.toMillis(365), Calendar.YEAR, "yyyy") {
         @Override
-        public void applyToCalendar(Calendar calendar) {
-            super.applyToCalendar(calendar);
+        public Calendar setCalendarToAggregationStart(Calendar calendar) {
+            super.setCalendarToAggregationStart(calendar);
             calendar.set(Calendar.DAY_OF_YEAR, 1);
+            return calendar;
         }
     },
-    ALL(R.string.workoutTypeAll, R.string.workoutTypeAll, Long.MAX_VALUE, "yyyy") {
+    ALL(R.string.workoutTypeAll, R.string.workoutTypeAll, Long.MAX_VALUE, Integer.MAX_VALUE, "yyyy") {
         @Override
-        public void applyToCalendar(Calendar calendar) {
-            super.applyToCalendar(calendar);
+        public Calendar setCalendarToAggregationStart(Calendar calendar) {
+            super.setCalendarToAggregationStart(calendar);
             calendar.set(Calendar.YEAR, 1);
             calendar.set(Calendar.DAY_OF_YEAR, 1);
+            return calendar;
+        }
+
+        public Calendar getAggregationEnd(Calendar calendar) {
+            Calendar clone = (Calendar) calendar.clone();
+            clone.setTimeInMillis(Long.MAX_VALUE);
+            return clone;
+        }
+
+        public long getAggregationEnd(long start) {
+            Calendar calendar = new GregorianCalendar();
+            calendar.setTimeInMillis(Long.MAX_VALUE);
+            return calendar.getTimeInMillis();
         }
     };
 
@@ -73,21 +89,37 @@ public enum AggregationSpan {
     public final int title;
     @StringRes
     public final int axisLabel;
-    public final long spanInterval;
     public final SimpleDateFormat dateFormat;
+    public final long spanInterval;
+    public final int calendarField;
 
     @SuppressLint("SimpleDateFormat")
-    AggregationSpan(int title, int axisLabel, long spanInterval, String formatString) {
+    AggregationSpan(int title, int axisLabel, long spanInterval, int calendarField, String formatString) {
         this.title = title;
         this.axisLabel = axisLabel;
         this.spanInterval = spanInterval;
+        this.calendarField = calendarField;
         this.dateFormat = new SimpleDateFormat(formatString);
     }
 
-    public void applyToCalendar(Calendar calendar) {
+    public Calendar setCalendarToAggregationStart(Calendar calendar) {
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
+        return calendar;
+    }
+
+    public Calendar getAggregationEnd(Calendar calendar) {
+        Calendar clone = (Calendar) calendar.clone();
+        clone.add(calendarField, 1);
+        return clone;
+    }
+
+    public long getAggregationEnd(long start) {
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTimeInMillis(start);
+        calendar.add(calendarField, 1);
+        return calendar.getTimeInMillis();
     }
 }

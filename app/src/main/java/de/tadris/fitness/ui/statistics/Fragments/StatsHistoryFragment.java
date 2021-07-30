@@ -194,7 +194,9 @@ public class StatsHistoryFragment extends StatsFragment {
                     i.putExtra("data", combinedChart.getData().getDataSetLabels()[0]);
                     i.putExtra("type", selection.getSelectedWorkoutType().id);
                     i.putExtra("formatter", combinedChart.getAxisLeft().getValueFormatter().getClass());
-                    i.putExtra("viewPort", viewPortValues);
+                    //i.putExtra("viewPort", viewPortValues);
+                    i.putExtra("xScale", combinedChart.getViewPortHandler().getScaleX());
+                    i.putExtra("xTrans", combinedChart.getViewPortHandler().getTransX());
                     i.putExtra("aggregationSpan", aggregationSpan);
                     String label = "";
                     if(combinedChart.getLegend().getEntries().length>0)

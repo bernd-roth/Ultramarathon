@@ -44,6 +44,7 @@ public class DetailStatsActivity extends FitoTrackActivity {
     WorkoutType workoutType;
     AggregationSpan aggregationSpan;
     StatsProvider statsProvider;
+    float xScale, xTrans;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,7 +69,9 @@ public class DetailStatsActivity extends FitoTrackActivity {
         String type = (String) getIntent().getSerializableExtra("type");
         String label = (String) getIntent().getSerializableExtra("ylabel");
         Object formatterClass = (Object) getIntent().getSerializableExtra("formatter");
-        float[] viewPortValues = getIntent().getFloatArrayExtra("viewPort");
+        //float[] viewPortValues = getIntent().getFloatArrayExtra("viewPort");
+        xScale = getIntent().getFloatExtra("xScale", 0);
+        xTrans = getIntent().getFloatExtra("xTrans", 0);
         aggregationSpan = (AggregationSpan) getIntent().getSerializableExtra("aggregationSpan");
 
         ChartStyles.defaultLineChart(chart);
@@ -147,13 +150,12 @@ public class DetailStatsActivity extends FitoTrackActivity {
         chart.setMarker(new DisplayValueMarker(this, chart.getAxisLeft().getValueFormatter(), label));
         updateChart(workoutType, chartIndex);
 
-        float[] currentViewPortValues = new float[9];
-        chart.getViewPortHandler().getMatrixTouch().getValues(currentViewPortValues);
+        chart.getViewPortHandler().zoom(xScale,
+                chart.getViewPortHandler().getScaleY(),
+                -xTrans,
+                chart.getViewPortHandler().getTransY());
 
-        currentViewPortValues[Matrix.MSCALE_X] = viewPortValues[Matrix.MSCALE_X];
-        currentViewPortValues[Matrix.MTRANS_X] = viewPortValues[Matrix.MTRANS_X];
-
-        animateChart(chart);
+        //animateChart(chart);
     }
 
 

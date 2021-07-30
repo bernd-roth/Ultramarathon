@@ -84,8 +84,7 @@ public class StatsOverviewFragment extends StatsFragment {
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void updateCharts() {
         long start = timeSpanSelection.getSelectedInstance();
-        StatsDataTypes.TimeSpan span = new StatsDataTypes.TimeSpan(start,
-                start + timeSpanSelection.getSelectedAggregationSpan().spanInterval);
+        StatsDataTypes.TimeSpan span = new StatsDataTypes.TimeSpan(start, timeSpanSelection.getSelectedAggregationSpan().getAggregationEnd(start));
 
         try {
             BarData distanceData = new BarData(statsProvider.totalDistances(span));

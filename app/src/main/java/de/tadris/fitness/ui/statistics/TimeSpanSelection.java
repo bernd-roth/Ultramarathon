@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
@@ -12,7 +11,6 @@ import android.widget.NumberPicker;
 import android.widget.Spinner;
 
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -130,7 +128,7 @@ public class TimeSpanSelection extends LinearLayout {
     public long getSelectedInstance() {
         GregorianCalendar calendar = new GregorianCalendar();
         calendar.setTimeInMillis(selectedInstance);
-        selectedAggregationSpan.applyToCalendar(calendar);
+        selectedAggregationSpan.setCalendarToAggregationStart(calendar);
         return calendar.getTimeInMillis();
     }
 

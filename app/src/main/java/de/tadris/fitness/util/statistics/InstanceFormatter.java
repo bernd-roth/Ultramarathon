@@ -21,7 +21,7 @@ public class InstanceFormatter implements NumberPicker.Formatter {
     public static long mapInstanceToIndex(long instance, AggregationSpan aggregationSpan) {
         Calendar calendar = new GregorianCalendar();
         calendar.setTimeInMillis(instance);
-        aggregationSpan.applyToCalendar(calendar);
+        aggregationSpan.setCalendarToAggregationStart(calendar);
         return calendar.getTimeInMillis() / aggregationSpan.spanInterval + 1;
     }
 

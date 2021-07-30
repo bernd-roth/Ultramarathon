@@ -92,7 +92,7 @@ public class AggregatedWorkoutData {
         }
 
         calendar.setTimeInMillis(workout.start);
-        span.applyToCalendar(calendar);
+        span.setCalendarToAggregationStart(calendar);
         return calendar.getTimeInMillis();
     }
 
