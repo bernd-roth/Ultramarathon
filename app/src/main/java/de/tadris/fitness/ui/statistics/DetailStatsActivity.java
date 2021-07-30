@@ -127,7 +127,7 @@ public class DetailStatsActivity extends FitoTrackActivity {
                 } else if (TimeUnit.DAYS.toMillis(21) < timeSpan) {
                     aggregationSpan = AggregationSpan.WEEK;
                 } else {
-                    aggregationSpan = AggregationSpan.SINGLE;
+                    //aggregationSpan = AggregationSpan.SINGLE;
                 }
 
                 if (oldAggregationSpan != aggregationSpan) {
