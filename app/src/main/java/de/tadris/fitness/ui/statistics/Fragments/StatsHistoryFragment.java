@@ -317,7 +317,7 @@ public class StatsHistoryFragment extends StatsFragment {
 
     private void fixViewPortOffsets(CombinedChart chart, float offset)
     {
-        chart.setViewPortOffsets(offset, chart.getViewPortHandler().offsetTop(),chart.getViewPortHandler().offsetRight(),chart.getViewPortHandler().offsetBottom());
+        chart.setViewPortOffsets(offset, offset/2,offset/2,offset/2);
     }
 
     private void updateDurationChart(WorkoutType workoutType) {
