@@ -164,6 +164,7 @@ public class StatsHistoryFragment extends StatsFragment {
 
         for (CombinedChart combinedChart : combinedChartList) {
             animateChart(combinedChart);
+            fixViewPortOffsets(combinedChart, 120);
             ChartStyles.defaultLineChart(combinedChart);
             OnChartGestureMultiListener multiListener = new OnChartGestureMultiListener(new ArrayList<>());
             multiListener.listeners.add(synchronizer.addChart(combinedChart));
@@ -308,6 +309,11 @@ public class StatsHistoryFragment extends StatsFragment {
             distanceChart.clear();
         }
         distanceChart.invalidate();
+    }
+
+    private void fixViewPortOffsets(CombinedChart chart, float offset)
+    {
+        chart.setViewPortOffsets(offset, chart.getViewPortHandler().offsetTop(),chart.getViewPortHandler().offsetRight(),chart.getViewPortHandler().offsetBottom());
     }
 
     private void updateDurationChart(WorkoutType workoutType) {
