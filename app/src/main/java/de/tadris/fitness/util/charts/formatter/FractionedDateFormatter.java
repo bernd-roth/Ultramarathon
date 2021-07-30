@@ -38,6 +38,6 @@ public class FractionedDateFormatter extends ValueFormatter {
 
     @Override
     public String getFormattedValue(float value) {
-        return format.format(new Date((long) (value * stats_time_factor + span.spanInterval)));
+        return format.format(new Date((long) (value * stats_time_factor + span.spanInterval/2)));
     }
 }

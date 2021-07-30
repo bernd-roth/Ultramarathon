@@ -162,6 +162,7 @@ public class ChartStyles {
 
         chart.setData(data);
         chart.setMarker(new WorkoutDisplayMarker(ctx));
+        chart.getAxisLeft().setAxisMinimum(0);
     }
 
     public static void horizontalBarChartIconLabel(HorizontalBarChart chart, BarData data, Context ctx)
@@ -185,9 +186,11 @@ public class ChartStyles {
 
         chart.setRenderer(new HorizontalBarChartIconRenderer(chart, chart.getAnimator(), chart.getViewPortHandler(), imageList, ctx));
         chart.setScaleEnabled(false);
-        chart.setExtraOffsets(0, 0, 0, 0);
+        chart.setExtraOffsets(30, 0, 0, 0);
 
         chart.setData(data);
         chart.setMarker(new WorkoutDisplayMarker(ctx));
+        chart.getAxisLeft().setAxisMinimum(0);
+        chart.getAxisRight().setAxisMinimum(0);
     }
 }
