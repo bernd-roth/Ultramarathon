@@ -1,10 +1,14 @@
 package de.tadris.fitness.util.charts.formatter;
 
+import android.content.Context;
+
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
+
+import de.tadris.fitness.R;
 
 public class TimeFormatter extends ValueFormatter {
     TimeUnit input;
@@ -36,5 +40,13 @@ public class TimeFormatter extends ValueFormatter {
         else
             return de.tadris.fitness.util.unit.TimeFormatter.formatMinutesOnly(s);
         // TODO: Implement rest
+    }
+
+    public String getUnit(Context ctx)
+    {
+        if(dispHours)
+            return ctx.getString(R.string.timeHourShort);
+        else
+            return ctx.getString(R.string.timeMinuteShort);
     }
 }

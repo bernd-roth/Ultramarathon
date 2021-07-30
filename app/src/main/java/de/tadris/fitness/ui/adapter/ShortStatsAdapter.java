@@ -1,40 +1,15 @@
 package de.tadris.fitness.ui.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarData;
-
-import de.tadris.fitness.Instance;
-import de.tadris.fitness.R;
-import de.tadris.fitness.data.StatsDataProvider;
-import de.tadris.fitness.data.StatsDataTypes;
-import de.tadris.fitness.data.StatsProvider;
-import de.tadris.fitness.data.WorkoutTypeManager;
 import de.tadris.fitness.ui.statistics.ShortStatsItemView;
-import de.tadris.fitness.ui.statistics.StatisticsActivity;
-import de.tadris.fitness.ui.statistics.TimeSpanSelection;
-import de.tadris.fitness.util.WorkoutProperty;
-import de.tadris.fitness.util.charts.ChartStyles;
-import de.tadris.fitness.util.charts.formatter.TimeFormatter;
-import de.tadris.fitness.util.exceptions.NoDataException;
 
 public class ShortStatsAdapter extends RecyclerView.Adapter<ShortStatsAdapter.ViewHolder> {
 
@@ -55,6 +30,15 @@ public class ShortStatsAdapter extends RecyclerView.Adapter<ShortStatsAdapter.Vi
         ViewGroup.LayoutParams parentParams = parent.getLayoutParams();
         view.setLayoutParams(new ViewGroup.LayoutParams(parentParams.width, parentParams.height));
         return new ViewHolder(view, ctx);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public void onViewAttachedToWindow(@NonNull ViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+        if (holder.itemView instanceof ShortStatsItemView) {
+            ((ShortStatsItemView) holder.itemView).updateChart();
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

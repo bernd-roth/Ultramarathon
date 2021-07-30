@@ -1,4 +1,4 @@
-package de.tadris.fitness.util.charts;
+package de.tadris.fitness.util.charts.marker;
 
 import android.content.Context;
 import android.widget.TextView;

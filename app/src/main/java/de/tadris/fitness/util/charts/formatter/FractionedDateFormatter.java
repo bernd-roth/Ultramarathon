@@ -19,10 +19,12 @@ public class FractionedDateFormatter extends ValueFormatter {
     Context ctx;
     SimpleDateFormat format;
     float stats_time_factor;
+    AggregationSpan span;
 
     public FractionedDateFormatter(Context ctx, AggregationSpan span)
     {
         setAggregationSpan(span);
+        this.span = span;
         this.ctx = ctx;
         TypedValue stats_time_factor = new TypedValue();
         ctx.getResources().getValue(R.dimen.stats_time_factor, stats_time_factor, true);
@@ -36,6 +38,6 @@ public class FractionedDateFormatter extends ValueFormatter {
 
     @Override
     public String getFormattedValue(float value) {
-        return format.format(new Date((long) (value *stats_time_factor)));
+        return format.format(new Date((long) (value * stats_time_factor + span.spanInterval/2)));
     }
 }
