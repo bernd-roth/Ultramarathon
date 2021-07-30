@@ -7,6 +7,7 @@ import android.util.TypedValue;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
+import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.CandleDataSet;
@@ -421,8 +422,8 @@ public class StatsProvider {
             }
         } else {
             // Find start and end time of workouts
-            long oldestWorkoutTime = dataProvider.getFirstData(workoutProperty, WorkoutTypeManager.getInstance().getAllTypes(ctx)).time;
-            long newestWorkoutTime = dataProvider.getLastData(workoutProperty, WorkoutTypeManager.getInstance().getAllTypes(ctx)).time;
+            long oldestWorkoutTime = Collections.min(data, StatsDataTypes.DataPoint.timeComparator).time;
+            long newestWorkoutTime = Collections.max(data, StatsDataTypes.DataPoint.timeComparator).time;
 
             GregorianCalendar calendar = new GregorianCalendar();
             calendar.setTimeInMillis(oldestWorkoutTime);
@@ -440,8 +441,6 @@ public class StatsProvider {
                     float max = (float) Collections.max(intervalData, StatsDataTypes.DataPoint.valueComparator).value;
                     float mean = calculateValueAverage(intervalData);
                     candleEntries.add(new CandleEntry((float) calendar.getTimeInMillis() / stats_time_factor.getFloat(), max, min, mean, mean));
-                } else {
-                    candleEntries.add(new CandleEntry((float) calendar.getTimeInMillis() / stats_time_factor.getFloat(), 0, 0, 0, 0));
                 }
 
                 // Increment time span
@@ -475,8 +474,8 @@ public class StatsProvider {
             }
         } else {
             // Find start and end time of workouts
-            long oldestWorkoutTime = dataProvider.getFirstData(workoutProperty, WorkoutTypeManager.getInstance().getAllTypes(ctx)).time;
-            long newestWorkoutTime = dataProvider.getLastData(workoutProperty, WorkoutTypeManager.getInstance().getAllTypes(ctx)).time;
+            long oldestWorkoutTime = Collections.min(data, StatsDataTypes.DataPoint.timeComparator).time;
+            long newestWorkoutTime = Collections.max(data, StatsDataTypes.DataPoint.timeComparator).time;
 
             // Find start time of aggregation span
             GregorianCalendar calendar = new GregorianCalendar();
@@ -487,9 +486,11 @@ public class StatsProvider {
             while (calendar.getTimeInMillis() < newestWorkoutTime) {
                 ArrayList<StatsDataTypes.DataPoint> intervalData = findDataPointsInAggregationSpan(data, calendar, span);
 
-                // Calculate min, max and average of the data of the span and store in the candle list
-                float sum = calculateValueSum(intervalData);
-                barEntries.add(new BarEntry((float) calendar.getTimeInMillis() / stats_time_factor.getFloat(), sum));
+                // Calculate the sum of the data from the span and store in the bar list
+                if (intervalData.size() > 0) {
+                    float sum = calculateValueSum(intervalData);
+                    barEntries.add(new BarEntry((float) calendar.getTimeInMillis() / stats_time_factor.getFloat(), sum));
+                }
 
                 // Increment time span
                 if (span != AggregationSpan.ALL) {
@@ -531,6 +532,17 @@ public class StatsProvider {
             sum += mark.value;
         }
         return sum;
+    }
+
+    public void setXLimits(Chart chart) {
+        try {
+            chart.getXAxis().setAxisMinimum(dataProvider.getFirstData(
+                    WorkoutProperty.TOP_SPEED, WorkoutTypeManager.getInstance().getAllTypes(ctx)).time);
+            chart.getXAxis().setAxisMaximum(dataProvider.getLastData(
+                    WorkoutProperty.TOP_SPEED, WorkoutTypeManager.getInstance().getAllTypes(ctx)).time);
+        } catch (NoDataException e) {
+            e.printStackTrace();
+        }
     }
 
 }
