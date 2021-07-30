@@ -60,7 +60,7 @@ public class StatsOverviewFragment extends StatsFragment {
         animateChart(distanceChart);
 
         durationChart = view.findViewById(R.id.stats_duration_chart);
-        ChartStyles.setXAxisLabel(durationChart, "h");
+        ChartStyles.setXAxisLabel(durationChart, getContext().getString(R.string.timeHourShort));
         ChartStyles.defaultBarChart(durationChart);
         animateChart(durationChart);
 

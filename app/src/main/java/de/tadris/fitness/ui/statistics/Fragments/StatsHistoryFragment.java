@@ -278,6 +278,7 @@ public class StatsHistoryFragment extends StatsFragment {
             if (distanceSwitch.isChecked()) {
                 BarDataSet barDataSet = statsProvider.getDistanceSumData(aggregationSpan, workoutType);
                 BarData barData = new BarData(barDataSet);
+                ChartStyles.setTextAppearance(barData);
                 barData.setBarWidth(aggregationSpan.spanInterval / stats_time_factor*BAR_WIDTH_FACTOR);
                 combinedData.setData(barData);
             } else {
@@ -308,6 +309,7 @@ public class StatsHistoryFragment extends StatsFragment {
             if (durationSwitch.isChecked()) {
                 BarDataSet barDataSet = statsProvider.getDurationSumData(aggregationSpan, workoutType);
                 BarData barData = new BarData(barDataSet);
+                ChartStyles.setTextAppearance(barData);
                 barData.setBarWidth(aggregationSpan.spanInterval / stats_time_factor*BAR_WIDTH_FACTOR);
                 combinedData.setData(barData);
             } else {
@@ -338,6 +340,7 @@ public class StatsHistoryFragment extends StatsFragment {
             if (pauseDurationSwitch.isChecked()) {
                 BarDataSet barDataSet = statsProvider.getPauseDurationSumData(aggregationSpan, workoutType);
                 BarData barData = new BarData(barDataSet);
+                ChartStyles.setTextAppearance(barData);
                 barData.setBarWidth(aggregationSpan.spanInterval / stats_time_factor*BAR_WIDTH_FACTOR);
                 combinedData.setData(barData);
             } else {

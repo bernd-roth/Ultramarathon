@@ -133,7 +133,7 @@ public class ChartStyles {
 
     public static void setTextAppearance(ChartData data)
     {
-        data.setValueTextSize(12);
+        data.setValueTextSize(10);
     }
 
 
