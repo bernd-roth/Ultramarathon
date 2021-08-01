@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -27,6 +27,8 @@ import java.util.List;
 
 import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.GpsWorkout;
+import de.tadris.fitness.data.IndoorSample;
+import de.tadris.fitness.data.IndoorWorkout;
 import de.tadris.fitness.data.WorkoutType;
 
 @JacksonXmlRootElement(localName = "fito-track")
@@ -36,6 +38,8 @@ class FitoTrackDataContainer {
     private int version;
     private List<GpsWorkout> workouts = new ArrayList<>();
     private List<GpsSample> samples = new ArrayList<>();
+    private List<IndoorWorkout> indoorWorkouts = new ArrayList<>();
+    private List<IndoorSample> indoorSamples = new ArrayList<>();
     private List<IntervalSetContainer> intervalSets = new ArrayList<>();
     private List<WorkoutType> workoutTypes = new ArrayList<>();
 
@@ -80,5 +84,21 @@ class FitoTrackDataContainer {
 
     public void setWorkoutTypes(List<WorkoutType> workoutTypes) {
         this.workoutTypes = workoutTypes;
+    }
+
+    public List<IndoorWorkout> getIndoorWorkouts() {
+        return indoorWorkouts;
+    }
+
+    public void setIndoorWorkouts(List<IndoorWorkout> indoorWorkouts) {
+        this.indoorWorkouts = indoorWorkouts;
+    }
+
+    public List<IndoorSample> getIndoorSamples() {
+        return indoorSamples;
+    }
+
+    public void setIndoorSamples(List<IndoorSample> indoorSamples) {
+        this.indoorSamples = indoorSamples;
     }
 }
