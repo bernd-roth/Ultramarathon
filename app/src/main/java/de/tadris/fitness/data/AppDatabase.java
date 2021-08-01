@@ -56,17 +56,30 @@ public abstract class AppDatabase extends RoomDatabase {
     }
 
     public List<BaseWorkout> getAllWorkouts() {
-        List<BaseWorkout> workouts = new ArrayList<>(Arrays.asList(gpsWorkoutDao().getWorkouts()));
-        int listIndex = 0;
+        List<BaseWorkout> allWorkouts = new ArrayList<>();
 
-        // Merging indoor workouts into gps workout list
-        for (IndoorWorkout workout : indoorWorkoutDao().getWorkouts()) {
-            if (workouts.size() <= listIndex || workout.start > workouts.get(listIndex).start) {
-                workouts.add(listIndex, workout);
+        List<GpsWorkout> gpsWorkouts = new ArrayList<>(Arrays.asList(gpsWorkoutDao().getWorkouts()));
+        List<IndoorWorkout> indoorWorkouts = new ArrayList<>(Arrays.asList(indoorWorkoutDao().getWorkouts()));
+
+
+        // Merging gps workouts indoor workouts
+        while (gpsWorkouts.size() > 0 && indoorWorkouts.size() > 0) {
+            GpsWorkout firstGpsWorkout = gpsWorkouts.get(0);
+            IndoorWorkout firstIndoorWorkout = indoorWorkouts.get(0);
+            if (firstGpsWorkout.start > firstIndoorWorkout.start) {
+                allWorkouts.add(gpsWorkouts.remove(0));
+            } else {
+                allWorkouts.add(indoorWorkouts.remove(0));
             }
-            listIndex++;
         }
-        return workouts;
+        if (gpsWorkouts.size() > 0) {
+            allWorkouts.addAll(gpsWorkouts);
+        }
+        if (indoorWorkouts.size() > 0) {
+            allWorkouts.addAll(indoorWorkouts);
+        }
+
+        return allWorkouts;
     }
 
     public long getLastWorkoutTimeByType(String type) {
