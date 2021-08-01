@@ -63,7 +63,7 @@
             android:name=".ui.ImportGpxActivity"
             android:label="@string/importWorkout">
 
-            <intent-filter>
+            <intent-filter tools:ignore="AppLinkUrlError">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="application/octet-stream" />
@@ -76,8 +76,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.settings.DownloadMapsActivity" />
-        <activity android:name=".ui.record.RecordIndoorWorkoutActivity"></activity>
-        <activity android:name=".ui.settings.DownloadMapsActivity" />
+        <activity android:name=".ui.record.RecordIndoorWorkoutActivity" />
         <activity android:name=".ui.settings.EditWorkoutTypeActivity" />
         <activity android:name=".ui.settings.ManageWorkoutTypesActivity" />
         <activity android:name=".ui.ShareFileActivity" />

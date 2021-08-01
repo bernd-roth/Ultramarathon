@@ -50,6 +50,11 @@ class RecordingSettingsFragment : FitoTrackSettingFragment(), AutoStartModeSelec
     lateinit var instance: Instance
     lateinit var preferences: UserPreferences
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        EventBus.getDefault().register(this)
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         instance = Instance.getInstance(context)
         preferences = Instance.getInstance(requireContext()).userPreferences
@@ -71,7 +76,7 @@ class RecordingSettingsFragment : FitoTrackSettingFragment(), AutoStartModeSelec
                 }
         }
         disableSpeechConfig()
-        checkTTS { showSpeechConfig() }
+        checkTTS()
         findPreference<Preference>("intervals")!!.onPreferenceClickListener =
             Preference.OnPreferenceClickListener {
                 showIntervalSetManagement()
@@ -99,22 +104,24 @@ class RecordingSettingsFragment : FitoTrackSettingFragment(), AutoStartModeSelec
             }
     }
 
-    private var ttsController: TTSController? = null
+    override fun onDestroy() {
+        EventBus.getDefault().unregister(this)
+        super.onDestroy()
+    }
 
-    private fun checkTTS(onTTSAvailable: Runnable) {
+    private var ttsController: TTSController? = null
+    private fun checkTTS() {
         ttsController = TTSController(requireContext())
-        EventBus.getDefault().register(object : Any() {
-            @Subscribe(threadMode = ThreadMode.MAIN)
-            fun onTTSReady(e: TTSReadyEvent) {
-                if (context != null) {
-                    if (e.ttsAvailable) {
-                        onTTSAvailable.run()
-                    }
-                    ttsController?.destroy()
-                    EventBus.getDefault().unregister(this)
-                }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onTTSReady(e: TTSReadyEvent) {
+        if (context != null) {
+            if (e.ttsAvailable) {
+                showSpeechConfig()
             }
-        })
+            ttsController?.destroy()
+        }
     }
 
     private fun showSpeechConfig() {

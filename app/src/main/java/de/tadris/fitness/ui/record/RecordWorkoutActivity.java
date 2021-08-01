@@ -79,7 +79,6 @@ import de.tadris.fitness.recording.event.HeartRateConnectionChangeEvent;
 import de.tadris.fitness.recording.event.TTSReadyEvent;
 import de.tadris.fitness.recording.event.WorkoutAutoStopEvent;
 import de.tadris.fitness.recording.gps.DefaultMovementDetector;
-import de.tadris.fitness.recording.gps.GpsRecorderService;
 import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
 import de.tadris.fitness.recording.gps.MovementDetector;
 import de.tadris.fitness.recording.information.InformationDisplay;
@@ -230,6 +229,10 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
         infoViews[1] = new InfoViewHolder(1, this, findViewById(R.id.recordInfo2Title), findViewById(R.id.recordInfo2Value));
         infoViews[2] = new InfoViewHolder(2, this, findViewById(R.id.recordInfo3Title), findViewById(R.id.recordInfo3Value));
         infoViews[3] = new InfoViewHolder(3, this, findViewById(R.id.recordInfo4Title), findViewById(R.id.recordInfo4Value));
+
+        findViewById(R.id.autoStartCountdownAbort).setOnClickListener(v -> {
+            onAutoStartCountdownAbortButtonClicked();
+        });
 
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
@@ -697,7 +700,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
         startPopupMenu.show();
     }
 
-    public void onAutoStartCountdownAbortButtonClicked(View v) {
+    public void onAutoStartCountdownAbortButtonClicked() {
         cancelAutoStart(true);
         Toast.makeText(this, R.string.workoutAutoStartAborted, Toast.LENGTH_SHORT).show();
     }
@@ -961,7 +964,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
     @Subscribe
     public void onVoiceAnnouncementIsReady(TTSReadyEvent e) {
         // actually, we only care for the RecorderService's TTS controller here
-        if (e.id.equals(GpsRecorderService.TTS_CONTROLLER_ID)) {
+        if (e.id.equals(BaseRecorderService.TTS_CONTROLLER_ID)) {
             this.voiceFeedbackAvailable = e.ttsAvailable;
             invalidateOptionsMenu();
         }
