@@ -435,4 +435,6 @@
     <string name="workoutFrequency">Частота</string>
     <string name="workoutRepetitions">Повторы</string>
     <string name="workoutRecordingTypeIndoor">Тренировки в помещении</string>
+    <string name="workoutSets">Наборы</string>
+    <string name="workoutRecordingTypeGps">Gps тренировки</string>
 </resources>
