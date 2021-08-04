@@ -322,4 +322,5 @@
     <string name="pref_announcements_config_summary">Välj tid och avstånd mellan röstmeddelanden</string>
     <string name="pref_voice_announcements_summary">Konfigurera röstmeddelanden som informerar dig under träningspasset</string>
     <string name="voiceAnnouncementsTitle">Röstmeddelanden</string>
+    <string name="chooseBackupFile">Välj säkerhetskopieringsfil</string>
 </resources>
