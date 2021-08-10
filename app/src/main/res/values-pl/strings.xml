@@ -18,7 +18,7 @@
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
   --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="restore">Przywróć</string>
-    <string name="importBackupMessage">UWAGA: Wszystkie dotychczasowe dane zostaną wyczyszczone. Jeśli chcesz je zachować, zrób najpierw ich kopię. Czy na pewno chcesz kontynuować\?</string>
+    <string name="importBackupMessage">OSTRZEŻENIE: Wszystkie Twoje istniejące dane w aplikacji zostaną wyczyszczone. Jeśli nie chcesz ich stracić, najpierw wykonaj kolejną kopię zapasową. Czy na pewno chcesz przywrócić tę kopię zapasową\?</string>
     <string name="chooseBackupFile">Wybierz plik kopii</string>
     <string name="loadingFile">Ładowanie pliku</string>
     <string name="finished">Zakończone</string>
@@ -64,8 +64,8 @@
     <string name="recordingStateIdle">Bezczynny</string>
     <string name="speechConfigNoSpeech">Brak powiadom.</string>
     <string name="actionGrant">Przyznaj</string>
-    <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack również zbiera dane o lokalizacji w tle, żeby nagrywać trening, kiedy ekran jest wyłączony. Zatem pozwól, aby FitoTrack miał dostęp do Twojej lokalizacji przez cały czas.</string>
-    <string name="recordingPermissionNotGrantedMessage">FitoTrack potrzebuje uprawnień do lokalizacji, aby móc śledzić Twój ruch podczas treningu. FitoTrack również zbiera dane o lokalizacji, kiedy aplikacja działa w tle lub ekran jest wyłączony, żeby nagrywać trening. Dane o lokalizacji pozostają zawsze na telefonie bez Twojej wyraźnej zgody na ich udostępnienie.</string>
+    <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack również zbiera dane o lokalizacji w tle, aby nagrywać trening, gdy ekran jest wyłączony. W związku z tym należy pozwolić, aby FitoTrack miał dostęp do Twojej lokalizacji przez cały czas.</string>
+    <string name="recordingPermissionNotGrantedMessage">FitoTrack potrzebuje uprawnień do lokalizacji, aby śledzić Twój ruch podczas treningu. FitoTrack zbiera również dane o lokalizacji, gdy aplikacja działa w tle lub ekran jest wyłączony, aby nagrywać treningi. Dane o lokalizacji zawsze pozostają w telefonie bez Twojej wyraźnej zgody na ich udostępnienie.</string>
     <string name="recordingPermissionNotGrantedTitle">Nie przyznano uprawnień</string>
     <string name="unitFootSingular">Stopa</string>
     <string name="unitFootPlural">Stopy</string>
@@ -81,7 +81,7 @@
     <string name="aboutAuthor">Twórca</string>
     <string name="aboutLinks">Linki</string>
     <string name="aboutReportBug">Zgłoś błąd</string>
-    <string name="aboutOpenSourceLibraries">Biblioteki open source</string>
+    <string name="aboutOpenSourceLibraries">Biblioteki otwartoźródłowe</string>
     <string name="editWorkoutStartEnd">Edytuj początek/koniec</string>
     <string name="aboutChangelog">Lista zmian</string>
     <string name="aboutVersion">Wersja</string>
@@ -92,8 +92,8 @@
     <string name="speedLastMinute">Śr. prędkość (ostatnia minuta)</string>
     <string name="sections">Odcinki</string>
     <string name="no_workouts_recorded">Brak nagranych treningów</string>
-    <string name="announcementSuppressDuringCall">Wstrzymaj w trakcie rozmowy</string>
-    <string name="workoutImported">Trening zaimportowano pomyślnie</string>
+    <string name="announcementSuppressDuringCall">Wstrzymuj w trakcie rozmowy</string>
+    <string name="workoutImported">Trening został zaimportowany</string>
     <string name="merge">Połącz</string>
     <string name="replace">Zamień</string>
     <string name="replaceOrMergeMessage">Zamienić czy połączyć bazę danych z plikiem kopii zapasowej\?</string>
@@ -142,7 +142,7 @@
     <string name="timeSecondsSingular">Sekunda</string>
     <string name="workoutDiscarded">Trening odrzucony</string>
     <string name="preferenceFirstDayOfWeek">Początek tygodnia</string>
-    <string name="preferenceUseAverageForCurrentSpeed">Użyj średniej prędkości z określonego czas zamiast ostatniego zapisu prędkości do obliczania aktualnej prędkości.</string>
+    <string name="preferenceUseAverageForCurrentSpeed">Używaj średniej prędkości z określonego czas zamiast ostatniego zapisu prędkości do obliczania aktualnej prędkości.</string>
     <string name="preferenceCurrentSpeedAverageTimeTitle">Aktualna prędkość wg średniej</string>
     <string name="preferenceCurrentSpeedAverageTimeSummary">Zamień obliczanie aktualnej prędkości obliczaniem średniej.</string>
     <string name="preferenceCurrentSpeedTime">Przedział czasu dla obliczania średniej</string>
@@ -150,7 +150,7 @@
     <string name="preferenceDateFormat">Format daty</string>
     <string name="preferencesCategoryMap">Mapa</string>
     <string name="preferencesCategoryAppearance">Wygląd</string>
-    <string name="preferencesBackupSummary">Utwórz/Przywróć kopię zapasową Twoich danych treningowych</string>
+    <string name="preferencesBackupSummary">Utwórz/Przywróć kopię zapasową swoich danych treningowych</string>
     <string name="preferencesBackupTitle">Baza danych</string>
     <string name="preferencesRecordingSummary">Zarządzaj nagrywaniem treningu</string>
     <string name="preferencesRecordingTitle">Nagrywanie</string>
@@ -175,7 +175,7 @@
     <string name="length_in_minutes">Czas trwania (minuty):</string>
     <string name="interval_name">Nazwa:</string>
     <string name="hintEditIntervalSet">Dodaj interwały, które będą wypowiadane.</string>
-    <string name="hintManageIntervalSets">Dodaj zestaw interwałów do użycia w Twoich treningach.</string>
+    <string name="hintManageIntervalSets">Dodaj zestaw interwałów, aby używać go w swoich treningach.</string>
     <string name="create">Utwórz</string>
     <string name="manageIntervalsSummary">Edytuj zestawy interwałów do użycia podczas treningu z komunikatami głosowymi.</string>
     <string name="createIntervalSet">Utwórz nowy zestaw interwałów</string>
@@ -203,14 +203,14 @@
     <string name="waiting_gps">Oczekiwanie na GPS</string>
     <string name="editWorkoutType">Edycja typu treningu</string>
     <string name="workoutTypeEditIcon">Ikona</string>
-    <string name="prefTrackStyleUsageTitle">Użyj automatycznego kolorowania trasy</string>
+    <string name="prefTrackStyleUsageTitle">Używaj automatycznego kolorowania trasy</string>
     <string name="trackStyle">Styl trasy</string>
     <string name="mapStyle">Styl mapy</string>
     <string name="gps">GPS</string>
     <string name="importBackupSummary">Przywraca wykonaną kopię zapasową</string>
-    <string name="importBackup">Import danych z kopii zapasowej</string>
+    <string name="importBackup">Importuj dane z kopii zapasowej</string>
     <string name="exportDataSummary">Wykonuje kopię zapasową wszystkich treningów</string>
-    <string name="exportData">Eksport danych</string>
+    <string name="exportData">Eksportuj dane</string>
     <string name="pref_announcements_config_summary">Wybierz czas i odległość między powiadomieniami głosowymi</string>
     <string name="pref_unit_system">Preferowany system jednostek</string>
     <string name="settings">Ustawienia</string>
@@ -295,7 +295,7 @@
     <string name="hintManageWorkoutTypes">Naciśnij ikonę plusa, aby dodać niestandardowe typy treningów.</string>
     <string name="resumeWorkoutConfirmation">Czy naprawdę chcesz wznowić ten trening\? Spowoduje to również dodanie wstrzymania od momentu zatrzymania treningu.</string>
     <string name="prefShowOnLockScreenTitle">Widoczne na ekranie blokady</string>
-    <string name="prefShowOnLockScreenSummary">Pokaż informacje o treningu, nawet gdy ekran jest zablokowany.</string>
+    <string name="prefShowOnLockScreenSummary">Pokazuj informacje o treningu, nawet jeśli ekran jest zablokowany.</string>
     <string name="notimeout">Bez limitu czasu</string>
     <string name="workoutStarted">Trening rozpoczęty</string>
     <string name="workoutStopped">Trening zatrzymany</string>
@@ -316,9 +316,9 @@
     <string name="auto">Automatyczne</string>
     <string name="selectColoring">Wybierz kolorowanie</string>
     <string name="pref_auto_start_mode_unknown">Nieznany tryb (nie wybieraj)</string>
-    <string name="pref_auto_start_mode_on_move">Czekam, aż zaczniesz się poruszać</string>
-    <string name="pref_auto_start_mode_wait_for_gps">Poczekaj na dokładną pozycję GPS</string>
-    <string name="pref_auto_start_mode_instant">Rozpocznij natychmiast</string>
+    <string name="pref_auto_start_mode_on_move">Czekaj, aż zaczniesz się poruszać</string>
+    <string name="pref_auto_start_mode_wait_for_gps">Czekaj na dokładną pozycję GPS</string>
+    <string name="pref_auto_start_mode_instant">Rozpoczynaj natychmiast</string>
     <string name="pref_auto_start_mode_title">Tryb automatycznego rozpoczęcia</string>
     <string name="intervalAutoStartModeTraining">Tryb automatycznego rozpoczęcia treningu</string>
     <string name="manageAutoStartModeSummary">Zmień tryb automatycznego rozpoczęcia treningu</string>
@@ -352,7 +352,7 @@
     <string name="action_nfc_settings">Idź do ustawień NFC</string>
     <string name="dialog_nfc_disabled">Aby używać tagów NFC do rozpoczęcia i zakończenia treningów, najpierw potrzebujesz włączyć NFC w ustawieniach urządzenia</string>
     <string name="dialog_nfc_disabled_title">NFC jest obecnie wyłączone</string>
-    <string name="nfcStartSummary">Jeśli włączone, będziesz w stanie rozpocząć i zatrzymać treningi, skanując tag NFC</string>
+    <string name="nfcStartSummary">Jeśli włączone, będziesz w stanie rozpoczynać i zatrzymywać treningi, skanując tag NFC</string>
     <string name="nfcStartTitle">Skanuj, aby rozpocząć</string>
     <string name="popup_auto_start_wait_for_gps">Gdy pozycja GPS jest dokładna</string>
     <string name="popup_auto_start_on_move">Gdy zacznę się poruszać</string>
