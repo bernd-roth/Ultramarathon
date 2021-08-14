@@ -16,9 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <plurals name="minutes">
         <item quantity="one"><xliff:g example="1" id="mins">%1$d</xliff:g> minutė</item>
         <item quantity="few"><xliff:g example="5" id="mins">%1$d</xliff:g> minutės</item>
@@ -45,7 +43,7 @@
     <string name="workoutDate">Data</string>
     <string name="workoutTime">Laikas</string>
     <string name="and">ir</string>
-    <string name="timeSecondsShort">sek.</string>
+    <string name="timeSecondsShort">s</string>
     <string name="timeHourPlural">Valandos</string>
     <string name="timeHourSingular">Valanda</string>
     <string name="timeMinuteSingular">Minutė</string>
@@ -53,4 +51,16 @@
     <string name="delete">Ištrinti</string>
     <string name="stop">Sustabdyti</string>
     <string name="app_name">FitoTrack</string>
+    <string name="workoutAvgFrequencyLong">Vidutinis dažnis</string>
+    <string name="workoutAvgFrequencyShort">Vid. dažnis</string>
+    <string name="workoutFrequency">Dažnis</string>
+    <string name="workoutSpeed">Greitis</string>
+    <string name="workoutRoute">Maršrutas</string>
+    <string name="workoutPace">Tempas</string>
+    <string name="workoutRepetitions">Pakartojimai</string>
+    <string name="gpsFound">GPS signalas rastas</string>
+    <string name="gpsLost">GPS signalas prarastas</string>
+    <string name="timeHourShort">val</string>
+    <string name="timeMinuteShort">min</string>
+    <string name="timeMinutePlural">Minutės</string>
 </resources>
