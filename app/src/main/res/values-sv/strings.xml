@@ -323,4 +323,6 @@
     <string name="pref_voice_announcements_summary">Konfigurera röstmeddelanden som informerar dig under träningspasset</string>
     <string name="voiceAnnouncementsTitle">Röstmeddelanden</string>
     <string name="chooseBackupFile">Välj säkerhetskopieringsfil</string>
+    <string name="workoutTypeHiking">Vandring</string>
+    <string name="setPreferencesTitle">Välj inställningar</string>
 </resources>
