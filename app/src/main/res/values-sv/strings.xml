@@ -357,4 +357,5 @@
     <string name="workoutMaxFrequency">Högsta frekvens</string>
     <string name="workoutMaxIntensity">Högsta intensitet</string>
     <string name="workoutAvgIntensityShort">Snittintensitet</string>
+    <string name="workoutEdited">Det här träningspasset har redigerats.</string>
 </resources>
