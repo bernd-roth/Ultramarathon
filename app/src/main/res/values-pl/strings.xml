@@ -144,7 +144,7 @@
     <string name="preferenceFirstDayOfWeek">Początek tygodnia</string>
     <string name="preferenceUseAverageForCurrentSpeed">Używaj średniej prędkości z określonego czas zamiast ostatniego zapisu prędkości do obliczania aktualnej prędkości.</string>
     <string name="preferenceCurrentSpeedAverageTimeTitle">Aktualna prędkość wg średniej</string>
-    <string name="preferenceCurrentSpeedAverageTimeSummary">Zamień obliczanie aktualnej prędkości obliczaniem średniej.</string>
+    <string name="preferenceCurrentSpeedAverageTimeSummary">Zamień obliczanie aktualnej prędkości obliczaniem średniej</string>
     <string name="preferenceCurrentSpeedTime">Przedział czasu dla obliczania średniej</string>
     <string name="preferenceTimeFormat">Format czasu</string>
     <string name="preferenceDateFormat">Format daty</string>
@@ -165,7 +165,7 @@
     <string name="intervalSets">Zestawy interwałów</string>
     <string name="intervalSet">Zestaw interwałów</string>
     <string name="intervalTraining">Trening interwałowy</string>
-    <string name="intervalsIncludePauseSummary">Jeśli włączone, interwały będą kontynuowane nawet podczas postojów w treningu.</string>
+    <string name="intervalsIncludePauseSummary">Jeśli włączone, interwały będą kontynuowane nawet podczas postojów w treningu</string>
     <string name="intervalsIncludePauseTitle">Uwzględniaj czas postoju w treningu interwałowym</string>
     <string name="intervalSetSelected">Wybrano zestaw interwałów</string>
     <string name="selectIntervalSet">Wybierz zestaw interwałów</string>
@@ -177,7 +177,7 @@
     <string name="hintEditIntervalSet">Dodaj interwały, które będą wypowiadane.</string>
     <string name="hintManageIntervalSets">Dodaj zestaw interwałów, aby używać go w swoich treningach.</string>
     <string name="create">Utwórz</string>
-    <string name="manageIntervalsSummary">Edytuj zestawy interwałów do użycia podczas treningu z komunikatami głosowymi.</string>
+    <string name="manageIntervalsSummary">Edytuj zestawy interwałów do użycia podczas treningu z komunikatami głosowymi</string>
     <string name="createIntervalSet">Utwórz nowy zestaw interwałów</string>
     <string name="manageIntervalSets">Zarządzaj zestawami interwałów</string>
     <string name="edit_interval">Edytuj interwał</string>
@@ -295,7 +295,7 @@
     <string name="hintManageWorkoutTypes">Naciśnij ikonę plusa, aby dodać niestandardowe typy treningów.</string>
     <string name="resumeWorkoutConfirmation">Czy naprawdę chcesz wznowić ten trening\? Spowoduje to również dodanie wstrzymania od momentu zatrzymania treningu.</string>
     <string name="prefShowOnLockScreenTitle">Widoczne na ekranie blokady</string>
-    <string name="prefShowOnLockScreenSummary">Pokazuj informacje o treningu, nawet jeśli ekran jest zablokowany.</string>
+    <string name="prefShowOnLockScreenSummary">Pokazuj informacje o treningu, nawet jeśli ekran jest zablokowany</string>
     <string name="notimeout">Bez limitu czasu</string>
     <string name="workoutStarted">Trening rozpoczęty</string>
     <string name="workoutStopped">Trening zatrzymany</string>
