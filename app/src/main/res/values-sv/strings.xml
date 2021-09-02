@@ -426,4 +426,5 @@
     <string name="intervalSetSelected">Intervallset valt</string>
     <string name="intervalSet">Intervallset</string>
     <string name="intervalSets">Intervallset</string>
+    <string name="setPreferencesMessage">Du kan ställa in ditt föredragna enhetssystem och din vikt i inställningarna.</string>
 </resources>
