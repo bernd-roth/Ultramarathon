@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -17,9 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
     <string name="stop">Arrêter</string>
     <string name="delete">Supprimer</string>
@@ -433,4 +430,8 @@
     <string name="trackStyle">Type d\'enregistrement</string>
     <string name="workoutMaxHeight">Hauteur maximale</string>
     <string name="workoutMinHeight">Hauteur minimale</string>
+    <string name="workoutFrequency">Fréquence</string>
+    <string name="workoutRepetitions">Répétitions</string>
+    <string name="workoutRecordingTypeIndoor">Entraînement en intérieur</string>
+    <string name="workoutRecordingTypeGps">Entraînement GPS</string>
 </resources>
