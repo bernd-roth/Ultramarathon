@@ -67,7 +67,7 @@
     <string name="workoutPace">Rythme</string>
     <string name="workoutRoute">Parcours</string>
     <string name="workoutSpeed">Vitesse</string>
-    <string name="workoutAvgSpeedShort">Vitesse moyenne</string>
+    <string name="workoutAvgSpeedShort">Vitesse moy.</string>
     <string name="workoutAvgSpeedLong">Vitesse moyenne</string>
     <string name="workoutTopSpeed">Vitesse maximale</string>
     <string name="workoutBurnedEnergy">Énergie consommée</string>
@@ -102,7 +102,7 @@
     <string name="enable">Activer</string>
     <string name="comment">Commentaire</string>
     <string name="enterComment">Entrez un commentaire</string>
-    <string name="okay">Ok</string>
+    <string name="okay">OK</string>
     <string name="stopRecordingQuestion">Arrêter l\'enregistrement \?</string>
     <string name="stopRecordingQuestionMessage">Voulez-vous vraiment arrêter l\'entraînement \?</string>
     <!-- leave the underscore because "continue" is a java command -->
@@ -307,7 +307,7 @@
     <string name="showIntervals">Afficher les intervalles</string>
     <string name="connectHeartRateDevice">Connecter un appareil de mesure du rythme cardiaque</string>
     <string name="selectBluetoothDevice">Sélectionner un appareil Bluetooth</string>
-    <string name="workoutAvgHeartRate">Moyenne. Fréquence cardiaque</string>
+    <string name="workoutAvgHeartRate">Fréquence cardiaque moyenne</string>
     <string name="workoutMaxHeartRate">Fréquence cardiaque maximale</string>
     <string name="workoutHeartRate">Rythme cardiaque</string>
     <string name="resumeWorkout">Reprendre L\'Entraînement</string>
@@ -375,20 +375,20 @@
     <string name="pref_auto_start_mode_title">Mode de démarrage automatique</string>
     <string name="intervalAutoStartModeTraining">Mode d\'entraînement avec démarrage automatique</string>
     <string name="manageAutoStartModeSummary">Modifier le mode de démarrage automatique de l\'entraînement</string>
-    <string name="ttsMinuteSecondCountdownAnnouncement"> <xliff:g id="mins" example="1 minute">%1$s</xliff:g> and <xliff:g id="secs" example="7 seconds">%2$s</xliff:g> jusqu\'au début </string>
-    <string name="ttsMinuteCountdownAnnouncement"> <xliff:g id="mins" example="12 minutes">%1$s</xliff:g> jusqu\'au début </string>
-    <string name="ttsLongSecondCountdownAnnouncement"> <xliff:g id="secs" example="5 seconds">%1$s</xliff:g> jusqu\'au début </string>
+    <string name="ttsMinuteSecondCountdownAnnouncement"> <xliff:g example="1 minute" id="mins">%1$s</xliff:g> and <xliff:g example="7 seconds" id="secs">%2$s</xliff:g> jusqu\'au début </string>
+    <string name="ttsMinuteCountdownAnnouncement"> <xliff:g example="12 minutes" id="mins">%1$s</xliff:g> jusqu\'au début </string>
+    <string name="ttsLongSecondCountdownAnnouncement"> <xliff:g example="5 seconds" id="secs">%1$s</xliff:g> jusqu\'au début </string>
     <string name="ttsAboveTargetSpeed">Trop rapide</string>
     <string name="ttsBelowTargetSpeed">Trop lent</string>
     <string name="lowerPaceLimit">Limite inférieure du rythme</string>
     <string name="upperPaceLimit">Limite supérieure du rythme</string>
     <plurals name="minutes">
-        <item quantity="one"><xliff:g id="mins" example="1">%1$d</xliff:g> minute</item>
-        <item quantity="other"><xliff:g id="mins" example="5">%1$d</xliff:g> minutes</item>
+        <item quantity="one"><xliff:g example="1" id="mins">%1$d</xliff:g> minute</item>
+        <item quantity="other"><xliff:g example="5" id="mins">%1$d</xliff:g> minutes</item>
     </plurals>
     <plurals name="seconds">
-        <item quantity="one"><xliff:g id="secs" example="1">%1$d</xliff:g> seconde</item>
-        <item quantity="other"><xliff:g id="secs" example="12">%1$d</xliff:g> secondes</item>
+        <item quantity="one"><xliff:g example="1" id="secs">%1$d</xliff:g> seconde</item>
+        <item quantity="other"><xliff:g example="12" id="secs">%1$d</xliff:g> secondes</item>
     </plurals>
     <string name="editStartEndHelp">Sélectionnez une position sur la carte ou le diagramme. Cliquez ensuite sur l\'une des flèches pour sélectionner un nouveau point de départ ou d\'arrivée. Lorsque vous avez terminé, cliquez sur l\'icône d\'enregistrement pour appliquer les modifications.</string>
     <string name="launchError">Impossible de lancer l\'application</string>
@@ -434,4 +434,39 @@
     <string name="workoutRepetitions">Répétitions</string>
     <string name="workoutRecordingTypeIndoor">Entraînement en intérieur</string>
     <string name="workoutRecordingTypeGps">Entraînement GPS</string>
+    <string name="workoutMaxIntensity">Intensité max</string>
+    <string name="workoutMaxFrequency">Fréquence max</string>
+    <string name="pref_render_theme_style_info">Pas de menu de thème de rendu disponible pour le thème de rendu sélectionné.</string>
+    <string name="workoutTypeTrampolineJumping">Trampoline</string>
+    <string name="workoutSets">Ensembles</string>
+    <string name="fileNotFound">Fichier introuvable</string>
+    <string name="preferenceCategoryRenderThemeCategories">Catégories</string>
+    <string name="pref_render_theme_style">Style de rendu</string>
+    <string name="pref_map_directory">Répertoire de cartes hors-ligne</string>
+    <string name="recordingActivityPermissionMessage">FitoTrack requiers la permission d\'enregistrer votre activité physique pour enregistrer des enregistrements intérieurs.</string>
+    <string name="currentTimeStructure">%s heures %s</string>
+    <string name="unitHertzLong">Hertz</string>
+    <string name="preferenceFirstDayOfWeek">Début de la semaine</string>
+    <string name="edit_interval">Modifier l\'intervalle</string>
+    <string name="pref_step_length">Longueur de foulée</string>
+    <plurals name="workoutPushUp">
+        <item quantity="one">Pompe</item>
+        <item quantity="other">Pompes</item>
+    </plurals>
+    <string name="workoutTypePushUps">Pompes</string>
+    <plurals name="workoutJump">
+        <item quantity="one">Saut</item>
+        <item quantity="other">Sauts</item>
+    </plurals>
+    <string name="workoutTypeRopeSkipping">Saut à la corde</string>
+    <plurals name="workoutStep">
+        <item quantity="one">Pas</item>
+        <item quantity="other">Pas</item>
+    </plurals>
+    <string name="workoutTypeTreadmill">Tapis de course</string>
+    <string name="workoutAvgIntensityShort">Intensité moy.</string>
+    <string name="workoutIntensity">Intensité</string>
+    <string name="workoutCurrentFrequency">Fréquence actuelle</string>
+    <string name="workoutAvgFrequencyLong">Fréquence moyenne</string>
+    <string name="workoutAvgFrequencyShort">Fréquence moy.</string>
 </resources>
