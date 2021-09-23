@@ -54,7 +54,7 @@
     <string name="setPreferencesTitle">Einstellungen setzen</string>
     <string name="settings">Einstellungen</string>
     <string name="shareFile">Datei teilen</string>
-    <string name="stop">Stopp</string>
+    <string name="stop">Stop</string>
     <string name="stopRecordingQuestion">Aufzeichnung stoppen?</string>
     <string name="stopRecordingQuestionMessage">Möchtest du die Aufzeichnung wirklich stoppen?</string>
     <string name="trackerRunning">Verfolgung läuft</string>
