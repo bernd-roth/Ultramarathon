@@ -318,7 +318,7 @@
     <string name="deleteWorkoutTypeConfirmation">Vuoi veramente eliminare questo tipo di allenamento\?</string>
     <string name="deleteWorkoutType">Elimina tipo di allenamento</string>
     <string name="actionSave">Salva</string>
-    <string name="customWorkoutTypesTitle">Tipi Di Allenamento Personalizzati</string>
+    <string name="customWorkoutTypesTitle">Tipi di allenamento personalizzati</string>
     <string name="preferenceCategoryVoiceFeedback">Risposta vocale</string>
     <string name="workoutTypeEditMinDistance">Distanza del campione</string>
     <string name="workoutTypeEditNameError">Inserisci un nome</string>
