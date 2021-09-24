@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -17,9 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-
-<resources>
+  --><resources>
     <string name="app_name">FitoTrack</string>
     <string name="stop">Ferma</string>
     <string name="delete">Cancella</string>
@@ -76,7 +73,7 @@
     <string name="workoutBurnedEnergy">Energia consumata</string>
     <string name="workoutTotalEnergy">Energia totale</string>
     <string name="workoutEnergyConsumption">Consumo energetico</string>
-    <string name="workoutEdited">Questo allenamento è stato editato.</string>
+    <string name="workoutEdited">Questo allenamento è stato modificato.</string>
     <string name="uploading">Caricamento</string>
     <string name="enterVerificationCode">Inserisci il codice di verifica</string>
     <string name="authenticationFailed">Autenticazione fallita.</string>
@@ -84,8 +81,8 @@
     <string name="uploadSuccessful">Caricamento avvenuto con successo</string>
     <string name="uploadFailed">Caricamento fallito</string>
     <string name="uploadFailedOsmNotAuthorized">Autorizzazione negata, riprova</string>
-    <string name="workoutAscent">Ascedente</string>
-    <string name="workoutDescent">Discedente</string>
+    <string name="workoutAscent">Salita</string>
+    <string name="workoutDescent">Discesa</string>
     <string name="height">Altezza</string>
     <string name="workoutTypeRunning">Corsa</string>
     <string name="workoutTypeWalking">Camminata</string>
@@ -129,7 +126,7 @@
     <string name="cut">Taglia i primi/ultimi 300 metri</string>
     <string name="trackVisibilityPref">Visibilità tracciato</string>
     <string name="description">Descrizione</string>
-    <string name="ttsNotAvailable">TextToSpeech non disponibile</string>
+    <string name="ttsNotAvailable">Sintesi vocale non disponibile</string>
     <string name="pref_announcement_mode">Modalità annunci vocali</string>
     <string name="save">Salva</string>
     <string name="share">Condividi</string>
@@ -156,8 +153,8 @@
     <string name="deleteIntervalSetMessage">Vuoi cancellare l\'intervallo di tempo?</string>
     <string name="selectIntervalSet">Seleziona intervallo di tempo</string>
     <string name="intervalSetSelected">Intervallo di tempo selezionato</string>
-    <string name="intervalsIncludePauseTitle">Includi le pause negli allenamenti ad intervallo di tempo</string>
-    <string name="intervalsIncludePauseSummary">Se selezionato, gli intervalli continueranno durante le pause nell\'allenamento.</string>
+    <string name="intervalsIncludePauseTitle">Includi il tempo di pausa nell\'intervallo dell\'allenamento</string>
+    <string name="intervalsIncludePauseSummary">Se attivato, gli intervalli continueranno anche se fai delle pause nel tuo allenamento.</string>
     <string name="intervalTraining">Allenamento ad intervallo di tempo</string>
     <string name="intervalSet">Intervallo di tempo</string>
     <string name="intervalSets">Intervalli di tempo</string>
@@ -287,20 +284,20 @@
     <string name="savedSuccessfully">Salvato</string>
     <string name="workoutTypeRowing">Canottaggio</string>
     <string name="importedWorkouts">Allenamenti %d importati</string>
-    <string name="importingFiles">Importare file</string>
+    <string name="importingFiles">Importa file</string>
     <string name="importMultipleMessageSelectFolder">Selezionare una cartella contenente tutti i file GPX che si desidera importare.</string>
-    <string name="importMultipleGpxFiles">Importare file GPX multipli</string>
-    <string name="actionGrant">Sovvenzione</string>
+    <string name="importMultipleGpxFiles">Importa file GPX multipli</string>
+    <string name="actionGrant">Concedi</string>
     <string name="aboutPrivacyPolicy">Politica sulla privacy</string>
     <string name="inclination">Inclinazione</string>
     <string name="nothingSelected">Niente di selezionato</string>
     <string name="showIntervals">Mostra intervalli</string>
     <string name="connectHeartRateDevice">Collegare il cardiofrequenzimetro</string>
     <string name="selectBluetoothDevice">Selezionare il dispositivo Bluetooth</string>
-    <string name="workoutAvgHeartRate">Avg. Frequenza Cardiaca</string>
+    <string name="workoutAvgHeartRate">Frequenza cardiaca media</string>
     <string name="workoutMaxHeartRate">Frequenza cardiaca max</string>
     <string name="workoutHeartRate">Frequenza cardiaca</string>
-    <string name="actionResume">Curriculum vitae</string>
+    <string name="actionResume">Riprendi</string>
     <string name="workoutStarted">Allenamento iniziato</string>
     <string name="workoutStopped">Allenamento interrotto</string>
     <string name="workoutResumed">Allenamento ripreso</string>
@@ -330,7 +327,54 @@
     <string name="workoutTypeEditIdErrorEmpty">Inserisci un ID</string>
     <string name="workoutTypeEditIdErrorCharacters">Caratteri consentiti: a–z, A–Z, 0–9, _, -</string>
     <string name="workoutTypeEditId">ID</string>
-    <string name="hintManageWorkoutTypes">Fare clic sul plus per aggiungere tipi di allenamento personalizzati.</string>
+    <string name="hintManageWorkoutTypes">Clicca sul segno + per aggiungere tipi di allenamento personalizzati.</string>
     <string name="workoutTypeAdd">Aggiungere</string>
     <string name="workoutTypeAll">Tutto</string>
+    <string name="actionImportMultiple">Importazione multipla</string>
+    <string name="actionImport">Importa</string>
+    <string name="importWorkoutMultipleQuestion">Vuoi importare un solo file GPX o una serie di file\?</string>
+    <string name="recordingActivityPermissionMessage">FitoTrack ha bisogno dell\'autorizzazione per monitorare la tua attività fisica per registrare gli allenamenti all\'interno.</string>
+    <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack raccoglie anche i dati sulla posizione in sfondo per registrare l\'allenamento quando lo schermo è spento. Pertanto, consenti a FitoTrack di avere sempre accesso alla tua posizione.</string>
+    <string name="recordingPermissionNotGrantedMessage">FitoTrack necessita il permesso di accedere alla tua posizione per tracciare i tuoi movimenti durante l\'allenamento. FitoTrack accede alla tua posizione per registrare i tuoi allenamenti anche quando la applicazione è eseguita in sfondo o lo schermo è spento. I dati di geolocalizzazione rimangono sul telefono se non acconsenti esplicitamente a condividerli.</string>
+    <string name="editWorkoutStartEnd">Modifica inizio/fine</string>
+    <string name="unitHertzLong">Hertz</string>
+    <string name="unitHeartBeatsPerMinute">bpm</string>
+    <string name="preferenceFirstDayOfWeek">Inizio della settimana</string>
+    <string name="preferenceUseAverageForCurrentSpeed">Utilizzare la velocità media in un determinato periodo di tempo invece dell\'ultimo record di velocità singolo per il calcolo della velocità corrente.</string>
+    <string name="preferenceCurrentSpeedAverageTimeTitle">Velocità attuale per media</string>
+    <string name="preferenceCurrentSpeedAverageTimeSummary">Sostituisci il calcolo della velocità corrente con un calcolo medio.</string>
+    <string name="preferenceCurrentSpeedTime">Intervallo di tempo per il calcolo della media</string>
+    <string name="preferencesCategoryMap">Mappa</string>
+    <string name="edit_interval">Modifica intervallo</string>
+    <string name="prefTrackStyleUsageTitle">Usa la colorazione delle tracce automaticamente</string>
+    <string name="trackStyle">Stile traccia</string>
+    <string name="pref_step_length">Lunghezza del passo</string>
+    <plurals name="workoutPushUp">
+        <item quantity="one">Sollevamento</item>
+        <item quantity="other">Sollevamenti</item>
+    </plurals>
+    <string name="workoutTypePushUps">Sollevamento</string>
+    <plurals name="workoutJump">
+        <item quantity="one">Salto</item>
+        <item quantity="other">Salti</item>
+    </plurals>
+    <string name="workoutTypeTrampolineJumping">Salto sul trampolino</string>
+    <string name="workoutTypeRopeSkipping">Salto con la corda</string>
+    <plurals name="workoutStep">
+        <item quantity="one">Passo</item>
+        <item quantity="other">Passi</item>
+    </plurals>
+    <string name="workoutMaxHeight">Altezza massima</string>
+    <string name="workoutMinHeight">Altezza minima</string>
+    <string name="workoutMaxIntensity">Intensità massima</string>
+    <string name="workoutAvgIntensityShort">Intensità media</string>
+    <string name="workoutIntensity">Intensità</string>
+    <string name="workoutMaxFrequency">Frequenza massima</string>
+    <string name="workoutCurrentFrequency">Frequenza corrente</string>
+    <string name="workoutAvgFrequencyLong">Frequenza media</string>
+    <string name="workoutAvgFrequencyShort">Frequenza media</string>
+    <string name="workoutFrequency">Frequenza</string>
+    <string name="workoutRepetitions">Ripetizioni</string>
+    <string name="workoutRecordingTypeIndoor">Allenamenti interni</string>
+    <string name="workoutRecordingTypeGps">Allenamenti GPS</string>
 </resources>
