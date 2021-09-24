@@ -319,7 +319,7 @@
     <string name="deleteWorkoutType">Elimina Tipo Di Allenamento</string>
     <string name="actionSave">Salvare</string>
     <string name="customWorkoutTypesTitle">Tipi Di Allenamento Personalizzati</string>
-    <string name="preferenceCategoryVoiceFeedback">Risposte di voce</string>
+    <string name="preferenceCategoryVoiceFeedback">Risposta vocale</string>
     <string name="workoutTypeEditMinDistance">Distanza del campione</string>
     <string name="workoutTypeEditNameError">Inserisci un nome</string>
     <string name="workoutTypeEditName">Nome</string>
