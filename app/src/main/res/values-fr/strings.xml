@@ -73,7 +73,7 @@
     <string name="workoutBurnedEnergy">Énergie consommée</string>
     <string name="workoutTotalEnergy">Énergie totale</string>
     <string name="workoutEnergyConsumption">Consommation d\'énergie</string>
-    <string name="workoutEdited">L\'entraînement a été édité.</string>
+    <string name="workoutEdited">L\'entraînement a été modifié.</string>
     <string name="uploading">Téléversement</string>
     <string name="enterVerificationCode">Entrez le code de vérification</string>
     <string name="authenticationFailed">Erreur d\'authentification.</string>
@@ -89,7 +89,7 @@
     <string name="workoutTypeCycling">Vélo</string>
     <string name="workoutTypeHiking">Randonnée</string>
     <string name="workoutTypeSkateboarding">Skateboard</string>
-    <string name="workoutTypeInlineSkating">Roller</string>
+    <string name="workoutTypeInlineSkating">Patins à roues alignées</string>
     <string name="workoutTypeOther">Autre</string>
     <string name="unknown">Inconnu</string>
     <string name="type">Type</string>
@@ -129,7 +129,7 @@
     <string name="cut">Enlever les premiers/derniers 300 mètres</string>
     <string name="trackVisibilityPref">Visibilité de la piste</string>
     <string name="description">Description</string>
-    <string name="ttsNotAvailable">TextToSpeech n\'est pas disponible </string>
+    <string name="ttsNotAvailable">La synthèse vocale n\'est pas disponible</string>
     <string name="pref_announcement_mode">Mode d\'annonce</string>
     <string name="save">Enregistrer</string>
     <string name="share">Partager</string>
@@ -342,7 +342,7 @@
     <string name="workoutTypeEditIdErrorUnique">Il existe déjà un type d\'entraînement utilisant cet identifiant</string>
     <string name="workoutTypeEditIdErrorEmpty">Veuillez saisir un identifiant</string>
     <string name="workoutTypeEditIdErrorCharacters">Caractères autorisés : a – z, A – Z, 0–9, _, -</string>
-    <string name="actionImportMultiple">Imports multiples</string>
+    <string name="actionImportMultiple">Importations multiples</string>
     <string name="actionImport">Importer</string>
     <string name="importWorkoutMultipleQuestion">Voulez-vous importer un ou plusieurs fichiers GPX \?</string>
     <string name="cancelDownloadConfirmation">Voulez-vous annuler le téléchargement en cours \?</string>
@@ -396,12 +396,12 @@
     <string name="moveEndOfWorkout">Fin de la coupure</string>
     <string name="moveStartOfWorkout">Début de la coupure</string>
     <string name="scanFailed">Échec du scan</string>
-    <string name="scanning">Scan…</string>
+    <string name="scanning">Scan en cours…</string>
     <string name="announcementCountdown">Actions de démarrage automatique (compte à rebours, état, etc.)</string>
-    <string name="action_nfc_settings">Aller aux réglages NFC</string>
-    <string name="dialog_nfc_disabled">Afin d\'utiliser les tags NFC pour démarrer et arrêter les entraînements, vous devez d\'abord activer la fonction NFC dans les paramètres de l\'appareil</string>
-    <string name="dialog_nfc_disabled_title">Le NFC est actuellement désactivé</string>
-    <string name="nfcStartSummary">Si l\'option est activée, vous pourrez commencer et arrêter vos séances d\'entraînement en scannant un tag NFC</string>
+    <string name="action_nfc_settings">Aller aux réglages CCP/NFC</string>
+    <string name="dialog_nfc_disabled">Afin d\'utiliser les étiquettes CCP/NFC pour démarrer et arrêter les entraînements, vous devez d\'abord activer la fonction CCP/NFC dans les paramètres de l\'appareil</string>
+    <string name="dialog_nfc_disabled_title">Le CCP/NFC est actuellement désactivé</string>
+    <string name="nfcStartSummary">Si l\'option est activée, vous pourrez commencer et arrêter vos séances d\'entraînement en scannant une étiquette CCP/NFC</string>
     <string name="nfcStartTitle">Scanner pour commencer</string>
     <string name="abort">Annuler</string>
     <string name="popup_auto_start_wait_for_gps">Quand le positionnement GPS est précis</string>
@@ -418,8 +418,8 @@
     <string name="pref_auto_start_delay_title">Démarrage automatique du compte à rebours</string>
     <string name="manageAutoStartDelaySummary">Choisissez un compte à rebours par défaut pour le démarrage automatique de l\'entraînement</string>
     <string name="intervalAutoStartDelayTraining">Délai de démarrage automatique de l\'entraînement</string>
-    <string name="runningMigrations">Effectuer des migrations</string>
-    <string name="editWorkoutStartEnd">Editer Début/Fin</string>
+    <string name="runningMigrations">Exécution des migrations</string>
+    <string name="editWorkoutStartEnd">Modifier début/fin</string>
     <string name="unitHeartBeatsPerMinute">bpm</string>
     <string name="preferenceUseAverageForCurrentSpeed">Utilisez la vitesse moyenne sur une certaine période au lieu du dernier enregistrement de vitesse unique pour le calcul de la vitesse actuelle.</string>
     <string name="preferenceCurrentSpeedAverageTimeTitle">Vitesse actuelle par moyenne</string>
