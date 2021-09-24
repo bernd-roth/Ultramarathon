@@ -16,7 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources>
+  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
     <string name="stop">Ferma</string>
     <string name="delete">Cancella</string>
@@ -192,7 +192,7 @@
     <string name="unitKJoule">Kilojoule</string>
     <string name="pref_energy_unit">Unità di misura energia</string>
     <string name="workoutTypeInlineSkating">Pattini in linea</string>
-    <string name="manageAutoTimeoutSummary">Edita l\'intervallo per il timeout automatico dell\'allenamento</string>
+    <string name="manageAutoTimeoutSummary">Modifica l\'intervallo per l\'arresto automatico dell\'allenamento</string>
     <string name="intervalAutoTimeoutTraining">Timeout automatico dell\'allenamento</string>
     <string name="pref_auto_timeout_title">Intervallo di tempo per lo stop automatico</string>
     <string name="currentTime">Orario corrente</string>
@@ -261,7 +261,7 @@
     <string name="aboutTitle">Informazioni</string>
     <string name="aboutVersion">Versione</string>
     <string name="aboutChangelog">Cambiamenti</string>
-    <string name="aboutOpenSourceLibraries">Biblioteche con codice aperto</string>
+    <string name="aboutOpenSourceLibraries">Librerie a codice aperto</string>
     <string name="aboutReportBug">Segnala un errore</string>
     <string name="aboutLinks">Collegamenti</string>
     <string name="aboutAuthor">Autore</string>
@@ -316,8 +316,8 @@
     <string name="editWorkoutType">Modifica tipo di allenamento</string>
     <string name="workoutTypeEditIcon">Icona</string>
     <string name="deleteWorkoutTypeConfirmation">Vuoi veramente eliminare questo tipo di allenamento\?</string>
-    <string name="deleteWorkoutType">Elimina Tipo Di Allenamento</string>
-    <string name="actionSave">Salvare</string>
+    <string name="deleteWorkoutType">Elimina tipo di allenamento</string>
+    <string name="actionSave">Salva</string>
     <string name="customWorkoutTypesTitle">Tipi Di Allenamento Personalizzati</string>
     <string name="preferenceCategoryVoiceFeedback">Risposta vocale</string>
     <string name="workoutTypeEditMinDistance">Distanza del campione</string>
@@ -377,4 +377,77 @@
     <string name="workoutRepetitions">Ripetizioni</string>
     <string name="workoutRecordingTypeIndoor">Allenamenti interni</string>
     <string name="workoutRecordingTypeGps">Allenamenti GPS</string>
+    <string name="pref_announcements_pace_control_title">Avvertenze sul controllo del ritmo</string>
+    <string name="pref_announcements_pace_control_summary">Avvertisci quando si è al di sotto o al di sopra di una determinata velocità</string>
+    <string name="noColoring">Nessuna colorazione</string>
+    <string name="auto">Automatico</string>
+    <string name="selectColoring">Seleziona la colorazione</string>
+    <string name="pref_auto_start_mode_unknown">Modalità sconosciuta (non selezionare)</string>
+    <string name="pref_auto_start_mode_on_move">Attendi che inizi a muoverti</string>
+    <string name="pref_auto_start_mode_wait_for_gps">Attendi una posizione GPS precisa</string>
+    <string name="pref_auto_start_mode_instant">Inizia immediatamente</string>
+    <string name="pref_auto_start_mode_title">Modalità di avvio automatico</string>
+    <string name="intervalAutoStartModeTraining">Modalità di avvio automatico dell\'allenamento</string>
+    <string name="manageAutoStartModeSummary">Cambiare la modalità di avvio automatico dell\'allenamento</string>
+    <string name="ttsAboveTargetSpeed">Troppo veloce</string>
+    <string name="ttsBelowTargetSpeed">Troppo lento</string>
+    <string name="lowerPaceLimit">Limite inferiore dep ritmo</string>
+    <string name="upperPaceLimit">Limite massimo del ritmo</string>
+    <plurals name="minutes">
+        <item quantity="one"><xliff:g example="1" id="mins">%1$d</xliff:g> minuto</item>
+        <item quantity="other"><xliff:g example="5" id="mins">%1$d</xliff:g> minuti</item>
+    </plurals>
+    <plurals name="seconds">
+        <item quantity="one"><xliff:g example="1" id="secs">%1$d</xliff:g> secondo</item>
+        <item quantity="other"><xliff:g example="12" id="secs">%1$d</xliff:g> secondi</item>
+    </plurals>
+    <string name="editStartEndHelp">Seleziona una posizione sulla mappa o sul diagramma. Poi clicca su una delle frecce per selezionare un nuovo punto iniziale o finale. Quando hai finito, clicca sull\'icona di salvataggio per applicare le modifiche.</string>
+    <string name="launchError">Impossibile lanciare l\'applicazione</string>
+    <string name="actionApply">Applica</string>
+    <string name="scanFailed">Scansione non riuscita</string>
+    <string name="scanning">Scansione in corso…</string>
+    <string name="announcementCountdown">Azioni di avvio automatico (conto alla rovescia, stato, ecc.)</string>
+    <string name="action_nfc_settings">Vai alle impostazioni NFC</string>
+    <string name="dialog_nfc_disabled">Al fine di utilizzare le etichette NFC per avviare e fermare gli allenamenti è necessario abilitare prima l\'NFC nelle impostazioni del dispositivo</string>
+    <string name="dialog_nfc_disabled_title">NFC è attualmente disabilitato</string>
+    <string name="currentTimeStructure">%s %s</string>
+    <string name="fileNotFound">File non trovato</string>
+    <string name="invalidNumberFormat">Formato numero non valido.</string>
+    <string name="workoutTypeTreadmill">Tapis roulant</string>
+    <string name="nfcStartSummary">Se attivo, potrai iniziare e terminare i tuoi workout con lo scan di un tag NFC</string>
+    <string name="nfcStartTitle">Scansione per iniziare</string>
+    <string name="workoutAutoStartAborted">Avvio automatico interrotto</string>
+    <string name="abort">Annulla</string>
+    <string name="popup_auto_start_wait_for_gps">Quando la posizione GPS è precisa</string>
+    <string name="popup_auto_start_on_move">Quando inizio a muovermi</string>
+    <string name="popup_auto_start_immediately">Inizia immediatamente</string>
+    <string name="popup_auto_start">Con ritardo predefinito</string>
+    <string name="popup_auto_start_delay">Con ritardo personalizzato</string>
+    <string name="workoutAutoStarted">L\'allenamento è iniziato automaticamente</string>
+    <string name="autoStartCountdownMsgMove">Inizia l\'allenamento una volta che si inizia a muoversi</string>
+    <string name="autoStartCountdownMsgGps">Inizia l\'allenamento una volta che la posizione GPS è abbastanza precisa</string>
+    <string name="autoStartCountdownMsg">Inizio dell\'allenamento fra</string>
+    <string name="customAutoStartDelay">Altro</string>
+    <string name="noAutoStartDelay">Nessuno</string>
+    <string name="pref_auto_start_delay_title">Conto alla rovescia per l\'avvio automatico</string>
+    <string name="manageAutoStartDelaySummary">Scegli un conto alla rovescia predefinito per l\'inizio automatico dell\'allenamento</string>
+    <string name="intervalAutoStartDelayTraining">Ritardo di avvio automatico dell\'allenamento</string>
+    <string name="downloading">Scaricamento in corso…</string>
+    <string name="chooseMapHint">Scegli una mappa</string>
+    <string name="downloadCanceled">Scaricamento annullato</string>
+    <string name="downloadFailed">Scaricamento fallito</string>
+    <string name="downloadSuccess">Scaricato</string>
+    <string name="cancelDownloadConfirmation">Vuoi annullare lo scaricamento in corso\?</string>
+    <string name="actionCancelDownload">Annulla lo scaricamento</string>
+    <string name="alreadyDownloading">Un file è già stato scaricato</string>
+    <string name="downloadMapConfirmation">Vuoi scaricare il file mappa %s\?</string>
+    <string name="actionDownloadMap">Scarica mappa</string>
+    <string name="overwriteMapConfirmation">Vuoi sovrascrivere il file mappa esistente %s\?</string>
+    <string name="downloadMapsSpecifyDirectory">Si prega di specificare prima una directory per le mappe fuori linea</string>
+    <string name="downloadMapsTitle">Scarica mappe</string>
+    <string name="pref_render_theme_style_info">Nessun menù di stile del tema di rendering disponibile per il rendering selezionato.</string>
+    <string name="preferenceCategoryRenderThemeCategories">Categorie</string>
+    <string name="pref_render_theme_style">Stile di rendering</string>
+    <string name="pref_map_directory">Cartella mappe fuori linea</string>
+    <string name="runningMigrations">Migrazioni in corso</string>
 </resources>
