@@ -104,6 +104,8 @@ class RecordingSettingsFragment : FitoTrackSettingFragment(), AutoStartModeSelec
             }
     }
 
+    override fun getTitle() = getString(R.string.preferencesRecordingTitle)
+
     override fun onDestroy() {
         EventBus.getDefault().unregister(this)
         super.onDestroy()

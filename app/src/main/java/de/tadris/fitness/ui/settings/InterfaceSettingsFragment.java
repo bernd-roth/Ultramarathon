@@ -179,4 +179,8 @@ public class InterfaceSettingsFragment extends FitoTrackSettingFragment {
         }
     }
 
+    @Override
+    protected String getTitle() {
+        return getString(R.string.preferencesUserInterfaceTitle);
+    }
 }

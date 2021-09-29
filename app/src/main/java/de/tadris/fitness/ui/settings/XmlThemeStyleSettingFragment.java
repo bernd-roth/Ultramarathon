@@ -219,4 +219,9 @@ public class XmlThemeStyleSettingFragment extends FitoTrackSettingFragment imple
         Log.d(TAG, "New render theme menu available: " + styleMenu.getId());
         requireActivity().runOnUiThread(this::setupOptions);
     }
+
+    @Override
+    protected String getTitle() {
+        return getString(R.string.pref_render_theme_style);
+    }
 }
