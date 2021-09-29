@@ -30,7 +30,6 @@
     <string name="errorImportFailed">Az adatok importálása nem sikerült.</string>
     <string name="shareFile">Fájl megosztása</string>
     <string name="initialising">Előkészítés</string>
-    <string name="workouts">Edzések</string>
     <string name="locationData">Hely adatai</string>
     <string name="converting">Átalakítás</string>
     <string name="finished">Befejeződött</string>
@@ -272,7 +271,6 @@
     <string name="speechConfigNoSpeech">Nincs közlemény</string>
     <string name="aboutHelpTranslating">Segítség a fordításban</string>
     <string name="aboutUnlistedContributors">Köszönet az összes fel nem sorolt közreműködőnek, akik segítettek a FitoTrack fordításában és bővítésében!</string>
-    <string name="importedWorkouts">%d edzés importálva</string>
     <string name="importingFiles">Fájlok importálása</string>
     <string name="importMultipleMessageSelectFolder">Válasszon egy mappát, amely tartalmazza az összes importálni kívánt GPX-fájlt.</string>
     <string name="importMultipleGpxFiles">Több GPX-fájl importálása</string>

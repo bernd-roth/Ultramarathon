@@ -27,7 +27,6 @@
     <string name="errorImportFailed">L\'import des données a échoué.</string>
     <string name="shareFile">Partager le fichier</string>
     <string name="initialising">Initialisation</string>
-    <string name="workouts">Entraînements</string>
     <string name="locationData">Données de localisation</string>
     <string name="converting">Conversion</string>
     <string name="finished">Terminé</string>
@@ -296,7 +295,6 @@
     <string name="aboutUnlistedContributors">Merci à tous les contributeurs non listés qui ont aidé à la traduction et à l\'extension de FitoTrack !</string>
     <string name="savedSuccessfully">Sauvegardé</string>
     <string name="workoutTypeRowing">Aviron</string>
-    <string name="importedWorkouts">Pourcentage %d entraînement importé</string>
     <string name="importingFiles">Importation de fichiers</string>
     <string name="importMultipleMessageSelectFolder">Veuillez sélectionner un dossier contenant tous les fichiers GPX que vous souhaitez importer.</string>
     <string name="importMultipleGpxFiles">Importer plusieurs fichiers GPX</string>

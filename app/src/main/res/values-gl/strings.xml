@@ -22,7 +22,6 @@
     <string name="finished">Rematado</string>
     <string name="converting">Converter</string>
     <string name="locationData">Datos da localización</string>
-    <string name="workouts">Adestramentos</string>
     <string name="initialising">Inicializando</string>
     <string name="shareFile">Compartir arquivo</string>
     <string name="errorImportFailed">A importación de datos fallou.</string>
@@ -247,7 +246,6 @@
     <string name="setPreferencesTitle">Establecer preferencias</string>
     <string name="backup">Copia de apoio</string>
     <string name="restore">Restaurar</string>
-    <string name="importedWorkouts">Importáronse %d adestramentos</string>
     <string name="importingFiles">Importación de ficheiros</string>
     <string name="importMultipleMessageSelectFolder">Escolle un cartafol que conteña todos os ficheiros GPX que desexas importar.</string>
     <string name="importMultipleGpxFiles">Importa varios ficheiros GPX</string>

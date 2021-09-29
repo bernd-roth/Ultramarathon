@@ -30,7 +30,6 @@
     <string name="errorImportFailed">La importación de datos ha fallado.</string>
     <string name="shareFile">Compartir archivo</string>
     <string name="initialising">Inicializando</string>
-    <string name="workouts">Entrenamientos</string>
     <string name="locationData">Datos de localización</string>
     <string name="converting">Convertir</string>
     <string name="finished">Terminado</string>
@@ -295,7 +294,6 @@
         <item>Claro</item>
         <item>Oscuro</item>
     </string-array>
-    <string name="importedWorkouts">Importado %d ejercicios</string>
     <string name="importingFiles">Importar archivos</string>
     <string name="importMultipleMessageSelectFolder">Por favor, seleccione una carpeta que contenga todos los archivos GPX que desee importar.</string>
     <string name="importMultipleGpxFiles">Importar múltiples archivos GPX</string>

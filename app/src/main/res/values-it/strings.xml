@@ -27,7 +27,6 @@
     <string name="errorImportFailed">Importazione dati fallita.</string>
     <string name="shareFile">Condividi file</string>
     <string name="initialising">Inizializzazione</string>
-    <string name="workouts">Allenamenti</string>
     <string name="locationData">Dati relativi alla posizione</string>
     <string name="converting">Conversione</string>
     <string name="finished">Concluso</string>
@@ -283,7 +282,6 @@
     <string name="aboutUnlistedContributors">Grazie a tutti i collaboratori non elencati che hanno contribuito alla traduzione e all\'estensione di FitoTrack!</string>
     <string name="savedSuccessfully">Salvato</string>
     <string name="workoutTypeRowing">Canottaggio</string>
-    <string name="importedWorkouts">Allenamenti %d importati</string>
     <string name="importingFiles">Importa file</string>
     <string name="importMultipleMessageSelectFolder">Selezionare una cartella contenente tutti i file GPX che si desidera importare.</string>
     <string name="importMultipleGpxFiles">Importa file GPX multipli</string>

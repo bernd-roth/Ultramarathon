@@ -30,7 +30,6 @@
     <string name="errorImportFailed">Data import is mislukt.</string>
     <string name="shareFile">Bestand delen</string>
     <string name="initialising">Initialiseren</string>
-    <string name="workouts">Trainingen</string>
     <string name="locationData">Locatie data</string>
     <string name="converting">Converteren</string>
     <string name="finished">Gereed</string>
@@ -284,7 +283,6 @@
     <string name="speechConfigNoSpeech">Geen aankondiging</string>
     <string name="aboutHelpTranslating">Helpen met vertalen</string>
     <string name="aboutUnlistedContributors">Met dank aan alle niet-beursgenoteerde medewerkers die hebben geholpen bij het vertalen en uitbreiden van FitoTrack!</string>
-    <string name="importedWorkouts">Geïmporteerde %d trainingen</string>
     <string name="importingFiles">Bestanden importeren</string>
     <string name="importMultipleMessageSelectFolder">Selecteer een map met alle GPX-bestanden die u wilt importeren.</string>
     <string name="importMultipleGpxFiles">Meerdere GPX-bestanden importeren</string>

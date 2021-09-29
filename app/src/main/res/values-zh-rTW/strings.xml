@@ -52,7 +52,6 @@
     <string name="min">最低</string>
     <string name="prefShowOnLockScreenSummary">即使電話被鎖定時，仍然顯示健身項目資料。</string>
     <string name="heartRateNotAvailable">目前不能顯示心率。</string>
-    <string name="importedWorkouts">已匯入了 %d 的健身項目</string>
     <string name="nothingSelected">未選擇任何內容</string>
     <string name="actionImportMultiple">匯入多項</string>
     <string name="importMultipleMessageSelectFolder">請選擇一份包含您所有想匯入的 GPX 文件的文件夾。</string>
@@ -258,7 +257,6 @@
     <string name="actionCancelDownload">取消下載</string>
     <string name="downloadFailed">下載失敗</string>
     <string name="workoutTypeAll">全部</string>
-    <string name="workouts">健身項目</string>
     <string name="workoutTypeRowing">划船</string>
     <string name="workoutTypeSkateboarding">滑板</string>
     <string name="workoutTypeCycling">單車</string>

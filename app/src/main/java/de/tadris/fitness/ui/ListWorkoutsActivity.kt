@@ -214,13 +214,11 @@ class ListWorkoutsActivity : FitoTrackActivity(), WorkoutAdapterListener {
                     }
                 }
                 dialog.setProgress(100)
-                val tmpImported =
-                    imported // Needs to be a final variable to use in the handler lambda
                 mHandler.post {
                     dialog.cancel()
                     Toast.makeText(
                         this,
-                        String.format(getString(R.string.importedWorkouts), tmpImported),
+                        resources.getQuantityString(R.plurals.importedWorkouts, imported, imported),
                         Toast.LENGTH_LONG
                     ).show()
                     refresh()

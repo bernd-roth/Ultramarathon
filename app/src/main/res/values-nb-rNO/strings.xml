@@ -232,7 +232,6 @@
     <string name="finished">Fullført</string>
     <string name="converting">Konverterer</string>
     <string name="locationData">Posisjonsdata</string>
-    <string name="workouts">Treningsøkter</string>
     <string name="initialising">Igangsetter</string>
     <string name="shareFile">Del fil</string>
     <string name="errorImportFailed">Dataimporten mislyktes.</string>
@@ -255,7 +254,6 @@
     <string name="importingFiles">Importerer filer</string>
     <string name="importMultipleMessageSelectFolder">Velg en mappe inneholdende alle GPX-filer du ønsker å importere.</string>
     <string name="aboutUnlistedContributors">Takk til alle ikke-børsnoterte bidragsytere som hjalp til med å oversette og å utvide FitoTrack!</string>
-    <string name="importedWorkouts">Importerte %d treningsøkter</string>
     <string name="importMultipleGpxFiles">Importer flerfoldige GPX-filer</string>
     <string name="aboutHelpTranslating">Hjelp til i oversettelsen</string>
     <string name="actionGrant">Stipend</string>

@@ -23,7 +23,6 @@
     <string name="error">Ошибка</string>
     <string name="shareFile">Поделиться файлом</string>
     <string name="initialising">Инициализация</string>
-    <string name="workouts">Тренировки</string>
     <string name="locationData">Данные о местоположении</string>
     <string name="converting">Преобразование</string>
     <string name="loadingFile">Загрузка файла</string>
@@ -251,7 +250,6 @@
     <string name="errorImportFailed">Ошибка в импорте данных.</string>
     <string name="errorExportFailed">Ошибка в экспорте данных.</string>
     <string name="errorGpxExportFailed">Ошибка в экспорте GPX.</string>
-    <string name="importedWorkouts">Импортировано %d тренировок</string>
     <string name="importingFiles">Импорт файлов</string>
     <string name="importMultipleMessageSelectFolder">Пожалуйста, выберите папку, содержащую все GPX-файлы, которые вы хотите импортировать.</string>
     <string name="importMultipleGpxFiles">Импортировать несколько GPX-файлов</string>

@@ -308,7 +308,6 @@
     <string name="showIntervals">Rodyti intervalus</string>
     <string name="connectHeartRateDevice">Prijunkite širdies ritmo įrenginį</string>
     <string name="selectBluetoothDevice">Pasirinkite Bluetooth įrenginį</string>
-    <string name="importedWorkouts">Importuotos %d treniruotės</string>
     <string name="importingFiles">Importuojami failai</string>
     <string name="actionImportMultiple">Importuoti kelis</string>
     <string name="actionImport">Importuoti</string>
@@ -414,7 +413,6 @@
     <string name="loadingFile">Įkeliamas failas</string>
     <string name="finished">Baigta</string>
     <string name="converting">Konvertavimas</string>
-    <string name="workouts">Treniruotės</string>
     <string name="initialising">Inicijavimas</string>
     <string name="shareFile">Bendrinti failą</string>
     <string name="errorImportFailed">Duomenų importavimas nepavyko.</string>

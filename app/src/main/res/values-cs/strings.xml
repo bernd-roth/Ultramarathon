@@ -41,7 +41,6 @@
     <string name="showIntervals">Zobrazit intervaly</string>
     <string name="connectHeartRateDevice">Připojte zařízení k měření tepové frekvence</string>
     <string name="selectBluetoothDevice">Vyberte zařízení Bluetooth</string>
-    <string name="importedWorkouts">Importováno %d cvičení</string>
     <string name="importingFiles">Importuji soubory</string>
     <string name="importMultipleMessageSelectFolder">Vyberte složku obsahující všechny soubory GPX, které chcete importovat.</string>
     <string name="importMultipleGpxFiles">Import více souborů GPX</string>
@@ -276,7 +275,6 @@
     <string name="finished">Hotovo</string>
     <string name="converting">Převádím</string>
     <string name="locationData">Údaje o poloze</string>
-    <string name="workouts">Cvičení</string>
     <string name="initialising">Inicializace</string>
     <string name="shareFile">Sdílet soubor</string>
     <string name="errorImportFailed">Import dat se nezdařil.</string>

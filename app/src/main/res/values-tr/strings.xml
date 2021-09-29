@@ -33,7 +33,6 @@
     <string name="showIntervals">Aralıkları göster</string>
     <string name="connectHeartRateDevice">Kalp ritmi aygıtı bağla</string>
     <string name="selectBluetoothDevice">Bluetooth aygıtı seç</string>
-    <string name="importedWorkouts">%d egzersiz içe aktarıldı</string>
     <string name="importingFiles">Dosyalar içe aktarılıyor</string>
     <string name="importMultipleGpxFiles">Birden fazla GPX dosyasını içe aktar</string>
     <string name="importMultipleMessageSelectFolder">Lütfen içe aktarmak istediğiniz tüm GPX dosyalarını içeren bir klasör seçin.</string>
@@ -269,7 +268,6 @@
     <string name="finished">Bitti</string>
     <string name="converting">Dönüştürülüyor</string>
     <string name="locationData">Konum verileri</string>
-    <string name="workouts">Egzersiz</string>
     <string name="exporting">Dışa aktarılıyor</string>
     <string name="initialising">Başlatılıyor</string>
     <string name="shareFile">Dosya paylaş</string>

@@ -24,7 +24,6 @@
     <string name="finished">Zakończone</string>
     <string name="converting">Konwersja</string>
     <string name="locationData">Dane o lokalizacji</string>
-    <string name="workouts">Treningi</string>
     <string name="initialising">Inicjalizacja</string>
     <string name="shareFile">Udostępnij plik</string>
     <string name="errorImportFailed">Importowanie danych nie powiodło się.</string>
@@ -287,7 +286,6 @@
     <string name="gpsLost">Utrata sygnału GPS</string>
     <string name="voiceAnnouncementsTitle">Powiadomienia głosowe</string>
     <string name="showIntervals">Pokaż interwały</string>
-    <string name="importedWorkouts">Zaimportowano %d trening(i/ów)</string>
     <string name="setPreferencesTitle">Ustawianie preferencji</string>
     <string name="actionImportMultiple">Importuj wiele</string>
     <string name="actionImport">Importuj</string>

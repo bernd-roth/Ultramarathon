@@ -80,7 +80,6 @@
     <string name="workoutTypeRunning">Laufen</string>
     <string name="unknown">Unbekannt</string>
     <string name="workoutTypeWalking">Gehen</string>
-    <string name="workouts">Workouts</string>
     <string name="enable">Aktivieren</string>
     <string name="height">Höhe</string>
     <string name="noGpsTitle">GPS deaktiviert</string>
@@ -307,7 +306,6 @@
     <string name="importMultipleGpxFiles">Mehrere GPX-Dateien importieren</string>
     <string name="importMultipleMessageSelectFolder">Bitte wähle einen Ordner, der alle GPX-Dateien enthält, die du importieren möchtest.</string>
     <string name="importingFiles">Dateien importieren</string>
-    <string name="importedWorkouts">%d Workouts importiert</string>
     <string name="actionGrant">Gewähren</string>
     <string name="aboutPrivacyPolicy">Datenschutzerklärung</string>
     <string name="inclination">Steigung</string>
