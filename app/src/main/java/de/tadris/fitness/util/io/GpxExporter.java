@@ -69,7 +69,7 @@ public class GpxExporter implements IWorkoutExporter {
         ArrayList<Track> tracks = new ArrayList<>();
         tracks.add(track);
         Metadata meta = new Metadata(workout.toString(), workout.comment, getDateTime(workout.start));
-        return new Gpx("1.0", "FitoTrack", meta, workout.toString(), workout.comment, tracks);
+        return new Gpx("1.1", "FitoTrack", meta, workout.toString(), workout.comment, tracks);
     }
 
     private Track getTrackFromWorkout(GpsWorkout workout, List<GpsSample> samples, int number) {
