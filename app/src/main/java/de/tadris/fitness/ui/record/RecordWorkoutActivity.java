@@ -971,9 +971,14 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
     }
 
     @Override
-    public void onInfoViewClick(int slot) {
-        if (instance.recorder.getState() == GpsWorkoutRecorder.RecordingState.IDLE) {
-            new SelectWorkoutInformationDialog(this, WorkoutType.RecordingType.findById(activity.recordingType), slot, this).show();
+    public void onInfoViewClick(int slot, boolean isLongClick) {
+        if (instance.recorder.getState() == GpsWorkoutRecorder.RecordingState.IDLE || isLongClick) {
+            new SelectWorkoutInformationDialog(
+                    this,
+                    WorkoutType.RecordingType.findById(activity.recordingType),
+                    slot,
+                    this)
+                    .show();
         }
     }
 
