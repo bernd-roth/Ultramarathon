@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -17,9 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
     <string name="stop">Stop</string>
     <string name="delete">Verwijderen</string>
@@ -450,4 +447,10 @@
     <string name="workoutFrequency">Frequentie</string>
     <string name="workoutSets">Sets</string>
     <string name="workoutRepetitions">Herhalingen</string>
+    <string name="workoutRecordingTypeGps">Gps Trainingen</string>
+    <string name="workoutRecordingTypeIndoor">Binnen Trainingen</string>
+    <string name="workoutAvgFrequencyLong">Gemiddelde Frequentie</string>
+    <string name="workoutCurrentFrequency">Huidige Frequentie</string>
+    <string name="unitHertzLong">Hertz</string>
+    <string name="currentTimeStructure">%s %s</string>
 </resources>
