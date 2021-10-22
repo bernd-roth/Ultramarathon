@@ -424,5 +424,9 @@
     <string name="workoutCurrentFrequency">Geçerli Sıklık</string>
     <string name="workoutAvgFrequencyLong">Ortalama Sıklık</string>
     <string name="workoutRecordingTypeIndoor">İç Mekan Egzersizleri</string>
-    <string name="workoutRecordingTypeGps">Gps Egzersizleri</string>
+    <string name="workoutRecordingTypeGps">GPS Egzersizleri</string>
+    <plurals name="importedWorkouts">
+        <item quantity="one">Bir egzersiz içe aktarıldı</item>
+        <item quantity="other">%d egzersiz içe aktarıldı</item>
+    </plurals>
 </resources>
