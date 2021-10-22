@@ -424,5 +424,9 @@
     <string name="workoutCurrentFrequency">Frecuencia actual</string>
     <string name="workoutAvgFrequencyLong">Frecuencia media</string>
     <string name="workoutRecordingTypeIndoor">Adestramentos en interior</string>
-    <string name="workoutRecordingTypeGps">Adestramentos Gps</string>
+    <string name="workoutRecordingTypeGps">Adestramentos GPS</string>
+    <plurals name="importedWorkouts">
+        <item quantity="one">Importado un adestramento</item>
+        <item quantity="other">Importados %d adestramentos</item>
+    </plurals>
 </resources>
