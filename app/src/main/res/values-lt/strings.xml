@@ -430,4 +430,9 @@
     <string name="trackStyle">Trasos stilius</string>
     <string name="trackingInfoDescription">Informacija apie veikiantį sekimą</string>
     <string name="trackingInfo">Sekimo informacija</string>
+    <plurals name="importedWorkouts">
+        <item quantity="one">Importuota viena treniruotė</item>
+        <item quantity="few">Importuotos %d treniruotės</item>
+        <item quantity="other">Importuota %d treniruočių</item>
+    </plurals>
 </resources>
