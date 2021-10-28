@@ -418,7 +418,7 @@ public class StatsProvider {
             // No aggregation
             for (StatsDataTypes.DataPoint dataPoint : data) {
                 float value = (float) dataPoint.value;
-                candleEntries.add(new CandleEntry((float) dataPoint.time / stats_time_factor.getFloat(), value, value, value, value));
+                candleEntries.add(new CandleEntry((float) dataPoint.time / stats_time_factor.getFloat(), value, value, value, value, dataPoint));
             }
         } else {
             // Find start and end time of workouts
