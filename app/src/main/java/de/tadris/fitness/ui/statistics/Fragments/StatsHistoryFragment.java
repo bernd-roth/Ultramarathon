@@ -230,7 +230,7 @@ public class StatsHistoryFragment extends StatsFragment {
                     } else if (TimeUnit.DAYS.toMillis(21) < timeSpan) {
                         aggregationSpan = AggregationSpan.WEEK;
                     } else {
-                        //aggregationSpan = AggregationSpan.SINGLE;
+                        aggregationSpan = AggregationSpan.SINGLE;
                     }
 
                     if (oldAggregationSpan != aggregationSpan) {

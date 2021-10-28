@@ -224,4 +224,3 @@ public class TimeSpanSelection extends LinearLayout {
         ((TextView)aggregationSpanSpinner.getSelectedView()).setTextColor(foregroundColor);
     }
 }
-

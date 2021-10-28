@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import de.tadris.fitness.Instance;
@@ -67,6 +68,8 @@ public class StatsDataProvider {
                 }
             }
         }
+
+        Collections.sort(data, StatsDataTypes.DataPoint.timeComparator);
         return data;
     }
 
