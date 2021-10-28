@@ -225,7 +225,6 @@
     <string name="prefShowOnLockScreenSummary">הצגת המידע על האימון גם כאשר הטלפון נעול.</string>
     <string name="prefShowOnLockScreenTitle">נראה במסך הנעילה</string>
     <string name="heartRateNotAvailable">דופק הלב אינו זמין כרגע.</string>
-    <string name="importedWorkouts">%d אימונים יובאו</string>
     <string name="importingFiles">כעת בייבוא הקבצים</string>
     <string name="importMultipleMessageSelectFolder">נא לבחור תיקיה שמכילה את כל קובצי GPX שברצונך לייבא.</string>
     <string name="importMultipleGpxFiles">ייבוא קובצי GPX מרובים</string>

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -18,7 +17,6 @@
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
-
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="chooseBackupFile">Ficheiro de copia de apoio</string>
     <string name="loadingFile">Cargando arquivo</string>
@@ -250,7 +248,6 @@
     <string name="setPreferencesTitle">Establecer preferencias</string>
     <string name="backup">Copia de apoio</string>
     <string name="restore">Restaurar</string>
-    <string name="importedWorkouts">Importáronse %d adestramentos</string>
     <string name="importingFiles">Importación de ficheiros</string>
     <string name="importMultipleMessageSelectFolder">Escolle un cartafol que conteña todos os ficheiros GPX que desexas importar.</string>
     <string name="importMultipleGpxFiles">Importa varios ficheiros GPX</string>
@@ -424,4 +421,14 @@
     <string name="workoutFrequency">Frecuencia</string>
     <string name="workoutSets">Conxuntos</string>
     <string name="workoutRepetitions">Repeticións</string>
+    <string name="currentTimeStructure">%s %s</string>
+    <string name="unitHertzLong">Hercios</string>
+    <string name="workoutCurrentFrequency">Frecuencia actual</string>
+    <string name="workoutAvgFrequencyLong">Frecuencia media</string>
+    <string name="workoutRecordingTypeIndoor">Adestramentos en interior</string>
+    <string name="workoutRecordingTypeGps">Adestramentos GPS</string>
+    <plurals name="importedWorkouts">
+        <item quantity="one">Importado un adestramento</item>
+        <item quantity="other">Importados %d adestramentos</item>
+    </plurals>
 </resources>

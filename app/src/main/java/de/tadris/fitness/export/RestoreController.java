@@ -32,6 +32,8 @@ import de.tadris.fitness.R;
 import de.tadris.fitness.data.AppDatabase;
 import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.GpsWorkout;
+import de.tadris.fitness.data.IndoorSample;
+import de.tadris.fitness.data.IndoorWorkout;
 import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.data.WorkoutType;
@@ -80,10 +82,19 @@ public class RestoreController {
             if (replace) {
                 resetDatabase();
             }
-            restoreWorkouts();
-            restoreSamples();
+            listener.onStatusChanged(40, context.getString(R.string.workoutRecordingTypeGps));
+            restoreGpsWorkouts();
+            listener.onStatusChanged(50, context.getString(R.string.locationData));
+            restoreGpsSamples();
+            listener.onStatusChanged(65, context.getString(R.string.workoutRecordingTypeIndoor));
+            restoreIndoorWorkouts();
+            listener.onStatusChanged(70, context.getString(R.string.workoutRecordingTypeIndoor));
+            restoreIndoorSamples();
+            listener.onStatusChanged(80, context.getString(R.string.intervalSets));
             restoreIntervalSets();
+            listener.onStatusChanged(85, context.getString(R.string.customWorkoutTypesTitle));
             restoreWorkoutTypes();
+            listener.onStatusChanged(90, context.getString(R.string.runningMigrations));
             runMigrations();
         });
     }
@@ -92,8 +103,7 @@ public class RestoreController {
         database.clearAllTables();
     }
 
-    private void restoreWorkouts() {
-        listener.onStatusChanged(40, context.getString(R.string.workouts));
+    private void restoreGpsWorkouts() {
         if (dataContainer.getWorkouts() != null) {
             for (GpsWorkout workout : dataContainer.getWorkouts()) {
                 // Only Import Unknown Workouts on merge
@@ -104,8 +114,7 @@ public class RestoreController {
         }
     }
 
-    private void restoreSamples() {
-        listener.onStatusChanged(50, context.getString(R.string.locationData));
+    private void restoreGpsSamples() {
         if (dataContainer.getSamples() != null) {
             for (GpsSample sample : dataContainer.getSamples()) {
                 // Only import unknown samples with known workout on merge
@@ -118,8 +127,31 @@ public class RestoreController {
         }
     }
 
+    private void restoreIndoorWorkouts() {
+        if (dataContainer.getIndoorWorkouts() != null) {
+            for (IndoorWorkout workout : dataContainer.getIndoorWorkouts()) {
+                // Only Import Unknown Workouts on merge
+                if (replace || database.indoorWorkoutDao().findById(workout.id) == null) {
+                    database.indoorWorkoutDao().insertWorkout(workout);
+                }
+            }
+        }
+    }
+
+    private void restoreIndoorSamples() {
+        if (dataContainer.getIndoorSamples() != null) {
+            for (IndoorSample sample : dataContainer.getIndoorSamples()) {
+                // Only import unknown samples with known workout on merge
+                // Query not necessary on replace because data was cleared
+                if (replace || (database.indoorWorkoutDao().findById(sample.workoutId) != null &&
+                        database.indoorWorkoutDao().findSampleById(sample.id) == null)) {
+                    database.indoorWorkoutDao().insertSample(sample);
+                }
+            }
+        }
+    }
+
     private void restoreIntervalSets() {
-        listener.onStatusChanged(70, context.getString(R.string.intervalSets));
         if (dataContainer.getIntervalSets() != null) {
             for (IntervalSetContainer container : dataContainer.getIntervalSets()) {
                 restoreIntervalSet(container);
@@ -144,7 +176,6 @@ public class RestoreController {
     }
 
     private void restoreWorkoutTypes() {
-        listener.onStatusChanged(80, context.getString(R.string.customWorkoutTypesTitle));
         if (dataContainer.getWorkoutTypes() != null) {
             for (WorkoutType type : dataContainer.getWorkoutTypes()) {
                 // Only import unknown workout types
@@ -156,7 +187,6 @@ public class RestoreController {
     }
 
     private void runMigrations() {
-        listener.onStatusChanged(90, context.getString(R.string.runningMigrations));
         if (dataContainer.getVersion() <= 1) {
             for (GpsWorkout workout : dataContainer.getWorkouts()) {
                 float minHeight = 0f;

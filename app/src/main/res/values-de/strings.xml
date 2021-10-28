@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -18,7 +17,6 @@
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
-
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
     <string name="backup">Sichern</string>
@@ -57,7 +55,7 @@
     <string name="setPreferencesTitle">Einstellungen setzen</string>
     <string name="settings">Einstellungen</string>
     <string name="shareFile">Datei teilen</string>
-    <string name="stop">Stopp</string>
+    <string name="stop">Stop</string>
     <string name="stopRecordingQuestion">Aufzeichnung stoppen?</string>
     <string name="stopRecordingQuestionMessage">Möchtest du die Aufzeichnung wirklich stoppen?</string>
     <string name="trackerRunning">Verfolgung läuft</string>
@@ -310,7 +308,6 @@
     <string name="importMultipleGpxFiles">Mehrere GPX-Dateien importieren</string>
     <string name="importMultipleMessageSelectFolder">Bitte wähle einen Ordner, der alle GPX-Dateien enthält, die du importieren möchtest.</string>
     <string name="importingFiles">Dateien importieren</string>
-    <string name="importedWorkouts">%d Workouts importiert</string>
     <string name="actionGrant">Gewähren</string>
     <string name="aboutPrivacyPolicy">Datenschutzerklärung</string>
     <string name="inclination">Steigung</string>
@@ -397,13 +394,13 @@
     <string name="announcementCountdown">Auto Start Aktionen (Countdown, Status, etc.)</string>
     <!-- used for countdown voice announcements -->
     <plurals name="seconds">
-        <item quantity="one"><xliff:g id="secs" example="1">%1$d</xliff:g> Sekunde</item>
-        <item quantity="other"><xliff:g id="secs" example="12">%1$d</xliff:g> Sekunden</item>
+        <item quantity="one"><xliff:g example="1" id="secs">%1$d</xliff:g> Sekunde</item>
+        <item quantity="other"><xliff:g example="12" id="secs">%1$d</xliff:g> Sekunden</item>
     </plurals>
     <!-- used for countdown voice announcements -->
     <plurals name="minutes">
-        <item quantity="one"><xliff:g id="mins" example="1">%1$d</xliff:g> Minute</item>
-        <item quantity="other"><xliff:g id="mins" example="5">%1$d</xliff:g> Minuten</item>
+        <item quantity="one"><xliff:g example="1" id="mins">%1$d</xliff:g> Minute</item>
+        <item quantity="other"><xliff:g example="5" id="mins">%1$d</xliff:g> Minuten</item>
     </plurals>
     <plurals name="workoutStep">
         <item quantity="one">Schritt</item>
@@ -427,17 +424,11 @@
         Zu schnell
     </string>
     <!-- countdown announcement -->
-    <string name="ttsLongSecondCountdownAnnouncement">
-        Noch <xliff:g id="secs" example="5 Sekunden">%1$s</xliff:g>
-    </string>
+    <string name="ttsLongSecondCountdownAnnouncement"> Noch <xliff:g example="5 Sekunden" id="secs">%1$s</xliff:g> </string>
     <!-- countdown announcement -->
-    <string name="ttsMinuteCountdownAnnouncement">
-        Noch <xliff:g id="mins" example="12 Minuten">%1$s</xliff:g>
-    </string>
+    <string name="ttsMinuteCountdownAnnouncement"> Noch <xliff:g example="12 Minuten" id="mins">%1$s</xliff:g> </string>
     <!-- countdown announcement -->
-    <string name="ttsMinuteSecondCountdownAnnouncement">
-        Noch <xliff:g id="mins" example="2 Minuten">%1$s</xliff:g> und <xliff:g id="secs" example="7 Sekunden">%2$s</xliff:g>
-    </string>
+    <string name="ttsMinuteSecondCountdownAnnouncement"> Noch <xliff:g example="2 Minuten" id="mins">%1$s</xliff:g> und <xliff:g example="7 Sekunden" id="secs">%2$s</xliff:g> </string>
     <string name="autoStartCountdownMsgGps">Starte Workout, sobald die GPS Position genau genug ist</string>
     <string name="autoStartCountdownMsgMove">Starte Workout, sobald du dich bewegst</string>
     <string name="manageAutoStartModeSummary">Wähle, wann das Aufnehmen deines Workouts beginnen soll</string>
@@ -469,7 +460,7 @@
     <string name="noColoring">Keine Färbung</string>
     <string name="launchError">Starten der App fehlgeschlagen</string>
     <string name="workoutRepetitions">Wiederholungen</string>
-    <string name="workoutSets">Sets</string>
+    <string name="workoutSets">Sätze</string>
     <string name="workoutFrequency">Frequenz</string>
     <string name="workoutAvgFrequencyShort">⌀-Frequenz</string>
     <string name="workoutMaxFrequency">Max Frequenz</string>
@@ -485,10 +476,14 @@
     <string name="unitHeartBeatsPerMinute">bpm</string>
     <string name="preferenceFirstDayOfWeek">Anfang der Woche</string>
     <string name="fileNotFound">Datei nicht gefunden</string>
-    <string name="workoutRecordingTypeGps">Gps Workouts</string>
+    <string name="workoutRecordingTypeGps">GPS Workouts</string>
     <string name="workoutRecordingTypeIndoor">Indoor Workouts</string>
     <string name="workoutAvgFrequencyLong">Durchschnittliche Frequenz</string>
     <string name="workoutCurrentFrequency">Aktuelle Frequenz</string>
     <string name="unitHertzLong">Hertz</string>
     <string name="currentTimeStructure">%s Uhr %s</string>
+    <plurals name="importedWorkouts">
+        <item quantity="one">Ein Workout importiert</item>
+        <item quantity="other">%d Workouts importiert</item>
+    </plurals>
 </resources>

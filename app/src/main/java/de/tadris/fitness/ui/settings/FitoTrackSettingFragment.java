@@ -19,6 +19,7 @@
 
 package de.tadris.fitness.ui.settings;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 
 import androidx.annotation.StringRes;
@@ -76,6 +77,21 @@ public abstract class FitoTrackSettingFragment extends PreferenceFragmentCompat 
                 PreferenceManager
                         .getDefaultSharedPreferences(preference.getContext())
                         .getString(preference.getKey(), ""));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setTitle(getTitle());
+    }
+
+    protected abstract String getTitle();
+
+    protected void setTitle(String s) {
+        Activity activity = getActivity();
+        if (activity != null) {
+            activity.setTitle(s);
+        }
     }
 
 }

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -18,7 +17,6 @@
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
-
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="stop">Durdur</string>
     <string name="workoutStarted">Egzersiz başlatıldı</string>
@@ -36,7 +34,6 @@
     <string name="showIntervals">Aralıkları göster</string>
     <string name="connectHeartRateDevice">Kalp ritmi aygıtı bağla</string>
     <string name="selectBluetoothDevice">Bluetooth aygıtı seç</string>
-    <string name="importedWorkouts">%d egzersiz içe aktarıldı</string>
     <string name="importingFiles">Dosyalar içe aktarılıyor</string>
     <string name="importMultipleGpxFiles">Birden fazla GPX dosyasını içe aktar</string>
     <string name="importMultipleMessageSelectFolder">Lütfen içe aktarmak istediğiniz tüm GPX dosyalarını içeren bir klasör seçin.</string>
@@ -424,4 +421,14 @@
     <string name="workoutFrequency">Sıklık</string>
     <string name="workoutSets">Kümeler</string>
     <string name="workoutRepetitions">Tekrarlar</string>
+    <string name="currentTimeStructure">%s %s</string>
+    <string name="unitHertzLong">Hertz</string>
+    <string name="workoutCurrentFrequency">Geçerli Sıklık</string>
+    <string name="workoutAvgFrequencyLong">Ortalama Sıklık</string>
+    <string name="workoutRecordingTypeIndoor">İç Mekan Egzersizleri</string>
+    <string name="workoutRecordingTypeGps">GPS Egzersizleri</string>
+    <plurals name="importedWorkouts">
+        <item quantity="one">Bir egzersiz içe aktarıldı</item>
+        <item quantity="other">%d egzersiz içe aktarıldı</item>
+    </plurals>
 </resources>

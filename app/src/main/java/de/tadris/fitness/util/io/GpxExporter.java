@@ -19,6 +19,8 @@
 
 package de.tadris.fitness.util.io;
 
+import static java.lang.Math.abs;
+
 import android.annotation.SuppressLint;
 
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -46,8 +48,6 @@ import de.tadris.fitness.util.gpx.TrackPointExtensions;
 import de.tadris.fitness.util.gpx.TrackSegment;
 import de.tadris.fitness.util.io.general.IWorkoutExporter;
 
-import static java.lang.Math.abs;
-
 public class GpxExporter implements IWorkoutExporter {
 
     @SuppressLint("SimpleDateFormat") // This has nothing to do with localisation
@@ -69,7 +69,7 @@ public class GpxExporter implements IWorkoutExporter {
         ArrayList<Track> tracks = new ArrayList<>();
         tracks.add(track);
         Metadata meta = new Metadata(workout.toString(), workout.comment, getDateTime(workout.start));
-        return new Gpx("1.0", "FitoTrack", meta, workout.toString(), workout.comment, tracks);
+        return new Gpx("1.1", "FitoTrack", meta, workout.toString(), workout.comment, tracks);
     }
 
     private Track getTrackFromWorkout(GpsWorkout workout, List<GpsSample> samples, int number) {

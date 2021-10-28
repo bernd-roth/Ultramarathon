@@ -72,7 +72,6 @@
     <string name="nothingSelected">未选择任何内容</string>
     <string name="connectHeartRateDevice">连接心率设备</string>
     <string name="selectBluetoothDevice">请选择蓝牙设备</string>
-    <string name="importedWorkouts">已导入 %d 条锻炼记录</string>
     <string name="importingFiles">导入文件</string>
     <string name="actionImportMultiple">导入多个</string>
     <string name="actionImport">导入</string>

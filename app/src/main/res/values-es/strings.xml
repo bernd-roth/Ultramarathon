@@ -295,7 +295,6 @@
         <item>Claro</item>
         <item>Oscuro</item>
     </string-array>
-    <string name="importedWorkouts">Importado %d ejercicios</string>
     <string name="importingFiles">Importar archivos</string>
     <string name="importMultipleMessageSelectFolder">Por favor, seleccione una carpeta que contenga todos los archivos GPX que desee importar.</string>
     <string name="importMultipleGpxFiles">Importar múltiples archivos GPX</string>

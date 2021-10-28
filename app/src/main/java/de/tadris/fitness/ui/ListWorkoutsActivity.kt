@@ -86,7 +86,7 @@ class ListWorkoutsActivity : FitoTrackActivity(), WorkoutAdapterListener {
         listView.layoutManager = layoutManager
         adapter = WorkoutAdapter(workouts, this)
         listView.adapter = adapter
-        shortStatsView = findViewById(R.id.short_stats_view);
+        shortStatsView = findViewById(R.id.short_stats_view)
 
         menu = findViewById(R.id.workoutListMenu)
         menu.setOnMenuButtonLongClickListener(OnLongClickListener {
@@ -219,14 +219,12 @@ class ListWorkoutsActivity : FitoTrackActivity(), WorkoutAdapterListener {
                     }
                 }
                 dialog.setProgress(100)
-                val tmpImported =
-                    imported // Needs to be a final variable to use in the handler lambda
                 mHandler.post {
                     dialog.cancel()
                     Toast.makeText(
-                        this,
-                        String.format(getString(R.string.importedWorkouts), tmpImported),
-                        Toast.LENGTH_LONG
+                            this,
+                            resources.getQuantityString(R.plurals.importedWorkouts, imported, imported),
+                            Toast.LENGTH_LONG
                     ).show()
                     refresh()
                 }
