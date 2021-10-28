@@ -102,7 +102,9 @@ public class DetailStatsActivity extends FitoTrackActivity {
             @Override
             public void onChartLongPressed(MotionEvent me) {
                 Highlight highlight = chart.getHighlightByTouchPoint(me.getX(), me.getY());
-                openWorkout(highlight.getX());
+                if (highlight != null) {
+                    openWorkout(highlight.getX());
+                }
             }
 
             @Override
