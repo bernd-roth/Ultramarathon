@@ -30,6 +30,8 @@ import static de.tadris.fitness.util.charts.BitmapHelper.drawableToBitmap;
 
 public class ChartStyles {
 
+    public static float BAR_WIDTH_FACTOR = 2f/3f;
+
     public static void defaultChart(BarLineChartBase chart)
     {
         chart.getAxisLeft().setEnabled(true);
