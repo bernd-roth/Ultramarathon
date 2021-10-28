@@ -65,7 +65,7 @@ import de.tadris.fitness.util.unit.EnergyUnitUtils;
 
 public abstract class WorkoutActivity extends InformationActivity {
 
-    public static final int NUMBER_OF_SAMPLES_IN_DIAGRAM = 80;
+    public static final int NUMBER_OF_SAMPLES_IN_DIAGRAM = 100;
     public static final String WORKOUT_ID_EXTRA = "de.tadris.fitness.WorkoutActivity.WORKOUT_ID_EXTRA";
 
     List<BaseSample> samples;
@@ -234,11 +234,19 @@ public abstract class WorkoutActivity extends InformationActivity {
         ChartStyles.setXAxisLabel(chart, xLabel);
         ChartStyles.setYAxisLabel(chart, yLabel);
 
-        long timeSpan = (long) ((chart.getHighestVisibleX() - chart.getLowestVisibleX()) * 1000f * 60f);
-        timeSpan /= NUMBER_OF_SAMPLES_IN_DIAGRAM;
-        if (timeSpan == 0) {
-            timeSpan = (samples.get(samples.size() - 1).relativeTime - samples.get(0).relativeTime) / NUMBER_OF_SAMPLES_IN_DIAGRAM;
+        double desiredTimeSpan = (chart.getHighestVisibleX() - chart.getLowestVisibleX())* 1000f*60f;
+        desiredTimeSpan /= NUMBER_OF_SAMPLES_IN_DIAGRAM;
+        long endTime = samples.get(samples.size() - 1).relativeTime;
+        long startTime = samples.get(0).relativeTime;
+        long duration = endTime-startTime;
+
+        if (desiredTimeSpan == 0) {
+            desiredTimeSpan = (duration) / NUMBER_OF_SAMPLES_IN_DIAGRAM;
         }
+
+        int n = (int) Math.round(Math.log(duration/desiredTimeSpan)/Math.log(2));
+        long timeSpan = (long) (duration / Math.pow(2,n));
+
 
         LineData lineData = new LineData();
 
