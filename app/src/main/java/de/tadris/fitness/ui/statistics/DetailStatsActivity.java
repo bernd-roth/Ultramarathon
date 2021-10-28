@@ -225,7 +225,10 @@ public class DetailStatsActivity extends FitoTrackActivity {
                     break;
             }
             if (currentBarDataSet != null) {
-                combinedData.setData(new BarData(currentBarDataSet));
+                BarData barData = new BarData(currentBarDataSet);
+                ChartStyles.setTextAppearance(barData);
+                barData.setBarWidth(aggregationSpan.spanInterval / stats_time_factor * ChartStyles.BAR_WIDTH_FACTOR);
+                combinedData.setData(barData);
             }
         } catch (NoDataException e) {
         }

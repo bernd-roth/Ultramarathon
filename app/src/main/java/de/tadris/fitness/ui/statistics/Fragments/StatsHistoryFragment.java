@@ -50,9 +50,6 @@ import de.tadris.fitness.util.statistics.ChartSynchronizer;
 import de.tadris.fitness.util.statistics.OnChartGestureMultiListener;
 
 public class StatsHistoryFragment extends StatsFragment {
-
-    private static float BAR_WIDTH_FACTOR = 2f/3f;
-
     TextView speedTitle;
     Switch speedSwitch;
     CombinedChart speedChart;
@@ -292,7 +289,7 @@ public class StatsHistoryFragment extends StatsFragment {
                 BarDataSet barDataSet = statsProvider.getDistanceSumData(aggregationSpan, workoutType);
                 BarData barData = new BarData(barDataSet);
                 ChartStyles.setTextAppearance(barData);
-                barData.setBarWidth(aggregationSpan.spanInterval / stats_time_factor*BAR_WIDTH_FACTOR);
+                barData.setBarWidth(aggregationSpan.spanInterval / stats_time_factor * ChartStyles.BAR_WIDTH_FACTOR);
                 combinedData.setData(barData);
             } else {
                 CandleDataSet candleDataSet = statsProvider.getDistanceCandleData(aggregationSpan, workoutType);
@@ -328,7 +325,7 @@ public class StatsHistoryFragment extends StatsFragment {
                 BarDataSet barDataSet = statsProvider.getDurationSumData(aggregationSpan, workoutType);
                 BarData barData = new BarData(barDataSet);
                 ChartStyles.setTextAppearance(barData);
-                barData.setBarWidth(aggregationSpan.spanInterval / stats_time_factor*BAR_WIDTH_FACTOR);
+                barData.setBarWidth(aggregationSpan.spanInterval / stats_time_factor * ChartStyles.BAR_WIDTH_FACTOR);
                 combinedData.setData(barData);
             } else {
                 CandleDataSet candleDataSet = statsProvider.getDurationCandleData(aggregationSpan, workoutType);
@@ -359,7 +356,7 @@ public class StatsHistoryFragment extends StatsFragment {
                 BarDataSet barDataSet = statsProvider.getPauseDurationSumData(aggregationSpan, workoutType);
                 BarData barData = new BarData(barDataSet);
                 ChartStyles.setTextAppearance(barData);
-                barData.setBarWidth(aggregationSpan.spanInterval / stats_time_factor*BAR_WIDTH_FACTOR);
+                barData.setBarWidth(aggregationSpan.spanInterval / stats_time_factor * ChartStyles.BAR_WIDTH_FACTOR);
                 combinedData.setData(barData);
             } else {
                 CandleDataSet candleDataSet = statsProvider.getPauseDurationCandleData(aggregationSpan, workoutType);
