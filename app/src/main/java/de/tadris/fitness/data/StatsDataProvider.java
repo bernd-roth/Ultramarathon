@@ -26,14 +26,14 @@ public class StatsDataProvider {
         ArrayList<StatsDataTypes.DataPoint> points = getData(requestedProperty, workoutTypes);
         if (points.size() == 0)
             throw new NoDataException();
-        return points.get(points.size() - 1);
+        return points.get(0);
     }
 
     public StatsDataTypes.DataPoint getLastData(WorkoutProperty requestedProperty, List<WorkoutType> workoutTypes) throws NoDataException {
         ArrayList<StatsDataTypes.DataPoint> points = getData(requestedProperty, workoutTypes);
         if (points.size() == 0)
             throw new NoDataException();
-        return points.get(0);
+        return points.get(points.size() - 1);
     }
 
     public ArrayList<StatsDataTypes.DataPoint> getData(WorkoutProperty requestedProperty, List<WorkoutType> workoutTypes)
