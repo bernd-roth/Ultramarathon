@@ -241,11 +241,12 @@ public abstract class WorkoutActivity extends InformationActivity {
         long duration = endTime-startTime;
 
         if (desiredTimeSpan == 0) {
-            desiredTimeSpan = (duration) / NUMBER_OF_SAMPLES_IN_DIAGRAM;
+            desiredTimeSpan = duration / NUMBER_OF_SAMPLES_IN_DIAGRAM;
         }
 
-        int n = (int) Math.round(Math.log(duration/desiredTimeSpan)/Math.log(2));
-        long timeSpan = (long) (duration / Math.pow(2,n));
+        long n = Math.round(Math.log(duration/desiredTimeSpan)/Math.log(2));
+        long bins = (long) Math.min(Math.pow(2,n), samples.size());
+        long timeSpan = (long) (duration / bins);
 
 
         LineData lineData = new LineData();
