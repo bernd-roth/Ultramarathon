@@ -44,7 +44,6 @@
     <string name="nothingSelected">Nada foi selecionado</string>
     <string name="showIntervals">Mostrar intervalos</string>
     <string name="selectBluetoothDevice">Selecionar aparelho Bluetooth</string>
-    <string name="importedWorkouts">Importados %d exercícios</string>
     <string name="importingFiles">Importar ficheiros</string>
     <string name="importMultipleMessageSelectFolder">Por favor, selecione a pasta que contêm todos os ficheiros GPX que deseja importar.</string>
     <string name="importMultipleGpxFiles">Importar vários ficheiros GPX</string>

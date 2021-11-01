@@ -214,7 +214,13 @@ public class VoiceAnnouncementsSettingsFragment extends FitoTrackSettingFragment
             }
 
             @Override
-            public void afterTextChanged(Editable editable) {}
+            public void afterTextChanged(Editable editable) {
+            }
         });
+    }
+
+    @Override
+    protected String getTitle() {
+        return getString(R.string.voiceAnnouncementsTitle);
     }
 }

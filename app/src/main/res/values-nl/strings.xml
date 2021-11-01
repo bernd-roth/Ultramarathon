@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -18,7 +17,6 @@
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
-
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
     <string name="stop">Stop</string>
@@ -284,7 +282,6 @@
     <string name="speechConfigNoSpeech">Geen aankondiging</string>
     <string name="aboutHelpTranslating">Helpen met vertalen</string>
     <string name="aboutUnlistedContributors">Met dank aan alle niet-beursgenoteerde medewerkers die hebben geholpen bij het vertalen en uitbreiden van FitoTrack!</string>
-    <string name="importedWorkouts">Geïmporteerde %d trainingen</string>
     <string name="importingFiles">Bestanden importeren</string>
     <string name="importMultipleMessageSelectFolder">Selecteer een map met alle GPX-bestanden die u wilt importeren.</string>
     <string name="importMultipleGpxFiles">Meerdere GPX-bestanden importeren</string>
@@ -452,4 +449,10 @@
     <string name="workoutFrequency">Frequentie</string>
     <string name="workoutSets">Sets</string>
     <string name="workoutRepetitions">Herhalingen</string>
+    <string name="workoutRecordingTypeGps">Gps Trainingen</string>
+    <string name="workoutRecordingTypeIndoor">Binnen Trainingen</string>
+    <string name="workoutAvgFrequencyLong">Gemiddelde Frequentie</string>
+    <string name="workoutCurrentFrequency">Huidige Frequentie</string>
+    <string name="unitHertzLong">Hertz</string>
+    <string name="currentTimeStructure">%s %s</string>
 </resources>

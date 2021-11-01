@@ -258,7 +258,6 @@
         <item>07/24/2001</item>
     </string-array>
     <string name="aboutVersion">Version</string>
-    <string name="importedWorkouts">Importeret %d træning</string>
     <string name="importingFiles">Import af filer</string>
     <string name="importMultipleMessageSelectFolder">Vælg en mappe, der indeholder alle de GPX filer, du gerne vil importere.</string>
     <string name="importMultipleGpxFiles">Importer flere GPX filer</string>

@@ -32,6 +32,7 @@ import org.greenrobot.eventbus.EventBus
 import java.util.*
 
 class TTSController(context: Context, val id: String = DEFAULT_TTS_CONTROLLER_ID) {
+
     private val textToSpeech = TextToSpeech(context) { status: Int -> ttsReady(status) }
 
     var isTtsAvailable = false

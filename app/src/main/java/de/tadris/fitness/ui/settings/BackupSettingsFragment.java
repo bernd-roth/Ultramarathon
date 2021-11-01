@@ -193,4 +193,8 @@ public class BackupSettingsFragment extends FitoTrackSettingFragment {
         }).start();
     }
 
+    @Override
+    protected String getTitle() {
+        return getString(R.string.preferencesBackupTitle);
+    }
 }

@@ -50,6 +50,11 @@ class RecordingSettingsFragment : FitoTrackSettingFragment(), AutoStartModeSelec
     lateinit var instance: Instance
     lateinit var preferences: UserPreferences
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        EventBus.getDefault().register(this)
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         instance = Instance.getInstance(context)
         preferences = Instance.getInstance(requireContext()).userPreferences
@@ -71,7 +76,7 @@ class RecordingSettingsFragment : FitoTrackSettingFragment(), AutoStartModeSelec
                 }
         }
         disableSpeechConfig()
-        checkTTS { showSpeechConfig() }
+        checkTTS()
         findPreference<Preference>("intervals")!!.onPreferenceClickListener =
             Preference.OnPreferenceClickListener {
                 showIntervalSetManagement()
@@ -88,33 +93,37 @@ class RecordingSettingsFragment : FitoTrackSettingFragment(), AutoStartModeSelec
                 true
             }
         findPreference<Preference>("autoTimeoutConfig")!!.onPreferenceClickListener =
-            Preference.OnPreferenceClickListener {
-                showAutoTimeoutConfig()
-                true
-            }
+                Preference.OnPreferenceClickListener {
+                    showAutoTimeoutConfig()
+                    true
+                }
         findPreference<Preference>("currentSpeedAverageTimeConfig")!!.onPreferenceClickListener =
-            Preference.OnPreferenceClickListener {
-                showCurrentSpeedAverageTimePicker()
-                true
-            }
+                Preference.OnPreferenceClickListener {
+                    showCurrentSpeedAverageTimePicker()
+                    true
+                }
+    }
+
+    override fun getTitle() = getString(R.string.preferencesRecordingTitle)
+
+    override fun onDestroy() {
+        EventBus.getDefault().unregister(this)
+        super.onDestroy()
     }
 
     private var ttsController: TTSController? = null
-
-    private fun checkTTS(onTTSAvailable: Runnable) {
+    private fun checkTTS() {
         ttsController = TTSController(requireContext())
-        EventBus.getDefault().register(object : Any() {
-            @Subscribe(threadMode = ThreadMode.MAIN)
-            fun onTTSReady(e: TTSReadyEvent) {
-                if (context != null) {
-                    if (e.ttsAvailable) {
-                        onTTSAvailable.run()
-                    }
-                    ttsController?.destroy()
-                    EventBus.getDefault().unregister(this)
-                }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onTTSReady(e: TTSReadyEvent) {
+        if (context != null) {
+            if (e.ttsAvailable) {
+                showSpeechConfig()
             }
-        })
+            ttsController?.destroy()
+        }
     }
 
     private fun showSpeechConfig() {

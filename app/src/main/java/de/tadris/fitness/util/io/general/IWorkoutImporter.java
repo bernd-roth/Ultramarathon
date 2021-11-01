@@ -31,7 +31,7 @@ import de.tadris.fitness.data.GpsWorkoutData;
 
 public interface IWorkoutImporter {
     class WorkoutImportResult {
-        List<GpsWorkoutData> workouts;
+        public List<GpsWorkoutData> workouts;
 
         public WorkoutImportResult(List<GpsWorkoutData> workouts) {
             this.workouts = workouts;

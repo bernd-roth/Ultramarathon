@@ -255,7 +255,6 @@
     <string name="importingFiles">Importerer filer</string>
     <string name="importMultipleMessageSelectFolder">Velg en mappe inneholdende alle GPX-filer du ønsker å importere.</string>
     <string name="aboutUnlistedContributors">Takk til alle ikke-børsnoterte bidragsytere som hjalp til med å oversette og å utvide FitoTrack!</string>
-    <string name="importedWorkouts">Importerte %d treningsøkter</string>
     <string name="importMultipleGpxFiles">Importer flerfoldige GPX-filer</string>
     <string name="aboutHelpTranslating">Hjelp til i oversettelsen</string>
     <string name="actionGrant">Stipend</string>
@@ -363,4 +362,10 @@
     <string name="workoutRepetitions">Repetisjoner</string>
     <string name="workoutRecordingTypeIndoor">Innendørstreningsøkter</string>
     <string name="workoutRecordingTypeGps">GPS-treningsøkter</string>
+    <string name="ttsAboveTargetSpeed">For rask</string>
+    <string name="ttsBelowTargetSpeed">For treg</string>
+    <plurals name="workoutJump">
+        <item quantity="one">Hopp</item>
+        <item quantity="other">Hopp</item>
+    </plurals>
 </resources>
