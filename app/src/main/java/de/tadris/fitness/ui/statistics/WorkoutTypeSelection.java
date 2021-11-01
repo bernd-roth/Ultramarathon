@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.WorkoutTypeFilter;
 import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.data.WorkoutTypeManager;
 import de.tadris.fitness.ui.FitoTrackActivity;
 import de.tadris.fitness.ui.dialog.SelectWorkoutTypeDialog;
 import de.tadris.fitness.ui.dialog.SelectWorkoutTypeDialogAll;
@@ -48,6 +49,20 @@ public class WorkoutTypeSelection extends LinearLayout {
                 Color.WHITE, "list", 0, WorkoutType.RecordingType.GPS.id));
     }
 
+    /**
+     * Returns the selected workout type as a list. Normally the list contains only one item.
+     * In case "all" is selected, the list contains every workout type.
+     * @return selected workout type as a list.
+     */
+    public ArrayList<WorkoutType> getSelectedWorkoutTypes() {
+        return createWorkoutTypeList(getContext(), selectedWorkoutType);
+    }
+
+    /**
+     * Return the selected workout type.
+     * In case "all" is selected an workout type with id "_all" is returned.
+     * @return selected workout type.
+     */
     public WorkoutType getSelectedWorkoutType() {
         return selectedWorkoutType;
     }
@@ -73,5 +88,21 @@ public class WorkoutTypeSelection extends LinearLayout {
 
     public void removeOnWorkoutTypeSelectListener(SelectWorkoutTypeDialog.WorkoutTypeSelectListener listener) {
         this.listeners.remove(listener);
+    }
+
+    /**
+     * Convert workout type to list (_all) type should be converted to a list with all Workout types
+     * @param workoutType
+     * @return list of workout types
+     */
+    public static ArrayList<WorkoutType> createWorkoutTypeList(Context ctx, WorkoutType workoutType) {
+        ArrayList<WorkoutType> workoutTypes = new ArrayList<>();
+
+        if (workoutType.id.equals(WorkoutTypeFilter.ID_ALL)) {
+            workoutTypes = (ArrayList<WorkoutType>) WorkoutTypeManager.getInstance().getAllTypes(ctx);
+        } else {
+            workoutTypes.add(workoutType);
+        }
+        return workoutTypes;
     }
 }

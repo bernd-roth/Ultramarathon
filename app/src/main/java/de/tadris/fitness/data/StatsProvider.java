@@ -17,6 +17,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.DefaultValueFormatter;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -243,39 +244,39 @@ public class StatsProvider {
                 new BarDataSet(barEntries, label));
     }
 
-    public CandleDataSet getPaceCandleData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {
+    public CandleDataSet getPaceCandleData(AggregationSpan span, List<WorkoutType> workoutTypes) throws NoDataException {
         final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.AVG_PACE;
 
-        CandleDataSet candleDataSet = new CandleDataSet(getCombinedCandleData(span, workoutType, WORKOUT_PROPERTY),
+        CandleDataSet candleDataSet = new CandleDataSet(getCombinedCandleData(span, workoutTypes, WORKOUT_PROPERTY),
                 String.valueOf(StatsType.PACE_CANDLE_DATA.getIndex()));
         CandleDataSet dataSet = DataSetStyles.applyDefaultCandleStyle(ctx, candleDataSet);
         dataSet.setValueFormatter(getCorrectTimeFormatter(TimeUnit.MINUTES, (long)dataSet.getYMax()));
         return DataSetStyles.applyDefaultCandleStyle(ctx, candleDataSet);
     }
 
-    public LineDataSet getPaceLineData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {
-        return convertCandleToMeanLineData(getPaceCandleData(span, workoutType));
+    public LineDataSet getPaceLineData(AggregationSpan span, List<WorkoutType> workoutTypes) throws NoDataException {
+        return convertCandleToMeanLineData(getPaceCandleData(span, workoutTypes));
     }
 
 
-    public CandleDataSet getSpeedCandleData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {
+    public CandleDataSet getSpeedCandleData(AggregationSpan span, List<WorkoutType> workoutTypes) throws NoDataException {
         final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.AVG_SPEED;
 
-        CandleDataSet candleDataSet = new CandleDataSet(getCombinedCandleData(span, workoutType, WORKOUT_PROPERTY),
+        CandleDataSet candleDataSet = new CandleDataSet(getCombinedCandleData(span, workoutTypes, WORKOUT_PROPERTY),
                 String.valueOf(StatsType.SPEED_CANDLE_DATA.getIndex()));
         candleDataSet.setValueFormatter(new SpeedFormatter(Instance.getInstance(ctx).distanceUnitUtils));
         return DataSetStyles.applyDefaultCandleStyle(ctx, candleDataSet);
     }
 
-    public LineDataSet getSpeedLineData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {
-        return convertCandleToMeanLineData(getSpeedCandleData(span, workoutType));
+    public LineDataSet getSpeedLineData(AggregationSpan span, List<WorkoutType> workoutTypes) throws NoDataException {
+        return convertCandleToMeanLineData(getSpeedCandleData(span, workoutTypes));
     }
 
 
-    public CandleDataSet getDistanceCandleData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {
+    public CandleDataSet getDistanceCandleData(AggregationSpan span, List<WorkoutType> workoutTypes) throws NoDataException {
         final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.LENGTH;
 
-        ArrayList<CandleEntry> candleEntries = getCombinedCandleData(span, workoutType, WORKOUT_PROPERTY);
+        ArrayList<CandleEntry> candleEntries = getCombinedCandleData(span, workoutTypes, WORKOUT_PROPERTY);
 
         // Display distance in kilometers
         for (CandleEntry entry : candleEntries) {
@@ -289,14 +290,14 @@ public class StatsProvider {
                 String.valueOf(StatsType.DISTANCE_CANDLE_DATA.getIndex())));
     }
 
-    public LineDataSet getDistanceLineData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {
-        return convertCandleToMeanLineData(getDistanceCandleData(span, workoutType));
+    public LineDataSet getDistanceLineData(AggregationSpan span, List<WorkoutType> workoutTypes) throws NoDataException {
+        return convertCandleToMeanLineData(getDistanceCandleData(span, workoutTypes));
     }
 
-    public BarDataSet getDistanceSumData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {
+    public BarDataSet getDistanceSumData(AggregationSpan span, List<WorkoutType> workoutTypes) throws NoDataException {
         final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.LENGTH;
 
-        ArrayList<BarEntry> barEntries = getCombinedSumData(span, workoutType, WORKOUT_PROPERTY);
+        ArrayList<BarEntry> barEntries = getCombinedSumData(span, workoutTypes, WORKOUT_PROPERTY);
 
         for (BarEntry entry : barEntries) {
             entry.setY(entry.getY() / 1000);
@@ -307,10 +308,10 @@ public class StatsProvider {
     }
 
 
-    public CandleDataSet getDurationCandleData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {
+    public CandleDataSet getDurationCandleData(AggregationSpan span, List<WorkoutType> workoutTypes) throws NoDataException {
         final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.DURATION;
 
-        ArrayList<CandleEntry> candleEntries = getCombinedCandleData(span, workoutType, WORKOUT_PROPERTY);
+        ArrayList<CandleEntry> candleEntries = getCombinedCandleData(span, workoutTypes, WORKOUT_PROPERTY);
 
         CandleDataSet dataSet = DataSetStyles.applyDefaultCandleStyle(ctx, new CandleDataSet(candleEntries,
                 String.valueOf(StatsType.DURATION_CANDLE_DATA.getIndex())));
@@ -318,14 +319,14 @@ public class StatsProvider {
         return dataSet;
     }
 
-    public LineDataSet getDurationLineData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {
-        return convertCandleToMeanLineData(getDurationCandleData(span, workoutType));
+    public LineDataSet getDurationLineData(AggregationSpan span, List<WorkoutType> workoutTypes) throws NoDataException {
+        return convertCandleToMeanLineData(getDurationCandleData(span, workoutTypes));
     }
 
-    public BarDataSet getDurationSumData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {
+    public BarDataSet getDurationSumData(AggregationSpan span, List<WorkoutType> workoutTypes) throws NoDataException {
         final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.DURATION;
 
-        ArrayList<BarEntry> barEntries = getCombinedSumData(span, workoutType, WORKOUT_PROPERTY);
+        ArrayList<BarEntry> barEntries = getCombinedSumData(span, workoutTypes, WORKOUT_PROPERTY);
 
         BarDataSet dataSet = DataSetStyles.applyDefaultBarStyle(ctx, new BarDataSet(barEntries,
                 String.valueOf(StatsType.DURATION_SUM_DATA.getIndex())));
@@ -334,10 +335,10 @@ public class StatsProvider {
     }
 
 
-    public CandleDataSet getPauseDurationCandleData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {
+    public CandleDataSet getPauseDurationCandleData(AggregationSpan span, List<WorkoutType> workoutTypes) throws NoDataException {
         final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.PAUSE_DURATION;
 
-        ArrayList<CandleEntry> candleEntries = getCombinedCandleData(span, workoutType, WORKOUT_PROPERTY);
+        ArrayList<CandleEntry> candleEntries = getCombinedCandleData(span, workoutTypes, WORKOUT_PROPERTY);
 
         CandleDataSet dataSet = DataSetStyles.applyDefaultCandleStyle(ctx, new CandleDataSet(candleEntries,
                 String.valueOf(StatsType.PAUSE_DURATION_CANDLE_DATA.getIndex())));
@@ -345,14 +346,14 @@ public class StatsProvider {
         return dataSet;
     }
 
-    public LineDataSet getPauseDurationLineData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {
-        return convertCandleToMeanLineData(getPauseDurationCandleData(span, workoutType));
+    public LineDataSet getPauseDurationLineData(AggregationSpan span, List<WorkoutType> workoutTypes) throws NoDataException {
+        return convertCandleToMeanLineData(getPauseDurationCandleData(span, workoutTypes));
     }
 
-    public BarDataSet getPauseDurationSumData(AggregationSpan span, WorkoutType workoutType) throws NoDataException {
+    public BarDataSet getPauseDurationSumData(AggregationSpan span, List<WorkoutType> workoutTypes) throws NoDataException {
         final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.PAUSE_DURATION;
 
-        ArrayList<BarEntry> barEntries = getCombinedSumData(span, workoutType, WORKOUT_PROPERTY);
+        ArrayList<BarEntry> barEntries = getCombinedSumData(span, workoutTypes, WORKOUT_PROPERTY);
 
         BarDataSet dataSet = DataSetStyles.applyDefaultBarStyle(ctx, new BarDataSet(barEntries,
                 String.valueOf(StatsType.PAUSE_DURATION_SUM_DATA.getIndex())));
@@ -366,22 +367,6 @@ public class StatsProvider {
             return new TimeFormatter(unit, false, true, true);
         else
             return new TimeFormatter(unit, true, true, false);
-    }
-
-    /**
-     * Convert workout type to list (_all) type should be converted to a list with all Workout types
-     * @param workoutType
-     * @return list of workout types
-     */
-    private ArrayList<WorkoutType> createWorkoutTypeList(WorkoutType workoutType) {
-        ArrayList<WorkoutType> workoutTypes = new ArrayList<>();
-        
-        if (workoutType.id.equals(WorkoutTypeFilter.ID_ALL)) {
-            workoutTypes = (ArrayList<WorkoutType>) WorkoutTypeManager.getInstance().getAllTypes(ctx);
-        } else {
-            workoutTypes.add(workoutType);
-        }
-        return workoutTypes;
     }
 
     private ArrayList<StatsDataTypes.DataPoint> findDataPointsInAggregationSpan(ArrayList<StatsDataTypes.DataPoint> data, Calendar startTime, AggregationSpan span) {
@@ -402,9 +387,7 @@ public class StatsProvider {
     }
 
 
-    private ArrayList<CandleEntry> getCombinedCandleData(AggregationSpan span, WorkoutType workoutType, WorkoutProperty workoutProperty) throws NoDataException {
-
-        ArrayList<WorkoutType> workoutTypes = createWorkoutTypeList(workoutType);
+    private ArrayList<CandleEntry> getCombinedCandleData(AggregationSpan span, List<WorkoutType> workoutTypes, WorkoutProperty workoutProperty) throws NoDataException {
         ArrayList<StatsDataTypes.DataPoint> data = dataProvider.getData(workoutProperty,
                 workoutTypes);
 
@@ -455,8 +438,7 @@ public class StatsProvider {
         return candleEntries;
     }
 
-    public ArrayList<BarEntry> getCombinedSumData(AggregationSpan span, WorkoutType workoutType, WorkoutProperty workoutProperty) throws NoDataException {
-        ArrayList<WorkoutType> workoutTypes = createWorkoutTypeList(workoutType);
+    public ArrayList<BarEntry> getCombinedSumData(AggregationSpan span, List<WorkoutType> workoutTypes, WorkoutProperty workoutProperty) throws NoDataException {
         ArrayList<StatsDataTypes.DataPoint> data = dataProvider.getData(workoutProperty,
                 workoutTypes);
 
