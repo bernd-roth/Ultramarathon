@@ -32,7 +32,7 @@ import de.tadris.fitness.R;
 
 public enum AggregationSpan {
 
-    SINGLE(R.string.singleWorkout, R.string.month, TimeUnit.MINUTES.toMillis(1), Calendar.MILLISECOND, "dd/MMM/yy") {
+    SINGLE(R.string.singleWorkout, R.string.dayInMonth, TimeUnit.MINUTES.toMillis(1), Calendar.MILLISECOND, "dd/MMM/yy") {
         @Override
         public Calendar setCalendarToAggregationStart(Calendar calendar) {
             return calendar;
