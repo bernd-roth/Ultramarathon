@@ -2,6 +2,7 @@ package de.tadris.fitness.ui.statistics.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.MotionEvent;
@@ -13,37 +14,37 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.github.mikephil.charting.animation.Easing;
-import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.CandleData;
 import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CombinedData;
-import com.github.mikephil.charting.data.DataSet;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.DefaultValueFormatter;
 import com.github.mikephil.charting.listener.ChartTouchListener;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.renderer.CombinedChartRenderer;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationSpan;
+import de.tadris.fitness.data.StatsDataProvider;
+import de.tadris.fitness.data.StatsDataTypes;
 import de.tadris.fitness.data.StatsProvider;
+import de.tadris.fitness.data.UserPreferences;
 import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.ui.dialog.SelectWorkoutTypeDialog;
 import de.tadris.fitness.ui.statistics.DetailStatsActivity;
 import de.tadris.fitness.ui.statistics.WorkoutTypeSelection;
+import de.tadris.fitness.util.WorkoutProperty;
 import de.tadris.fitness.util.charts.ChartStyles;
 import de.tadris.fitness.util.charts.DataSetStyles;
 import de.tadris.fitness.util.charts.formatter.FractionedDateFormatter;
-import de.tadris.fitness.util.charts.formatter.SpeedFormatter;
 import de.tadris.fitness.util.charts.formatter.TimeFormatter;
 import de.tadris.fitness.util.exceptions.NoDataException;
 import de.tadris.fitness.util.statistics.ChartSynchronizer;
@@ -89,6 +90,7 @@ public class StatsHistoryFragment extends StatsFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        aggregationSpan = preferences.getStatisticsAggregationSpan();
 
         // Register WorkoutType selection listeners
         selection = view.findViewById(R.id.stats_history_workout_type_selector);
@@ -107,7 +109,7 @@ public class StatsHistoryFragment extends StatsFragment {
                 } else {
                     speedTitle.setText(R.string.workoutSpeed);
                 }
-                updateSpeedChart(selection.getSelectedWorkoutType());
+                updateSpeedChart(selection.getSelectedWorkoutTypes());
             }
         });
 
@@ -122,7 +124,7 @@ public class StatsHistoryFragment extends StatsFragment {
                 } else {
                     distanceTitle.setText(R.string.workoutAvgDistance);
                 }
-                updateDistanceChart(selection.getSelectedWorkoutType());
+                updateDistanceChart(selection.getSelectedWorkoutTypes());
             }
         });
 
@@ -137,7 +139,7 @@ public class StatsHistoryFragment extends StatsFragment {
                 } else {
                     durationTitle.setText(R.string.workoutAvgDurationLong);
                 }
-                updateDurationChart(selection.getSelectedWorkoutType());
+                updateDurationChart(selection.getSelectedWorkoutTypes());
             }
         });
 
@@ -152,7 +154,7 @@ public class StatsHistoryFragment extends StatsFragment {
                 } else {
                     pauseDurationTitle.setText(R.string.workoutAvgPauseDuration);
                 }
-                updatePauseDurationChart(selection.getSelectedWorkoutType());
+                updatePauseDurationChart(selection.getSelectedWorkoutTypes());
             }
         });
 
@@ -231,7 +233,7 @@ public class StatsHistoryFragment extends StatsFragment {
                     }
 
                     if (oldAggregationSpan != aggregationSpan) {
-                        updateCharts(selection.getSelectedWorkoutType());
+                        updateCharts(selection.getSelectedWorkoutTypes());
                     }
                 }
 
@@ -243,26 +245,38 @@ public class StatsHistoryFragment extends StatsFragment {
             combinedChart.setOnChartGestureListener(multiListener);
         }
 
-        updateCharts(selection.getSelectedWorkoutType());
+        updateCharts(selection.getSelectedWorkoutTypes());
+
+        // set initial view port
+        final StatsDataProvider dataProvider = new StatsDataProvider(context);
+        final ArrayList<StatsDataTypes.DataPoint> data = dataProvider.getData(WorkoutProperty.LENGTH, selection.getSelectedWorkoutTypes());
+        if (data.size() > 0) {
+            final StatsDataTypes.DataPoint lastEntry = data.get(data.size() - 1);
+            final long leftTime = lastEntry.time - aggregationSpan.spanInterval;
+            speedChart.zoom(lastEntry.time / aggregationSpan.spanInterval, 1, leftTime, 0);
+        }
+
+
+        //final BarDataSet dataSet = statsProvider.getDistanceSumData(aggregationSpan, selection.getSelectedWorkoutType());
     }
 
-    private void updateCharts(WorkoutType workoutType) {
-        updateSpeedChart(workoutType);
-        updateDurationChart(workoutType);
-        updatePauseDurationChart(workoutType);
-        updateDistanceChart(workoutType);
+    private void updateCharts(List<WorkoutType> workoutTypes) {
+        updateSpeedChart(workoutTypes);
+        updateDurationChart(workoutTypes);
+        updatePauseDurationChart(workoutTypes);
+        updateDistanceChart(workoutTypes);
     }
 
-    private void updateSpeedChart(WorkoutType workoutType) {
+    private void updateSpeedChart(List<WorkoutType> workoutTypes) {
         CandleDataSet candleDataSet;
 
         try {
             if (speedSwitch.isChecked()) {
                 // Retrieve candle data
-                candleDataSet = statsProvider.getPaceCandleData(aggregationSpan, workoutType);
+                candleDataSet = statsProvider.getPaceCandleData(aggregationSpan, workoutTypes);
                 ChartStyles.setYAxisLabel(speedChart, Instance.getInstance(context).distanceUnitUtils.getPaceUnit());
             } else {
-                candleDataSet = statsProvider.getSpeedCandleData(aggregationSpan, workoutType);
+                candleDataSet = statsProvider.getSpeedCandleData(aggregationSpan, workoutTypes);
                 ChartStyles.setYAxisLabel(speedChart, Instance.getInstance(context).distanceUnitUtils.getDistanceUnitSystem().getSpeedUnit());
             }
 
@@ -281,18 +295,18 @@ public class StatsHistoryFragment extends StatsFragment {
         speedChart.invalidate();
     }
 
-    private void updateDistanceChart(WorkoutType workoutType) {
+    private void updateDistanceChart(List<WorkoutType> workoutTypes) {
         CombinedData combinedData = new CombinedData();
 
         try {
             if (distanceSwitch.isChecked()) {
-                BarDataSet barDataSet = statsProvider.getDistanceSumData(aggregationSpan, workoutType);
+                BarDataSet barDataSet = statsProvider.getDistanceSumData(aggregationSpan, workoutTypes);
                 BarData barData = new BarData(barDataSet);
                 ChartStyles.setTextAppearance(barData);
                 barData.setBarWidth(aggregationSpan.spanInterval / stats_time_factor * ChartStyles.BAR_WIDTH_FACTOR);
                 combinedData.setData(barData);
             } else {
-                CandleDataSet candleDataSet = statsProvider.getDistanceCandleData(aggregationSpan, workoutType);
+                CandleDataSet candleDataSet = statsProvider.getDistanceCandleData(aggregationSpan, workoutTypes);
                 combinedData.setData(new CandleData(candleDataSet));
                 // Create background line
                 LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);
@@ -317,18 +331,18 @@ public class StatsHistoryFragment extends StatsFragment {
         chart.setViewPortOffsets(offset, offset/2,offset/2,offset/2);
     }
 
-    private void updateDurationChart(WorkoutType workoutType) {
+    private void updateDurationChart(List<WorkoutType> workoutTypes) {
         CombinedData combinedData = new CombinedData();
 
         try {
             if (durationSwitch.isChecked()) {
-                BarDataSet barDataSet = statsProvider.getDurationSumData(aggregationSpan, workoutType);
+                BarDataSet barDataSet = statsProvider.getDurationSumData(aggregationSpan, workoutTypes);
                 BarData barData = new BarData(barDataSet);
                 ChartStyles.setTextAppearance(barData);
                 barData.setBarWidth(aggregationSpan.spanInterval / stats_time_factor * ChartStyles.BAR_WIDTH_FACTOR);
                 combinedData.setData(barData);
             } else {
-                CandleDataSet candleDataSet = statsProvider.getDurationCandleData(aggregationSpan, workoutType);
+                CandleDataSet candleDataSet = statsProvider.getDurationCandleData(aggregationSpan, workoutTypes);
                 combinedData.setData(new CandleData(candleDataSet));
                 // Create background line
                 LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);
@@ -348,18 +362,18 @@ public class StatsHistoryFragment extends StatsFragment {
         durationChart.invalidate();
     }
 
-    private void updatePauseDurationChart(WorkoutType workoutType) {
+    private void updatePauseDurationChart(List<WorkoutType> workoutTypes) {
         CombinedData combinedData = new CombinedData();
 
         try {
             if (pauseDurationSwitch.isChecked()) {
-                BarDataSet barDataSet = statsProvider.getPauseDurationSumData(aggregationSpan, workoutType);
+                BarDataSet barDataSet = statsProvider.getPauseDurationSumData(aggregationSpan, workoutTypes);
                 BarData barData = new BarData(barDataSet);
                 ChartStyles.setTextAppearance(barData);
                 barData.setBarWidth(aggregationSpan.spanInterval / stats_time_factor * ChartStyles.BAR_WIDTH_FACTOR);
                 combinedData.setData(barData);
             } else {
-                CandleDataSet candleDataSet = statsProvider.getPauseDurationCandleData(aggregationSpan, workoutType);
+                CandleDataSet candleDataSet = statsProvider.getPauseDurationCandleData(aggregationSpan, workoutTypes);
                 combinedData.setData(new CandleData(candleDataSet));
                 // Create background line
                 LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);

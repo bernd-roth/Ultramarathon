@@ -19,8 +19,6 @@
 
 package de.tadris.fitness.data;
 
-import android.content.Context;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.PluralsRes;
 import androidx.room.ColumnInfo;
@@ -32,19 +30,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
-import de.tadris.fitness.Instance;
-import de.tadris.fitness.R;
+import de.tadris.fitness.aggregation.WorkoutTypeFilter;
 import de.tadris.fitness.ui.record.RecordGpsWorkoutActivity;
 import de.tadris.fitness.ui.record.RecordIndoorWorkoutActivity;
 import de.tadris.fitness.ui.record.RecordWorkoutActivity;
 import de.tadris.fitness.ui.workout.ShowGpsWorkoutActivity;
 import de.tadris.fitness.ui.workout.ShowIndoorWorkoutActivity;
 import de.tadris.fitness.ui.workout.WorkoutActivity;
-import de.tadris.fitness.util.Icon;
 
 @Entity(tableName = "workout_type")
 public class WorkoutType implements Serializable {
