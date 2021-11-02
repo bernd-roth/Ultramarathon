@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.CombinedChart;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.CandleData;
@@ -27,6 +28,7 @@ import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.renderer.CombinedChartRenderer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -78,6 +80,8 @@ public class StatsHistoryFragment extends StatsFragment {
 
     AggregationSpan aggregationSpan = AggregationSpan.YEAR;
 
+    UserPreferences preferences;
+
     public StatsHistoryFragment(Context ctx) {
         super(R.layout.fragment_stats_history, ctx);
         synchronizer = new ChartSynchronizer();
@@ -85,17 +89,17 @@ public class StatsHistoryFragment extends StatsFragment {
         TypedValue stats_time_factor = new TypedValue();
         context.getResources().getValue(R.dimen.stats_time_factor, stats_time_factor, true);
         this.stats_time_factor = stats_time_factor.getFloat();
+        preferences = new UserPreferences(ctx);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        aggregationSpan = preferences.getStatisticsAggregationSpan();
 
         // Register WorkoutType selection listeners
         selection = view.findViewById(R.id.stats_history_workout_type_selector);
         ((TextView)selection.findViewById(R.id.view_workout_type_selection_text)).setTextColor(getContext().getColor(R.color.textDarkerWhite));
-        selection.addOnWorkoutTypeSelectListener(workoutType -> updateCharts(workoutType));
+        selection.addOnWorkoutTypeSelectListener(workoutType -> updateCharts(Arrays.asList(workoutType)));
 
         // Setup switch functionality
         speedTitle = view.findViewById(R.id.stats_history_speed_title);
@@ -219,7 +223,10 @@ public class StatsHistoryFragment extends StatsFragment {
 
                 @Override
                 public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
-                    long timeSpan = (long) ((combinedChart.getHighestVisibleX() - combinedChart.getLowestVisibleX()) * stats_time_factor);
+                    float high = combinedChart.getHighestVisibleX();
+                    float low= combinedChart.getLowestVisibleX();
+                    long timeSpan = (long) ((high - low) * stats_time_factor);
+
                     AggregationSpan oldAggregationSpan = aggregationSpan;
 
                     if (TimeUnit.DAYS.toMillis(1095) < timeSpan) {
@@ -244,20 +251,36 @@ public class StatsHistoryFragment extends StatsFragment {
             });
             combinedChart.setOnChartGestureListener(multiListener);
         }
+        displaySpan(preferences.getStatisticsAggregationSpan()); // set viewport according to other statistic views
+    }
 
+    private void displaySpan(AggregationSpan span)
+    {
+        // set span for aggregation -> one smaller
+        if(span == AggregationSpan.ALL){
+            aggregationSpan = AggregationSpan.YEAR;
+        } else if(span == AggregationSpan.YEAR){
+            aggregationSpan = AggregationSpan.MONTH;
+        } else if(span == AggregationSpan.MONTH){
+            aggregationSpan = AggregationSpan.WEEK;
+        } else if(span == AggregationSpan.WEEK){
+            aggregationSpan = AggregationSpan.SINGLE;
+        }
         updateCharts(selection.getSelectedWorkoutTypes());
 
-        // set initial view port
+        // set view port
         final StatsDataProvider dataProvider = new StatsDataProvider(context);
         final ArrayList<StatsDataTypes.DataPoint> data = dataProvider.getData(WorkoutProperty.LENGTH, selection.getSelectedWorkoutTypes());
         if (data.size() > 0) {
+            final StatsDataTypes.DataPoint firstEntry = data.get(0);
             final StatsDataTypes.DataPoint lastEntry = data.get(data.size() - 1);
-            final long leftTime = lastEntry.time - aggregationSpan.spanInterval;
-            speedChart.zoom(lastEntry.time / aggregationSpan.spanInterval, 1, leftTime, 0);
+            final long leftTime = lastEntry.time - span.spanInterval;
+            final float zoom = (float) (lastEntry.time- firstEntry.time) / span.spanInterval;
+            for (CombinedChart chart:combinedChartList) { // need to iterate cause code zoom doesn't trigger GestureListeners
+                chart.zoom(zoom, 1, 0, 0);
+                chart.moveViewToX(leftTime);
+            }
         }
-
-
-        //final BarDataSet dataSet = statsProvider.getDistanceSumData(aggregationSpan, selection.getSelectedWorkoutType());
     }
 
     private void updateCharts(List<WorkoutType> workoutTypes) {
