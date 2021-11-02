@@ -21,6 +21,7 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import de.tadris.fitness.R;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.util.Icon;
 import de.tadris.fitness.util.charts.marker.DisplayValueMarker;
@@ -167,6 +168,14 @@ public class ChartStyles {
         chart.getAxisLeft().setAxisMinimum(0);
     }
 
+    public static void barChartNoData(BarChart chart, Context ctx)
+    {
+        chart.setData(new BarData()); // Needed in case there is nothing to clear...
+        chart.clearValues();
+        chart.setExtraOffsets(0, 0, 0, 0);
+        ChartStyles.setXAxisLabel(chart, ctx.getString(R.string.no_workouts_recorded));
+    }
+
     public static void horizontalBarChartIconLabel(HorizontalBarChart chart, BarData data, Context ctx)
     {
         setTextAppearance(data);
@@ -194,5 +203,6 @@ public class ChartStyles {
         chart.setMarker(new WorkoutDisplayMarker(ctx));
         chart.getAxisLeft().setAxisMinimum(0);
         chart.getAxisRight().setAxisMinimum(0);
+        chart.getDescription().setEnabled(false);
     }
 }

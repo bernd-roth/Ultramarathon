@@ -100,7 +100,7 @@ public class StatsOverviewFragment extends StatsFragment {
             BarData distanceData = new BarData(statsProvider.totalDistances(span));
             ChartStyles.horizontalBarChartIconLabel(distanceChart, distanceData, context);
         } catch (NoDataException e) {
-            distanceChart.clear();
+            ChartStyles.barChartNoData(distanceChart, getContext());
         }
         distanceChart.invalidate();
 
@@ -108,7 +108,7 @@ public class StatsOverviewFragment extends StatsFragment {
             BarData numberOfActivitiesData = new BarData(statsProvider.numberOfActivities(span));
             ChartStyles.horizontalBarChartIconLabel(numberOfActivitiesChart,numberOfActivitiesData, context);
         } catch (NoDataException e) {
-            numberOfActivitiesChart.clear();
+            ChartStyles.barChartNoData(numberOfActivitiesChart, getContext());
         }
         numberOfActivitiesChart.invalidate();
 
@@ -116,7 +116,7 @@ public class StatsOverviewFragment extends StatsFragment {
             BarData durationData = new BarData(statsProvider.totalDurations(span));
             ChartStyles.horizontalBarChartIconLabel(durationChart, durationData, context);
         } catch (NoDataException e) {
-            durationChart.clear();
+            ChartStyles.barChartNoData(durationChart, getContext());
         }
         durationChart.invalidate();
     }

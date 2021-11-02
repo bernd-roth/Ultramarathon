@@ -89,24 +89,23 @@ public class ShortStatsItemView extends LinearLayout {
             switch (chartType)
             {
                 case 0:
-                    data = new BarData(statsProvider.totalDistances(span));
                     title.setText(getContext().getString(R.string.workoutDistance));
+                    data = new BarData(statsProvider.totalDistances(span));
                     ChartStyles.setXAxisLabel(chart, Instance.getInstance(getContext()).distanceUnitUtils.getDistanceUnitSystem().getLongDistanceUnit());
                     break;
                 case 1:
-                    data = new BarData(statsProvider.totalDurations(span));
                     title.setText(getContext().getString(R.string.workoutDuration));
+                    data = new BarData(statsProvider.totalDurations(span));
                     ChartStyles.setXAxisLabel(chart, getContext().getString(R.string.timeHourShort));
                     break;
                 default:
-                    data = new BarData(statsProvider.numberOfActivities(span));
                     title.setText(getContext().getString(R.string.numberOfWorkouts));
+                    data = new BarData(statsProvider.numberOfActivities(span));
                     break;
             }
             ChartStyles.barChartIconLabel(chart, data, getContext());
         } catch (NoDataException e) {
-            chart.setData(new BarData()); // Needed in case there is nothing to clear...
-            chart.clearValues();
+            ChartStyles.barChartNoData(chart, getContext());
         }
         chart.invalidate();
     }
