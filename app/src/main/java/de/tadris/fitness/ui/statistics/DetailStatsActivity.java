@@ -253,6 +253,8 @@ public class DetailStatsActivity extends FitoTrackActivity {
         }
 
         chart.setData(combinedData);
+        chart.getXAxis().setAxisMinimum(combinedData.getXMin()-aggregationSpan.spanInterval/stats_time_factor/2);
+        chart.getXAxis().setAxisMaximum(combinedData.getXMax()+aggregationSpan.spanInterval/stats_time_factor/2);
         chart.invalidate();
     }
 
