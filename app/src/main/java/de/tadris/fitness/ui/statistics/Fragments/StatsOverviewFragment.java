@@ -99,10 +99,20 @@ public class StatsOverviewFragment extends StatsFragment {
         try {
             BarData distanceData = new BarData(statsProvider.totalDistances(span));
             ChartStyles.horizontalBarChartIconLabel(distanceChart, distanceData, context);
+            ChartStyles.setXAxisLabel(distanceChart, Instance.getInstance(getContext()).distanceUnitUtils.getDistanceUnitSystem().getLongDistanceUnit());
         } catch (NoDataException e) {
             ChartStyles.barChartNoData(distanceChart, getContext());
         }
         distanceChart.invalidate();
+
+        try {
+            BarData durationData = new BarData(statsProvider.totalDurations(span));
+            ChartStyles.horizontalBarChartIconLabel(durationChart, durationData, context);
+            ChartStyles.setXAxisLabel(durationChart, getContext().getString(R.string.timeHourShort));
+        } catch (NoDataException e) {
+            ChartStyles.barChartNoData(durationChart, getContext());
+        }
+        durationChart.invalidate();
 
         try {
             BarData numberOfActivitiesData = new BarData(statsProvider.numberOfActivities(span));
@@ -111,13 +121,5 @@ public class StatsOverviewFragment extends StatsFragment {
             ChartStyles.barChartNoData(numberOfActivitiesChart, getContext());
         }
         numberOfActivitiesChart.invalidate();
-
-        try {
-            BarData durationData = new BarData(statsProvider.totalDurations(span));
-            ChartStyles.horizontalBarChartIconLabel(durationChart, durationData, context);
-        } catch (NoDataException e) {
-            ChartStyles.barChartNoData(durationChart, getContext());
-        }
-        durationChart.invalidate();
     }
 }
