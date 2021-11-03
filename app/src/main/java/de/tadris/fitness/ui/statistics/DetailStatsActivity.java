@@ -73,7 +73,7 @@ public class DetailStatsActivity extends FitoTrackActivity {
     protected void onStart() {
         super.onStart();
         int chartIndex = Integer.parseInt(getIntent().getExtras().getString("data"));
-        String type = (String) getIntent().getSerializableExtra("type");
+        ArrayList<WorkoutType> types = (ArrayList<WorkoutType>) getIntent().getSerializableExtra("types");
         String label = (String) getIntent().getSerializableExtra("ylabel");
         statsType = StatsProvider.StatsType.getByIndex(chartIndex);
         xScale = getIntent().getFloatExtra("xScale", 0);
@@ -83,6 +83,7 @@ public class DetailStatsActivity extends FitoTrackActivity {
         ChartStyles.setYAxisLabel(chart,label);
 
         WorkoutType workoutType;
+        String type = types.get(0).id; // TODO: What the heck why? Fix this!
         if (type.equals("_all")) {
             workoutType = new WorkoutType();
             workoutType.id = type;
@@ -177,28 +178,35 @@ public class DetailStatsActivity extends FitoTrackActivity {
 
         CombinedData combinedData = new CombinedData();
 
+        String additionalTitle=" - ";
+        for(WorkoutType type : workoutTypes)
+        {
+            additionalTitle += type.title +", ";
+        }
+        additionalTitle = additionalTitle.substring(0, additionalTitle.length()-2);
+
         // Draw candle charts
         try {
             switch (statsType) {
                 case SPEED_CANDLE_DATA:
                     currentCandleDataSet = statsProvider.getSpeedCandleData(aggregationSpan, workoutTypes);
-                    setTitle(this.getString(R.string.workoutSpeed));
+                    setTitle(this.getString(R.string.workoutSpeed)+additionalTitle);
                     break;
                 case PACE_CANDLE_DATA:
                     currentCandleDataSet = statsProvider.getPaceCandleData(aggregationSpan, workoutTypes);
-                    setTitle(this.getString(R.string.workoutPace));
+                    setTitle(this.getString(R.string.workoutPace)+additionalTitle);
                     break;
                 case DISTANCE_CANDLE_DATA:
                     currentCandleDataSet = statsProvider.getDistanceCandleData(aggregationSpan, workoutTypes);
-                    setTitle(this.getString(R.string.workoutAvgDistance));
+                    setTitle(this.getString(R.string.workoutAvgDistance)+additionalTitle);
                     break;
                 case DURATION_CANDLE_DATA:
                     currentCandleDataSet = statsProvider.getDurationCandleData(aggregationSpan, workoutTypes);
-                    setTitle(this.getString(R.string.workoutAvgDurationLong));
+                    setTitle(this.getString(R.string.workoutAvgDurationLong)+additionalTitle);
                     break;
                 case PAUSE_DURATION_CANDLE_DATA:
                     currentCandleDataSet = statsProvider.getPauseDurationCandleData(aggregationSpan, workoutTypes);
-                    setTitle(this.getString(R.string.workoutAvgPauseDuration));
+                    setTitle(this.getString(R.string.workoutAvgPauseDuration)+additionalTitle);
                     break;
                 default:
                     break;
@@ -217,15 +225,15 @@ public class DetailStatsActivity extends FitoTrackActivity {
             switch (statsType)  {
                 case DISTANCE_SUM_DATA:
                     currentBarDataSet = statsProvider.getDistanceSumData(aggregationSpan, workoutTypes);
-                    setTitle(this.getString(R.string.workoutDistanceSum));
+                    setTitle(this.getString(R.string.workoutDistanceSum)+additionalTitle);
                     break;
                 case DURATION_SUM_DATA:
                     currentBarDataSet = statsProvider.getDurationSumData(aggregationSpan, workoutTypes);
-                    setTitle(this.getString(R.string.workoutDurationSum));
+                    setTitle(this.getString(R.string.workoutDurationSum)+additionalTitle);
                     break;
                 case PAUSE_DURATION_SUM_DATA:
                     currentBarDataSet = statsProvider.getPauseDurationSumData(aggregationSpan, workoutTypes);
-                    setTitle(this.getString(R.string.workoutPauseDurationSum));
+                    setTitle(this.getString(R.string.workoutPauseDurationSum)+additionalTitle);
                     break;
             }
             if (currentBarDataSet != null) {
@@ -253,8 +261,6 @@ public class DetailStatsActivity extends FitoTrackActivity {
         }
 
         chart.setData(combinedData);
-        chart.getXAxis().setAxisMinimum(combinedData.getXMin()-aggregationSpan.spanInterval/stats_time_factor/2);
-        chart.getXAxis().setAxisMaximum(combinedData.getXMax()+aggregationSpan.spanInterval/stats_time_factor/2);
         chart.invalidate();
     }
 

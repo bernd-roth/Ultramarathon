@@ -204,7 +204,7 @@ public class StatsHistoryFragment extends StatsFragment {
 
                     Intent i = new Intent(context, DetailStatsActivity.class);
                     i.putExtra("data", combinedChart.getData().getDataSetLabels()[0]);
-                    i.putExtra("type", selection.getSelectedWorkoutType().id);
+                    i.putExtra("types", selection.getSelectedWorkoutTypes());
                     i.putExtra("formatter", combinedChart.getAxisLeft().getValueFormatter().getClass());
                     //i.putExtra("viewPort", viewPortValues);
                     i.putExtra("xScale", combinedChart.getViewPortHandler().getScaleX());
