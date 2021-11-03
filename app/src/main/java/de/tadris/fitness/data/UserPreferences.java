@@ -22,8 +22,17 @@ package de.tadris.fitness.data;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.ArraySet;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 import de.tadris.fitness.BuildConfig;
 import de.tadris.fitness.aggregation.AggregationSpan;
@@ -46,6 +55,7 @@ public class UserPreferences {
     private static final String UPPER_TARGET_SPEED_LIMIT = "upperTargetSpeedLimit";
     public static final String STEP_LENGTH = "stepLength";
     public static final String STATISTICS_AGGREGATION_SPAN = "statisticsAggregationSpan";
+    public static final String STATISTICS_SELECTED_TYPES = "statisticsSelectedTypes";
 
     /**
      * Default NFC start enable state if no other has been chosen
@@ -117,12 +127,19 @@ public class UserPreferences {
     /**
      * Default timespan to show in statistics (ShortStats View etc) value of 2 represents months
      */
-    private static final int DEFAULT_STATISTICS_SPAN= AggregationSpan.MONTH.toInt();
+    private static final int DEFAULT_STATISTICS_SPAN = AggregationSpan.MONTH.toInt();
+
+    /**
+     * Default selection of WorkoutType in statistics in means of typeID
+     */
+    private static final Set<String> DEFAULT_STATISTICS_SELECTED_TYPES = new ArraySet<>();
 
     private final SharedPreferences preferences;
+    private final Context ctx;
 
     public UserPreferences(Context context) {
         this.preferences= PreferenceManager.getDefaultSharedPreferences(context);
+        this.ctx = context;
     }
 
     public int getUserWeight(){
@@ -461,5 +478,27 @@ public class UserPreferences {
     public void setStatisticsAggregationSpan(AggregationSpan span)
     {
         preferences.edit().putInt(STATISTICS_AGGREGATION_SPAN, span.toInt()).apply();
+    }
+
+    public List<WorkoutType> getStatisticsSelectedTypes()
+    {
+        Set<String> typeIDs = preferences.getStringSet(STATISTICS_SELECTED_TYPES, DEFAULT_STATISTICS_SELECTED_TYPES);
+        List<WorkoutType> types = new ArrayList<>();
+
+        for(String type:typeIDs)
+        {
+            types.add(WorkoutTypeManager.getInstance().getWorkoutTypeById(ctx, type));
+        }
+        return types;
+    }
+
+    public void setStatisticsSelectedTypes(List<WorkoutType> types)
+    {
+        Set<String> typeIDs = new ArraySet<>();
+        for(WorkoutType type:types)
+        {
+            typeIDs.add(type.id);
+        }
+        preferences.edit().putStringSet(STATISTICS_SELECTED_TYPES, typeIDs).apply();
     }
 }

@@ -15,7 +15,6 @@ import androidx.annotation.Nullable;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.CombinedChart;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.CandleData;
@@ -40,6 +39,7 @@ import de.tadris.fitness.data.StatsDataTypes;
 import de.tadris.fitness.data.StatsProvider;
 import de.tadris.fitness.data.UserPreferences;
 import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.data.WorkoutTypeManager;
 import de.tadris.fitness.ui.dialog.SelectWorkoutTypeDialog;
 import de.tadris.fitness.ui.statistics.DetailStatsActivity;
 import de.tadris.fitness.ui.statistics.WorkoutTypeSelection;
@@ -99,7 +99,8 @@ public class StatsHistoryFragment extends StatsFragment {
         // Register WorkoutType selection listeners
         selection = view.findViewById(R.id.stats_history_workout_type_selector);
         ((TextView)selection.findViewById(R.id.view_workout_type_selection_text)).setTextColor(getContext().getColor(R.color.textDarkerWhite));
-        selection.addOnWorkoutTypeSelectListener(workoutType -> updateCharts(Arrays.asList(workoutType)));
+        selection.addOnWorkoutTypeSelectListener(workoutType -> updateCharts(selection.getSelectedWorkoutTypes()));
+        selection.addOnWorkoutTypeSelectListener(workoutType -> preferences.setStatisticsSelectedTypes(selection.getSelectedWorkoutTypes()));
 
         // Setup switch functionality
         speedTitle = view.findViewById(R.id.stats_history_speed_title);
@@ -251,6 +252,14 @@ public class StatsHistoryFragment extends StatsFragment {
             });
             combinedChart.setOnChartGestureListener(multiListener);
         }
+
+        List<WorkoutType> selected = preferences.getStatisticsSelectedTypes();
+        if (selected.get(0) == null)
+            selected.clear();
+        if(selected.size() == 0)
+            selected.addAll(WorkoutTypeManager.getInstance().getAllTypes(context));
+        selection.setSelectedWorkoutType(selected.get(0));
+
         displaySpan(preferences.getStatisticsAggregationSpan()); // set viewport according to other statistic views
     }
 
