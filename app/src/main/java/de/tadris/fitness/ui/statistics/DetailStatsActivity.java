@@ -73,7 +73,7 @@ public class DetailStatsActivity extends FitoTrackActivity {
     protected void onStart() {
         super.onStart();
         int chartIndex = Integer.parseInt(getIntent().getExtras().getString("data"));
-        ArrayList<WorkoutType> types = (ArrayList<WorkoutType>) getIntent().getSerializableExtra("types");
+        List<WorkoutType> types = (ArrayList<WorkoutType>) getIntent().getSerializableExtra("types");
         String label = (String) getIntent().getSerializableExtra("ylabel");
         statsType = StatsProvider.StatsType.getByIndex(chartIndex);
         xScale = getIntent().getFloatExtra("xScale", 0);
@@ -83,13 +83,12 @@ public class DetailStatsActivity extends FitoTrackActivity {
         ChartStyles.setYAxisLabel(chart,label);
 
         WorkoutType workoutType;
-        String type = types.get(0).id; // TODO: What the heck why? Fix this!
-        if (type.equals("_all")) {
+        if (types.size()!=1) {
             workoutType = new WorkoutType();
-            workoutType.id = type;
+            workoutType.id = "_all";
         }
         else {
-            workoutType = workoutTypeManager.getWorkoutTypeById(this, type);
+            workoutType = WorkoutTypeManager.getInstance().getWorkoutTypeById(this, types.get(0).id);
         }
         workoutTypes = WorkoutTypeSelection.createWorkoutTypeList(this, workoutType);
 
@@ -251,16 +250,16 @@ public class DetailStatsActivity extends FitoTrackActivity {
 
         chart.getAxisLeft().setValueFormatter(combinedData.getMaxEntryCountSet().getValueFormatter());
 
-        if(chart.getLegend().getEntries().length>0) {
+        if (chart.getLegend().getEntries().length > 0) {
             String yLabel = chart.getLegend().getEntries()[0].label;
             chart.setMarker(new DisplayValueMarker(this, chart.getAxisLeft().getValueFormatter(), yLabel));
-        }
-        else
-        {
+        } else {
             chart.setMarker(new DisplayValueMarker(this, chart.getAxisLeft().getValueFormatter(), ""));
         }
 
         chart.setData(combinedData);
+        chart.getXAxis().setAxisMinimum(combinedData.getXMin() - aggregationSpan.spanInterval / stats_time_factor / 2);
+        chart.getXAxis().setAxisMaximum(combinedData.getXMax() + aggregationSpan.spanInterval / stats_time_factor / 2);
         chart.invalidate();
     }
 

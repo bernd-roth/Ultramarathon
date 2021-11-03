@@ -39,7 +39,7 @@ import de.tadris.fitness.util.Icon;
 
 public class SelectWorkoutTypeDialog implements WorkoutTypeAdapter.WorkoutTypeAdapterListener {
 
-    private static final String ID_ADD = "_add";
+    protected static final String ID_ADD = "_add";
 
     private Activity context;
     private WorkoutTypeSelectListener listener;

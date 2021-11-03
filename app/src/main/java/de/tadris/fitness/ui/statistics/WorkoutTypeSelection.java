@@ -15,7 +15,10 @@ import androidx.core.content.ContextCompat;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.WorkoutTypeFilter;
@@ -28,8 +31,10 @@ import de.tadris.fitness.util.Icon;
 
 public class WorkoutTypeSelection extends LinearLayout {
 
-    private WorkoutType selectedWorkoutType;
+    private List<WorkoutType> selectedWorkoutTypes;
     private ArrayList<SelectWorkoutTypeDialog.WorkoutTypeSelectListener> listeners;
+
+    private WorkoutType typeAll;
 
     public WorkoutTypeSelection(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -38,15 +43,16 @@ public class WorkoutTypeSelection extends LinearLayout {
         listeners = new ArrayList<>();
 
         // selectListener forwards the selected entry to setSelectedWorkoutType
-        SelectWorkoutTypeDialog.WorkoutTypeSelectListener selectListener = workoutType -> setSelectedWorkoutType(workoutType);
+        SelectWorkoutTypeDialog.WorkoutTypeSelectListener selectListener = workoutType -> setSelectedWorkoutTypes(createWorkoutTypeList(context, workoutType));
         // Setup onClickListener
         OnClickListener clickListener = view -> new SelectWorkoutTypeDialogAll((FitoTrackActivity) getContext(), selectListener).show();
         this.setOnClickListener(clickListener);
 
         // The init
-        setSelectedWorkoutType(new WorkoutType(WorkoutTypeFilter.ID_ALL,
-                context.getString(R.string.workoutTypeAll), 0,
-                Color.WHITE, "list", 0, WorkoutType.RecordingType.GPS.id));
+        typeAll = new WorkoutType(WorkoutTypeFilter.ID_ALL,
+                getContext().getString(R.string.workoutTypeAll), 0,
+                Color.WHITE, "list", 0, WorkoutType.RecordingType.GPS.id);
+        setSelectedWorkoutTypes(null);
     }
 
     /**
@@ -54,31 +60,28 @@ public class WorkoutTypeSelection extends LinearLayout {
      * In case "all" is selected, the list contains every workout type.
      * @return selected workout type as a list.
      */
-    public ArrayList<WorkoutType> getSelectedWorkoutTypes() {
-        return createWorkoutTypeList(getContext(), selectedWorkoutType);
+    public List<WorkoutType> getSelectedWorkoutTypes() {
+        return selectedWorkoutTypes;
     }
 
-    /**
-     * Return the selected workout type.
-     * In case "all" is selected an workout type with id "_all" is returned.
-     * @return selected workout type.
-     */
-    public WorkoutType getSelectedWorkoutType() {
-        return selectedWorkoutType;
-    }
-
-    public void setSelectedWorkoutType(@NotNull WorkoutType selectedWorkoutType) {
-        this.selectedWorkoutType = selectedWorkoutType;
-
+    public void setSelectedWorkoutTypes(List<WorkoutType> types) {
+        this.selectedWorkoutTypes = types;
         ImageView imageView = findViewById(R.id.view_workout_type_selection_image);
-        imageView.setImageDrawable(ContextCompat.getDrawable(getContext(),
-                Icon.getIcon(selectedWorkoutType.icon)));
-
         TextView textView = findViewById(R.id.view_workout_type_selection_text);
-        textView.setText(selectedWorkoutType.title);
 
+        WorkoutType type;
+        if(types != null && types.size()==1) {
+            type = types.get(0);
+        }
+        else
+        {
+            type = typeAll;
+        }
+        imageView.setImageDrawable(ContextCompat.getDrawable(getContext(),
+                Icon.getIcon(type.icon)));
+        textView.setText(type.title);
         for (SelectWorkoutTypeDialog.WorkoutTypeSelectListener listener : listeners) {
-            listener.onSelectWorkoutType(selectedWorkoutType);
+            listener.onSelectWorkoutType(type);
         }
     }
 

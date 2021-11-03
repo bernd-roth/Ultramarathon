@@ -31,6 +31,7 @@ public class SelectWorkoutTypeDialogAll extends SelectWorkoutTypeDialog {
         this.options.add(0, new WorkoutType(WorkoutTypeFilter.ID_ALL,
                 context.getString(R.string.workoutTypeAll), 0,
                 context.getThemePrimaryColor(), "list", 0, WorkoutType.RecordingType.GPS.id));
+        this.options.removeIf(type -> type.id==ID_ADD);
     }
 
 }

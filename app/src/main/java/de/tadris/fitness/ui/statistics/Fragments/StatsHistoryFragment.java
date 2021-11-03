@@ -26,6 +26,7 @@ import com.github.mikephil.charting.listener.ChartTouchListener;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.renderer.CombinedChartRenderer;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -204,7 +205,7 @@ public class StatsHistoryFragment extends StatsFragment {
 
                     Intent i = new Intent(context, DetailStatsActivity.class);
                     i.putExtra("data", combinedChart.getData().getDataSetLabels()[0]);
-                    i.putExtra("types", selection.getSelectedWorkoutTypes());
+                    i.putExtra("types", (Serializable) selection.getSelectedWorkoutTypes());
                     i.putExtra("formatter", combinedChart.getAxisLeft().getValueFormatter().getClass());
                     //i.putExtra("viewPort", viewPortValues);
                     i.putExtra("xScale", combinedChart.getViewPortHandler().getScaleX());
@@ -258,7 +259,7 @@ public class StatsHistoryFragment extends StatsFragment {
             selected.clear();
         if(selected.size() == 0)
             selected.addAll(WorkoutTypeManager.getInstance().getAllTypes(context));
-        selection.setSelectedWorkoutType(selected.get(0));
+        selection.setSelectedWorkoutTypes(selected);
 
         displaySpan(preferences.getStatisticsAggregationSpan()); // set viewport according to other statistic views
     }
