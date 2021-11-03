@@ -170,6 +170,7 @@ public class ChartStyles {
 
     public static void barChartNoData(BarChart chart, Context ctx)
     {
+        chart.setDrawMarkers(false);
         chart.setData(new BarData()); // Needed in case there is nothing to clear...
         chart.clearValues();
         chart.setExtraOffsets(0, 0, 0, 0);
@@ -201,6 +202,7 @@ public class ChartStyles {
 
         chart.setData(data);
         chart.setMarker(new WorkoutDisplayMarker(ctx));
+        chart.setDrawMarkers(true);
         chart.getAxisLeft().setAxisMinimum(0);
         chart.getAxisRight().setAxisMinimum(0);
         chart.getDescription().setEnabled(false);
