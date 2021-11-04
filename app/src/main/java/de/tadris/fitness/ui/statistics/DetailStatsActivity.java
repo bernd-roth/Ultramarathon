@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.MotionEvent;
+import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.github.mikephil.charting.animation.Easing;
@@ -154,10 +156,8 @@ public class DetailStatsActivity extends FitoTrackActivity {
 
         updateChart(workoutTypes);
 
-        chart.getViewPortHandler().zoom(xScale,
-                chart.getViewPortHandler().getScaleY(),
-                -xTrans,
-                chart.getViewPortHandler().getTransY());
+        chart.zoom(xScale, 1, 0, 0);
+        chart.moveViewToX(xTrans);
 
         animateChart(chart);
     }

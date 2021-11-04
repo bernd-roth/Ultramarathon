@@ -208,8 +208,8 @@ public class StatsHistoryFragment extends StatsFragment {
                     i.putExtra("types", (Serializable) selection.getSelectedWorkoutTypes());
                     i.putExtra("formatter", combinedChart.getAxisLeft().getValueFormatter().getClass());
                     //i.putExtra("viewPort", viewPortValues);
-                    i.putExtra("xScale", combinedChart.getViewPortHandler().getScaleX());
-                    i.putExtra("xTrans", combinedChart.getViewPortHandler().getTransX());
+                    i.putExtra("xScale", combinedChart.getScaleX());
+                    i.putExtra("xTrans", combinedChart.getLowestVisibleX());
                     i.putExtra("aggregationSpan", aggregationSpan);
                     String label = "";
                     if(combinedChart.getLegend().getEntries().length>0)
