@@ -84,15 +84,12 @@ public class DetailStatsActivity extends FitoTrackActivity {
         ChartStyles.defaultLineChart(chart);
         ChartStyles.setYAxisLabel(chart,label);
 
-        WorkoutType workoutType;
-        if (types.size()!=1) {
-            workoutType = new WorkoutType();
-            workoutType.id = "_all";
+        // Direct adding of the types from the Intent results in black screen...
+        workoutTypes = new ArrayList<>();
+        for(WorkoutType workoutType : types)
+        {
+            workoutTypes.add(WorkoutTypeManager.getInstance().getWorkoutTypeById(this, workoutType.id));
         }
-        else {
-            workoutType = WorkoutTypeManager.getInstance().getWorkoutTypeById(this, types.get(0).id);
-        }
-        workoutTypes = WorkoutTypeSelection.createWorkoutTypeList(this, workoutType);
 
         chart.setOnChartGestureListener(new OnChartGestureListener() {
             @Override
@@ -130,20 +127,9 @@ public class DetailStatsActivity extends FitoTrackActivity {
 
             @Override
             public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
-                long timeSpan = (long) ((chart.getHighestVisibleX() - chart.getLowestVisibleX()) * stats_time_factor);
-                AggregationSpan oldAggregationSpan = aggregationSpan;
-
-                if (TimeUnit.DAYS.toMillis(1095) < timeSpan) {
-                    aggregationSpan = AggregationSpan.YEAR;
-                } else if (TimeUnit.DAYS.toMillis(93) < timeSpan) {
-                    aggregationSpan = AggregationSpan.MONTH;
-                } else if (TimeUnit.DAYS.toMillis(21) < timeSpan) {
-                    aggregationSpan = AggregationSpan.WEEK;
-                } else {
-                    aggregationSpan = AggregationSpan.SINGLE;
-                }
-
-                if (oldAggregationSpan != aggregationSpan) {
+                AggregationSpan newAggSpan = ChartStyles.statsAggregationSpan(chart, stats_time_factor);
+                if (aggregationSpan != newAggSpan) {
+                    aggregationSpan = newAggSpan;
                     updateChart(workoutTypes);
                 }
             }
@@ -237,31 +223,11 @@ public class DetailStatsActivity extends FitoTrackActivity {
             }
             if (currentBarDataSet != null) {
                 BarData barData = new BarData(currentBarDataSet);
-                ChartStyles.setTextAppearance(barData);
-                float barWidth = Math.max(aggregationSpan.spanInterval, AggregationSpan.DAY.spanInterval);
-                barData.setBarWidth(barWidth / stats_time_factor * ChartStyles.BAR_WIDTH_FACTOR);
                 combinedData.setData(barData);
             }
         } catch (NoDataException e) {
         }
-
-        chart.getXAxis().setValueFormatter(new FractionedDateFormatter(this,aggregationSpan));
-        chart.getXAxis().setGranularity((float)aggregationSpan.spanInterval / stats_time_factor);
-        ChartStyles.setXAxisLabel(chart, getString(aggregationSpan.axisLabel));
-
-        chart.getAxisLeft().setValueFormatter(combinedData.getMaxEntryCountSet().getValueFormatter());
-
-        if (chart.getLegend().getEntries().length > 0) {
-            String yLabel = chart.getLegend().getEntries()[0].label;
-            chart.setMarker(new DisplayValueMarker(this, chart.getAxisLeft().getValueFormatter(), yLabel));
-        } else {
-            chart.setMarker(new DisplayValueMarker(this, chart.getAxisLeft().getValueFormatter(), ""));
-        }
-
-        chart.setData(combinedData);
-        chart.getXAxis().setAxisMinimum(combinedData.getXMin() - aggregationSpan.spanInterval / stats_time_factor / 2);
-        chart.getXAxis().setAxisMaximum(combinedData.getXMax() + aggregationSpan.spanInterval / stats_time_factor / 2);
-        chart.invalidate();
+        ChartStyles.updateCombinedChartToSpan(chart, combinedData, aggregationSpan, stats_time_factor, this);
     }
 
     private void animateChart (CombinedChart chart) {

@@ -8,22 +8,28 @@ import android.graphics.drawable.Drawable;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.BarLineChartBase;
 import com.github.mikephil.charting.charts.Chart;
+import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.ChartData;
+import com.github.mikephil.charting.data.CombinedData;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 import de.tadris.fitness.R;
+import de.tadris.fitness.aggregation.AggregationSpan;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.util.Icon;
+import de.tadris.fitness.util.charts.formatter.FractionedDateFormatter;
 import de.tadris.fitness.util.charts.marker.DisplayValueMarker;
 import de.tadris.fitness.util.charts.marker.WorkoutDisplayMarker;
 
@@ -130,8 +136,29 @@ public class ChartStyles {
         chart.setMarker(new DisplayValueMarker(ctx, chart.getAxisLeft().getValueFormatter()," "+unit));
     }
 
-    public static void defaultBarData(BarChart chart, BarData data) {
+    public static void updateCombinedChartToSpan(CombinedChart chart, CombinedData combinedData, AggregationSpan aggregationSpan, float stats_time_factor, Context ctx) {
+        ChartStyles.setTextAppearance(combinedData);
+        if(combinedData.getBarData() != null) {
+            float barWidth = Math.max(aggregationSpan.spanInterval, AggregationSpan.DAY.spanInterval);
+            combinedData.getBarData().setBarWidth(barWidth / stats_time_factor * ChartStyles.BAR_WIDTH_FACTOR);
+        }
+        chart.getXAxis().setValueFormatter(new FractionedDateFormatter(ctx,aggregationSpan));
+        chart.getXAxis().setGranularity((float)aggregationSpan.spanInterval / stats_time_factor);
+        ChartStyles.setXAxisLabel(chart, ctx.getString(aggregationSpan.axisLabel));
 
+        chart.getAxisLeft().setValueFormatter(combinedData.getMaxEntryCountSet().getValueFormatter());
+
+        if (chart.getLegend().getEntries().length > 0) {
+            String yLabel = chart.getLegend().getEntries()[0].label;
+            chart.setMarker(new DisplayValueMarker(ctx, chart.getAxisLeft().getValueFormatter(), yLabel));
+        } else {
+            chart.setMarker(new DisplayValueMarker(ctx, chart.getAxisLeft().getValueFormatter(), ""));
+        }
+
+        chart.setData(combinedData);
+        chart.getXAxis().setAxisMinimum(combinedData.getXMin() - aggregationSpan.spanInterval / stats_time_factor / 2);
+        chart.getXAxis().setAxisMaximum(combinedData.getXMax() + aggregationSpan.spanInterval / stats_time_factor / 2);
+        chart.invalidate();
     }
 
     public static void setTextAppearance(ChartData data)
@@ -206,5 +233,22 @@ public class ChartStyles {
         chart.getAxisLeft().setAxisMinimum(0);
         chart.getAxisRight().setAxisMinimum(0);
         chart.getDescription().setEnabled(false);
+    }
+
+    public static AggregationSpan statsAggregationSpan(BarLineChartBase chart, float stats_time_factor)
+    {
+        long timeSpan = (long) ((chart.getHighestVisibleX() - chart.getLowestVisibleX()) * stats_time_factor);
+        AggregationSpan aggregationSpan;
+
+        if (TimeUnit.DAYS.toMillis(1095) < timeSpan) {
+            aggregationSpan = AggregationSpan.YEAR;
+        } else if (TimeUnit.DAYS.toMillis(93) < timeSpan) {
+            aggregationSpan = AggregationSpan.MONTH;
+        } else if (TimeUnit.DAYS.toMillis(21) < timeSpan) {
+            aggregationSpan = AggregationSpan.WEEK;
+        } else {
+            aggregationSpan = AggregationSpan.SINGLE;
+        }
+        return aggregationSpan;
     }
 }

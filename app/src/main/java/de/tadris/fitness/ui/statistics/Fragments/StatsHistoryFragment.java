@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -225,23 +226,9 @@ public class StatsHistoryFragment extends StatsFragment {
 
                 @Override
                 public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
-                    float high = combinedChart.getHighestVisibleX();
-                    float low= combinedChart.getLowestVisibleX();
-                    long timeSpan = (long) ((high - low) * stats_time_factor);
-
-                    AggregationSpan oldAggregationSpan = aggregationSpan;
-
-                    if (TimeUnit.DAYS.toMillis(1095) < timeSpan) {
-                        aggregationSpan = AggregationSpan.YEAR;
-                    } else if (TimeUnit.DAYS.toMillis(93) < timeSpan) {
-                        aggregationSpan = AggregationSpan.MONTH;
-                    } else if (TimeUnit.DAYS.toMillis(21) < timeSpan) {
-                        aggregationSpan = AggregationSpan.WEEK;
-                    } else {
-                        aggregationSpan = AggregationSpan.SINGLE;
-                    }
-
-                    if (oldAggregationSpan != aggregationSpan) {
+                    AggregationSpan newAggSpan = ChartStyles.statsAggregationSpan(combinedChart, stats_time_factor);
+                    if (aggregationSpan != newAggSpan) {
+                        aggregationSpan = newAggSpan;
                         updateCharts(selection.getSelectedWorkoutTypes());
                     }
                 }
@@ -321,7 +308,7 @@ public class StatsHistoryFragment extends StatsFragment {
             LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);
             combinedData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(context, lineDataSet)));
 
-            updateChartToData(speedChart, combinedData);
+            ChartStyles.updateCombinedChartToSpan(speedChart, combinedData, aggregationSpan, stats_time_factor, getContext());
         } catch (NoDataException e) {
             speedChart.clear();
         }
@@ -335,9 +322,6 @@ public class StatsHistoryFragment extends StatsFragment {
             if (distanceSwitch.isChecked()) {
                 BarDataSet barDataSet = statsProvider.getDistanceSumData(aggregationSpan, workoutTypes);
                 BarData barData = new BarData(barDataSet);
-                ChartStyles.setTextAppearance(barData);
-                float barWidth = Math.max(aggregationSpan.spanInterval, AggregationSpan.DAY.spanInterval);
-                barData.setBarWidth(barWidth / stats_time_factor * ChartStyles.BAR_WIDTH_FACTOR);
                 combinedData.setData(barData);
             } else {
                 CandleDataSet candleDataSet = statsProvider.getDistanceCandleData(aggregationSpan, workoutTypes);
@@ -352,7 +336,7 @@ public class StatsHistoryFragment extends StatsFragment {
             // Therefore the following two lines resets all renderers manually.
             distanceChart.clear();
             ((CombinedChartRenderer) distanceChart.getRenderer()).createRenderers();
-            updateChartToData(distanceChart, combinedData);
+            ChartStyles.updateCombinedChartToSpan(distanceChart, combinedData, aggregationSpan, stats_time_factor, getContext());
             ChartStyles.setYAxisLabel(distanceChart, Instance.getInstance(getContext()).distanceUnitUtils.getDistanceUnitSystem().getLongDistanceUnit());
         } catch (NoDataException e) {
             distanceChart.clear();
@@ -372,9 +356,6 @@ public class StatsHistoryFragment extends StatsFragment {
             if (durationSwitch.isChecked()) {
                 BarDataSet barDataSet = statsProvider.getDurationSumData(aggregationSpan, workoutTypes);
                 BarData barData = new BarData(barDataSet);
-                ChartStyles.setTextAppearance(barData);
-                float barWidth = Math.max(aggregationSpan.spanInterval, AggregationSpan.DAY.spanInterval);
-                barData.setBarWidth(barWidth / stats_time_factor * ChartStyles.BAR_WIDTH_FACTOR);
                 combinedData.setData(barData);
             } else {
                 CandleDataSet candleDataSet = statsProvider.getDurationCandleData(aggregationSpan, workoutTypes);
@@ -389,7 +370,7 @@ public class StatsHistoryFragment extends StatsFragment {
             // Therefore the following two lines resets all renderers manually.
             durationChart.clear();
             ((CombinedChartRenderer) durationChart.getRenderer()).createRenderers();
-            updateChartToData(durationChart, combinedData);
+            ChartStyles.updateCombinedChartToSpan(durationChart, combinedData, aggregationSpan, stats_time_factor, getContext());
             ChartStyles.setYAxisLabel(durationChart, ((TimeFormatter)durationChart.getAxisLeft().getValueFormatter()).getUnit(getContext()));
         } catch (NoDataException e) {
             durationChart.clear();
@@ -404,9 +385,6 @@ public class StatsHistoryFragment extends StatsFragment {
             if (pauseDurationSwitch.isChecked()) {
                 BarDataSet barDataSet = statsProvider.getPauseDurationSumData(aggregationSpan, workoutTypes);
                 BarData barData = new BarData(barDataSet);
-                ChartStyles.setTextAppearance(barData);
-                float barWidth = Math.max(aggregationSpan.spanInterval, AggregationSpan.DAY.spanInterval);
-                barData.setBarWidth(barWidth / stats_time_factor * ChartStyles.BAR_WIDTH_FACTOR);
                 combinedData.setData(barData);
             } else {
                 CandleDataSet candleDataSet = statsProvider.getPauseDurationCandleData(aggregationSpan, workoutTypes);
@@ -421,23 +399,12 @@ public class StatsHistoryFragment extends StatsFragment {
             // Therefore the following two lines resets all renderers manually.
             pauseDurationChart.clear();
             ((CombinedChartRenderer) pauseDurationChart.getRenderer()).createRenderers();
-            updateChartToData(pauseDurationChart, combinedData);
+            ChartStyles.updateCombinedChartToSpan(pauseDurationChart, combinedData, aggregationSpan, stats_time_factor, getContext());
             ChartStyles.setYAxisLabel(pauseDurationChart, ((TimeFormatter)combinedData.getMaxEntryCountSet().getValueFormatter()).getUnit(getContext()));
         } catch (NoDataException e) {
             pauseDurationChart.clear();
         }
         pauseDurationChart.invalidate();
-    }
-
-    private void updateChartToData(CombinedChart chart, CombinedData data)
-    {
-        chart.setData(data);
-        chart.getXAxis().setValueFormatter(new FractionedDateFormatter(context,aggregationSpan));
-        chart.getXAxis().setGranularity((float)aggregationSpan.spanInterval / stats_time_factor);
-        chart.getAxisLeft().setValueFormatter(data.getMaxEntryCountSet().getValueFormatter());
-        ChartStyles.setXAxisLabel(chart, getString(aggregationSpan.axisLabel));
-        chart.getXAxis().setAxisMinimum(data.getXMin()-aggregationSpan.spanInterval/stats_time_factor/2);
-        chart.getXAxis().setAxisMaximum(data.getXMax()+aggregationSpan.spanInterval/stats_time_factor/2);
     }
 
     private void animateChart (CombinedChart chart) {
