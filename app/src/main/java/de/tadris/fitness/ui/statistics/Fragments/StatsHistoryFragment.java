@@ -336,7 +336,8 @@ public class StatsHistoryFragment extends StatsFragment {
                 BarDataSet barDataSet = statsProvider.getDistanceSumData(aggregationSpan, workoutTypes);
                 BarData barData = new BarData(barDataSet);
                 ChartStyles.setTextAppearance(barData);
-                barData.setBarWidth(aggregationSpan.spanInterval / stats_time_factor * ChartStyles.BAR_WIDTH_FACTOR);
+                float barWidth = Math.max(aggregationSpan.spanInterval, AggregationSpan.DAY.spanInterval);
+                barData.setBarWidth(barWidth / stats_time_factor * ChartStyles.BAR_WIDTH_FACTOR);
                 combinedData.setData(barData);
             } else {
                 CandleDataSet candleDataSet = statsProvider.getDistanceCandleData(aggregationSpan, workoutTypes);
@@ -372,7 +373,8 @@ public class StatsHistoryFragment extends StatsFragment {
                 BarDataSet barDataSet = statsProvider.getDurationSumData(aggregationSpan, workoutTypes);
                 BarData barData = new BarData(barDataSet);
                 ChartStyles.setTextAppearance(barData);
-                barData.setBarWidth(aggregationSpan.spanInterval / stats_time_factor * ChartStyles.BAR_WIDTH_FACTOR);
+                float barWidth = Math.max(aggregationSpan.spanInterval, AggregationSpan.DAY.spanInterval);
+                barData.setBarWidth(barWidth / stats_time_factor * ChartStyles.BAR_WIDTH_FACTOR);
                 combinedData.setData(barData);
             } else {
                 CandleDataSet candleDataSet = statsProvider.getDurationCandleData(aggregationSpan, workoutTypes);
@@ -403,7 +405,8 @@ public class StatsHistoryFragment extends StatsFragment {
                 BarDataSet barDataSet = statsProvider.getPauseDurationSumData(aggregationSpan, workoutTypes);
                 BarData barData = new BarData(barDataSet);
                 ChartStyles.setTextAppearance(barData);
-                barData.setBarWidth(aggregationSpan.spanInterval / stats_time_factor * ChartStyles.BAR_WIDTH_FACTOR);
+                float barWidth = Math.max(aggregationSpan.spanInterval, AggregationSpan.DAY.spanInterval);
+                barData.setBarWidth(barWidth / stats_time_factor * ChartStyles.BAR_WIDTH_FACTOR);
                 combinedData.setData(barData);
             } else {
                 CandleDataSet candleDataSet = statsProvider.getPauseDurationCandleData(aggregationSpan, workoutTypes);
