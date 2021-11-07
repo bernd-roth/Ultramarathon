@@ -14,7 +14,7 @@ import java.util.Arrays;
 
 import de.tadris.fitness.ui.statistics.Fragments.StatsFragment;
 import de.tadris.fitness.ui.statistics.Fragments.StatsHistoryFragment;
-import de.tadris.fitness.ui.statistics.Fragments.StatsHealthFragment;
+import de.tadris.fitness.ui.statistics.Fragments.StatsExploreFragment;
 import de.tadris.fitness.ui.statistics.Fragments.StatsOverviewFragment;
 
 public class StatisticsAdapter extends FragmentStateAdapter {
@@ -29,7 +29,7 @@ public class StatisticsAdapter extends FragmentStateAdapter {
         fragments = new ArrayList<>(Arrays.asList(
                 new StatsOverviewFragment(context),
                 new StatsHistoryFragment(context),
-                new StatsHealthFragment(context)));
+                new StatsExploreFragment(context)));
     }
 
     @Override

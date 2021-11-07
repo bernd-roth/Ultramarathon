@@ -457,7 +457,7 @@
     <string name="energyExpended">Energy expended</string>
     <string name="caloriesBurned">Calories burned</string>
     <string name="heartFrequency">Heart frequency</string>
-    <string name="stats_health_title">Health</string>
+    <string name="stats_explore_title">Explore</string>
     <string name="stats_history_title">History</string>
     <string name="stats_overview_title">Overview</string>
     <string name="histogram">Histogram</string>

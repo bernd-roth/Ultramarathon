@@ -52,7 +52,7 @@ public class WorkoutTypeSelection extends LinearLayout {
         typeAll = new WorkoutType(WorkoutTypeFilter.ID_ALL,
                 getContext().getString(R.string.workoutTypeAll), 0,
                 Color.WHITE, "list", 0, WorkoutType.RecordingType.GPS.id);
-        setSelectedWorkoutTypes(null);
+        setSelectedWorkoutTypes(createWorkoutTypeList(context,typeAll));
     }
 
     /**

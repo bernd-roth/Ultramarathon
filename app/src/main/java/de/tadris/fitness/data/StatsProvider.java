@@ -10,6 +10,8 @@ import androidx.annotation.RequiresApi;
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.BubbleDataSet;
+import com.github.mikephil.charting.data.BubbleEntry;
 import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CandleEntry;
 import com.github.mikephil.charting.data.DataSet;
@@ -32,6 +34,7 @@ import java.util.concurrent.TimeUnit;
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationSpan;
+import de.tadris.fitness.aggregation.WorkoutInformation;
 import de.tadris.fitness.aggregation.WorkoutTypeFilter;
 import de.tadris.fitness.util.WorkoutProperty;
 import de.tadris.fitness.util.charts.DataSetStyles;
@@ -486,6 +489,24 @@ public class StatsProvider {
         return barEntries;
     }
 
+    public BubbleDataSet getExploreData(List<WorkoutType> workoutTypes, StatsDataTypes.TimeSpan timeSpan, AggregationSpan aggregationSpan, WorkoutProperty xAxis, WorkoutProperty yAxis, WorkoutProperty bubbleSize) throws NoDataException {
+        ArrayList<StatsDataTypes.DataPoint> xData = dataProvider.getData(xAxis,
+                workoutTypes, timeSpan);
+        ArrayList<StatsDataTypes.DataPoint> yData = dataProvider.getData(yAxis,
+                workoutTypes, timeSpan);
+        ArrayList<StatsDataTypes.DataPoint> bubbleData = dataProvider.getData(bubbleSize,
+                workoutTypes, timeSpan);
+
+        if (xData.isEmpty() || yData.isEmpty()) {
+            throw new NoDataException();
+        }
+
+        List<BubbleEntry> bubbleEntries = new ArrayList<>();
+        for(int i = 0; i<xData.size();i++) {
+            bubbleEntries.add(new BubbleEntry((float)xData.get(i).value, (float)yData.get(i).value, (float)bubbleData.get(i).value));
+        }
+        return new BubbleDataSet(bubbleEntries, bubbleSize.getStringRepresentation(ctx));
+    }
 
 
     public static LineDataSet convertCandleToMeanLineData(CandleDataSet candleDataSet) {
@@ -526,5 +547,4 @@ public class StatsProvider {
             e.printStackTrace();
         }
     }
-
 }

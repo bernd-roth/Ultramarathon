@@ -39,6 +39,11 @@ public enum WorkoutProperty {
         return id;
     }
 
+    public static WorkoutProperty getById(int id)
+    {
+        return WorkoutProperty.values()[id];
+    }
+
     public boolean isBaseProperty() { return id <=CALORIE.getId(); }
     public boolean isGPSProperty() { return CALORIE.getId() < id && id <= DESCENT.getId(); }
     public boolean isIndoorProperty() { return DESCENT.getId() < id && id <=CALORIE.getId(); }
