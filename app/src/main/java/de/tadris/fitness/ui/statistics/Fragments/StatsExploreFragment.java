@@ -15,14 +15,20 @@ import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.data.BubbleData;
 import com.github.mikephil.charting.data.BubbleDataSet;
 import com.github.mikephil.charting.data.CombinedData;
+import com.github.mikephil.charting.data.ScatterData;
+import com.github.mikephil.charting.data.ScatterDataSet;
+
+import java.util.List;
 
 import de.tadris.fitness.R;
+import de.tadris.fitness.aggregation.AggregationSpan;
 import de.tadris.fitness.aggregation.WorkoutInformationManager;
 import de.tadris.fitness.data.StatsDataTypes;
 import de.tadris.fitness.data.StatsProvider;
 import de.tadris.fitness.ui.statistics.TimeSpanSelection;
 import de.tadris.fitness.ui.statistics.WorkoutTypeSelection;
 import de.tadris.fitness.util.WorkoutProperty;
+import de.tadris.fitness.util.charts.ChartStyles;
 import de.tadris.fitness.util.exceptions.NoDataException;
 
 public class StatsExploreFragment extends StatsFragment {
@@ -45,6 +51,9 @@ public class StatsExploreFragment extends StatsFragment {
         spinnerSize = view.findViewById(R.id.spinner_size);
         chart = view.findViewById(R.id.explore_chart);
 
+        ChartStyles.defaultChart(chart);
+        chart.getLegend().setEnabled(true);
+
         timeSpanSelection = view.findViewById(R.id.time_span_selection_exp);
         timeSpanSelection.setForegroundColor(getContext().getColor(R.color.textDarkerWhite));
         timeSpanSelection.addOnTimeSpanSelectionListener((aggregationSpan, instance) -> updateChart());
@@ -56,6 +65,9 @@ public class StatsExploreFragment extends StatsFragment {
         addAdapterAndListenerToSpinner(spinnerX);
         addAdapterAndListenerToSpinner(spinnerY);
         addAdapterAndListenerToSpinner(spinnerSize);
+        spinnerY.setSelection(2);
+        spinnerX.setSelection(8);
+        spinnerSize.setSelection(7);
     }
 
     private void addAdapterAndListenerToSpinner(Spinner spinner)
@@ -81,21 +93,28 @@ public class StatsExploreFragment extends StatsFragment {
         WorkoutProperty y = WorkoutProperty.getById(spinnerY.getSelectedItemPosition());
         WorkoutProperty bubbleSize = WorkoutProperty.getById(spinnerSize.getSelectedItemPosition());
 
+//        statsProvider.setAxisLimits(chart.getXAxis(), x);
+//        statsProvider.setAxisLimits(chart.getAxisLeft(), y);
+
         long start = timeSpanSelection.getSelectedInstance();
         StatsDataTypes.TimeSpan span = new StatsDataTypes.TimeSpan(start, timeSpanSelection.getSelectedAggregationSpan().getAggregationEnd(start));
 
         try {
-            BubbleDataSet bubbles = statsProvider.getExploreData(workoutTypeSelection.getSelectedWorkoutTypes(),
+            List<BubbleDataSet> bubbleSets = statsProvider.getExploreData(workoutTypeSelection.getSelectedWorkoutTypes(),
                     span,
                     timeSpanSelection.getSelectedAggregationSpan(),
                     x,
                     y,
                     bubbleSize);
             BubbleData bubbleData= new BubbleData();
-            bubbleData.addDataSet(bubbles);
+            for(BubbleDataSet bubbles : bubbleSets) {
+                bubbleData.addDataSet(bubbles);
+            }
             CombinedData dataSet = new CombinedData();
             dataSet.setData(bubbleData);
             chart.setData(dataSet);
+            chart.getXAxis().setValueFormatter(StatsProvider.getValueFormatter(x, getContext(), 1000, AggregationSpan.MONTH));
+            chart.getAxisLeft().setValueFormatter(StatsProvider.getValueFormatter(y, getContext(), 1000, AggregationSpan.MONTH));
         } catch (NoDataException e) {
             e.printStackTrace();
         }

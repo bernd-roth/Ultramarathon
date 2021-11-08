@@ -8,6 +8,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 import com.github.mikephil.charting.charts.Chart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.BubbleDataSet;
@@ -18,6 +20,7 @@ import com.github.mikephil.charting.data.DataSet;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.DefaultValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -38,6 +41,7 @@ import de.tadris.fitness.aggregation.WorkoutInformation;
 import de.tadris.fitness.aggregation.WorkoutTypeFilter;
 import de.tadris.fitness.util.WorkoutProperty;
 import de.tadris.fitness.util.charts.DataSetStyles;
+import de.tadris.fitness.util.charts.formatter.FractionedDateFormatter;
 import de.tadris.fitness.util.charts.formatter.SpeedFormatter;
 import de.tadris.fitness.util.charts.formatter.TimeFormatter;
 import de.tadris.fitness.util.exceptions.NoDataException;
@@ -372,6 +376,41 @@ public class StatsProvider {
             return new TimeFormatter(unit, true, true, false);
     }
 
+    public static ValueFormatter getValueFormatter(WorkoutProperty property, Context ctx, @Nullable long maxTime, @Nullable AggregationSpan span)
+    {
+        switch(property)
+        {
+            case START:
+            case END:
+                return new FractionedDateFormatter(ctx, span);
+            case DURATION:
+            case AVG_PACE:
+            case PAUSE_DURATION:
+                return getCorrectTimeFormatter(TimeUnit.MILLISECONDS, maxTime);
+
+            case AVG_SPEED:
+            case TOP_SPEED:
+                return new SpeedFormatter(Instance.getInstance(ctx).distanceUnitUtils);
+
+            case ASCENT:
+            case DESCENT:
+            case LENGTH:
+
+            case CALORIE:
+            case AVG_INTENSITY:
+            case MAX_INTENSITY:
+
+            case MAX_FREQUENCY:
+            case AVG_FREQUENCY:
+
+            case AVG_HEART_RATE:
+            case MAX_HEART_RATE:
+            default:
+                return new DefaultValueFormatter(2);
+        }
+    }
+
+
     private ArrayList<StatsDataTypes.DataPoint> findDataPointsInAggregationSpan(ArrayList<StatsDataTypes.DataPoint> data, Calendar startTime, AggregationSpan span) {
         // Retrieve the workoutProperty for all workouts in the specific time span
         StatsDataTypes.TimeSpan timeSpan = new StatsDataTypes.TimeSpan(startTime.getTimeInMillis(), span.getAggregationEnd(startTime).getTimeInMillis());
@@ -489,23 +528,35 @@ public class StatsProvider {
         return barEntries;
     }
 
-    public BubbleDataSet getExploreData(List<WorkoutType> workoutTypes, StatsDataTypes.TimeSpan timeSpan, AggregationSpan aggregationSpan, WorkoutProperty xAxis, WorkoutProperty yAxis, WorkoutProperty bubbleSize) throws NoDataException {
-        ArrayList<StatsDataTypes.DataPoint> xData = dataProvider.getData(xAxis,
-                workoutTypes, timeSpan);
-        ArrayList<StatsDataTypes.DataPoint> yData = dataProvider.getData(yAxis,
-                workoutTypes, timeSpan);
-        ArrayList<StatsDataTypes.DataPoint> bubbleData = dataProvider.getData(bubbleSize,
-                workoutTypes, timeSpan);
+    public List<BubbleDataSet> getExploreData(List<WorkoutType> workoutTypes, StatsDataTypes.TimeSpan timeSpan, AggregationSpan aggregationSpan, WorkoutProperty xAxis, WorkoutProperty yAxis, WorkoutProperty bubbleSize) throws NoDataException {
+        List<BubbleDataSet> dataSets = new ArrayList<>();
+        for(WorkoutType type : workoutTypes) {
+            List<WorkoutType> typeList = new ArrayList<>();
+            typeList.add(type);
+            ArrayList<StatsDataTypes.DataPoint> xData = dataProvider.getData(xAxis,
+                    typeList, timeSpan);
+            ArrayList<StatsDataTypes.DataPoint> yData = dataProvider.getData(yAxis,
+                    typeList, timeSpan);
+            ArrayList<StatsDataTypes.DataPoint> bubbleData = dataProvider.getData(bubbleSize,
+                    typeList, timeSpan);
 
-        if (xData.isEmpty() || yData.isEmpty()) {
+            if (xData.isEmpty() || yData.isEmpty() || bubbleData.isEmpty()) {
+                continue;
+            }
+
+            List<BubbleEntry> bubbleEntries = new ArrayList<>();
+            for (int i = 0; i < xData.size(); i++) {
+                bubbleEntries.add(new BubbleEntry((float) xData.get(i).value, (float) yData.get(i).value, (float) bubbleData.get(i).value));
+            }
+            BubbleDataSet set =new BubbleDataSet(bubbleEntries, type.title);
+            set.setColor(type.color);
+            set.setValueFormatter(getValueFormatter(yAxis, ctx, (long) set.getYMax(), AggregationSpan.MONTH));
+            dataSets.add(set);
+        }
+        if(dataSets.size() == 0) {
             throw new NoDataException();
         }
-
-        List<BubbleEntry> bubbleEntries = new ArrayList<>();
-        for(int i = 0; i<xData.size();i++) {
-            bubbleEntries.add(new BubbleEntry((float)xData.get(i).value, (float)yData.get(i).value, (float)bubbleData.get(i).value));
-        }
-        return new BubbleDataSet(bubbleEntries, bubbleSize.getStringRepresentation(ctx));
+        return dataSets;
     }
 
 
@@ -537,12 +588,12 @@ public class StatsProvider {
         return sum;
     }
 
-    public void setXLimits(Chart chart) {
+    public void setAxisLimits(AxisBase axis, WorkoutProperty property) {
         try {
-            chart.getXAxis().setAxisMinimum(dataProvider.getFirstData(
-                    WorkoutProperty.TOP_SPEED, WorkoutTypeManager.getInstance().getAllTypes(ctx)).time);
-            chart.getXAxis().setAxisMaximum(dataProvider.getLastData(
-                    WorkoutProperty.TOP_SPEED, WorkoutTypeManager.getInstance().getAllTypes(ctx)).time);
+            axis.setAxisMinimum(dataProvider.getFirstData(
+                    property, WorkoutTypeManager.getInstance().getAllTypes(ctx)).time);
+            axis.setAxisMaximum(dataProvider.getLastData(
+                    property, WorkoutTypeManager.getInstance().getAllTypes(ctx)).time);
         } catch (NoDataException e) {
             e.printStackTrace();
         }
