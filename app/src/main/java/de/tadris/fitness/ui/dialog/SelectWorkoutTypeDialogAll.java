@@ -37,7 +37,8 @@ public class SelectWorkoutTypeDialogAll extends SelectWorkoutTypeDialog {
     public SelectWorkoutTypeDialogAll(FitoTrackActivity context, WorkoutTypeSelectListener listener) {
         super(context, listener);
         // this.options.removeIf(type -> type.id==ID_ADD);
-        options.removeIf(type -> statsDataProvider.getData(WorkoutProperty.START, Arrays.asList(type)).size() == 0);
+        statsDataProvider = new StatsDataProvider(context);
+        this.options.removeIf(type -> statsDataProvider.getData(WorkoutProperty.START, Arrays.asList(type)).size() == 0);
 
         this.options.add(0, new WorkoutType(WorkoutTypeFilter.ID_ALL,
                 context.getString(R.string.workoutTypeAll), 0,
