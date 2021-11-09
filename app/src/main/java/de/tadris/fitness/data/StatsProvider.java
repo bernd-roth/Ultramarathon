@@ -549,7 +549,7 @@ public class StatsProvider {
                 bubbleEntries.add(new BubbleEntry((float) xData.get(i).value, (float) yData.get(i).value, (float) bubbleData.get(i).value));
             }
             BubbleDataSet set =new BubbleDataSet(bubbleEntries, type.title);
-            set.setColor(type.color);
+            set.setColor(type.color, 127);
             set.setValueFormatter(getValueFormatter(yAxis, ctx, (long) set.getYMax(), AggregationSpan.MONTH));
             dataSets.add(set);
         }

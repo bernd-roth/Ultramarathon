@@ -19,19 +19,29 @@
 
 package de.tadris.fitness.ui.dialog;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.WorkoutTypeFilter;
+import de.tadris.fitness.data.StatsDataProvider;
+import de.tadris.fitness.data.StatsProvider;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.ui.FitoTrackActivity;
+import de.tadris.fitness.util.WorkoutProperty;
 
 public class SelectWorkoutTypeDialogAll extends SelectWorkoutTypeDialog {
 
+    StatsDataProvider statsDataProvider;
+
     public SelectWorkoutTypeDialogAll(FitoTrackActivity context, WorkoutTypeSelectListener listener) {
         super(context, listener);
+        // this.options.removeIf(type -> type.id==ID_ADD);
+        options.removeIf(type -> statsDataProvider.getData(WorkoutProperty.START, Arrays.asList(type)).size() == 0);
+
         this.options.add(0, new WorkoutType(WorkoutTypeFilter.ID_ALL,
                 context.getString(R.string.workoutTypeAll), 0,
                 context.getThemePrimaryColor(), "list", 0, WorkoutType.RecordingType.GPS.id));
-        this.options.removeIf(type -> type.id==ID_ADD);
     }
 
 }
