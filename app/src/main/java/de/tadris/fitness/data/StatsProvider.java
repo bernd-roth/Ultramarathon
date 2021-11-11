@@ -46,6 +46,7 @@ import de.tadris.fitness.util.charts.formatter.SpeedFormatter;
 import de.tadris.fitness.util.charts.formatter.TimeFormatter;
 import de.tadris.fitness.util.exceptions.NoDataException;
 
+import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 public class StatsProvider {
@@ -548,9 +549,12 @@ public class StatsProvider {
             for (int i = 0; i < xData.size(); i++) {
                 bubbleEntries.add(new BubbleEntry((float) xData.get(i).value, (float) yData.get(i).value, (float) bubbleData.get(i).value));
             }
+            bubbleEntries.sort((Entry a, Entry b) -> a.getX() < b.getX() ? -1 : a.getX() > b.getX() ? 1 : 0);
             BubbleDataSet set =new BubbleDataSet(bubbleEntries, type.title);
-            set.setColor(type.color, 127);
+            int alpha = 255/(bubbleEntries.size());
+            set.setColor(type.color, min(max(alpha, 20), 160));
             set.setValueFormatter(getValueFormatter(yAxis, ctx, (long) set.getYMax(), AggregationSpan.MONTH));
+            set.setDrawValues(false);
             dataSets.add(set);
         }
         if(dataSets.size() == 0) {
