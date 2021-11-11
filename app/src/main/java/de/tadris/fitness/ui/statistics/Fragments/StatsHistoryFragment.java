@@ -306,15 +306,11 @@ public class StatsHistoryFragment extends StatsFragment {
     private void updateSpeedChart(List<WorkoutType> workoutTypes) {
         CandleDataSet candleDataSet;
 
+        WorkoutProperty property = speedSwitch.isChecked() ? WorkoutProperty.AVG_PACE : WorkoutProperty.AVG_SPEED;
         try {
-            if (speedSwitch.isChecked()) {
-                // Retrieve candle data
-                candleDataSet = statsProvider.getPaceCandleData(aggregationSpan, workoutTypes);
-                ChartStyles.setYAxisLabel(speedChart, Instance.getInstance(context).distanceUnitUtils.getPaceUnit());
-            } else {
-                candleDataSet = statsProvider.getSpeedCandleData(aggregationSpan, workoutTypes);
-                ChartStyles.setYAxisLabel(speedChart, Instance.getInstance(context).distanceUnitUtils.getDistanceUnitSystem().getSpeedUnit());
-            }
+            // Retrieve candle data
+            candleDataSet = statsProvider.getCandleData(aggregationSpan, workoutTypes, property);
+            ChartStyles.setYAxisLabel(speedChart, property.getUnit(context, candleDataSet.getYMax()));
 
             // Add candle data
             CombinedData combinedData = new CombinedData();
@@ -336,11 +332,11 @@ public class StatsHistoryFragment extends StatsFragment {
 
         try {
             if (distanceSwitch.isChecked()) {
-                BarDataSet barDataSet = statsProvider.getDistanceSumData(aggregationSpan, workoutTypes);
+                BarDataSet barDataSet = statsProvider.getSumData(aggregationSpan, workoutTypes, WorkoutProperty.LENGTH);
                 BarData barData = new BarData(barDataSet);
                 combinedData.setData(barData);
             } else {
-                CandleDataSet candleDataSet = statsProvider.getDistanceCandleData(aggregationSpan, workoutTypes);
+                CandleDataSet candleDataSet = statsProvider.getCandleData(aggregationSpan, workoutTypes, WorkoutProperty.LENGTH);
                 combinedData.setData(new CandleData(candleDataSet));
                 // Create background line
                 LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);
@@ -353,7 +349,7 @@ public class StatsHistoryFragment extends StatsFragment {
             distanceChart.clear();
             ((CombinedChartRenderer) distanceChart.getRenderer()).createRenderers();
             ChartStyles.updateCombinedChartToSpan(distanceChart, combinedData, aggregationSpan, statsProvider.STATS_TIME_FACTOR, getContext());
-            ChartStyles.setYAxisLabel(distanceChart, Instance.getInstance(getContext()).distanceUnitUtils.getDistanceUnitSystem().getLongDistanceUnit());
+            ChartStyles.setYAxisLabel(distanceChart, WorkoutProperty.LENGTH.getUnit(context, combinedData.getYMax()));
         } catch (NoDataException e) {
             distanceChart.clear();
         }
@@ -370,11 +366,11 @@ public class StatsHistoryFragment extends StatsFragment {
 
         try {
             if (durationSwitch.isChecked()) {
-                BarDataSet barDataSet = statsProvider.getDurationSumData(aggregationSpan, workoutTypes);
+                BarDataSet barDataSet = statsProvider.getSumData(aggregationSpan, workoutTypes, WorkoutProperty.DURATION);
                 BarData barData = new BarData(barDataSet);
                 combinedData.setData(barData);
             } else {
-                CandleDataSet candleDataSet = statsProvider.getDurationCandleData(aggregationSpan, workoutTypes);
+                CandleDataSet candleDataSet = statsProvider.getCandleData(aggregationSpan, workoutTypes, WorkoutProperty.DURATION);
                 combinedData.setData(new CandleData(candleDataSet));
                 // Create background line
                 LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);
@@ -387,7 +383,7 @@ public class StatsHistoryFragment extends StatsFragment {
             durationChart.clear();
             ((CombinedChartRenderer) durationChart.getRenderer()).createRenderers();
             ChartStyles.updateCombinedChartToSpan(durationChart, combinedData, aggregationSpan, statsProvider.STATS_TIME_FACTOR, getContext());
-            ChartStyles.setYAxisLabel(durationChart, ((TimeFormatter)durationChart.getAxisLeft().getValueFormatter()).getUnit(getContext()));
+            ChartStyles.setYAxisLabel(durationChart, WorkoutProperty.DURATION.getUnit(context, combinedData.getYMax()));
         } catch (NoDataException e) {
             durationChart.clear();
         }
@@ -399,11 +395,11 @@ public class StatsHistoryFragment extends StatsFragment {
 
         try {
             if (pauseDurationSwitch.isChecked()) {
-                BarDataSet barDataSet = statsProvider.getPauseDurationSumData(aggregationSpan, workoutTypes);
+                BarDataSet barDataSet = statsProvider.getSumData(aggregationSpan, workoutTypes, WorkoutProperty.PAUSE_DURATION);
                 BarData barData = new BarData(barDataSet);
                 combinedData.setData(barData);
             } else {
-                CandleDataSet candleDataSet = statsProvider.getPauseDurationCandleData(aggregationSpan, workoutTypes);
+                CandleDataSet candleDataSet = statsProvider.getCandleData(aggregationSpan, workoutTypes, WorkoutProperty.PAUSE_DURATION);
                 combinedData.setData(new CandleData(candleDataSet));
                 // Create background line
                 LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);
@@ -416,7 +412,7 @@ public class StatsHistoryFragment extends StatsFragment {
             pauseDurationChart.clear();
             ((CombinedChartRenderer) pauseDurationChart.getRenderer()).createRenderers();
             ChartStyles.updateCombinedChartToSpan(pauseDurationChart, combinedData, aggregationSpan, statsProvider.STATS_TIME_FACTOR, getContext());
-            ChartStyles.setYAxisLabel(pauseDurationChart, ((TimeFormatter)combinedData.getMaxEntryCountSet().getValueFormatter()).getUnit(getContext()));
+            ChartStyles.setYAxisLabel(pauseDurationChart, WorkoutProperty.PAUSE_DURATION.getUnit(context, combinedData.getYMax()));
         } catch (NoDataException e) {
             pauseDurationChart.clear();
         }

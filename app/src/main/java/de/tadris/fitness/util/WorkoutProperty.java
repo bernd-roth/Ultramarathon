@@ -16,9 +16,11 @@ import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationSpan;
 import de.tadris.fitness.data.StatsProvider;
+import de.tadris.fitness.util.charts.formatter.DistanceFormatter;
 import de.tadris.fitness.util.charts.formatter.FractionedDateFormatter;
 import de.tadris.fitness.util.charts.formatter.SpeedFormatter;
 import de.tadris.fitness.util.charts.formatter.TimeFormatter;
+import de.tadris.fitness.util.unit.DistanceUnitUtils;
 
 public enum WorkoutProperty {
     START(0),
@@ -113,7 +115,7 @@ public enum WorkoutProperty {
             case ASCENT:
             case DESCENT:
             case LENGTH:
-                return new DefaultValueFormatter(1);
+                return new DistanceFormatter(Instance.getInstance(ctx).distanceUnitUtils, (int)value);
 
             case CALORIE:
             case AVG_INTENSITY:

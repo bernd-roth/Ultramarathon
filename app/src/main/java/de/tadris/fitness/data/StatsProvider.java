@@ -113,7 +113,7 @@ public class StatsProvider {
 
         for (StatsDataTypes.DataPoint dataPoint : workouts) {
             distances.put(dataPoint.workoutType,
-                    distances.getOrDefault(dataPoint.workoutType, (float) 0) + (float) dataPoint.value / 1000);
+                    distances.getOrDefault(dataPoint.workoutType, (float) 0) + (float) dataPoint.value);
         }
 
         // Sort numberOfWorkouts map
@@ -223,11 +223,6 @@ public class StatsProvider {
         return DataSetStyles.applyDefaultCandleStyle(ctx, candleDataSet);
     }
 
-    public LineDataSet getPaceLineData(AggregationSpan span, List<WorkoutType> workoutTypes) throws NoDataException {
-        return convertCandleToMeanLineData(getPaceCandleData(span, workoutTypes));
-    }
-
-
     public CandleDataSet getSpeedCandleData(AggregationSpan span, List<WorkoutType> workoutTypes) throws NoDataException {
         final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.AVG_SPEED;
 
@@ -254,10 +249,6 @@ public class StatsProvider {
                 WORKOUT_PROPERTY.name()));
     }
 
-    public LineDataSet getDistanceLineData(AggregationSpan span, List<WorkoutType> workoutTypes) throws NoDataException {
-        return convertCandleToMeanLineData(getDistanceCandleData(span, workoutTypes));
-    }
-
     public BarDataSet getDistanceSumData(AggregationSpan span, List<WorkoutType> workoutTypes) throws NoDataException {
         final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.LENGTH;
 
@@ -281,10 +272,6 @@ public class StatsProvider {
                 WORKOUT_PROPERTY.getStringRepresentation(ctx)));
         dataSet.setValueFormatter(WORKOUT_PROPERTY.getValueFormatter(ctx, dataSet.getYMax()));
         return dataSet;
-    }
-
-    public LineDataSet getDurationLineData(AggregationSpan span, List<WorkoutType> workoutTypes) throws NoDataException {
-        return convertCandleToMeanLineData(getDurationCandleData(span, workoutTypes));
     }
 
     public BarDataSet getDurationSumData(AggregationSpan span, List<WorkoutType> workoutTypes) throws NoDataException {

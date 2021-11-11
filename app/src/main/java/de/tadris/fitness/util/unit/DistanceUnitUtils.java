@@ -171,8 +171,16 @@ public class DistanceUnitUtils extends UnitUtils {
             if (useLongUnitNames) {
                 return value + " " + getString(distanceUnitSystem.getShortDistanceUnitTitle(value != 1));
             } else {
-                return (int) distanceUnitSystem.getDistanceFromMeters(distanceInMeters) + " " + distanceUnitSystem.getShortDistanceUnit();
+                return value + " " + distanceUnitSystem.getShortDistanceUnit();
             }
+        }
+    }
+
+    public String getDistanceWithoutUnit(int distanceInMeters, boolean useLongUnit, int precision) {
+        if (useLongUnit) {
+            return round(distanceUnitSystem.getDistanceFromKilometers((double) distanceInMeters / 1000d), precision);
+        } else {
+            return round(distanceUnitSystem.getDistanceFromMeters(distanceInMeters),0);
         }
     }
 
