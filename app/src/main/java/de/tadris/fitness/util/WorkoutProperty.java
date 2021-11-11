@@ -2,6 +2,7 @@ package de.tadris.fitness.util;
 
 import android.content.Context;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import de.tadris.fitness.R;
@@ -43,6 +44,9 @@ public enum WorkoutProperty {
     {
         return WorkoutProperty.values()[id];
     }
+
+    private static final List<WorkoutProperty> summable = Arrays.asList(DURATION, PAUSE_DURATION, CALORIE, LENGTH, ASCENT, DESCENT);
+    public boolean summable() {return summable.contains(this);}
 
     public boolean isBaseProperty() { return id <=CALORIE.getId(); }
     public boolean isGPSProperty() { return CALORIE.getId() < id && id <= DESCENT.getId(); }

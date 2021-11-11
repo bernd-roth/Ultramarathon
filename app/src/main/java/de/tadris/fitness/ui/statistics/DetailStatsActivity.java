@@ -35,6 +35,7 @@ import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.data.WorkoutTypeManager;
 import de.tadris.fitness.ui.FitoTrackActivity;
 import de.tadris.fitness.ui.workout.ShowGpsWorkoutActivity;
+import de.tadris.fitness.util.WorkoutProperty;
 import de.tadris.fitness.util.charts.ChartStyles;
 import de.tadris.fitness.util.charts.DataSetStyles;
 import de.tadris.fitness.util.charts.formatter.FractionedDateFormatter;
@@ -50,7 +51,8 @@ public class DetailStatsActivity extends FitoTrackActivity {
     AggregationSpan aggregationSpan;
     StatsProvider statsProvider;
     float xScale, xTrans;
-    StatsProvider.StatsType statsType;
+    WorkoutProperty property;
+    boolean summed;
     CandleDataSet currentCandleDataSet = null;
     BarDataSet currentBarDataSet = null;
 
@@ -74,10 +76,10 @@ public class DetailStatsActivity extends FitoTrackActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        int chartIndex = Integer.parseInt(getIntent().getExtras().getString("data"));
+        property = (WorkoutProperty) getIntent().getSerializableExtra("property");
+        summed = getIntent().getBooleanExtra("summed", false);
         List<WorkoutType> types = (ArrayList<WorkoutType>) getIntent().getSerializableExtra("types");
         String label = (String) getIntent().getSerializableExtra("ylabel");
-        statsType = StatsProvider.StatsType.getByIndex(chartIndex);
         xScale = getIntent().getFloatExtra("xScale", 0);
         xTrans = getIntent().getFloatExtra("xTrans", 0);
 
@@ -172,56 +174,17 @@ public class DetailStatsActivity extends FitoTrackActivity {
 
         // Draw candle charts
         try {
-            switch (statsType) {
-                case SPEED_CANDLE_DATA:
-                    currentCandleDataSet = statsProvider.getSpeedCandleData(aggregationSpan, workoutTypes);
-                    setTitle(this.getString(R.string.workoutSpeed)+additionalTitle);
-                    break;
-                case PACE_CANDLE_DATA:
-                    currentCandleDataSet = statsProvider.getPaceCandleData(aggregationSpan, workoutTypes);
-                    setTitle(this.getString(R.string.workoutPace)+additionalTitle);
-                    break;
-                case DISTANCE_CANDLE_DATA:
-                    currentCandleDataSet = statsProvider.getDistanceCandleData(aggregationSpan, workoutTypes);
-                    setTitle(this.getString(R.string.workoutAvgDistance)+additionalTitle);
-                    break;
-                case DURATION_CANDLE_DATA:
-                    currentCandleDataSet = statsProvider.getDurationCandleData(aggregationSpan, workoutTypes);
-                    setTitle(this.getString(R.string.workoutAvgDurationLong)+additionalTitle);
-                    break;
-                case PAUSE_DURATION_CANDLE_DATA:
-                    currentCandleDataSet = statsProvider.getPauseDurationCandleData(aggregationSpan, workoutTypes);
-                    setTitle(this.getString(R.string.workoutAvgPauseDuration)+additionalTitle);
-                    break;
-                default:
-                    break;
-            }
-            if (currentCandleDataSet != null) {
+            if (summed != true) {
+                currentCandleDataSet = statsProvider.getCandleData(aggregationSpan, workoutTypes, property);
+                setTitle(currentCandleDataSet.getLabel()+additionalTitle);
                 combinedData.setData(new CandleData(currentCandleDataSet));
                 // Create background line data
                 LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(currentCandleDataSet);
                 combinedData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(this, lineDataSet)));
             }
-        } catch (NoDataException e) {
-        }
-
-        // Draw bar charts
-        try {
-            switch (statsType)  {
-                case DISTANCE_SUM_DATA:
-                    currentBarDataSet = statsProvider.getDistanceSumData(aggregationSpan, workoutTypes);
-                    setTitle(this.getString(R.string.workoutDistanceSum)+additionalTitle);
-                    break;
-                case DURATION_SUM_DATA:
-                    currentBarDataSet = statsProvider.getDurationSumData(aggregationSpan, workoutTypes);
-                    setTitle(this.getString(R.string.workoutDurationSum)+additionalTitle);
-                    break;
-                case PAUSE_DURATION_SUM_DATA:
-                    currentBarDataSet = statsProvider.getPauseDurationSumData(aggregationSpan, workoutTypes);
-                    setTitle(this.getString(R.string.workoutPauseDurationSum)+additionalTitle);
-                    break;
-            }
-            if (currentBarDataSet != null) {
+            else {
+                currentBarDataSet = statsProvider.getSumData(aggregationSpan, workoutTypes, property);
+                setTitle(this.getString(R.string.workoutDistanceSum)+additionalTitle);
                 BarData barData = new BarData(currentBarDataSet);
                 combinedData.setData(barData);
             }

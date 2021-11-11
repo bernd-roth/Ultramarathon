@@ -71,8 +71,6 @@ public class StatsHistoryFragment extends StatsFragment {
     Switch distanceSwitch;
     CombinedChart distanceChart;
 
-    float stats_time_factor;
-
     WorkoutTypeSelection selection;
 
     ChartSynchronizer synchronizer;
@@ -88,9 +86,6 @@ public class StatsHistoryFragment extends StatsFragment {
         super(R.layout.fragment_stats_history, ctx);
         synchronizer = new ChartSynchronizer();
         statsProvider = new StatsProvider(ctx);
-        TypedValue stats_time_factor = new TypedValue();
-        context.getResources().getValue(R.dimen.stats_time_factor, stats_time_factor, true);
-        this.stats_time_factor = stats_time_factor.getFloat();
         preferences = new UserPreferences(ctx);
     }
 
@@ -205,7 +200,28 @@ public class StatsHistoryFragment extends StatsFragment {
                     combinedChart.getViewPortHandler().getMatrixTouch().getValues(viewPortValues);
 
                     Intent i = new Intent(context, DetailStatsActivity.class);
-                    i.putExtra("data", combinedChart.getData().getDataSetLabels()[0]);
+                    WorkoutProperty workoutProperty;
+                    boolean summed = false;
+                    switch (combinedChartList.indexOf(combinedChart))
+                    {
+                        case 0:
+                            workoutProperty = speedSwitch.isChecked() ? WorkoutProperty.AVG_PACE : WorkoutProperty.AVG_SPEED;
+                            break;
+                        case 1:
+                            workoutProperty = WorkoutProperty.LENGTH;
+                            summed = distanceSwitch.isChecked();
+                            break;
+                        case 2:
+                            workoutProperty = WorkoutProperty.DURATION;
+                            summed = durationSwitch.isChecked();
+                            break;
+                        case 3:
+                        default:
+                            workoutProperty = WorkoutProperty.PAUSE_DURATION;
+                            summed = pauseDurationSwitch.isChecked();
+                    }
+                    i.putExtra("property", (Serializable) workoutProperty);
+                    i.putExtra("summed", summed);
                     i.putExtra("types", (Serializable) selection.getSelectedWorkoutTypes());
                     i.putExtra("formatter", combinedChart.getAxisLeft().getValueFormatter().getClass());
                     //i.putExtra("viewPort", viewPortValues);
@@ -226,7 +242,7 @@ public class StatsHistoryFragment extends StatsFragment {
 
                 @Override
                 public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
-                    AggregationSpan newAggSpan = ChartStyles.statsAggregationSpan(combinedChart, stats_time_factor);
+                    AggregationSpan newAggSpan = ChartStyles.statsAggregationSpan(combinedChart, statsProvider.STATS_TIME_FACTOR);
                     if (aggregationSpan != newAggSpan) {
                         aggregationSpan = newAggSpan;
                         updateCharts(selection.getSelectedWorkoutTypes());
@@ -308,7 +324,7 @@ public class StatsHistoryFragment extends StatsFragment {
             LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);
             combinedData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(context, lineDataSet)));
 
-            ChartStyles.updateCombinedChartToSpan(speedChart, combinedData, aggregationSpan, stats_time_factor, getContext());
+            ChartStyles.updateCombinedChartToSpan(speedChart, combinedData, aggregationSpan, statsProvider.STATS_TIME_FACTOR, getContext());
         } catch (NoDataException e) {
             speedChart.clear();
         }
@@ -336,7 +352,7 @@ public class StatsHistoryFragment extends StatsFragment {
             // Therefore the following two lines resets all renderers manually.
             distanceChart.clear();
             ((CombinedChartRenderer) distanceChart.getRenderer()).createRenderers();
-            ChartStyles.updateCombinedChartToSpan(distanceChart, combinedData, aggregationSpan, stats_time_factor, getContext());
+            ChartStyles.updateCombinedChartToSpan(distanceChart, combinedData, aggregationSpan, statsProvider.STATS_TIME_FACTOR, getContext());
             ChartStyles.setYAxisLabel(distanceChart, Instance.getInstance(getContext()).distanceUnitUtils.getDistanceUnitSystem().getLongDistanceUnit());
         } catch (NoDataException e) {
             distanceChart.clear();
@@ -370,7 +386,7 @@ public class StatsHistoryFragment extends StatsFragment {
             // Therefore the following two lines resets all renderers manually.
             durationChart.clear();
             ((CombinedChartRenderer) durationChart.getRenderer()).createRenderers();
-            ChartStyles.updateCombinedChartToSpan(durationChart, combinedData, aggregationSpan, stats_time_factor, getContext());
+            ChartStyles.updateCombinedChartToSpan(durationChart, combinedData, aggregationSpan, statsProvider.STATS_TIME_FACTOR, getContext());
             ChartStyles.setYAxisLabel(durationChart, ((TimeFormatter)durationChart.getAxisLeft().getValueFormatter()).getUnit(getContext()));
         } catch (NoDataException e) {
             durationChart.clear();
@@ -399,7 +415,7 @@ public class StatsHistoryFragment extends StatsFragment {
             // Therefore the following two lines resets all renderers manually.
             pauseDurationChart.clear();
             ((CombinedChartRenderer) pauseDurationChart.getRenderer()).createRenderers();
-            ChartStyles.updateCombinedChartToSpan(pauseDurationChart, combinedData, aggregationSpan, stats_time_factor, getContext());
+            ChartStyles.updateCombinedChartToSpan(pauseDurationChart, combinedData, aggregationSpan, statsProvider.STATS_TIME_FACTOR, getContext());
             ChartStyles.setYAxisLabel(pauseDurationChart, ((TimeFormatter)combinedData.getMaxEntryCountSet().getValueFormatter()).getUnit(getContext()));
         } catch (NoDataException e) {
             pauseDurationChart.clear();

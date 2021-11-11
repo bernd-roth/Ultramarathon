@@ -12,9 +12,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import de.tadris.fitness.ui.statistics.Fragments.StatsExploreFragment;
 import de.tadris.fitness.ui.statistics.Fragments.StatsFragment;
 import de.tadris.fitness.ui.statistics.Fragments.StatsHistoryFragment;
-import de.tadris.fitness.ui.statistics.Fragments.StatsExploreFragment;
+import de.tadris.fitness.ui.statistics.Fragments.StatsExperimentalFragment;
 import de.tadris.fitness.ui.statistics.Fragments.StatsOverviewFragment;
 
 public class StatisticsAdapter extends FragmentStateAdapter {

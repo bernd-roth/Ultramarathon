@@ -1,64 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <de.tadris.fitness.ui.statistics.WorkoutTypeSelection
+        android:id="@+id/stats_explore_type_selector"
+        style="@style/statsBar"
+        android:gravity="center_horizontal" />
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <de.tadris.fitness.ui.statistics.WorkoutTypeSelection
-            android:id="@+id/workout_type_selector_exp"
-            style="@style/statsBar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal" />
-
-        <de.tadris.fitness.ui.statistics.TimeSpanSelection
-            android:id="@+id/time_span_selection_exp"
-            style="@style/statsBar"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_gravity="center_horizontal" />
-
-        <Spinner
-            android:id="@+id/spinner_y_axis"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="start"
-            android:padding="5dp" />
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/stats_explore_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    style="@style/title"/>
+
+                <Switch
+                    android:id="@+id/stats_explore_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
 
             <com.github.mikephil.charting.charts.CombinedChart
-                android:id="@+id/explore_chart"
+                android:id="@+id/stats_explore_chart"
                 android:layout_width="match_parent"
-                android:layout_height="300dp">
+                android:layout_height="200dp" />
 
-            </com.github.mikephil.charting.charts.CombinedChart>
         </LinearLayout>
-
-        <Spinner
-            android:id="@+id/spinner_x_axis"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="start"
-            android:padding="5dp" />
-
-        <Spinner
-            android:id="@+id/spinner_size"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="start"
-            android:padding="5dp" />
-
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</LinearLayout>

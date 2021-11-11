@@ -1,80 +1,93 @@
 package de.tadris.fitness.ui.statistics.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.CombinedChart;
-import com.github.mikephil.charting.data.BubbleData;
-import com.github.mikephil.charting.data.BubbleDataSet;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.CandleData;
+import com.github.mikephil.charting.data.CandleDataSet;
+import com.github.mikephil.charting.data.CandleEntry;
 import com.github.mikephil.charting.data.CombinedData;
-import com.github.mikephil.charting.data.ScatterData;
-import com.github.mikephil.charting.data.ScatterDataSet;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.listener.ChartTouchListener;
+import com.github.mikephil.charting.listener.OnChartGestureListener;
+import com.github.mikephil.charting.renderer.CombinedChartRenderer;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
+import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationSpan;
-import de.tadris.fitness.aggregation.WorkoutInformationManager;
 import de.tadris.fitness.data.StatsDataProvider;
 import de.tadris.fitness.data.StatsDataTypes;
 import de.tadris.fitness.data.StatsProvider;
-import de.tadris.fitness.data.WorkoutTypeManager;
-import de.tadris.fitness.ui.statistics.TimeSpanSelection;
+import de.tadris.fitness.data.UserPreferences;
+import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.ui.statistics.DetailStatsActivity;
 import de.tadris.fitness.ui.statistics.WorkoutTypeSelection;
 import de.tadris.fitness.util.WorkoutProperty;
 import de.tadris.fitness.util.charts.ChartStyles;
+import de.tadris.fitness.util.charts.DataSetStyles;
+import de.tadris.fitness.util.charts.formatter.TimeFormatter;
 import de.tadris.fitness.util.exceptions.NoDataException;
+import de.tadris.fitness.util.statistics.OnChartGestureMultiListener;
 
 public class StatsExploreFragment extends StatsFragment {
-    StatsProvider statsProvider;
-    Spinner spinnerY, spinnerX, spinnerSize;
-    TimeSpanSelection timeSpanSelection;
-    WorkoutTypeSelection workoutTypeSelection;
+    Spinner title;
+    Switch chartSwitch;
     CombinedChart chart;
+
+    WorkoutTypeSelection selection;
+
+    StatsProvider statsProvider;
+
+    AggregationSpan aggregationSpan = AggregationSpan.YEAR;
+
+    UserPreferences preferences;
 
     public StatsExploreFragment(Context ctx) {
         super(R.layout.fragment_stats_explore, ctx);
         statsProvider = new StatsProvider(ctx);
+        preferences = new UserPreferences(ctx);
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        spinnerX = view.findViewById(R.id.spinner_x_axis);
-        spinnerY = view.findViewById(R.id.spinner_y_axis);
-        spinnerSize = view.findViewById(R.id.spinner_size);
-        chart = view.findViewById(R.id.explore_chart);
+        title = view.findViewById(R.id.stats_explore_title);
+        selection = view.findViewById(R.id.stats_explore_type_selector);
+        ((TextView)selection.findViewById(R.id.view_workout_type_selection_text)).setTextColor(getContext().getColor(R.color.textDarkerWhite));
+        chart = view.findViewById(R.id.stats_explore_chart);
+        chartSwitch = view.findViewById(R.id.stats_explore_switch);
 
-        ChartStyles.defaultChart(chart);
-        chart.getLegend().setEnabled(true);
+        // Register WorkoutType selection listeners
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, WorkoutProperty.getStringRepresentations(getContext()));
+        title.setAdapter(spinnerAdapter);
 
-        timeSpanSelection = view.findViewById(R.id.time_span_selection_exp);
-        timeSpanSelection.setForegroundColor(getContext().getColor(R.color.textDarkerWhite));
-        timeSpanSelection.addOnTimeSpanSelectionListener((aggregationSpan, instance) -> updateChart());
+        selection.addOnWorkoutTypeSelectListener(workoutType -> updateChart());
+        selection.addOnWorkoutTypeSelectListener(workoutType -> preferences.setStatisticsSelectedTypes(selection.getSelectedWorkoutTypes()));
+        selection.setSelectedWorkoutTypes(preferences.getStatisticsSelectedTypes());
 
-        workoutTypeSelection = view.findViewById(R.id.workout_type_selector_exp);
-        ((TextView)workoutTypeSelection.findViewById(R.id.view_workout_type_selection_text)).setTextColor(getContext().getColor(R.color.textDarkerWhite));
-        workoutTypeSelection.addOnWorkoutTypeSelectListener(workoutType -> updateChart());
 
-        addAdapterAndListenerToSpinner(spinnerX);
-        addAdapterAndListenerToSpinner(spinnerY);
-        addAdapterAndListenerToSpinner(spinnerSize);
-        spinnerY.setSelection(2);
-        spinnerX.setSelection(8);
-        spinnerSize.setSelection(7);
-    }
-
-    private void addAdapterAndListenerToSpinner(Spinner spinner)
-    {
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        title.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 updateChart();
@@ -85,42 +98,150 @@ public class StatsExploreFragment extends StatsFragment {
             }
         });
 
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, WorkoutProperty.getStringRepresentations(getContext()));
-        spinner.setAdapter(spinnerAdapter);
+
+        // Setup switch functionality
+        chartSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateChart();
+            }
+        });
+        animateChart(chart);
+        fixViewPortOffsets(chart, 120);
+        ChartStyles.defaultLineChart(chart);
+        statsProvider.setAxisLimits(chart.getXAxis(), WorkoutProperty.TOP_SPEED);
+        OnChartGestureMultiListener multiListener = new OnChartGestureMultiListener(new ArrayList<>());
+        multiListener.listeners.add(new OnChartGestureListener() {
+            @Override
+            public void onChartGestureStart(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
+
+            }
+
+            @Override
+            public void onChartGestureEnd(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
+
+            }
+
+            @Override
+            public void onChartLongPressed(MotionEvent me) {
+
+            }
+
+            @Override
+            public void onChartDoubleTapped(MotionEvent me) {
+
+            }
+
+            @Override
+            public void onChartSingleTapped(MotionEvent me) {
+                Intent i = new Intent(context, DetailStatsActivity.class);
+                i.putExtra("property", WorkoutProperty.getById(title.getSelectedItemPosition()));
+                i.putExtra("summed", chartSwitch.isChecked());
+                i.putExtra("types", (Serializable) selection.getSelectedWorkoutTypes());
+                i.putExtra("formatter", chart.getAxisLeft().getValueFormatter().getClass());
+                i.putExtra("xScale", chart.getScaleX());
+                i.putExtra("xTrans", chart.getLowestVisibleX());
+                i.putExtra("aggregationSpan", aggregationSpan);
+                String label = "";
+                if(chart.getLegend().getEntries().length>0)
+                    label =chart.getLegend().getEntries()[0].label;
+                i.putExtra("ylabel", label);
+                context.startActivity(i);
+            }
+
+            @Override
+            public void onChartFling(MotionEvent me1, MotionEvent me2, float velocityX, float velocityY) {
+
+            }
+
+            @Override
+            public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
+                AggregationSpan newAggSpan = ChartStyles.statsAggregationSpan(chart, statsProvider.STATS_TIME_FACTOR);
+                if (aggregationSpan != newAggSpan) {
+                    aggregationSpan = newAggSpan;
+                    updateChart();
+                }
+            }
+
+            @Override
+            public void onChartTranslate(MotionEvent me, float dX, float dY) {
+
+            }
+        });
+        chart.setOnChartGestureListener(multiListener);
+
+        displaySpan(preferences.getStatisticsAggregationSpan()); // set viewport according to other statistic views
     }
 
-    private void updateChart()
+    private void displaySpan(AggregationSpan span)
     {
-        WorkoutProperty x = WorkoutProperty.getById(spinnerX.getSelectedItemPosition());
-        WorkoutProperty y = WorkoutProperty.getById(spinnerY.getSelectedItemPosition());
-        WorkoutProperty bubbleSize = WorkoutProperty.getById(spinnerSize.getSelectedItemPosition());
+        // set span for aggregation -> one smaller
+        if(span == AggregationSpan.ALL){
+            aggregationSpan = AggregationSpan.YEAR;
+        } else if(span == AggregationSpan.YEAR){
+            aggregationSpan = AggregationSpan.MONTH;
+        } else if(span == AggregationSpan.MONTH){
+            aggregationSpan = AggregationSpan.WEEK;
+        } else if(span == AggregationSpan.WEEK){
+            aggregationSpan = AggregationSpan.SINGLE;
+        }
+        updateChart();
 
-//        statsProvider.setAxisLimits(chart.getXAxis(), x);
-//        statsProvider.setAxisLimits(chart.getAxisLeft(), y);
+        // set view port
+        final StatsDataProvider dataProvider = new StatsDataProvider(context);
+        final ArrayList<StatsDataTypes.DataPoint> data = dataProvider.getData(WorkoutProperty.LENGTH, selection.getSelectedWorkoutTypes());
+        if (data.size() > 0) {
+            final StatsDataTypes.DataPoint firstEntry = data.get(0);
+            final StatsDataTypes.DataPoint lastEntry = data.get(data.size() - 1);
+            final long leftTime = lastEntry.time - span.spanInterval;
+            final float zoom = (float) (lastEntry.time- firstEntry.time) / span.spanInterval;
+            chart.zoom(zoom, 1, 0, 0);
+            chart.moveViewToX(leftTime);
+        }
+    }
 
-        long start = timeSpanSelection.getSelectedInstance();
-        StatsDataTypes.TimeSpan span = new StatsDataTypes.TimeSpan(start, timeSpanSelection.getSelectedAggregationSpan().getAggregationEnd(start));
+    private void updateChart() {
+        List<WorkoutType> workoutTypes = selection.getSelectedWorkoutTypes();
+        WorkoutProperty property = WorkoutProperty.getById(title.getSelectedItemPosition());
+        CombinedData combinedData = new CombinedData();
 
         try {
-            List<BubbleDataSet> bubbleSets = statsProvider.getExploreData(workoutTypeSelection.getSelectedWorkoutTypes(),
-                    span,
-                    timeSpanSelection.getSelectedAggregationSpan(),
-                    x,
-                    y,
-                    bubbleSize);
-            BubbleData bubbleData= new BubbleData();
-            for(BubbleDataSet bubbles : bubbleSets) {
-                bubbleData.addDataSet(bubbles);
+            if (chartSwitch.isChecked()) {
+                List<BarEntry> entries = statsProvider.getCombinedSumData(aggregationSpan, workoutTypes, property);
+                BarDataSet barDataSet = new BarDataSet(entries, property.name());
+                DataSetStyles.applyDefaultBarStyle(getContext(), barDataSet);
+                BarData barData = new BarData(barDataSet);
+                combinedData.setData(barData);
+            } else {
+                List<CandleEntry> entries = statsProvider.getCombinedCandleData(aggregationSpan, workoutTypes, property);
+                CandleDataSet candleDataSet = new CandleDataSet(entries, property.name());
+                CandleDataSet dataSet = DataSetStyles.applyDefaultCandleStyle(getContext(), candleDataSet);
+                combinedData.setData(new CandleData(candleDataSet));
+                // Create background line
+                LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);
+                combinedData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(context, lineDataSet)));
             }
-            CombinedData dataSet = new CombinedData();
-            dataSet.setData(bubbleData);
-            chart.setData(dataSet);
-            chart.getXAxis().setValueFormatter(StatsProvider.getValueFormatter(x, getContext(), 1000, AggregationSpan.MONTH));
-            chart.getAxisLeft().setValueFormatter(StatsProvider.getValueFormatter(y, getContext(), 1000, AggregationSpan.MONTH));
+
+            // It is very dumb but CombinedChart.setData() calls the initBuffer method of all renderer before resetting the renderer (because the super call is executed before).
+            // In case a bar chart was displayed before but not longer, the activity would crash.
+            // Therefore the following two lines resets all renderers manually.
+            chart.clear();
+            ((CombinedChartRenderer) chart.getRenderer()).createRenderers();
+            ChartStyles.updateCombinedChartToSpan(chart, combinedData, aggregationSpan, statsProvider.STATS_TIME_FACTOR, getContext());
+            ChartStyles.setYAxisLabel(chart, Instance.getInstance(getContext()).distanceUnitUtils.getDistanceUnitSystem().getLongDistanceUnit());
         } catch (NoDataException e) {
-            e.printStackTrace();
+            chart.clear();
         }
         chart.invalidate();
+    }
+
+    private void fixViewPortOffsets(CombinedChart chart, float offset)
+    {
+        chart.setViewPortOffsets(offset, offset/2,offset/2,offset/2);
+    }
+
+    private void animateChart (CombinedChart chart) {
+        chart.animateY(500, Easing.EaseInExpo);
     }
 
     @Override
