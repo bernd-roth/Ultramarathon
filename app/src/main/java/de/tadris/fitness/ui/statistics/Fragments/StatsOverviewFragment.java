@@ -50,21 +50,6 @@ public class StatsOverviewFragment extends StatsFragment {
 
         numberOfActivitiesChart = view.findViewById(R.id.stats_number_of_workout_chart);
         distanceChart = view.findViewById(R.id.stats_distances_chart);
-
-        StatsDataProvider statsDataProvider = new StatsDataProvider(getContext());
-        long firstWorkoutTime;
-        long lastWorkoutTime;
-        try {
-            firstWorkoutTime = statsDataProvider.getFirstData(WorkoutProperty.LENGTH, WorkoutTypeManager.getInstance().getAllTypes(context)).time;
-            lastWorkoutTime = statsDataProvider.getLastData(WorkoutProperty.LENGTH, WorkoutTypeManager.getInstance().getAllTypes(context)).time;
-
-        }
-        catch (NoDataException e)
-        {
-            return;
-        }
-
-        timeSpanSelection.setLimits(firstWorkoutTime, lastWorkoutTime);
         timeSpanSelection.addOnTimeSpanSelectionListener((aggregationSpan, instance) -> updateCharts());
 
         ChartStyles.defaultBarChart(numberOfActivitiesChart);

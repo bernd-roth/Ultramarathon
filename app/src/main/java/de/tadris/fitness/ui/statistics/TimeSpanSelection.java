@@ -26,7 +26,11 @@ import java.util.List;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationSpan;
+import de.tadris.fitness.data.StatsDataProvider;
 import de.tadris.fitness.data.UserPreferences;
+import de.tadris.fitness.data.WorkoutTypeManager;
+import de.tadris.fitness.util.WorkoutProperty;
+import de.tadris.fitness.util.exceptions.NoDataException;
 import de.tadris.fitness.util.statistics.InstanceFormatter;
 
 public class TimeSpanSelection extends LinearLayout {
@@ -81,7 +85,6 @@ public class TimeSpanSelection extends LinearLayout {
         }
 
         setAggregationSpan(selectedAggregationSpan);
-        setInstance(GregorianCalendar.getInstance().getTimeInMillis());
 
         aggregationSpanSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -100,6 +103,25 @@ public class TimeSpanSelection extends LinearLayout {
         aggregationSpanInstancePicker.setOnValueChangedListener((numberPicker, i, i1) -> specifyInstance());
 
         aggregationSpanInstancePicker.setTextColor(this.foregroundColor);
+        initializeLimits();
+    }
+
+    public void initializeLimits()
+    {
+        StatsDataProvider statsDataProvider = new StatsDataProvider(getContext());
+        long firstWorkoutTime;
+        long lastWorkoutTime;
+        try {
+            firstWorkoutTime = statsDataProvider.getFirstData(WorkoutProperty.LENGTH, WorkoutTypeManager.getInstance().getAllTypes(getContext())).time;
+            //lastWorkoutTime = statsDataProvider.getLastData(WorkoutProperty.LENGTH, WorkoutTypeManager.getInstance().getAllTypes(getContext())).time;
+
+        }
+        catch (NoDataException e)
+        {
+            return;
+        }
+
+        setLimits(firstWorkoutTime, GregorianCalendar.getInstance().getTimeInMillis());
     }
 
     private void loadAggregationSpanEntries() {
@@ -197,6 +219,7 @@ public class TimeSpanSelection extends LinearLayout {
         if (max != aggregationSpanInstancePicker.getMaxValue()) {
             aggregationSpanInstancePicker.setMaxValue(max);
         }
+        setInstance(lastInstance);
     }
 
     public void addOnTimeSpanSelectionListener(OnTimeSpanSelectionListener listener) {
