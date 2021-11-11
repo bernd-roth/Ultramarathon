@@ -207,15 +207,11 @@ public class StatsExploreFragment extends StatsFragment {
 
         try {
             if (chartSwitch.isChecked()) {
-                List<BarEntry> entries = statsProvider.getCombinedSumData(aggregationSpan, workoutTypes, property);
-                BarDataSet barDataSet = new BarDataSet(entries, property.name());
-                DataSetStyles.applyDefaultBarStyle(getContext(), barDataSet);
+                BarDataSet barDataSet = statsProvider.getSumData(aggregationSpan, workoutTypes, property);;
                 BarData barData = new BarData(barDataSet);
                 combinedData.setData(barData);
             } else {
-                List<CandleEntry> entries = statsProvider.getCombinedCandleData(aggregationSpan, workoutTypes, property);
-                CandleDataSet candleDataSet = new CandleDataSet(entries, property.name());
-                CandleDataSet dataSet = DataSetStyles.applyDefaultCandleStyle(getContext(), candleDataSet);
+                CandleDataSet candleDataSet = statsProvider.getCandleData(aggregationSpan, workoutTypes, property);
                 combinedData.setData(new CandleData(candleDataSet));
                 // Create background line
                 LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);
@@ -228,7 +224,7 @@ public class StatsExploreFragment extends StatsFragment {
             chart.clear();
             ((CombinedChartRenderer) chart.getRenderer()).createRenderers();
             ChartStyles.updateCombinedChartToSpan(chart, combinedData, aggregationSpan, statsProvider.STATS_TIME_FACTOR, getContext());
-            ChartStyles.setYAxisLabel(chart, Instance.getInstance(getContext()).distanceUnitUtils.getDistanceUnitSystem().getLongDistanceUnit());
+            ChartStyles.setYAxisLabel(chart, property.getUnit(getContext(), combinedData.getYMax()));
         } catch (NoDataException e) {
             chart.clear();
         }

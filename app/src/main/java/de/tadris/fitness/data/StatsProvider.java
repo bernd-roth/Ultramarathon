@@ -132,7 +132,7 @@ public class StatsProvider {
         }
         BarDataSet dataSet = DataSetStyles.applyDefaultBarStyle(ctx,
                 new BarDataSet(barEntries, WORKOUT_PROPERTY.name()));
-        dataSet.setValueFormatter(new DefaultValueFormatter(1));
+        dataSet.setValueFormatter(WORKOUT_PROPERTY.getValueFormatter(ctx, dataSet.getYMax()));
         return dataSet;
     }
 
@@ -174,7 +174,7 @@ public class StatsProvider {
 
         BarDataSet dataSet = DataSetStyles.applyDefaultBarStyle(ctx,
                 new BarDataSet(barEntries, WORKOUT_PROPERTY.name()));
-        dataSet.setValueFormatter(getCorrectTimeFormatter(TimeUnit.MILLISECONDS, (long)dataSet.getYMax()));
+        dataSet.setValueFormatter(WORKOUT_PROPERTY.getValueFormatter(ctx, dataSet.getYMax()));
         return dataSet;
     }
 
@@ -219,7 +219,7 @@ public class StatsProvider {
         CandleDataSet candleDataSet = new CandleDataSet(getCombinedCandleData(span, workoutTypes, WORKOUT_PROPERTY),
                 WORKOUT_PROPERTY.name());
         CandleDataSet dataSet = DataSetStyles.applyDefaultCandleStyle(ctx, candleDataSet);
-        dataSet.setValueFormatter(getCorrectTimeFormatter(TimeUnit.MINUTES, (long)dataSet.getYMax()));
+        dataSet.setValueFormatter(WORKOUT_PROPERTY.getValueFormatter(ctx, (long)dataSet.getYMax()));
         return DataSetStyles.applyDefaultCandleStyle(ctx, candleDataSet);
     }
 
@@ -233,14 +233,9 @@ public class StatsProvider {
 
         CandleDataSet candleDataSet = new CandleDataSet(getCombinedCandleData(span, workoutTypes, WORKOUT_PROPERTY),
                 WORKOUT_PROPERTY.name());
-        candleDataSet.setValueFormatter(new SpeedFormatter(Instance.getInstance(ctx).distanceUnitUtils));
+        candleDataSet.setValueFormatter(WORKOUT_PROPERTY.getValueFormatter(ctx, candleDataSet.getYMax()));
         return DataSetStyles.applyDefaultCandleStyle(ctx, candleDataSet);
     }
-
-    public LineDataSet getSpeedLineData(AggregationSpan span, List<WorkoutType> workoutTypes) throws NoDataException {
-        return convertCandleToMeanLineData(getSpeedCandleData(span, workoutTypes));
-    }
-
 
     public CandleDataSet getDistanceCandleData(AggregationSpan span, List<WorkoutType> workoutTypes) throws NoDataException {
         final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.LENGTH;
@@ -284,7 +279,7 @@ public class StatsProvider {
 
         CandleDataSet dataSet = DataSetStyles.applyDefaultCandleStyle(ctx, new CandleDataSet(candleEntries,
                 WORKOUT_PROPERTY.getStringRepresentation(ctx)));
-        dataSet.setValueFormatter(getCorrectTimeFormatter(TimeUnit.MILLISECONDS, (long)dataSet.getYMax()));
+        dataSet.setValueFormatter(WORKOUT_PROPERTY.getValueFormatter(ctx, dataSet.getYMax()));
         return dataSet;
     }
 
@@ -299,7 +294,7 @@ public class StatsProvider {
 
         BarDataSet dataSet = DataSetStyles.applyDefaultBarStyle(ctx, new BarDataSet(barEntries,
                 WORKOUT_PROPERTY.getStringRepresentation(ctx)));
-        dataSet.setValueFormatter(getCorrectTimeFormatter(TimeUnit.MILLISECONDS, (long) dataSet.getYMax()));
+        dataSet.setValueFormatter(WORKOUT_PROPERTY.getValueFormatter(ctx, dataSet.getYMax()));
         return dataSet;
     }
 
@@ -311,7 +306,7 @@ public class StatsProvider {
 
         CandleDataSet dataSet = DataSetStyles.applyDefaultCandleStyle(ctx, new CandleDataSet(candleEntries,
                 WORKOUT_PROPERTY.getStringRepresentation(ctx)));
-        dataSet.setValueFormatter(getCorrectTimeFormatter(TimeUnit.MILLISECONDS, (long)dataSet.getYMax()));
+        dataSet.setValueFormatter(WORKOUT_PROPERTY.getValueFormatter(ctx, dataSet.getYMax()));
         return dataSet;
     }
 
@@ -320,7 +315,7 @@ public class StatsProvider {
 
         CandleDataSet dataSet = DataSetStyles.applyDefaultCandleStyle(ctx, new CandleDataSet(candleEntries,
                 workoutProperty.getStringRepresentation(ctx)));
-        //dataSet.setValueFormatter(getCorrectTimeFormatter(TimeUnit.MILLISECONDS, (long)dataSet.getYMax()));
+        dataSet.setValueFormatter(workoutProperty.getValueFormatter(ctx, dataSet.getYMax()));
         return dataSet;
     }
 
@@ -328,7 +323,7 @@ public class StatsProvider {
         ArrayList<BarEntry> barEntries = getCombinedSumData(span, workoutTypes, workoutProperty);
         BarDataSet dataSet = DataSetStyles.applyDefaultBarStyle(ctx, new BarDataSet(barEntries,
                 workoutProperty.getStringRepresentation(ctx)));
-        //dataSet.setValueFormatter(getCorrectTimeFormatter(TimeUnit.MILLISECONDS, (long)dataSet.getYMax()));
+        dataSet.setValueFormatter(workoutProperty.getValueFormatter(ctx, dataSet.getYMax()));
         return dataSet;
     }
 
@@ -339,52 +334,17 @@ public class StatsProvider {
 
         BarDataSet dataSet = DataSetStyles.applyDefaultBarStyle(ctx, new BarDataSet(barEntries,
                 WORKOUT_PROPERTY.getStringRepresentation(ctx)));
-        dataSet.setValueFormatter(getCorrectTimeFormatter(TimeUnit.MILLISECONDS, (long)dataSet.getYMax()));
+        dataSet.setValueFormatter(WORKOUT_PROPERTY.getValueFormatter(ctx, dataSet.getYMax()));
         return dataSet;
     }
 
-    private static TimeFormatter getCorrectTimeFormatter(TimeUnit unit, long maxTime)
+    public static TimeFormatter getCorrectTimeFormatter(TimeUnit unit, long maxTime)
     {
         if(unit.toMillis(maxTime) > TimeUnit.HOURS.toMillis(1))
             return new TimeFormatter(unit, false, true, true);
         else
             return new TimeFormatter(unit, true, true, false);
     }
-
-    public static ValueFormatter getValueFormatter(WorkoutProperty property, Context ctx, @Nullable long maxTime, @Nullable AggregationSpan span)
-    {
-        switch(property)
-        {
-            case START:
-            case END:
-                return new FractionedDateFormatter(ctx, span);
-            case DURATION:
-            case AVG_PACE:
-            case PAUSE_DURATION:
-                return getCorrectTimeFormatter(TimeUnit.MILLISECONDS, maxTime);
-
-            case AVG_SPEED:
-            case TOP_SPEED:
-                return new SpeedFormatter(Instance.getInstance(ctx).distanceUnitUtils);
-
-            case ASCENT:
-            case DESCENT:
-            case LENGTH:
-
-            case CALORIE:
-            case AVG_INTENSITY:
-            case MAX_INTENSITY:
-
-            case MAX_FREQUENCY:
-            case AVG_FREQUENCY:
-
-            case AVG_HEART_RATE:
-            case MAX_HEART_RATE:
-            default:
-                return new DefaultValueFormatter(2);
-        }
-    }
-
 
     private ArrayList<StatsDataTypes.DataPoint> findDataPointsInAggregationSpan(ArrayList<StatsDataTypes.DataPoint> data, Calendar startTime, AggregationSpan span) {
         // Retrieve the workoutProperty for all workouts in the specific time span
@@ -527,7 +487,7 @@ public class StatsProvider {
             BubbleDataSet set =new BubbleDataSet(bubbleEntries, type.title);
             int alpha = 255/(bubbleEntries.size());
             set.setColor(type.color, min(max(alpha, 20), 160));
-            set.setValueFormatter(getValueFormatter(yAxis, ctx, (long) set.getYMax(), AggregationSpan.MONTH));
+            set.setValueFormatter(yAxis.getValueFormatter(ctx, set.getYMax()));
             set.setDrawValues(false);
             dataSets.add(set);
         }

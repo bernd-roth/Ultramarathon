@@ -110,8 +110,8 @@ public class StatsExperimentalFragment extends StatsFragment {
             CombinedData dataSet = new CombinedData();
             dataSet.setData(bubbleData);
             chart.setData(dataSet);
-            chart.getXAxis().setValueFormatter(StatsProvider.getValueFormatter(x, getContext(), 1000, AggregationSpan.MONTH));
-            chart.getAxisLeft().setValueFormatter(StatsProvider.getValueFormatter(y, getContext(), 1000, AggregationSpan.MONTH));
+            chart.getXAxis().setValueFormatter(x.getValueFormatter(getContext(), dataSet.getXMax()));
+            chart.getAxisLeft().setValueFormatter(bubbleSets.get(0).getValueFormatter());
         } catch (NoDataException e) {
             e.printStackTrace();
         }
