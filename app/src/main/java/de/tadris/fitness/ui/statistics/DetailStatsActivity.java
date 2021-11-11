@@ -147,7 +147,7 @@ public class DetailStatsActivity extends FitoTrackActivity {
         chart.zoom(xScale, 1, 0, 0);
         chart.moveViewToX(xTrans);
 
-        animateChart(chart);
+        ChartStyles.animateChart(chart);
     }
 
     private void openWorkout(float xPosition) {
@@ -191,9 +191,5 @@ public class DetailStatsActivity extends FitoTrackActivity {
         } catch (NoDataException e) {
         }
         ChartStyles.updateCombinedChartToSpan(chart, combinedData, aggregationSpan, stats_time_factor, this);
-    }
-
-    private void animateChart (CombinedChart chart) {
-        chart.animateY(500, Easing.EaseInExpo);
     }
 }

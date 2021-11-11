@@ -167,8 +167,8 @@ public class StatsHistoryFragment extends StatsFragment {
         combinedChartList.add(pauseDurationChart);
 
         for (CombinedChart combinedChart : combinedChartList) {
-            animateChart(combinedChart);
-            fixViewPortOffsets(combinedChart, 120);
+            ChartStyles.animateChart(combinedChart);
+            ChartStyles.fixViewPortOffsets(combinedChart, 120);
             ChartStyles.defaultLineChart(combinedChart);
             statsProvider.setAxisLimits(combinedChart.getXAxis(), WorkoutProperty.TOP_SPEED);
             OnChartGestureMultiListener multiListener = new OnChartGestureMultiListener(new ArrayList<>());
@@ -356,11 +356,6 @@ public class StatsHistoryFragment extends StatsFragment {
         distanceChart.invalidate();
     }
 
-    private void fixViewPortOffsets(CombinedChart chart, float offset)
-    {
-        chart.setViewPortOffsets(offset, offset/2,offset/2,offset/2);
-    }
-
     private void updateDurationChart(List<WorkoutType> workoutTypes) {
         CombinedData combinedData = new CombinedData();
 
@@ -417,10 +412,6 @@ public class StatsHistoryFragment extends StatsFragment {
             pauseDurationChart.clear();
         }
         pauseDurationChart.invalidate();
-    }
-
-    private void animateChart (CombinedChart chart) {
-        chart.animateY(500, Easing.EaseInExpo);
     }
 
     @Override

@@ -213,90 +213,6 @@ public class StatsProvider {
                 new BarDataSet(barEntries, label));
     }
 
-    public CandleDataSet getPaceCandleData(AggregationSpan span, List<WorkoutType> workoutTypes) throws NoDataException {
-        final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.AVG_PACE;
-
-        CandleDataSet candleDataSet = new CandleDataSet(getCombinedCandleData(span, workoutTypes, WORKOUT_PROPERTY),
-                WORKOUT_PROPERTY.name());
-        CandleDataSet dataSet = DataSetStyles.applyDefaultCandleStyle(ctx, candleDataSet);
-        dataSet.setValueFormatter(WORKOUT_PROPERTY.getValueFormatter(ctx, (long)dataSet.getYMax()));
-        return DataSetStyles.applyDefaultCandleStyle(ctx, candleDataSet);
-    }
-
-    public CandleDataSet getSpeedCandleData(AggregationSpan span, List<WorkoutType> workoutTypes) throws NoDataException {
-        final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.AVG_SPEED;
-
-        CandleDataSet candleDataSet = new CandleDataSet(getCombinedCandleData(span, workoutTypes, WORKOUT_PROPERTY),
-                WORKOUT_PROPERTY.name());
-        candleDataSet.setValueFormatter(WORKOUT_PROPERTY.getValueFormatter(ctx, candleDataSet.getYMax()));
-        return DataSetStyles.applyDefaultCandleStyle(ctx, candleDataSet);
-    }
-
-    public CandleDataSet getDistanceCandleData(AggregationSpan span, List<WorkoutType> workoutTypes) throws NoDataException {
-        final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.LENGTH;
-
-        ArrayList<CandleEntry> candleEntries = getCombinedCandleData(span, workoutTypes, WORKOUT_PROPERTY);
-
-        // Display distance in kilometers
-        for (CandleEntry entry : candleEntries) {
-            entry.setHigh(entry.getHigh() / 1000);
-            entry.setLow(entry.getLow() / 1000);
-            entry.setOpen(entry.getOpen() / 1000);
-            entry.setClose(entry.getClose() / 1000);
-        }
-
-        return DataSetStyles.applyDefaultCandleStyle(ctx, new CandleDataSet(candleEntries,
-                WORKOUT_PROPERTY.name()));
-    }
-
-    public BarDataSet getDistanceSumData(AggregationSpan span, List<WorkoutType> workoutTypes) throws NoDataException {
-        final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.LENGTH;
-
-        ArrayList<BarEntry> barEntries = getCombinedSumData(span, workoutTypes, WORKOUT_PROPERTY);
-
-        for (BarEntry entry : barEntries) {
-            entry.setY(entry.getY() / 1000);
-        }
-
-        return DataSetStyles.applyDefaultBarStyle(ctx, new BarDataSet(barEntries,
-                WORKOUT_PROPERTY.getStringRepresentation(ctx)));
-    }
-
-
-    public CandleDataSet getDurationCandleData(AggregationSpan span, List<WorkoutType> workoutTypes) throws NoDataException {
-        final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.DURATION;
-
-        ArrayList<CandleEntry> candleEntries = getCombinedCandleData(span, workoutTypes, WORKOUT_PROPERTY);
-
-        CandleDataSet dataSet = DataSetStyles.applyDefaultCandleStyle(ctx, new CandleDataSet(candleEntries,
-                WORKOUT_PROPERTY.getStringRepresentation(ctx)));
-        dataSet.setValueFormatter(WORKOUT_PROPERTY.getValueFormatter(ctx, dataSet.getYMax()));
-        return dataSet;
-    }
-
-    public BarDataSet getDurationSumData(AggregationSpan span, List<WorkoutType> workoutTypes) throws NoDataException {
-        final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.DURATION;
-
-        ArrayList<BarEntry> barEntries = getCombinedSumData(span, workoutTypes, WORKOUT_PROPERTY);
-
-        BarDataSet dataSet = DataSetStyles.applyDefaultBarStyle(ctx, new BarDataSet(barEntries,
-                WORKOUT_PROPERTY.getStringRepresentation(ctx)));
-        dataSet.setValueFormatter(WORKOUT_PROPERTY.getValueFormatter(ctx, dataSet.getYMax()));
-        return dataSet;
-    }
-
-
-    public CandleDataSet getPauseDurationCandleData(AggregationSpan span, List<WorkoutType> workoutTypes) throws NoDataException {
-        final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.PAUSE_DURATION;
-
-        ArrayList<CandleEntry> candleEntries = getCombinedCandleData(span, workoutTypes, WORKOUT_PROPERTY);
-
-        CandleDataSet dataSet = DataSetStyles.applyDefaultCandleStyle(ctx, new CandleDataSet(candleEntries,
-                WORKOUT_PROPERTY.getStringRepresentation(ctx)));
-        dataSet.setValueFormatter(WORKOUT_PROPERTY.getValueFormatter(ctx, dataSet.getYMax()));
-        return dataSet;
-    }
-
     public CandleDataSet getCandleData(AggregationSpan span, List<WorkoutType> workoutTypes, WorkoutProperty workoutProperty) throws NoDataException {
         ArrayList<CandleEntry> candleEntries = getCombinedCandleData(span, workoutTypes, workoutProperty);
 
@@ -311,17 +227,6 @@ public class StatsProvider {
         BarDataSet dataSet = DataSetStyles.applyDefaultBarStyle(ctx, new BarDataSet(barEntries,
                 workoutProperty.getStringRepresentation(ctx)));
         dataSet.setValueFormatter(workoutProperty.getValueFormatter(ctx, dataSet.getYMax()));
-        return dataSet;
-    }
-
-    public BarDataSet getPauseDurationSumData(AggregationSpan span, List<WorkoutType> workoutTypes) throws NoDataException {
-        final WorkoutProperty WORKOUT_PROPERTY = WorkoutProperty.PAUSE_DURATION;
-
-        ArrayList<BarEntry> barEntries = getCombinedSumData(span, workoutTypes, WORKOUT_PROPERTY);
-
-        BarDataSet dataSet = DataSetStyles.applyDefaultBarStyle(ctx, new BarDataSet(barEntries,
-                WORKOUT_PROPERTY.getStringRepresentation(ctx)));
-        dataSet.setValueFormatter(WORKOUT_PROPERTY.getValueFormatter(ctx, dataSet.getYMax()));
         return dataSet;
     }
 
@@ -349,7 +254,6 @@ public class StatsProvider {
         }
         return intervalData;
     }
-
 
     public ArrayList<CandleEntry> getCombinedCandleData(AggregationSpan span, List<WorkoutType> workoutTypes, WorkoutProperty workoutProperty) throws NoDataException {
         ArrayList<StatsDataTypes.DataPoint> data = dataProvider.getData(workoutProperty,
@@ -483,7 +387,6 @@ public class StatsProvider {
         }
         return dataSets;
     }
-
 
     public static LineDataSet convertCandleToMeanLineData(CandleDataSet candleDataSet) {
         ArrayList<Entry> lineData = new ArrayList<>();

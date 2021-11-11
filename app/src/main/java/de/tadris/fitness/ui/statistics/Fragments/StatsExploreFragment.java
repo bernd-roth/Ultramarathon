@@ -106,8 +106,8 @@ public class StatsExploreFragment extends StatsFragment {
                 updateChart();
             }
         });
-        animateChart(chart);
-        fixViewPortOffsets(chart, 120);
+        ChartStyles.animateChart(chart);
+        ChartStyles.fixViewPortOffsets(chart, 120);
         ChartStyles.defaultLineChart(chart);
         statsProvider.setAxisLimits(chart.getXAxis(), WorkoutProperty.TOP_SPEED);
         OnChartGestureMultiListener multiListener = new OnChartGestureMultiListener(new ArrayList<>());
@@ -229,15 +229,6 @@ public class StatsExploreFragment extends StatsFragment {
             chart.clear();
         }
         chart.invalidate();
-    }
-
-    private void fixViewPortOffsets(CombinedChart chart, float offset)
-    {
-        chart.setViewPortOffsets(offset, offset/2,offset/2,offset/2);
-    }
-
-    private void animateChart (CombinedChart chart) {
-        chart.animateY(500, Easing.EaseInExpo);
     }
 
     @Override

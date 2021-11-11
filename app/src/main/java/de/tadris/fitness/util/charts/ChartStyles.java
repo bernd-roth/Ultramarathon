@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.BarLineChartBase;
 import com.github.mikephil.charting.charts.Chart;
@@ -250,5 +251,14 @@ public class ChartStyles {
             aggregationSpan = AggregationSpan.SINGLE;
         }
         return aggregationSpan;
+    }
+
+    public static void fixViewPortOffsets(CombinedChart chart, float offset)
+    {
+        chart.setViewPortOffsets(offset, offset/2,offset/2,offset/2);
+    }
+
+    public static void animateChart (CombinedChart chart) {
+        chart.animateY(500, Easing.EaseInExpo);
     }
 }
