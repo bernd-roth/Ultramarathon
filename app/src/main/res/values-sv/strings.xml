@@ -425,4 +425,8 @@
     <string name="intervalSet">Intervallset</string>
     <string name="intervalSets">Intervallset</string>
     <string name="setPreferencesMessage">Du kan ställa in ditt föredragna enhetssystem och din vikt i inställningarna.</string>
+    <plurals name="importedWorkouts">
+        <item quantity="one">Importerade ett träningspass</item>
+        <item quantity="other">Importerade %d träningspass</item>
+    </plurals>
 </resources>

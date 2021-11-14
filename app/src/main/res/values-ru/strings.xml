@@ -434,5 +434,11 @@
     <string name="workoutRepetitions">Повторы</string>
     <string name="workoutRecordingTypeIndoor">Тренировки в помещении</string>
     <string name="workoutSets">Наборы</string>
-    <string name="workoutRecordingTypeGps">Gps тренировки</string>
+    <string name="workoutRecordingTypeGps">GPS тренировки</string>
+    <plurals name="importedWorkouts">
+        <item quantity="one">Импортировано одна тренировка</item>
+        <item quantity="few">Импортировано %d тренировки</item>
+        <item quantity="many">Импортировано %d тренировок</item>
+        <item quantity="other">Импортировано %d тренировок</item>
+    </plurals>
 </resources>
