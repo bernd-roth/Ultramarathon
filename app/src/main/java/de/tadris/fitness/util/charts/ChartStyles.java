@@ -11,6 +11,7 @@ import com.github.mikephil.charting.charts.BarLineChartBase;
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LegendEntry;
@@ -137,16 +138,14 @@ public class ChartStyles {
         chart.setMarker(new DisplayValueMarker(ctx, chart.getAxisLeft().getValueFormatter()," "+unit));
     }
 
-    public static void updateCombinedChartToSpan(CombinedChart chart, CombinedData combinedData, AggregationSpan aggregationSpan, float stats_time_factor, Context ctx) {
+    public static void updateCombinedChartToSpan(CombinedChart chart, CombinedData combinedData, AggregationSpan aggregationSpan, Context ctx) {
         ChartStyles.setTextAppearance(combinedData);
         if(combinedData.getBarData() != null) {
             float barWidth = Math.max(aggregationSpan.spanInterval, AggregationSpan.DAY.spanInterval);
-            combinedData.getBarData().setBarWidth(barWidth / stats_time_factor * ChartStyles.BAR_WIDTH_FACTOR);
+            combinedData.getBarData().setBarWidth(barWidth * ChartStyles.BAR_WIDTH_FACTOR);
         }
-        chart.getXAxis().setValueFormatter(new FractionedDateFormatter(ctx,aggregationSpan));
-        chart.getXAxis().setGranularity((float)aggregationSpan.spanInterval / stats_time_factor);
-        ChartStyles.setXAxisLabel(chart, ctx.getString(aggregationSpan.axisLabel));
 
+        updateTimeAxisToZoom(ctx, chart, chart.getXAxis(), aggregationSpan);
         chart.getAxisLeft().setValueFormatter(combinedData.getMaxEntryCountSet().getValueFormatter());
 
         if (chart.getLegend().getEntries().length > 0) {
@@ -157,9 +156,22 @@ public class ChartStyles {
         }
 
         chart.setData(combinedData);
-        chart.getXAxis().setAxisMinimum(combinedData.getXMin() - aggregationSpan.spanInterval / stats_time_factor / 2);
-        chart.getXAxis().setAxisMaximum(combinedData.getXMax() + aggregationSpan.spanInterval / stats_time_factor / 2);
+        chart.getXAxis().setAxisMinimum(combinedData.getXMin() - aggregationSpan.spanInterval / 2);
+        chart.getXAxis().setAxisMaximum(combinedData.getXMax() + aggregationSpan.spanInterval / 2);
         chart.invalidate();
+    }
+
+    public static void updateTimeAxisToZoom(Context ctx, Chart chart, AxisBase axis, AggregationSpan aggregationSpan)
+    {
+        axis.setValueFormatter(new FractionedDateFormatter(ctx,aggregationSpan));
+        axis.setGranularity((float)aggregationSpan.spanInterval);
+        if(axis instanceof XAxis) {
+            ChartStyles.setXAxisLabel(chart, ctx.getString(aggregationSpan.axisLabel));
+        }
+        else
+        {
+            ChartStyles.setYAxisLabel(chart, ctx.getString(aggregationSpan.axisLabel));
+        }
     }
 
     public static void setTextAppearance(ChartData data)
@@ -236,9 +248,14 @@ public class ChartStyles {
         chart.getDescription().setEnabled(false);
     }
 
-    public static AggregationSpan statsAggregationSpan(BarLineChartBase chart, float stats_time_factor)
+    public static AggregationSpan statsAggregationSpan(BarLineChartBase chart)
     {
-        long timeSpan = (long) ((chart.getHighestVisibleX() - chart.getLowestVisibleX()) * stats_time_factor);
+        long timeSpan = (long) ((chart.getHighestVisibleX() - chart.getLowestVisibleX()));
+        return statsAggregationSpan(timeSpan);
+    }
+
+    public static AggregationSpan statsAggregationSpan(long timeSpan)
+    {
         AggregationSpan aggregationSpan;
 
         if (TimeUnit.DAYS.toMillis(1095) < timeSpan) {

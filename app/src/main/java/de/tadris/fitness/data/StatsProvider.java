@@ -44,16 +44,12 @@ import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 public class StatsProvider {
-    public static float STATS_TIME_FACTOR;
     Context ctx;
     StatsDataProvider dataProvider;
 
     public StatsProvider(Context ctx) {
         this.ctx = ctx;
         dataProvider = new StatsDataProvider(ctx);
-        TypedValue factor = new TypedValue();
-        ctx.getResources().getValue(R.dimen.stats_time_factor, factor, true);
-        STATS_TIME_FACTOR = factor.getFloat();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -218,7 +214,7 @@ public class StatsProvider {
 
         CandleDataSet dataSet = DataSetStyles.applyDefaultCandleStyle(ctx, new CandleDataSet(candleEntries,
                 workoutProperty.getStringRepresentation(ctx)));
-        dataSet.setValueFormatter(workoutProperty.getValueFormatter(ctx, dataSet.getYMax()));
+        dataSet.setValueFormatter(workoutProperty.getValueFormatter(ctx, dataSet.getYMax()-dataSet.getYMin()));
         return dataSet;
     }
 
@@ -226,7 +222,7 @@ public class StatsProvider {
         ArrayList<BarEntry> barEntries = getCombinedSumData(span, workoutTypes, workoutProperty);
         BarDataSet dataSet = DataSetStyles.applyDefaultBarStyle(ctx, new BarDataSet(barEntries,
                 workoutProperty.getStringRepresentation(ctx)));
-        dataSet.setValueFormatter(workoutProperty.getValueFormatter(ctx, dataSet.getYMax()));
+        dataSet.setValueFormatter(workoutProperty.getValueFormatter(ctx, dataSet.getYMax()-dataSet.getYMin()));
         return dataSet;
     }
 
@@ -269,7 +265,7 @@ public class StatsProvider {
             // No aggregation
             for (StatsDataTypes.DataPoint dataPoint : data) {
                 float value = (float) dataPoint.value;
-                candleEntries.add(new CandleEntry((float) dataPoint.time / STATS_TIME_FACTOR, value, value, value, value, dataPoint));
+                candleEntries.add(new CandleEntry((float) dataPoint.time, value, value, value, value, dataPoint));
             }
         } else {
             // Find start and end time of workouts
@@ -291,7 +287,7 @@ public class StatsProvider {
                     float min = (float) Collections.min(intervalData, StatsDataTypes.DataPoint.valueComparator).value;
                     float max = (float) Collections.max(intervalData, StatsDataTypes.DataPoint.valueComparator).value;
                     float mean = calculateValueAverage(intervalData);
-                    candleEntries.add(new CandleEntry((float) calendar.getTimeInMillis() / STATS_TIME_FACTOR, max, min, mean, mean));
+                    candleEntries.add(new CandleEntry((float) calendar.getTimeInMillis(), max, min, mean, mean));
                 }
 
                 // Increment time span
@@ -320,7 +316,7 @@ public class StatsProvider {
             // No aggregation
             for (StatsDataTypes.DataPoint dataPoint : data) {
                 float value = (float) dataPoint.value;
-                barEntries.add(new BarEntry((float) dataPoint.time / STATS_TIME_FACTOR, value));
+                barEntries.add(new BarEntry((float) dataPoint.time, value));
             }
         } else {
             // Find start and end time of workouts
@@ -339,7 +335,7 @@ public class StatsProvider {
                 // Calculate the sum of the data from the span and store in the bar list
                 if (intervalData.size() > 0) {
                     float sum = calculateValueSum(intervalData);
-                    barEntries.add(new BarEntry((float) calendar.getTimeInMillis() / STATS_TIME_FACTOR, sum));
+                    barEntries.add(new BarEntry((float) calendar.getTimeInMillis(), sum));
                 }
 
                 // Increment time span
@@ -378,7 +374,7 @@ public class StatsProvider {
             BubbleDataSet set =new BubbleDataSet(bubbleEntries, type.title);
             int alpha = 255/(bubbleEntries.size());
             set.setColor(type.color, min(max(alpha, 20), 160));
-            set.setValueFormatter(yAxis.getValueFormatter(ctx, set.getYMax()));
+            set.setValueFormatter(yAxis.getValueFormatter(ctx, set.getYMax()-set.getYMin()));
             set.setDrawValues(false);
             dataSets.add(set);
         }

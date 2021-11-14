@@ -18,7 +18,6 @@ import de.tadris.fitness.data.StatsDataTypes;
 public class FractionedDateFormatter extends ValueFormatter {
     Context ctx;
     SimpleDateFormat format;
-    float stats_time_factor;
     AggregationSpan span;
 
     public FractionedDateFormatter(Context ctx, AggregationSpan span)
@@ -26,18 +25,16 @@ public class FractionedDateFormatter extends ValueFormatter {
         setAggregationSpan(span);
         this.span = span;
         this.ctx = ctx;
-        TypedValue stats_time_factor = new TypedValue();
-        ctx.getResources().getValue(R.dimen.stats_time_factor, stats_time_factor, true);
-        this.stats_time_factor = stats_time_factor.getFloat();
     }
 
     public void setAggregationSpan(AggregationSpan span)
     {
         format = span.dateFormat;
     }
+    public AggregationSpan getSpan() {return span;}
 
     @Override
     public String getFormattedValue(float value) {
-        return format.format(new Date((long) (value * stats_time_factor + span.spanInterval/2)));
+        return format.format(new Date((long) (value + span.spanInterval/2)));
     }
 }

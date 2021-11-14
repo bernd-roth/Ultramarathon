@@ -242,7 +242,7 @@ public class StatsHistoryFragment extends StatsFragment {
 
                 @Override
                 public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
-                    AggregationSpan newAggSpan = ChartStyles.statsAggregationSpan(combinedChart, statsProvider.STATS_TIME_FACTOR);
+                    AggregationSpan newAggSpan = ChartStyles.statsAggregationSpan(combinedChart);
                     if (aggregationSpan != newAggSpan) {
                         aggregationSpan = newAggSpan;
                         updateCharts(selection.getSelectedWorkoutTypes());
@@ -320,7 +320,7 @@ public class StatsHistoryFragment extends StatsFragment {
             LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);
             combinedData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(context, lineDataSet)));
 
-            ChartStyles.updateCombinedChartToSpan(speedChart, combinedData, aggregationSpan, statsProvider.STATS_TIME_FACTOR, getContext());
+            ChartStyles.updateCombinedChartToSpan(speedChart, combinedData, aggregationSpan, getContext());
         } catch (NoDataException e) {
             speedChart.clear();
         }
@@ -348,7 +348,7 @@ public class StatsHistoryFragment extends StatsFragment {
             // Therefore the following two lines resets all renderers manually.
             distanceChart.clear();
             ((CombinedChartRenderer) distanceChart.getRenderer()).createRenderers();
-            ChartStyles.updateCombinedChartToSpan(distanceChart, combinedData, aggregationSpan, statsProvider.STATS_TIME_FACTOR, getContext());
+            ChartStyles.updateCombinedChartToSpan(distanceChart, combinedData, aggregationSpan, getContext());
             ChartStyles.setYAxisLabel(distanceChart, WorkoutProperty.LENGTH.getUnit(context, combinedData.getYMax()));
         } catch (NoDataException e) {
             distanceChart.clear();
@@ -377,7 +377,7 @@ public class StatsHistoryFragment extends StatsFragment {
             // Therefore the following two lines resets all renderers manually.
             durationChart.clear();
             ((CombinedChartRenderer) durationChart.getRenderer()).createRenderers();
-            ChartStyles.updateCombinedChartToSpan(durationChart, combinedData, aggregationSpan, statsProvider.STATS_TIME_FACTOR, getContext());
+            ChartStyles.updateCombinedChartToSpan(durationChart, combinedData, aggregationSpan, getContext());
             ChartStyles.setYAxisLabel(durationChart, WorkoutProperty.DURATION.getUnit(context, combinedData.getYMax()));
         } catch (NoDataException e) {
             durationChart.clear();
@@ -406,7 +406,7 @@ public class StatsHistoryFragment extends StatsFragment {
             // Therefore the following two lines resets all renderers manually.
             pauseDurationChart.clear();
             ((CombinedChartRenderer) pauseDurationChart.getRenderer()).createRenderers();
-            ChartStyles.updateCombinedChartToSpan(pauseDurationChart, combinedData, aggregationSpan, statsProvider.STATS_TIME_FACTOR, getContext());
+            ChartStyles.updateCombinedChartToSpan(pauseDurationChart, combinedData, aggregationSpan, getContext());
             ChartStyles.setYAxisLabel(pauseDurationChart, WorkoutProperty.PAUSE_DURATION.getUnit(context, combinedData.getYMax()));
         } catch (NoDataException e) {
             pauseDurationChart.clear();

@@ -16,6 +16,7 @@ import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationSpan;
 import de.tadris.fitness.data.StatsProvider;
+import de.tadris.fitness.util.charts.ChartStyles;
 import de.tadris.fitness.util.charts.formatter.DistanceFormatter;
 import de.tadris.fitness.util.charts.formatter.FractionedDateFormatter;
 import de.tadris.fitness.util.charts.formatter.SpeedFormatter;
@@ -101,7 +102,7 @@ public enum WorkoutProperty {
         switch (this) {
             case START:
             case END:
-                //return new FractionedDateFormatter(ctx, span);
+                return new FractionedDateFormatter(ctx, ChartStyles.statsAggregationSpan((long)value));
             case DURATION:
             case PAUSE_DURATION:
                 return StatsProvider.getCorrectTimeFormatter(TimeUnit.MILLISECONDS, (long) value);
@@ -135,6 +136,7 @@ public enum WorkoutProperty {
         switch (this) {
             case START:
             case END:
+                return ctx.getString(((FractionedDateFormatter)getValueFormatter(ctx, value)).getSpan().axisLabel);
             case DURATION:
             case PAUSE_DURATION:
                 return ((TimeFormatter)getValueFormatter(ctx, value)).getUnit(ctx);

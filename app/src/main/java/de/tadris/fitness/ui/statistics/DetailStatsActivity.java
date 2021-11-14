@@ -45,7 +45,6 @@ import de.tadris.fitness.util.exceptions.NoDataException;
 public class DetailStatsActivity extends FitoTrackActivity {
 
     CombinedChart chart;
-    float stats_time_factor;
     WorkoutTypeManager workoutTypeManager;
     ArrayList<WorkoutType> workoutTypes;
     AggregationSpan aggregationSpan;
@@ -62,10 +61,6 @@ public class DetailStatsActivity extends FitoTrackActivity {
         setContentView(R.layout.activity_statistics_detail);
         setTitle(getString(R.string.details));
         setupActionBar();
-
-        TypedValue stats_time_factor = new TypedValue();
-        this.getResources().getValue(R.dimen.stats_time_factor, stats_time_factor, true);
-        this.stats_time_factor = stats_time_factor.getFloat();
 
         workoutTypeManager = WorkoutTypeManager.getInstance();
         statsProvider = new StatsProvider(this);
@@ -129,7 +124,7 @@ public class DetailStatsActivity extends FitoTrackActivity {
 
             @Override
             public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
-                AggregationSpan newAggSpan = ChartStyles.statsAggregationSpan(chart, stats_time_factor);
+                AggregationSpan newAggSpan = ChartStyles.statsAggregationSpan(chart);
                 if (aggregationSpan != newAggSpan) {
                     aggregationSpan = newAggSpan;
                     updateChart(workoutTypes);
@@ -190,6 +185,6 @@ public class DetailStatsActivity extends FitoTrackActivity {
             }
         } catch (NoDataException e) {
         }
-        ChartStyles.updateCombinedChartToSpan(chart, combinedData, aggregationSpan, stats_time_factor, this);
+        ChartStyles.updateCombinedChartToSpan(chart, combinedData, aggregationSpan, this);
     }
 }

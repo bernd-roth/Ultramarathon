@@ -156,7 +156,7 @@ public class StatsExploreFragment extends StatsFragment {
 
             @Override
             public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
-                AggregationSpan newAggSpan = ChartStyles.statsAggregationSpan(chart, statsProvider.STATS_TIME_FACTOR);
+                AggregationSpan newAggSpan = ChartStyles.statsAggregationSpan(chart);
                 if (aggregationSpan != newAggSpan) {
                     aggregationSpan = newAggSpan;
                     updateChart();
@@ -223,8 +223,8 @@ public class StatsExploreFragment extends StatsFragment {
             // Therefore the following two lines resets all renderers manually.
             chart.clear();
             ((CombinedChartRenderer) chart.getRenderer()).createRenderers();
-            ChartStyles.updateCombinedChartToSpan(chart, combinedData, aggregationSpan, statsProvider.STATS_TIME_FACTOR, getContext());
-            ChartStyles.setYAxisLabel(chart, property.getUnit(getContext(), combinedData.getYMax()));
+            ChartStyles.updateCombinedChartToSpan(chart, combinedData, aggregationSpan, getContext());
+            ChartStyles.setYAxisLabel(chart, property.getUnit(getContext(), combinedData.getYMax()-combinedData.getYMin()));
         } catch (NoDataException e) {
             chart.clear();
         }
