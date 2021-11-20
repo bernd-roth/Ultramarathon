@@ -277,7 +277,7 @@
     <string name="resumeWorkout">Gjenoppta treningsøkt</string>
     <string name="heartRateNotAvailable">Puls er ikke tilgjengelig for øyeblikket.</string>
     <string name="announcementWorkoutActions">Treningshandlinger (pause, gjenoppta, etc.)</string>
-    <string name="resumeWorkoutConfirmation">Tror du virkelig ønsker å fortsette denne treningen\? Dette vil også legge til en pause fra treningen ble stoppet.</string>
+    <string name="resumeWorkoutConfirmation">Fortsett denne treningen\? En pause fra treningen ble stoppet vil bli lagt til.</string>
     <string name="prefShowOnLockScreenSummary">Vis treningsøktinfo selv om enheten er låst.</string>
     <string name="prefShowOnLockScreenTitle">Synlig på låseskjermen</string>
     <string name="notimeout">Uten tidsavbrudd</string>
