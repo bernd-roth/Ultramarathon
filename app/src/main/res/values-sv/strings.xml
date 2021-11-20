@@ -57,7 +57,7 @@
     <string name="preferencesBackupSummary">Säkerhetskopiera/Återställ data för ditt träningspass</string>
     <string name="preferencesBackupTitle">Databas</string>
     <string name="preferencesRecordingSummary">Hantera inspelning av träningspasset</string>
-    <string name="preferencesRecordingTitle">Spelar in</string>
+    <string name="preferencesRecordingTitle">Inspelning</string>
     <string name="preferencesUserInterfaceSummary">Personifiera appen</string>
     <string name="preferencesUserInterfaceTitle">Användargränssnitt</string>
     <string name="avgSpeedTotalLong">Snitthastighet totalt</string>
