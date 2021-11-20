@@ -291,8 +291,8 @@
     <string name="workoutTypeEditIdErrorCharacters">Leidžiami simboliai: a-z, A-Z, 0-9, _, -</string>
     <string name="workoutTypeEditId">ID</string>
     <string name="hintManageWorkoutTypes">Spustelėkite pliusą, kad pridėtumėte pasirinktinius treniruočių tipus.</string>
-    <string name="resumeWorkoutConfirmation">Ar tikrai norite tęsti šią treniruotę\? Taip pat bus pridėta pauzė nuo to laiko, kai treniruotė buvo sustabdyta.</string>
-    <string name="prefShowOnLockScreenSummary">Rodyti treniruotės informaciją, net jei telefonas užrakintas.</string>
+    <string name="resumeWorkoutConfirmation">Tęsti šią treniruotę\? Bus pridėta pauzė nuo tada, kai treniruotė buvo sustabdyta.</string>
+    <string name="prefShowOnLockScreenSummary">Rodyti treniruotės informaciją, net jei įrenginys užrakintas.</string>
     <string name="prefShowOnLockScreenTitle">Matoma užrakintame ekrane</string>
     <string name="workoutStarted">Treniruotė pradėta</string>
     <string name="workoutStopped">Treniruotė sustabdyta</string>
