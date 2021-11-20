@@ -16,35 +16,35 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources>
+  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="sections">Seksjoner</string>
     <string name="workoutStatsHelpText">Denne skjermen viser historisk treningsøktstatistikk. Angi treningsøkten først ved å klikke på den. Sett så infoen du ønsker og tidsrommet.
 \n
 \nFor eksempel, hvis du velger \"Uke\", som tidsrom, vil alle treningsøkter for hver uke bli flettet til ett datapunkt som enten er gjennomsnitt eller sum for hver uke.</string>
     <string name="unitMilesPerHour">Engelske mil per time</string>
-    <string name="unitYardsPlural">Verft</string>
+    <string name="unitYardsPlural">Yard</string>
     <string name="unitYardsSingular">Yard</string>
     <string name="unitMilesPlural">Engelske mil</string>
-    <string name="unitMilesSingular">Mil</string>
+    <string name="unitMilesSingular">Engelsk mil</string>
     <string name="workoutPauseDuration">Pausevarighet</string>
     <string name="pref_announcements_content">Innholdet i kunngjøringene</string>
     <string name="pref_announcements_config_summary">Velg tid og distanse mellom stemmeanvisninger</string>
     <string name="pref_voice_announcements_summary">Sett opp stemmeinstruks som holder deg oppdatert i løpet av treningsøkten</string>
     <string name="errorWorkoutAddFuture">Treningen kan ikke være i fremtiden</string>
     <string name="setPreferencesMessage">Du kan stille inn foretrukket enhetssystem og vekt i innstillingene.</string>
-    <string name="importBackupMessage">ADVARSEL: Alle eksisterende data i appen blir slettet. Hvis du ikke vil miste dem, må du først ta en annen sikkerhetskopi. Er du sikker på at du vil gjenopprette denne sikkerhetskopien\?</string>
+    <string name="importBackupMessage">Advarsel: Alle eksisterende data i programmet blir slettet. Hvis du ikke vil miste dem, må du først ta en annen sikkerhetskopi. Er du sikker på at du vil gjenopprette denne sikkerhetskopien\?</string>
     <string name="unitFootSingular">Fot</string>
     <string name="noWorkoutStarted">Ingen treningsøkt i gang</string>
     <string name="unitFootPlural">Fot</string>
     <string name="editDisplayedInformationHint">Så lenge treningsøkten ikke har startet, kan du redigere viste verdier ved å klikk på én av de fire feltene.</string>
-    <string name="editDisplayedInformation">Rediger vist informasjon</string>
+    <string name="editDisplayedInformation">Rediger vist info</string>
     <string name="aboutSourceCode">Vis kildekode</string>
     <string name="aboutSendFeedback">Send tilbakemelding til utvikler</string>
     <string name="aboutContributors">Bidragsytere</string>
     <string name="aboutAuthor">Utvikler</string>
     <string name="aboutLinks">Lenker</string>
     <string name="aboutReportBug">Innrapporter en feil</string>
-    <string name="aboutOpenSourceLibraries">Open source-biblioteker</string>
+    <string name="aboutOpenSourceLibraries">Frie biblioteker</string>
     <string name="aboutChangelog">Endringslogg</string>
     <string name="aboutVersion">Versjon</string>
     <string name="aboutTitle">Om</string>
@@ -84,21 +84,21 @@
     <string name="unitKcalLong">Kalorier</string>
     <string name="unitMetersPerSecond">Meter per sekund</string>
     <string name="unitKilometersPerHour">Kilometer per time</string>
-    <string name="unitKilometersSingular">kilometer</string>
+    <string name="unitKilometersSingular">Kilometer</string>
     <string name="unitKilometersPlural">Kilometer</string>
-    <string name="unitMetersSingular">meter</string>
+    <string name="unitMetersSingular">Meter</string>
     <string name="unitMetersPlural">Meter</string>
     <string name="per">per</string>
     <string name="timeSecondsPlural">Sekunder</string>
     <string name="timeSecondsSingular">Sekund</string>
-    <string name="workoutDiscarded">Arbeidsøkt forkastet</string>
+    <string name="workoutDiscarded">Treningsøkt forkastet</string>
     <string name="preferenceTimeFormat">Tidsformat</string>
     <string name="preferenceDateFormat">Datoformat</string>
     <string name="preferencesCategoryAppearance">Utseende</string>
     <string name="preferencesBackupSummary">Sikkerhetskopier/gjenopprett din treningsøktdata</string>
     <string name="preferencesBackupTitle">Database</string>
     <string name="preferencesRecordingSummary">Håndter treningsøktopptaket</string>
-    <string name="preferencesRecordingTitle">Tar opp</string>
+    <string name="preferencesRecordingTitle">Opptak</string>
     <string name="preferencesUserInterfaceSummary">Tilpass programmet</string>
     <string name="preferencesUserInterfaceTitle">Brukergrensesnitt</string>
     <string name="avgSpeedTotalLong">Gjen.-hastighet totalt</string>
@@ -110,7 +110,7 @@
     <string name="intervalSets">Intervallsett</string>
     <string name="intervalSet">Intervallsett</string>
     <string name="intervalTraining">Intervalltrening</string>
-    <string name="intervalsIncludePauseSummary">Hvis aktivert, vil intervallene fortsette, selv om du gjør en pause i treningen.</string>
+    <string name="intervalsIncludePauseSummary">Hvis aktivert, vil intervallene fortsette, selv om du tar en pause i treningen.</string>
     <string name="intervalsIncludePauseTitle">Inkluder pausetid i intervalltrening</string>
     <string name="intervalSetSelected">Intervallsett valgt</string>
     <string name="selectIntervalSet">Velg intervallsett</string>
@@ -151,7 +151,7 @@
     <string name="exportDataSummary">Dette utfører sikkerhetskopi av alle treningsøkter</string>
     <string name="exportData">Eksporter data</string>
     <string name="settings">Innstillinger</string>
-    <string name="pref_unit_system">Foretrukket system av enheter</string>
+    <string name="pref_unit_system">Foretrukket enhetssystem</string>
     <string name="pref_weight_summary">Din vekt trengs for å regne ut forbrente kalorier</string>
     <string name="pref_weight">Din vekt</string>
     <string name="exportAsGpxFile">Eksporter som GPX-fil</string>
@@ -169,7 +169,7 @@
     <string name="comment">Kommentar</string>
     <string name="enable">Skru på</string>
     <string name="noGpsMessage">Skru på GPS for sporing av din treningsøkt.</string>
-    <string name="noGpsTitle">GPS deaktivert</string>
+    <string name="noGpsTitle">GPS avskrudd</string>
     <string name="recordWorkout">Ta opp treningsøkt</string>
     <string name="setDuration">Sett varighet</string>
     <string name="importWorkout">Importer treningsøkt</string>
@@ -188,9 +188,9 @@
     <string name="workoutAscent">Stigning</string>
     <string name="uploadFailedOsmNotAuthorized">Ikke identitetsbekreftet, prøv igjen</string>
     <string name="uploadFailed">Kunne ikke laste opp</string>
-    <string name="uploadSuccessful">Last opp vellykket</string>
+    <string name="uploadSuccessful">Opplastet</string>
     <string name="upload">Last opp</string>
-    <string name="authenticationFailed">Godkjenning mislyktes.</string>
+    <string name="authenticationFailed">Identitetsbekreftelse mislyktes.</string>
     <string name="enterVerificationCode">Skriv inn bekreftelseskode</string>
     <string name="uploading">Laster opp</string>
     <string name="workoutEdited">Denne treningsøkten har blitt redigert.</string>
@@ -227,7 +227,7 @@
     <string name="setPreferencesTitle">Sett innstillinger</string>
     <string name="backup">Sikkerhetskopier</string>
     <string name="restore">Gjenopprett</string>
-    <string name="chooseBackupFile">Velg Backup-File</string>
+    <string name="chooseBackupFile">Velg sikkerhetskopifil</string>
     <string name="loadingFile">Laster inn fil</string>
     <string name="finished">Fullført</string>
     <string name="converting">Konverterer</string>
@@ -253,56 +253,56 @@
     <string name="speechConfigNoSpeech">Ingen kunngjøring</string>
     <string name="importingFiles">Importerer filer</string>
     <string name="importMultipleMessageSelectFolder">Velg en mappe inneholdende alle GPX-filer du ønsker å importere.</string>
-    <string name="aboutUnlistedContributors">Takk til alle ikke-børsnoterte bidragsytere som hjalp til med å oversette og å utvide FitoTrack!</string>
+    <string name="aboutUnlistedContributors">Takk til alle manglende bidragsytere hjalp til med å oversette og å utvide FitoTrack!</string>
     <string name="importMultipleGpxFiles">Importer flerfoldige GPX-filer</string>
-    <string name="aboutHelpTranslating">Hjelp til i oversettelsen</string>
-    <string name="actionGrant">Stipend</string>
-    <string name="aboutPrivacyPolicy">Personvernregler</string>
-    <string name="inclination">Tilbøyelighet</string>
+    <string name="aboutHelpTranslating">Bistå oversettelsen</string>
+    <string name="actionGrant">Innvilg</string>
+    <string name="aboutPrivacyPolicy">Personvernspraksis</string>
+    <string name="inclination">Helning</string>
     <string name="nothingSelected">Ingenting er valgt</string>
     <string name="showIntervals">Vis intervaller</string>
-    <string name="connectHeartRateDevice">Koble hjertefrekvens-enhet</string>
-    <string name="selectBluetoothDevice">Velg Bluetooth-enhe</string>
-    <string name="workoutAvgHeartRate">Avg. hjertefrekvens</string>
-    <string name="workoutMaxHeartRate">Maks Puls</string>
-    <string name="workoutHeartRate">hjertefrekvens</string>
+    <string name="connectHeartRateDevice">Koble til pulsenhet</string>
+    <string name="selectBluetoothDevice">Velg Blåtannsenhet</string>
+    <string name="workoutAvgHeartRate">Gjen. puls</string>
+    <string name="workoutMaxHeartRate">Makspuls</string>
+    <string name="workoutHeartRate">Puls</string>
     <string name="workoutStarted">Treningsøkt startet</string>
     <string name="workoutStopped">Treningsøkt stoppet</string>
     <string name="workoutResumed">Treningsøkt gjenopptatt</string>
-    <string name="workoutPaused">Trening på pause</string>
-    <string name="actionResume">Fortsette</string>
-    <string name="actionPause">Gå i stykker</string>
-    <string name="autoPauseSummary">Automatisk pause og fortsette trening</string>
-    <string name="autoPauseTitle">Bilbrudd</string>
-    <string name="resumeWorkout">Gjenoppta Trening</string>
-    <string name="heartRateNotAvailable">Puls er for øyeblikket ikke tilgjengelig.</string>
-    <string name="announcementWorkoutActions">Trening Handlinger (pause, gjenoppta, etc.)</string>
+    <string name="workoutPaused">Treningsøkt på pause</string>
+    <string name="actionResume">Fortsett</string>
+    <string name="actionPause">Pause</string>
+    <string name="autoPauseSummary">Ta pause automatisk og fortsett treningsøkt</string>
+    <string name="autoPauseTitle">Automatisk pause</string>
+    <string name="resumeWorkout">Gjenoppta treningsøkt</string>
+    <string name="heartRateNotAvailable">Puls er ikke tilgjengelig for øyeblikket.</string>
+    <string name="announcementWorkoutActions">Treningshandlinger (pause, gjenoppta, etc.)</string>
     <string name="resumeWorkoutConfirmation">Tror du virkelig ønsker å fortsette denne treningen\? Dette vil også legge til en pause fra treningen ble stoppet.</string>
-    <string name="prefShowOnLockScreenSummary">Vis trening informasjon selv om telefonen er låst.</string>
+    <string name="prefShowOnLockScreenSummary">Vis treningsøktinfo selv om enheten er låst.</string>
     <string name="prefShowOnLockScreenTitle">Synlig på låseskjermen</string>
-    <string name="notimeout">Ingen Timeout</string>
+    <string name="notimeout">Uten tidsavbrudd</string>
     <string name="workoutTypeEditMET">MET</string>
-    <string name="editWorkoutType">Rediger trening type</string>
+    <string name="editWorkoutType">Rediger treningøkttype</string>
     <string name="workoutTypeEditIcon">Ikon</string>
-    <string name="deleteWorkoutTypeConfirmation">Tror du virkelig ønsker å slette denne type trening\?</string>
-    <string name="deleteWorkoutType">Slette Treningsøkt Type</string>
+    <string name="deleteWorkoutTypeConfirmation">Slett denne treningsøkttypen\?</string>
+    <string name="deleteWorkoutType">Slett treningsøkttype</string>
     <string name="actionSave">Lagre</string>
-    <string name="customWorkoutTypesTitle">Tilpassede Typer Trening</string>
-    <string name="preferenceCategoryVoiceFeedback">Stemme tilbakemelding</string>
-    <string name="workoutTypeEditMinDistance">Eksempel avstand</string>
-    <string name="workoutTypeEditNameError">Vennligst skriv inn et navn</string>
+    <string name="customWorkoutTypesTitle">Egendefinerte treningsøkttyper</string>
+    <string name="preferenceCategoryVoiceFeedback">Stemme-tilbakemelding</string>
+    <string name="workoutTypeEditMinDistance">Målingsavstand</string>
+    <string name="workoutTypeEditNameError">Skriv inn et navn</string>
     <string name="workoutTypeEditName">Navn</string>
-    <string name="workoutTypeEditIdErrorUnique">Det er allerede en treningsøkt type ved å bruke denne ID-en</string>
-    <string name="workoutTypeEditIdErrorEmpty">Vennligst legg inn en ID</string>
-    <string name="workoutTypeEditIdErrorCharacters">Tillatt tegn: a–z, A–Z, 0–9, _, -</string>
+    <string name="workoutTypeEditIdErrorUnique">Det er allerede en treningsøkttype som bruker denne ID-en</string>
+    <string name="workoutTypeEditIdErrorEmpty">Legg inn en ID</string>
+    <string name="workoutTypeEditIdErrorCharacters">Tillatte tegn: a–å, A–Å, 0–9, _, -</string>
     <string name="workoutTypeEditId">ID</string>
-    <string name="hintManageWorkoutTypes">Klikk på plusstegnet for å legge til en tilpasset trening typer.</string>
-    <string name="workoutTypeAdd">Legge</string>
+    <string name="hintManageWorkoutTypes">Klikk på plusstegnet for å legge til egendefinerte treningsøkttyper.</string>
+    <string name="workoutTypeAdd">Legg til</string>
     <string name="actionImportMultiple">Importer flere</string>
     <string name="actionImport">Importer</string>
     <string name="importWorkoutMultipleQuestion">Ønsker du å importere én eller flere GPX-filer\?</string>
-    <string name="recordingPermissionNotGrantedMessage">Innvilg posisjonstilgang for å spore dine bevegelser under arbeidsøkter, når skjermen er av, og i bakgrunnen. Den forblir på enheten din uten din klare tilgang til å dele den.</string>
-    <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack samler også posisjonsdata i bakgrunnen for å ta opp din arbeidsøkt når skjermen er av. Derfor må du innvilge kontinuerlig tilgang.</string>
+    <string name="recordingPermissionNotGrantedMessage">Innvilg posisjonstilgang for å spore dine bevegelser under treningsøkter, når skjermen er av, og i bakgrunnen. Den forblir på enheten din uten din klare tilgang til å dele den.</string>
+    <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack samler også posisjonsdata i bakgrunnen for å ta opp din treningsøkt når skjermen er av. Derfor må du innvilge kontinuerlig tilgang.</string>
     <string name="overwriteMapConfirmation">Ønsker du å overskrive den eksisterende kartfilen «%s»\?</string>
     <string name="downloadMapsSpecifyDirectory">Angi en mappe for frakoblede kart først</string>
     <string name="alreadyDownloading">En fil lastes ned allerede</string>
@@ -367,4 +367,66 @@
         <item quantity="one">Hopp</item>
         <item quantity="other">Hopp</item>
     </plurals>
+    <string name="workoutTypeTreadmill">Tredemølle</string>
+    <string name="pref_step_length">Steglengde</string>
+    <string name="edit_interval">Rediger intervall</string>
+    <string name="runningMigrations">Kjørende migreringer</string>
+    <string name="manageAutoStartDelaySummary">Velg forvalgt nedtelling for automatisk treningsøktstart</string>
+    <string name="autoStartCountdownMsg">Starter treningsøkt om</string>
+    <string name="autoStartCountdownMsgMove">Starter treningsøkt når du begynner å bevege deg</string>
+    <string name="popup_auto_start">Med forvalgt forsinkelse</string>
+    <string name="upperPaceLimit">Øvre tempogrense</string>
+    <string name="ttsMinuteSecondCountdownAnnouncement"> <xliff:g example="1 minute" id="mins">%1$s</xliff:g> og <xliff:g example="7 seconds" id="secs">%2$s</xliff:g> til oppstart </string>
+    <string name="ttsLongSecondCountdownAnnouncement"> <xliff:g example="5 seconds" id="secs">%1$s</xliff:g> til oppstart </string>
+    <string name="intervalAutoStartModeTraining">Modus for automatisk treningsøktstart</string>
+    <string name="pref_auto_start_mode_title">Modus for automatisk start</string>
+    <string name="pref_announcements_pace_control_summary">Advar når hastigheten overstiger eller faller under angitt nivå</string>
+    <string name="workoutSets">Sett</string>
+    <string name="currentTimeStructure">%s %s</string>
+    <string name="workoutAutoStartAborted">Automatisk start avbrutt</string>
+    <string name="dialog_nfc_disabled">For å bruke NFC-brikker til å starte og stoppe treningsøkter må du skru på NFC i enhetsinnstillingene først</string>
+    <string name="nfcStartSummary">Aktiver dette for å kunne starte og stoppe treningsøkter ved å skanne en NFC-brikke</string>
+    <string name="announcementCountdown">Autostart av handlinger (nedtelling, tilstand, etc.)</string>
+    <string name="lowerPaceLimit">Nedre tempogrense</string>
+    <string name="manageAutoStartModeSummary">Endre modus for automatisk treningsøktstart</string>
+    <string name="preferenceCategoryRenderThemeCategories">Kategorier</string>
+    <string name="pref_announcements_pace_control_title">Tempokontroll-advarsler</string>
+    <plurals name="importedWorkouts">
+        <item quantity="one">Importerte én treningsøkt</item>
+        <item quantity="other">Importerte %d treningsøkter</item>
+    </plurals>
+    <string name="workoutTypeRopeSkipping">Hoppetau</string>
+    <string name="workoutTypePushUps">Armhevinger</string>
+    <plurals name="seconds">
+        <item quantity="one"><xliff:g example="1" id="secs">%1$d</xliff:g> sekund</item>
+        <item quantity="other"><xliff:g example="12" id="secs">%1$d</xliff:g> sekunder</item>
+    </plurals>
+    <string name="workoutAutoStarted">Treningsøkt startet automatisk</string>
+    <string name="workoutTypeTrampolineJumping">Trampolinehopping</string>
+    <string name="pref_render_theme_style">Opptegningsstil</string>
+    <plurals name="minutes">
+        <item quantity="one"><xliff:g example="1" id="mins">%1$d</xliff:g> minutt</item>
+        <item quantity="other"><xliff:g example="5" id="mins">%1$d</xliff:g> minutter</item>
+    </plurals>
+    <plurals name="workoutPushUp">
+        <item quantity="one">Armheving</item>
+        <item quantity="other">Armhevinger</item>
+    </plurals>
+    <string name="pref_map_directory">Mappe for frakoblede kart</string>
+    <string name="intervalAutoStartDelayTraining">Forsinkelse av automatisk treningsøkt-start</string>
+    <string name="recordingActivityPermissionMessage">FitoTrack trenger tilgang til å spore din fysiske aktivitet for å ta opp treningsøkter innendørs.</string>
+    <string name="popup_auto_start_delay">Med egendefinert forsinkelse</string>
+    <string name="pref_auto_start_mode_on_move">Venter på at du begynner å bevege deg</string>
+    <string name="pref_auto_start_delay_title">Nedtelling til automatisk start</string>
+    <string name="preferenceCurrentSpeedAverageTimeSummary">Erstatt nåværende hastighetsutregning med gjen. utregning.</string>
+    <string name="preferenceFirstDayOfWeek">Ukestart</string>
+    <string name="unitHertzLong">Hertz</string>
+    <string name="pref_render_theme_style_info">Valgt opptegningsdrakt har ingen tilgjengelige draktstil.</string>
+    <string name="autoStartCountdownMsgGps">Starter treningsøkt når GPS-posisjon er nøyaktig nok</string>
+    <string name="pref_auto_start_mode_unknown">Ukjent modus (ikke velg dette)</string>
+    <string name="preferenceCurrentSpeedTime">Tidsområde for gjen- utregning</string>
+    <string name="preferenceCurrentSpeedAverageTimeTitle">Nåværende hastighet fra gjen.</string>
+    <string name="preferenceUseAverageForCurrentSpeed">Bruk gjen.hastighet over gitt tid istedenfor siste hastighetsrekord for nåværende hastighetsutregning.</string>
+    <string name="ttsMinuteCountdownAnnouncement"> <xliff:g example="12 minutes" id="mins">%1$s</xliff:g> til oppstart </string>
+    <string name="editStartEndHelp">Velg en posisjon på kartet eller diagrammet. Klikk på en av pilene for å velge et nytt start- eller sluttpunkt. Når du er ferdig trykker du på lagringsikonet for å bruke endringene.</string>
 </resources>
