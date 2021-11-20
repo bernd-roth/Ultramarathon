@@ -277,8 +277,8 @@
     <string name="error">Hata</string>
     <string name="delete">Sil</string>
     <string name="app_name">FitoTrack</string>
-    <string name="resumeWorkoutConfirmation">Bu egzersizi gerçekten devam ettirmek istiyor musunuz\? Bu aynı zamanda egzersizin durdurulduğu andan itibaren bir duraklama ekleyecektir.</string>
-    <string name="prefShowOnLockScreenSummary">Telefon kilitli olsa bile egzersiz bilgilerini göster.</string>
+    <string name="resumeWorkoutConfirmation">Bu egzersize devam edilsin mi\? Egzersizin durdurulduğu zamandan bir duraklama eklenecektir.</string>
+    <string name="prefShowOnLockScreenSummary">Aygıt kilitli olsa bile egzersiz bilgilerini göster.</string>
     <string name="prefShowOnLockScreenTitle">Kilit ekranında görünür</string>
     <string name="notimeout">Zaman Aşımı Yok</string>
     <string name="editWorkoutType">Egzersiz türünü düzenle</string>
