@@ -45,7 +45,7 @@
     <string name="timeHourShort">h</string>
     <string name="timeSecondsShort">s</string>
     <string name="and">et</string>
-    <string name="errorEnterValidNumber">Merci d\'entrer un nombre valide</string>
+    <string name="errorEnterValidNumber">Entrez un nombre valide</string>
     <string name="errorWorkoutAddFuture">L\'entraînement ne peut pas avoir lieu dans le futur</string>
     <string name="errorEnterValidDuration">Merci d\'entrer une durée valide</string>
     <string name="announcementGPSStatus">Statut GPS</string>
@@ -320,8 +320,8 @@
     <string name="autoPauseSummary">Automatiquement pause et continuer les séances d\'entraînement</string>
     <string name="autoPauseTitle">Pause automatique</string>
     <string name="notimeout">Aucune pause</string>
-    <string name="resumeWorkoutConfirmation">Voulez-vous vraiment reprendre cette séance d\'entraînement  \? Cela ajoutera également une pause à partir du moment où l\'entraînement a été arrêté.</string>
-    <string name="prefShowOnLockScreenSummary">Afficher les informations d\'entraînement, même si le téléphone est verrouillé.</string>
+    <string name="resumeWorkoutConfirmation">Reprendre cette séance d\'entraînement \? Une pause à partir du moment où la séance d\'entraînement a été arrêtée sera ajoutée.</string>
+    <string name="prefShowOnLockScreenSummary">Afficher les informations relatives à l\'entraînement même si l\'appareil est verrouillé.</string>
     <string name="prefShowOnLockScreenTitle">Visible sur l\'écran de verrouillage</string>
     <string name="editWorkoutType">Modifier l\'entraînement</string>
     <string name="workoutTypeEditIcon">Icône</string>
@@ -391,8 +391,8 @@
     <string name="editStartEndHelp">Sélectionnez une position sur la carte ou le diagramme. Cliquez ensuite sur l\'une des flèches pour sélectionner un nouveau point de départ ou d\'arrivée. Lorsque vous avez terminé, cliquez sur l\'icône d\'enregistrement pour appliquer les modifications.</string>
     <string name="launchError">Impossible de lancer l\'application</string>
     <string name="actionApply">Appliquer</string>
-    <string name="moveEndOfWorkout">Fin de la coupure</string>
-    <string name="moveStartOfWorkout">Début de la coupure</string>
+    <string name="moveEndOfWorkout">Sauter la fin</string>
+    <string name="moveStartOfWorkout">Sauter le début</string>
     <string name="scanFailed">Échec du scan</string>
     <string name="scanning">Scan en cours…</string>
     <string name="announcementCountdown">Actions de démarrage automatique (compte à rebours, état, etc.)</string>
@@ -431,7 +431,7 @@
     <string name="workoutFrequency">Fréquence</string>
     <string name="workoutRepetitions">Répétitions</string>
     <string name="workoutRecordingTypeIndoor">Entraînement en intérieur</string>
-    <string name="workoutRecordingTypeGps">Entraînement GPS</string>
+    <string name="workoutRecordingTypeGps">Entraînements GPS</string>
     <string name="workoutMaxIntensity">Intensité max</string>
     <string name="workoutMaxFrequency">Fréquence max</string>
     <string name="pref_render_theme_style_info">Pas de menu de thème de rendu disponible pour le thème de rendu sélectionné.</string>
@@ -467,4 +467,8 @@
     <string name="workoutCurrentFrequency">Fréquence actuelle</string>
     <string name="workoutAvgFrequencyLong">Fréquence moyenne</string>
     <string name="workoutAvgFrequencyShort">Fréquence moy.</string>
+    <plurals name="importedWorkouts">
+        <item quantity="one">Un entraînement importé</item>
+        <item quantity="other">%d entraînements importés</item>
+    </plurals>
 </resources>
