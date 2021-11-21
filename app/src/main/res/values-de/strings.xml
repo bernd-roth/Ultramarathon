@@ -329,8 +329,8 @@
     <string name="workoutStarted">Workout gestartet</string>
     <string name="notimeout">Kein Timeout</string>
     <string name="prefShowOnLockScreenTitle">Auf dem Sperrbildschirm sichtbar</string>
-    <string name="prefShowOnLockScreenSummary">Zeige Workout-Informationen, selbst wenn das Telefon gesperrt ist.</string>
-    <string name="resumeWorkoutConfirmation">Möchtest du das Workout wirklich fortsetzen? Dies wird unter anderem auch eine Pause von dem Zeitpunkt erstellen, an dem das Workout gestoppt wurde.</string>
+    <string name="prefShowOnLockScreenSummary">Workout-Informationen zeigen, selbst wenn das Gerät gesperrt ist.</string>
+    <string name="resumeWorkoutConfirmation">Dieses Workout fortsetzen\? Eine Pause ab dem Zeitpunkt, an dem das Workout gestoppt wurde, wird hinzugefügt.</string>
     <string name="editWorkoutType">Workout-Typ bearbeiten</string>
     <string name="workoutTypeEditIcon">Symbol</string>
     <string name="deleteWorkoutTypeConfirmation">Möchtest du den Workout-Typ wirklich löschen\?</string>
