@@ -34,6 +34,7 @@ import de.tadris.fitness.R;
 import de.tadris.fitness.data.UserPreferences;
 import de.tadris.fitness.data.migration.Migration;
 import de.tadris.fitness.data.migration.Migration12IntervalSets;
+import de.tadris.fitness.data.migration.MigrationCleanCache;
 import de.tadris.fitness.map.MapManager;
 import de.tadris.fitness.recording.BaseWorkoutRecorder;
 import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
@@ -79,6 +80,9 @@ public class LauncherActivity extends Activity implements Migration.MigrationLis
         List<Migration> migrations = new ArrayList<>();
         if (preferences.getLastVersionCode() < 1200) {
             migrations.add(new Migration12IntervalSets(this, this));
+        }
+        if (preferences.getLastVersionCode() < 1300) {
+            migrations.add(new MigrationCleanCache(this, this));
         }
         progressDialog = new ProgressDialogController(this, getString(R.string.runningMigrations));
         progressDialog.show();

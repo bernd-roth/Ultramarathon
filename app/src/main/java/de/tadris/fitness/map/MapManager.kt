@@ -40,6 +40,7 @@ import org.mapsforge.map.rendertheme.XmlRenderTheme
 import org.mapsforge.map.rendertheme.ZipRenderTheme
 import org.mapsforge.map.rendertheme.ZipXmlThemeResourceProvider
 import java.io.BufferedInputStream
+import java.io.File
 import java.io.FileInputStream
 import java.util.zip.ZipInputStream
 
@@ -207,7 +208,14 @@ class MapManager(private val activity: Activity) {
         fun initMapProvider(activity: Activity) {
             // This sets the device scale factor so the map is displayed accordingly
             AndroidGraphicFactory.createInstance(activity.application)
+            initSvgCache(activity)
             DisplayModel.setDefaultUserScaleFactor(0.85f)
+        }
+
+        private fun initSvgCache(activity: Activity) {
+            val svgCache = File(activity.cacheDir, "svg")
+            if (!svgCache.exists()) svgCache.mkdir()
+            AndroidGraphicFactory.INSTANCE.setSvgCacheDir(svgCache)
         }
     }
 }
