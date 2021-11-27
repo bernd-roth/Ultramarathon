@@ -33,20 +33,20 @@ class InformationAnnouncements(
 ) {
 
     private val manager: InformationManager = InformationManager(recorder.recordingType, context)
-    private var lastSpokenUpdateTime: Long = 0
+    private var lastSpokenUpdateTime = 0L
     private var lastSpokenUpdateDistance = 0
-    private var lastSpokenSpeedWarningTime: Long = 0
+    private var lastSpokenSpeedWarningTime = 0L
     private var lowerTargetSpeedLimit = 0f
     private var upperTargetSpeedLimit = 0f
 
     private val preferences = Instance.getInstance(context).userPreferences
-    private val intervalTime: Long = (60 * 1000 * preferences.spokenUpdateTimePeriod).toLong()
-    private val intervalInMeters: Int =
+    private val intervalTime = (60 * 1000 * preferences.spokenUpdateTimePeriod).toLong()
+    private val intervalInMeters =
         (1000.0 / Instance.getInstance(context).distanceUnitUtils.distanceUnitSystem.getDistanceFromKilometers(
             1.0
         )
                 * preferences.spokenUpdateDistancePeriod).toInt()
-    private val speedWarningIntervalTime: Long = (1000 * 10).toLong()
+    private val speedWarningIntervalTime = 1000L * 10
 
     init {
         if (preferences.hasLowerTargetSpeedLimit()) {
@@ -60,7 +60,7 @@ class InformationAnnouncements(
     fun check() {
         if (!TTSController.isTtsAvailable) {
             return
-        } // Cannot speak
+        }
         checkSpeed()
         var shouldSpeak = false
         if (intervalTime != 0L && recorder.duration - lastSpokenUpdateTime > intervalTime) {

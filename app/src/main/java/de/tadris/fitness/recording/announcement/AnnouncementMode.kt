@@ -19,7 +19,7 @@
 package de.tadris.fitness.recording.announcement
 
 import android.content.Context
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 
 enum class AnnouncementMode {
     ALWAYS, HEADPHONES;
