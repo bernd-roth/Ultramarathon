@@ -26,6 +26,7 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
@@ -208,14 +209,15 @@ public abstract class BaseRecorderService extends Service {
                 .setContentText(contentText)
                 .setStyle(new Notification.BigTextStyle().bigText(contentText))
                 .setSmallIcon(R.drawable.notification);
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationHelper.createChannels(this);
             builder.setChannelId(NotificationHelper.CHANNEL_WORKOUT);
         }
 
         Intent recorderActivityIntent = new Intent(this, instance.recorder.getActivityClass());
         recorderActivityIntent.setAction(RecordWorkoutActivity.RESUME_ACTION);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, recorderActivityIntent, 0);
+        int flag = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE : 0;
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, recorderActivityIntent, flag);
         builder.setContentIntent(pendingIntent);
 
         return builder.build();
