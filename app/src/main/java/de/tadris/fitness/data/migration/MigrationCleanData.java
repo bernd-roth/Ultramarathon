@@ -25,16 +25,16 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.IOException;
 
-public class MigrationCleanCache extends Migration {
+public class MigrationCleanData extends Migration {
 
-    public MigrationCleanCache(Context context, MigrationListener listener) {
+    public MigrationCleanData(Context context, MigrationListener listener) {
         super(context, listener);
     }
 
     @Override
     public void migrate() {
         try {
-            FileUtils.cleanDirectory(context.getCacheDir());
+            FileUtils.cleanDirectory(context.getFilesDir());
         } catch (IOException e) {
             e.printStackTrace();
         }
