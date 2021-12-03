@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -17,9 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="recordingBackgroundPermissionNotGrantedMessage">屏幕关闭时，FitoTrack 也会在后台收集位置数据，以便记录您的运动。因此，请允许 FitoTrack 随时访问位置信息。</string>
     <string name="recordingPermissionNotGrantedMessage">为了追踪锻炼期间您的运行，FitoTrack 需要位置权限。 FitoTrack 也会在后台运行，或屏幕关闭时收集位置数据，以便记录您的锻炼。除非您明确同意分享，否则位置数据只会储存在手机上。</string>
     <string name="editDisplayedInformationHint">只要锻炼未开始，您就可以点击四个区域之一，来编辑显示值。</string>
@@ -306,14 +303,14 @@
     <string name="pref_auto_start_mode_title">自动开始模式</string>
     <string name="intervalAutoStartModeTraining">自动锻炼开始模式</string>
     <string name="manageAutoStartModeSummary">修改自动锻炼开始的模式</string>
-    <string name="ttsMinuteSecondCountdownAnnouncement"> <xliff:g id="mins" example="1 minute">%1$s</xliff:g> 和 <xliff:g id="secs" example="7 seconds">%2$s</xliff:g> 直至开始 </string>
-    <string name="ttsMinuteCountdownAnnouncement"> <xliff:g id="mins" example="12 minutes">%1$s</xliff:g> 直至开始 </string>
-    <string name="ttsLongSecondCountdownAnnouncement"> <xliff:g id="secs" example="5 seconds">%1$s</xliff:g> 直到开始 </string>
+    <string name="ttsMinuteSecondCountdownAnnouncement"> <xliff:g example="1 minute" id="mins">%1$s</xliff:g> 和 <xliff:g example="7 seconds" id="secs">%2$s</xliff:g> 直至开始 </string>
+    <string name="ttsMinuteCountdownAnnouncement"> <xliff:g example="12 minutes" id="mins">%1$s</xliff:g> 直到开始 </string>
+    <string name="ttsLongSecondCountdownAnnouncement"> <xliff:g example="5 seconds" id="secs">%1$s</xliff:g> 直到开始 </string>
     <plurals name="minutes">
-        <item quantity="other"><xliff:g id="mins" example="5">%1$d</xliff:g> 分</item>
+        <item quantity="other"><xliff:g example="5" id="mins">%1$d</xliff:g> 分</item>
     </plurals>
     <plurals name="seconds">
-        <item quantity="other"><xliff:g id="secs" example="12">%1$d</xliff:g> 秒</item>
+        <item quantity="other"><xliff:g example="12" id="secs">%1$d</xliff:g> 秒</item>
     </plurals>
     <string name="scanFailed">扫描失败</string>
     <string name="scanning">正在扫描…</string>
@@ -396,4 +393,7 @@
     <string name="workoutFrequency">频率</string>
     <string name="workoutSets">组</string>
     <string name="workoutRepetitions">重复次数</string>
+    <plurals name="importedWorkouts">
+        <item quantity="other">导入了 %d 条锻炼记录</item>
+    </plurals>
 </resources>
