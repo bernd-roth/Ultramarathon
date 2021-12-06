@@ -277,8 +277,8 @@
     <string name="resumeWorkout">Retomar adestramento</string>
     <string name="heartRateNotAvailable">Non está dispoñible o ritmo cardíaco.</string>
     <string name="announcementWorkoutActions">Accións do adestramento (pausar, retomar, etc.)</string>
-    <string name="resumeWorkoutConfirmation">Queres continuar este adestramento\? Esto engadirá unha pausa desde o momento en que o adestramento se detivo.</string>
-    <string name="prefShowOnLockScreenSummary">Mostrar información do adestramento incluso coa pantalla bloqueada.</string>
+    <string name="resumeWorkoutConfirmation">Continuar co adestramento\? Esto engadirá unha pausa desde o momento en que o adestramento se detivo.</string>
+    <string name="prefShowOnLockScreenSummary">Mostrar info do adestramento incluso estando bloqueado.</string>
     <string name="prefShowOnLockScreenTitle">Visible na pantalla de bloqueo</string>
     <string name="notimeout">Sen caducidade</string>
     <string name="editWorkoutType">Edita tipo de adestramento</string>
@@ -424,5 +424,9 @@
     <string name="workoutCurrentFrequency">Frecuencia actual</string>
     <string name="workoutAvgFrequencyLong">Frecuencia media</string>
     <string name="workoutRecordingTypeIndoor">Adestramentos en interior</string>
-    <string name="workoutRecordingTypeGps">Adestramentos Gps</string>
+    <string name="workoutRecordingTypeGps">Adestramentos GPS</string>
+    <plurals name="importedWorkouts">
+        <item quantity="one">Importado un adestramento</item>
+        <item quantity="other">Importados %d adestramentos</item>
+    </plurals>
 </resources>

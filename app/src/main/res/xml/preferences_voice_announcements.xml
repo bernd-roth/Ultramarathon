@@ -37,11 +37,6 @@
         android:key="announcementMode"
         android:title="@string/pref_announcement_mode" />
 
-    <CheckBoxPreference
-        android:defaultValue="true"
-        android:key="announcementSuppressDuringCall"
-        android:title="@string/announcementSuppressDuringCall" />
-
     <PreferenceCategory android:title="@string/pref_announcements_content">
 
         <CheckBoxPreference

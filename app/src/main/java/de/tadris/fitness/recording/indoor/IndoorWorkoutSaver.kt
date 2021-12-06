@@ -62,12 +62,12 @@ class IndoorWorkoutSaver(private val context: Context, workoutData: IndoorWorkou
     private fun setFrequencies() {
         if (samples.size > 2) {
             // Recalculate exact frequency
-            var lastTime = samples[0].relativeTime
+            var lastTime = samples[0].absoluteTime
             samples.forEach { sample ->
-                val timeDiff = sample.relativeTime - lastTime
+                val timeDiff = sample.absoluteTime - lastTime
                 sample.frequency =
                     if (timeDiff > 0) 1000 * sample.repetitions.toDouble() / timeDiff else 0.0
-                lastTime = sample.relativeTime
+                lastTime = sample.absoluteTime
             }
         }
     }

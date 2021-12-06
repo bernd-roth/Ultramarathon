@@ -16,23 +16,27 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.tadris.fitness.recording.announcement
 
-import android.content.Context
-import androidx.preference.PreferenceManager
+package de.tadris.fitness.data.migration;
 
-enum class AnnouncementMode {
-    ALWAYS, HEADPHONES;
+import android.content.Context;
 
-    companion object {
+import org.apache.commons.io.FileUtils;
 
-        fun getCurrentMode(context: Context?): AnnouncementMode {
-            return when (PreferenceManager.getDefaultSharedPreferences(context)
-                .getString("announcementMode", "headphones")!!) {
-                "always" -> ALWAYS
-                "headphones" -> HEADPHONES
-                else -> HEADPHONES
-            }
+import java.io.IOException;
+
+public class MigrationCleanData extends Migration {
+
+    public MigrationCleanData(Context context, MigrationListener listener) {
+        super(context, listener);
+    }
+
+    @Override
+    public void migrate() {
+        try {
+            FileUtils.cleanDirectory(context.getFilesDir());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

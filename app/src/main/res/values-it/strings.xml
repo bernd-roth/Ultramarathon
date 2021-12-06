@@ -306,8 +306,8 @@
     <string name="resumeWorkout">Riprendere L\'Allenamento</string>
     <string name="heartRateNotAvailable">La frequenza cardiaca non è attualmente disponibile.</string>
     <string name="announcementWorkoutActions">Azioni di allenamento (pausa, riprendere, ecc.)</string>
-    <string name="resumeWorkoutConfirmation">Vuoi davvero riprendere questo allenamento\? Questo aggiungerà anche una pausa dal momento in cui l\'allenamento è stato interrotto.</string>
-    <string name="prefShowOnLockScreenSummary">Mostra le informazioni sull\'allenamento anche se il telefono è bloccato.</string>
+    <string name="resumeWorkoutConfirmation">Riprendere questo allenamento\? Verrà aggiunta una pausa dal momento in cui l\'allenamento è stato interrotto.</string>
+    <string name="prefShowOnLockScreenSummary">Mostra le informazioni sull\'allenamento anche se il dispositivo è bloccato.</string>
     <string name="prefShowOnLockScreenTitle">Visibile sulla schermata di blocco</string>
     <string name="notimeout">Nessun Timeout</string>
     <string name="workoutTypeEditMET">MET</string>
@@ -448,4 +448,14 @@
     <string name="pref_render_theme_style">Stile di rendering</string>
     <string name="pref_map_directory">Cartella mappe fuori linea</string>
     <string name="runningMigrations">Migrazioni in corso</string>
+    <string name="workoutSets">Serie</string>
+    <plurals name="importedWorkouts">
+        <item quantity="one">Un allenamento importato</item>
+        <item quantity="other">%d allenamenti importati</item>
+    </plurals>
+    <string name="moveEndOfWorkout">Ignora fine</string>
+    <string name="moveStartOfWorkout">Ignora l\'inizio</string>
+    <string name="ttsMinuteCountdownAnnouncement"> <xliff:g example="12 minutes" id="mins">%1$s</xliff:g> fino all\'inizio </string>
+    <string name="ttsMinuteSecondCountdownAnnouncement"> <xliff:g example="1 minute" id="mins">%1$s</xliff:g> e <xliff:g example="7 seconds" id="secs">%2$s</xliff:g> fino all\'inizio </string>
+    <string name="ttsLongSecondCountdownAnnouncement"> <xliff:g example="5 seconds" id="secs">%1$s</xliff:g> fino all\'inizio </string>
 </resources>

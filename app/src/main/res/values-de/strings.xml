@@ -89,7 +89,7 @@
     <string name="mapStyle">Kartenstil</string>
     <string name="actionUploadToOSM">Auf OSM hochladen</string>
     <string name="authenticationFailed">Authentifizierung fehlgeschlagen.</string>
-    <string name="cut">Die ersten/letzten 300 m abschneiden</string>
+    <string name="cut">Die ersten/letzten 300 m abschneiden</string>
     <string name="description">Beschreibung</string>
     <string name="enterVerificationCode">Gebe den Verifizierungscode ein</string>
     <string name="trackVisibilityPref">Spursichtbarkeit</string>
@@ -329,8 +329,8 @@
     <string name="workoutStarted">Workout gestartet</string>
     <string name="notimeout">Kein Timeout</string>
     <string name="prefShowOnLockScreenTitle">Auf dem Sperrbildschirm sichtbar</string>
-    <string name="prefShowOnLockScreenSummary">Zeige Workout-Informationen, selbst wenn das Telefon gesperrt ist.</string>
-    <string name="resumeWorkoutConfirmation">Möchtest du das Workout wirklich fortsetzen? Dies wird unter anderem auch eine Pause von dem Zeitpunkt erstellen, an dem das Workout gestoppt wurde.</string>
+    <string name="prefShowOnLockScreenSummary">Workout-Informationen zeigen, selbst wenn das Gerät gesperrt ist.</string>
+    <string name="resumeWorkoutConfirmation">Dieses Workout fortsetzen\? Eine Pause ab dem Zeitpunkt, an dem das Workout gestoppt wurde, wird hinzugefügt.</string>
     <string name="editWorkoutType">Workout-Typ bearbeiten</string>
     <string name="workoutTypeEditIcon">Symbol</string>
     <string name="deleteWorkoutTypeConfirmation">Möchtest du den Workout-Typ wirklich löschen\?</string>
@@ -458,7 +458,7 @@
     <string name="noColoring">Keine Färbung</string>
     <string name="launchError">Starten der App fehlgeschlagen</string>
     <string name="workoutRepetitions">Wiederholungen</string>
-    <string name="workoutSets">Sets</string>
+    <string name="workoutSets">Sätze</string>
     <string name="workoutFrequency">Frequenz</string>
     <string name="workoutAvgFrequencyShort">⌀-Frequenz</string>
     <string name="workoutMaxFrequency">Max Frequenz</string>
@@ -474,10 +474,14 @@
     <string name="unitHeartBeatsPerMinute">bpm</string>
     <string name="preferenceFirstDayOfWeek">Anfang der Woche</string>
     <string name="fileNotFound">Datei nicht gefunden</string>
-    <string name="workoutRecordingTypeGps">Gps Workouts</string>
+    <string name="workoutRecordingTypeGps">GPS Workouts</string>
     <string name="workoutRecordingTypeIndoor">Indoor Workouts</string>
     <string name="workoutAvgFrequencyLong">Durchschnittliche Frequenz</string>
     <string name="workoutCurrentFrequency">Aktuelle Frequenz</string>
     <string name="unitHertzLong">Hertz</string>
     <string name="currentTimeStructure">%s Uhr %s</string>
+    <plurals name="importedWorkouts">
+        <item quantity="one">Ein Workout importiert</item>
+        <item quantity="other">%d Workouts importiert</item>
+    </plurals>
 </resources>

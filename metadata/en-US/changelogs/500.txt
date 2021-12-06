@@ -12,5 +12,5 @@ Bug-Fixes:
 - Wrong speed values after GPS-signal was lost for some time (#47)
 
 Localisation:
-- update Dutch thanks to albertheres and didierm (#57, #58)
-- update Hungarian thanks to urbalazs (#59)
+- Update Dutch thanks to albertheres and didierm (#57, #58)
+- Update Hungarian thanks to urbalazs (#59)

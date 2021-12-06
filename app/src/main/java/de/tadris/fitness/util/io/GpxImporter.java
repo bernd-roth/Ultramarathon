@@ -90,6 +90,10 @@ public class GpxImporter implements IWorkoutImporter {
 
         String startTime = firstPoint.getTime();
 
+        if (startTime == null || startTime.isEmpty()) {
+            throw new RuntimeException("The GPX file doesn't include timestamps.");
+        }
+
         workout.start = parseDate(startTime).getTime();
 
         int index = firstSegment.getTrkpt().size();
@@ -135,9 +139,14 @@ public class GpxImporter implements IWorkoutImporter {
     }
 
     private static Date parseDate(String str) {
-        // Need parseCalendar because parseDate seems to be corrupted.
-        // The hour is always one lesser then the original time.
-        return DateParserUtils.parseCalendar(str).getTime();
+        try {
+            // Need parseCalendar because parseDate seems to be corrupted.
+            // The hour is always one lesser then the original time.
+            return DateParserUtils.parseCalendar(str).getTime();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Cannot parse timestamps: " + e.getMessage(), e.getCause());
+        }
     }
 
     private static String getTypeIdById(String id) {

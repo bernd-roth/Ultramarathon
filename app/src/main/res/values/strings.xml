@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
@@ -15,8 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
     <string name="stop">Stop</string>
     <string name="delete">Delete</string>
@@ -335,8 +335,8 @@
     <string name="workoutStarted">Workout started</string>
     <string name="notimeout">No Timeout</string>
     <string name="prefShowOnLockScreenTitle">Visible on lock screen</string>
-    <string name="prefShowOnLockScreenSummary">Show workout information even if the phone is locked.</string>
-    <string name="resumeWorkoutConfirmation">Do you really want to resume this workout? This will also add a pause from the time the workout was stopped.</string>
+    <string name="prefShowOnLockScreenSummary">Show workout info even if the device is locked.</string>
+    <string name="resumeWorkoutConfirmation">Resume this workout\? A pause from the time the workout was stopped will be added.</string>
     <string name="hintManageWorkoutTypes">Click on the plus to add custom workout types.</string>
     <string name="workoutTypeEditId">ID</string>
     <string name="workoutTypeEditIdErrorCharacters">Allowed characters: a–z, A–Z, 0–9, _, -</string>

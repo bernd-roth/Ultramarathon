@@ -250,6 +250,9 @@ public class GpsWorkoutSaver {
         workout.ascent = 0f;
         workout.descent = 0f;
 
+        // Eliminate noise
+        roundSampleElevation();
+
         // Now sum up the ascent/descent
         if (samples.size() > 1) {
             GpsSample firstSample = samples.get(0);
@@ -263,7 +266,9 @@ public class GpsWorkoutSaver {
                 workout.minElevationMSL = Math.min(workout.minElevationMSL, (float) sample.elevationMSL);
                 workout.maxElevationMSL = Math.max(workout.maxElevationMSL, (float) sample.elevationMSL);
 
-                double diff = sample.elevation - prevSample.elevation;
+                // Use rounded sample elevation
+                double diff = sample.tmpElevation - prevSample.tmpElevation;
+
                 if (Double.isNaN(diff)) {
                     Log.e("WorkoutSaver", "ElevationDiff is NaN fallback to 0");
                     diff = 0d;
