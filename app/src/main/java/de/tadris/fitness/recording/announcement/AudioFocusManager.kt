@@ -55,6 +55,8 @@ class AudioFocusManager(private val audioManager: AudioManager) {
         } else {
             audioManager.abandonAudioFocus(null)
         }
+
+        lastFocusRequest = null
     }
 
 }
