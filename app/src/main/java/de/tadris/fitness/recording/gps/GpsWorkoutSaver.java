@@ -188,7 +188,11 @@ public class GpsWorkoutSaver {
             float altitude_difference =
                     SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, sample.pressure) -
                             SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, (float) avgPressure);
-            sample.elevation = avgElevation + altitude_difference;
+            if (!Double.isNaN(altitude_difference)) {
+                sample.elevation = avgElevation + altitude_difference;
+            } else {
+                Log.w("WorkoutSaver", "Cannot determine elevation for sample " + i + ": pressure=" + sample.pressure);
+            }
         }
     }
 
