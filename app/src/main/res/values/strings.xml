@@ -166,7 +166,7 @@
     <string name="prefTrackStyleUsageTitle">Use track coloring automatically</string>
     <string name="waiting_gps">Waiting for GPS</string>
     <string name="actionUploadToOSM">Upload to OSM</string>
-    <string name="cut">Cut the first/last 300 Meters</string>
+    <string name="cut">Cut the first/last 300 m</string>
     <string name="trackVisibilityPref">Track Visibility</string>
     <string name="description">Description</string>
     <string name="ttsNotAvailable">TextToSpeech is not available</string>
@@ -223,7 +223,7 @@
     <string name="preferenceCurrentSpeedAverageTimeSummary">Replace the current speed calculation by an average calculation.</string>
     <string name="preferenceCurrentSpeedAverageTimeTitle">Current Speed by Average</string>
     <string name="preferenceUseAverageForCurrentSpeed">Use the average speed over a certain time instead of the last single speed record for the current speed calculation.</string>
-    <string name="preferenceFirstDayOfWeek">Start of the week</string>
+    <string name="preferenceFirstDayOfWeek">Week start</string>
     <string name="workoutDiscarded">Workout discarded</string>
     <string name="timeSecondsSingular">Second</string>
     <string name="timeSecondsPlural">Seconds</string>
@@ -360,9 +360,9 @@
     <string name="pref_render_theme_style_info">No render theme style menu available for selected render theme.</string>
     <string name="downloadMapsTitle">Download Maps</string>
     <string name="downloadMapsSpecifyDirectory">Please specify a directory for offline maps first</string>
-    <string name="overwriteMapConfirmation">Do you want to overwrite the existing map file %s?</string>
+    <string name="overwriteMapConfirmation">Overwrite the existing \\\"%s\\\" map file\?</string>
     <string name="actionDownloadMap">Download map</string>
-    <string name="downloadMapConfirmation">Do you want to download the map file %s?</string>
+    <string name="downloadMapConfirmation">Download the \\\"%s\\\" map file\?</string>
     <string name="alreadyDownloading">A file is already being downloaded</string>
     <string name="actionCancelDownload">Cancel download</string>
     <string name="cancelDownloadConfirmation">Do you want to cancel the current download?</string>
@@ -438,12 +438,12 @@
     <string name="pref_auto_start_mode_instant">Start immediately</string>
     <string name="pref_auto_start_mode_wait_for_gps">Wait for accurate GPS position</string>
     <string name="pref_auto_start_mode_on_move">Wait for you to start moving</string>
-    <string name="pref_auto_start_mode_unknown">Unknown mode (please do not select)</string>
+    <string name="pref_auto_start_mode_unknown">Unknown (do not use)</string>
     <string name="selectColoring">Select coloring</string>
     <string name="auto">Auto</string>
     <string name="noColoring">No coloring</string>
     <string name="pref_announcements_pace_control_summary">Warn when below or above a specified speed</string>
-    <string name="pref_announcements_pace_control_title">Pace Control Warnings</string>
+    <string name="pref_announcements_pace_control_title">Pace-warnings</string>
     <string name="invalidNumberFormat">Invalid number format.</string>
     <string name="fileNotFound">File not found</string>
     <string name="approxSymbol" translatable="false">≈</string>
