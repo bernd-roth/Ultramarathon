@@ -360,9 +360,9 @@
     <string name="pref_render_theme_style_info">Keine Optionen für gewähltes Renderthema verfügbar.</string>
     <string name="downloadMapsTitle">Karten herunterladen</string>
     <string name="downloadMapsSpecifyDirectory">Bitte gebe erst ein Verzeichnis für die Karten an</string>
-    <string name="overwriteMapConfirmation">Möchtest du die bereits existierende Kartendatei %s überschreiben?</string>
+    <string name="overwriteMapConfirmation">Die bereits existierende Kartendatei \\\"%s\\\" überschreiben\?</string>
     <string name="actionDownloadMap">Karte herunterladen</string>
-    <string name="downloadMapConfirmation">Möchtest du die Kartendatei %s herunterladen?</string>
+    <string name="downloadMapConfirmation">Die Kartendatei \\\"%s\\\" herunterladen\?</string>
     <string name="alreadyDownloading">Eine Datei wird bereits heruntergeladen</string>
     <string name="actionCancelDownload">Download abbrechen</string>
     <string name="cancelDownloadConfirmation">Möchtest du den aktuellen Download abbrechen?</string>
@@ -435,7 +435,7 @@
     <string name="pref_auto_start_mode_instant">Sofort starten</string>
     <string name="pref_auto_start_mode_wait_for_gps">Auf exakte GPS-Position warten</string>
     <string name="pref_auto_start_mode_on_move">Starten, sobald du dich bewegst</string>
-    <string name="pref_auto_start_mode_unknown">Unbekannter Modus (bitte nicht auswählen)</string>
+    <string name="pref_auto_start_mode_unknown">Unbekannt (nicht benutzen)</string>
     <string name="pref_announcements_pace_control_summary">Warne wenn unter oder über einer bestimmten Geschwindigkeit</string>
     <string name="pref_announcements_pace_control_title">Tempowarnungen</string>
     <string name="downloading">Herunterladen…</string>
