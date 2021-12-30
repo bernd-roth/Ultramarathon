@@ -31,9 +31,9 @@
     <string name="cancelDownloadConfirmation">想要取消正在进行的下载吗？</string>
     <string name="actionCancelDownload">取消下载</string>
     <string name="alreadyDownloading">文件已下载</string>
-    <string name="downloadMapConfirmation">想要下载地图文件 %s 吗？</string>
+    <string name="downloadMapConfirmation">要下载地图文件 \\\" %s \\\"吗？</string>
     <string name="actionDownloadMap">下载地图</string>
-    <string name="overwriteMapConfirmation">想要覆盖已有的地图文件 %s 吗？</string>
+    <string name="overwriteMapConfirmation">想要覆盖已有的地图文件 \\\"%s\\\"吗？</string>
     <string name="downloadMapsSpecifyDirectory">请先指定离线地图目录</string>
     <string name="downloadMapsTitle">下载地图</string>
     <string name="editWorkoutType">编辑锻炼类型</string>
@@ -52,7 +52,7 @@
     <string name="workoutTypeEditIdErrorCharacters">可用字符：a–z, A–Z, 0–9, _, -</string>
     <string name="workoutTypeEditId">ID</string>
     <string name="hintManageWorkoutTypes">点击加号图标可新增自定义锻炼类型。</string>
-    <string name="prefShowOnLockScreenSummary">即使手机锁屏，仍显示锻炼信息。</string>
+    <string name="prefShowOnLockScreenSummary">即使手机被锁定，仍显示锻炼信息。</string>
     <string name="prefShowOnLockScreenTitle">锁屏时显示</string>
     <string name="notimeout">没有超时</string>
     <string name="workoutStarted">锻炼开始</string>
@@ -88,7 +88,7 @@
     <string name="editDisplayedInformation">编辑显示信息</string>
     <string name="aboutPrivacyPolicy">隐私政策</string>
     <string name="aboutHelpTranslating">帮助翻译</string>
-    <string name="aboutUnlistedContributors">感谢所有帮助我们翻译和扩展 FitoTrack 的未列出贡献者！</string>
+    <string name="aboutUnlistedContributors">感谢所有帮助我们翻译和扩展 FitoTrack 的未列出姓名的贡献者们！</string>
     <string name="aboutSourceCode">查看源代码</string>
     <string name="aboutSendFeedback">向开发者反馈意见建议</string>
     <string name="aboutContributors">贡献者</string>
@@ -137,7 +137,7 @@
     <string name="unitKilometersPlural">千米</string>
     <string name="unitMetersSingular">米</string>
     <string name="unitMetersPlural">米</string>
-    <string name="cut">去年最初/最后的 300 米</string>
+    <string name="cut">减去最初/最后的 300 米</string>
     <string name="unitYardsPlural">码</string>
     <string name="unitYardsSingular">码</string>
     <string name="unitMilesPlural">英里</string>
@@ -296,7 +296,7 @@
     <string name="delete">删除</string>
     <string name="stop">停止</string>
     <string name="app_name">FitoTrack</string>
-    <string name="pref_auto_start_mode_unknown">未知模式（请勿选择）</string>
+    <string name="pref_auto_start_mode_unknown">未知（不要使用）</string>
     <string name="pref_auto_start_mode_on_move">等您开始移动</string>
     <string name="pref_auto_start_mode_wait_for_gps">等待位置信息准确</string>
     <string name="pref_auto_start_mode_instant">立即开始</string>
@@ -335,7 +335,7 @@
     <string name="noAutoStartDelay">无</string>
     <string name="manageAutoStartDelaySummary">为自动开始锻炼选择默认倒计时</string>
     <string name="intervalAutoStartDelayTraining">自动开始锻炼延迟</string>
-    <string name="resumeWorkoutConfirmation">真想继续锻炼吗？此操作将添加一个暂停——从锻炼停止开始计时。</string>
+    <string name="resumeWorkoutConfirmation">想继续锻炼吗？此操作将添加一段暂停时间——从锻炼停止开始计时。</string>
     <string name="intervalsIncludePauseSummary">如果激活，锻炼中的暂停时间，将计入间隔。</string>
     <string name="deleteIntervalSet">删除间隔设置</string>
     <string name="hintEditIntervalSet">添加间隔，其将被播报。</string>
@@ -366,7 +366,7 @@
     <string name="recordingActivityPermissionMessage">FitoTrack 需要权限跟踪您的身体活动以便记录室内锻炼。</string>
     <string name="editWorkoutStartEnd">编辑开始/结束</string>
     <string name="unitHeartBeatsPerMinute">bpm</string>
-    <string name="preferenceFirstDayOfWeek">每周开始</string>
+    <string name="preferenceFirstDayOfWeek">每周开始日</string>
     <string name="preferenceUseAverageForCurrentSpeed">使用某一时段的平均速度替代该时段最后时刻的瞬时速度。</string>
     <string name="preferenceCurrentSpeedAverageTimeTitle">当前平均速度</string>
     <string name="preferenceCurrentSpeedAverageTimeSummary">用平均计算代替当前速度计算。</string>
