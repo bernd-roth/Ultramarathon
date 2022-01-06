@@ -316,6 +316,7 @@
     <string name="workoutAvgHeartRate">⌀ Herzfrequenz</string>
     <string name="workoutMaxHeartRate">Max Herzfrequenz</string>
     <string name="workoutHeartRate">Herzfrequenz</string>
+    <string name="heartRateSensorBattery">Pulssensor Akku</string>
     <string name="announcementWorkoutActions">Workout Aktionen (pausieren, fortsetzten, etc.)</string>
     <string name="heartRateNotAvailable">Herzfrequenz aktuell nicht verfügbar.</string>
     <string name="resumeWorkout">Workout fortsetzen</string>

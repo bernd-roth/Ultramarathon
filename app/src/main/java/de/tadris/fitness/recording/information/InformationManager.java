@@ -58,6 +58,7 @@ public class InformationManager {
             information.add(new AverageFrequency(context));
         }
         information.add(new CurrentHeartRate(context));
+        information.add(new CurrentHRBatteryLevel(context));
         information.add(new BurnedEnergy(context));
     }
 

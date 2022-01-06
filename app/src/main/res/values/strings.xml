@@ -86,6 +86,7 @@
     <string name="workoutTotalEnergy">Total Energy</string>
     <string name="workoutEnergyConsumption">Energy Consumption</string>
     <string name="workoutHeartRate">Heart Rate</string>
+    <string name="heartRateSensorBattery">Sensor Battery</string>
     <string name="workoutMaxHeartRate">Max Heart Rate</string>
     <string name="workoutAvgHeartRate">Avg. Heart Rate</string>
     <string name="workoutEdited">This workout has been edited.</string>
@@ -240,6 +241,7 @@
     <string name="unitKilometersPerHour">Kilometers per hour</string>
     <string name="unitMetersPerSecond">Meters per second</string>
     <string name="unitHeartBeatsPerMinute">bpm</string>
+    <string name="unitHeartRateSensorBattery">%</string>
     <string name="unitKcalLong">Calories</string>
     <string name="unitHertzLong">Hertz</string>
     <string name="unitKJoule">Kilojoule</string>

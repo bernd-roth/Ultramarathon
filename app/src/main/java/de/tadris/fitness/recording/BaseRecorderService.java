@@ -52,8 +52,11 @@ import de.tadris.fitness.recording.announcement.TTSController;
 import de.tadris.fitness.recording.announcement.VoiceAnnouncements;
 import de.tadris.fitness.recording.event.HeartRateChangeEvent;
 import de.tadris.fitness.recording.event.HeartRateConnectionChangeEvent;
+import de.tadris.fitness.recording.event.HRBatteryLevelChangeEvent;
+import de.tadris.fitness.recording.event.HRBatteryLevelConnectionEvent;
 import de.tadris.fitness.recording.gps.GpsRecorderService;
 import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
+import de.tadris.fitness.recording.sensors.HRBatteryManager;
 import de.tadris.fitness.recording.sensors.HRManager;
 import de.tadris.fitness.ui.record.RecordWorkoutActivity;
 import de.tadris.fitness.util.NotificationHelper;
@@ -81,7 +84,9 @@ public abstract class BaseRecorderService extends Service {
     protected Thread mWatchdogThread = null;
 
     protected HRManager hrManager;
+    protected HRBatteryManager hrBatteryManager;
     protected HeartRateListener heartRateListener;
+    protected HRBatteryListener heartRateBatteryListener;
 
     private class HeartRateListener implements HRManager.HRManagerCallback, ConnectionObserver {
         @Override
@@ -120,6 +125,45 @@ public abstract class BaseRecorderService extends Service {
 
         private void publishState(GpsRecorderService.HeartRateConnectionState state) {
             EventBus.getDefault().postSticky(new HeartRateConnectionChangeEvent(state));
+        }
+    }
+
+    private class HRBatteryListener implements HRBatteryManager.HRBatteryManagerCallback, ConnectionObserver {
+        @Override
+        public void onHRBatteryMeasure(HRBatteryLevelChangeEvent event) {
+            EventBus.getDefault().post(event);
+        }
+        @Override
+        public void onDeviceConnecting(@NonNull BluetoothDevice device) {
+            publishState(GpsRecorderService.HRBatteryConnectionState.CONNECTING);
+        }
+
+        @Override
+        public void onDeviceConnected(@NonNull BluetoothDevice device) {
+            publishState(GpsRecorderService.HRBatteryConnectionState.CONNECTED);
+        }
+
+        @Override
+        public void onDeviceFailedToConnect(@NonNull BluetoothDevice device, int reason) {
+            publishState(GpsRecorderService.HRBatteryConnectionState.CONNECTION_FAILED);
+        }
+
+        @Override
+        public void onDeviceReady(@NonNull BluetoothDevice device) {
+            publishState(GpsRecorderService.HRBatteryConnectionState.CONNECTED);
+        }
+
+        @Override
+        public void onDeviceDisconnecting(@NonNull BluetoothDevice device) {
+
+        }
+
+        @Override
+        public void onDeviceDisconnected(@NonNull BluetoothDevice device, int reason) {
+            publishState(GpsRecorderService.HRBatteryConnectionState.DISCONNECTED);
+        }
+        private void publishState(GpsRecorderService.HRBatteryConnectionState state) {
+            EventBus.getDefault().postSticky(new HRBatteryLevelConnectionEvent(state));
         }
     }
 
@@ -239,6 +283,8 @@ public abstract class BaseRecorderService extends Service {
 
         initializeHRManager();
 
+        initializeHRBatteryManager();
+
         initializeTTS();
 
         initializeWatchdog();
@@ -255,7 +301,9 @@ public abstract class BaseRecorderService extends Service {
         mTTSController.destroy();
 
         hrManager.stop();
+        hrBatteryManager.stop();
         heartRateListener.publishState(HeartRateConnectionState.DISCONNECTED);
+        heartRateBatteryListener.publishState(HRBatteryConnectionState.DISCONNECTED);
 
         if (wakeLock != null && wakeLock.isHeld()) {
             wakeLock.release();
@@ -271,6 +319,12 @@ public abstract class BaseRecorderService extends Service {
         hrManager = new HRManager(this, heartRateListener);
         hrManager.setConnectionObserver(heartRateListener);
         hrManager.start();
+    }
+
+    private void initializeHRBatteryManager() {
+        heartRateBatteryListener = new HRBatteryListener();
+        hrBatteryManager = new HRBatteryManager(this, heartRateBatteryListener);
+        hrBatteryManager.start();
     }
 
     private void initializeTTS() {
@@ -312,4 +366,21 @@ public abstract class BaseRecorderService extends Service {
         }
     }
 
+    public enum HRBatteryConnectionState {
+        DISCONNECTED(R.color.heartRateStateUnavailable, R.drawable.ic_bluetooth),
+        CONNECTING(R.color.heartRateStateConnecting, R.drawable.ic_bluetooth_connecting),
+        CONNECTED(R.color.heartRateStateAvailable, R.drawable.ic_bluetooth_connected),
+        CONNECTION_FAILED(R.color.heartRateStateFailed, R.drawable.ic_bluetooth_off);
+
+        @ColorRes
+        public final int colorRes;
+
+        @DrawableRes
+        public final int iconRes;
+
+        HRBatteryConnectionState(int colorRes, int iconRes) {
+            this.colorRes = colorRes;
+            this.iconRes = iconRes;
+        }
+    }
 }

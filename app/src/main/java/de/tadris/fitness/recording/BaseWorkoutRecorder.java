@@ -33,6 +33,8 @@ import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.data.UserPreferences;
 import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.recording.event.HRBatteryLevelChangeEvent;
+import de.tadris.fitness.recording.event.HRBatteryLevelConnectionEvent;
 import de.tadris.fitness.recording.event.HeartRateChangeEvent;
 import de.tadris.fitness.recording.event.HeartRateConnectionChangeEvent;
 import de.tadris.fitness.recording.event.WorkoutAutoStopEvent;
@@ -61,6 +63,7 @@ public abstract class BaseWorkoutRecorder {
     protected List<Interval> intervalList;
 
     protected int lastHeartRate = -1;
+    protected int lastHRBatteryLevel = -1;
 
     // Temporarily saved the last interval that was triggered.
     // It will be added to the next recorded sample.
@@ -225,6 +228,19 @@ public abstract class BaseWorkoutRecorder {
         }
     }
 
+    @Subscribe
+    public void onHRBatteryChange(HRBatteryLevelChangeEvent event) {
+        lastHRBatteryLevel = event.batteryLevel;
+    }
+
+    @Subscribe
+    public void onHRBatteryConnectionChange(HRBatteryLevelConnectionEvent event) {
+        if (event.state != GpsRecorderService.HRBatteryConnectionState.CONNECTED) {
+            // If heart rate sensor currently not available
+            lastHRBatteryLevel = -1;
+        }
+    }
+
     public RecordingState getState() {
         return state;
     }
@@ -239,6 +255,10 @@ public abstract class BaseWorkoutRecorder {
 
     public int getCurrentHeartRate() {
         return lastHeartRate;
+    }
+
+    public int getCurrentHRBatteryLevel() {
+        return lastHRBatteryLevel;
     }
 
     public boolean isAutoPauseEnabled() {
