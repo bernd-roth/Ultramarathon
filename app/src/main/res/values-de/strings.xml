@@ -73,7 +73,7 @@
     <string name="workoutSpeed">Geschwindigkeit</string>
     <string name="workoutStartTime">Startzeit</string>
     <string name="workoutTime">Zeit</string>
-    <string name="workoutTopSpeed">Max Geschw.</string>
+    <string name="workoutTopSpeed">Höchstgeschw.</string>
     <string name="workoutTotalEnergy">Gesamte Energie</string>
     <string name="workoutTypeCycling">Fahrrad fahren</string>
     <string name="workoutTypeHiking">Wandern</string>
@@ -223,12 +223,12 @@
     <string name="unitKJoule">Kilojoule</string>
     <string name="pref_energy_unit">Energieeinheit</string>
     <string name="workoutTypeInlineSkating">Inlineskaten</string>
-    <string name="manageAutoTimeoutSummary">Einstellung zum automatisch Stoppen des Workouts</string>
+    <string name="manageAutoTimeoutSummary">Einstellung zum automatischen Stoppen des Workouts</string>
     <string name="intervalAutoTimeoutTraining">Workout Auto-Stop Timer</string>
     <string name="pref_auto_timeout_title">Zeitspanne bis Auto-Stop</string>
     <string name="currentTime">Aktuelle Uhrzeit</string>
     <string name="unlockPhoneStopWorkout">Bitte das Telefon entsperren, um die Aufnahme zu beenden</string>
-    <string name="workout_statistics">Workout Statistiken</string>
+    <string name="workout_statistics">Workout-Statistiken</string>
     <string name="workoutStatsHelpText">Dieser Screen zeigt Statistiken zu den Workouts. Um es zu verwenden, muss man zunächst die Trainingsart angeben, indem man darauf klickt. Dann stellt man die Information, über die man etwas wissen möchte, und die Zeitspanne ein.
 \n
 \nWenn man z. B. „Woche“ als Zeitspanne auswählt, werden alle Workouts jeder Woche in einem Datenpunkt zusammengefasst und entweder der Durchschnitt oder die Summe jeder Woche berechnet.</string>
@@ -313,8 +313,8 @@
     <string name="showIntervals">Intervalle zeigen</string>
     <string name="connectHeartRateDevice">Herzfrequenzmesser verbinden</string>
     <string name="selectBluetoothDevice">Bluetooth-Gerät auswählen</string>
-    <string name="workoutAvgHeartRate">⌀ Herzfrequenz</string>
-    <string name="workoutMaxHeartRate">Max Herzfrequenz</string>
+    <string name="workoutAvgHeartRate">⌀-Herzfrequenz</string>
+    <string name="workoutMaxHeartRate">Max. Herzfrequenz</string>
     <string name="workoutHeartRate">Herzfrequenz</string>
     <string name="announcementWorkoutActions">Workout Aktionen (pausieren, fortsetzten, etc.)</string>
     <string name="heartRateNotAvailable">Herzfrequenz aktuell nicht verfügbar.</string>
@@ -461,7 +461,7 @@
     <string name="workoutSets">Sätze</string>
     <string name="workoutFrequency">Frequenz</string>
     <string name="workoutAvgFrequencyShort">⌀-Frequenz</string>
-    <string name="workoutMaxFrequency">Max Frequenz</string>
+    <string name="workoutMaxFrequency">Max. Frequenz</string>
     <string name="workoutIntensity">Intensität</string>
     <string name="workoutAvgIntensityShort">⌀-Intensität</string>
     <string name="workoutMaxIntensity">Max Intensität</string>
@@ -474,8 +474,8 @@
     <string name="unitHeartBeatsPerMinute">bpm</string>
     <string name="preferenceFirstDayOfWeek">Anfang der Woche</string>
     <string name="fileNotFound">Datei nicht gefunden</string>
-    <string name="workoutRecordingTypeGps">GPS Workouts</string>
-    <string name="workoutRecordingTypeIndoor">Indoor Workouts</string>
+    <string name="workoutRecordingTypeGps">GPS-Workouts</string>
+    <string name="workoutRecordingTypeIndoor">Indoor-Workouts</string>
     <string name="workoutAvgFrequencyLong">Durchschnittliche Frequenz</string>
     <string name="workoutCurrentFrequency">Aktuelle Frequenz</string>
     <string name="unitHertzLong">Hertz</string>
