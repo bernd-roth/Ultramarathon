@@ -213,7 +213,7 @@
     <string name="pref_announcements_config_summary">Wybierz czas i odległość między powiadomieniami głosowymi</string>
     <string name="pref_unit_system">Preferowany system jednostek</string>
     <string name="settings">Ustawienia</string>
-    <string name="pref_weight_summary">Twoja waga jest potrzebna do obliczenia spalonych kalorii</string>
+    <string name="pref_weight_summary">Twoja waga jest potrzebna do obliczania spalonych kalorii</string>
     <string name="pref_weight">Twoja waga</string>
     <string name="exportAsGpxFile">Eksportuj jako plik GPX</string>
     <string name="trackingInfoDescription">Informacje o uruchomionym śledzeniu</string>
@@ -307,7 +307,7 @@
     <string name="resumeWorkout">Wznów trening</string>
     <string name="inclination">Nachylenie</string>
     <string name="fileNotFound">Nie znaleziono pliku</string>
-    <string name="invalidNumberFormat">Nieprawidłowy format liczby.</string>
+    <string name="invalidNumberFormat">Nieprawidłowy format liczby</string>
     <string name="pref_announcements_pace_control_summary">Ostrzegaj, gdy jest poniżej lub powyżej określonej prędkości</string>
     <string name="pref_announcements_pace_control_title">Ostrzeżenia o kontroli tempa</string>
     <string name="noColoring">Bez kolorowania</string>
@@ -339,7 +339,7 @@
         <item quantity="many"><xliff:g example="12" id="secs">%1$d</xliff:g> sekund</item>
         <item quantity="other"><xliff:g example="12" id="secs">%1$d</xliff:g> sekund</item>
     </plurals>
-    <string name="launchError">Nie można uruchomić aplikacji</string>
+    <string name="launchError">Nie udało się uruchomić aplikacji</string>
     <string name="editStartEndHelp">Wybierz pozycję na mapie albo diagramie. Następnie naciśnij jedną ze strzałek, aby wybrać nowy punkt początkowy albo końcowy. Gdy skończysz, kliknij ikonę zapisu w celu zastosowania zmian.</string>
     <string name="actionApply">Zastosuj</string>
     <string name="moveEndOfWorkout">Wytnij koniec</string>
