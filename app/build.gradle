@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -97,8 +97,8 @@ dependencies {
     // File Utils
 
     // Please don't update unless targetSdk is Oreo or newer (26+)
-    // Newer versions need Java 8 features and desugaring is not working well on this.
-    implementation 'commons-io:commons-io:2.6'
+    // Newer versions need Java 7 & 8 features and desugaring is not working well on this.
+    implementation 'commons-io:commons-io:2.5'
 
     // Upload to OSM
     implementation('de.westnordost:osmapi-traces:1.0')
