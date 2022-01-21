@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -370,7 +370,6 @@
     <string name="downloadFailed">Download failed</string>
     <string name="downloadCanceled">Download canceled</string>
     <string name="chooseMapHint">Please choose a map file</string>
-    <string name="downloading">Downloading…</string>
     <string name="intervalAutoStartDelayTraining">Auto Start Workout Delay</string>
     <string name="manageAutoStartDelaySummary">Choose a default countdown for automatic workout start</string>
     <string name="pref_auto_start_delay_title">Auto Start Countdown</string>
@@ -447,11 +446,10 @@
     <string name="invalidNumberFormat">Invalid number format.</string>
     <string name="fileNotFound">File not found</string>
     <string name="approxSymbol" translatable="false">≈</string>
-    <string name="downloading">Downloading</string>
+    <string name="downloading">Downloading…</string>
     <string name="exportTargetDirectory">Directory</string>
     <string name="autoBackupTitle">Automatic backups</string>
     <string name="workoutGPXExportTitle">Workout GPX exports</string>
-    <string name="unknown">Unknown</string>
     <string name="hintConfigureExportTargets">Add targets to which the files should be exported.</string>
     <string name="deleteExportTargetConfirmation">Do you really want to delete this export target?</string>
     <string name="autoExportWorkoutsSummary">Export newly recorded workouts</string>

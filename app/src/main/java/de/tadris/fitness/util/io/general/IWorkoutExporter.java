@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -23,15 +23,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.List;
 
-import de.tadris.fitness.data.GpsSample;
-import de.tadris.fitness.data.GpsWorkout;
+import de.tadris.fitness.data.GpsWorkoutData;
 
 public interface IWorkoutExporter {
-    void exportWorkout(GpsWorkout workout, List<GpsSample> samples, OutputStream outputStream) throws IOException;
+    void exportWorkout(GpsWorkoutData data, OutputStream outputStream) throws IOException;
 
-    default void exportWorkout(GpsWorkout workout, List<GpsSample> samples, File file) throws IOException {
-        exportWorkout(workout, samples, new FileOutputStream(file));
+    default void exportWorkout(GpsWorkoutData data, File file) throws IOException {
+        exportWorkout(data, new FileOutputStream(file));
     }
 }

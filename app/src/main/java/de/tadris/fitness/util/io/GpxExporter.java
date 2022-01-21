@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -19,6 +19,8 @@
 
 package de.tadris.fitness.util.io;
 
+import static java.lang.Math.abs;
+
 import android.annotation.SuppressLint;
 
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -30,13 +32,13 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.GpsWorkout;
+import de.tadris.fitness.data.GpsWorkoutData;
 import de.tadris.fitness.util.gpx.Gpx;
 import de.tadris.fitness.util.gpx.GpxTpxExtension;
 import de.tadris.fitness.util.gpx.Metadata;
@@ -45,8 +47,6 @@ import de.tadris.fitness.util.gpx.TrackPoint;
 import de.tadris.fitness.util.gpx.TrackPointExtensions;
 import de.tadris.fitness.util.gpx.TrackSegment;
 import de.tadris.fitness.util.io.general.IWorkoutExporter;
-
-import static java.lang.Math.abs;
 
 public class GpxExporter implements IWorkoutExporter {
 
@@ -57,22 +57,24 @@ public class GpxExporter implements IWorkoutExporter {
     }
 
     @Override
-    public void exportWorkout(GpsWorkout workout, List<GpsSample> samples, OutputStream fileStream) throws IOException {
+    public void exportWorkout(GpsWorkoutData data, OutputStream fileStream) throws IOException {
         XmlMapper mapper = new XmlMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         mapper.enable(ToXmlGenerator.Feature.WRITE_XML_DECLARATION);
-        mapper.writeValue(fileStream, getGpxFromWorkout(workout, samples));
+        mapper.writeValue(fileStream, getGpxFromWorkout(data));
     }
 
-    private Gpx getGpxFromWorkout(GpsWorkout workout, List<GpsSample> samples) {
-        Track track = getTrackFromWorkout(workout, samples, 0);
+    private Gpx getGpxFromWorkout(GpsWorkoutData data) {
+        GpsWorkout workout = data.getWorkout();
+        Track track = getTrackFromWorkout(data, 0);
         ArrayList<Track> tracks = new ArrayList<>();
         tracks.add(track);
         Metadata meta = new Metadata(workout.toString(), workout.comment, getDateTime(workout.start));
         return new Gpx("1.1", "FitoTrack", meta, workout.toString(), workout.comment, tracks);
     }
 
-    private Track getTrackFromWorkout(GpsWorkout workout, List<GpsSample> samples, int number) {
+    private Track getTrackFromWorkout(GpsWorkoutData data, int number) {
+        GpsWorkout workout = data.getWorkout();
         Track track = new Track();
         track.setNumber(number);
         track.setName(workout.toString());
@@ -85,7 +87,7 @@ public class GpxExporter implements IWorkoutExporter {
         TrackSegment segment = new TrackSegment();
         ArrayList<TrackPoint> trkpt = new ArrayList<>();
 
-        for (GpsSample sample : samples) {
+        for (GpsSample sample : data.getSamples()) {
             trkpt.add(new TrackPoint(sample.lat, sample.lon, sample.elevation,
                     getDateTime(sample.absoluteTime), new TrackPointExtensions(sample.speed, new GpxTpxExtension(sample.heartRate))));
         }

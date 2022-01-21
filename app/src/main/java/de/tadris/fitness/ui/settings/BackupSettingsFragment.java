@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -69,7 +69,7 @@ public class BackupSettingsFragment extends FitoTrackSettingFragment {
     }
 
     private void startExportTargetActivity(String exportSource) {
-        Intent intent = new Intent(this, ConfigureExportTargetsActivity.class);
+        Intent intent = new Intent(requireContext(), ConfigureExportTargetsActivity.class);
         intent.putExtra(ConfigureExportTargetsActivity.EXTRA_SOURCE, exportSource);
         startActivity(intent);
     }
@@ -91,8 +91,8 @@ public class BackupSettingsFragment extends FitoTrackSettingFragment {
         dialogController.show();
         new Thread(() -> {
             try {
-                File file = new BackupExportSource().provideFile(this, (progress, action) -> mHandler.post(() -> dialogController.setProgress(progress, action)));
-                Uri uri = FileProvider.getUriForFile(getBaseContext(), BuildConfig.APPLICATION_ID + ".fileprovider", file);
+                File file = new BackupExportSource().provideFile(requireContext(), (progress, action) -> mHandler.post(() -> dialogController.setProgress(progress, action)));
+                Uri uri = FileProvider.getUriForFile(requireContext(), BuildConfig.APPLICATION_ID + ".fileprovider", file);
                 mHandler.post(() -> {
                     dialogController.cancel();
                     Intent intent = new Intent(getContext(), ShareFileActivity.class);

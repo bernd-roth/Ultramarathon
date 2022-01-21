@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -25,8 +25,8 @@ import java.io.File;
 import java.io.IOException;
 
 import de.tadris.fitness.Instance;
-import de.tadris.fitness.data.Workout;
-import de.tadris.fitness.data.WorkoutData;
+import de.tadris.fitness.data.GpsWorkout;
+import de.tadris.fitness.data.GpsWorkoutData;
 import de.tadris.fitness.util.DataManager;
 import de.tadris.fitness.util.io.general.IOHelper;
 
@@ -40,9 +40,15 @@ public class WorkoutGpxExportSource implements ExportSource {
 
     @Override
     public File provideFile(Context context) throws Exception {
-        Workout workout = Instance.getInstance(context).db.workoutDao().getWorkoutById(workoutId);
-        WorkoutData data = WorkoutData.fromWorkout(context, workout);
-        String file = DataManager.getSharedDirectory(context) + String.format("/workout-%s-%s.gpx", workout.getSafeDateString(), workout.getSafeComment());
+        GpsWorkout workout = Instance.getInstance(context).db.gpsWorkoutDao().getWorkoutById(workoutId);
+        GpsWorkoutData data = GpsWorkoutData.fromWorkout(context, workout);
+        final String filename;
+        if (!workout.getSafeComment().isEmpty()) {
+            filename = String.format("workout-%s-%s.gpx", workout.getSafeDateString(), workout.getSafeComment());
+        } else {
+            filename = String.format("workout-%s.gpx", workout.getSafeDateString());
+        }
+        String file = DataManager.getSharedDirectory(context) + "/" + filename;
         File parent = new File(file).getParentFile();
         if (!parent.exists() && !parent.mkdirs()) {
             throw new IOException("Cannot write to " + file);

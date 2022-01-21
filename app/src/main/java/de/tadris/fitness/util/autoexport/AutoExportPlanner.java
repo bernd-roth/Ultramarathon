@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -31,7 +31,7 @@ import java.util.concurrent.TimeUnit;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.data.ExportTargetConfiguration;
-import de.tadris.fitness.data.Workout;
+import de.tadris.fitness.data.GpsWorkout;
 import de.tadris.fitness.util.autoexport.source.ExportSource;
 
 public class AutoExportPlanner {
@@ -63,13 +63,13 @@ public class AutoExportPlanner {
         WorkManager.getInstance(context).enqueueUniquePeriodicWork(String.valueOf(configuration.id), ExistingPeriodicWorkPolicy.REPLACE, workRequest);
     }
 
-    public void onWorkoutRecorded(Workout workout) {
+    public void onWorkoutRecorded(GpsWorkout workout) {
         for (ExportTargetConfiguration configuration : getConfigurations(ExportSource.EXPORT_SOURCE_WORKOUT_GPX)) {
             planWorkoutExportFor(workout, configuration);
         }
     }
 
-    private void planWorkoutExportFor(Workout workout, ExportTargetConfiguration configuration) {
+    private void planWorkoutExportFor(GpsWorkout workout, ExportTargetConfiguration configuration) {
         Data data = new Data.Builder()
                 .putString(AutoExporter.DATA_SOURCE_TYPE, ExportSource.EXPORT_SOURCE_WORKOUT_GPX)
                 .putString(AutoExporter.DATA_SOURCE_DATA, String.valueOf(workout.id))

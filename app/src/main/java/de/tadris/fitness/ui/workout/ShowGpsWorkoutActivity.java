@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -54,6 +54,7 @@ import de.tadris.fitness.ui.workout.diagram.SampleConverter;
 import de.tadris.fitness.ui.workout.diagram.SpeedConverter;
 import de.tadris.fitness.util.DialogUtils;
 import de.tadris.fitness.util.autoexport.source.WorkoutGpxExportSource;
+import de.tadris.fitness.util.io.general.IOHelper;
 import de.tadris.fitness.util.sections.SectionListModel;
 import de.tadris.fitness.util.sections.SectionListPresenter;
 import de.tadris.fitness.util.sections.SectionListView;
@@ -242,21 +243,7 @@ public class ShowGpsWorkoutActivity extends GpsWorkoutActivity implements Dialog
             try {
                 File file = new WorkoutGpxExportSource(workout.id).provideFile(this);
                 Uri uri = FileProvider.getUriForFile(getBaseContext(), BuildConfig.APPLICATION_ID + ".fileprovider", file);
-                final String filename;
-                if (!workout.getSafeComment().isEmpty()) {
-                    filename = String.format("workout-%s-%s.gpx", workout.getSafeDateString(), workout.getSafeComment());
-                } else {
-                    filename = String.format("workout-%s.gpx", workout.getSafeDateString());
-                }
-                String file = DataManager.getSharedDirectory(this) + "/" + filename;
-                File parent = new File(file).getParentFile();
-                if (!parent.exists() && !parent.mkdirs()) {
-                    throw new IOException("Cannot write to " + file);
-                }
-                Uri uri = FileProvider.getUriForFile(getBaseContext(), BuildConfig.APPLICATION_ID + ".fileprovider", new File(file));
-
-
-                IOHelper.GpxExporter.exportWorkout(workout, samples, new File(file));
+                IOHelper.GpxExporter.exportWorkout(getGpsWorkoutData(), file);
                 mHandler.post(() -> {
                     dialogController.cancel();
                     Intent intent = new Intent(this, ShareFileActivity.class);
