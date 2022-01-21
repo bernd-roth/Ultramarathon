@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -25,6 +25,11 @@
         android:summary="@string/pref_announcements_config_summary"
         android:title="@string/pref_announcements_config_title" />
 
+    <Preference
+        android:key="paceControlConfig"
+        android:summary="@string/pref_announcements_pace_control_summary"
+        android:title="@string/pref_announcements_pace_control_title" />
+
     <ListPreference
         android:defaultValue="headphones"
         android:entries="@array/pref_announcement_mode"
@@ -32,22 +37,17 @@
         android:key="announcementMode"
         android:title="@string/pref_announcement_mode" />
 
-    <CheckBoxPreference
-        android:defaultValue="true"
-        android:key="announcementSuppressDuringCall"
-        android:title="@string/announcementSuppressDuringCall" />
-
     <PreferenceCategory android:title="@string/pref_announcements_content">
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="announcement_countdown"
+            android:title="@string/announcementCountdown" />
 
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="announcement_system_actions"
             android:title="@string/announcementWorkoutActions" />
-
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="announcement_gps-lost"
-            android:title="@string/announcementGPSStatus" />
 
         <CheckBoxPreference
             android:defaultValue="false"
@@ -58,6 +58,20 @@
             android:defaultValue="true"
             android:key="announcement_duration"
             android:title="@string/workoutDuration" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="announcement_current_heart_rate"
+            android:title="@string/workoutHeartRate" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/workoutRecordingTypeGps">
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="announcement_gps-lost"
+            android:title="@string/announcementGPSStatus" />
 
         <CheckBoxPreference
             android:defaultValue="true"
@@ -91,13 +105,32 @@
 
         <CheckBoxPreference
             android:defaultValue="false"
-            android:key="announcement_current_heart_rate"
-            android:title="@string/workoutHeartRate" />
+            android:key="announcement_ascent"
+            android:title="@string/workoutAscent" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/workoutRecordingTypeIndoor">
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="announcement_repetitions"
+            android:title="@string/workoutRepetitions" />
 
         <CheckBoxPreference
             android:defaultValue="false"
-            android:key="announcement_ascent"
-            android:title="@string/workoutAscent" />
+            android:key="announcement_avg_frequency"
+            android:title="@string/workoutAvgFrequencyShort" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="announcement_current_frequency"
+            android:title="@string/workoutCurrentFrequency" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="announcement_current_intensity"
+            android:title="@string/workoutIntensity" />
 
     </PreferenceCategory>
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -19,44 +19,203 @@
 
 package de.tadris.fitness.map;
 
+import androidx.annotation.Nullable;
+
+import org.mapsforge.core.graphics.Canvas;
+import org.mapsforge.core.graphics.GraphicFactory;
 import org.mapsforge.core.graphics.Paint;
+import org.mapsforge.core.graphics.Path;
 import org.mapsforge.core.graphics.Style;
+import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.LatLong;
+import org.mapsforge.core.model.Point;
+import org.mapsforge.core.util.MercatorProjection;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
-import org.mapsforge.map.layer.overlay.Polyline;
+import org.mapsforge.map.layer.Layer;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
-import de.tadris.fitness.data.WorkoutSample;
+import de.tadris.fitness.data.GpsSample;
+import de.tadris.fitness.data.GpsWorkout;
+import de.tadris.fitness.ui.workout.diagram.SampleConverter;
 
-public class WorkoutLayer extends Polyline {
+public class WorkoutLayer extends Layer {
 
-    private static Paint getDEFAULT_PAINT_STROKE(int color) {
-        Paint paint= AndroidGraphicFactory.INSTANCE.createPaint();
+    private static final byte STROKE_MIN_ZOOM = 12;
+    private final GraphicFactory graphicFactory;
+    private final boolean keepAligned;
+    private Paint paintStroke;
+    private double strokeIncrease = 1;
+    private BoundingBox boundingBox;
+    private final List<GpsSample> samples;
+    private Set<MapSampleSelectionListener> listeners;
+
+    private ColoringStrategy fallbackColoringStrategy; // if workout is displayed without coloring this will be used
+
+    @Nullable
+    private SampleConverter sampleConverter; // get values from samples
+    @Nullable
+    private ColoringStrategy coloringStrategy; // get colors from values
+
+    private static Paint getDEFAULT_PAINT_STROKE() {
+        Paint paint = AndroidGraphicFactory.INSTANCE.createPaint();
         paint.setStyle(Style.STROKE);
-        paint.setColor(color);
         paint.setStrokeWidth(14f);
         return paint;
     }
 
-    private final List<WorkoutSample> samples;
-
-    public WorkoutLayer(List<WorkoutSample> samples, int color) {
-        this(getDEFAULT_PAINT_STROKE(color), samples);
+    public WorkoutLayer(List<GpsSample> samples, ColoringStrategy fallbackColoringStrategy, @Nullable ColoringStrategy coloringStrategy) {
+        this(getDEFAULT_PAINT_STROKE(), samples);
+        this.fallbackColoringStrategy = fallbackColoringStrategy;
+        this.coloringStrategy = coloringStrategy;
+        listeners = new HashSet<>();
     }
 
-    private WorkoutLayer(Paint paintStroke, List<WorkoutSample> samples) {
-        super(paintStroke, AndroidGraphicFactory.INSTANCE);
+    public void addMapSampleSelectionListener(MapSampleSelectionListener listener){
+        this.listeners.add(listener);
+    }
+
+    private WorkoutLayer(Paint paintStroke, List<GpsSample> samples) {
+        super();
+        this.keepAligned = false;
+        this.paintStroke = paintStroke;
+        this.graphicFactory = AndroidGraphicFactory.INSTANCE;
         this.samples = samples;
-        init();
-    }
 
-    private void init(){
-        List<LatLong> points = new ArrayList<LatLong>();
-        for(WorkoutSample sample : samples){
+        //We need to calculate the Bounding box hence need to still convert the items to latLongs
+        List<LatLong> points = new ArrayList<>();
+        for (GpsSample sample : samples) {
             points.add(sample.toLatLong());
         }
-        addPoints(points);
+        boundingBox = points.isEmpty() ? null : new BoundingBox(points);
+    }
+
+    private void onSampleSelected(GpsSample sample) {
+        for (MapSampleSelectionListener listener : listeners) {
+            listener.onMapSelectionChanged(sample);
+        }
+    }
+
+    /**
+     * State variable to hold whether a selection was done
+     */
+    private boolean hasSelection = false;
+
+    public boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY) {
+
+        if (listeners.size() ==0){
+            return false;
+        }
+        double max_distance = Math.max(20 / 2 * this.displayModel.getScaleFactor(),
+                this.paintStroke.getStrokeWidth() / 2);
+
+        // on tap find the closest workout sample and if within a certain range select it
+        GpsSample sample = findClosestSample(tapLatLong);
+
+        assert sample != null;
+        double distance =  sample.toLatLong().sphericalDistance(tapLatLong);
+        System.out.println("distance " + distance + " max (" + max_distance + ")");
+        if (distance < max_distance) {
+            onSampleSelected(sample);
+            hasSelection = true;
+            return true;
+        } else if (hasSelection) {//if the user clicks outside the area deselect item
+            onSampleSelected(null);
+            hasSelection = false;
+        }
+        return false;
+    }
+
+    /**
+     * @param latLong location
+     * @return the sample that is closest to the selected location
+     */
+    private GpsSample findClosestSample(LatLong latLong) {
+        GpsSample sample = null;
+        double shortestDistance = 0;
+
+        for (int i = 0; i < this.samples.size() - 1; i++) {
+            double dist = latLong.sphericalDistance(samples.get(i).toLatLong());
+            if (sample == null || (dist < shortestDistance)) {
+                sample = samples.get(i);
+                shortestDistance = dist;
+            }
+        }
+        return sample;
+    }
+
+    @Override
+    public synchronized void draw(BoundingBox boundingBox, byte zoomLevel, Canvas canvas, Point topLeftPoint) {
+        if (this.samples.isEmpty() || this.paintStroke == null) {
+            return;
+        }
+
+        if (this.boundingBox != null && !this.boundingBox.intersects(boundingBox)) {
+            return;
+        }
+
+        Iterator<GpsSample> sampleIterator = this.samples.iterator();
+
+        GpsSample sample = sampleIterator.next();
+        long mapSize = MercatorProjection.getMapSize(zoomLevel, displayModel.getTileSize());
+        float x = (float) (MercatorProjection.longitudeToPixelX(sample.lon, mapSize) - topLeftPoint.x);
+        float y = (float) (MercatorProjection.latitudeToPixelY(sample.lat, mapSize) - topLeftPoint.y);
+
+        if (this.keepAligned) {
+            this.paintStroke.setBitmapShaderShift(topLeftPoint);
+        }
+        float strokeWidth = this.paintStroke.getStrokeWidth();
+        if (this.strokeIncrease > 1) {
+            float scale = (float) Math.pow(this.strokeIncrease, Math.max(zoomLevel - STROKE_MIN_ZOOM, 0));
+            this.paintStroke.setStrokeWidth(strokeWidth * scale);
+        }
+
+        Path path = this.graphicFactory.createPath();
+        while (sampleIterator.hasNext()) {
+            path.moveTo(x, y);
+            sample = sampleIterator.next();
+            x = (float) (MercatorProjection.longitudeToPixelX(sample.lon, mapSize) - topLeftPoint.x);
+            y = (float) (MercatorProjection.latitudeToPixelY(sample.lat, mapSize) - topLeftPoint.y);
+            paintStroke.setColor(getColorFromSample(sample));
+            path.lineTo(x, y);
+            canvas.drawPath(path, this.paintStroke);
+            path.clear();
+        }
+        this.paintStroke.setStrokeWidth(strokeWidth);
+    }
+
+    private int getColorFromSample(GpsSample sample) {
+        if (coloringStrategy != null && sampleConverter != null) {
+            double value = sampleConverter.getValue(sample);
+            return coloringStrategy.getColor(value);
+        } else {
+            return fallbackColoringStrategy.getColor(0);
+        }
+    }
+
+    public void setColoringStrategy(GpsWorkout workout, ColoringStrategy coloringStrategy) {
+        this.coloringStrategy = coloringStrategy;
+        refreshColoringMinMax(workout);
+    }
+
+    public void setSampleConverter(GpsWorkout workout, @Nullable SampleConverter sampleConverter) {
+        this.sampleConverter = sampleConverter;
+        refreshColoringMinMax(workout);
+    }
+
+    private void refreshColoringMinMax(GpsWorkout workout) {
+        if (coloringStrategy != null && sampleConverter != null) {
+            coloringStrategy.setMin(sampleConverter.getMinValue(workout));
+            coloringStrategy.setMax(sampleConverter.getMaxValue(workout));
+        }
+        requestRedraw();
+    }
+
+    public BoundingBox getBoundingBox() {
+        return boundingBox;
     }
 }

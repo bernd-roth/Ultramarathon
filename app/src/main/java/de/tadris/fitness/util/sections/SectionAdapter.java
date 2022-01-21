@@ -1,3 +1,22 @@
+/*
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ *
+ * This file is part of FitoTrack
+ *
+ * FitoTrack is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     FitoTrack is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package de.tadris.fitness.util.sections;
 
 import android.content.Context;
@@ -38,6 +57,7 @@ public class SectionAdapter extends ArrayAdapter<SectionListModel.Section> {
         TextView mUp;
         View upLayout;
         TextView pace;
+        TextView paceUnit;
         TextView criterionText;
         View progressBg;
     }
@@ -81,6 +101,7 @@ public class SectionAdapter extends ArrayAdapter<SectionListModel.Section> {
             viewHolder.mUp = sectionView.findViewById(R.id.sectionAscent);
             viewHolder.upLayout = sectionView.findViewById(R.id.ascentLayout);
             viewHolder.pace = sectionView.findViewById(R.id.sectionPace);
+            viewHolder.paceUnit = sectionView.findViewById(R.id.sectionPaceUnit);
             viewHolder.criterionText = sectionView.findViewById(R.id.sectionCrit);
             viewHolder.progressBg = sectionView.findViewById(R.id.progress1);
 
@@ -112,12 +133,15 @@ public class SectionAdapter extends ArrayAdapter<SectionListModel.Section> {
 
         viewHolder.dist.setText(roundMeterToKilometer(section.dist) + distanceUnitUtils.getDistanceUnitSystem().getLongDistanceUnit());
         viewHolder.time.setText(TimeFormatter.formatDuration((long) (section.time / 1000)));
-        viewHolder.mDown.setText(Math.round(section.descent) + distanceUnitUtils.getDistanceUnitSystem().getShortDistanceUnit());
-        viewHolder.mUp.setText(Math.round(section.ascent) + distanceUnitUtils.getDistanceUnitSystem().getShortDistanceUnit());
-        if (paceToggle)
-            viewHolder.pace.setText(TimeFormatter.formatDuration((long) (section.getPace())));
-        else
-            viewHolder.pace.setText(distanceUnitUtils.getSpeed(1000.0 / section.getPace())); // must be in m/s
+        viewHolder.mDown.setText(distanceUnitUtils.getDistance((int) Math.round(section.descent)));
+        viewHolder.mUp.setText(distanceUnitUtils.getDistance((int) Math.round(section.ascent)));
+        if (paceToggle) {
+            viewHolder.pace.setText((distanceUnitUtils.getPace(section.getPace() / 60, false, false)));
+            viewHolder.paceUnit.setText(distanceUnitUtils.getPaceUnit());
+        } else {
+            viewHolder.pace.setText(distanceUnitUtils.getSpeedWithoutUnit(1000.0 / section.getPace())); // must be in m/s
+            viewHolder.paceUnit.setText(distanceUnitUtils.getDistanceUnitSystem().getSpeedUnit());
+        }
 
 
         switch (criterion) {

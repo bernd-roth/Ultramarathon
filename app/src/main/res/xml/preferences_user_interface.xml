@@ -18,7 +18,8 @@
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ListPreference
         android:defaultValue="1"
@@ -34,14 +35,13 @@
         android:summary="@string/pref_weight_summary"
         android:title="@string/pref_weight" />
 
-    <PreferenceCategory android:title="@string/preferencesCategoryAppearance">
+    <Preference
+        android:key="stepLength"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_step_length" />
 
-        <ListPreference
-            android:defaultValue="0"
-            android:entries="@array/pref_theme_setting"
-            android:entryValues="@array/pref_theme_setting_values"
-            android:key="themeSetting"
-            android:title="@string/theme" />
+    <PreferenceCategory android:title="@string/preferencesCategoryMap">
 
         <ListPreference
             android:defaultValue="osm.mapnik"
@@ -50,15 +50,48 @@
             android:key="mapStyle"
             android:title="@string/mapStyle" />
 
+        <ListPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="diagram"
+            android:entries="@array/pref_track_style_usage"
+            android:entryValues="@array/pref_track_style_usage_values"
+            android:key="trackStyleUsage"
+            android:title="@string/prefTrackStyleUsageTitle" />
+
+        <ListPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="purple_rain"
+            android:entries="@array/pref_track_style"
+            android:entryValues="@array/pref_track_style_values"
+            android:key="trackStyle"
+            android:title="@string/trackStyle" />
         <Preference
-            android:key="offlineMapFileName"
+            android:key="offlineMapDirectoryName"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="@string/pref_map_file" />
+            android:title="@string/pref_map_directory" />
+
+        <Preference
+            android:key="xmlThemeStyleMenu"
+            android:title="@string/pref_render_theme_style"
+            app:fragment="de.tadris.fitness.ui.settings.XmlThemeStyleSettingFragment" />
 
         <Preference
             android:key="offlineMapDownload"
             android:title="@string/downloadMapsTitle" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/preferencesCategoryAppearance">
+
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/pref_theme_setting"
+            android:entryValues="@array/pref_theme_setting_values"
+            android:key="themeSetting"
+            android:title="@string/theme" />
 
         <ListPreference
             android:defaultValue="system"
@@ -74,6 +107,14 @@
             android:key="timeFormat"
             android:title="@string/preferenceTimeFormat" />
 
+        <ListPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="system"
+            android:entries="@array/pref_first_day_of_week"
+            android:entryValues="@array/pref_first_day_of_week_values"
+            android:key="firstDayOfWeek"
+            android:title="@string/preferenceFirstDayOfWeek" />
         <ListPreference
             android:defaultValue="kcal"
             android:entries="@array/pref_energy_units"

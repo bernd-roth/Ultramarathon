@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -23,14 +23,19 @@ import androidx.annotation.ColorRes;
 
 import com.github.mikephil.charting.charts.CombinedChart;
 
-import de.tadris.fitness.data.WorkoutData;
-import de.tadris.fitness.data.WorkoutSample;
+import de.tadris.fitness.data.BaseSample;
+import de.tadris.fitness.data.BaseWorkout;
+import de.tadris.fitness.data.BaseWorkoutData;
 
 public interface SampleConverter {
 
-    void onCreate(WorkoutData data);
+    void onCreate(BaseWorkoutData data);
 
-    float getValue(WorkoutSample sample);
+    float getMinValue(BaseWorkout workout);
+
+    float getMaxValue(BaseWorkout workout);
+
+    float getValue(BaseSample sample);
 
     String getName();
 

@@ -6,13 +6,24 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH"
+        android:maxSdkVersion="30" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_ADMIN"
+        android:maxSdkVersion="30" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_SCAN"
+        android:usesPermissionFlags="neverForLocation" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
 
     <uses-feature
         android:name="android.hardware.location.gps"
@@ -36,27 +47,47 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
+        <activity
+            android:name=".ui.ImportGpxActivity"
+            android:label="@string/importWorkout"
+            android:exported="true">
+
+            <intent-filter tools:ignore="AppLinkUrlError">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="application/octet-stream" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="application/*" />
+            </intent-filter>
+        </activity>
         <activity android:name=".ui.settings.ConfigureExportTargetsActivity"></activity>
-        <activity android:name=".ui.settings.EditWorkoutTypeActivity" />
-        <activity android:name=".ui.settings.DownloadMapsActivity"></activity>
+        <activity android:name=".ui.settings.DownloadMapsActivity" />
+        <activity android:name=".ui.record.RecordIndoorWorkoutActivity" />
         <activity android:name=".ui.settings.EditWorkoutTypeActivity" />
         <activity android:name=".ui.settings.ManageWorkoutTypesActivity" />
         <activity android:name=".ui.ShareFileActivity" />
         <activity android:name=".ui.settings.AboutActivity" />
         <activity android:name=".ui.settings.EditIntervalSetActivity" />
         <activity android:name=".ui.settings.ManageIntervalSetsActivity" />
-        <activity android:name=".ui.settings.VoiceAnnouncementsSettingsActivity" />
-        <activity android:name=".ui.settings.MainSettingsActivity" />
+        <activity android:name=".ui.settings.FitoTrackSettingsActivity" />
         <activity android:name=".ui.workout.EnterWorkoutActivity" />
         <activity
-            android:name=".ui.workout.ShowWorkoutMapActivity"
+            android:name=".ui.workout.ShowWorkoutFullscreenMapActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.workout.ShowWorkoutMapDiagramActivity" />
         <activity
-            android:name=".ui.workout.ShowWorkoutActivity"
+            android:name=".ui.workout.ShowGpsWorkoutActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.record.RecordWorkoutActivity"
+            android:name=".ui.workout.ShowIndoorWorkoutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.record.RecordGpsWorkoutActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:showOnLockScreen="true" />
@@ -65,20 +96,19 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.LauncherActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.settings.InterfaceSettingsActivity" />
-        <activity android:name=".ui.settings.RecordingSettingsActivity" />
-        <activity android:name=".ui.settings.BackupSettingsActivity" />
         <activity android:name=".ui.workout.AggregatedWorkoutStatisticsActivity" />
         <activity
             android:name=".ui.workout.ShareWorkoutActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.workout.EditWorkoutStartEndActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -91,8 +121,16 @@
         </provider>
 
         <service
-            android:name=".recording.RecorderService"
+            android:name=".recording.gps.GpsRecorderService"
             android:foregroundServiceType="location" />
+
+        <service android:name=".recording.indoor.IndoorRecorderService" />
     </application>
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.TTS_SERVICE" />
+        </intent>
+    </queries>
 
 </manifest>

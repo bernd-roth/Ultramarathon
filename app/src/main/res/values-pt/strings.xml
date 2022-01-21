@@ -16,9 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-
-<resources>
+  --><resources>
     <string name="actionGrant">Conceder</string>
     <string name="editWorkoutType">Editar o tipo de exercício</string>
     <string name="workoutTypeEditIcon">Ícone</string>
@@ -26,8 +24,6 @@
     <string name="deleteWorkoutType">Apagar O Tipo De Exercício</string>
     <string name="actionSave">Guardar</string>
     <string name="customWorkoutTypesTitle">Tipos De Exercício Personalizados</string>
-    <string name="workoutTypeEditMETHint">Uma medida para consumo de energia</string>
-    <string name="workoutTypeEditMinDistanceHint">Distância mínima entre duas amostras GPS</string>
     <string name="workoutTypeEditMinDistance">Distância de amostragem</string>
     <string name="workoutTypeEditNameError">Introduza um nome, por favor</string>
     <string name="workoutTypeEditIdErrorUnique">Já existe um tipo de exercício usando este ID</string>
@@ -43,12 +39,10 @@
     <string name="autoPauseSummary">Pausar e continuar exercícios automaticamente</string>
     <string name="autoPauseTitle">Pausa Automática</string>
     <string name="resumeWorkout">Continuar Exercício</string>
-    <string name="intervals">Intervalos</string>
     <string name="inclination">Inclinação</string>
     <string name="nothingSelected">Nada foi selecionado</string>
     <string name="showIntervals">Mostrar intervalos</string>
-    <string name="selectBluetoothDevice">Selecionar dispositivo Bluetooth</string>
-    <string name="importedWorkouts">Importados %d exercícios</string>
+    <string name="selectBluetoothDevice">Selecionar aparelho Bluetooth</string>
     <string name="importingFiles">Importar ficheiros</string>
     <string name="importMultipleMessageSelectFolder">Por favor, selecione a pasta que contêm todos os ficheiros GPX que deseja importar.</string>
     <string name="importMultipleGpxFiles">Importar vários ficheiros GPX</string>
@@ -60,7 +54,6 @@
     <string name="noWorkoutStarted">Nenhum Exercício Começado</string>
     <string name="editDisplayedInformationHint">Enquanto o treino não tiver começado, poderá editar os valores apresentados clicando num dos quatro campos.</string>
     <string name="editDisplayedInformation">Editar informação apresentada</string>
-    <string name="sendEmail">Enviar Email</string>
     <string name="aboutPrivacyPolicy">Política de Privacidade</string>
     <string name="aboutHelpTranslating">Ajudar a traduzir</string>
     <string name="aboutUnlistedContributors">Obrigad@ a todos os contribuidores não listados que ajudaram a traduzir e expandir o FitoTrack!</string>
@@ -83,10 +76,9 @@
     <string name="merge">Agregar</string>
     <string name="replace">Substituir</string>
     <string name="replaceOrMergeMessage">Substituir ou fundir a base de dados com um ficheiro de cópia de segurança\?</string>
-    <string name="dataSamples">Amostras</string>
-    <string name="workoutStatsHelpText">Esta tela mostra estatísticas históricas dos treinos. Para usá-lo, você primeiro precisa especificar o tipo de exercício, clicando nele. Em seguida, defina a informação que você quer saber sobre e o período de tempo.
+    <string name="workoutStatsHelpText">Este ecrã mostra estatísticas históricas dos treinos. Para usá-lo, primeiro precisa especificar o tipo de exercício, por clicar nele. Em seguida, defina a informação que quer saber sobre e o período.
 \n
-\nPor exemplo, se você selecionar \"semana\" como período de tempo, todos os exercícios de cada semana serão fundidos em um ponto de dados ou calculando a média ou a soma de cada semana.</string>
+\nPor exemplo, se selecionar \"semana\" como período, todos os exercícios de cada semana serão fundidos num ponto de dados ou calculando a média, ou a soma de cada semana.</string>
     <string name="singleWorkout">Exercício Único</string>
     <string name="calendarWeekYear">Calendário Semana / Ano</string>
     <string name="help">Ajuda</string>
@@ -103,7 +95,6 @@
     <string name="workout_statistics">Estatísticas De Exercício</string>
     <string name="no_workouts_recorded_for_this_activity">Nenhum exercício para esta modalidade</string>
     <string name="unlockPhoneStopWorkout">Desbloqueie o seu telemóvel para terminar o rastreamento, por favor</string>
-    <string name="oClock">em Ponto</string>
     <string name="currentTime">momento</string>
     <string name="pref_auto_timeout_title">Período para Paragem Automática</string>
     <string name="intervalAutoTimeoutTraining">Paragem Automática de Exercício</string>
@@ -139,7 +130,6 @@
     <string name="actionUploadToOSM">Fazer o Upload para o OSM</string>
     <string name="mapStyle">Tipo de Mapa</string>
     <string name="waiting_gps">Aguardando pelo GPS</string>
-    <string name="data">Dados</string>
     <string name="gps">GPS</string>
     <string name="importBackup">Importar Backup de Dados</string>
     <string name="exportData">Exportar Dados</string>
@@ -150,7 +140,6 @@
     <string name="exportAsGpxFile">Exportar como ficheiro GPX</string>
     <string name="cancel">Cancelar</string>
     <string name="trackerWaitingMessage">Esperando para começar o exercício</string>
-    <string name="trackerRunningMessage">O seu exercício está a ser gravado</string>
     <string name="deleteWorkoutMessage">Deseja realmente apagar este exercício\?</string>
     <string name="deleteWorkout">Apagar Exercício</string>
     <string name="continue_">Continuar</string>
@@ -168,14 +157,13 @@
     <string name="enterWorkout">Introduzir Exercício</string>
     <string name="type">Tipo</string>
     <string name="workoutTypeAdd">Adicionar</string>
-    <string name="workoutTypeUnknown">Desconhecido</string>
+    <string name="unknown">Desconhecido</string>
     <string name="workoutTypeOther">Outros</string>
     <string name="workoutTypeRowing">Remar</string>
     <string name="workoutTypeInlineSkating">Andar em Patins-em-linha</string>
     <string name="workoutTypeSkateboarding">Andar de Skate</string>
     <string name="workoutTypeHiking">Escalada</string>
     <string name="workoutTypeCycling">Ciclismo</string>
-    <string name="workoutTypeJogging">Movimentar</string>
     <string name="workoutTypeWalking">Caminhada</string>
     <string name="workoutTypeRunning">Corrida</string>
     <string name="height">Altura</string>
@@ -236,7 +224,6 @@
     <string name="hintManageIntervalSets">Adicionar um conjunto de intervalos para se utilizar nos exercícios.</string>
     <string name="create">Criar</string>
     <string name="createIntervalSet">Criar Novo Conjunto de Intervalos</string>
-    <string name="workoutRecording">Gravando Exercício</string>
     <string name="manageIntervalSets">Gerir Os Conjuntos De Intervalos</string>
     <string name="add_interval">Adicionar Intervalo</string>
     <string name="add">Adicionar</string>
@@ -251,7 +238,6 @@
     <string name="savedSuccessfully">Guardado</string>
     <string name="share">Partilhar</string>
     <string name="save">Guardar</string>
-    <string name="action_edit_comment">Editar Comentário</string>
     <string name="errorEnterValidNumber">Introduza um número válido</string>
     <string name="and">e</string>
     <string name="timeSecondsShort">s</string>
@@ -263,7 +249,6 @@
     <string name="timeMinuteSingular">Minuto</string>
     <string name="setPreferencesMessage">Pode definir as unidades de medida pretendidas e o seu peso em Definições.</string>
     <string name="setPreferencesTitle">Definir Preferências</string>
-    <string name="pref_ringtone_silent">Silencioso</string>
     <string name="backup">Backup</string>
     <string name="restore">Restaurar</string>
     <string name="importBackupMessage">AVISO: Toda a informação existente na aplicação será apagada. Se não quer perdê-la, primeiro faça um outro backup. Tem a certeza que quer restaurar deste backup\?</string>
@@ -272,8 +257,6 @@
     <string name="finished">Terminado</string>
     <string name="converting">Convertendo</string>
     <string name="locationData">Dados de Localização</string>
-    <string name="workouts">Exercícios</string>
-    <string name="preferences">Preferências</string>
     <string name="initialising">Inicializando</string>
     <string name="shareFile">Partilhar ficheiro</string>
     <string name="errorImportFailed">A importação de dados falhou.</string>
@@ -283,7 +266,6 @@
     <string name="exporting">Exportar</string>
     <string name="delete">Apagar</string>
     <string name="stop">Parar</string>
-    <string name="workout_add">Adicionar</string>
     <string name="app_name">FitoTrack</string>
     <string name="hintManageWorkoutTypes">Carregue no mais para adicionar tipos de treino personalizados.</string>
     <string name="resumeWorkoutConfirmation">Queres mesmo retomar este exercício\? Isto também irá adicionar uma pausa a partir do momento em que o treino foi parado.</string>
@@ -292,9 +274,7 @@
     <string name="notimeout">Sem Tempo-Limite</string>
     <string name="workoutStopped">Exercício parado</string>
     <string name="heartRateNotAvailable">A frequência cardíaca não está disponível.</string>
-    <string name="connectHeartRateDevice">Ligar o dispositivo de Frequência Cardíaca</string>
-    <string name="bulkActions">Accao</string>
-    <string name="importMultipleGpxFilesSummary">Importar mais do que um ficheiro GPX de uma vez</string>
+    <string name="connectHeartRateDevice">Ligar o aparelho de Frequência Cardíaca</string>
     <string name="recordingStatePaused">Pausa</string>
     <string name="recordingStateRunning">Execucao</string>
     <string name="recordingStateIdle">Ocioso</string>
@@ -318,4 +298,39 @@
     <string name="voiceAnnouncementsTitle">Anúncios De Voz</string>
     <string name="workoutTypeEditMET">MET</string>
     <string name="preferenceCategoryVoiceFeedback">Feedback de voz</string>
+    <string name="actionImportMultiple">Importar múltiplos</string>
+    <string name="actionImport">Importar</string>
+    <string name="importWorkoutMultipleQuestion">Pretende importar um ficheiro GPX ou múltiplos\?</string>
+    <string name="workoutTypeAll">Todos</string>
+    <string name="workoutRecordingTypeGps">Treinos GPS</string>
+    <string name="workoutRecordingTypeIndoor">Treinos em Interior</string>
+    <string name="workoutRepetitions">Repetições</string>
+    <string name="workoutSets">Sets</string>
+    <string name="workoutFrequency">Frequência</string>
+    <string name="workoutAvgFrequencyShort">Frequência Méd.</string>
+    <string name="workoutAvgFrequencyLong">Frequência Média</string>
+    <string name="workoutCurrentFrequency">Frequência atual</string>
+    <string name="workoutMaxFrequency">Frequência máxima</string>
+    <string name="workoutIntensity">Intensidade</string>
+    <string name="workoutAvgIntensityShort">Intensidade Méd.</string>
+    <string name="workoutMaxIntensity">Intensidade Máx.</string>
+    <string name="workoutMinHeight">Altura mín</string>
+    <string name="workoutMaxHeight">Altura máx</string>
+    <string name="workoutTypeTreadmill">Passadeira</string>
+    <plurals name="workoutStep">
+        <item quantity="one">Passo</item>
+        <item quantity="other">Passos</item>
+    </plurals>
+    <string name="workoutTypeRopeSkipping">Saltar à corda</string>
+    <string name="workoutTypeTrampolineJumping">Salto em trampolim</string>
+    <string name="workoutTypePushUps">Flexões</string>
+    <string name="pref_step_length">Comprimento do passo</string>
+    <plurals name="workoutJump">
+        <item quantity="one">Salto</item>
+        <item quantity="other">Saltos</item>
+    </plurals>
+    <plurals name="workoutPushUp">
+        <item quantity="one">Flexão</item>
+        <item quantity="other">Flexões</item>
+    </plurals>
 </resources>

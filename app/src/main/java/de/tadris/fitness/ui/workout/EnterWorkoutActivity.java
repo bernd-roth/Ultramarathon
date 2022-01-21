@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -24,7 +24,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,7 +37,7 @@ import java.util.Calendar;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
-import de.tadris.fitness.data.Workout;
+import de.tadris.fitness.data.GpsWorkout;
 import de.tadris.fitness.data.WorkoutBuilder;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.ui.dialog.DatePickerFragment;
@@ -57,6 +56,7 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
     TextView typeTextView, dateTextView, timeTextView, durationTextView;
     EditText distanceEditText, commentEditText;
     private DistanceUnitSystem unitSystem;
+    private boolean activityWasCreated = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +92,10 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
                     distanceEditText.setText(str2);
                     int pos = distanceEditText.getText().length();
                     distanceEditText.setSelection(pos);
+                }
+
+                if (activityWasCreated) {
+                    workoutBuilder.setWasEdited();
                 }
             }
         });
@@ -135,7 +139,7 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
         Intent intent = getIntent();
         long workoutId = intent.getLongExtra(WORKOUT_ID_EXTRA, 0);
         if (workoutId != 0) {
-            Workout workout = Instance.getInstance(this).db.workoutDao().getWorkoutById(workoutId);
+            GpsWorkout workout = Instance.getInstance(this).db.gpsWorkoutDao().getWorkoutById(workoutId);
             if (workout != null) {
                 loadFromWorkout(workout);
             } else {
@@ -145,9 +149,11 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
         }
 
         updateTextViews();
+
+        activityWasCreated = true;
     }
 
-    private void loadFromWorkout(Workout workout) {
+    private void loadFromWorkout(GpsWorkout workout) {
         workoutBuilder = WorkoutBuilder.fromWorkout(this, workout);
         distanceEditText.setText(String.valueOf(
                 UnitUtils.roundDouble(unitSystem.getDistanceFromKilometers(workoutBuilder.getLength() / 1000d), 3)
@@ -175,9 +181,9 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
             Toast.makeText(this, R.string.errorEnterValidDuration, Toast.LENGTH_LONG).show();
             return;
         }
-        Workout workout = workoutBuilder.saveWorkout(this);
-        final Intent intent = new Intent(this, ShowWorkoutActivity.class);
-        intent.putExtra(ShowWorkoutActivity.WORKOUT_ID_EXTRA, workout.id);
+        GpsWorkout workout = workoutBuilder.saveWorkout(this);
+        final Intent intent = new Intent(this, ShowGpsWorkoutActivity.class);
+        intent.putExtra(ShowGpsWorkoutActivity.WORKOUT_ID_EXTRA, workout.id);
         startActivity(intent);
         finish();
     }
@@ -209,6 +215,7 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
     @Override
     public void onDatePick(int year, int month, int day) {
         workoutBuilder.getStart().set(year, month, day);
+        workoutBuilder.setWasEdited();
         updateTextViews();
         showTimeSelection();
     }
@@ -224,6 +231,7 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
         workoutBuilder.getStart().set(Calendar.HOUR_OF_DAY, hour);
         workoutBuilder.getStart().set(Calendar.MINUTE, minute);
         workoutBuilder.getStart().set(Calendar.SECOND, 0);
+        workoutBuilder.setWasEdited();
         updateTextViews();
         showDurationSelection();
     }
@@ -238,6 +246,7 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
     @Override
     public void onDurationPick(long duration) {
         workoutBuilder.setDuration(duration);
+        workoutBuilder.setWasEdited();
         updateTextViews();
         requestKeyboard(commentEditText);
     }
@@ -254,10 +263,9 @@ public class EnterWorkoutActivity extends InformationActivity implements SelectW
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch (id) {
-            case R.id.actionEnterWorkoutAdd:
-                saveWorkout();
-                return true;
+        if (id == R.id.actionEnterWorkoutAdd) {
+            saveWorkout();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

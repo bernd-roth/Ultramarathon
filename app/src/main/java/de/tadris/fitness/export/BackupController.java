@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -36,7 +36,7 @@ import de.tadris.fitness.data.IntervalSet;
 
 public class BackupController {
 
-    static final int VERSION = 1;
+    static final int VERSION = 3;
 
     private final Context context;
     private final File output;
@@ -54,10 +54,14 @@ public class BackupController {
     public void exportData() throws IOException {
         listener.onStatusChanged(0, context.getString(R.string.initialising));
         init();
-        listener.onStatusChanged(5, context.getString(R.string.workouts));
-        saveWorkoutsToContainer();
+        listener.onStatusChanged(5, context.getString(R.string.workoutRecordingTypeGps));
+        saveGpsWorkoutsToContainer();
         listener.onStatusChanged(20, context.getString(R.string.locationData));
-        saveSamplesToContainer();
+        saveGpsSamplesToContainer();
+        listener.onStatusChanged(40, context.getString(R.string.workoutRecordingTypeIndoor));
+        saveIndoorWorkoutsToContainer();
+        listener.onStatusChanged(45, context.getString(R.string.workoutRecordingTypeIndoor));
+        saveIndoorSamplesToContainer();
         listener.onStatusChanged(50, context.getString(R.string.intervalSets));
         saveIntervalsToContainer();
         listener.onStatusChanged(55, context.getString(R.string.customWorkoutTypesTitle));
@@ -77,12 +81,20 @@ public class BackupController {
         dataContainer.setVersion(VERSION);
     }
 
-    private void saveWorkoutsToContainer(){
-        dataContainer.getWorkouts().addAll(Arrays.asList(database.workoutDao().getWorkouts()));
+    private void saveGpsWorkoutsToContainer() {
+        dataContainer.getWorkouts().addAll(Arrays.asList(database.gpsWorkoutDao().getWorkouts()));
     }
 
-    private void saveSamplesToContainer(){
-        dataContainer.getSamples().addAll(Arrays.asList(database.workoutDao().getSamples()));
+    private void saveGpsSamplesToContainer() {
+        dataContainer.getSamples().addAll(Arrays.asList(database.gpsWorkoutDao().getSamples()));
+    }
+
+    private void saveIndoorWorkoutsToContainer() {
+        dataContainer.getIndoorWorkouts().addAll(Arrays.asList(database.indoorWorkoutDao().getWorkouts()));
+    }
+
+    private void saveIndoorSamplesToContainer() {
+        dataContainer.getIndoorSamples().addAll(Arrays.asList(database.indoorWorkoutDao().getSamples()));
     }
 
     private void saveIntervalsToContainer() {

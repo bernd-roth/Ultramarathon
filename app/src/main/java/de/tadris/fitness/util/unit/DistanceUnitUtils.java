@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -91,11 +91,42 @@ public class DistanceUnitUtils extends UnitUtils {
         return hours + ":" + minStr + ":" + sekStr;
     }
 
+    public String getMinuteSecondTime(long time) {
+        long totalSecs = time / 1000;
+        long totalMins = totalSecs / 60;
+        long mins = totalMins % 60;
+        long secs = totalSecs % 60;
+        String minStr = (mins < 10 ? "0" : "") + mins;
+        String sekStr = (secs < 10 ? "0" : "") + secs;
+        return minStr + ":" + sekStr;
+    }
+
+    public String getMinuteSecondTime(long time, boolean useLongTime) {
+        if (!useLongTime) {
+            return getMinuteSecondTime(time);
+        }
+        long totalSecs = time / 1000;
+        long totalMins = totalSecs / 60;
+        long mins = totalMins % 60;
+        long secs = totalSecs % 60;
+        String minStr = "" + mins + " " + context.getText(R.string.timeMinuteShort);
+        String sekStr = "" + secs + " " + context.getText(R.string.timeSecondsShort);
+        if (secs > 0) {
+            return minStr + " " + sekStr;
+        } else {
+            return minStr;
+        }
+    }
+
     public String getPace(double metricPace) {
         return getPace(metricPace, false);
     }
 
     public String getPace(double metricPace, boolean useLongUnits) {
+        return getPace(metricPace, useLongUnits, true);
+    }
+
+    public String getPace(double metricPace, boolean useLongUnits, boolean appendUnit) {
         if (!Double.isInfinite(metricPace)) {
             double one = distanceUnitSystem.getDistanceFromKilometers(1);
             double secondsTotal = 60 * metricPace / one;
@@ -106,12 +137,20 @@ public class DistanceUnitUtils extends UnitUtils {
                         " " + getSecondsText(seconds) + " " + getString(R.string.per) +
                         " " + getString(distanceUnitSystem.getLongDistanceUnitTitle(false));
             } else {
-                return minutes + ":" + (seconds < 10 ? "0" : "") + seconds + " min/" + distanceUnitSystem.getLongDistanceUnit();
+                String withoutUnit = minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+                if (appendUnit) {
+                    return withoutUnit + " " + getPaceUnit();
+                } else {
+                    return withoutUnit;
+                }
             }
-        }
-        else {
+        } else {
             return "-";
         }
+    }
+
+    public String getPaceUnit() {
+        return "min/" + distanceUnitSystem.getLongDistanceUnit();
     }
 
     public String getDistance(int distanceInMeters) {
@@ -122,7 +161,7 @@ public class DistanceUnitUtils extends UnitUtils {
         if (distanceInMeters >= 1000) {
             String lengthInLongUnit = round(distanceUnitSystem.getDistanceFromKilometers((double) distanceInMeters / 1000d), 2);
             if (useLongUnitNames) {
-                return lengthInLongUnit + " " + getString(distanceUnitSystem.getLongDistanceUnitTitle(false));
+                return lengthInLongUnit + " " + getString(distanceUnitSystem.getLongDistanceUnitTitle(distanceInMeters> 1000 ));
             } else {
                 return lengthInLongUnit + " " + distanceUnitSystem.getLongDistanceUnit();
             }
@@ -158,12 +197,16 @@ public class DistanceUnitUtils extends UnitUtils {
      * @return speed in km/h
      */
     public String getSpeed(double speed, boolean useLongNames) {
-        String value = round(distanceUnitSystem.getSpeedFromMeterPerSecond(speed), 1);
+        String value = getSpeedWithoutUnit(speed);
         if (useLongNames) {
             return value + " " + getString(distanceUnitSystem.getSpeedUnitTitle());
         } else {
             return value + " " + distanceUnitSystem.getSpeedUnit();
         }
+    }
+
+    public String getSpeedWithoutUnit(double speed) {
+        return round(distanceUnitSystem.getSpeedFromMeterPerSecond(speed), 1);
     }
 
     private String getHourText(int hours) {

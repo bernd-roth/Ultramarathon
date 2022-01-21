@@ -21,7 +21,6 @@ package de.tadris.fitness.ui.workout;
 
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
@@ -43,31 +42,18 @@ import com.github.mikephil.charting.formatter.DefaultAxisValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
-import org.mapsforge.core.graphics.Paint;
-import org.mapsforge.core.model.BoundingBox;
-import org.mapsforge.core.model.LatLong;
-import org.mapsforge.core.model.MapPosition;
-import org.mapsforge.core.util.LatLongUtils;
-import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
-import org.mapsforge.map.android.view.MapView;
-import org.mapsforge.map.layer.Layer;
-import org.mapsforge.map.layer.download.TileDownloadLayer;
-import org.mapsforge.map.layer.overlay.FixedPixelCircle;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
+import de.tadris.fitness.data.BaseSample;
+import de.tadris.fitness.data.BaseWorkout;
+import de.tadris.fitness.data.BaseWorkoutData;
+import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.IntervalSet;
-import de.tadris.fitness.data.Workout;
-import de.tadris.fitness.data.WorkoutData;
-import de.tadris.fitness.data.WorkoutSample;
-import de.tadris.fitness.map.MapManager;
-import de.tadris.fitness.map.WorkoutLayer;
 import de.tadris.fitness.ui.workout.diagram.SampleConverter;
 import de.tadris.fitness.util.WorkoutCalculator;
 import de.tadris.fitness.util.unit.DistanceUnitUtils;
@@ -77,12 +63,10 @@ public abstract class WorkoutActivity extends InformationActivity {
 
     public static final String WORKOUT_ID_EXTRA = "de.tadris.fitness.WorkoutActivity.WORKOUT_ID_EXTRA";
 
-    List<WorkoutSample> samples;
-    Workout workout;
+    List<BaseSample> samples;
+    private BaseWorkout workout;
     private Resources.Theme theme;
-    MapView mapView;
-    private FixedPixelCircle highlightingCircle;
-    final Handler mHandler = new Handler();
+    protected final Handler mHandler = new Handler();
     protected IntervalSet usedIntervalSet;
     protected Interval[] intervals;
 
@@ -96,7 +80,7 @@ public abstract class WorkoutActivity extends InformationActivity {
         Intent intent = getIntent();
         long workoutId = intent.getLongExtra(WORKOUT_ID_EXTRA, 0);
         if (workoutId != 0) {
-            workout = Instance.getInstance(this).db.workoutDao().getWorkoutById(workoutId);
+            workout = findWorkout(workoutId);
         }
         if (workout == null) {
             Toast.makeText(this, R.string.cannotFindWorkout, Toast.LENGTH_LONG).show();
@@ -104,7 +88,7 @@ public abstract class WorkoutActivity extends InformationActivity {
             return;
         }
 
-        samples = Arrays.asList(Instance.getInstance(this).db.workoutDao().getAllSamplesOfWorkout(workout.id));
+        samples = findSamples(workoutId);
         if (workout.intervalSetUsedId != 0) {
             usedIntervalSet = Instance.getInstance(this).db.intervalDao().getSet(workout.intervalSetUsedId);
             intervals = Instance.getInstance(this).db.intervalDao().getAllIntervalsOfSet(usedIntervalSet.id);
@@ -112,10 +96,12 @@ public abstract class WorkoutActivity extends InformationActivity {
         setTheme(Instance.getInstance(this).themes.getWorkoutTypeTheme(workout.getWorkoutType(this)));
     }
 
+    abstract BaseWorkout findWorkout(long id);
+
+    abstract List<BaseSample> findSamples(long workoutId);
+
     void initAfterContent() {
-        if (getActionBar() != null) {
-            getActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+        setupActionBar();
         setTitle(workout.getWorkoutType(this).title);
 
         theme = getTheme();
@@ -127,11 +113,18 @@ public abstract class WorkoutActivity extends InformationActivity {
         return chart;
     }
 
+    protected int getMapHeight() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        return displayMetrics.widthPixels * 3 / 4;
+    }
+
     boolean diagramsInteractive = false;
 
     private CombinedChart getDiagram(SampleConverter converter) {
         return getDiagram(Collections.singletonList(converter), converter.isIntervalSetVisible());
     }
+
 
     private CombinedChart getDiagram(List<SampleConverter> converters, boolean showIntervalSets) {
         CombinedChart chart = new CombinedChart(this);
@@ -142,18 +135,12 @@ public abstract class WorkoutActivity extends InformationActivity {
             chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
                 @Override
                 public void onValueSelected(Entry e, Highlight h) {
-                    onNothingSelected();
-                    WorkoutSample sample = findSample(e);
-                    if (sample != null) {
-                        onDiagramValueSelected(sample.toLatLong());
-                    }
+                    onChartSelectionChanged(findSample(e));
                 }
 
                 @Override
                 public void onNothingSelected() {
-                    if(highlightingCircle != null){
-                        mapView.getLayerManager().getLayers().remove(highlightingCircle);
-                    }
+                    onChartSelectionChanged(null);
                 }
             });
         }
@@ -165,6 +152,8 @@ public abstract class WorkoutActivity extends InformationActivity {
         chart.getLegend().setTextColor(getThemeTextColor());
         chart.getDescription().setTextColor(getThemeTextColor());
 
+        chart.setHighlightPerDragEnabled(diagramsInteractive);
+        chart.setHighlightPerTapEnabled(diagramsInteractive);
 
         updateChart(chart, converters, showIntervalSets);
 
@@ -173,6 +162,9 @@ public abstract class WorkoutActivity extends InformationActivity {
         }
 
         return chart;
+    }
+
+    protected void onChartSelectionChanged(BaseSample sample) {
     }
 
     protected void updateChart(CombinedChart chart, List<SampleConverter> converters, boolean showIntervalSets) {
@@ -194,10 +186,10 @@ public abstract class WorkoutActivity extends InformationActivity {
 
         int converterIndex = 0;
         for (SampleConverter converter : converters) {
-            converter.onCreate(getWorkoutData());
+            converter.onCreate(getBaseWorkoutData());
 
             List<Entry> entries = new ArrayList<>();
-            for (WorkoutSample sample : samples) {
+            for (BaseSample sample : samples) {
                 // turn data into Entry objects
                 Entry e = new Entry((float) (sample.relativeTime) / 1000f / 60f, converter.getValue(sample), sample);
                 entries.add(e);
@@ -209,6 +201,7 @@ public abstract class WorkoutActivity extends InformationActivity {
             dataSet.setValueTextColor(color);
             dataSet.setDrawCircles(false);
             dataSet.setLineWidth(4);
+            dataSet.setHighlightLineWidth(2.5f);
             dataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
             if (converters.size() == 2) {
                 YAxis.AxisDependency axisDependency = converterIndex == 0 ? YAxis.AxisDependency.LEFT : YAxis.AxisDependency.RIGHT;
@@ -230,7 +223,7 @@ public abstract class WorkoutActivity extends InformationActivity {
         if (showIntervalSets && intervals != null && intervals.length > 0) {
             List<BarEntry> barEntries = new ArrayList<>();
 
-            for (long relativeTime : WorkoutCalculator.getIntervalSetTimesFromWorkout(getWorkoutData(), intervals)) {
+            for (long relativeTime : WorkoutCalculator.getIntervalSetTimesFromWorkout(getBaseWorkoutData())) {
                 barEntries.add(new BarEntry((float) (relativeTime) / 1000f / 60f, yMax));
             }
 
@@ -252,20 +245,9 @@ public abstract class WorkoutActivity extends InformationActivity {
         chart.invalidate();
     }
 
-    private void onDiagramValueSelected(LatLong latLong) {
-        Paint p = AndroidGraphicFactory.INSTANCE.createPaint();
-        p.setColor(0xff693cff);
-        highlightingCircle = new FixedPixelCircle(latLong, 10, p, null);
-        mapView.addLayer(highlightingCircle);
-
-        if (!mapView.getBoundingBox().contains(latLong)) {
-            mapView.getModel().mapViewPosition.animateTo(latLong);
-        }
-    }
-
-    private WorkoutSample findSample(Entry entry) {
-        if (entry.getData() instanceof WorkoutSample) {
-            return (WorkoutSample) entry.getData();
+    private GpsSample findSample(Entry entry) {
+        if (entry.getData() instanceof GpsSample) {
+            return (GpsSample) entry.getData();
         } else {
             return null;
         }
@@ -275,93 +257,12 @@ public abstract class WorkoutActivity extends InformationActivity {
     boolean fullScreenItems = false;
     LinearLayout mapRoot;
 
-    void addMap(){
-        mapView = MapManager.setupMap(this);
-
-        WorkoutLayer workoutLayer= new WorkoutLayer(samples, getThemePrimaryColor());
-        mapView.addLayer(workoutLayer);
-
-        final BoundingBox bounds= new BoundingBox(workoutLayer.getLatLongs()).extendMeters(50);
-        mHandler.postDelayed(() -> {
-            mapView.getModel().mapViewPosition.setMapPosition(new MapPosition(bounds.getCenterPoint(),
-                                                                              (LatLongUtils.zoomForBounds(mapView.getDimension(), bounds,
-                                                                                                          mapView.getModel().displayModel.getTileSize()))));
-            mapView.animate().alpha(1f).setDuration(1000).start();
-        }, 1000);
-
-        mapRoot = new LinearLayout(this);
-        mapRoot.setOrientation(LinearLayout.VERTICAL);
-        mapRoot.addView(mapView);
-
-        root.addView(mapRoot, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                                                         fullScreenItems ? ViewGroup.LayoutParams.MATCH_PARENT : getMapHeight()));
-        mapView.setAlpha(0);
-
-        if(showPauses){
-            Paint pBlue = AndroidGraphicFactory.INSTANCE.createPaint();
-            pBlue.setColor(Color.BLUE);
-            for (WorkoutCalculator.Pause pause : WorkoutCalculator.getPausesFromWorkout(getWorkoutData())) {
-                float radius = Math.min(10, Math.max(2, (float) Math.sqrt((float) pause.duration / 1000)));
-                mapView.addLayer(new FixedPixelCircle(pause.location, radius, pBlue, null));
-            }
-        }
-
-        Paint pGreen = AndroidGraphicFactory.INSTANCE.createPaint();
-        pGreen.setColor(Color.GREEN);
-        mapView.addLayer(new FixedPixelCircle(samples.get(0).toLatLong(), 10, pGreen, null));
-
-        Paint pRed = AndroidGraphicFactory.INSTANCE.createPaint();
-        pRed.setColor(Color.RED);
-        mapView.addLayer(new FixedPixelCircle(samples.get(samples.size() - 1).toLatLong(), 10, pRed, null));
-
-        mapView.setClickable(false);
-
-    }
-
-    private int getMapHeight() {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        return displayMetrics.widthPixels * 3 / 4;
-    }
-
     protected boolean hasSamples() {
         return samples.size() > 1;
     }
 
-    protected WorkoutData getWorkoutData() {
-        return new WorkoutData(workout, samples);
-    }
-
-    @Override
-    protected void onDestroy() {
-        if (mapView != null) {
-            mapView.destroyAll();
-        }
-        AndroidGraphicFactory.clearResourceMemoryCache();
-        super.onDestroy();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (mapView != null) {
-            for (Layer layer : mapView.getLayerManager().getLayers()) {
-                if (layer instanceof TileDownloadLayer) {
-                    ((TileDownloadLayer) layer).onPause();
-                }
-            }
-        }
-    }
-
-    public void onResume() {
-        super.onResume();
-        if (mapView != null) {
-            for (Layer layer : mapView.getLayerManager().getLayers()) {
-                if (layer instanceof TileDownloadLayer) {
-                    ((TileDownloadLayer) layer).onResume();
-                }
-            }
-        }
+    protected BaseWorkoutData getBaseWorkoutData() {
+        return new BaseWorkoutData(workout, samples);
     }
 
     @Override
@@ -372,6 +273,10 @@ public abstract class WorkoutActivity extends InformationActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public BaseWorkout getWorkout() {
+        return workout;
     }
 
 }

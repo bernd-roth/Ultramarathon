@@ -20,8 +20,6 @@
 package de.tadris.fitness.ui;
 
 import android.Manifest;
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -34,12 +32,14 @@ import android.view.inputmethod.InputMethodManager;
 import androidx.annotation.AttrRes;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 
-abstract public class FitoTrackActivity extends Activity {
+abstract public class FitoTrackActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,16 +64,25 @@ abstract public class FitoTrackActivity extends Activity {
     }
 
     protected int getThemeColor(@AttrRes int colorRes) {
-        final TypedValue value = new TypedValue ();
+        final TypedValue value = new TypedValue();
         getTheme().resolveAttribute(colorRes, value, true);
         return value.data;
     }
 
     protected void showErrorDialog(Exception e, @StringRes int title, @StringRes int message) {
+        showErrorDialog(e, title, message, null);
+    }
+
+    protected void showErrorDialog(Exception e, @StringRes int title, @StringRes int message, @Nullable Runnable listener) {
         new AlertDialog.Builder(this)
                 .setTitle(title)
                 .setMessage(getString(message) + "\n\n" + e.getMessage())
-                .setPositiveButton(R.string.okay, null)
+                .setPositiveButton(R.string.okay, (dialog, which) -> {
+                    if (listener != null) listener.run();
+                })
+                .setOnDismissListener(dialog -> {
+                    if (listener != null) listener.run();
+                })
                 .create().show();
     }
 
@@ -84,8 +93,12 @@ abstract public class FitoTrackActivity extends Activity {
     }
 
     protected boolean hasStoragePermission() {
-        return ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+        return checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE) &&
+                checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+    }
+
+    protected boolean checkPermission(String permission) {
+        return ActivityCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED;
     }
 
     protected void requestKeyboard(View v) {
@@ -97,10 +110,11 @@ abstract public class FitoTrackActivity extends Activity {
     }
 
     protected void setupActionBar() {
-        ActionBar actionBar = getActionBar();
+        ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             // Show the Up button in the action bar.
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
         }
     }
 
@@ -113,6 +127,5 @@ abstract public class FitoTrackActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 
 }

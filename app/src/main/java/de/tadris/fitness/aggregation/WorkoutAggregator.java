@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.tadris.fitness.Instance;
-import de.tadris.fitness.data.Workout;
+import de.tadris.fitness.data.BaseWorkout;
 
 public class WorkoutAggregator {
 
@@ -47,16 +47,22 @@ public class WorkoutAggregator {
 
     private List<WorkoutInformationResult> getResults() {
         List<WorkoutInformationResult> results = new ArrayList<>();
-        Workout[] workouts = Instance.getInstance(context).db.workoutDao().getWorkouts();
-        for (Workout workout : workouts) {
+        List<BaseWorkout> workouts = Instance.getInstance(context).db.getAllWorkouts();
+        for (BaseWorkout workout : workouts) {
             if (filter.isAccepted(workout)) {
-                results.add(getResultFor(workout));
+                if (isAvailableFor(workout)) {
+                    results.add(getResultFor(workout));
+                }
             }
         }
         return results;
     }
 
-    private WorkoutInformationResult getResultFor(Workout workout) {
+    private boolean isAvailableFor(BaseWorkout workout) {
+        return information.isInformationAvailableFor(workout);
+    }
+
+    private WorkoutInformationResult getResultFor(BaseWorkout workout) {
         return new WorkoutInformationResult(workout, information.getValueFromWorkout(workout));
     }
 }

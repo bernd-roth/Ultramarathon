@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -22,9 +22,12 @@ package de.tadris.fitness.ui.workout.diagram;
 import android.content.Context;
 
 import de.tadris.fitness.R;
-import de.tadris.fitness.data.WorkoutData;
+import de.tadris.fitness.data.BaseSample;
+import de.tadris.fitness.data.BaseWorkout;
+import de.tadris.fitness.data.BaseWorkoutData;
+import de.tadris.fitness.data.GpsSample;
+import de.tadris.fitness.data.GpsWorkout;
 import de.tadris.fitness.data.WorkoutManager;
-import de.tadris.fitness.data.WorkoutSample;
 
 public class SpeedConverter extends AbstractSampleConverter {
 
@@ -33,13 +36,13 @@ public class SpeedConverter extends AbstractSampleConverter {
     }
 
     @Override
-    public void onCreate(WorkoutData data) {
-        WorkoutManager.roundSpeedValues(data.getSamples());
+    public void onCreate(BaseWorkoutData data) {
+        WorkoutManager.roundSpeedValues(data.castToGpsData().getSamples());
     }
 
     @Override
-    public float getValue(WorkoutSample sample) {
-        return (float) distanceUnitUtils.getDistanceUnitSystem().getSpeedFromMeterPerSecond(sample.tmpRoundedSpeed);
+    public float getValue(BaseSample sample) {
+        return (float) distanceUnitUtils.getDistanceUnitSystem().getSpeedFromMeterPerSecond(((GpsSample) sample).tmpRoundedSpeed);
     }
 
     @Override
@@ -60,5 +63,15 @@ public class SpeedConverter extends AbstractSampleConverter {
     @Override
     public int getColor() {
         return R.color.diagramSpeed;
+    }
+
+    @Override
+    public float getMinValue(BaseWorkout workout) {
+        return (float) distanceUnitUtils.getDistanceUnitSystem().getSpeedFromMeterPerSecond(((GpsWorkout) workout).avgSpeed * 0.4);
+    }
+
+    @Override
+    public float getMaxValue(BaseWorkout workout) {
+        return (float) distanceUnitUtils.getDistanceUnitSystem().getSpeedFromMeterPerSecond(((GpsWorkout) workout).avgSpeed * 1.6);
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -45,6 +45,7 @@ public interface DistanceUnitSystem {
 
     double getSpeedFromMeterPerSecond(double meterPerSecond);
 
+    double getMeterPerSecondFromSpeed(double speed);
 
     String getLongDistanceUnit();
 
@@ -55,6 +56,12 @@ public interface DistanceUnitSystem {
 
     @StringRes
     int getShortDistanceUnitTitle(boolean isPlural);
+
+    String getReallyShortDistanceUnit();
+
+    double getDistanceFromCentimeters(double centimeters);
+
+    double getCentimetersFromReallyShortDistance(double reallyShortDistance);
 
     default String getElevationUnit() {
         return getShortDistanceUnit();

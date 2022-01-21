@@ -26,6 +26,10 @@ import android.widget.NumberPicker;
 
 public class NumberPickerUtils {
 
+    /**
+     * If custom formatting is used in the Android NumberPicker, it is blank unit the user touches it.
+     * This method fixes it and can be called when creating NumberPickers
+     */
     public static void fixNumberPicker(NumberPicker numberPicker) {
         View editView = numberPicker.getChildAt(0);
 

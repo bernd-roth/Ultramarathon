@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -21,7 +21,7 @@ package de.tadris.fitness.aggregation;
 
 import androidx.annotation.StringRes;
 
-import de.tadris.fitness.data.Workout;
+import de.tadris.fitness.data.BaseWorkout;
 
 /**
  * general note: this could also be used to display the data in the ShowWorkoutActivity.
@@ -33,7 +33,9 @@ public interface WorkoutInformation {
 
     String getUnit();
 
-    double getValueFromWorkout(Workout workout);
+    boolean isInformationAvailableFor(BaseWorkout workout);
+
+    double getValueFromWorkout(BaseWorkout workout);
 
     AggregationType getAggregationType();
 

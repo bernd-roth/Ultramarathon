@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -20,19 +20,22 @@
 package de.tadris.fitness.util;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.preference.PreferenceManager;
 
 import androidx.annotation.StyleRes;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.WorkoutType;
 
 public class FitoTrackThemes {
 
-    private static final int THEME_SETTING_LIGHT = 0;
+    private static final int THEME_SETTING_AUTO = 0;
+    private static final int THEME_SETTING_LIGHT = 2;
     private static final int THEME_SETTING_DARK = 1;
 
-    private Context context;
+    private final Context context;
 
     public FitoTrackThemes(Context context) {
         this.context = context;
@@ -40,60 +43,43 @@ public class FitoTrackThemes {
 
     @StyleRes
     public int getDefaultTheme() {
-        if (shouldUseLightMode()) {
-            return R.style.AppTheme;
-        } else {
-            return R.style.AppThemeDark;
-        }
+        return R.style.AppTheme;
     }
 
     @StyleRes
     public int getWorkoutTypeTheme(WorkoutType type) {
-        if (shouldUseLightMode()) {
-            switch (type.id) {
-                case "walking":
-                case "running":
-                    return R.style.Running;
-                case "hiking":
-                    return R.style.Hiking;
-                case "cycling":
-                    return R.style.Bicycling;
-                case "skateboarding":
-                case "inline_skating":
-                    return R.style.Skating;
-                case "rowing":
-                    return R.style.Rowing;
-                default:
-                    return R.style.AppTheme;
-            }
-        } else {
-            switch (type.id) {
-                case "walking":
-                case "running":
-                    return R.style.RunningDark;
-                case "hiking":
-                    return R.style.HikingDark;
-                case "cycling":
-                    return R.style.BicyclingDark;
-                case "skateboarding":
-                case "inline_skating":
-                    return R.style.SkatingDark;
-                case "rowing":
-                    return R.style.RowingDark;
-                default:
-                    return R.style.AppThemeDark;
-            }
+        switch (type.id) {
+            case "walking":
+            case "running":
+            case "treadmill":
+                return R.style.Running;
+            case "hiking":
+                return R.style.Hiking;
+            case "cycling":
+                return R.style.Bicycling;
+            case "skateboarding":
+            case "inline_skating":
+                return R.style.Skating;
+            case "rowing":
+                return R.style.Rowing;
+            default:
+                return R.style.AppTheme;
         }
     }
 
-    public boolean shouldUseLightMode() {
-        switch (getThemeSetting()) {
-            default:
-            case THEME_SETTING_LIGHT:
-                return true;
-            case THEME_SETTING_DARK:
-                return false;
+    public void updateDarkModeSetting() {
+        int mode = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
+        if (getThemeSetting() == THEME_SETTING_LIGHT) {
+            mode = AppCompatDelegate.MODE_NIGHT_NO;
+        } else if (getThemeSetting() == THEME_SETTING_DARK) {
+            mode = AppCompatDelegate.MODE_NIGHT_YES;
         }
+        AppCompatDelegate.setDefaultNightMode(mode);
+    }
+
+    public boolean isDarkModeEnabled() {
+        int currentNightMode = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        return currentNightMode == Configuration.UI_MODE_NIGHT_YES;
     }
 
     private int getThemeSetting() {

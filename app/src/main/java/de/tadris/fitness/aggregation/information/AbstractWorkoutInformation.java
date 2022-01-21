@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -23,6 +23,7 @@ import android.content.Context;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.aggregation.WorkoutInformation;
+import de.tadris.fitness.data.BaseWorkout;
 import de.tadris.fitness.util.unit.DistanceUnitUtils;
 import de.tadris.fitness.util.unit.EnergyUnitUtils;
 
@@ -36,6 +37,11 @@ public abstract class AbstractWorkoutInformation implements WorkoutInformation {
         this.context = context;
         this.distanceUnitUtils = Instance.getInstance(context).distanceUnitUtils;
         this.energyUnitUtils = Instance.getInstance(context).energyUnitUtils;
+    }
+
+    @Override
+    public boolean isInformationAvailableFor(BaseWorkout workout) {
+        return true;
     }
 
 }

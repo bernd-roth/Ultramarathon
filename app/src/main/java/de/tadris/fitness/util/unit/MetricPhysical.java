@@ -29,6 +29,9 @@ public class MetricPhysical extends Metric{
     }
 
     @Override
+    public double getMeterPerSecondFromSpeed(double speed) { return speed; }
+
+    @Override
     public String getSpeedUnit() {
         return "m/s";
     }

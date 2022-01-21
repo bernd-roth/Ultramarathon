@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -22,8 +22,11 @@ package de.tadris.fitness.ui.workout.diagram;
 import android.content.Context;
 
 import de.tadris.fitness.R;
-import de.tadris.fitness.data.WorkoutData;
-import de.tadris.fitness.data.WorkoutSample;
+import de.tadris.fitness.data.BaseSample;
+import de.tadris.fitness.data.BaseWorkout;
+import de.tadris.fitness.data.BaseWorkoutData;
+import de.tadris.fitness.data.GpsSample;
+import de.tadris.fitness.data.GpsWorkout;
 
 public class HeightConverter extends AbstractSampleConverter {
 
@@ -32,12 +35,12 @@ public class HeightConverter extends AbstractSampleConverter {
     }
 
     @Override
-    public void onCreate(WorkoutData data) {
+    public void onCreate(BaseWorkoutData data) {
     }
 
     @Override
-    public float getValue(WorkoutSample sample) {
-        return (float) distanceUnitUtils.getDistanceUnitSystem().getElevationFromMeters(sample.elevationMSL);
+    public float getValue(BaseSample sample) {
+        return (float) distanceUnitUtils.getDistanceUnitSystem().getElevationFromMeters(((GpsSample) sample).elevationMSL);
     }
 
     @Override
@@ -55,4 +58,13 @@ public class HeightConverter extends AbstractSampleConverter {
         return R.color.diagramHeight;
     }
 
+    @Override
+    public float getMinValue(BaseWorkout workout) {
+        return (float) distanceUnitUtils.getDistanceUnitSystem().getElevationFromMeters(((GpsWorkout) workout).minElevationMSL);
+    }
+
+    @Override
+    public float getMaxValue(BaseWorkout workout) {
+        return (float) distanceUnitUtils.getDistanceUnitSystem().getElevationFromMeters(((GpsWorkout) workout).maxElevationMSL);
+    }
 }

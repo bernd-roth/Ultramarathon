@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -17,7 +17,27 @@
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <SwitchPreference
+        android:id="@+id/nfcStart"
+        android:defaultValue="false"
+        android:key="nfcStart"
+        android:summary="@string/nfcStartSummary"
+        android:title="@string/nfcStartTitle" />
+
+    <Preference
+        android:id="@+id/autoStartModeConfig"
+        android:key="autoStartModeConfig"
+        android:summary="@string/manageAutoStartModeSummary"
+        android:title="@string/intervalAutoStartModeTraining" />
+
+    <Preference
+        android:id="@+id/autoStartDelayConfig"
+        android:key="autoStartDelayConfig"
+        android:summary="@string/manageAutoStartDelaySummary"
+        android:title="@string/intervalAutoStartDelayTraining" />
 
     <SwitchPreference
         android:defaultValue="true"
@@ -36,18 +56,21 @@
         android:summary="@string/prefShowOnLockScreenSummary"
         android:title="@string/prefShowOnLockScreenTitle" />
 
+    <Preference
+        android:id="@+id/currentSpeedAverageTimeConfig"
+        android:key="currentSpeedAverageTimeConfig"
+        android:summary="@string/preferenceCurrentSpeedAverageTimeSummary"
+        android:title="@string/preferenceCurrentSpeedAverageTimeTitle" />
+
     <PreferenceCategory android:title="@string/preferenceCategoryVoiceFeedback">
 
         <Preference
             android:key="speech"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:summary="@string/pref_voice_announcements_summary"
+            app:fragment="de.tadris.fitness.ui.settings.VoiceAnnouncementsSettingsFragment"
             android:title="@string/voiceAnnouncementsTitle" />
 
         <Preference
             android:key="intervals"
-            android:summary="@string/manageIntervalsSummary"
             android:title="@string/intervalTraining" />
 
         <SwitchPreference

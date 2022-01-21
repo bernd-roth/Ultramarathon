@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -39,7 +39,6 @@ public class AboutActivity extends FitoTrackActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(Instance.getInstance(this).themes.getDefaultTheme());
 
         createAboutPage();
         setContentView(aboutPage.create());
@@ -49,7 +48,7 @@ public class AboutActivity extends FitoTrackActivity {
 
     private void createAboutPage() {
         aboutPage = new AboutPage(this);
-        aboutPage.enableDarkMode(!Instance.getInstance(this).themes.shouldUseLightMode());
+        aboutPage.enableDarkMode(Instance.getInstance(this).themes.isDarkModeEnabled());
         aboutPage.setImage(R.mipmap.ic_launcher_round);
         aboutPage.setDescription(getString(R.string.aboutVersion) + " " + BuildConfig.VERSION_NAME);
 

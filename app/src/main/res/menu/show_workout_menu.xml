@@ -27,6 +27,9 @@
         android:id="@+id/actionEditWorkout"
         android:title="@string/editWorkout" />
     <item
+        android:id="@+id/actionEditWorkoutStartEnd"
+        android:title="@string/editWorkoutStartEnd" />
+    <item
         android:id="@+id/actionExportGpx"
         android:title="@string/exportAsGpxFile" />
     <item

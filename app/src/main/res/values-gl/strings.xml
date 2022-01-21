@@ -16,14 +16,12 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources>
+  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="chooseBackupFile">Ficheiro de copia de apoio</string>
     <string name="loadingFile">Cargando arquivo</string>
     <string name="finished">Rematado</string>
     <string name="converting">Converter</string>
     <string name="locationData">Datos da localización</string>
-    <string name="workouts">Adestramentos</string>
-    <string name="preferences">Preferencias</string>
     <string name="initialising">Inicializando</string>
     <string name="shareFile">Compartir arquivo</string>
     <string name="errorImportFailed">A importación de datos fallou.</string>
@@ -33,18 +31,16 @@
     <string name="exporting">Exportar</string>
     <string name="delete">Eliminar</string>
     <string name="stop">Deter</string>
-    <string name="workout_add">Engadir</string>
     <string name="app_name">FitoTrack</string>
     <string name="pref_announcements_config_title">Activador do anuncio</string>
     <string name="importBackupMessage">AVISO: Eliminaranse tódolos teus datos existentes na aplicación. Se non desexas perdelos, primeiro fai outra copia de apoio. Tes a certeza de querer restaurar esta copia de apoio\?</string>
-     <string name="recordingPermissionNotGrantedTitle">Permisos non concedidos</string>
+    <string name="recordingPermissionNotGrantedTitle">Permisos non concedidos</string>
     <string name="unitFootSingular">Pé</string>
     <string name="unitFootPlural">Pés</string>
     <string name="noWorkoutStarted">Non se iniciou o adestramento</string>
     <string name="editDisplayedInformationHint">Sempre que o adestramento non tivese comezado, podes editar os valores mostrados premendo nalgún dos catro campos.</string>
     <string name="editDisplayedInformation">Editar a información presentada</string>
-    <string name="sendEmail">Enviar email</string>
-    <string name="aboutSendFeedback">Enviar comentarios ó desenvolvedor</string>
+    <string name="aboutSendFeedback">Enviar comentarios ao desenvolvedor</string>
     <string name="aboutSourceCode">Ver código fonte</string>
     <string name="aboutContributors">Colaboradores</string>
     <string name="aboutAuthor">Autor</string>
@@ -65,7 +61,6 @@
     <string name="merge">Combinar</string>
     <string name="replace">Reemplazar</string>
     <string name="replaceOrMergeMessage">Reemplazar ou combinar a base de datos co arquivo de respaldo\?</string>
-    <string name="dataSamples">Mostras</string>
     <string name="workoutStatsHelpText">Esta pantalla mostra as estatísticas históricas dos adestramentos. Para usalo, primeiro debes indicar o tipo de adestramento facendo clic nel. Após, configura a información que desexas coñecer e o período de tempo.
 \n
 \nEx. Se escolles \"Semana\" como período de tempo, todos os adestramentos de cada semana fusionaranse nun punto de datos, xa sexa calculando o promedio ou a suma de cada semana.</string>
@@ -86,7 +81,6 @@
     <string name="workout_statistics">Estatísticas de adestramento</string>
     <string name="no_workouts_recorded_for_this_activity">Non existen adestramentos para esta actividade</string>
     <string name="unlockPhoneStopWorkout">Por favor desbloquea o teléfono para deter a gravación</string>
-    <string name="oClock">En punto</string>
     <string name="currentTime">Tempo actual</string>
     <string name="pref_auto_timeout_title">Intervalo de tempo para a parada automática</string>
     <string name="intervalAutoTimeoutTraining">Parada automática do adestramento</string>
@@ -115,7 +109,7 @@
     <string name="preferencesBackupSummary">Copia/Restauración dos teus datos de adestramento</string>
     <string name="preferencesBackupTitle">Base de datos</string>
     <string name="preferencesRecordingSummary">Xestionar a gravación do adestramento</string>
-    <string name="preferencesRecordingTitle">Ó gravar</string>
+    <string name="preferencesRecordingTitle">Ao gravar</string>
     <string name="preferencesUserInterfaceSummary">Personalizar a aplicación</string>
     <string name="preferencesUserInterfaceTitle">Interface da usuaria</string>
     <string name="avgSpeedTotalLong">Velocidade promedio en Total</string>
@@ -140,7 +134,6 @@
     <string name="hintManageIntervalSets">Engade un conxunto de intervalos para usalo nos teus adestramentos.</string>
     <string name="create">Crear</string>
     <string name="createIntervalSet">Crear novo conxunto de intervalos</string>
-    <string name="workoutRecording">Gravando o adestramento</string>
     <string name="manageIntervalsSummary">Edita os conxuntos de intervalos que poderás utilizar durante o adestramento mediante o asistente de voz.</string>
     <string name="manageIntervalSets">Xestionar conxuntos de intervalos</string>
     <string name="add_interval">Engadir intervalo</string>
@@ -157,18 +150,16 @@
     <string name="share">Compartir</string>
     <string name="save">Gardar</string>
     <string name="pref_announcement_mode">Modo de anuncio</string>
-    <string name="action_edit_comment">Editar comentario</string>
     <string name="ttsNotAvailable">TextToSpeech non está dispoñible</string>
     <string name="description">Descrición</string>
     <string name="trackVisibilityPref">Visibilidade da ruta</string>
-    <string name="cut">Corta os primeiros/últimos 300 metros</string>
+    <string name="cut">Corta os primeiros/últimos 300m.</string>
     <string name="actionUploadToOSM">Subir a OSM</string>
     <string name="waiting_gps">Agardando polo GPS</string>
     <string name="mapStyle">Estilo do mapa</string>
-    <string name="data">Datos</string>
     <string name="gps">GPS</string>
-    <string name="importBackupSummary">Restaurar unha copia de seguridade</string>
-    <string name="importBackup">Importar copia de seguridade</string>
+    <string name="importBackupSummary">Restaurar unha copia de apoio</string>
+    <string name="importBackup">Importar copia de apoio</string>
     <string name="exportDataSummary">Isto fai unha copia de apoio de todos os adestramentos</string>
     <string name="exportData">Exportar datos</string>
     <string name="settings">Axustes</string>
@@ -180,7 +171,6 @@
     <string name="trackingInfoDescription">Información sobre o rastrexador en execución</string>
     <string name="trackingInfo">Información seguimento</string>
     <string name="trackerWaitingMessage">Agardando para comezar o adestramento</string>
-    <string name="trackerRunningMessage">O teu adestramento está sendo gravado</string>
     <string name="trackerRunning">O rastrexador está traballando</string>
     <string name="deleteWorkoutMessage">Realmente queres eliminar o adestramento\?</string>
     <string name="deleteWorkout">Eliminar adestramento</string>
@@ -198,14 +188,13 @@
     <string name="importWorkout">Importar adestramento</string>
     <string name="enterWorkout">Novo adestramento</string>
     <string name="type">Tipo</string>
-    <string name="workoutTypeUnknown">Descoñecido</string>
+    <string name="unknown">Descoñecido</string>
     <string name="workoutTypeOther">Outro</string>
     <string name="workoutTypeRowing">Remo</string>
     <string name="workoutTypeInlineSkating">Patíns en liña</string>
     <string name="workoutTypeSkateboarding">Patinaxe</string>
     <string name="workoutTypeHiking">Sendeirismo</string>
     <string name="workoutTypeCycling">Ciclismo</string>
-    <string name="workoutTypeJogging">Trotar</string>
     <string name="workoutTypeWalking">Camiñar</string>
     <string name="workoutTypeRunning">Correr</string>
     <string name="height">Altura</string>
@@ -255,13 +244,9 @@
     <string name="timeMinuteSingular">Minuto</string>
     <string name="setPreferencesMessage">Podes establecer o sistema de unidades preferido e o teu peso nos axustes.</string>
     <string name="setPreferencesTitle">Establecer preferencias</string>
-    <string name="pref_ringtone_silent">Silencioso</string>
     <string name="backup">Copia de apoio</string>
     <string name="restore">Restaurar</string>
-    <string name="importedWorkouts">Importáronse %d adestramentos</string>
     <string name="importingFiles">Importación de ficheiros</string>
-    <string name="bulkActions">Accións agrupadas</string>
-    <string name="importMultipleGpxFilesSummary">Importa máis dun ficheiro GPX do sistema de ficheiros á vez</string>
     <string name="importMultipleMessageSelectFolder">Escolle un cartafol que conteña todos os ficheiros GPX que desexas importar.</string>
     <string name="importMultipleGpxFiles">Importa varios ficheiros GPX</string>
     <string name="recordingStateStopped">Detido</string>
@@ -272,14 +257,14 @@
     <string name="actionGrant">Conceder</string>
     <string name="aboutPrivacyPolicy">Política de Privacidade</string>
     <string name="aboutHelpTranslating">Axuda a traducir</string>
-    <string name="aboutUnlistedContributors">Grazas a todas as colaboradoras non mencionadas que axudaron a traducir e ampliar FitoTrack!</string>
+    <string name="aboutUnlistedContributors">Grazas a todas as colaboradoras non mencionadas que axudaron a traducir e mellorar FitoTrack!</string>
     <string name="inclination">Inclinación</string>
     <string name="nothingSelected">Nada seleccionado</string>
     <string name="showIntervals">Amosar intervalos</string>
     <string name="connectHeartRateDevice">Conectar monitor ritmo cardíaco</string>
     <string name="selectBluetoothDevice">Selecciona dispositivo Bluetooth</string>
     <string name="workoutAvgHeartRate">Ritmo card. promedio</string>
-    <string name="workoutMaxHeartRate">Ritmo cardíaco Máx.</string>
+    <string name="workoutMaxHeartRate">Ritmo cardíaco Máx</string>
     <string name="workoutHeartRate">Ritmo cardíaco</string>
     <string name="workoutStarted">Adestramento iniciado</string>
     <string name="workoutStopped">Adestramento detido</string>
@@ -291,10 +276,9 @@
     <string name="autoPauseTitle">Pausa automática</string>
     <string name="resumeWorkout">Retomar adestramento</string>
     <string name="heartRateNotAvailable">Non está dispoñible o ritmo cardíaco.</string>
-    <string name="intervals">Intervalos</string>
     <string name="announcementWorkoutActions">Accións do adestramento (pausar, retomar, etc.)</string>
-    <string name="resumeWorkoutConfirmation">Queres continuar este adestramento\? Esto engadirá unha pausa desde o momento en que o adestramento se detivo.</string>
-    <string name="prefShowOnLockScreenSummary">Mostrar información do adestramento incluso coa pantalla bloqueada.</string>
+    <string name="resumeWorkoutConfirmation">Continuar co adestramento\? Esto engadirá unha pausa desde o momento en que o adestramento se detivo.</string>
+    <string name="prefShowOnLockScreenSummary">Mostrar info do adestramento incluso estando bloqueado.</string>
     <string name="prefShowOnLockScreenTitle">Visible na pantalla de bloqueo</string>
     <string name="notimeout">Sen caducidade</string>
     <string name="editWorkoutType">Edita tipo de adestramento</string>
@@ -304,9 +288,7 @@
     <string name="actionSave">Gardar</string>
     <string name="customWorkoutTypesTitle">Adestramentos personalizados</string>
     <string name="preferenceCategoryVoiceFeedback">Axuda por voz</string>
-    <string name="workoutTypeEditMETHint">Medida do consumo de enerxía</string>
     <string name="workoutTypeEditMET">MET</string>
-    <string name="workoutTypeEditMinDistanceHint">Distancia mínima entre dúas medidas GPS</string>
     <string name="workoutTypeEditMinDistance">Distancia de mostra</string>
     <string name="workoutTypeEditNameError">Escribe un nome</string>
     <string name="workoutTypeEditName">Nome</string>
@@ -319,4 +301,132 @@
     <string name="actionImportMultiple">Importar varios</string>
     <string name="actionImport">Importar</string>
     <string name="importWorkoutMultipleQuestion">Queres importar un só ficheiro GPX ou varios\?</string>
+    <string name="downloading">Descargando…</string>
+    <string name="chooseMapHint">Escolle o ficheiro do mapa</string>
+    <string name="downloadCanceled">Descarga cancelada</string>
+    <string name="downloadFailed">A descarga fallou</string>
+    <string name="downloadSuccess">Descargado</string>
+    <string name="cancelDownloadConfirmation">Queres cancelar a descarga actual\?</string>
+    <string name="actionCancelDownload">Cancelar a descarga</string>
+    <string name="alreadyDownloading">Xa se está descargando un ficheiro</string>
+    <string name="downloadMapConfirmation">Queres descargar o ficheiro de mapa \\\"%s\"\\\?</string>
+    <string name="actionDownloadMap">Descargar mapa</string>
+    <string name="overwriteMapConfirmation">Sobrescribir o ficheiro de mapas existente \\\"%s\"\\\?</string>
+    <string name="downloadMapsSpecifyDirectory">Indica o directorio para os mapas sen conexión</string>
+    <string name="downloadMapsTitle">Descargar Mapas</string>
+    <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack tamén recolle datos de localización en segundo plano para gravar o adestramento cando a pantalla está apagada. Por tanto, dalle acceso a FitoTrack para acceder á localización de xeito permanente.</string>
+    <string name="recordingPermissionNotGrantedMessage">FitoTrack precisa do permiso de acceso á localización para seguir o teu adestramento. FitoTrack tamén recolle datos de localización cando a app está en segundo plano ou a coa pantalla apagada para poder gravar os adestramentos. Os datos de localización permanecen en todo momento no teu dispositivo a non ser que queiras compartilos de xeito explícito.</string>
+    <string name="workoutTypeAll">Todo</string>
+    <string name="pref_auto_start_mode_unknown">Descoñecido (non usar)</string>
+    <string name="pref_auto_start_mode_on_move">Agardar a que comeces a moverte</string>
+    <string name="pref_auto_start_mode_wait_for_gps">Agardar pola posición GPS precisa</string>
+    <string name="pref_auto_start_mode_instant">Comezar inmediatamente</string>
+    <string name="pref_auto_start_mode_title">Modo Auto-Inicio</string>
+    <string name="intervalAutoStartModeTraining">Modo de Adestramento de inicio automático</string>
+    <string name="manageAutoStartModeSummary">Cambia o xeito en que se inicia o adestramento automático</string>
+    <string name="ttsMinuteSecondCountdownAnnouncement"> <xliff:g example="1 minute" id="mins">%1$s</xliff:g> e <xliff:g example="7 seconds" id="secs">%2$s</xliff:g> para o inicio </string>
+    <string name="ttsMinuteCountdownAnnouncement"> <xliff:g example="12 minutes" id="mins">%1$s</xliff:g> para o inicio </string>
+    <string name="ttsLongSecondCountdownAnnouncement"> <xliff:g example="5 seconds" id="secs">%1$s</xliff:g> para o inicio </string>
+    <plurals name="minutes">
+        <item quantity="one"><xliff:g example="1" id="mins">%1$d</xliff:g> minuto</item>
+        <item quantity="other"><xliff:g example="5" id="mins">%1$d</xliff:g> minutos</item>
+    </plurals>
+    <plurals name="seconds">
+        <item quantity="one"><xliff:g example="1" id="secs">%1$d</xliff:g> segundo</item>
+        <item quantity="other"><xliff:g example="12" id="secs">%1$d</xliff:g> segundos</item>
+    </plurals>
+    <string name="announcementCountdown">Accións de Inicio automático (contra atrás, estado, etc.)</string>
+    <string name="action_nfc_settings">Ir aos axustes NFC</string>
+    <string name="dialog_nfc_disabled">Para poder usar etiquetas NFC para iniciar e deter adestramentos tes que activar o NFC no dispositivo</string>
+    <string name="dialog_nfc_disabled_title">NFC está desactivado</string>
+    <string name="nfcStartSummary">Se se activa, poderás iniciar e deter os adestramentos escaneando unha etiqueta NFC</string>
+    <string name="nfcStartTitle">Escanear para iniciar</string>
+    <string name="workoutAutoStartAborted">Inicio automático abortado</string>
+    <string name="abort">Cancelar</string>
+    <string name="popup_auto_start_wait_for_gps">Cando a posición GPS sexa precisa</string>
+    <string name="popup_auto_start_on_move">Cando comece a moverme</string>
+    <string name="popup_auto_start_immediately">Iniciar inmediatamente</string>
+    <string name="popup_auto_start">Con retraso por defecto</string>
+    <string name="popup_auto_start_delay">Con retraso personalizado</string>
+    <string name="workoutAutoStarted">Adestramento iniciado automáticamente</string>
+    <string name="autoStartCountdownMsgMove">Inicar adestramento cando te comeces a mover</string>
+    <string name="autoStartCountdownMsgGps">Iniciar adestramento cando a posición GPS sexa precisa abondo</string>
+    <string name="autoStartCountdownMsg">Iniciar adestramento en</string>
+    <string name="customAutoStartDelay">Outro</string>
+    <string name="noAutoStartDelay">Nada</string>
+    <string name="pref_auto_start_delay_title">Conta atrás do Inicio Automático</string>
+    <string name="manageAutoStartDelaySummary">Escolle a conta atrás por defecto para o inicio automático do adestramento</string>
+    <string name="intervalAutoStartDelayTraining">Retraso no Inicio Automático do adestramento</string>
+    <string name="scanFailed">Fallo o escaneo</string>
+    <string name="scanning">Escaneando…</string>
+    <string name="invalidNumberFormat">Formato de número non válido.</string>
+    <string name="pref_announcements_pace_control_title">Avisos de ritmo</string>
+    <string name="pref_announcements_pace_control_summary">Aviso cando estás por enriba ou embaixo da velocidade indicada</string>
+    <string name="noColoring">Sen cores</string>
+    <string name="auto">Auto</string>
+    <string name="selectColoring">Elixe cor</string>
+    <string name="ttsAboveTargetSpeed">Demasiado rápido</string>
+    <string name="ttsBelowTargetSpeed">Demasiado lento</string>
+    <string name="lowerPaceLimit">Límite inferior de ritmo</string>
+    <string name="upperPaceLimit">Límite superior de ritmo</string>
+    <string name="editStartEndHelp">Elixe unha posición no mapa ou diagrama. Despois preme nunha das frechas para elexir un novo punto de inicio e fin. Cando remates preme na icona de gardar para aplicar os cambios.</string>
+    <string name="launchError">Non se puido iniciar a aplicación</string>
+    <string name="actionApply">Aplicar</string>
+    <string name="moveEndOfWorkout">Cortar fin</string>
+    <string name="moveStartOfWorkout">Cortar inicio</string>
+    <string name="runningMigrations">Migración de carreiras</string>
+    <string name="editWorkoutStartEnd">Editar Inicio/Fin</string>
+    <string name="preferenceUseAverageForCurrentSpeed">Usar a velocidade media durante unha marxe de tempo no lugar da última velocidade rexistrada do cálculo actual de velocidade.</string>
+    <string name="preferenceCurrentSpeedAverageTimeTitle">Velocidade actual pola Media</string>
+    <string name="preferenceCurrentSpeedAverageTimeSummary">Substituír o cálculo actual de velocidade por un cálculo medio.</string>
+    <string name="preferenceCurrentSpeedTime">Ámbito temporal para calcular a media</string>
+    <string name="preferencesCategoryMap">Mapa</string>
+    <string name="prefTrackStyleUsageTitle">Usar automáticamente cores para ruta</string>
+    <string name="trackStyle">Estilo da ruta</string>
+    <string name="workoutMaxHeight">Altura máx</string>
+    <string name="workoutMinHeight">Altura min</string>
+    <string name="unitHeartBeatsPerMinute">ppm</string>
+    <string name="preferenceFirstDayOfWeek">Comezo da semana</string>
+    <string name="edit_interval">Editar intervalo</string>
+    <string name="fileNotFound">Non se atopa o ficheiro</string>
+    <string name="pref_render_theme_style_info">Sen menú do estilo da aparencia para o decorado seleccionado.</string>
+    <string name="preferenceCategoryRenderThemeCategories">Categorías</string>
+    <string name="pref_render_theme_style">Estilo de debuxado</string>
+    <string name="pref_map_directory">Directorio de mapas sen conexión</string>
+    <string name="recordingActivityPermissionMessage">FitoTrack require o permiso para rexistrar a túa actividade física e gravar adestramentos en interior.</string>
+    <string name="pref_step_length">Lonx. da zancada</string>
+    <plurals name="workoutPushUp">
+        <item quantity="one">Push up</item>
+        <item quantity="other">Push ups</item>
+    </plurals>
+    <string name="workoutTypePushUps">Push ups</string>
+    <plurals name="workoutJump">
+        <item quantity="one">Salto</item>
+        <item quantity="other">Saltos</item>
+    </plurals>
+    <string name="workoutTypeTrampolineJumping">Salto de trampolín</string>
+    <string name="workoutTypeRopeSkipping">Saltar á corda</string>
+    <plurals name="workoutStep">
+        <item quantity="one">Paso</item>
+        <item quantity="other">Pasos</item>
+    </plurals>
+    <string name="workoutTypeTreadmill">Cinta de correr</string>
+    <string name="workoutMaxIntensity">Intensidade Máx</string>
+    <string name="workoutAvgIntensityShort">Intensidade Med</string>
+    <string name="workoutIntensity">Intensidade</string>
+    <string name="workoutMaxFrequency">Frecuencia Máx</string>
+    <string name="workoutAvgFrequencyShort">Frecuencia Media</string>
+    <string name="workoutFrequency">Frecuencia</string>
+    <string name="workoutSets">Conxuntos</string>
+    <string name="workoutRepetitions">Repeticións</string>
+    <string name="currentTimeStructure">%s %s</string>
+    <string name="unitHertzLong">Hercios</string>
+    <string name="workoutCurrentFrequency">Frecuencia actual</string>
+    <string name="workoutAvgFrequencyLong">Frecuencia media</string>
+    <string name="workoutRecordingTypeIndoor">Adestramentos en interior</string>
+    <string name="workoutRecordingTypeGps">Adestramentos GPS</string>
+    <plurals name="importedWorkouts">
+        <item quantity="one">Importado un adestramento</item>
+        <item quantity="other">Importados %d adestramentos</item>
+    </plurals>
 </resources>

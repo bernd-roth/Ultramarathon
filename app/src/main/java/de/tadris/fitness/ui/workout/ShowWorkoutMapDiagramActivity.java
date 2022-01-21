@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -25,24 +25,24 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.CombinedChart;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.highlight.Highlight;
 
 import de.tadris.fitness.R;
+import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.ui.dialog.SampleConverterPickerDialog;
-import de.tadris.fitness.ui.workout.diagram.ConverterManager;
 import de.tadris.fitness.ui.workout.diagram.HeartRateConverter;
 import de.tadris.fitness.ui.workout.diagram.HeightConverter;
 import de.tadris.fitness.ui.workout.diagram.SampleConverter;
 import de.tadris.fitness.ui.workout.diagram.SpeedConverter;
 
-public class ShowWorkoutMapDiagramActivity extends WorkoutActivity {
+public class ShowWorkoutMapDiagramActivity extends ShowWorkoutColoredMapActivity {
 
     public static final String DIAGRAM_TYPE_EXTRA = "de.tadris.fitness.ShowWorkoutMapDiagramActivity.DIAGRAM_TYPE";
 
     public static final String DIAGRAM_TYPE_HEIGHT = "height";
     public static final String DIAGRAM_TYPE_SPEED = "speed";
     public static final String DIAGRAM_TYPE_HEART_RATE = "heartrate";
-
-    private ConverterManager converterManager;
 
     private CombinedChart chart;
     private TextView selection;
@@ -52,8 +52,6 @@ public class ShowWorkoutMapDiagramActivity extends WorkoutActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initBeforeContent();
-
-        converterManager = new ConverterManager(this, getWorkoutData());
 
         setContentView(R.layout.activity_show_workout_map_diagram);
         initRoot();
@@ -65,6 +63,7 @@ public class ShowWorkoutMapDiagramActivity extends WorkoutActivity {
 
         fullScreenItems = true;
         addMap();
+
         mapView.setClickable(true);
 
         diagramsInteractive = true;
@@ -75,6 +74,28 @@ public class ShowWorkoutMapDiagramActivity extends WorkoutActivity {
         findViewById(R.id.showWorkoutDiagramSelector).setOnClickListener(v -> new SampleConverterPickerDialog(this, this::updateChart, converterManager).show());
         showIntervals.setOnCheckedChangeListener((buttonView, isChecked) -> updateChart());
         showIntervals.setVisibility(intervals != null && intervals.length > 0 ? View.VISIBLE : View.GONE);
+
+        refreshColoring();
+    }
+
+    @Override
+    protected boolean isDiagramActivity() {
+        return true;
+    }
+
+    @Override
+    public void onMapSelectionChanged(GpsSample sample) {
+
+        if (sample == null) {
+            chart.highlightValue(null);
+        } else {
+            float dataIndex = (sample.relativeTime) / 1000f / 60f;
+            Highlight h = new Highlight((float) dataIndex, 0, -1);
+            h.setDataIndex(0);
+            chart.highlightValue(h);
+            chart.centerViewTo(dataIndex, 0, YAxis.AxisDependency.LEFT);
+        }
+        onChartSelectionChanged(sample);
     }
 
     private void initDiagram() {
@@ -111,8 +132,8 @@ public class ShowWorkoutMapDiagramActivity extends WorkoutActivity {
             sb.append(converter.getName());
         }
         selection.setText(converterManager.selectedConverters.size() > 0 ? sb.toString() : getString(R.string.nothingSelected));
+        refreshColoring();
     }
-
 
     @Override
     protected void initRoot() {
