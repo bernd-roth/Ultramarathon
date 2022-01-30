@@ -98,6 +98,19 @@ public enum WorkoutProperty {
         return criteria;
     }
 
+    public String getFormattedValue(Context ctx, float value)
+    {
+        return getFormattedValue(ctx, value, true);
+    }
+
+    public String getFormattedValue(Context ctx, float value, boolean unit)
+    {
+        String formatted = getValueFormatter(ctx, value).getFormattedValue(value);
+        if(unit)
+            formatted += " " + getUnit(ctx, value);
+        return formatted;
+    }
+
     public ValueFormatter getValueFormatter(Context ctx, float value) {
         switch (this) {
             case START:

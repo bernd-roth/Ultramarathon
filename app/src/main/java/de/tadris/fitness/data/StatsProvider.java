@@ -53,6 +53,13 @@ public class StatsProvider {
         dataProvider = new StatsDataProvider(ctx);
     }
 
+    public enum Reduction{
+        MINIMUM,
+        MAXIMUM,
+        SUM,
+        AVERAGE
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     public BarDataSet numberOfActivities(StatsDataTypes.TimeSpan timeSpan) throws NoDataException {
         ArrayList<BarEntry> barEntries = new ArrayList<>();
@@ -91,6 +98,37 @@ public class StatsProvider {
         BarDataSet dataSet = DataSetStyles.applyDefaultBarStyle(ctx, new BarDataSet(barEntries, ctx.getString(R.string.numberOfWorkouts)));
         dataSet.setValueFormatter(new DefaultValueFormatter(0));
         return dataSet;
+    }
+
+    public double getValue(StatsDataTypes.TimeSpan timeSpan, List<WorkoutType> workoutTypes, WorkoutProperty property, Reduction reduction)
+    {
+        ArrayList<StatsDataTypes.DataPoint> values = dataProvider.getData(property, workoutTypes, timeSpan);
+        double value;
+
+        if (reduction == Reduction.MINIMUM) {
+            value = values.get(0).value;
+            for (StatsDataTypes.DataPoint point : values)
+                if (value > point.value)
+                    value = point.value;
+        }
+        else if(reduction == Reduction.MAXIMUM)
+        {
+            value = values.get(0).value;
+            for (StatsDataTypes.DataPoint point : values)
+                if (value < point.value)
+                    value = point.value;
+        }
+        else
+        {
+            value = 0;
+            for (StatsDataTypes.DataPoint point : values)
+                    value += point.value;
+            if(reduction==Reduction.AVERAGE)
+            {
+                value /= values.size();
+            }
+        }
+        return value;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
