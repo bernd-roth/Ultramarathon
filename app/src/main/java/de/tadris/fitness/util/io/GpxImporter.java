@@ -78,9 +78,6 @@ public class GpxImporter implements IWorkoutImporter {
         }
         if (gpx.getMetadata() != null) {
             if (workout.comment == null) {
-                workout.comment = gpx.getName();
-            }
-            if (workout.comment == null) {
                 workout.comment = gpx.getMetadata().getName();
             }
             if (workout.comment == null) {
@@ -128,7 +125,6 @@ public class GpxImporter implements IWorkoutImporter {
             sample.relativeTime = sample.absoluteTime - startTime;
             TrackPointExtensions extensions = point.getExtensions();
             if (extensions != null) {
-                sample.speed = extensions.getSpeed();
                 if (extensions.getGpxTpxExtension() != null) {
                     sample.heartRate = extensions.getGpxTpxExtension().getHr();
                 }
