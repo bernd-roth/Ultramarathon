@@ -69,6 +69,12 @@
         <item name="colorPrimaryVariant">@color/colorPrimaryDarkRowing</item>
     </style>
 
+    <style name="titleSpinnerStyle" parent="AppTheme">
+        <item name="android:spinnerItemStyle">
+            @style/title
+        </item>
+    </style>
+
     <style name="title" parent="AppTheme">
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">20sp</item>

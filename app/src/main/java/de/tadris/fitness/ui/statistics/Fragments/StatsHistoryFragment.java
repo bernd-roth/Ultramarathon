@@ -258,10 +258,10 @@ public class StatsHistoryFragment extends StatsFragment {
         }
 
         List<WorkoutType> selected = preferences.getStatisticsSelectedTypes();
-        if (selected.get(0) == null)
+        if (selected.size()==0 || selected.get(0) == null) {
             selected.clear();
-        if(selected.size() == 0)
             selected.addAll(WorkoutTypeManager.getInstance().getAllTypes(context));
+        }
         selection.setSelectedWorkoutTypes(selected);
 
         displaySpan(preferences.getStatisticsAggregationSpan()); // set viewport according to other statistic views

@@ -31,6 +31,7 @@ import com.github.mikephil.charting.renderer.CombinedChartRenderer;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import de.tadris.fitness.Instance;
@@ -41,12 +42,12 @@ import de.tadris.fitness.data.StatsDataTypes;
 import de.tadris.fitness.data.StatsProvider;
 import de.tadris.fitness.data.UserPreferences;
 import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.data.WorkoutTypeManager;
 import de.tadris.fitness.ui.statistics.DetailStatsActivity;
 import de.tadris.fitness.ui.statistics.WorkoutTypeSelection;
 import de.tadris.fitness.util.WorkoutProperty;
 import de.tadris.fitness.util.charts.ChartStyles;
 import de.tadris.fitness.util.charts.DataSetStyles;
-import de.tadris.fitness.util.charts.formatter.TimeFormatter;
 import de.tadris.fitness.util.exceptions.NoDataException;
 import de.tadris.fitness.util.statistics.OnChartGestureMultiListener;
 
@@ -79,17 +80,35 @@ public class StatsExploreFragment extends StatsFragment {
         chartSwitch = view.findViewById(R.id.stats_explore_switch);
 
         // Register WorkoutType selection listeners
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, WorkoutProperty.getStringRepresentations(getContext()));
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(), R.layout.stats_title, WorkoutProperty.getStringRepresentations(getContext()));
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         title.setAdapter(spinnerAdapter);
 
         selection.addOnWorkoutTypeSelectListener(workoutType -> updateChart());
         selection.addOnWorkoutTypeSelectListener(workoutType -> preferences.setStatisticsSelectedTypes(selection.getSelectedWorkoutTypes()));
-        selection.setSelectedWorkoutTypes(preferences.getStatisticsSelectedTypes());
+        List<WorkoutType> selected = preferences.getStatisticsSelectedTypes();
+        if (selected.size()==0 || selected.get(0) == null) {
+            selected.clear();
+            selected.addAll(WorkoutTypeManager.getInstance().getAllTypes(context));
+        }
+        selection.setSelectedWorkoutTypes(selected);
 
 
         title.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                WorkoutProperty property = WorkoutProperty.getById(title.getSelectedItemPosition());
+                if(!property.summable())
+                {
+                    chartSwitch.setChecked(false);
+                    chartSwitch.setEnabled(false);
+                    chartSwitch.setVisibility(View.GONE);
+                }
+                else
+                {
+                    chartSwitch.setEnabled(true);
+                    chartSwitch.setVisibility(View.VISIBLE);
+                }
                 updateChart();
             }
 
@@ -224,7 +243,10 @@ public class StatsExploreFragment extends StatsFragment {
             chart.clear();
             ((CombinedChartRenderer) chart.getRenderer()).createRenderers();
             ChartStyles.updateCombinedChartToSpan(chart, combinedData, aggregationSpan, getContext());
-            ChartStyles.setYAxisLabel(chart, property.getUnit(getContext(), combinedData.getYMax()-combinedData.getYMin()));
+            if(!(property == WorkoutProperty.START) && !(property ==WorkoutProperty.END)) {
+                ChartStyles.setYAxisLabel(chart, property.getUnit(getContext(), combinedData.getYMax() - combinedData.getYMin()));
+            }
+
         } catch (NoDataException e) {
             chart.clear();
         }

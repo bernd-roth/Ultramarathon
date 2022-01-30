@@ -35,6 +35,7 @@ import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationSpan;
 import de.tadris.fitness.util.WorkoutProperty;
 import de.tadris.fitness.util.charts.DataSetStyles;
+import de.tadris.fitness.util.charts.formatter.DayTimeFormatter;
 import de.tadris.fitness.util.charts.formatter.FractionedDateFormatter;
 import de.tadris.fitness.util.charts.formatter.SpeedFormatter;
 import de.tadris.fitness.util.charts.formatter.TimeFormatter;
@@ -214,7 +215,13 @@ public class StatsProvider {
 
         CandleDataSet dataSet = DataSetStyles.applyDefaultCandleStyle(ctx, new CandleDataSet(candleEntries,
                 workoutProperty.getStringRepresentation(ctx)));
-        dataSet.setValueFormatter(workoutProperty.getValueFormatter(ctx, dataSet.getYMax()-dataSet.getYMin()));
+        if(workoutProperty == WorkoutProperty.START || workoutProperty == WorkoutProperty.END)
+        {
+            dataSet.setValueFormatter(new DayTimeFormatter(ctx));
+        }
+        else {
+            dataSet.setValueFormatter(workoutProperty.getValueFormatter(ctx, dataSet.getYMax() - dataSet.getYMin()));
+        }
         return dataSet;
     }
 
@@ -257,6 +264,14 @@ public class StatsProvider {
 
         if (data.isEmpty()) {
             throw new NoDataException();
+        }
+
+        if(workoutProperty == WorkoutProperty.START || workoutProperty == WorkoutProperty.END)
+        {
+            // Time data -> convert to time ot the day
+            for (int i=0; i< data.size(); i++) {
+                data.get(i).value %= 86400000; // day->milliseconds
+            }
         }
 
         ArrayList<CandleEntry> candleEntries = new ArrayList<>();
