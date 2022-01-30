@@ -196,34 +196,14 @@
     <string name="pref_auto_timeout_title">Intervallo di tempo per lo stop automatico</string>
     <string name="currentTime">Orario corrente</string>
     <string name="unlockPhoneStopWorkout">Per favore sblocca il telefono per terminare la registrazione</string>
-    <string-array name="pref_energy_units">
-        <item>kcal</item>
-        <item>Joule</item>
-    </string-array>
-    <string-array name="pref_announcement_mode">
-        <item>Sempre</item>
-        <item>Solo con cuffie</item>
-    </string-array>
-    <string-array name="pref_theme_setting">
-        <item>System</item>
-        <item>Chiaro</item>
-        <item>Scuro</item>
-    </string-array>
-    <string-array name="pref_time_format">
-        <item>Default di sistema</item>
-        <item>12:08 PM</item>
-        <item>15:23</item>
-    </string-array>
-    <string-array name="pref_date_format">
-        <item>Default di sistema</item>
-        <item>2001-07-24</item>
-        <item>2001.07.24</item>
-        <item>2001/07/24</item>
-        <item>24-07-2001</item>
-        <item>24.07.2001</item>
-        <item>24/07/2001</item>
-        <item>07/24/2001</item>
-    </string-array>
+    <string name="kcal_unit">kcal</string>
+    <string name="joule_unit">Joule</string>
+    <string name="always_mode">Sempre</string>
+    <string name="only_on_headphones_mode">Solo con cuffie</string>
+    <string name="system_theme">System</string>
+    <string name="light_theme">Chiaro</string>
+    <string name="dark_theme">Scuro</string>
+    <string name="system_default">Default di sistema</string>
     <string name="workoutStatsHelpText">Questa schermata mostra le statistiche storiche degli allenamenti. Per utilizzarlo devi prima specificare il tipo di allenamento cliccandoci sopra, quindi imposta le informazioni che desideri conoscere e l\'intervallo di tempo.
 \n
 \nPer esempio, se si seleziona «Settimana» come intervallo di tempo, tutti gli allenamenti di ogni settimana verranno uniti in un punto dati calcolando la media o la somma di ogni settimana.</string>

@@ -122,15 +122,11 @@
     <string name="save">Guardar</string>
     <string name="share">Compartir</string>
     <string name="savingFailed">Error al guardar</string>
-    <string-array name="pref_announcement_mode">
-        <item>Siempre</item>
-        <item>Solo en auriculares</item>
-    </string-array>
-    <string-array name="osm_track_visibility">
-        <item>Identificable</item>
-        <item>Rastreable</item>
-        <item>Privado</item>
-    </string-array>
+    <string name="always_mode">Siempre</string>
+    <string name="only_on_headphones_mode">Solo en auriculares</string>
+    <string name="identifiable_visibility">Identificable</string>
+    <string name="trackable_visibility">Rastreable</string>
+    <string name="private_visibility">Privado</string>
     <string name="setDuration">Especificar duración</string>
     <string name="avgSpeedTotalLong">Velocidad Promedio en Total</string>
     <string name="avgSpeedTotalShort">Vel. Promedio (Total)</string>
@@ -267,33 +263,15 @@
     <string name="aboutHelpTranslating">Ayuda para traducir</string>
     <string name="aboutUnlistedContributors">Gracias a todos los contribuyentes no listados que ayudaron a traducir y extender FitoTrack!</string>
     <string name="trackerWaitingMessage">Esperando para empezar a entrenar</string>
-    <string-array name="pref_unit_systems">
-        <item>Métrico</item>
-        <item>Métrico con m/s</item>
-        <item>Imperial (UK)</item>
-        <item>Imperial con metros</item>
-        <item>Imperial (EEUU)</item>
-    </string-array>
-    <string-array name="pref_time_format">
-        <item>Predeterminado del sistema</item>
-        <item>12:08 PM</item>
-        <item>15:23</item>
-    </string-array>
-    <string-array name="pref_date_format">
-        <item>Predeterminado del sistema</item>
-        <item>2001-07-24</item>
-        <item>2001.07.24</item>
-        <item>2001/07/24</item>
-        <item>24-07-2001</item>
-        <item>24.07.2001</item>
-        <item>24/07/2001</item>
-        <item>07/24/2001</item>
-    </string-array>
-    <string-array name="pref_theme_setting">
-        <item>System</item>
-        <item>Claro</item>
-        <item>Oscuro</item>
-    </string-array>
+    <string name="metric_unit_system">Métrico</string>
+    <string name="metric_with_m_s_unit_system">Métrico con m/s</string>
+    <string name="imperial_unit_system">Imperial (UK)</string>
+    <string name="imperial_with_meters_unit_system">Imperial con metros</string>
+    <string name="us_customary_unit_system">Imperial (EEUU)</string>
+    <string name="system_default">Predeterminado del sistema</string>
+    <string name="system_theme">System</string>
+    <string name="light_theme">Claro</string>
+    <string name="dark_theme">Oscuro</string>
     <string name="importingFiles">Importar archivos</string>
     <string name="importMultipleMessageSelectFolder">Por favor, seleccione una carpeta que contenga todos los archivos GPX que desee importar.</string>
     <string name="importMultipleGpxFiles">Importar múltiples archivos GPX</string>
