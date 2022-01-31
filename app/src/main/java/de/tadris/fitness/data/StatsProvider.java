@@ -100,9 +100,13 @@ public class StatsProvider {
         return dataSet;
     }
 
-    public double getValue(StatsDataTypes.TimeSpan timeSpan, List<WorkoutType> workoutTypes, WorkoutProperty property, Reduction reduction)
+    public double getValue(StatsDataTypes.TimeSpan timeSpan, List<WorkoutType> workoutTypes, WorkoutProperty property, Reduction reduction) throws NoDataException
     {
         ArrayList<StatsDataTypes.DataPoint> values = dataProvider.getData(property, workoutTypes, timeSpan);
+        if (values.isEmpty()) {
+            throw new NoDataException();
+        }
+
         double value;
 
         if (reduction == Reduction.MINIMUM) {

@@ -122,35 +122,44 @@ public class StatsExploreFragment extends StatsFragment {
         StatsDataTypes.TimeSpan span = new StatsDataTypes.TimeSpan(start, timeSpanSelection.getSelectedAggregationSpan().getAggregationEnd(start));
         List<WorkoutType> types = selection.getSelectedWorkoutTypes();
 
-        float avgSpeed = (float) statsProvider.getValue(span, types, WorkoutProperty.AVG_SPEED, StatsProvider.Reduction.AVERAGE);
-        float avgPace = (float) statsProvider.getValue(span, types, WorkoutProperty.AVG_PACE, StatsProvider.Reduction.AVERAGE);
-        updateOverview(overviewSpeed, WorkoutProperty.AVG_SPEED.getFormattedValue(getContext(), avgSpeed),
-                WorkoutProperty.AVG_PACE.getFormattedValue(getContext(),avgPace));
+        try {
+            float avgSpeed = (float) statsProvider.getValue(span, types, WorkoutProperty.AVG_SPEED, StatsProvider.Reduction.AVERAGE);
+            float avgPace = (float) statsProvider.getValue(span, types, WorkoutProperty.AVG_PACE, StatsProvider.Reduction.AVERAGE);
+            updateOverview(overviewSpeed, WorkoutProperty.AVG_SPEED.getFormattedValue(getContext(), avgSpeed),
+                    WorkoutProperty.AVG_PACE.getFormattedValue(getContext(),avgPace));
 
-        float lowSpeed = (float) statsProvider.getValue(span, types, WorkoutProperty.AVG_SPEED, StatsProvider.Reduction.MINIMUM);
-        float highSpeed = (float) statsProvider.getValue(span, types, WorkoutProperty.AVG_SPEED, StatsProvider.Reduction.MAXIMUM);
-        updateOverview(overviewSpeed2, WorkoutProperty.AVG_SPEED.getFormattedValue(getContext(), lowSpeed),
-                WorkoutProperty.AVG_SPEED.getFormattedValue(getContext(), highSpeed));
+            float lowSpeed = (float) statsProvider.getValue(span, types, WorkoutProperty.AVG_SPEED, StatsProvider.Reduction.MINIMUM);
+            float highSpeed = (float) statsProvider.getValue(span, types, WorkoutProperty.AVG_SPEED, StatsProvider.Reduction.MAXIMUM);
+            updateOverview(overviewSpeed2, WorkoutProperty.AVG_SPEED.getFormattedValue(getContext(), lowSpeed),
+                    WorkoutProperty.AVG_SPEED.getFormattedValue(getContext(), highSpeed));
 
-        float sumDistance = (float) statsProvider.getValue(span, types, WorkoutProperty.LENGTH, StatsProvider.Reduction.SUM);
-        float avgDistance = (float) statsProvider.getValue(span, types, WorkoutProperty.LENGTH, StatsProvider.Reduction.AVERAGE);
-        updateOverview(overviewDistance, WorkoutProperty.LENGTH.getFormattedValue(getContext(), avgDistance),
-                WorkoutProperty.LENGTH.getFormattedValue(getContext(), sumDistance));
+            float sumDistance = (float) statsProvider.getValue(span, types, WorkoutProperty.LENGTH, StatsProvider.Reduction.SUM);
+            float avgDistance = (float) statsProvider.getValue(span, types, WorkoutProperty.LENGTH, StatsProvider.Reduction.AVERAGE);
+            updateOverview(overviewDistance, WorkoutProperty.LENGTH.getFormattedValue(getContext(), avgDistance),
+                    WorkoutProperty.LENGTH.getFormattedValue(getContext(), sumDistance));
 
-        float lowDist = (float) statsProvider.getValue(span, types, WorkoutProperty.LENGTH, StatsProvider.Reduction.MINIMUM);
-        float highDist = (float) statsProvider.getValue(span, types, WorkoutProperty.LENGTH, StatsProvider.Reduction.MAXIMUM);
-        updateOverview(overviewDistance2, WorkoutProperty.LENGTH.getFormattedValue(getContext(), lowDist),
-                WorkoutProperty.LENGTH.getFormattedValue(getContext(), highDist));
+            float lowDist = (float) statsProvider.getValue(span, types, WorkoutProperty.LENGTH, StatsProvider.Reduction.MINIMUM);
+            float highDist = (float) statsProvider.getValue(span, types, WorkoutProperty.LENGTH, StatsProvider.Reduction.MAXIMUM);
+            updateOverview(overviewDistance2, WorkoutProperty.LENGTH.getFormattedValue(getContext(), lowDist),
+                    WorkoutProperty.LENGTH.getFormattedValue(getContext(), highDist));
 
-        float sumDuration = (float) statsProvider.getValue(span, types, WorkoutProperty.DURATION, StatsProvider.Reduction.SUM);
-        float avgDuration = (float) statsProvider.getValue(span, types, WorkoutProperty.DURATION, StatsProvider.Reduction.AVERAGE);
-        updateOverview(overviewDuration, WorkoutProperty.DURATION.getFormattedValue(getContext(), avgDuration),
-                WorkoutProperty.DURATION.getFormattedValue(getContext(), sumDuration));
+            float sumDuration = (float) statsProvider.getValue(span, types, WorkoutProperty.DURATION, StatsProvider.Reduction.SUM);
+            float avgDuration = (float) statsProvider.getValue(span, types, WorkoutProperty.DURATION, StatsProvider.Reduction.AVERAGE);
+            updateOverview(overviewDuration, WorkoutProperty.DURATION.getFormattedValue(getContext(), avgDuration),
+                    WorkoutProperty.DURATION.getFormattedValue(getContext(), sumDuration));
 
-        float lowDur = (float) statsProvider.getValue(span, types, WorkoutProperty.DURATION, StatsProvider.Reduction.MINIMUM);
-        float highDur = (float) statsProvider.getValue(span, types, WorkoutProperty.DURATION, StatsProvider.Reduction.MAXIMUM);
-        updateOverview(overviewDuration2, WorkoutProperty.DURATION.getFormattedValue(getContext(), lowDur),
+            float lowDur = (float) statsProvider.getValue(span, types, WorkoutProperty.DURATION, StatsProvider.Reduction.MINIMUM);
+            float highDur = (float) statsProvider.getValue(span, types, WorkoutProperty.DURATION, StatsProvider.Reduction.MAXIMUM);
+            updateOverview(overviewDuration2, WorkoutProperty.DURATION.getFormattedValue(getContext(), lowDur),
                 WorkoutProperty.DURATION.getFormattedValue(getContext(), highDur));
+        } catch (NoDataException e) {
+            updateOverview(overviewSpeed, "", "");
+            updateOverview(overviewSpeed2, "", "");
+            updateOverview(overviewDistance, "", "");
+            updateOverview(overviewDistance2, "", "");
+            updateOverview(overviewDuration, "", "");
+            updateOverview(overviewDuration2, "", "");
+        }
     }
 
     private void updateOverview(View overview, String value1, String value2)
