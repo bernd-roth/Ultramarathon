@@ -41,94 +41,32 @@
 
             <TextView
                 android:id="@+id/textView15"
+                style="@style/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/title"
-                android:text="@string/stats_overview_title" />
+                android:layout_gravity="center_vertical"
+                android:text="@string/workoutSpeed" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
 
-                <ImageView
-                    android:id="@+id/imageViewSpeed"
-                    android:layout_width="48dp"
-                    android:layout_height="match_parent"
-                    app:srcCompat="@android:drawable/ic_lock_idle_alarm" />
-
-                <LinearLayout
+                <include
+                    android:id="@+id/overviewSpeed"
+                    layout="@layout/show_entry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:visibility="visible" />
 
-                    <include
-                        android:id="@+id/overviewSpeed"
-                        layout="@layout/show_entry"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="visible" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/textLowestSpeed"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:fontFamily="sans-serif-black"
-                            android:gravity="center"
-                            android:text="TextView"
-                            android:textAlignment="textEnd"
-                            android:textAllCaps="false"
-                            android:textColor="?android:textColorPrimary"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/textView6"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="1dp"
-                            android:text="▼"
-                            android:textAlignment="center"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                            android:textColor="@color/colorPrimaryDark" />
-
-                        <TextView
-                            android:id="@+id/textView7"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="1dp"
-                            android:layout_weight="0"
-                            android:text="▲"
-                            android:textAlignment="center"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                            android:textColor="@color/colorAccent" />
-
-                        <TextView
-                            android:id="@+id/textHighestSpeed"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:fontFamily="sans-serif-black"
-                            android:gravity="center"
-                            android:text="TextView"
-                            android:textAlignment="textStart"
-                            android:textAllCaps="false"
-                            android:textColor="?android:textColorPrimary"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-                </LinearLayout>
+                <include
+                    android:id="@+id/overviewSpeed2"
+                    layout="@layout/show_entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible" />
             </LinearLayout>
 
             <TextView
@@ -136,91 +74,30 @@
                 style="@style/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/TopFlop" />
+                android:gravity="center_vertical"
+                android:text="@string/workoutDistance" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:paddingLeft="20dp">
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
 
-                <ImageView
-                    android:id="@+id/imageViewDistance"
-                    android:layout_width="48dp"
-                    android:layout_height="match_parent"
-                    app:srcCompat="@drawable/ic_distance" />
-
-                <LinearLayout
+                <include
+                    android:id="@+id/overviewDistance"
+                    layout="@layout/show_entry"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:visibility="visible" />
 
-                    <include
-                        android:id="@+id/overviewDistance"
-                        layout="@layout/show_entry"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="visible" />
+                <include
+                    android:id="@+id/overviewDistance2"
+                    layout="@layout/show_entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/textLowestDistance"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:fontFamily="sans-serif-black"
-                            android:gravity="center"
-                            android:text="TextView"
-                            android:textAlignment="textEnd"
-                            android:textAllCaps="false"
-                            android:textColor="?android:textColorPrimary"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/textView8"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="1dp"
-                            android:text="▼"
-                            android:textAlignment="center"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                            android:textColor="@color/colorPrimaryDark" />
-
-                        <TextView
-                            android:id="@+id/textView9"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="1dp"
-                            android:layout_weight="0"
-                            android:text="▲"
-                            android:textAlignment="center"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                            android:textColor="@color/colorAccent" />
-
-                        <TextView
-                            android:id="@+id/textHighestDistance"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:fontFamily="sans-serif-black"
-                            android:gravity="center"
-                            android:text="TextView"
-                            android:textAlignment="textStart"
-                            android:textAllCaps="false"
-                            android:textColor="?android:textColorPrimary"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-                </LinearLayout>
             </LinearLayout>
 
             <TextView
@@ -228,91 +105,30 @@
                 style="@style/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/TopFlop" />
+                android:foregroundGravity="center_vertical"
+                android:text="@string/workoutDuration" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
 
-                <ImageView
-                    android:id="@+id/imageViewDuration"
-                    android:layout_width="48dp"
-                    android:layout_height="match_parent"
-                    app:srcCompat="@drawable/ic_clock" />
-
-                <LinearLayout
+                <include
+                    android:id="@+id/overviewDuration"
+                    layout="@layout/show_entry"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:visibility="visible" />
 
-                    <include
-                        android:id="@+id/overviewDuration"
-                        layout="@layout/show_entry"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="visible" />
+                <include
+                    android:id="@+id/overviewDuration2"
+                    layout="@layout/show_entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/textLowestDuration"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:fontFamily="sans-serif-black"
-                            android:gravity="center"
-                            android:text="TextView"
-                            android:textAlignment="textEnd"
-                            android:textAllCaps="false"
-                            android:textColor="?android:textColorPrimary"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/textView10"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="1dp"
-                            android:text="▼"
-                            android:textAlignment="center"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                            android:textColor="@color/colorPrimaryDark" />
-
-                        <TextView
-                            android:id="@+id/textView11"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="1dp"
-                            android:layout_weight="0"
-                            android:text="▲"
-                            android:textAlignment="center"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                            android:textColor="@color/colorAccent" />
-
-                        <TextView
-                            android:id="@+id/textHighestDuration"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:fontFamily="sans-serif-black"
-                            android:gravity="center"
-                            android:text="TextView"
-                            android:textAlignment="textStart"
-                            android:textAllCaps="false"
-                            android:textColor="?android:textColorPrimary"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>

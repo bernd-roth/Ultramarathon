@@ -49,16 +49,12 @@ import de.tadris.fitness.util.exceptions.NoDataException;
 import de.tadris.fitness.util.statistics.OnChartGestureMultiListener;
 
 public class StatsExploreFragment extends StatsFragment {
-    TextView lowestSpeed;
-    TextView highestSpeed;
-    TextView lowestDistance;
-    TextView highestDistance;
-    TextView lowestDuration;
-    TextView highestDuration;
-
     View overviewSpeed;
+    View overviewSpeed2;
     View overviewDistance;
+    View overviewDistance2;
     View overviewDuration;
+    View overviewDuration2;
 
     TimeSpanSelection timeSpanSelection;
     WorkoutTypeSelection selection;
@@ -80,26 +76,25 @@ public class StatsExploreFragment extends StatsFragment {
         super.onViewCreated(view, savedInstanceState);
         selection = view.findViewById(R.id.stats_explore_type_selector);
         overviewSpeed = view.findViewById(R.id.overviewSpeed);
-        ((TextView)overviewSpeed.findViewById(R.id.v1title)).setText(R.string.workoutSpeed);
+        ((TextView)overviewSpeed.findViewById(R.id.v1title)).setText(R.string.workoutAvgSpeedLong);
         ((TextView)overviewSpeed.findViewById(R.id.v2title)).setText(R.string.workoutPace);
-        lowestSpeed = view.findViewById(R.id.textLowestSpeed);
-        highestSpeed = view.findViewById(R.id.textHighestSpeed);
-        lowestDuration = view.findViewById(R.id.textLowestDuration);
-        highestDuration = view.findViewById(R.id.textHighestDuration);
-        lowestDistance = view.findViewById(R.id.textLowestDistance);
-        highestDistance = view.findViewById(R.id.textHighestDistance);
+        overviewSpeed2 = view.findViewById(R.id.overviewSpeed2);
+        ((TextView)overviewSpeed2.findViewById(R.id.v1title)).setText(R.string.min);
+        ((TextView)overviewSpeed2.findViewById(R.id.v2title)).setText(R.string.max);
 
         overviewDistance = view.findViewById(R.id.overviewDistance);
         ((TextView)overviewDistance.findViewById(R.id.v1title)).setText(R.string.workoutAvgDistance);
         ((TextView)overviewDistance.findViewById(R.id.v2title)).setText(R.string.workoutDistanceSum);
+        overviewDistance2 = view.findViewById(R.id.overviewDistance2);
+        ((TextView)overviewDistance2.findViewById(R.id.v1title)).setText(R.string.min);
+        ((TextView)overviewDistance2.findViewById(R.id.v2title)).setText(R.string.max);
 
         overviewDuration = view.findViewById(R.id.overviewDuration);
-        ((TextView)overviewDuration.findViewById(R.id.v1title)).setText(R.string.workoutAvgDurationLong);
-        ((TextView)overviewDuration.findViewById(R.id.v2title)).setText(R.string.workoutDurationSum);
-
-        ((ImageView)view.findViewById(R.id.imageViewSpeed)).setColorFilter(getContext().getColor(R.color.colorPrimary));
-        ((ImageView)view.findViewById(R.id.imageViewDistance)).setColorFilter(getContext().getColor(R.color.colorPrimary));
-        ((ImageView)view.findViewById(R.id.imageViewDuration)).setColorFilter(getContext().getColor(R.color.colorPrimary));
+        ((TextView)overviewDuration.findViewById(R.id.v1title)).setText(R.string.avg);
+        ((TextView)overviewDuration.findViewById(R.id.v2title)).setText(R.string.sum);
+        overviewDuration2 = view.findViewById(R.id.overviewDuration2);
+        ((TextView)overviewDuration2.findViewById(R.id.v1title)).setText(R.string.min);
+        ((TextView)overviewDuration2.findViewById(R.id.v2title)).setText(R.string.max);
 
         ((TextView)selection.findViewById(R.id.view_workout_type_selection_text)).setTextColor(getContext().getColor(R.color.textDarkerWhite));
         timeSpanSelection = view.findViewById(R.id.time_span_selection);
@@ -132,30 +127,30 @@ public class StatsExploreFragment extends StatsFragment {
         updateOverview(overviewSpeed, WorkoutProperty.AVG_SPEED.getFormattedValue(getContext(), avgSpeed),
                 WorkoutProperty.AVG_PACE.getFormattedValue(getContext(),avgPace));
 
+        float lowSpeed = (float) statsProvider.getValue(span, types, WorkoutProperty.AVG_SPEED, StatsProvider.Reduction.MINIMUM);
+        float highSpeed = (float) statsProvider.getValue(span, types, WorkoutProperty.AVG_SPEED, StatsProvider.Reduction.MAXIMUM);
+        updateOverview(overviewSpeed2, WorkoutProperty.AVG_SPEED.getFormattedValue(getContext(), lowSpeed),
+                WorkoutProperty.AVG_SPEED.getFormattedValue(getContext(), highSpeed));
+
         float sumDistance = (float) statsProvider.getValue(span, types, WorkoutProperty.LENGTH, StatsProvider.Reduction.SUM);
         float avgDistance = (float) statsProvider.getValue(span, types, WorkoutProperty.LENGTH, StatsProvider.Reduction.AVERAGE);
         updateOverview(overviewDistance, WorkoutProperty.LENGTH.getFormattedValue(getContext(), avgDistance),
                 WorkoutProperty.LENGTH.getFormattedValue(getContext(), sumDistance));
+
+        float lowDist = (float) statsProvider.getValue(span, types, WorkoutProperty.LENGTH, StatsProvider.Reduction.MINIMUM);
+        float highDist = (float) statsProvider.getValue(span, types, WorkoutProperty.LENGTH, StatsProvider.Reduction.MAXIMUM);
+        updateOverview(overviewDistance2, WorkoutProperty.LENGTH.getFormattedValue(getContext(), lowDist),
+                WorkoutProperty.LENGTH.getFormattedValue(getContext(), highDist));
 
         float sumDuration = (float) statsProvider.getValue(span, types, WorkoutProperty.DURATION, StatsProvider.Reduction.SUM);
         float avgDuration = (float) statsProvider.getValue(span, types, WorkoutProperty.DURATION, StatsProvider.Reduction.AVERAGE);
         updateOverview(overviewDuration, WorkoutProperty.DURATION.getFormattedValue(getContext(), avgDuration),
                 WorkoutProperty.DURATION.getFormattedValue(getContext(), sumDuration));
 
-        float lowSpeed = (float) statsProvider.getValue(span, types, WorkoutProperty.AVG_SPEED, StatsProvider.Reduction.MINIMUM);
-        float highSpeed = (float) statsProvider.getValue(span, types, WorkoutProperty.AVG_SPEED, StatsProvider.Reduction.MAXIMUM);
-        lowestSpeed.setText(WorkoutProperty.AVG_SPEED.getFormattedValue(getContext(), lowSpeed));
-        highestSpeed.setText(WorkoutProperty.AVG_SPEED.getFormattedValue(getContext(), highSpeed));
-
-        float lowDist = (float) statsProvider.getValue(span, types, WorkoutProperty.LENGTH, StatsProvider.Reduction.MINIMUM);
-        float highDist = (float) statsProvider.getValue(span, types, WorkoutProperty.LENGTH, StatsProvider.Reduction.MAXIMUM);
-        lowestDistance.setText(WorkoutProperty.LENGTH.getFormattedValue(getContext(), lowDist));
-        highestDistance.setText(WorkoutProperty.LENGTH.getFormattedValue(getContext(), highDist));
-
         float lowDur = (float) statsProvider.getValue(span, types, WorkoutProperty.DURATION, StatsProvider.Reduction.MINIMUM);
         float highDur = (float) statsProvider.getValue(span, types, WorkoutProperty.DURATION, StatsProvider.Reduction.MAXIMUM);
-        lowestDuration.setText(WorkoutProperty.DURATION.getFormattedValue(getContext(), lowDur));
-        highestDuration.setText(WorkoutProperty.DURATION.getFormattedValue(getContext(), highDur));
+        updateOverview(overviewDuration2, WorkoutProperty.DURATION.getFormattedValue(getContext(), lowDur),
+                WorkoutProperty.DURATION.getFormattedValue(getContext(), highDur));
     }
 
     private void updateOverview(View overview, String value1, String value2)

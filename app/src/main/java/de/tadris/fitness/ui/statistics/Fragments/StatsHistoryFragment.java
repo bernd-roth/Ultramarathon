@@ -428,8 +428,6 @@ public class StatsHistoryFragment extends StatsFragment {
             if(!(property == WorkoutProperty.START) && !(property == WorkoutProperty.END)) {
                 String unit = property.getUnit(getContext(), combinedData.getYMax() - combinedData.getYMin());
                 ChartStyles.setYAxisLabel(exploreChart, unit);
-                lowest += " " + unit;
-                highest += " " + unit;
             }
             ChartStyles.updateCombinedChartToSpan(exploreChart, combinedData, aggregationSpan, getContext());
 
