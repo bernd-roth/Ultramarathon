@@ -131,6 +131,36 @@
 
             </LinearLayout>
 
+            <Spinner
+                android:id="@+id/stats_explore_title2"
+                style="@style/titleSpinnerStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <include
+                    android:id="@+id/overviewExplore"
+                    layout="@layout/show_entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible" />
+
+                <include
+                    android:id="@+id/overviewExplore2"
+                    layout="@layout/show_entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

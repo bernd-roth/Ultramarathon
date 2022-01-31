@@ -162,9 +162,11 @@ public enum WorkoutProperty {
 
             case ASCENT:
             case DESCENT:
-                return Instance.getInstance(ctx).distanceUnitUtils.getDistanceUnitSystem().getShortDistanceUnit();
             case LENGTH:
-                return Instance.getInstance(ctx).distanceUnitUtils.getDistanceUnitSystem().getLongDistanceUnit();
+                if(value / Instance.getInstance(ctx).distanceUnitUtils.getDistanceUnitSystem().getMetersFromLongDistance(1) > 1)
+                    return Instance.getInstance(ctx).distanceUnitUtils.getDistanceUnitSystem().getLongDistanceUnit();
+                else
+                    return Instance.getInstance(ctx).distanceUnitUtils.getDistanceUnitSystem().getShortDistanceUnit();
 
             case CALORIE:
             case AVG_INTENSITY:

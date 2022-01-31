@@ -406,14 +406,10 @@ public class StatsHistoryFragment extends StatsFragment {
         try {
             if (exploreChartSwitch.isChecked()) {
                 BarDataSet barDataSet = statsProvider.getSumData(aggregationSpan, workoutTypes, property);
-                highest = barDataSet.getValueFormatter().getFormattedValue(barDataSet.getYMax());
-                lowest = barDataSet.getValueFormatter().getFormattedValue(barDataSet.getYMin());
                 BarData barData = new BarData(barDataSet);
                 combinedData.setData(barData);
             } else {
                 CandleDataSet candleDataSet = statsProvider.getCandleData(aggregationSpan, workoutTypes, property);
-                highest = candleDataSet.getValueFormatter().getFormattedValue(candleDataSet.getYMax());
-                lowest = candleDataSet.getValueFormatter().getFormattedValue(candleDataSet.getYMin());
                 combinedData.setData(new CandleData(candleDataSet));
                 // Create background line
                 LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);

@@ -23,6 +23,7 @@ import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CombinedData;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.listener.ChartTouchListener;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.renderer.CombinedChartRenderer;
@@ -45,6 +46,8 @@ import de.tadris.fitness.ui.statistics.WorkoutTypeSelection;
 import de.tadris.fitness.util.WorkoutProperty;
 import de.tadris.fitness.util.charts.ChartStyles;
 import de.tadris.fitness.util.charts.DataSetStyles;
+import de.tadris.fitness.util.charts.formatter.DayTimeFormatter;
+import de.tadris.fitness.util.charts.formatter.TimeFormatter;
 import de.tadris.fitness.util.exceptions.NoDataException;
 import de.tadris.fitness.util.statistics.OnChartGestureMultiListener;
 
@@ -55,6 +58,10 @@ public class StatsExploreFragment extends StatsFragment {
     View overviewDistance2;
     View overviewDuration;
     View overviewDuration2;
+    View overviewExplore;
+    View overviewExplore2;
+
+    Spinner exploreTitle;
 
     TimeSpanSelection timeSpanSelection;
     WorkoutTypeSelection selection;
@@ -96,6 +103,13 @@ public class StatsExploreFragment extends StatsFragment {
         ((TextView)overviewDuration2.findViewById(R.id.v1title)).setText(R.string.min);
         ((TextView)overviewDuration2.findViewById(R.id.v2title)).setText(R.string.max);
 
+        overviewExplore = view.findViewById(R.id.overviewExplore);
+        ((TextView)overviewExplore.findViewById(R.id.v1title)).setText(R.string.avg);
+        ((TextView)overviewExplore.findViewById(R.id.v2title)).setText(R.string.sum);
+        overviewExplore2 = view.findViewById(R.id.overviewExplore2);
+        ((TextView)overviewExplore2.findViewById(R.id.v1title)).setText(R.string.min);
+        ((TextView)overviewExplore2.findViewById(R.id.v2title)).setText(R.string.max);
+
         ((TextView)selection.findViewById(R.id.view_workout_type_selection_text)).setTextColor(getContext().getColor(R.color.textDarkerWhite));
         timeSpanSelection = view.findViewById(R.id.time_span_selection);
         timeSpanSelection.setForegroundColor(getContext().getColor(R.color.textDarkerWhite));
@@ -105,6 +119,26 @@ public class StatsExploreFragment extends StatsFragment {
                 updateOverview();
             }
         });
+
+        exploreTitle = view.findViewById(R.id.stats_explore_title2);
+        // Register WorkoutType selection listeners
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(), R.layout.stats_title, WorkoutProperty.getStringRepresentations(getContext()));
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        exploreTitle.setAdapter(spinnerAdapter);
+        exploreTitle.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                WorkoutProperty property = WorkoutProperty.getById(exploreTitle.getSelectedItemPosition());
+                long start = timeSpanSelection.getSelectedInstance();
+                StatsDataTypes.TimeSpan span = new StatsDataTypes.TimeSpan(start, timeSpanSelection.getSelectedAggregationSpan().getAggregationEnd(start));
+                updateOverviewExplore(property, span, selection.getSelectedWorkoutTypes());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+        exploreTitle.setSelection(WorkoutProperty.PAUSE_DURATION.getId());
 
         selection.addOnWorkoutTypeSelectListener(workoutType -> updateOverview());
         selection.addOnWorkoutTypeSelectListener(workoutType -> preferences.setStatisticsSelectedTypes(selection.getSelectedWorkoutTypes()));
@@ -152,6 +186,7 @@ public class StatsExploreFragment extends StatsFragment {
             float highDur = (float) statsProvider.getValue(span, types, WorkoutProperty.DURATION, StatsProvider.Reduction.MAXIMUM);
             updateOverview(overviewDuration2, WorkoutProperty.DURATION.getFormattedValue(getContext(), lowDur),
                 WorkoutProperty.DURATION.getFormattedValue(getContext(), highDur));
+            updateOverviewExplore(WorkoutProperty.getById(exploreTitle.getSelectedItemPosition()), span, types);
         } catch (NoDataException e) {
             updateOverview(overviewSpeed, "", "");
             updateOverview(overviewSpeed2, "", "");
@@ -169,6 +204,42 @@ public class StatsExploreFragment extends StatsFragment {
 
         v1.setText(value1);
         v2.setText(value2);
+    }
+
+    private void updateOverviewExplore(WorkoutProperty property, StatsDataTypes.TimeSpan span, List<WorkoutType> types)
+    {
+        try {
+            float sum = (float) statsProvider.getValue(span, types, property, StatsProvider.Reduction.SUM);
+            float avg = (float) statsProvider.getValue(span, types, property, StatsProvider.Reduction.AVERAGE);
+            if(property == WorkoutProperty.START || property == WorkoutProperty.END)
+                updateOverview(overviewExplore, (new DayTimeFormatter(getContext())).getFormattedValue(avg), "");
+            else
+                updateOverview(overviewExplore, property.getFormattedValue(getContext(), avg),
+                    property.getFormattedValue(getContext(), sum));
+
+            if(property.summable()) {
+                overviewExplore.findViewById(R.id.v2value).setVisibility(View.VISIBLE);
+                overviewExplore.findViewById(R.id.v2title).setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                overviewExplore.findViewById(R.id.v2value).setVisibility(View.INVISIBLE);
+                overviewExplore.findViewById(R.id.v2title).setVisibility(View.INVISIBLE);
+            }
+
+            float minimum = (float) statsProvider.getValue(span, types, property, StatsProvider.Reduction.MINIMUM);
+            float maximum = (float) statsProvider.getValue(span, types, property, StatsProvider.Reduction.MAXIMUM);
+            if(property == WorkoutProperty.START || property == WorkoutProperty.END)
+                updateOverview(overviewExplore2, (new DayTimeFormatter(getContext())).getFormattedValue(minimum),
+                        (new DayTimeFormatter(getContext())).getFormattedValue(maximum));
+            else
+                updateOverview(overviewExplore2, property.getFormattedValue(getContext(), minimum),
+                        property.getFormattedValue(getContext(), maximum));
+        }
+        catch (NoDataException e) {
+            updateOverview(overviewExplore, "", "");
+            updateOverview(overviewExplore2, "", "");
+        }
     }
 
     @Override

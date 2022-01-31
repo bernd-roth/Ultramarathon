@@ -2,6 +2,7 @@ package de.tadris.fitness.data;
 
 import android.content.Context;
 import android.os.Build;
+import android.util.TimeUtils;
 import android.util.TypedValue;
 
 import androidx.annotation.Nullable;
@@ -110,23 +111,47 @@ public class StatsProvider {
         double value;
 
         if (reduction == Reduction.MINIMUM) {
-            value = values.get(0).value;
-            for (StatsDataTypes.DataPoint point : values)
-                if (value > point.value)
-                    value = point.value;
+            if(property == WorkoutProperty.START || property == WorkoutProperty.END) {
+                value = values.get(0).value % TimeUnit.DAYS.toMillis(1);
+                for (StatsDataTypes.DataPoint point : values)
+                    if (value > point.value % TimeUnit.DAYS.toMillis(1))
+                        value = point.value % TimeUnit.DAYS.toMillis(1);
+            }
+            else {
+                value = values.get(0).value;
+                for (StatsDataTypes.DataPoint point : values)
+                    if (value > point.value)
+                        value = point.value;
+            }
         }
         else if(reduction == Reduction.MAXIMUM)
         {
-            value = values.get(0).value;
-            for (StatsDataTypes.DataPoint point : values)
-                if (value < point.value)
-                    value = point.value;
+            if(property == WorkoutProperty.START || property == WorkoutProperty.END) {
+                value = values.get(0).value  % TimeUnit.DAYS.toMillis(1);
+                for (StatsDataTypes.DataPoint point : values)
+                    if (value < point.value % TimeUnit.DAYS.toMillis(1))
+                        value = point.value % TimeUnit.DAYS.toMillis(1);
+            }
+            else {
+                value = values.get(0).value;
+                for (StatsDataTypes.DataPoint point : values)
+                    if (value < point.value)
+                        value = point.value;
+            }
         }
         else
         {
             value = 0;
-            for (StatsDataTypes.DataPoint point : values)
+
+            if(property == WorkoutProperty.START || property == WorkoutProperty.END) {
+                for (StatsDataTypes.DataPoint point : values)
+                    value += (point.value % TimeUnit.DAYS.toMillis(1));
+            }
+            else{
+                for (StatsDataTypes.DataPoint point : values)
                     value += point.value;
+
+            }
             if(reduction==Reduction.AVERAGE)
             {
                 value /= values.size();
@@ -312,7 +337,7 @@ public class StatsProvider {
         {
             // Time data -> convert to time ot the day
             for (int i=0; i< data.size(); i++) {
-                data.get(i).value %= 86400000; // day->milliseconds
+                data.get(i).value %= TimeUnit.DAYS.toMillis(1); // day->milliseconds
             }
         }
 
