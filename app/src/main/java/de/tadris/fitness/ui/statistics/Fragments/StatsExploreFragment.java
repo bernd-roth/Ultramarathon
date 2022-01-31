@@ -49,12 +49,6 @@ import de.tadris.fitness.util.exceptions.NoDataException;
 import de.tadris.fitness.util.statistics.OnChartGestureMultiListener;
 
 public class StatsExploreFragment extends StatsFragment {
-    Spinner title;
-    Switch chartSwitch;
-    CombinedChart chart;
-    TextView highestViewDiagram;
-    TextView lowestViewDiagram;
-
     TextView lowestSpeed;
     TextView highestSpeed;
     TextView lowestDistance;
@@ -84,9 +78,6 @@ public class StatsExploreFragment extends StatsFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        title = view.findViewById(R.id.stats_explore_title);
-        highestViewDiagram = view.findViewById(R.id.textHighestDiagram);
-        lowestViewDiagram = view.findViewById(R.id.textLowestDiagram);
         selection = view.findViewById(R.id.stats_explore_type_selector);
         overviewSpeed = view.findViewById(R.id.overviewSpeed);
         ((TextView)overviewSpeed.findViewById(R.id.v1title)).setText(R.string.workoutSpeed);
@@ -111,8 +102,6 @@ public class StatsExploreFragment extends StatsFragment {
         ((ImageView)view.findViewById(R.id.imageViewDuration)).setColorFilter(getContext().getColor(R.color.colorPrimary));
 
         ((TextView)selection.findViewById(R.id.view_workout_type_selection_text)).setTextColor(getContext().getColor(R.color.textDarkerWhite));
-        chart = view.findViewById(R.id.stats_explore_chart);
-        chartSwitch = view.findViewById(R.id.stats_explore_switch);
         timeSpanSelection = view.findViewById(R.id.time_span_selection);
         timeSpanSelection.setForegroundColor(getContext().getColor(R.color.textDarkerWhite));
         timeSpanSelection.addOnTimeSpanSelectionListener(new TimeSpanSelection.OnTimeSpanSelectionListener() {
@@ -122,12 +111,6 @@ public class StatsExploreFragment extends StatsFragment {
             }
         });
 
-        // Register WorkoutType selection listeners
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(), R.layout.stats_title, WorkoutProperty.getStringRepresentations(getContext()));
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        title.setAdapter(spinnerAdapter);
-
-        selection.addOnWorkoutTypeSelectListener(workoutType -> updateChart());
         selection.addOnWorkoutTypeSelectListener(workoutType -> updateOverview());
         selection.addOnWorkoutTypeSelectListener(workoutType -> preferences.setStatisticsSelectedTypes(selection.getSelectedWorkoutTypes()));
         List<WorkoutType> selected = preferences.getStatisticsSelectedTypes();
@@ -136,103 +119,6 @@ public class StatsExploreFragment extends StatsFragment {
             selected.addAll(WorkoutTypeManager.getInstance().getAllTypes(context));
         }
         selection.setSelectedWorkoutTypes(selected);
-
-        title.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                WorkoutProperty property = WorkoutProperty.getById(title.getSelectedItemPosition());
-                if(!property.summable())
-                {
-                    chartSwitch.setChecked(false);
-                    chartSwitch.setEnabled(false);
-                    chartSwitch.setVisibility(View.GONE);
-                }
-                else
-                {
-                    chartSwitch.setEnabled(true);
-                    chartSwitch.setVisibility(View.VISIBLE);
-                }
-                updateChart();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-
-
-        // Setup switch functionality
-        chartSwitch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                updateChart();
-            }
-        });
-        ChartStyles.animateChart(chart);
-        ChartStyles.fixViewPortOffsets(chart, 120);
-        ChartStyles.defaultLineChart(chart);
-        statsProvider.setAxisLimits(chart.getXAxis(), WorkoutProperty.TOP_SPEED);
-        OnChartGestureMultiListener multiListener = new OnChartGestureMultiListener(new ArrayList<>());
-        multiListener.listeners.add(new OnChartGestureListener() {
-            @Override
-            public void onChartGestureStart(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
-
-            }
-
-            @Override
-            public void onChartGestureEnd(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
-
-            }
-
-            @Override
-            public void onChartLongPressed(MotionEvent me) {
-
-            }
-
-            @Override
-            public void onChartDoubleTapped(MotionEvent me) {
-
-            }
-
-            @Override
-            public void onChartSingleTapped(MotionEvent me) {
-                Intent i = new Intent(context, DetailStatsActivity.class);
-                i.putExtra("property", WorkoutProperty.getById(title.getSelectedItemPosition()));
-                i.putExtra("summed", chartSwitch.isChecked());
-                i.putExtra("types", (Serializable) selection.getSelectedWorkoutTypes());
-                i.putExtra("formatter", chart.getAxisLeft().getValueFormatter().getClass());
-                i.putExtra("xScale", chart.getScaleX());
-                i.putExtra("xTrans", chart.getLowestVisibleX());
-                i.putExtra("aggregationSpan", aggregationSpan);
-                String label = "";
-                if(chart.getLegend().getEntries().length>0)
-                    label =chart.getLegend().getEntries()[0].label;
-                i.putExtra("ylabel", label);
-                context.startActivity(i);
-            }
-
-            @Override
-            public void onChartFling(MotionEvent me1, MotionEvent me2, float velocityX, float velocityY) {
-
-            }
-
-            @Override
-            public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
-                AggregationSpan newAggSpan = ChartStyles.statsAggregationSpan(chart);
-                if (aggregationSpan != newAggSpan) {
-                    aggregationSpan = newAggSpan;
-                    updateChart();
-                }
-            }
-
-            @Override
-            public void onChartTranslate(MotionEvent me, float dX, float dY) {
-
-            }
-        });
-        chart.setOnChartGestureListener(multiListener);
-
-        displaySpan(preferences.getStatisticsAggregationSpan()); // set viewport according to other statistic views
     }
 
     private void updateOverview()
@@ -279,77 +165,6 @@ public class StatsExploreFragment extends StatsFragment {
 
         v1.setText(value1);
         v2.setText(value2);
-    }
-
-    private void displaySpan(AggregationSpan span)
-    {
-        // set span for aggregation -> one smaller
-        if(span == AggregationSpan.ALL){
-            aggregationSpan = AggregationSpan.YEAR;
-        } else if(span == AggregationSpan.YEAR){
-            aggregationSpan = AggregationSpan.MONTH;
-        } else if(span == AggregationSpan.MONTH){
-            aggregationSpan = AggregationSpan.WEEK;
-        } else if(span == AggregationSpan.WEEK){
-            aggregationSpan = AggregationSpan.SINGLE;
-        }
-        updateChart();
-
-        // set view port
-        final StatsDataProvider dataProvider = new StatsDataProvider(context);
-        final ArrayList<StatsDataTypes.DataPoint> data = dataProvider.getData(WorkoutProperty.LENGTH, selection.getSelectedWorkoutTypes());
-        if (data.size() > 0) {
-            final StatsDataTypes.DataPoint firstEntry = data.get(0);
-            final StatsDataTypes.DataPoint lastEntry = data.get(data.size() - 1);
-            final long leftTime = lastEntry.time - span.spanInterval;
-            final float zoom = (float) (lastEntry.time- firstEntry.time) / span.spanInterval;
-            chart.zoom(zoom, 1, 0, 0);
-            chart.moveViewToX(leftTime);
-        }
-    }
-
-    private void updateChart() {
-        List<WorkoutType> workoutTypes = selection.getSelectedWorkoutTypes();
-        WorkoutProperty property = WorkoutProperty.getById(title.getSelectedItemPosition());
-        CombinedData combinedData = new CombinedData();
-        String lowest, highest;
-
-        try {
-            if (chartSwitch.isChecked()) {
-                BarDataSet barDataSet = statsProvider.getSumData(aggregationSpan, workoutTypes, property);
-                highest = barDataSet.getValueFormatter().getFormattedValue(barDataSet.getYMax());
-                lowest = barDataSet.getValueFormatter().getFormattedValue(barDataSet.getYMin());
-                BarData barData = new BarData(barDataSet);
-                combinedData.setData(barData);
-            } else {
-                CandleDataSet candleDataSet = statsProvider.getCandleData(aggregationSpan, workoutTypes, property);
-                highest = candleDataSet.getValueFormatter().getFormattedValue(candleDataSet.getYMax());
-                lowest = candleDataSet.getValueFormatter().getFormattedValue(candleDataSet.getYMin());
-                combinedData.setData(new CandleData(candleDataSet));
-                // Create background line
-                LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);
-                combinedData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(context, lineDataSet)));
-            }
-
-            // It is very dumb but CombinedChart.setData() calls the initBuffer method of all renderer before resetting the renderer (because the super call is executed before).
-            // In case a bar chart was displayed before but not longer, the activity would crash.
-            // Therefore the following two lines resets all renderers manually.
-            chart.clear();
-            ((CombinedChartRenderer) chart.getRenderer()).createRenderers();
-            if(!(property == WorkoutProperty.START) && !(property == WorkoutProperty.END)) {
-                String unit = property.getUnit(getContext(), combinedData.getYMax() - combinedData.getYMin());
-                ChartStyles.setYAxisLabel(chart, unit);
-                lowest += " " + unit;
-                highest += " " + unit;
-            }
-            ChartStyles.updateCombinedChartToSpan(chart, combinedData, aggregationSpan, getContext());
-            lowestViewDiagram.setText(lowest);
-            highestViewDiagram.setText(highest);
-
-        } catch (NoDataException e) {
-            chart.clear();
-        }
-        chart.invalidate();
     }
 
     @Override

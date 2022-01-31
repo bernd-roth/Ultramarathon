@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -63,9 +66,10 @@ public class StatsHistoryFragment extends StatsFragment {
     Switch durationSwitch;
     CombinedChart durationChart;
 
-    TextView pauseDurationTitle;
-    Switch pauseDurationSwitch;
-    CombinedChart pauseDurationChart;
+    Spinner exploreTitle;
+    Switch exploreChartSwitch;
+    CombinedChart exploreChart;
+
 
     TextView distanceTitle;
     Switch distanceSwitch;
@@ -103,68 +107,76 @@ public class StatsHistoryFragment extends StatsFragment {
         speedTitle = view.findViewById(R.id.stats_history_speed_title);
         speedChart = view.findViewById(R.id.stats_speed_chart);
         speedSwitch = view.findViewById(R.id.speed_switch);
-        speedSwitch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (speedSwitch.isChecked()) {
-                    speedTitle.setText(R.string.workoutPace);
-                } else {
-                    speedTitle.setText(R.string.workoutSpeed);
-                }
-                updateSpeedChart(selection.getSelectedWorkoutTypes());
+        speedSwitch.setOnClickListener(view14 -> {
+            if (speedSwitch.isChecked()) {
+                speedTitle.setText(R.string.workoutPace);
+            } else {
+                speedTitle.setText(R.string.workoutSpeed);
             }
+            updateSpeedChart(selection.getSelectedWorkoutTypes());
         });
 
         distanceTitle = view.findViewById(R.id.stats_history_distance_title);
         distanceChart = view.findViewById(R.id.stats_history_distance_chart);
         distanceSwitch = view.findViewById(R.id.distance_switch);
-        distanceSwitch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (distanceSwitch.isChecked()) {
-                    distanceTitle.setText(R.string.workoutDistanceSum);
-                } else {
-                    distanceTitle.setText(R.string.workoutAvgDistance);
-                }
-                updateDistanceChart(selection.getSelectedWorkoutTypes());
+        distanceSwitch.setOnClickListener(view13 -> {
+            if (distanceSwitch.isChecked()) {
+                distanceTitle.setText(R.string.workoutDistanceSum);
+            } else {
+                distanceTitle.setText(R.string.workoutAvgDistance);
             }
+            updateDistanceChart(selection.getSelectedWorkoutTypes());
         });
 
         durationTitle = view.findViewById(R.id.stats_history_duration_title);
         durationChart = view.findViewById(R.id.stats_duration_chart);
         durationSwitch = view.findViewById(R.id.duration_switch);
-        durationSwitch.setOnClickListener(new View.OnClickListener() {
+        durationSwitch.setOnClickListener(view12 -> {
+            if (durationSwitch.isChecked()) {
+                durationTitle.setText(R.string.workoutDurationSum);
+            } else {
+                durationTitle.setText(R.string.workoutAvgDurationLong);
+            }
+            updateDurationChart(selection.getSelectedWorkoutTypes());
+        });
+
+        exploreTitle = view.findViewById(R.id.stats_explore_title);
+        // Register WorkoutType selection listeners
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(), R.layout.stats_title, WorkoutProperty.getStringRepresentations(getContext()));
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        exploreTitle.setAdapter(spinnerAdapter);
+        exploreTitle.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View view) {
-                if (durationSwitch.isChecked()) {
-                    durationTitle.setText(R.string.workoutDurationSum);
-                } else {
-                    durationTitle.setText(R.string.workoutAvgDurationLong);
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                WorkoutProperty property = WorkoutProperty.getById(exploreTitle.getSelectedItemPosition());
+                if(!property.summable())
+                {
+                    exploreChartSwitch.setChecked(false);
+                    exploreChartSwitch.setEnabled(false);
+                    exploreChartSwitch.setVisibility(View.GONE);
                 }
-                updateDurationChart(selection.getSelectedWorkoutTypes());
+                else
+                {
+                    exploreChartSwitch.setEnabled(true);
+                    exploreChartSwitch.setVisibility(View.VISIBLE);
+                }
+                updateExploreChart(selection.getSelectedWorkoutTypes());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
             }
         });
 
-        pauseDurationTitle = view.findViewById(R.id.stats_history_pause_duration_title);
-        pauseDurationChart = view.findViewById(R.id.stats_pause_duration_chart);
-        pauseDurationSwitch = view.findViewById(R.id.pause_duration_switch);
-        pauseDurationSwitch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (pauseDurationSwitch.isChecked()) {
-                    pauseDurationTitle.setText(R.string.workoutPauseDurationSum);
-                } else {
-                    pauseDurationTitle.setText(R.string.workoutAvgPauseDuration);
-                }
-                updatePauseDurationChart(selection.getSelectedWorkoutTypes());
-            }
-        });
+        exploreChart = view.findViewById(R.id.stats_explore_chart);
+        exploreChartSwitch = view.findViewById(R.id.stats_explore_switch);
+        exploreChartSwitch.setOnClickListener(view1 -> updateExploreChart(selection.getSelectedWorkoutTypes()));
 
 
         combinedChartList.add(speedChart);
         combinedChartList.add(distanceChart);
         combinedChartList.add(durationChart);
-        combinedChartList.add(pauseDurationChart);
+        combinedChartList.add(exploreChart);
 
         for (CombinedChart combinedChart : combinedChartList) {
             ChartStyles.animateChart(combinedChart);
@@ -217,8 +229,8 @@ public class StatsHistoryFragment extends StatsFragment {
                             break;
                         case 3:
                         default:
-                            workoutProperty = WorkoutProperty.PAUSE_DURATION;
-                            summed = pauseDurationSwitch.isChecked();
+                            workoutProperty = WorkoutProperty.getById(exploreTitle.getSelectedItemPosition());
+                            summed = exploreChartSwitch.isChecked();
                     }
                     i.putExtra("property", (Serializable) workoutProperty);
                     i.putExtra("summed", summed);
@@ -265,6 +277,7 @@ public class StatsHistoryFragment extends StatsFragment {
         selection.setSelectedWorkoutTypes(selected);
 
         displaySpan(preferences.getStatisticsAggregationSpan()); // set viewport according to other statistic views
+        exploreTitle.setSelection(WorkoutProperty.PAUSE_DURATION.getId());
     }
 
     private void displaySpan(AggregationSpan span)
@@ -299,7 +312,7 @@ public class StatsHistoryFragment extends StatsFragment {
     private void updateCharts(List<WorkoutType> workoutTypes) {
         updateSpeedChart(workoutTypes);
         updateDurationChart(workoutTypes);
-        updatePauseDurationChart(workoutTypes);
+        updateExploreChart(workoutTypes);
         updateDistanceChart(workoutTypes);
     }
 
@@ -385,16 +398,22 @@ public class StatsHistoryFragment extends StatsFragment {
         durationChart.invalidate();
     }
 
-    private void updatePauseDurationChart(List<WorkoutType> workoutTypes) {
+    private void updateExploreChart(List<WorkoutType> workoutTypes) {
+        WorkoutProperty property = WorkoutProperty.getById(exploreTitle.getSelectedItemPosition());
         CombinedData combinedData = new CombinedData();
+        String lowest, highest;
 
         try {
-            if (pauseDurationSwitch.isChecked()) {
-                BarDataSet barDataSet = statsProvider.getSumData(aggregationSpan, workoutTypes, WorkoutProperty.PAUSE_DURATION);
+            if (exploreChartSwitch.isChecked()) {
+                BarDataSet barDataSet = statsProvider.getSumData(aggregationSpan, workoutTypes, property);
+                highest = barDataSet.getValueFormatter().getFormattedValue(barDataSet.getYMax());
+                lowest = barDataSet.getValueFormatter().getFormattedValue(barDataSet.getYMin());
                 BarData barData = new BarData(barDataSet);
                 combinedData.setData(barData);
             } else {
-                CandleDataSet candleDataSet = statsProvider.getCandleData(aggregationSpan, workoutTypes, WorkoutProperty.PAUSE_DURATION);
+                CandleDataSet candleDataSet = statsProvider.getCandleData(aggregationSpan, workoutTypes, property);
+                highest = candleDataSet.getValueFormatter().getFormattedValue(candleDataSet.getYMax());
+                lowest = candleDataSet.getValueFormatter().getFormattedValue(candleDataSet.getYMin());
                 combinedData.setData(new CandleData(candleDataSet));
                 // Create background line
                 LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);
@@ -404,15 +423,22 @@ public class StatsHistoryFragment extends StatsFragment {
             // It is very dumb but CombinedChart.setData() calls the initBuffer method of all renderer before resetting the renderer (because the super call is executed before).
             // In case a bar chart was displayed before but not longer, the activity would crash.
             // Therefore the following two lines resets all renderers manually.
-            pauseDurationChart.clear();
-            ((CombinedChartRenderer) pauseDurationChart.getRenderer()).createRenderers();
-            ChartStyles.updateCombinedChartToSpan(pauseDurationChart, combinedData, aggregationSpan, getContext());
-            ChartStyles.setYAxisLabel(pauseDurationChart, WorkoutProperty.PAUSE_DURATION.getUnit(context, combinedData.getYMax()));
+            exploreChart.clear();
+            ((CombinedChartRenderer) exploreChart.getRenderer()).createRenderers();
+            if(!(property == WorkoutProperty.START) && !(property == WorkoutProperty.END)) {
+                String unit = property.getUnit(getContext(), combinedData.getYMax() - combinedData.getYMin());
+                ChartStyles.setYAxisLabel(exploreChart, unit);
+                lowest += " " + unit;
+                highest += " " + unit;
+            }
+            ChartStyles.updateCombinedChartToSpan(exploreChart, combinedData, aggregationSpan, getContext());
+
         } catch (NoDataException e) {
-            pauseDurationChart.clear();
+            exploreChart.clear();
         }
-        pauseDurationChart.invalidate();
+        exploreChart.invalidate();
     }
+
 
     @Override
     public String getTitle() {
