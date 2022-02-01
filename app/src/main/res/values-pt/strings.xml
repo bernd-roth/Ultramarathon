@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -304,4 +303,35 @@
     <string name="actionImport">Importar</string>
     <string name="importWorkoutMultipleQuestion">Pretende importar um ficheiro GPX ou múltiplos\?</string>
     <string name="workoutTypeAll">Todos</string>
+    <string name="workoutRecordingTypeGps">Treinos GPS</string>
+    <string name="workoutRecordingTypeIndoor">Treinos em Interior</string>
+    <string name="workoutRepetitions">Repetições</string>
+    <string name="workoutSets">Sets</string>
+    <string name="workoutFrequency">Frequência</string>
+    <string name="workoutAvgFrequencyShort">Frequência Méd.</string>
+    <string name="workoutAvgFrequencyLong">Frequência Média</string>
+    <string name="workoutCurrentFrequency">Frequência atual</string>
+    <string name="workoutMaxFrequency">Frequência máxima</string>
+    <string name="workoutIntensity">Intensidade</string>
+    <string name="workoutAvgIntensityShort">Intensidade Méd.</string>
+    <string name="workoutMaxIntensity">Intensidade Máx.</string>
+    <string name="workoutMinHeight">Altura mín</string>
+    <string name="workoutMaxHeight">Altura máx</string>
+    <string name="workoutTypeTreadmill">Passadeira</string>
+    <plurals name="workoutStep">
+        <item quantity="one">Passo</item>
+        <item quantity="other">Passos</item>
+    </plurals>
+    <string name="workoutTypeRopeSkipping">Saltar à corda</string>
+    <string name="workoutTypeTrampolineJumping">Salto em trampolim</string>
+    <string name="workoutTypePushUps">Flexões</string>
+    <string name="pref_step_length">Comprimento do passo</string>
+    <plurals name="workoutJump">
+        <item quantity="one">Salto</item>
+        <item quantity="other">Saltos</item>
+    </plurals>
+    <plurals name="workoutPushUp">
+        <item quantity="one">Flexão</item>
+        <item quantity="other">Flexões</item>
+    </plurals>
 </resources>

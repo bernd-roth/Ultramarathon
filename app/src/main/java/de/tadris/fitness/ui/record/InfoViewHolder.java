@@ -44,13 +44,22 @@ class InfoViewHolder {
     private void setOnClickListeners() {
         titleView.setOnClickListener(getOnClickListener());
         valueView.setOnClickListener(getOnClickListener());
+        titleView.setOnLongClickListener(getOnLongClickListener());
+        valueView.setOnLongClickListener(getOnLongClickListener());
     }
 
     private View.OnClickListener getOnClickListener() {
-        return v -> listener.onInfoViewClick(slot);
+        return v -> listener.onInfoViewClick(slot, false);
+    }
+
+    private View.OnLongClickListener getOnLongClickListener() {
+        return v -> {
+            listener.onInfoViewClick(slot, true);
+            return true;
+        };
     }
 
     public interface InfoViewClickListener {
-        void onInfoViewClick(int slot);
+        void onInfoViewClick(int slot, boolean isLongClick);
     }
 }

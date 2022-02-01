@@ -25,25 +25,14 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TrackPointExtensions {
 
-    private double speed;
-
     @JacksonXmlProperty(localName = "gpxtpx:TrackPointExtension")
     private GpxTpxExtension gpxTpxExtension;
 
     public TrackPointExtensions() {
     }
 
-    public TrackPointExtensions(double speed, GpxTpxExtension gpxTpxExtension) {
-        this.speed = speed;
+    public TrackPointExtensions(GpxTpxExtension gpxTpxExtension) {
         this.gpxTpxExtension = gpxTpxExtension;
-    }
-
-    public double getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(double speed) {
-        this.speed = speed;
     }
 
     public GpxTpxExtension getGpxTpxExtension() {

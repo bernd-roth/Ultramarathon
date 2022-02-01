@@ -26,10 +26,10 @@ import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
 import android.util.Log
 import de.tadris.fitness.recording.BaseWorkoutRecorder
-import de.tadris.fitness.recording.announcement.AnnouncementMode
 import de.tadris.fitness.recording.event.TTSReadyEvent
 import org.greenrobot.eventbus.EventBus
 import java.util.*
+import kotlin.collections.HashSet
 
 class TTSController(context: Context, val id: String = DEFAULT_TTS_CONTROLLER_ID) {
 
@@ -40,6 +40,8 @@ class TTSController(context: Context, val id: String = DEFAULT_TTS_CONTROLLER_ID
 
     private val currentMode = AnnouncementMode.getCurrentMode(context)
     private val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+    private val audioFocusManager = AudioFocusManager(audioManager)
+    private val queuedUtterances = HashSet<String>();
 
     private fun ttsReady(status: Int) {
         isTtsAvailable =
@@ -50,11 +52,11 @@ class TTSController(context: Context, val id: String = DEFAULT_TTS_CONTROLLER_ID
         EventBus.getDefault().post(TTSReadyEvent(isTtsAvailable, id))
     }
 
-    fun speak(recorder: BaseWorkoutRecorder?, announcement: Announcement) {
+    fun speak(recorder: BaseWorkoutRecorder, announcement: Announcement) {
         if (!announcement.isAnnouncementEnabled) {
             return
         }
-        val text = announcement.getSpokenText(recorder!!)
+        val text = announcement.getSpokenText(recorder)
         if (text != null && text != "") {
             speak(text)
         }
@@ -66,12 +68,18 @@ class TTSController(context: Context, val id: String = DEFAULT_TTS_CONTROLLER_ID
             // Cannot speak
             return
         }
-        if (currentMode === AnnouncementMode.HEADPHONES && !isHeadsetOn) {
+        if (currentMode == AnnouncementMode.HEADPHONES && !isHeadsetOn) {
             // Not allowed to speak
             return
         }
+        if (!audioFocusManager.requestFocus()) {
+            return
+        }
         Log.d("Recorder", "TTS speaks: $text")
-        textToSpeech.speak(text, TextToSpeech.QUEUE_ADD, null, "announcement" + ++speakId)
+
+        val utteranceId = "announcement" + ++speakId
+        textToSpeech.speak(text, TextToSpeech.QUEUE_ADD, null, utteranceId)
+        queuedUtterances.add(utteranceId)
     }
 
     private val isHeadsetOn: Boolean
@@ -109,16 +117,14 @@ class TTSController(context: Context, val id: String = DEFAULT_TTS_CONTROLLER_ID
     }
 
     private inner class TextToSpeechListener : UtteranceProgressListener() {
-        override fun onStart(utteranceId: String) {
-            audioManager.requestAudioFocus(
-                null,
-                AudioManager.STREAM_SYSTEM,
-                AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK
-            )
-        }
+        override fun onStart(utteranceId: String) {}
 
         override fun onDone(utteranceId: String) {
-            audioManager.abandonAudioFocus(null)
+            queuedUtterances.remove(utteranceId);
+
+            if (queuedUtterances.isEmpty()) {
+                audioFocusManager.abandonFocus()
+            }
         }
 
         override fun onError(utteranceId: String) {}

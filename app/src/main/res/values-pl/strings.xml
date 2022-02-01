@@ -38,9 +38,9 @@
     <string name="pref_voice_announcements_summary">Skonfiguruj komunikaty głosowe, które będą Cię informować podczas treningu</string>
     <string name="announcementWorkoutActions">Akcje treningu (wstrzymanie, wznowienie itd.)</string>
     <string name="announcementGPSStatus">Status GPS</string>
-    <string name="errorEnterValidDuration">Wprowadź poprawny czas trwania</string>
+    <string name="errorEnterValidDuration">Wprowadź prawidłowy czas trwania</string>
     <string name="errorWorkoutAddFuture">Trening nie mógł odbyć się w przyszłości</string>
-    <string name="errorEnterValidNumber">Wprowadź poprawną liczbę</string>
+    <string name="errorEnterValidNumber">Wprowadź prawidłową liczbę</string>
     <string name="and">i</string>
     <string name="timeSecondsShort">sek.</string>
     <string name="timeHourShort">godz.</string>
@@ -142,10 +142,10 @@
     <string name="timeSecondsSingular">Sekunda</string>
     <string name="workoutDiscarded">Trening odrzucony</string>
     <string name="preferenceFirstDayOfWeek">Początek tygodnia</string>
-    <string name="preferenceUseAverageForCurrentSpeed">Używaj średniej prędkości z określonego czasu zamiast ostatniego zapisu prędkości do obliczania aktualnej prędkości.</string>
+    <string name="preferenceUseAverageForCurrentSpeed">Używaj średniej prędkości z określonego czasu zamiast ostatniego zapisu prędkości do obliczania aktualnej prędkości</string>
     <string name="preferenceCurrentSpeedAverageTimeTitle">Aktualna prędkość według średniej</string>
-    <string name="preferenceCurrentSpeedAverageTimeSummary">Zamień obliczanie aktualnej prędkości obliczaniem średniej</string>
-    <string name="preferenceCurrentSpeedTime">Przedział czasu dla obliczania średniej</string>
+    <string name="preferenceCurrentSpeedAverageTimeSummary">Zastąp obliczanie aktualnej prędkości obliczaniem średniej</string>
+    <string name="preferenceCurrentSpeedTime">Przedział czasu do obliczania średniej</string>
     <string name="preferenceTimeFormat">Format czasu</string>
     <string name="preferenceDateFormat">Format daty</string>
     <string name="preferencesCategoryMap">Mapa</string>
@@ -198,7 +198,7 @@
     <string name="save">Zapisz</string>
     <string name="description">Opis</string>
     <string name="trackVisibilityPref">Widoczność trasy</string>
-    <string name="cut">Wytnij pierwsze/ostatnie 300 metrów</string>
+    <string name="cut">Wytnij pierwsze/ostatnie 300 m</string>
     <string name="actionUploadToOSM">Prześlij do OSM</string>
     <string name="waiting_gps">Oczekiwanie na GPS</string>
     <string name="editWorkoutType">Edycja typu treningu</string>
@@ -214,7 +214,7 @@
     <string name="pref_announcements_config_summary">Wybierz czas i odległość między powiadomieniami głosowymi</string>
     <string name="pref_unit_system">Preferowany system jednostek</string>
     <string name="settings">Ustawienia</string>
-    <string name="pref_weight_summary">Twoja waga jest potrzebna do obliczenia spalonych kalorii</string>
+    <string name="pref_weight_summary">Twoja waga jest potrzebna do obliczania spalonych kalorii</string>
     <string name="pref_weight">Twoja waga</string>
     <string name="exportAsGpxFile">Eksportuj jako plik GPX</string>
     <string name="trackingInfoDescription">Informacje o uruchomionym śledzeniu</string>
@@ -292,7 +292,7 @@
     <string name="actionImport">Importuj</string>
     <string name="workoutTypeEditId">ID</string>
     <string name="hintManageWorkoutTypes">Naciśnij ikonę plusa, aby dodać niestandardowe typy treningów.</string>
-    <string name="resumeWorkoutConfirmation">Czy naprawdę chcesz wznowić ten trening\? Spowoduje to również dodanie wstrzymania od momentu zatrzymania treningu.</string>
+    <string name="resumeWorkoutConfirmation">Czy na pewno chcesz wznowić ten trening\? Spowoduje to również dodanie wstrzymania od momentu zatrzymania treningu.</string>
     <string name="prefShowOnLockScreenTitle">Widoczne na ekranie blokady</string>
     <string name="prefShowOnLockScreenSummary">Pokazuj informacje o treningu, nawet jeśli ekran jest zablokowany</string>
     <string name="notimeout">Bez limitu czasu</string>
@@ -308,14 +308,14 @@
     <string name="resumeWorkout">Wznów trening</string>
     <string name="inclination">Nachylenie</string>
     <string name="fileNotFound">Nie znaleziono pliku</string>
-    <string name="invalidNumberFormat">Niepoprawny format liczbowy.</string>
+    <string name="invalidNumberFormat">Nieprawidłowy format liczby</string>
     <string name="pref_announcements_pace_control_summary">Ostrzegaj, gdy jest poniżej lub powyżej określonej prędkości</string>
     <string name="pref_announcements_pace_control_title">Ostrzeżenia o kontroli tempa</string>
     <string name="noColoring">Bez kolorowania</string>
     <string name="auto">Automatyczne</string>
     <string name="selectColoring">Wybierz kolorowanie</string>
-    <string name="pref_auto_start_mode_unknown">Nieznany tryb (nie wybieraj)</string>
-    <string name="pref_auto_start_mode_on_move">Czekaj, aż zaczniesz się poruszać</string>
+    <string name="pref_auto_start_mode_unknown">Nieznany (nie używać)</string>
+    <string name="pref_auto_start_mode_on_move">Czekaj, aż zacznę się poruszać</string>
     <string name="pref_auto_start_mode_wait_for_gps">Czekaj na dokładną pozycję GPS</string>
     <string name="pref_auto_start_mode_instant">Rozpoczynaj natychmiast</string>
     <string name="pref_auto_start_mode_title">Tryb automatycznego rozpoczęcia</string>
@@ -340,7 +340,7 @@
         <item quantity="many"><xliff:g example="12" id="secs">%1$d</xliff:g> sekund</item>
         <item quantity="other"><xliff:g example="12" id="secs">%1$d</xliff:g> sekund</item>
     </plurals>
-    <string name="launchError">Nie można uruchomić aplikacji</string>
+    <string name="launchError">Nie udało się uruchomić aplikacji</string>
     <string name="editStartEndHelp">Wybierz pozycję na mapie albo diagramie. Następnie naciśnij jedną ze strzałek, aby wybrać nowy punkt początkowy albo końcowy. Gdy skończysz, kliknij ikonę zapisu w celu zastosowania zmian.</string>
     <string name="actionApply">Zastosuj</string>
     <string name="moveEndOfWorkout">Wytnij koniec</string>
@@ -348,7 +348,7 @@
     <string name="scanFailed">Skanowanie nie powiodło się</string>
     <string name="scanning">Skanowanie…</string>
     <string name="announcementCountdown">Akcje automatycznego rozpoczęcia (odliczanie, stan itd.)</string>
-    <string name="action_nfc_settings">Idź do ustawień NFC</string>
+    <string name="action_nfc_settings">Przejdź do ustawień NFC</string>
     <string name="dialog_nfc_disabled">Aby używać tagów NFC do rozpoczęcia i zakończenia treningów, najpierw potrzebujesz włączyć NFC w ustawieniach urządzenia</string>
     <string name="dialog_nfc_disabled_title">NFC jest obecnie wyłączone</string>
     <string name="nfcStartSummary">Jeśli włączone, będziesz w stanie rozpoczynać i zatrzymywać treningi, skanując tag NFC</string>
@@ -364,7 +364,7 @@
     <string name="autoStartCountdownMsg">Rozpoczęcie treningu za</string>
     <string name="noAutoStartDelay">Brak</string>
     <string name="pref_auto_start_delay_title">Odliczanie do automatycznego rozpoczęcia</string>
-    <string name="manageAutoStartDelaySummary">Wybierz domyślne odliczanie dla automatycznego rozpoczęcia treningu</string>
+    <string name="manageAutoStartDelaySummary">Wybierz domyślne odliczanie do automatycznego rozpoczęcia treningu</string>
     <string name="intervalAutoStartDelayTraining">Opóźnienie automatycznego rozpoczęcia treningu</string>
     <string name="workoutAutoStartAborted">Przerwano automatyczne uruchamianie</string>
     <string name="abort">Anuluj</string>
@@ -376,9 +376,9 @@
     <string name="cancelDownloadConfirmation">Czy chcesz anulować aktualne pobieranie\?</string>
     <string name="actionCancelDownload">Anulowanie pobierania</string>
     <string name="alreadyDownloading">Plik jest już pobierany</string>
-    <string name="downloadMapConfirmation">Czy chcesz pobrać plik mapy %s\?</string>
+    <string name="downloadMapConfirmation">Pobrać plik mapy „%s”\?</string>
     <string name="actionDownloadMap">Pobieranie mapy</string>
-    <string name="overwriteMapConfirmation">Czy chcesz nadpisać istniejący plik mapy %s\?</string>
+    <string name="overwriteMapConfirmation">Nadpisać istniejący plik mapy „%s”\?</string>
     <string name="downloadMapsSpecifyDirectory">Najpierw określ katalog dla map offline</string>
     <string name="downloadMapsTitle">Pobierz mapy</string>
     <string name="deleteWorkoutTypeConfirmation">Czy na pewno chcesz usunąć ten typ treningu\?</string>

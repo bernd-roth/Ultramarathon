@@ -24,6 +24,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,7 @@ import de.tadris.fitness.R;
 import de.tadris.fitness.data.UserPreferences;
 import de.tadris.fitness.data.migration.Migration;
 import de.tadris.fitness.data.migration.Migration12IntervalSets;
+import de.tadris.fitness.data.migration.MigrationCleanData;
 import de.tadris.fitness.map.MapManager;
 import de.tadris.fitness.recording.BaseWorkoutRecorder;
 import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
@@ -80,11 +82,15 @@ public class LauncherActivity extends Activity implements Migration.MigrationLis
         if (preferences.getLastVersionCode() < 1200) {
             migrations.add(new Migration12IntervalSets(this, this));
         }
+        if (preferences.getLastVersionCode() < 1300) {
+            migrations.add(new MigrationCleanData(this, this));
+        }
         progressDialog = new ProgressDialogController(this, getString(R.string.runningMigrations));
         progressDialog.show();
         new Thread(() -> {
             try {
                 for (Migration migration : migrations) {
+                    Log.i("Migration", "Running migration " + migration.getClass().getSimpleName());
                     migration.migrate();
                 }
                 preferences.updateLastVersionCode();

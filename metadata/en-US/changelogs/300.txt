@@ -1,5 +1,3 @@
-**3.0:**
-
 New:
 - Upload workouts as GPS-Tracks to OpenStreetMap (#24)
 - Automatic Workout Stop (#23)

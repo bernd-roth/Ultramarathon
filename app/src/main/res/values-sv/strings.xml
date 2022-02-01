@@ -58,7 +58,7 @@
     <string name="preferencesBackupSummary">Säkerhetskopiera/Återställ data för ditt träningspass</string>
     <string name="preferencesBackupTitle">Databas</string>
     <string name="preferencesRecordingSummary">Hantera inspelning av träningspasset</string>
-    <string name="preferencesRecordingTitle">Spelar in</string>
+    <string name="preferencesRecordingTitle">Inspelning</string>
     <string name="preferencesUserInterfaceSummary">Personifiera appen</string>
     <string name="preferencesUserInterfaceTitle">Användargränssnitt</string>
     <string name="avgSpeedTotalLong">Snitthastighet totalt</string>
@@ -193,7 +193,7 @@
     <string name="workoutTypeSkateboarding">Skateboardåkning</string>
     <string name="workoutMaxHeight">Högsta höjd</string>
     <string name="workoutMinHeight">Lägsta höjd</string>
-    <string name="prefShowOnLockScreenSummary">Visa information om träningspasset även om telefonen är låst.</string>
+    <string name="prefShowOnLockScreenSummary">Visa info om träningspasset även om enheten är låst.</string>
     <string name="pref_map_directory">Katalog för offline-kartor</string>
     <string name="workoutAutoStartAborted">Automatisk start avbruten</string>
     <string name="manageAutoStartModeSummary">Ändra läge för automatisk start av träningspass</string>
@@ -376,7 +376,7 @@
     <string name="selectBluetoothDevice">Välj Bluetooth-enhet</string>
     <string name="intervalAutoStartDelayTraining">Fördröjning av automatisk start</string>
     <string name="prefShowOnLockScreenTitle">Synligt på låsskärmen</string>
-    <string name="resumeWorkoutConfirmation">Vill du verkligen återuppta detta träningspass\? Detta kommer även lägga till en paus motsvarande den tid som träningspasset var stoppat.</string>
+    <string name="resumeWorkoutConfirmation">Återuppta detta träningspass\? En paus från tidpunkten då träningspasset stoppades kommer att läggas till.</string>
     <string name="nothingSelected">Ingenting har valts</string>
     <string name="pref_announcements_pace_control_summary">Varna när du går under eller över en specificerad hastighet</string>
     <string name="workoutTypeEditMinDistance">Mätavstånd</string>
@@ -427,4 +427,8 @@
     <string name="intervalSet">Intervallset</string>
     <string name="intervalSets">Intervallset</string>
     <string name="setPreferencesMessage">Du kan ställa in ditt föredragna enhetssystem och din vikt i inställningarna.</string>
+    <plurals name="importedWorkouts">
+        <item quantity="one">Importerade ett träningspass</item>
+        <item quantity="other">Importerade %d träningspass</item>
+    </plurals>
 </resources>

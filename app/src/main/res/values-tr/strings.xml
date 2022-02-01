@@ -279,8 +279,8 @@
     <string name="error">Hata</string>
     <string name="delete">Sil</string>
     <string name="app_name">FitoTrack</string>
-    <string name="resumeWorkoutConfirmation">Bu egzersizi gerçekten devam ettirmek istiyor musunuz\? Bu aynı zamanda egzersizin durdurulduğu andan itibaren bir duraklama ekleyecektir.</string>
-    <string name="prefShowOnLockScreenSummary">Telefon kilitli olsa bile egzersiz bilgilerini göster.</string>
+    <string name="resumeWorkoutConfirmation">Bu egzersize devam edilsin mi\? Egzersizin durdurulduğu zamandan bir duraklama eklenecektir.</string>
+    <string name="prefShowOnLockScreenSummary">Aygıt kilitli olsa bile egzersiz bilgilerini göster.</string>
     <string name="prefShowOnLockScreenTitle">Kilit ekranında görünür</string>
     <string name="notimeout">Zaman Aşımı Yok</string>
     <string name="editWorkoutType">Egzersiz türünü düzenle</string>
@@ -311,9 +311,9 @@
     <string name="cancelDownloadConfirmation">Geçerli indirmeyi iptal etmek istiyor musunuz\?</string>
     <string name="actionCancelDownload">İndirmeyi iptal et</string>
     <string name="alreadyDownloading">Bir dosya zaten indiriliyor</string>
-    <string name="downloadMapConfirmation">%s harita dosyasını indirmek istiyor musunuz\?</string>
+    <string name="downloadMapConfirmation">\\\"%s\\\" harita dosyası indirilsin mi\?</string>
     <string name="actionDownloadMap">Harita indir</string>
-    <string name="overwriteMapConfirmation">Mevcut %s harita dosyasının üzerine yazmak istiyor musunuz\?</string>
+    <string name="overwriteMapConfirmation">Mevcut \\\"%s\\\" harita dosyasının üzerine yazılsın mı\?</string>
     <string name="downloadMapsSpecifyDirectory">Lütfen önce çevrim dışı haritalar için bir dizin belirtin</string>
     <string name="downloadMapsTitle">Haritaları İndir</string>
     <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack, ekran kapalıyken egzersizi kaydetmek için arka plandayken de konum verilerini toplar. Bu nedenle, lütfen FitoTrack\'in her zaman konumunuza erişmesine izin verin.</string>
@@ -321,7 +321,7 @@
     <string name="workoutTypeAll">Tümü</string>
     <string name="intervalAutoStartModeTraining">Otomatik Egzersiz Başlatma Modu</string>
     <string name="intervalAutoStartDelayTraining">Otomatik Egzersiz Başlatma Gecikmesi</string>
-    <string name="pref_auto_start_mode_unknown">Bilinmeyen mod (lütfen seçmeyin)</string>
+    <string name="pref_auto_start_mode_unknown">Bilinmiyor (kullanmayın)</string>
     <string name="pref_auto_start_mode_on_move">Hareket etmeye başlamayı bekle</string>
     <string name="pref_auto_start_mode_wait_for_gps">Doğru GPS konumunu bekle</string>
     <string name="pref_auto_start_mode_instant">Hemen başla</string>
@@ -362,7 +362,7 @@
     <string name="scanFailed">Tarama başarısız oldu</string>
     <string name="scanning">Taranıyor…</string>
     <string name="invalidNumberFormat">Geçersiz sayı biçimi.</string>
-    <string name="pref_announcements_pace_control_title">Hız Denetimi Uyarıları</string>
+    <string name="pref_announcements_pace_control_title">Hız uyarıları</string>
     <string name="pref_announcements_pace_control_summary">Belirli bir hızın altında veya üstünde olduğunda uyar</string>
     <string name="noColoring">Renklendirme yok</string>
     <string name="selectColoring">Renklendirme seç</string>
@@ -388,7 +388,7 @@
     <string name="workoutMaxHeight">Azami yükseklik</string>
     <string name="workoutMinHeight">Asgari yükseklik</string>
     <string name="unitHeartBeatsPerMinute">bpm</string>
-    <string name="preferenceFirstDayOfWeek">Haftanın başlangıcı</string>
+    <string name="preferenceFirstDayOfWeek">Hafta başlangıcı</string>
     <string name="edit_interval">Aralık Düzenle</string>
     <string name="fileNotFound">Dosya bulunamadı</string>
     <string name="pref_render_theme_style_info">Seçilen oluşturma teması için oluşturma teması tarzı menüsü yok.</string>

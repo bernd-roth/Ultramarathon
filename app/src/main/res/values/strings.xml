@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
@@ -15,8 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
     <string name="stop">Stop</string>
     <string name="delete">Delete</string>
@@ -171,7 +171,7 @@
     <string name="prefTrackStyleUsageTitle">Use track coloring automatically</string>
     <string name="waiting_gps">Waiting for GPS</string>
     <string name="actionUploadToOSM">Upload to OSM</string>
-    <string name="cut">Cut the first/last 300 Meters</string>
+    <string name="cut">Cut the first/last 300 m</string>
     <string name="trackVisibilityPref">Track Visibility</string>
     <string name="description">Description</string>
     <string name="ttsNotAvailable">TextToSpeech is not available</string>
@@ -228,7 +228,7 @@
     <string name="preferenceCurrentSpeedAverageTimeSummary">Replace the current speed calculation by an average calculation.</string>
     <string name="preferenceCurrentSpeedAverageTimeTitle">Current Speed by Average</string>
     <string name="preferenceUseAverageForCurrentSpeed">Use the average speed over a certain time instead of the last single speed record for the current speed calculation.</string>
-    <string name="preferenceFirstDayOfWeek">Start of the week</string>
+    <string name="preferenceFirstDayOfWeek">Week start</string>
     <string name="workoutDiscarded">Workout discarded</string>
     <string name="timeSecondsSingular">Second</string>
     <string name="timeSecondsPlural">Seconds</string>
@@ -295,7 +295,7 @@
     <string name="aboutContributors">Contributors</string>
     <string name="aboutSendFeedback">Send feedback to developer</string>
     <string name="aboutSourceCode">View source code</string>
-    <string name="aboutUnlistedContributors">Thanks to all the unlisted contributors that helped translating and extending FitoTrack!</string>
+    <string name="aboutUnlistedContributors">Thanks to all the unlisted contributors that helped to translate and extend FitoTrack!</string>
     <string name="aboutHelpTranslating">Help translating</string>
     <string name="aboutPrivacyPolicy">Privacy Policy</string>
     <string name="editDisplayedInformation">Edit displayed information</string>
@@ -340,8 +340,8 @@
     <string name="workoutStarted">Workout started</string>
     <string name="notimeout">No Timeout</string>
     <string name="prefShowOnLockScreenTitle">Visible on lock screen</string>
-    <string name="prefShowOnLockScreenSummary">Show workout information even if the phone is locked.</string>
-    <string name="resumeWorkoutConfirmation">Do you really want to resume this workout? This will also add a pause from the time the workout was stopped.</string>
+    <string name="prefShowOnLockScreenSummary">Show workout info even if the device is locked.</string>
+    <string name="resumeWorkoutConfirmation">Resume this workout\? A pause from the time the workout was stopped will be added.</string>
     <string name="hintManageWorkoutTypes">Click on the plus to add custom workout types.</string>
     <string name="workoutTypeEditId">ID</string>
     <string name="workoutTypeEditIdErrorCharacters">Allowed characters: a–z, A–Z, 0–9, _, -</string>
@@ -365,9 +365,9 @@
     <string name="pref_render_theme_style_info">No render theme style menu available for selected render theme.</string>
     <string name="downloadMapsTitle">Download Maps</string>
     <string name="downloadMapsSpecifyDirectory">Please specify a directory for offline maps first</string>
-    <string name="overwriteMapConfirmation">Do you want to overwrite the existing map file %s?</string>
+    <string name="overwriteMapConfirmation">Overwrite the existing \\\"%s\\\" map file\?</string>
     <string name="actionDownloadMap">Download map</string>
-    <string name="downloadMapConfirmation">Do you want to download the map file %s?</string>
+    <string name="downloadMapConfirmation">Download the \\\"%s\\\" map file\?</string>
     <string name="alreadyDownloading">A file is already being downloaded</string>
     <string name="actionCancelDownload">Cancel download</string>
     <string name="cancelDownloadConfirmation">Do you want to cancel the current download?</string>
@@ -444,12 +444,12 @@
     <string name="pref_auto_start_mode_instant">Start immediately</string>
     <string name="pref_auto_start_mode_wait_for_gps">Wait for accurate GPS position</string>
     <string name="pref_auto_start_mode_on_move">Wait for you to start moving</string>
-    <string name="pref_auto_start_mode_unknown">Unknown mode (please do not select)</string>
+    <string name="pref_auto_start_mode_unknown">Unknown (do not use)</string>
     <string name="selectColoring">Select coloring</string>
     <string name="auto">Auto</string>
     <string name="noColoring">No coloring</string>
     <string name="pref_announcements_pace_control_summary">Warn when below or above a specified speed</string>
-    <string name="pref_announcements_pace_control_title">Pace Control Warnings</string>
+    <string name="pref_announcements_pace_control_title">Pace-warnings</string>
     <string name="invalidNumberFormat">Invalid number format.</string>
     <string name="fileNotFound">File not found</string>
     <string name="approxSymbol" translatable="false">≈</string>

@@ -93,8 +93,12 @@ abstract public class FitoTrackActivity extends AppCompatActivity {
     }
 
     protected boolean hasStoragePermission() {
-        return ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+        return checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE) &&
+                checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+    }
+
+    protected boolean checkPermission(String permission) {
+        return ActivityCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED;
     }
 
     protected void requestKeyboard(View v) {

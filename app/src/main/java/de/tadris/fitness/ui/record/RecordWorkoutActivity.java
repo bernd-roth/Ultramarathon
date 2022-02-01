@@ -19,6 +19,7 @@
 
 package de.tadris.fitness.ui.record;
 
+import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.ActivityManager;
@@ -54,6 +55,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -97,7 +99,8 @@ import de.tadris.fitness.util.NfcAdapterHelper;
 import de.tadris.fitness.util.ToneGeneratorController;
 import de.tadris.fitness.util.VibratorController;
 
-public abstract class RecordWorkoutActivity extends FitoTrackActivity implements SelectIntervalSetDialog.IntervalSetSelectListener,
+public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
+        SelectIntervalSetDialog.IntervalSetSelectListener,
         InfoViewHolder.InfoViewClickListener, SelectWorkoutInformationDialog.WorkoutInformationSelectListener,
         ChooseBluetoothDeviceDialog.BluetoothDeviceSelectListener {
 
@@ -109,6 +112,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
     public static final String WORKOUT_TYPE_EXTRA = "de.tadris.fitness.RecordWorkoutActivity.WORKOUT_TYPE_EXTRA";
 
     public static final int REQUEST_CODE_ENABLE_BLUETOOTH = 12;
+    public static final int REQUEST_CODE_BLUETOOTH_PERMISSION = 13;
 
     // used to convert auto start time timebase from/to ms
     private static final int AUTO_START_DELAY_MULTIPLIER = 1_000; // s to ms
@@ -133,7 +137,6 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
     private boolean useNfcStart;
     private long autoStartDelayMs;    // in ms
     private AutoStartWorkout.Mode autoStartMode;
-    private boolean useAutoStart = true;   // always enable auto start mode
     private View autoStartCountdownOverlay;
     private AlertDialogWrapper autoStartDelayDialog;
     private ChooseAutoStartModeDialog autoStartModeDialog;
@@ -167,9 +170,9 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
                 NfcAdapterHelper.isNfcPresent(this);
         Log.d(TAG, "NFC start enabled:" + this.useNfcStart);
 
-        this.autoStartDelayMs = instance.userPreferences.getAutoStartDelay() * AUTO_START_DELAY_MULTIPLIER;
+        this.autoStartDelayMs = (long) instance.userPreferences.getAutoStartDelay() * AUTO_START_DELAY_MULTIPLIER;
         this.autoStartMode = instance.userPreferences.getAutoStartMode();
-        Log.d(TAG, "auto start enabled:" + this.useAutoStart + ", auto start delay: " +
+        Log.d(TAG, "auto start enabled, auto start delay: " +
                 this.autoStartDelayMs + ", auto start mode: " + autoStartMode);
     }
 
@@ -193,33 +196,27 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
 
         startPopupButton = findViewById(R.id.recordStartPopup);
 
-        if (useAutoStart) {
-            // instantiate TTSController in app context to be able to completely play the auto start
-            // abort announcement even when this activity has been destroyed already
-            ttsController = new TTSController(getApplicationContext(), TTS_CONTROLLER_ID);
-            movementDetector = new DefaultMovementDetector(this, instance.recorder.getWorkout());
-            autoStartWorkout = new AutoStartWorkout(new AutoStartWorkout.Config(autoStartDelayMs,
-                    autoStartMode), movementDetector);
-            movementDetector.registerTo(EventBus.getDefault());
-            movementDetector.start();
-            vibratorController = new VibratorController(this, instance);
-            autoStartVibratorFeedback = new AutoStartVibratorFeedback(vibratorController);
-            toneGeneratorController = new ToneGeneratorController(this, instance,
-                    AudioManager.STREAM_NOTIFICATION);
-            autoStartSoundFeedback = new AutoStartSoundFeedback(toneGeneratorController, instance);
-            autoStartVibratorFeedback.registerTo(EventBus.getDefault());
-            autoStartSoundFeedback.registerTo(EventBus.getDefault());
-            autoStartAnnouncements = new AutoStartAnnouncements(this, autoStartWorkout, instance, instance.recorder, ttsController);
-            autoStartAnnouncements.registerTo(EventBus.getDefault());
-            if (!autoStartWorkout.registerTo(EventBus.getDefault())) {
-                Log.e(TAG, "onCreate: Failed to setup auto start helper, not using auto start");
-                useAutoStart = false;
-                startPopupButton.setVisibility(View.GONE);
-            } else {
-                show(startPopupButton);
-            }
-        } else {
+        // instantiate TTSController in app context to be able to completely play the auto start
+        // abort announcement even when this activity has been destroyed already
+        ttsController = new TTSController(getApplicationContext(), TTS_CONTROLLER_ID);
+        movementDetector = new DefaultMovementDetector(this, instance.recorder.getWorkout());
+        autoStartWorkout = new AutoStartWorkout(new AutoStartWorkout.Config(autoStartDelayMs,
+                autoStartMode), movementDetector);
+        movementDetector.registerTo(EventBus.getDefault());
+        movementDetector.start();
+        vibratorController = new VibratorController(this);
+        autoStartVibratorFeedback = new AutoStartVibratorFeedback(vibratorController);
+        toneGeneratorController = new ToneGeneratorController(this, AudioManager.STREAM_NOTIFICATION);
+        autoStartSoundFeedback = new AutoStartSoundFeedback(toneGeneratorController, instance);
+        autoStartVibratorFeedback.registerTo(EventBus.getDefault());
+        autoStartSoundFeedback.registerTo(EventBus.getDefault());
+        autoStartAnnouncements = new AutoStartAnnouncements(this, autoStartWorkout, instance, instance.recorder, ttsController);
+        autoStartAnnouncements.registerTo(EventBus.getDefault());
+        if (!autoStartWorkout.registerTo(EventBus.getDefault())) {
+            Log.e(TAG, "onCreate: Failed to setup auto start helper, not using auto start");
             startPopupButton.setVisibility(View.GONE);
+        } else {
+            show(startPopupButton);
         }
 
         updateStartButton(false, R.string.cannotStart, null);
@@ -261,7 +258,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
     }
 
     private void showAutoStartCountdownOverlay() {
-        if (useAutoStart && autoStartCountdownOverlay != null) {
+        if (autoStartCountdownOverlay != null) {
             autoStartCountdownOverlay.clearAnimation();
 
             // if the view's not visible currently, we should start the animation from full transparency
@@ -298,7 +295,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
     }
 
     private void hideAutoStartCountdownOverlay() {
-        if (useAutoStart && autoStartCountdownOverlay != null &&
+        if (autoStartCountdownOverlay != null &&
                 autoStartCountdownOverlay.getVisibility() != View.GONE) {
             autoStartCountdownOverlay.clearAnimation();
 
@@ -307,6 +304,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
             int durationMs = (int) (autoStartCountdownOverlay.getAlpha() * 1000 + 0.5);
             autoStartCountdownOverlay.animate().alpha(0f).setDuration(durationMs).setListener(new Animator.AnimatorListener() {
                 private boolean cancelled = false;
+
                 @Override
                 public void onAnimationStart(Animator animator) {
                 }
@@ -374,30 +372,26 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
     }
 
     protected void hide(View view) {
-        if (useAutoStart && startPopupMenu != null
+        if (startPopupMenu != null
                 && (view.getId() == recordStartButtonsRoot.getId()
                 || view.getId() == startPopupButton.getId())) {
             startPopupMenu.dismiss();
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            int cx = view.getWidth() / 2;
-            int cy = view.getHeight() / 2;
-            float initialRadius = (float) Math.hypot(cx, cy);
-            Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, initialRadius, 0f);
-            anim.setDuration(500);
-            anim.setInterpolator(new AccelerateInterpolator());
-            anim.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    super.onAnimationEnd(animation);
-                    view.setVisibility(View.INVISIBLE);
-                }
-            });
+        int cx = view.getWidth() / 2;
+        int cy = view.getHeight() / 2;
+        float initialRadius = (float) Math.hypot(cx, cy);
+        Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, initialRadius, 0f);
+        anim.setDuration(500);
+        anim.setInterpolator(new AccelerateInterpolator());
+        anim.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                view.setVisibility(View.INVISIBLE);
+            }
+        });
 
-            anim.start();
-        } else {
-            view.animate().alpha(0f).setDuration(500).start();
-        }
+        anim.start();
     }
 
     protected void show(View view) {
@@ -564,29 +558,28 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
 
     @Override
     protected void onDestroy() {
-        if (useAutoStart) {
-            // abort any ongoing auto start procedure
-            cancelAutoStart(true);
+        // abort any ongoing auto start procedure
+        cancelAutoStart(true);
 
-            // once that's done, make sure no one stays registered to its event bus thereby creating
-            // a stale process
-            movementDetector.stop();
-            movementDetector.unregisterFromBus();
-            autoStartWorkout.unregisterFromBus();
-            autoStartVibratorFeedback.unregisterFromBus();
-            autoStartSoundFeedback.unregisterFromBus();
-            autoStartAnnouncements.unregisterFromBus();
+        // once that's done, make sure no one stays registered to its event bus thereby creating
+        // a stale process
+        movementDetector.stop();
+        movementDetector.unregisterFromBus();
+        autoStartWorkout.unregisterFromBus();
+        autoStartVibratorFeedback.unregisterFromBus();
+        autoStartSoundFeedback.unregisterFromBus();
+        autoStartAnnouncements.unregisterFromBus();
 
-            // shutdown Text-to-Speech engine
-            if (ttsController != null) {
-                ttsController.destroyWhenDone();
-            }
-
-            if (autoStartDelayDialog != null) {
-                autoStartDelayDialog.getDialog().cancel();
-                autoStartDelayDialog = null;
-            }
+        // shutdown Text-to-Speech engine
+        if (ttsController != null) {
+            ttsController.destroyWhenDone();
         }
+
+        if (autoStartDelayDialog != null) {
+            autoStartDelayDialog.getDialog().cancel();
+            autoStartDelayDialog = null;
+        }
+
         EventBus.getDefault().unregister(this);
 
         // Kill Service on Finished or not Started Recording
@@ -639,7 +632,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
         }
 
         // update countdown field if necessary
-        if (useAutoStart && autoStartWorkout != null
+        if (autoStartWorkout != null
                 && autoStartWorkout.getState() == AutoStartWorkout.State.COUNTDOWN) {
             onCountdownChange(new AutoStartWorkout.CountdownChangeEvent(autoStartWorkout.getCountdownMs()));
         }
@@ -657,10 +650,8 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
             int itemId = menuItem.getItemId();
             if (itemId == R.id.auto_start) {
                 Log.d(TAG, "Auto start from popup menu selected");
-                if (useAutoStart) {
-                    AutoStartWorkout.Config config = autoStartWorkout.getDefaultStartConfig();
-                    beginAutoStart(config.countdownMs, config.mode);
-                }
+                AutoStartWorkout.Config config = autoStartWorkout.getDefaultStartConfig();
+                beginAutoStart(config.countdownMs, config.mode);
             } else if (itemId == R.id.auto_start_immediately) {
                 start();
             } else if (itemId == R.id.auto_start_on_move) {
@@ -675,13 +666,9 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
                 // preferences
                 autoStartDelayDialog = new ChooseAutoStartDelayDialog(this, delayS -> {
                     autoStartDelayDialog = new ChooseAutoStartModeDialog(this, mode -> {
-                        if (!beginAutoStart(delayS * 1_000, mode)) {
-                            Log.e(TAG, "Failed to initiate auto workout start sequence from " +
-                                    "popup menu");
-                        } else {
-                            Log.d(TAG, "Auto start from popup menu with delay of " + delayS +
-                                    "s and mode " + mode);
-                        }
+                        beginAutoStart(delayS * 1_000L, mode);
+                        Log.d(TAG, "Auto start from popup menu with delay of " + delayS +
+                                "s and mode " + mode);
                     }, autoStartWorkout.getLastStartConfig().mode);
                     autoStartDelayDialog.show();
                 }, autoStartWorkout.getLastStartConfig().countdownMs);
@@ -711,40 +698,35 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
      *
      * @param delayMs the delay in milliseconds after which the workout should be started
      * @param mode    the auto start mode with which the workout should be started
-     * @return whether it has been started successfully or not
      */
-    public boolean beginAutoStart(long delayMs, AutoStartWorkout.Mode mode) {
-        if (useAutoStart) {
-            // show the countdown overlay (at least, if we're actually counting down)
-            if (autoStartCountdownOverlay == null) {
-                autoStartCountdownOverlay = findViewById(R.id.recorderAutoStartOverlay);
-            }
-            AutoStartWorkout.Config config;
-            if (mode == null) {
-                config = new AutoStartWorkout.Config(delayMs);
-            } else if (delayMs == Long.MIN_VALUE) {
-                config = new AutoStartWorkout.Config(mode);
-            } else {
-                config = new AutoStartWorkout.Config(delayMs, mode);
-            }
-            EventBus.getDefault().post(new AutoStartWorkout.BeginEvent(config));
-            return true;
+    public void beginAutoStart(long delayMs, AutoStartWorkout.Mode mode) {
+        // show the countdown overlay (at least, if we're actually counting down)
+        if (autoStartCountdownOverlay == null) {
+            autoStartCountdownOverlay = findViewById(R.id.recorderAutoStartOverlay);
         }
-        return false;
+        AutoStartWorkout.Config config;
+        if (mode == null) {
+            config = new AutoStartWorkout.Config(delayMs);
+        } else if (delayMs == Long.MIN_VALUE) {
+            config = new AutoStartWorkout.Config(mode);
+        } else {
+            config = new AutoStartWorkout.Config(delayMs, mode);
+        }
+        EventBus.getDefault().post(new AutoStartWorkout.BeginEvent(config));
     }
 
     /**
      * Start the auto start sequence in default mode.
      */
-    public boolean beginAutoStart(long delayMs) {
-        return beginAutoStart(delayMs, null);
+    public void beginAutoStart(long delayMs) {
+        beginAutoStart(delayMs, null);
     }
 
     /**
      * Start the auto start sequence with default delay.
      */
-    public boolean beginAutoStart(AutoStartWorkout.Mode mode) {
-        return beginAutoStart(Long.MIN_VALUE, mode);
+    public void beginAutoStart(AutoStartWorkout.Mode mode) {
+        beginAutoStart(Long.MIN_VALUE, mode);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -856,9 +838,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
 
     private void onManualPauseButtonClick() {
         if (instance.recorder.isResumed()) {
-            if (useAutoStart) {
-                startPopupButton.setVisibility(View.GONE);
-            }
+            startPopupButton.setVisibility(View.GONE);
             showStartButton();
             instance.recorder.pause();
             updateStartButton(true, R.string.actionResume, v -> {
@@ -882,6 +862,10 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
     }
 
     private void chooseHRDevice() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && (!checkPermission(Manifest.permission.BLUETOOTH_CONNECT) || !checkPermission(Manifest.permission.BLUETOOTH_SCAN))) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.BLUETOOTH_CONNECT, Manifest.permission.BLUETOOTH_SCAN}, REQUEST_CODE_BLUETOOTH_PERMISSION);
+            return;
+        }
         try {
             new ChooseBluetoothDeviceDialog(this, this).show();
         } catch (ChooseBluetoothDeviceDialog.BluetoothNotAvailableException ignored) {
@@ -897,7 +881,8 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_ENABLE_BLUETOOTH && resultCode == RESULT_OK) {
+        if ((requestCode == REQUEST_CODE_ENABLE_BLUETOOTH || requestCode == REQUEST_CODE_BLUETOOTH_PERMISSION)
+                && resultCode == RESULT_OK) {
             chooseHRDevice();
         }
     }
@@ -972,9 +957,14 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
     }
 
     @Override
-    public void onInfoViewClick(int slot) {
-        if (instance.recorder.getState() == GpsWorkoutRecorder.RecordingState.IDLE) {
-            new SelectWorkoutInformationDialog(this, WorkoutType.RecordingType.findById(activity.recordingType), slot, this).show();
+    public void onInfoViewClick(int slot, boolean isLongClick) {
+        if (instance.recorder.getState() == GpsWorkoutRecorder.RecordingState.IDLE || isLongClick) {
+            new SelectWorkoutInformationDialog(
+                    this,
+                    WorkoutType.RecordingType.findById(activity.recordingType),
+                    slot,
+                    this)
+                    .show();
         }
     }
 

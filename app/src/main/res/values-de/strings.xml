@@ -74,7 +74,7 @@
     <string name="workoutSpeed">Geschwindigkeit</string>
     <string name="workoutStartTime">Startzeit</string>
     <string name="workoutTime">Zeit</string>
-    <string name="workoutTopSpeed">Max Geschw.</string>
+    <string name="workoutTopSpeed">Höchstgeschw.</string>
     <string name="workoutTotalEnergy">Gesamte Energie</string>
     <string name="workoutTypeCycling">Fahrrad fahren</string>
     <string name="workoutTypeHiking">Wandern</string>
@@ -91,7 +91,7 @@
     <string name="mapStyle">Kartenstil</string>
     <string name="actionUploadToOSM">Auf OSM hochladen</string>
     <string name="authenticationFailed">Authentifizierung fehlgeschlagen.</string>
-    <string name="cut">Die ersten/letzten 300 m abschneiden</string>
+    <string name="cut">Die ersten/letzten 300 m abschneiden</string>
     <string name="description">Beschreibung</string>
     <string name="enterVerificationCode">Gebe den Verifizierungscode ein</string>
     <string name="trackVisibilityPref">Spursichtbarkeit</string>
@@ -225,12 +225,12 @@
     <string name="unitKJoule">Kilojoule</string>
     <string name="pref_energy_unit">Energieeinheit</string>
     <string name="workoutTypeInlineSkating">Inlineskaten</string>
-    <string name="manageAutoTimeoutSummary">Einstellung zum automatisch Stoppen des Workouts</string>
+    <string name="manageAutoTimeoutSummary">Einstellung zum automatischen Stoppen des Workouts</string>
     <string name="intervalAutoTimeoutTraining">Workout Auto-Stop Timer</string>
     <string name="pref_auto_timeout_title">Zeitspanne bis Auto-Stop</string>
     <string name="currentTime">Aktuelle Uhrzeit</string>
     <string name="unlockPhoneStopWorkout">Bitte das Telefon entsperren, um die Aufnahme zu beenden</string>
-    <string name="workout_statistics">Workout Statistiken</string>
+    <string name="workout_statistics">Workout-Statistiken</string>
     <string name="workoutStatsHelpText">Dieser Screen zeigt Statistiken zu den Workouts. Um es zu verwenden, muss man zunächst die Trainingsart angeben, indem man darauf klickt. Dann stellt man die Information, über die man etwas wissen möchte, und die Zeitspanne ein.
 \n
 \nWenn man z. B. „Woche“ als Zeitspanne auswählt, werden alle Workouts jeder Woche in einem Datenpunkt zusammengefasst und entweder der Durchschnitt oder die Summe jeder Woche berechnet.</string>
@@ -315,8 +315,8 @@
     <string name="showIntervals">Intervalle zeigen</string>
     <string name="connectHeartRateDevice">Herzfrequenzmesser verbinden</string>
     <string name="selectBluetoothDevice">Bluetooth-Gerät auswählen</string>
-    <string name="workoutAvgHeartRate">⌀ Herzfrequenz</string>
-    <string name="workoutMaxHeartRate">Max Herzfrequenz</string>
+    <string name="workoutAvgHeartRate">⌀-Herzfrequenz</string>
+    <string name="workoutMaxHeartRate">Max. Herzfrequenz</string>
     <string name="workoutHeartRate">Herzfrequenz</string>
     <string name="announcementWorkoutActions">Workout Aktionen (pausieren, fortsetzten, etc.)</string>
     <string name="heartRateNotAvailable">Herzfrequenz aktuell nicht verfügbar.</string>
@@ -331,8 +331,8 @@
     <string name="workoutStarted">Workout gestartet</string>
     <string name="notimeout">Kein Timeout</string>
     <string name="prefShowOnLockScreenTitle">Auf dem Sperrbildschirm sichtbar</string>
-    <string name="prefShowOnLockScreenSummary">Zeige Workout-Informationen, selbst wenn das Telefon gesperrt ist.</string>
-    <string name="resumeWorkoutConfirmation">Möchtest du das Workout wirklich fortsetzen? Dies wird unter anderem auch eine Pause von dem Zeitpunkt erstellen, an dem das Workout gestoppt wurde.</string>
+    <string name="prefShowOnLockScreenSummary">Workout-Informationen zeigen, selbst wenn das Gerät gesperrt ist.</string>
+    <string name="resumeWorkoutConfirmation">Dieses Workout fortsetzen\? Eine Pause ab dem Zeitpunkt, an dem das Workout gestoppt wurde, wird hinzugefügt.</string>
     <string name="editWorkoutType">Workout-Typ bearbeiten</string>
     <string name="workoutTypeEditIcon">Symbol</string>
     <string name="deleteWorkoutTypeConfirmation">Möchtest du den Workout-Typ wirklich löschen\?</string>
@@ -362,9 +362,9 @@
     <string name="pref_render_theme_style_info">Keine Optionen für gewähltes Renderthema verfügbar.</string>
     <string name="downloadMapsTitle">Karten herunterladen</string>
     <string name="downloadMapsSpecifyDirectory">Bitte gebe erst ein Verzeichnis für die Karten an</string>
-    <string name="overwriteMapConfirmation">Möchtest du die bereits existierende Kartendatei %s überschreiben?</string>
+    <string name="overwriteMapConfirmation">Die bereits existierende Kartendatei \\\"%s\\\" überschreiben\?</string>
     <string name="actionDownloadMap">Karte herunterladen</string>
-    <string name="downloadMapConfirmation">Möchtest du die Kartendatei %s herunterladen?</string>
+    <string name="downloadMapConfirmation">Die Kartendatei \\\"%s\\\" herunterladen\?</string>
     <string name="alreadyDownloading">Eine Datei wird bereits heruntergeladen</string>
     <string name="actionCancelDownload">Download abbrechen</string>
     <string name="cancelDownloadConfirmation">Möchtest du den aktuellen Download abbrechen?</string>
@@ -437,7 +437,7 @@
     <string name="pref_auto_start_mode_instant">Sofort starten</string>
     <string name="pref_auto_start_mode_wait_for_gps">Auf exakte GPS-Position warten</string>
     <string name="pref_auto_start_mode_on_move">Starten, sobald du dich bewegst</string>
-    <string name="pref_auto_start_mode_unknown">Unbekannter Modus (bitte nicht auswählen)</string>
+    <string name="pref_auto_start_mode_unknown">Unbekannt (nicht benutzen)</string>
     <string name="pref_announcements_pace_control_summary">Warne wenn unter oder über einer bestimmten Geschwindigkeit</string>
     <string name="pref_announcements_pace_control_title">Tempowarnungen</string>
     <string name="downloading">Herunterladen…</string>
@@ -463,7 +463,7 @@
     <string name="workoutSets">Sätze</string>
     <string name="workoutFrequency">Frequenz</string>
     <string name="workoutAvgFrequencyShort">⌀-Frequenz</string>
-    <string name="workoutMaxFrequency">Max Frequenz</string>
+    <string name="workoutMaxFrequency">Max. Frequenz</string>
     <string name="workoutIntensity">Intensität</string>
     <string name="workoutAvgIntensityShort">⌀-Intensität</string>
     <string name="workoutMaxIntensity">Max Intensität</string>
@@ -476,8 +476,8 @@
     <string name="unitHeartBeatsPerMinute">bpm</string>
     <string name="preferenceFirstDayOfWeek">Anfang der Woche</string>
     <string name="fileNotFound">Datei nicht gefunden</string>
-    <string name="workoutRecordingTypeGps">GPS Workouts</string>
-    <string name="workoutRecordingTypeIndoor">Indoor Workouts</string>
+    <string name="workoutRecordingTypeGps">GPS-Workouts</string>
+    <string name="workoutRecordingTypeIndoor">Indoor-Workouts</string>
     <string name="workoutAvgFrequencyLong">Durchschnittliche Frequenz</string>
     <string name="workoutCurrentFrequency">Aktuelle Frequenz</string>
     <string name="unitHertzLong">Hertz</string>

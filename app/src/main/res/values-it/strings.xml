@@ -20,7 +20,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
     <string name="stop">Ferma</string>
-    <string name="delete">Cancella</string>
+    <string name="delete">Elimina</string>
     <string name="exporting">Esportazione</string>
     <string name="error">Errore</string>
     <string name="errorGpxExportFailed">Esportazione GPX fallita.</string>
@@ -61,9 +61,9 @@
     <string name="workoutTime">Tempo</string>
     <string name="workoutDate">Data</string>
     <string name="workoutDuration">Durata</string>
-    <string name="workoutPauseDuration">Pausa Durata</string>
-    <string name="workoutStartTime">Tempo iniziale</string>
-    <string name="workoutEndTime">Tempo finale</string>
+    <string name="workoutPauseDuration">Durata Pausa</string>
+    <string name="workoutStartTime">Orario di inizio</string>
+    <string name="workoutEndTime">Orario di fine</string>
     <string name="workoutDistance">Distanza</string>
     <string name="workoutPace">Ritmo</string>
     <string name="workoutRoute">Percorso</string>
@@ -105,12 +105,12 @@
     <string name="stopRecordingQuestionMessage">Vuoi veramente terminare la registrazione?</string>
     <!-- leave the underscore because "continue" is a java command -->
     <string name="continue_">Continua</string>
-    <string name="deleteWorkout">Cancella allenamento</string>
-    <string name="deleteWorkoutMessage">Vuoi veramente cancellare questo allenamento?</string>
+    <string name="deleteWorkout">Elimina allenamento</string>
+    <string name="deleteWorkoutMessage">Vuoi veramente eliminare questo allenamento\?</string>
     <string name="trackerRunning">Il tracciamento è in funzione</string>
     <string name="trackingInfo">Info tracciamento</string>
     <string name="trackingInfoDescription">Info sul tracciamento in corso</string>
-    <string name="cancel">Cancella</string>
+    <string name="cancel">Annulla</string>
     <string name="exportAsGpxFile">Esporta come file GPX</string>
     <string name="pref_weight">Il tuo peso</string>
     <string name="pref_weight_summary">Il tuo peso è necessario per calcolare le calorie consumate</string>
@@ -142,7 +142,7 @@
     <string name="add">Aggiungi</string>
     <string name="add_interval">Aggiungi intervallo di tempo</string>
     <string name="manageIntervalSets">Gestisci gli intervalli di tempo</string>
-    <string name="manageIntervalsSummary">Edita gli intervalli di tempo: potrai usarli durante gli allenamenti con gli annunci vocali.</string>
+    <string name="manageIntervalsSummary">Modifica gli intervalli di tempo: potrai usarli durante gli allenamenti con gli annunci vocali.</string>
     <string name="createIntervalSet">Crea un nuovo intervallo di tempo</string>
     <string name="create">Crea</string>
     <string name="hintManageIntervalSets">Aggiungi un intervallo di tempo per i tuoi allenamenti.</string>
@@ -182,12 +182,12 @@
     <string name="unitMilesPlural">Miglia</string>
     <string name="unitYardsSingular">Yard</string>
     <string name="unitYardsPlural">Yarde</string>
-    <string name="unitMilesPerHour">Miglia all\'ora</string>
+    <string name="unitMilesPerHour">Miglia orarie</string>
     <string name="unitMetersPlural">Metri</string>
     <string name="unitMetersSingular">Metro</string>
     <string name="unitKilometersPlural">Chilometri</string>
     <string name="unitKilometersSingular">Chilometro</string>
-    <string name="unitKilometersPerHour">Chilometri all\'ora</string>
+    <string name="unitKilometersPerHour">Chilometri orari</string>
     <string name="unitMetersPerSecond">Metri al secondo</string>
     <string name="unitKcalLong">Calorie</string>
     <string name="unitKJoule">Kilojoule</string>
@@ -226,12 +226,12 @@
         <item>24/07/2001</item>
         <item>07/24/2001</item>
     </string-array>
-    <string name="workoutStatsHelpText">Questa schermata mostra le statistiche storiche degli allenamenti. Per utilizzarlo devi prima specificare il tipo di allenamento cliccandoci sopra. Quindi imposta le informazioni che desideri conoscere e l\'intervallo di tempo.
+    <string name="workoutStatsHelpText">Questa schermata mostra le statistiche storiche degli allenamenti. Per utilizzarlo devi prima specificare il tipo di allenamento cliccandoci sopra, quindi imposta le informazioni che desideri conoscere e l\'intervallo di tempo.
 \n
 \nPer esempio, se si seleziona «Settimana» come intervallo di tempo, tutti gli allenamenti di ogni settimana verranno uniti in un punto dati calcolando la media o la somma di ogni settimana.</string>
     <string name="no_workouts_recorded">Nessun allenamento registrato</string>
     <string name="announcementSuppressDuringCall">Sopprimere durante la chiamata</string>
-    <string name="replaceOrMergeMessage">Sostituire o unire la base di dati con un file di backup\?</string>
+    <string name="replaceOrMergeMessage">Sostituire o unire il database con un file di backup\?</string>
     <string name="merge">Unisci</string>
     <string name="replace">Sostituisci</string>
     <string name="workoutTypeSkateboarding">Skateboard</string>
@@ -255,7 +255,7 @@
     <string name="singleWorkout">Allenamento unico</string>
     <string name="workoutImported">Allenamento importato con successo</string>
     <string name="sections">Sezioni</string>
-    <string name="speedLastMinute">Velo. media (ultimo minuto)</string>
+    <string name="speedLastMinute">Vel. media (ultimo minuto)</string>
     <string name="speedLastMinuteSpoken">Velocità durante l\'ultimo minuto</string>
     <string name="cannotFindWorkout">Impossibile trovare l\'allenamento</string>
     <string name="editWorkout">Modifica allenamento</string>
@@ -302,14 +302,14 @@
     <string name="workoutStopped">Allenamento interrotto</string>
     <string name="workoutResumed">Allenamento ripreso</string>
     <string name="workoutPaused">Allenamento in pausa</string>
-    <string name="actionPause">pausa</string>
+    <string name="actionPause">Pausa</string>
     <string name="autoPauseSummary">Automaticamente mettere in pausa e continuare gli allenamenti</string>
     <string name="autoPauseTitle">Pausa automatica</string>
     <string name="resumeWorkout">Riprendere L\'Allenamento</string>
     <string name="heartRateNotAvailable">La frequenza cardiaca non è attualmente disponibile.</string>
     <string name="announcementWorkoutActions">Azioni di allenamento (pausa, riprendere, ecc.)</string>
-    <string name="resumeWorkoutConfirmation">Vuoi davvero riprendere questo allenamento\? Questo aggiungerà anche una pausa dal momento in cui l\'allenamento è stato interrotto.</string>
-    <string name="prefShowOnLockScreenSummary">Mostra le informazioni sull\'allenamento anche se il telefono è bloccato.</string>
+    <string name="resumeWorkoutConfirmation">Riprendere questo allenamento\? Verrà aggiunta una pausa dal momento in cui l\'allenamento è stato interrotto.</string>
+    <string name="prefShowOnLockScreenSummary">Mostra le informazioni sull\'allenamento anche se il dispositivo è bloccato.</string>
     <string name="prefShowOnLockScreenTitle">Visibile sulla schermata di blocco</string>
     <string name="notimeout">Nessun Timeout</string>
     <string name="workoutTypeEditMET">MET</string>
@@ -320,7 +320,7 @@
     <string name="actionSave">Salva</string>
     <string name="customWorkoutTypesTitle">Tipi di allenamento personalizzati</string>
     <string name="preferenceCategoryVoiceFeedback">Risposta vocale</string>
-    <string name="workoutTypeEditMinDistance">Distanza del campione</string>
+    <string name="workoutTypeEditMinDistance">Distanza campionata</string>
     <string name="workoutTypeEditNameError">Inserisci un nome</string>
     <string name="workoutTypeEditName">Nome</string>
     <string name="workoutTypeEditIdErrorUnique">Esiste già un tipo di allenamento che utilizza questo ID</string>
@@ -328,13 +328,13 @@
     <string name="workoutTypeEditIdErrorCharacters">Caratteri consentiti: a–z, A–Z, 0–9, _, -</string>
     <string name="workoutTypeEditId">ID</string>
     <string name="hintManageWorkoutTypes">Clicca sul segno + per aggiungere tipi di allenamento personalizzati.</string>
-    <string name="workoutTypeAdd">Aggiungere</string>
+    <string name="workoutTypeAdd">Aggiungi</string>
     <string name="workoutTypeAll">Tutto</string>
     <string name="actionImportMultiple">Importazione multipla</string>
     <string name="actionImport">Importa</string>
     <string name="importWorkoutMultipleQuestion">Vuoi importare un solo file GPX o una serie di file\?</string>
-    <string name="recordingActivityPermissionMessage">FitoTrack ha bisogno dell\'autorizzazione per monitorare la tua attività fisica per registrare gli allenamenti all\'interno.</string>
-    <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack raccoglie anche i dati sulla posizione in sfondo per registrare l\'allenamento quando lo schermo è spento. Pertanto, consenti a FitoTrack di avere sempre accesso alla tua posizione.</string>
+    <string name="recordingActivityPermissionMessage">FitoTrack ha bisogno dell\'autorizzazione per monitorare la tua attività fisica per registrare gli allenamenti al chiuso.</string>
+    <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack raccoglie anche i dati sulla posizione in background per registrare l\'allenamento quando lo schermo è spento. Pertanto, consenti a FitoTrack di avere sempre accesso alla tua posizione.</string>
     <string name="recordingPermissionNotGrantedMessage">FitoTrack necessita il permesso di accedere alla tua posizione per tracciare i tuoi movimenti durante l\'allenamento. FitoTrack accede alla tua posizione per registrare i tuoi allenamenti anche quando la applicazione è eseguita in sfondo o lo schermo è spento. I dati di geolocalizzazione rimangono sul telefono se non acconsenti esplicitamente a condividerli.</string>
     <string name="editWorkoutStartEnd">Modifica inizio/fine</string>
     <string name="unitHertzLong">Hertz</string>
@@ -375,10 +375,10 @@
     <string name="workoutAvgFrequencyShort">Frequenza media</string>
     <string name="workoutFrequency">Frequenza</string>
     <string name="workoutRepetitions">Ripetizioni</string>
-    <string name="workoutRecordingTypeIndoor">Allenamenti interni</string>
+    <string name="workoutRecordingTypeIndoor">Allenamenti al chiuso</string>
     <string name="workoutRecordingTypeGps">Allenamenti GPS</string>
     <string name="pref_announcements_pace_control_title">Avvertenze sul controllo del ritmo</string>
-    <string name="pref_announcements_pace_control_summary">Avvertisci quando si è al di sotto o al di sopra di una determinata velocità</string>
+    <string name="pref_announcements_pace_control_summary">Avverti quando si è al di sotto o al di sopra di una determinata velocità</string>
     <string name="noColoring">Nessuna colorazione</string>
     <string name="auto">Automatico</string>
     <string name="selectColoring">Seleziona la colorazione</string>
@@ -450,4 +450,14 @@
     <string name="pref_render_theme_style">Stile di rendering</string>
     <string name="pref_map_directory">Cartella mappe fuori linea</string>
     <string name="runningMigrations">Migrazioni in corso</string>
+    <string name="workoutSets">Serie</string>
+    <plurals name="importedWorkouts">
+        <item quantity="one">Un allenamento importato</item>
+        <item quantity="other">%d allenamenti importati</item>
+    </plurals>
+    <string name="moveEndOfWorkout">Ignora fine</string>
+    <string name="moveStartOfWorkout">Ignora l\'inizio</string>
+    <string name="ttsMinuteCountdownAnnouncement"> <xliff:g example="12 minutes" id="mins">%1$s</xliff:g> fino all\'inizio </string>
+    <string name="ttsMinuteSecondCountdownAnnouncement"> <xliff:g example="1 minute" id="mins">%1$s</xliff:g> e <xliff:g example="7 seconds" id="secs">%2$s</xliff:g> fino all\'inizio </string>
+    <string name="ttsLongSecondCountdownAnnouncement"> <xliff:g example="5 seconds" id="secs">%1$s</xliff:g> fino all\'inizio </string>
 </resources>

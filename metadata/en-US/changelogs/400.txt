@@ -1,5 +1,3 @@
-**4.0:**
-
 New:
 - Voice announcements: optionally gives you updates about your current workout
 
