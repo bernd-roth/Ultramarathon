@@ -13,7 +13,7 @@ import de.tadris.fitness.R;
 
 public class DataSetStyles {
     public static CandleDataSet applyDefaultCandleStyle(Context ctx, CandleDataSet candleDataSet) {
-        candleDataSet.setShadowColor(ContextCompat.getColor(ctx, R.color.complementPrimary));
+        candleDataSet.setShadowColor(ContextCompat.getColor(ctx, R.color.colorAccent));
         candleDataSet.setShadowWidth(6f);
         candleDataSet.setNeutralColor(Color.TRANSPARENT);
         candleDataSet.setDrawValues(false);
@@ -31,7 +31,7 @@ public class DataSetStyles {
     }
 
     public static BarDataSet applyDefaultBarStyle(Context ctx, BarDataSet barDataSet) {
-        barDataSet.setColor(ContextCompat.getColor(ctx, R.color.complementPrimary));
+        barDataSet.setColor(ContextCompat.getColor(ctx, R.color.colorAccent));
         return barDataSet;
     }
 }
