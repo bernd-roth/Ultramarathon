@@ -165,8 +165,12 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
     }
 
     private void setupMap() {
+        boolean showZoomControls = instance.userPreferences.getShowWorkoutZoomControls();
+        boolean setClickable = showZoomControls;
         mapView = new MapManager(this).setupMap();
-        mapView.setClickable(false);
+
+        mapView.setBuiltInZoomControls(showZoomControls);
+        mapView.setClickable(setClickable);
     }
 
     private void updateLine() {

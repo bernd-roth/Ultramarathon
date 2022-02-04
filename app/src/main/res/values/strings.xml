@@ -445,6 +445,8 @@
     <string name="pref_announcements_pace_control_title">Pace-warnings</string>
     <string name="invalidNumberFormat">Invalid number format.</string>
     <string name="fileNotFound">File not found</string>
+    <string name="showWorkoutZoomControlsSummary">Enable zoom controls in map while recording GPS activity</string>
+    <string name="showWorkoutZoomControlsTitle">Enable zoom controls</string>
     <string name="hidden">Hidden</string>
     <!-- strings for string arrays -->
     <string name="identifiable_visibility">Identifiable</string>
