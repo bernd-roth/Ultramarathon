@@ -31,6 +31,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.ImageView;
 
 import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
@@ -46,6 +47,7 @@ import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.layer.Layer;
 import org.mapsforge.map.layer.download.TileDownloadLayer;
 import org.mapsforge.map.layer.overlay.Polyline;
+import org.mapsforge.map.view.InputListener;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -71,6 +73,8 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
     private Polyline polyline;
     private final List<LatLong> latLongList = new ArrayList<>();
     private TextView gpsStatusView;
+    private ImageView focusGpsOverlay;
+    private boolean focusGpsForce = true;
     private boolean gpsFound = false;
 
     @Override
@@ -121,6 +125,19 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
         waitingForGPSOverlay.setVisibility(View.VISIBLE);
         gpsStatusView = findViewById(R.id.recordGpsStatus);
 
+        focusGpsOverlay = findViewById(R.id.gpsFocus);
+        focusGpsOverlay.setVisibility(View.GONE);
+        focusGpsOverlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                focusGpsForce = true;
+                if (!latLongList.isEmpty()) {
+                    focusGpsOverlay.setVisibility(View.GONE);
+                    mapView.getModel().mapViewPosition.animateTo(latLongList.get(latLongList.size() - 1));
+                }
+            }
+        });
+
         onGPSStateChanged(new WorkoutGPSStateChanged(GpsWorkoutRecorder.GpsState.SIGNAL_LOST, GpsWorkoutRecorder.GpsState.SIGNAL_LOST));
 
         if (wasAlreadyRunning) {
@@ -165,12 +182,39 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
     }
 
     private void setupMap() {
-        boolean showZoomControls = instance.userPreferences.getShowWorkoutZoomControls();
-        boolean setClickable = showZoomControls;
+        final boolean showZoomControls = instance.userPreferences.getShowWorkoutZoomControls();
+        final boolean setClickable = showZoomControls;
         mapView = new MapManager(this).setupMap();
 
         mapView.setBuiltInZoomControls(showZoomControls);
         mapView.setClickable(setClickable);
+
+        mapView.addInputListener(new InputListener() {
+            @Override
+            public void onMoveEvent() {
+                if (!latLongList.isEmpty()) {
+                    final LatLong center = mapView.getBoundingBox().getCenterPoint();
+                    final LatLong latLongGps = latLongList.get(latLongList.size() - 1);
+                    final double distanceMeter = Math.abs(latLongGps.sphericalDistance(center));
+                    final boolean distanceThresholdExceeded = distanceMeter > 50;
+                    final boolean focusGps = !distanceThresholdExceeded;
+
+                    if (distanceThresholdExceeded) {
+                        focusGpsOverlay.setVisibility(View.VISIBLE);
+                        focusGpsForce = false;
+                        handleLocation(latLongGps);
+                    } else {
+                        focusGpsOverlay.setVisibility(View.GONE);
+                        focusGpsForce = true;
+                    }
+                }
+            }
+
+            @Override
+            public void onZoomEvent() {
+
+            }
+        });
     }
 
     private void updateLine() {
@@ -293,16 +337,26 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
 
     @Subscribe
     public void onLocationChange(LocationChangeEvent e) {
-        LatLong latLong = GpsRecorderService.locationToLatLong(e.location);
-        mapView.getModel().mapViewPosition.animateTo(latLong);
+        LatLong latLongGps = GpsRecorderService.locationToLatLong(e.location);
+        handleLocation(latLongGps);
+   }
 
-        if (instance.recorder.getState() == GpsWorkoutRecorder.RecordingState.RUNNING) {
-            latLongList.add(latLong);
-            updateLine();
-        }
+   private void handleLocation(LatLong latLongGps){
+       final LatLong center = mapView.getBoundingBox().getCenterPoint();
+       final boolean focusGps = focusGpsForce || latLongList.isEmpty();
 
-        foundGPS();
-    }
+       if (focusGps) {
+           mapView.getModel().mapViewPosition.animateTo(latLongGps);
+       }
+
+       if (instance.recorder.getState() == GpsWorkoutRecorder.RecordingState.RUNNING) {
+           latLongList.add(latLongGps);
+           updateLine();
+       }
+
+       foundGPS();
+
+   }
 
     @Override
     protected void onDestroy() {

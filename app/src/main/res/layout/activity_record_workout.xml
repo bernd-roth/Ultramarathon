@@ -47,6 +47,16 @@
             android:layout_gravity="center"
             android:src="@drawable/location_marker" />
 
+        <ImageView
+            android:id="@+id/gpsFocus"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:alpha="20"
+            android:scaleX="1"
+            android:scaleY="1"
+            android:src="@drawable/ic_gps_no_fix"/>
+
         <TextView
             android:id="@+id/recordGpsStatus"
             android:layout_width="wrap_content"
