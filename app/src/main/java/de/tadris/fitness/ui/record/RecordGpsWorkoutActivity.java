@@ -21,6 +21,7 @@ package de.tadris.fitness.ui.record;
 
 import android.Manifest;
 import android.animation.Animator;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -28,6 +29,7 @@ import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -72,10 +74,13 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
     private MapView mapView;
     private Polyline polyline;
     private final List<LatLong> latLongList = new ArrayList<>();
+    private LatLong lastGpsPosition = null;
     private TextView gpsStatusView;
     private ImageView focusGpsOverlay;
-    private boolean focusGpsForce = true;
+    private boolean automaticFocusMode = true;
     private boolean gpsFound = false;
+    private boolean showIconSwitchAutoMode = false;
+    private boolean focusedInitially = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,11 +135,9 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
         focusGpsOverlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                focusGpsForce = true;
-                if (!latLongList.isEmpty()) {
-                    focusGpsOverlay.setVisibility(View.GONE);
-                    mapView.getModel().mapViewPosition.animateTo(latLongList.get(latLongList.size() - 1));
-                }
+                automaticFocusMode = true;
+                showIconSwitchAutoMode = false;
+                managePositioning();
             }
         });
 
@@ -181,6 +184,7 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
         }).start();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void setupMap() {
         final boolean showZoomControls = instance.userPreferences.getShowWorkoutZoomControls();
         final boolean setClickable = showZoomControls;
@@ -189,33 +193,88 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
         mapView.setBuiltInZoomControls(showZoomControls);
         mapView.setClickable(setClickable);
 
-        mapView.addInputListener(new InputListener() {
-            @Override
-            public void onMoveEvent() {
-                if (!latLongList.isEmpty()) {
-                    final LatLong center = mapView.getBoundingBox().getCenterPoint();
-                    final LatLong latLongGps = latLongList.get(latLongList.size() - 1);
-                    final double distanceMeter = Math.abs(latLongGps.sphericalDistance(center));
-                    final boolean distanceThresholdExceeded = distanceMeter > 50;
-                    final boolean focusGps = !distanceThresholdExceeded;
-
-                    if (distanceThresholdExceeded) {
-                        focusGpsOverlay.setVisibility(View.VISIBLE);
-                        focusGpsForce = false;
-                        handleLocation(latLongGps);
-                    } else {
-                        focusGpsOverlay.setVisibility(View.GONE);
-                        focusGpsForce = true;
-                    }
+        if (showZoomControls) {
+            mapView.addInputListener(new InputListener() {
+                @Override
+                public void onMoveEvent() {
+                    managePositioning();
                 }
-            }
 
-            @Override
-            public void onZoomEvent() {
+                @Override
+                public void onZoomEvent() {
+                }
+            });
 
-            }
-        });
+            mapView.setOnTouchListener(new View.OnTouchListener() {
+                private boolean prevFocusState = automaticFocusMode;
+                private boolean prevShowIcon = showIconSwitchAutoMode;
+
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN: {
+                            prevFocusState = automaticFocusMode;
+                            prevShowIcon = showIconSwitchAutoMode;
+                            automaticFocusMode = false;
+                        }
+                        break;
+                        case MotionEvent.ACTION_UP: {
+                            automaticFocusMode = prevFocusState && !distanceThresholdExceeds();
+                            showIconSwitchAutoMode = prevShowIcon || !automaticFocusMode;
+                        }
+                        break;
+                    }
+                    managePositioning();
+                    return false;
+                }
+            });
+        }
     }
+
+    private boolean distanceThresholdExceeds (){
+        final LatLong lastPosition = getLastGpsPosition();
+        if (lastPosition == null) {
+            return false;
+        }
+
+        final LatLong center = mapView.getBoundingBox().getCenterPoint();
+        final double distanceMeter = Math.abs(lastPosition.sphericalDistance(center));
+        final boolean distanceThresholdExceeded = distanceMeter > 50;
+
+        return distanceThresholdExceeded;
+    }
+
+    private boolean isWorkoutRunning() {
+        return instance.recorder.getState() == GpsWorkoutRecorder.RecordingState.RUNNING;
+    }
+
+    private LatLong getLastGpsPosition(){
+        if (!latLongList.isEmpty() && isWorkoutRunning() ) {
+            return latLongList.get(latLongList.size() - 1);
+        }
+
+        return lastGpsPosition;
+    }
+
+    private void managePositioning() {
+        LatLong lastPosition = getLastGpsPosition();
+        if (lastPosition != null) {
+            handleLocation(lastPosition);
+            handleCenterIcon();
+        }
+    }
+
+    private boolean shouldFocus() {
+        return !focusedInitially || automaticFocusMode;
+    }
+
+    private void handleCenterIcon() {
+        final int visibility = showIconSwitchAutoMode
+                || (!shouldFocus() && distanceThresholdExceeds()) ? View.VISIBLE: View.GONE;
+
+        focusGpsOverlay.setVisibility(visibility);
+    }
+
 
     private void updateLine() {
         if (polyline != null) {
@@ -337,25 +396,23 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
 
     @Subscribe
     public void onLocationChange(LocationChangeEvent e) {
-        LatLong latLongGps = GpsRecorderService.locationToLatLong(e.location);
-        handleLocation(latLongGps);
+        final LatLong latLongGps = GpsRecorderService.locationToLatLong(e.location);
+        if (isWorkoutRunning()) {
+            latLongList.add(latLongGps);
+        }
+        lastGpsPosition = latLongGps;
+
+        managePositioning();
+        foundGPS();
    }
 
-   private void handleLocation(LatLong latLongGps){
-       final LatLong center = mapView.getBoundingBox().getCenterPoint();
-       final boolean focusGps = focusGpsForce || latLongList.isEmpty();
+   private void handleLocation(LatLong latLongGps) {
+       updateLine();
 
-       if (focusGps) {
+       if (shouldFocus()) {
            mapView.getModel().mapViewPosition.animateTo(latLongGps);
+           focusedInitially = true;
        }
-
-       if (instance.recorder.getState() == GpsWorkoutRecorder.RecordingState.RUNNING) {
-           latLongList.add(latLongGps);
-           updateLine();
-       }
-
-       foundGPS();
-
    }
 
     @Override
@@ -395,8 +452,10 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
         GpsWorkoutRecorder.GpsState state = e.newState;
         gpsStatusView.setTextColor(state.color);
 
+
         if (state != GpsWorkoutRecorder.GpsState.SIGNAL_LOST) {
             foundGPS();
+            managePositioning();
         }
 
         if (instance.recorder.getState() == GpsWorkoutRecorder.RecordingState.IDLE) {
