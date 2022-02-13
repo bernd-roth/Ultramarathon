@@ -30,9 +30,11 @@ import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.RelativeSizeSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,30 +46,37 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import de.tadris.fitness.BuildConfig;
+import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
+import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.recording.information.InformationDisplay;
+import de.tadris.fitness.recording.information.RecordingInformation;
+import de.tadris.fitness.ui.dialog.SelectWorkoutInformationDialog;
+import de.tadris.fitness.ui.record.InfoViewHolder;
 import de.tadris.fitness.util.DataManager;
+import de.tadris.fitness.util.Icon;
 
 public class ShareWorkoutActivity extends ShowWorkoutColoredMapActivity {
+
+    public static final String TAG = "ShareWorkoutActivity";
+    // [!] This should only be changed if absolutely necessary because this acts as a Key to
+    //     access the User preferences for the custom metrics.
+    public static final String PREFS_PREFIX="ShareWorkoutActivity";
+
+    private InfoViewHolder[] customizableMetricFieldViewHolders;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        initBeforeContent();
-
-        setContentView(R.layout.activity_share_workout);
-
-        initRoot();
-
-        initContents();
-
-        initAfterContent();
-
-        fullScreenItems = true;
-        addMap();
-
-        mapView.setClickable(true);
-
+        this.initBeforeContent();
+        this.setContentView(R.layout.activity_share_workout);
+        this.initRoot();
+        this.initContents();
+        this.initAfterContent();
+        this.fullScreenItems = true;
+        this.addMap();
+        this.mapView.setClickable(true);
     }
 
     @Override
@@ -97,24 +106,45 @@ public class ShareWorkoutActivity extends ShowWorkoutColoredMapActivity {
         root = findViewById(R.id.showWorkoutMapParent);
     }
 
+
     private void initContents(){
-        TextView workoutType = this.findViewById(R.id.workoutTypeTitle);
-        workoutType.setText(workout.getWorkoutType(this).title);
 
-        TextView workoutDistance = this.findViewById(R.id.workoutDistance);
-        String distance=distanceUnitUtils.getDistance(workout.length);
-        Spannable distanceSpan = new SpannableString(distance);
-        distanceSpan.setSpan(new RelativeSizeSpan(0.8f), distance.lastIndexOf(" "), distance.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        workoutDistance.setText(distanceSpan);
+        this.initViewHolders();
 
-        TextView workoutPace     = this.findViewById(R.id.workoutPace);
-        String pace=distanceUnitUtils.getPace(workout.avgPace);
-        Spannable paceSpan = new SpannableString(pace);
-        paceSpan.setSpan(new RelativeSizeSpan(0.8f), pace.lastIndexOf(" "), pace.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        workoutPace.setText(paceSpan);
+        ImageView activityImage = this.findViewById(R.id.shareWorkoutActivityIconImageView);
+        String activityIcon = this.workout.getWorkoutType(this).icon;
 
-        TextView workoutTime     = this.findViewById(R.id.workoutTime);
-        workoutTime.setText(distanceUnitUtils.getHourMinuteSecondTime(workout.duration));
+        if(activityIcon != null && Icon.getIcon(activityIcon) != Icon.OTHER.iconRes) {
+            // An Icon will only be set if the activity Icon is not null AND the activity is not
+            // "other". It would look a bit weird with a "?"-icon on the shared image.
+            activityImage.setImageResource(Icon.getIcon(activityIcon));
+        }
+        else {
+            activityImage.setVisibility(View.INVISIBLE);
+        }
+
+
+
+    }
+
+
+    /**
+     * This method creates the metric view-holders (clickable text at the bottom of the
+     * activity's view)
+     */
+    private void initViewHolders() {
+        Log.v(TAG, "Initializing Customizable Metric Fields");
+        this.customizableMetricFieldViewHolders = new InfoViewHolder[]{
+                new InfoViewHolder(0, this::handleInfoViewClickEvent,
+                        this.findViewById(R.id.shareWorkoutActivityCustomMetric1LabelTextview),
+                        this.findViewById(R.id.shareWorkoutActivityCustomMetric1ValueTextview)),
+                new InfoViewHolder(1, this::handleInfoViewClickEvent,
+                        this.findViewById(R.id.shareWorkoutActivityCustomMetric2LabelTextview),
+                        this.findViewById(R.id.shareWorkoutActivityCustomMetric2ValueTextview)),
+                new InfoViewHolder(2, this::handleInfoViewClickEvent,
+                        this.findViewById(R.id.shareWorkoutActivityCustomMetric3LabelTextview),
+                        this.findViewById(R.id.shareWorkoutActivityCustomMetric3ValueTextview))
+        };
     }
 
     private void shareWorkoutActivity() {
@@ -163,5 +193,47 @@ public class ShareWorkoutActivity extends ShowWorkoutColoredMapActivity {
         }
         view.draw(canvas);
         return returnedBitmap;
+    }
+
+    /**
+     * This callback is invoked when the user interacts with one of the customizable metric fields.
+     * @param slot An Int that identifies the Text field
+     * @param isLongClick is true if the user held the button instead of just tapping it
+     */
+    public void handleInfoViewClickEvent(int slot, boolean isLongClick) {
+        Log.v(TAG, String.format("User clicked on Custom Metric field (Slot #%d), longClick=%b", slot, isLongClick));
+
+        if (!isLongClick) {
+            return;
+        }
+
+        WorkoutType.RecordingType recordingType = WorkoutType.RecordingType.findById(this.workout.getWorkoutType(this).recordingType);
+        new SelectWorkoutInformationDialog(this, recordingType, slot, this::handleWorkoutInformationSelectEvent).show();
+    }
+
+    /**
+     * This callback is invoked when the user has selected the new metric to display in the provided
+     * slot.
+     * @param slot the Index of the ViewHolder that has been modified.
+     * @param information
+     */
+    private void handleWorkoutInformationSelectEvent(int slot, RecordingInformation information) {
+        Instance.getInstance(this).userPreferences.setIdOfDisplayedInformation(PREFS_PREFIX, slot, information.getId());
+        this.updateSlot(slot, information);
+    }
+
+    /**
+     * Update a specific custom metric slot
+     * @param slot The "slot" to update
+     */
+    private void updateSlot(int slot, RecordingInformation information) {
+        Log.v(TAG, String.format("Updating data in Slot #%d", slot));
+        Instance instance = Instance.getInstance(this);
+        String slotInformationTypeId = instance.userPreferences.getIdOfDisplayedInformation(PREFS_PREFIX, slot);
+        String label = information.getTitle();
+        String data = information.getDisplayedText(instance.recorder); // [!] FIXME: As of now, this always returns a 0 or "-", probably because there is no "Recorder" when sharing.
+        InfoViewHolder infoViewHolder = this.customizableMetricFieldViewHolders[slot];
+        infoViewHolder.setText(label, data);
+
     }
 }
