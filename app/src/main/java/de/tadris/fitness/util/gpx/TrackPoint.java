@@ -40,8 +40,6 @@ public class TrackPoint {
 
     private String time;
 
-    private String fix;
-
     private TrackPointExtensions extensions;
 
     public TrackPoint() {

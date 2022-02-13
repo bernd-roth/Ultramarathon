@@ -125,7 +125,7 @@
     <string name="mapStyle">Kaartstijl</string>
     <string name="waiting_gps">Wacht op GPS</string>
     <string name="actionUploadToOSM">Upload naar OSM</string>
-    <string name="cut">Knip de eerste/laatste 300 meter</string>
+    <string name="cut">Knip de eerste/laatste 300m</string>
     <string name="trackVisibilityPref">Zichtbaarheid opname</string>
     <string name="description">Beschrijving</string>
     <string name="ttsNotAvailable">Tekst-naar-spraak is niet beschikbaar</string>
@@ -304,8 +304,8 @@
     <string name="resumeWorkout">Weer Trainen</string>
     <string name="heartRateNotAvailable">Hartslag is momenteel niet beschikbaar.</string>
     <string name="announcementWorkoutActions">Training acties (pauzeren, hervatten, enz.)</string>
-    <string name="resumeWorkoutConfirmation">Wil je echt doorgaan met deze training\? Dit zal ook een pauze toevoegen vanaf het moment dat de training werd gestopt.</string>
-    <string name="prefShowOnLockScreenSummary">Toon training informatie, zelfs als de telefoon op slot zit.</string>
+    <string name="resumeWorkoutConfirmation">Deze training hervatten\? Er wordt een pauze toegevoegd vanaf het moment dat de training werd gestopt.</string>
+    <string name="prefShowOnLockScreenSummary">Trainingsinfo weergeven, zelfs als het apparaat is vergrendeld.</string>
     <string name="prefShowOnLockScreenTitle">Zichtbaar op vergrendelscherm</string>
     <string name="notimeout">Geen Time-Out</string>
     <string name="workoutTypeEditMET">MET</string>
@@ -328,7 +328,7 @@
     <string name="actionImportMultiple">Meerdere importeren</string>
     <string name="actionImport">Importeren</string>
     <string name="importWorkoutMultipleQuestion">Wil je één of GPX-bestand of meerdere importeren\?</string>
-    <string name="pref_auto_start_mode_unknown">Onbekende modus (niet selecteren)</string>
+    <string name="pref_auto_start_mode_unknown">Onbekend (niet gebruiken)</string>
     <string name="pref_auto_start_mode_on_move">Wacht tot je begint te bewegen</string>
     <string name="pref_auto_start_mode_wait_for_gps">Wacht op een nauwkeurige GPS-positie</string>
     <string name="pref_auto_start_mode_instant">Begin direct</string>
@@ -367,9 +367,9 @@
     <string name="cancelDownloadConfirmation">Wilt u de huidige download annuleren\?</string>
     <string name="actionCancelDownload">Annuleer het downloaden</string>
     <string name="alreadyDownloading">Er wordt al een bestand gedownload</string>
-    <string name="downloadMapConfirmation">Wil je de kaart %s downloaden\?</string>
+    <string name="downloadMapConfirmation">Wil je de kaart \\\"%s\\\" downloaden\?</string>
     <string name="actionDownloadMap">Kaart downloaden</string>
-    <string name="overwriteMapConfirmation">Wil je de bestaande kaart %s overschrijven\?</string>
+    <string name="overwriteMapConfirmation">Wil je de bestaande kaart \\\"%s\\\" overschrijven\?</string>
     <string name="downloadMapsSpecifyDirectory">Geef eerst een locatie op voor offline kaarten</string>
     <string name="downloadMapsTitle">Kaarten downloaden</string>
     <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack verzamelt ook locatiegegevens op de achtergrond om de training op te nemen wanneer het scherm is uitgeschakeld. Geef FitoTrack daarom altijd toegang tot uw locatie.</string>
@@ -377,7 +377,7 @@
     <string name="workoutTypeAll">Alle</string>
     <string name="edit_interval">Interval bewerken</string>
     <string name="invalidNumberFormat">Ongeldig getalformaat.</string>
-    <string name="pref_announcements_pace_control_title">Waarschuwingen voor tempocontrole</string>
+    <string name="pref_announcements_pace_control_title">Tempo waarschuwingen</string>
     <string name="pref_announcements_pace_control_summary">Waarschuw bij onder of boven een bepaalde snelheid</string>
     <string name="noColoring">Geen kleur</string>
     <string name="auto">Automatisch</string>
@@ -394,7 +394,7 @@
     <string name="runningMigrations">Migraties uitvoeren</string>
     <string name="editWorkoutStartEnd">Bewerken Start/Einde</string>
     <string name="unitHeartBeatsPerMinute">bpm</string>
-    <string name="preferenceFirstDayOfWeek">Begin van de week</string>
+    <string name="preferenceFirstDayOfWeek">Week start</string>
     <string name="preferenceUseAverageForCurrentSpeed">Gebruik de gemiddelde snelheid over een bepaalde tijd in plaats van het laatste enkele snelheidsrecord voor de huidige snelheidsberekening.</string>
     <string name="preferenceCurrentSpeedAverageTimeTitle">Huidige snelheid gemiddeld</string>
     <string name="preferenceCurrentSpeedAverageTimeSummary">Vervang de huidige snelheidsberekening door een gemiddelde berekening.</string>
@@ -453,4 +453,8 @@
     <string name="workoutCurrentFrequency">Huidige Frequentie</string>
     <string name="unitHertzLong">Hertz</string>
     <string name="currentTimeStructure">%s %s</string>
+    <plurals name="importedWorkouts">
+        <item quantity="one">1 training geïmporteerd</item>
+        <item quantity="other">%d Trainingen geïmporteerd</item>
+    </plurals>
 </resources>

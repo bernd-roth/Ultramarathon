@@ -122,7 +122,7 @@
     <string name="mapStyle">Stile mappa</string>
     <string name="waiting_gps">Attesa GPS</string>
     <string name="actionUploadToOSM">Carica su OSM</string>
-    <string name="cut">Taglia i primi/ultimi 300 metri</string>
+    <string name="cut">Taglia i primi / gli ultimi 300 metri</string>
     <string name="trackVisibilityPref">Visibilità tracciato</string>
     <string name="description">Descrizione</string>
     <string name="ttsNotAvailable">Sintesi vocale non disponibile</string>
@@ -440,7 +440,7 @@
     <string name="alreadyDownloading">Un file è già stato scaricato</string>
     <string name="downloadMapConfirmation">Vuoi scaricare il file mappa %s\?</string>
     <string name="actionDownloadMap">Scarica mappa</string>
-    <string name="overwriteMapConfirmation">Vuoi sovrascrivere il file mappa esistente %s\?</string>
+    <string name="overwriteMapConfirmation">Vuoi sovrascrivere il file della mappa esistente %s\?</string>
     <string name="downloadMapsSpecifyDirectory">Si prega di specificare prima una directory per le mappe fuori linea</string>
     <string name="downloadMapsTitle">Scarica mappe</string>
     <string name="pref_render_theme_style_info">Nessun menù di stile del tema di rendering disponibile per il rendering selezionato.</string>

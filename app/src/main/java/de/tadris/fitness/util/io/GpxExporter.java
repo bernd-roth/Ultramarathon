@@ -70,7 +70,7 @@ public class GpxExporter implements IWorkoutExporter {
         ArrayList<Track> tracks = new ArrayList<>();
         tracks.add(track);
         Metadata meta = new Metadata(workout.toString(), workout.comment, getDateTime(workout.start));
-        return new Gpx("1.1", "FitoTrack", meta, workout.toString(), workout.comment, tracks);
+        return new Gpx("1.1", "FitoTrack", meta, tracks);
     }
 
     private Track getTrackFromWorkout(GpsWorkoutData data, int number) {
@@ -87,9 +87,14 @@ public class GpxExporter implements IWorkoutExporter {
         TrackSegment segment = new TrackSegment();
         ArrayList<TrackPoint> trkpt = new ArrayList<>();
 
-        for (GpsSample sample : data.getSamples()) {
-            trkpt.add(new TrackPoint(sample.lat, sample.lon, sample.elevation,
-                    getDateTime(sample.absoluteTime), new TrackPointExtensions(sample.speed, new GpxTpxExtension(sample.heartRate))));
+        for (GpsSample sample : samples) {
+            trkpt.add(new TrackPoint(
+                    sample.lat,
+                    sample.lon,
+                    sample.elevation,
+                    getDateTime(sample.absoluteTime),
+                    new TrackPointExtensions(new GpxTpxExtension(sample.heartRate))
+            ));
         }
         segment.setTrkpt(trkpt);
 
