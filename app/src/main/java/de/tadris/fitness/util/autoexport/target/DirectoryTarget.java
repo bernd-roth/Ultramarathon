@@ -35,8 +35,6 @@ import de.tadris.fitness.R;
 
 public class DirectoryTarget implements ExportTarget {
 
-    public static final String TARGET_TYPE_DIRECTORY = "directory";
-
     private final String directoryUri;
 
     public DirectoryTarget(String directoryUri) {

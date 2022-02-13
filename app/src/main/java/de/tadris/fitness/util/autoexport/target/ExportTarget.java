@@ -29,6 +29,8 @@ import java.io.File;
 
 public interface ExportTarget {
 
+    String TARGET_TYPE_DIRECTORY = "directory";
+
     void exportFile(Context context, File file) throws Exception;
 
     String getId();
@@ -48,7 +50,7 @@ public interface ExportTarget {
     static ExportTarget getExportTargetImplementation(String type, String data) {
         // TODO: check null-safety for usages
         switch (type) {
-            case DirectoryTarget.TARGET_TYPE_DIRECTORY:
+            case TARGET_TYPE_DIRECTORY:
                 return new DirectoryTarget(data);
             default:
                 return null;

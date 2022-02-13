@@ -46,6 +46,18 @@ public interface ExportSource {
         }
     }
 
+    @StringRes
+    static int getExplanation(String name) {
+        switch (name) {
+            case EXPORT_SOURCE_BACKUP:
+                return R.string.autoExportBackupExplanation;
+            case EXPORT_SOURCE_WORKOUT_GPX:
+                return R.string.autoExportWorkoutExplanation;
+            default:
+                return R.string.unknown;
+        }
+    }
+
     static ExportSource getExportSourceByName(String name, String data) {
         switch (name) {
             case EXPORT_SOURCE_BACKUP:

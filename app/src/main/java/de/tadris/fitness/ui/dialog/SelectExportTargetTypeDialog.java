@@ -28,9 +28,9 @@ import de.tadris.fitness.util.autoexport.target.ExportTarget;
 
 public class SelectExportTargetTypeDialog {
 
-    private Activity context;
-    private ExportTargetTypeSelectListener listener;
-    private ExportTarget[] targetTypes;
+    private final Activity context;
+    private final ExportTargetTypeSelectListener listener;
+    private final ExportTarget[] targetTypes;
 
     public SelectExportTargetTypeDialog(Activity context, ExportTargetTypeSelectListener listener) {
         this.context = context;

@@ -87,7 +87,7 @@ public class GpxExporter implements IWorkoutExporter {
         TrackSegment segment = new TrackSegment();
         ArrayList<TrackPoint> trkpt = new ArrayList<>();
 
-        for (GpsSample sample : samples) {
+        for (GpsSample sample : data.getSamples()) {
             trkpt.add(new TrackPoint(
                     sample.lat,
                     sample.lon,

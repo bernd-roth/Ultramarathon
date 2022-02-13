@@ -21,6 +21,7 @@ package de.tadris.fitness.data;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
+import androidx.room.Insert;
 import androidx.room.Query;
 
 @Dao
@@ -34,5 +35,8 @@ public interface ExportTargetDao {
 
     @Delete
     void delete(ExportTargetConfiguration configuration);
+
+    @Insert
+    void insert(ExportTargetConfiguration configuration);
 
 }

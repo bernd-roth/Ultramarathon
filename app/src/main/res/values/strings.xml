@@ -455,6 +455,8 @@
     <string name="autoExportWorkoutsSummary">Export newly recorded workouts</string>
     <string name="autoExportBackupTitle">Automatic app backups</string>
     <string name="autoExportBackupSummary">Export backups automatically</string>
+    <string name="autoExportBackupExplanation">In the specified interval a backup will be exported here:</string>
+    <string name="autoExportWorkoutExplanation">After a new workout was recorded, a GPX-export will be exported here:</string>
     <string-array name="osm_track_visibility">
         <item>Identifiable</item>
         <item>Trackable</item>

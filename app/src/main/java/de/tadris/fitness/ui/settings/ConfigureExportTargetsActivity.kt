@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -16,96 +16,128 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package de.tadris.fitness.ui.settings
 
-package de.tadris.fitness.ui.settings;
+import android.app.AlertDialog
+import android.content.DialogInterface
+import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
+import android.view.View
+import android.widget.TextView
+import androidx.preference.Preference
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import de.tadris.fitness.Instance
+import de.tadris.fitness.R
+import de.tadris.fitness.data.ExportTargetConfiguration
+import de.tadris.fitness.ui.FitoTrackActivity
+import de.tadris.fitness.ui.adapter.ExportTargetConfigurationAdapter
+import de.tadris.fitness.ui.adapter.ExportTargetConfigurationAdapter.ExportTargetAdapterListener
+import de.tadris.fitness.ui.dialog.SelectExportTargetTypeDialog
+import de.tadris.fitness.ui.dialog.SelectExportTargetTypeDialog.ExportTargetTypeSelectListener
+import de.tadris.fitness.util.autoexport.source.ExportSource
+import de.tadris.fitness.util.autoexport.target.DirectoryTarget
+import de.tadris.fitness.util.autoexport.target.ExportTarget
 
-import android.app.AlertDialog;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
+class ConfigureExportTargetsActivity : FitoTrackActivity(),
+    ExportTargetAdapterListener, ExportTargetTypeSelectListener {
 
-import androidx.recyclerview.widget.RecyclerView;
+    companion object {
+        const val EXTRA_SOURCE = "source"
+        const val FILE_PICKER_CODE = 5
+    }
 
-import java.util.ArrayList;
-import java.util.Arrays;
+    private var exportSourceId = ""
 
-import de.tadris.fitness.Instance;
-import de.tadris.fitness.R;
-import de.tadris.fitness.data.ExportTargetConfiguration;
-import de.tadris.fitness.ui.FitoTrackActivity;
-import de.tadris.fitness.ui.adapter.ExportTargetConfigurationAdapter;
-import de.tadris.fitness.ui.dialog.SelectExportTargetTypeDialog;
-import de.tadris.fitness.util.autoexport.source.ExportSource;
-import de.tadris.fitness.util.autoexport.target.DirectoryTarget;
-import de.tadris.fitness.util.autoexport.target.ExportTarget;
+    private lateinit var adapter: ExportTargetConfigurationAdapter
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var explanationText: TextView
+    private lateinit var hintText: TextView
 
-public class ConfigureExportTargetsActivity extends FitoTrackActivity
-        implements ExportTargetConfigurationAdapter.ExportTargetAdapterListener,
-        SelectExportTargetTypeDialog.ExportTargetTypeSelectListener {
-
-    public static final String EXTRA_SOURCE = "source";
-
-    String exportSourceId = "";
-
-    private RecyclerView recyclerView;
-    private ExportTargetConfigurationAdapter adapter;
-    private TextView hintText;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_configure_export_targets);
-
-        if (getIntent().getExtras() != null) {
-            exportSourceId = getIntent().getExtras().getString(EXTRA_SOURCE, "");
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_configure_export_targets)
+        if (intent.extras != null) {
+            exportSourceId = intent.extras!!
+                .getString(EXTRA_SOURCE, "")
         }
         if (exportSourceId.isEmpty()) {
-            finish();
-            return;
+            finish()
+            return
         }
-        setTitle(ExportSource.getTitle(exportSourceId));
-        setupActionBar();
-
-        recyclerView = findViewById(R.id.exportTargetsRecyclerView);
-        hintText = findViewById(R.id.exportTargetsHint);
-        findViewById(R.id.exportTargetsAdd).setOnClickListener(v -> showAddDialog());
+        setTitle(ExportSource.getTitle(exportSourceId))
+        setupActionBar()
+        recyclerView = findViewById(R.id.exportTargetsRecyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        hintText = findViewById(R.id.exportTargetsHint)
+        explanationText = findViewById(R.id.exportTargetsExplanation)
+        findViewById<View>(R.id.exportTargetsAdd).setOnClickListener { showAddDialog() }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        loadData();
+    override fun onResume() {
+        super.onResume()
+        loadData()
     }
 
-    private void loadData() {
-        ExportTargetConfiguration[] configurations = Instance.getInstance(this).db.exportTargetDao().findAllFor(exportSourceId);
-        adapter = new ExportTargetConfigurationAdapter(new ArrayList<>(Arrays.asList(configurations)), this);
-        recyclerView.setAdapter(adapter);
-        hintText.setVisibility(configurations.length == 0 ? View.VISIBLE : View.GONE);
+    private fun loadData() {
+        val configurations =
+            Instance.getInstance(this).db.exportTargetDao().findAllFor(exportSourceId)
+        adapter = ExportTargetConfigurationAdapter(configurations.toList(), this)
+        recyclerView.adapter = adapter
+        hintText.visibility = if (configurations.isEmpty()) View.VISIBLE else View.GONE
+        explanationText.visibility = if (configurations.isEmpty()) View.GONE else View.VISIBLE
+        explanationText.text = getString(ExportSource.getExplanation(exportSourceId))
     }
 
-    public void showAddDialog() {
-        new SelectExportTargetTypeDialog(this, this).show();
+    private fun showAddDialog() {
+        SelectExportTargetTypeDialog(this, this).show()
     }
 
-    @Override
-    public void onTargetTypeSelect(ExportTarget target) {
-        if (target instanceof DirectoryTarget) {
-
+    override fun onTargetTypeSelect(target: ExportTarget) {
+        if (target is DirectoryTarget) {
+            showDirectoryPicker()
         }
     }
 
-    @Override
-    public void onDelete(ExportTargetConfiguration configuration) {
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.delete)
-                .setMessage(R.string.deleteExportTargetConfirmation)
-                .setNegativeButton(R.string.cancel, null)
-                .setPositiveButton(R.string.delete, (dialog, which) -> delete(configuration))
-                .show();
+    private fun showDirectoryPicker(){
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
+        startActivityForResult(intent, FILE_PICKER_CODE)
     }
 
-    private void delete(ExportTargetConfiguration configuration) {
-        Instance.getInstance(this).db.exportTargetDao().delete(configuration);
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == RESULT_OK && requestCode == FILE_PICKER_CODE) {
+            val uri = data?.data ?: return
+            contentResolver.takePersistableUriPermission(
+                uri,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+            saveDirectoryTarget(uri)
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
+
+    private fun saveDirectoryTarget(uri: Uri){
+        val configuration = ExportTargetConfiguration()
+        configuration.source = exportSourceId
+        configuration.type = ExportTarget.TARGET_TYPE_DIRECTORY
+        configuration.data = uri.toString()
+        Instance.getInstance(this).db.exportTargetDao().insert(configuration)
+        loadData()
+    }
+
+    override fun onDelete(configuration: ExportTargetConfiguration) {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.delete)
+            .setMessage(R.string.deleteExportTargetConfirmation)
+            .setNegativeButton(R.string.cancel, null)
+            .setPositiveButton(R.string.delete) { _: DialogInterface?, _: Int ->
+                delete(configuration)
+            }
+            .show()
+    }
+
+    private fun delete(configuration: ExportTargetConfiguration) {
+        Instance.getInstance(this).db.exportTargetDao().delete(configuration)
+    }
+
 }
