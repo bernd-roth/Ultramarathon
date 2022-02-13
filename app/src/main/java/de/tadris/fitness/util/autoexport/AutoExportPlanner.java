@@ -50,7 +50,7 @@ public class AutoExportPlanner {
 
     public void planAutoBackupFor(ExportTargetConfiguration configuration) {
         Data data = new Data.Builder()
-                .putString(AutoExporter.DATA_SOURCE_TYPE, ExportSource.EXPORT_SOURCE_WORKOUT_GPX)
+                .putString(AutoExporter.DATA_SOURCE_TYPE, ExportSource.EXPORT_SOURCE_BACKUP)
                 .putLong(AutoExporter.DATA_TARGET_CONFIG_ID, configuration.id)
                 .build();
         int hourInterval = Instance.getInstance(context).userPreferences.getAutoBackupIntervalHours();

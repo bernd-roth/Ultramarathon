@@ -40,6 +40,13 @@
             android:summary="@string/autoExportWorkoutsSummary"
             android:title="@string/workoutGPXExportTitle" />
 
+        <ListPreference
+            android:defaultValue="168"
+            android:entries="@array/pref_backup_interval_entries"
+            android:entryValues="@array/pref_backup_interval_values"
+            android:key="autoBackupInterval"
+            android:title="@string/exportIntervalTitle" />
+
         <Preference
             android:key="autoExportBackup"
             android:summary="@string/autoExportBackupSummary"

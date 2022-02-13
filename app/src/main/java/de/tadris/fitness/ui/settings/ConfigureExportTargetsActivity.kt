@@ -36,6 +36,7 @@ import de.tadris.fitness.ui.adapter.ExportTargetConfigurationAdapter
 import de.tadris.fitness.ui.adapter.ExportTargetConfigurationAdapter.ExportTargetAdapterListener
 import de.tadris.fitness.ui.dialog.SelectExportTargetTypeDialog
 import de.tadris.fitness.ui.dialog.SelectExportTargetTypeDialog.ExportTargetTypeSelectListener
+import de.tadris.fitness.util.autoexport.AutoExportPlanner
 import de.tadris.fitness.util.autoexport.source.ExportSource
 import de.tadris.fitness.util.autoexport.target.DirectoryTarget
 import de.tadris.fitness.util.autoexport.target.ExportTarget
@@ -123,6 +124,7 @@ class ConfigureExportTargetsActivity : FitoTrackActivity(),
         configuration.data = uri.toString()
         Instance.getInstance(this).db.exportTargetDao().insert(configuration)
         loadData()
+        AutoExportPlanner(this).planAutoBackup()
     }
 
     override fun onDelete(configuration: ExportTargetConfiguration) {
@@ -138,6 +140,7 @@ class ConfigureExportTargetsActivity : FitoTrackActivity(),
 
     private fun delete(configuration: ExportTargetConfiguration) {
         Instance.getInstance(this).db.exportTargetDao().delete(configuration)
+        AutoExportPlanner(this).planAutoBackup()
     }
 
 }

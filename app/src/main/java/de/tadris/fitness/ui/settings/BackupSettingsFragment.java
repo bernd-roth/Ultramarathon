@@ -30,6 +30,7 @@ import android.os.Handler;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
+import androidx.preference.Preference;
 
 import java.io.File;
 
@@ -38,6 +39,7 @@ import de.tadris.fitness.R;
 import de.tadris.fitness.export.RestoreController;
 import de.tadris.fitness.ui.ShareFileActivity;
 import de.tadris.fitness.ui.dialog.ProgressDialogController;
+import de.tadris.fitness.util.autoexport.AutoExportPlanner;
 import de.tadris.fitness.util.autoexport.source.BackupExportSource;
 import de.tadris.fitness.util.autoexport.source.ExportSource;
 
@@ -65,6 +67,14 @@ public class BackupSettingsFragment extends FitoTrackSettingFragment {
             startExportTargetActivity(ExportSource.EXPORT_SOURCE_BACKUP);
             return true;
         });
+
+        Preference backupIntervalPreference = findPreference("autoBackupInterval");
+        backupIntervalPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+            sBindPreferenceSummaryToValueListener.onPreferenceChange(preference, newValue);
+            new AutoExportPlanner(getContext()).planAutoBackup();
+            return true;
+        });
+        triggerChangeListener(backupIntervalPreference);
 
     }
 

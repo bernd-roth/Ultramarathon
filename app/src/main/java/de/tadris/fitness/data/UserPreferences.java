@@ -219,7 +219,7 @@ public class UserPreferences {
     }
 
     public int getAutoBackupIntervalHours() {
-        return preferences.getInt("autoBackupInterval", 24 * 7);
+        return Integer.parseInt(preferences.getString("autoBackupInterval", "168"));
     }
 
     public String getOfflineMapDirectoryName() {

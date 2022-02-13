@@ -139,6 +139,9 @@ public class ShowGpsWorkoutActivity extends GpsWorkoutActivity implements Dialog
             addTitle(getString(R.string.sections));
             addSectionList();
         }
+
+        // TODO remove this:
+        Instance.getInstance(this).planner.onWorkoutRecorded(workout);
     }
 
     private void addSectionList() {

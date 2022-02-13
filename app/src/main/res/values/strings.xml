@@ -457,6 +457,12 @@
     <string name="autoExportBackupSummary">Export backups automatically</string>
     <string name="autoExportBackupExplanation">In the specified interval a backup will be exported here:</string>
     <string name="autoExportWorkoutExplanation">After a new workout was recorded, a GPX-export will be exported here:</string>
+    <string name="exportIntervalTitle">Backup interval</string>
+    <string name="takeBackups1">Every day</string>
+    <string name="takeBackups2">Every second day</string>
+    <string name="takeBackups3">Every third day</string>
+    <string name="takeBackups7">Every week</string>
+    <string name="takeBackups14">Every second week</string>
     <string-array name="osm_track_visibility">
         <item>Identifiable</item>
         <item>Trackable</item>
