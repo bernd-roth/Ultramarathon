@@ -21,6 +21,8 @@ package de.tadris.fitness.aggregation.information;
 
 import android.content.Context;
 
+import androidx.annotation.StringRes;
+
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationType;
 import de.tadris.fitness.data.IndoorWorkout;
@@ -37,8 +39,9 @@ public class Repetitions extends IndoorWorkoutInformation {
     }
 
     @Override
+    @StringRes
     public int getTitleRes() {
-        return R.string.workoutRepetitions;
+        return SummaryInformationType.Repetitions.getLabelRes();
     }
 
     @Override

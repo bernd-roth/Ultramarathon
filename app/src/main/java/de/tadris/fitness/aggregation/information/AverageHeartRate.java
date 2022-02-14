@@ -21,6 +21,8 @@ package de.tadris.fitness.aggregation.information;
 
 import android.content.Context;
 
+import androidx.annotation.StringRes;
+
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationType;
 import de.tadris.fitness.data.BaseWorkout;
@@ -32,8 +34,9 @@ public class AverageHeartRate extends AbstractWorkoutInformation {
     }
 
     @Override
+    @StringRes
     public int getTitleRes() {
-        return R.string.workoutAvgHeartRate;
+        return SummaryInformationType.AverageHeartRate.getLabelRes();
     }
 
     @Override
