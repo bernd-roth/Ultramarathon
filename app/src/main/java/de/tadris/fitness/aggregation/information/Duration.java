@@ -44,6 +44,11 @@ public class Duration extends AbstractWorkoutInformation {
     }
 
     @Override
+    public SummaryInformationType getType() {
+        return SummaryInformationType.Duration;
+    }
+
+    @Override
     public double getValueFromWorkout(BaseWorkout workout) {
         return (double) (workout.duration / 1000 / 60);
     }

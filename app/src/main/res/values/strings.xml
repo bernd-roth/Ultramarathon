@@ -447,6 +447,7 @@
     <string name="invalidNumberFormat">Invalid number format.</string>
     <string name="fileNotFound">File not found</string>
     <string name="approxSymbol" translatable="false">≈</string>
+    <string name="hidden">Hidden</string>
     <string-array name="osm_track_visibility">
         <item>Identifiable</item>
         <item>Trackable</item>

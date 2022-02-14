@@ -44,6 +44,11 @@ public class AverageTotalSpeed extends GpsWorkoutInformation {
     }
 
     @Override
+    public SummaryInformationType getType() {
+        return SummaryInformationType.AverageTotalSpeed;
+    }
+
+    @Override
     public double getValueFromWorkout(GpsWorkout workout) {
         return distanceUnitUtils.getDistanceUnitSystem().getSpeedFromMeterPerSecond((double) workout.length / ((double) (workout.end - workout.start) / 1000));
     }

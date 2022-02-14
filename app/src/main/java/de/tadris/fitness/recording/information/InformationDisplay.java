@@ -22,6 +22,7 @@ package de.tadris.fitness.recording.information;
 import android.content.Context;
 
 import de.tadris.fitness.Instance;
+import de.tadris.fitness.data.preferences.RecordingScreenInformationPreferences;
 import de.tadris.fitness.data.preferences.UserPreferences;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.recording.BaseWorkoutRecorder;
@@ -39,7 +40,14 @@ public class InformationDisplay {
     }
 
     public DisplaySlot getDisplaySlot(BaseWorkoutRecorder recorder, int slot) {
-        String informationId = preferences.getIdOfDisplayedInformation(mode.id, slot);
+        String informationId = null;
+        try {
+            informationId = preferences.getRecordingScreenInformationPreferences().getIdOfDisplayedInformation(mode.id, slot);
+        } catch (RecordingScreenInformationPreferences.UnknownModeException e) {
+            e.printStackTrace();
+            // Should never happen as long as all Workout Recording Types are handled inside RecordingScreenInformationPreferences
+            return new DisplaySlot(slot, "ERR", "ERR");
+        }
         RecordingInformation information = manager.getInformationById(informationId);
         if (information != null) {
             return new DisplaySlot(slot, information.getTitle(), information.getDisplayedText(recorder));

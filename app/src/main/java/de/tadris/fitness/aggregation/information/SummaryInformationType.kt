@@ -14,17 +14,19 @@ import de.tadris.fitness.data.BaseWorkout
  * Note that these are different from "Live"-Information Values.
  */
 enum class SummaryInformationType(val id: String, @StringRes val labelRes: Int) {
-    AverageHeartRate("TODO", R.string.workoutAvgHeartRate),
-    AverageMotionSpeed("TODO", R.string.avgSpeedInMotion),
-    AveragePace("TODO", R.string.workoutPace),
-    AverageTotalSpeed("TODO", R.string.avgSpeedTotalShort),
-    BurnedEnergy("TODO", R.string.workoutBurnedEnergy),
-    Distance("TODO", R.string.workoutDistance),
-    Duration("TODO", R.string.workoutDuration),
-    EnergyConsumption("TODO", R.string.workoutEnergyConsumption),
-    Repetitions("TODO", R.string.workoutRepetitions),
-    TopSpeed("TODO", R.string.workoutTopSpeed),
-    WorkoutCount("TODO", R.string.workoutNumber);
+    AverageHeartRate("TODO-1", R.string.workoutAvgHeartRate),
+    AverageMotionSpeed("TODO-2", R.string.avgSpeedInMotion),
+    AveragePace("TODO-3", R.string.workoutPace),
+    AverageTotalSpeed("TODO-4", R.string.avgSpeedTotalShort),
+    BurnedEnergy("TODO-5", R.string.workoutBurnedEnergy),
+    Distance("TODO-6", R.string.workoutDistance),
+    Duration("TODO-7", R.string.workoutDuration),
+    EnergyConsumption("TODO-8", R.string.workoutEnergyConsumption),
+    Repetitions("TODO-9", R.string.workoutRepetitions),
+    TopSpeed("TODO-10", R.string.workoutTopSpeed),
+    WorkoutCount("TODO-11", R.string.workoutNumber),
+    // This should be used if one of the TextViews should not display anything.
+    Hidden("TODO-12", R.string.hidden);
 
     companion object {
         @JvmStatic
@@ -63,6 +65,7 @@ enum class SummaryInformationType(val id: String, @StringRes val labelRes: Int) 
                 Repetitions -> Repetitions(ctx)
                 TopSpeed -> TopSpeed(ctx)
                 WorkoutCount -> WorkoutCount(ctx)
+                Hidden -> Hidden(ctx)
             }
         }
 

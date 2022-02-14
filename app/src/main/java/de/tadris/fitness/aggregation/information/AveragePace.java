@@ -44,6 +44,11 @@ public class AveragePace extends GpsWorkoutInformation {
     }
 
     @Override
+    public SummaryInformationType getType() {
+        return SummaryInformationType.AveragePace;
+    }
+
+    @Override
     public double getValueFromWorkout(GpsWorkout workout) {
         return ((double) workout.duration / 1000 / 60) / distanceUnitUtils.getDistanceUnitSystem().getDistanceFromKilometers((double) workout.length / 1000);
     }

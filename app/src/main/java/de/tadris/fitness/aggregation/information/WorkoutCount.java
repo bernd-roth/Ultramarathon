@@ -44,6 +44,11 @@ public class WorkoutCount extends AbstractWorkoutInformation {
     }
 
     @Override
+    public SummaryInformationType getType() {
+        return SummaryInformationType.WorkoutCount;
+    }
+
+    @Override
     public double getValueFromWorkout(BaseWorkout workout) {
         return 1;
     }

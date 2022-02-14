@@ -114,8 +114,8 @@ public class UserPreferences {
 
     public UserPreferences(Context context) {
         this.preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        this.recordingScreenInformationPreferences = new RecordingScreenInformationPreferences(context);
-        this.sharingScreenInformationPreferences = new SharingScreenInformationPreferences(context);
+        this.recordingScreenInformationPreferences = new RecordingScreenInformationPreferences(this.preferences);
+        this.sharingScreenInformationPreferences = new SharingScreenInformationPreferences(this.preferences);
     }
 
     public RecordingScreenInformationPreferences getRecordingScreenInformationPreferences() {
@@ -158,6 +158,7 @@ public class UserPreferences {
         return preferences.getBoolean("intervalsIncludePause", true);
     }
 
+    @Deprecated()
     public String getIdOfDisplayedInformation(String mode, int slot) {
         String defValue = "";
         if (WorkoutType.RecordingType.INDOOR.id.equals(mode)) {

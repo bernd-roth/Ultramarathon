@@ -50,6 +50,11 @@ public class Repetitions extends IndoorWorkoutInformation {
     }
 
     @Override
+    public SummaryInformationType getType() {
+        return SummaryInformationType.Repetitions;
+    }
+
+    @Override
     public AggregationType getAggregationType() {
         return AggregationType.SUM;
     }

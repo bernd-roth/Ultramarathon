@@ -44,6 +44,11 @@ public class AverageMotionSpeed extends GpsWorkoutInformation {
     }
 
     @Override
+    public SummaryInformationType getType() {
+        return SummaryInformationType.AverageMotionSpeed;
+    }
+
+    @Override
     public double getValueFromWorkout(GpsWorkout workout) {
         return distanceUnitUtils.getDistanceUnitSystem().getSpeedFromMeterPerSecond((double) workout.length / ((double) workout.duration / 1000));
     }

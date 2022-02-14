@@ -45,6 +45,11 @@ public class AverageHeartRate extends AbstractWorkoutInformation {
     }
 
     @Override
+    public SummaryInformationType getType() {
+        return SummaryInformationType.AverageHeartRate;
+    }
+
+    @Override
     public boolean isInformationAvailableFor(BaseWorkout workout) {
         return workout.hasHeartRateData();
     }

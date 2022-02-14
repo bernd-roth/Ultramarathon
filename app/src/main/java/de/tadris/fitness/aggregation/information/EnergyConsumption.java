@@ -44,6 +44,11 @@ public class EnergyConsumption extends AbstractWorkoutInformation {
     }
 
     @Override
+    public SummaryInformationType getType() {
+        return SummaryInformationType.EnergyConsumption;
+    }
+
+    @Override
     public double getValueFromWorkout(BaseWorkout workout) {
         return workout.calorie / ((double) workout.duration / 1000 / 60);
     }

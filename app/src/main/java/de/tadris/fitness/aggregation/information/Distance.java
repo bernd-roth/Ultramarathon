@@ -44,6 +44,11 @@ public class Distance extends GpsWorkoutInformation {
     }
 
     @Override
+    public SummaryInformationType getType() {
+        return SummaryInformationType.Distance;
+    }
+
+    @Override
     public double getValueFromWorkout(GpsWorkout workout) {
         return distanceUnitUtils.getDistanceUnitSystem().getDistanceFromKilometers(workout.length / 1000d);
     }

@@ -21,6 +21,7 @@ package de.tadris.fitness.aggregation;
 
 import androidx.annotation.StringRes;
 
+import de.tadris.fitness.aggregation.information.SummaryInformationType;
 import de.tadris.fitness.data.BaseWorkout;
 
 /**
@@ -32,6 +33,8 @@ public interface WorkoutInformation {
     int getTitleRes();
 
     String getUnit();
+
+    SummaryInformationType getType();
 
     boolean isInformationAvailableFor(BaseWorkout workout);
 

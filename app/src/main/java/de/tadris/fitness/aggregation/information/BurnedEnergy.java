@@ -44,6 +44,11 @@ public class BurnedEnergy extends AbstractWorkoutInformation {
     }
 
     @Override
+    public SummaryInformationType getType() {
+        return SummaryInformationType.BurnedEnergy;
+    }
+
+    @Override
     public double getValueFromWorkout(BaseWorkout workout) {
         return workout.calorie;
     }

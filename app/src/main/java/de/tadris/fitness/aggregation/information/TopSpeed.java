@@ -44,6 +44,11 @@ public class TopSpeed extends GpsWorkoutInformation {
     }
 
     @Override
+    public SummaryInformationType getType() {
+        return SummaryInformationType.Repetitions;
+    }
+
+    @Override
     public double getValueFromWorkout(GpsWorkout workout) {
         return distanceUnitUtils.getDistanceUnitSystem().getSpeedFromMeterPerSecond(workout.topSpeed);
     }
