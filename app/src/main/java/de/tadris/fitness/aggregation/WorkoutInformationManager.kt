@@ -24,7 +24,7 @@ import de.tadris.fitness.data.BaseWorkout
 
 class WorkoutInformationManager(context: Context) {
 
-    private val information = listOf(
+    private val information = mutableListOf<WorkoutInformation>(
         Distance(context),
         Duration(context),
         AverageMotionSpeed(context),
@@ -37,6 +37,10 @@ class WorkoutInformationManager(context: Context) {
         Repetitions(context),
         WorkoutCount(context),
     )
+
+    fun addInformation(information: WorkoutInformation) {
+        this.information.add(information)
+    }
 
     fun getInformation(): List<WorkoutInformation> {
         return information

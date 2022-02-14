@@ -59,7 +59,10 @@ class ShareWorkoutActivity : ShowWorkoutColoredMapActivity() {
         super.onCreate(savedInstanceState)
         initBeforeContent()
         this.setContentView(R.layout.activity_share_workout)
+
         informationManager = WorkoutInformationManager(this)
+        informationManager.addInformation(Hidden(this))
+
         initRoot()
         initContents()
         initAfterContent()
@@ -177,8 +180,21 @@ class ShareWorkoutActivity : ShowWorkoutColoredMapActivity() {
      * @param isLongClick is true if the user held the button instead of just tapping it
      */
     private fun handleInfoViewClickEvent(slot: Int, isLongClick: Boolean) {
-        Log.v(TAG, String.format("User clicked on Custom Metric field (Slot #%d), longClick=%b", slot, isLongClick))
-        SelectShareInformationDialog(this, this.workout, slot, this::handleWorkoutInformationSelectEvent).show()
+        Log.v(
+            TAG,
+            String.format(
+                "User clicked on Custom Metric field (Slot #%d), longClick=%b",
+                slot,
+                isLongClick
+            )
+        )
+        SelectShareInformationDialog(
+            this,
+            informationManager,
+            this.workout,
+            slot,
+            this::handleWorkoutInformationSelectEvent
+        ).show()
     }
 
     /**
@@ -204,10 +220,15 @@ class ShareWorkoutActivity : ShowWorkoutColoredMapActivity() {
         val informationType = prefs.getIdOfDisplayedInformation(RecordingType.GPS.id, slot);
         val information = informationManager.findById(informationType) ?: Hidden(this)
 
+        val infoViewHolder = customizableMetricFieldViewHolders[slot]
+        if (information is Hidden) {
+            infoViewHolder.setText("           ", "           ")
+            return
+        }
+
         val label = getString(information.titleRes);
         val data = information.getFormattedValueFromWorkout(workout)
 
-        val infoViewHolder = customizableMetricFieldViewHolders[slot]
         infoViewHolder.setText(label, data);
     }
 }

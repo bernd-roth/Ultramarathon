@@ -27,12 +27,14 @@ import de.tadris.fitness.aggregation.WorkoutInformationManager
 import de.tadris.fitness.data.BaseWorkout
 
 class SelectShareInformationDialog(
-    private val ctx: Context, workout: BaseWorkout,
+    private val ctx: Context,
+    informationManager: WorkoutInformationManager,
+    workout: BaseWorkout,
     private val slot: Int,
     private val callback: (slot: Int, informationTypeId: String) -> Unit
 ) {
 
-    private val informationList = WorkoutInformationManager(ctx).getAvailableInformationFor(workout)
+    private val informationList = informationManager.getAvailableInformationFor(workout)
 
     fun show() {
         val builder = AlertDialog.Builder(ctx);
