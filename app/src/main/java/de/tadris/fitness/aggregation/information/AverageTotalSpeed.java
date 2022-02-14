@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -35,7 +35,7 @@ public class AverageTotalSpeed extends GpsWorkoutInformation {
     @Override
     @StringRes
     public int getTitleRes() {
-        return SummaryInformationType.AverageTotalSpeed.getLabelRes();
+        return R.string.avgSpeedTotalShort;
     }
 
     @Override
@@ -44,8 +44,8 @@ public class AverageTotalSpeed extends GpsWorkoutInformation {
     }
 
     @Override
-    public SummaryInformationType getType() {
-        return SummaryInformationType.AverageTotalSpeed;
+    public String getId() {
+        return "average-total-speed";
     }
 
     @Override

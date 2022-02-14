@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -35,7 +35,7 @@ public class AveragePace extends GpsWorkoutInformation {
     @Override
     @StringRes
     public int getTitleRes() {
-        return SummaryInformationType.AveragePace.getLabelRes();
+        return R.string.workoutPace;
     }
 
     @Override
@@ -44,8 +44,8 @@ public class AveragePace extends GpsWorkoutInformation {
     }
 
     @Override
-    public SummaryInformationType getType() {
-        return SummaryInformationType.AveragePace;
+    public String getId() {
+        return "average-pace";
     }
 
     @Override

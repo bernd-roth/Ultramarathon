@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -41,7 +41,7 @@ public class Repetitions extends IndoorWorkoutInformation {
     @Override
     @StringRes
     public int getTitleRes() {
-        return SummaryInformationType.Repetitions.getLabelRes();
+        return R.string.workoutRepetitions;
     }
 
     @Override
@@ -50,8 +50,8 @@ public class Repetitions extends IndoorWorkoutInformation {
     }
 
     @Override
-    public SummaryInformationType getType() {
-        return SummaryInformationType.Repetitions;
+    public String getId() {
+        return "repetitions";
     }
 
     @Override

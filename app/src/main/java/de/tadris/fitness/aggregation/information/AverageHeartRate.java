@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -36,7 +36,7 @@ public class AverageHeartRate extends AbstractWorkoutInformation {
     @Override
     @StringRes
     public int getTitleRes() {
-        return SummaryInformationType.AverageHeartRate.getLabelRes();
+        return R.string.workoutAvgHeartRate;
     }
 
     @Override
@@ -45,8 +45,8 @@ public class AverageHeartRate extends AbstractWorkoutInformation {
     }
 
     @Override
-    public SummaryInformationType getType() {
-        return SummaryInformationType.AverageHeartRate;
+    public String getId() {
+        return "average-heartrate";
     }
 
     @Override

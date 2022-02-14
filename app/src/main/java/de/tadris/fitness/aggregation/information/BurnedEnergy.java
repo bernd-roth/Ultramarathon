@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -35,7 +35,7 @@ public class BurnedEnergy extends AbstractWorkoutInformation {
     @Override
     @StringRes
     public int getTitleRes() {
-        return SummaryInformationType.BurnedEnergy.getLabelRes();
+        return R.string.workoutBurnedEnergy;
     }
 
     @Override
@@ -44,8 +44,8 @@ public class BurnedEnergy extends AbstractWorkoutInformation {
     }
 
     @Override
-    public SummaryInformationType getType() {
-        return SummaryInformationType.BurnedEnergy;
+    public String getId() {
+        return "burned-energy";
     }
 
     @Override

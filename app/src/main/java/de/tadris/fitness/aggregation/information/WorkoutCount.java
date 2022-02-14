@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -35,7 +35,7 @@ public class WorkoutCount extends AbstractWorkoutInformation {
     @Override
     @StringRes
     public int getTitleRes() {
-        return SummaryInformationType.WorkoutCount.getLabelRes();
+        return R.string.workoutNumber;
     }
 
     @Override
@@ -44,8 +44,8 @@ public class WorkoutCount extends AbstractWorkoutInformation {
     }
 
     @Override
-    public SummaryInformationType getType() {
-        return SummaryInformationType.WorkoutCount;
+    public String getId() {
+        return "workout-count";
     }
 
     @Override

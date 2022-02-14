@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -31,18 +31,14 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.annotation.StringRes
 import androidx.core.content.FileProvider
 import de.tadris.fitness.BuildConfig
 import de.tadris.fitness.Instance
 import de.tadris.fitness.R
-import de.tadris.fitness.aggregation.WorkoutInformation
-import de.tadris.fitness.aggregation.information.SummaryInformationType
-import de.tadris.fitness.data.WorkoutType
+import de.tadris.fitness.aggregation.WorkoutInformationManager
+import de.tadris.fitness.aggregation.information.Hidden
 import de.tadris.fitness.data.WorkoutType.RecordingType
-import de.tadris.fitness.recording.information.RecordingInformation
 import de.tadris.fitness.ui.dialog.SelectShareInformationDialog
-import de.tadris.fitness.ui.dialog.SelectWorkoutInformationDialog
 import de.tadris.fitness.ui.record.InfoViewHolder
 import de.tadris.fitness.util.DataManager
 import de.tadris.fitness.util.Icon
@@ -54,12 +50,16 @@ import java.util.concurrent.TimeUnit
 const val TAG = "ShareWorkoutActivity"
 
 class ShareWorkoutActivity : ShowWorkoutColoredMapActivity() {
+
+    private lateinit var informationManager: WorkoutInformationManager
+
     private lateinit var customizableMetricFieldViewHolders: Array<InfoViewHolder>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initBeforeContent()
         this.setContentView(R.layout.activity_share_workout)
+        informationManager = WorkoutInformationManager(this)
         initRoot()
         initContents()
         initAfterContent()
@@ -178,10 +178,6 @@ class ShareWorkoutActivity : ShowWorkoutColoredMapActivity() {
      */
     private fun handleInfoViewClickEvent(slot: Int, isLongClick: Boolean) {
         Log.v(TAG, String.format("User clicked on Custom Metric field (Slot #%d), longClick=%b", slot, isLongClick))
-        if (!isLongClick) {
-            return // Only do something when the user holds the TextView
-        }
-        val recordingType = RecordingType.findById(this.workout.getWorkoutType(this).recordingType)
         SelectShareInformationDialog(this, this.workout, slot, this::handleWorkoutInformationSelectEvent).show()
     }
 
@@ -189,11 +185,11 @@ class ShareWorkoutActivity : ShowWorkoutColoredMapActivity() {
      * This callback is invoked when the user has selected the new metric to display in the provided
      * slot.
      * @param slot the Index of the ViewHolder that has been modified.
-     * @param informationType The Type of
+     * @param informationTypeId Type of shown information
      */
-    private fun handleWorkoutInformationSelectEvent(slot: Int, informationType: SummaryInformationType) {
+    private fun handleWorkoutInformationSelectEvent(slot: Int, informationTypeId: String) {
         Instance.getInstance(this).userPreferences.sharingScreenInformationPreferences
-                .setIdOfDisplayedInformation(RecordingType.GPS.id, slot, informationType)
+            .setIdOfDisplayedInformation(RecordingType.GPS.id, slot, informationTypeId)
         this.updateSlot(slot)
     }
 
@@ -206,11 +202,10 @@ class ShareWorkoutActivity : ShowWorkoutColoredMapActivity() {
         val prefs = Instance.getInstance(this).userPreferences.sharingScreenInformationPreferences;
         // This is the type of Data we want to display in the Slot
         val informationType = prefs.getIdOfDisplayedInformation(RecordingType.GPS.id, slot);
-        val label = this.getString(informationType.labelRes);
+        val information = informationManager.findById(informationType) ?: Hidden(this)
 
-        // TODO: Whats the best approach to the get the value here?
-        val data = "TODO :)"
-
+        val label = getString(information.titleRes);
+        val data = information.getFormattedValueFromWorkout(workout)
 
         val infoViewHolder = customizableMetricFieldViewHolders[slot]
         infoViewHolder.setText(label, data);

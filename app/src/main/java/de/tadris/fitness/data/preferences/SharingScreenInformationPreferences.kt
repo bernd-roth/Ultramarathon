@@ -1,10 +1,26 @@
+/*
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
+ *
+ * This file is part of FitoTrack
+ *
+ * FitoTrack is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     FitoTrack is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package de.tadris.fitness.data.preferences
 
 import android.content.SharedPreferences
-import android.util.Log
-import de.tadris.fitness.aggregation.information.SummaryInformationType
 import de.tadris.fitness.data.WorkoutType
-import java.lang.Exception
 
 private const val TAG = "SharingScreenInfoPrefs"
 /**
@@ -14,54 +30,34 @@ private const val TAG = "SharingScreenInfoPrefs"
 class SharingScreenInformationPreferences(private val prefs: SharedPreferences) {
 
     @Throws(UnknownModeException::class)
-    fun getIdOfDisplayedInformation(mode: String, slot: Int) : SummaryInformationType {
-        val defaultValueEnum = when(mode) {
+    fun getIdOfDisplayedInformation(mode: String, slot: Int): String {
+        val defaultValueEnum = when (mode) {
             WorkoutType.RecordingType.INDOOR.id -> this.getDefaultIndoorActivityId(slot)
             WorkoutType.RecordingType.GPS.id -> this.getDefaultGpsActivityId(slot)
             else -> throw UnknownModeException()
         }
 
         val preferenceKey = "information_display_share_${mode}_${slot}"
-        val storedValueAsString = this.prefs.getString(preferenceKey, defaultValueEnum.id)!!
-
-        // Try to parse. If this thrown an error, overwrite with a fallback value
-        var storedValueAsEnum : SummaryInformationType
-
-        try {
-            storedValueAsEnum = SummaryInformationType.getEnumById(storedValueAsString)
-        }
-        catch (err: SummaryInformationType.Companion.UnknownTypeException) {
-            // Unknown value! Fallback to a safe value.
-            Log.e(TAG, "Value stored under \"$preferenceKey\" (\"$storedValueAsString\") " +
-                    "could not be parsed into an Information Type. Falling back to \"$defaultValueEnum.id\" ")
-            this.setIdOfDisplayedInformation(mode, slot, defaultValueEnum)
-            storedValueAsEnum = defaultValueEnum
-        }
-
-        return storedValueAsEnum
+        return this.prefs.getString(preferenceKey, defaultValueEnum)!!
     }
 
-    fun setIdOfDisplayedInformation(mode: String, slot: Int, valueEnum: SummaryInformationType) {
+    fun setIdOfDisplayedInformation(mode: String, slot: Int, valueType: String) {
         val preferenceKey = "information_display_share_${mode}_${slot}"
-        this.prefs.edit().putString(preferenceKey, valueEnum.id).apply()
+        this.prefs.edit().putString(preferenceKey, valueType).apply()
     }
 
-    private fun getDefaultIndoorActivityId(slot: Int): SummaryInformationType {
-        return when(slot) {
-            0 -> SummaryInformationType.AveragePace
-            1 -> SummaryInformationType.Duration
-            2 -> SummaryInformationType.BurnedEnergy
-            else -> SummaryInformationType.BurnedEnergy
-        }
+    private fun getDefaultIndoorActivityId(slot: Int) = when (slot) {
+        0 -> "repetitions"
+        1 -> "duration"
+        2 -> "burned-energy"
+        else -> "burned-energy"
     }
 
-    private fun getDefaultGpsActivityId(slot: Int): SummaryInformationType {
-        return when(slot) {
-            0 -> SummaryInformationType.Distance
-            1 -> SummaryInformationType.TopSpeed
-            2 -> SummaryInformationType.Duration
-            else -> SummaryInformationType.AverageTotalSpeed
-        }
+    private fun getDefaultGpsActivityId(slot: Int) = when (slot) {
+        0 -> "distance"
+        1 -> "average-pace"
+        2 -> "duration"
+        else -> "duration"
     }
 
     class UnknownModeException : Exception()

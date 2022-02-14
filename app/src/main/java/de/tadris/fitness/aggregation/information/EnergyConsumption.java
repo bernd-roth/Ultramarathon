@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -35,7 +35,7 @@ public class EnergyConsumption extends AbstractWorkoutInformation {
     @Override
     @StringRes
     public int getTitleRes() {
-        return SummaryInformationType.EnergyConsumption.getLabelRes();
+        return R.string.workoutEnergyConsumption;
     }
 
     @Override
@@ -44,8 +44,8 @@ public class EnergyConsumption extends AbstractWorkoutInformation {
     }
 
     @Override
-    public SummaryInformationType getType() {
-        return SummaryInformationType.EnergyConsumption;
+    public String getId() {
+        return "energy-consumption";
     }
 
     @Override

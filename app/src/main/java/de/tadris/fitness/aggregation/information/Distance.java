@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -35,7 +35,7 @@ public class Distance extends GpsWorkoutInformation {
     @Override
     @StringRes
     public int getTitleRes() {
-        return SummaryInformationType.Distance.getLabelRes();
+        return R.string.workoutDistance;
     }
 
     @Override
@@ -44,8 +44,8 @@ public class Distance extends GpsWorkoutInformation {
     }
 
     @Override
-    public SummaryInformationType getType() {
-        return SummaryInformationType.Distance;
+    public String getId() {
+        return "distance";
     }
 
     @Override

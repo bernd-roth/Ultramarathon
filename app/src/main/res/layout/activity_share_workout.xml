@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -95,116 +95,113 @@
         android:background="@drawable/share_workout_background_down"
         android:orientation="vertical">
 
-        <!-- This Table Layout contains the customizable metrics
-             that should be shared in the exported Bitmap -->
-        <TableLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
+            android:gravity="bottom"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
-            android:layout_marginTop="15dp"
-            android:stretchColumns="0,1,2*">
+            android:orientation="horizontal">
 
-            <!-- This Table Row contains the labels -->
-            <TableRow
-                android:id="@+id/tableRow1"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-                <!-- Column 1 -->
                 <TextView
                     android:id="@+id/shareWorkoutActivityCustomMetric1LabelTextview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:fontFamily="sans-serif-black"
                     android:shadowColor="#000000"
                     android:shadowRadius="7"
                     android:text="@string/workoutTypeRunning"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
+                    android:padding="2dp"
                     android:textStyle="bold" />
 
-                <!-- Column 2 -->
-                <TextView
-                    android:id="@+id/shareWorkoutActivityCustomMetric2LabelTextview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="sans-serif-black"
-                    android:shadowColor="#000000"
-                    android:shadowRadius="7"
-                    android:text="@string/workoutPace"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <!-- Column 3 -->
-                <TextView
-                    android:id="@+id/shareWorkoutActivityCustomMetric3LabelTextview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="sans-serif-black"
-                    android:shadowColor="#000000"
-                    android:shadowRadius="7"
-                    android:text="@string/workoutDuration"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-            </TableRow>
-
-            <!-- This Table Row contains the values -->
-            <TableRow
-                android:id="@+id/tableRow2"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <!-- Column 1 -->
                 <TextView
                     android:id="@+id/shareWorkoutActivityCustomMetric1ValueTextview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:fontFamily="sans-serif-black"
                     android:shadowColor="#000000"
                     android:shadowRadius="8"
+                    android:padding="2dp"
                     android:text="6,1 km"
                     android:textColor="#FFFFFF"
-                    android:textSize="24sp"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/shareWorkoutActivityCustomMetric2LabelTextview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-black"
+                    android:shadowColor="#000000"
+                    android:shadowRadius="7"
+                    android:padding="2dp"
+                    android:text="@string/workoutPace"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
-                <!-- Column 2 -->
                 <TextView
                     android:id="@+id/shareWorkoutActivityCustomMetric2ValueTextview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:fontFamily="sans-serif-black"
                     android:shadowColor="#000000"
                     android:shadowRadius="8"
                     android:text="6:04 min/km"
                     android:textColor="#FFFFFF"
-                    android:textSize="24sp"
+                    android:padding="2dp"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/shareWorkoutActivityCustomMetric3LabelTextview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-black"
+                    android:shadowColor="#000000"
+                    android:shadowRadius="7"
+                    android:padding="2dp"
+                    android:text="@string/workoutDuration"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
-                <!-- Column 3 -->
                 <TextView
                     android:id="@+id/shareWorkoutActivityCustomMetric3ValueTextview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:fontFamily="sans-serif-black"
                     android:shadowColor="#000000"
                     android:shadowRadius="8"
+                    android:padding="2dp"
                     android:text="37m 16s"
                     android:textColor="#FFFFFF"
-                    android:textSize="24sp"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
-            </TableRow>
-
-        </TableLayout>
+            </LinearLayout>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/recordMapAttribution"
