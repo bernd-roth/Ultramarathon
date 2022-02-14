@@ -17,7 +17,7 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.data;
+package de.tadris.fitness.data.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -26,6 +26,7 @@ import android.preference.PreferenceManager;
 import java.util.Calendar;
 
 import de.tadris.fitness.BuildConfig;
+import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.model.AutoStartWorkout;
 
 public class UserPreferences {
@@ -108,9 +109,21 @@ public class UserPreferences {
 
 
     private final SharedPreferences preferences;
+    private final RecordingScreenInformationPreferences recordingScreenInformationPreferences;
+    private final SharingScreenInformationPreferences sharingScreenInformationPreferences;
 
     public UserPreferences(Context context) {
-        this.preferences= PreferenceManager.getDefaultSharedPreferences(context);
+        this.preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        this.recordingScreenInformationPreferences = new RecordingScreenInformationPreferences(context);
+        this.sharingScreenInformationPreferences = new SharingScreenInformationPreferences(context);
+    }
+
+    public RecordingScreenInformationPreferences getRecordingScreenInformationPreferences() {
+        return this.recordingScreenInformationPreferences;
+    }
+
+    public SharingScreenInformationPreferences getSharingScreenInformationPreferences() {
+        return this.sharingScreenInformationPreferences;
     }
 
     public int getUserWeight(){

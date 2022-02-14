@@ -22,7 +22,7 @@ package de.tadris.fitness.recording.information;
 import android.content.Context;
 
 import de.tadris.fitness.Instance;
-import de.tadris.fitness.data.UserPreferences;
+import de.tadris.fitness.data.preferences.UserPreferences;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.recording.BaseWorkoutRecorder;
 

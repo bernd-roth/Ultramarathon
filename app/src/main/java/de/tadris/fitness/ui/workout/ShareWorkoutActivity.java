@@ -229,11 +229,15 @@ public class ShareWorkoutActivity extends ShowWorkoutColoredMapActivity {
     private void updateSlot(int slot, RecordingInformation information) {
         Log.v(TAG, String.format("Updating data in Slot #%d", slot));
         Instance instance = Instance.getInstance(this);
+        // This is the type of Data we want to display in the Slot
         String slotInformationTypeId = instance.userPreferences.getIdOfDisplayedInformation(PREFS_PREFIX, slot);
+
         String label = information.getTitle();
-        String data = information.getDisplayedText(instance.recorder); // [!] FIXME: As of now, this always returns a 0 or "-", probably because there is no "Recorder" when sharing.
+
+
+
         InfoViewHolder infoViewHolder = this.customizableMetricFieldViewHolders[slot];
-        infoViewHolder.setText(label, data);
+        //infoViewHolder.setText(label, data);
 
     }
 }
