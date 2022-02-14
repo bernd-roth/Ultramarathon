@@ -45,7 +45,7 @@ public class TopSpeed extends GpsWorkoutInformation {
 
     @Override
     public SummaryInformationType getType() {
-        return SummaryInformationType.Repetitions;
+        return SummaryInformationType.TopSpeed;
     }
 
     @Override
