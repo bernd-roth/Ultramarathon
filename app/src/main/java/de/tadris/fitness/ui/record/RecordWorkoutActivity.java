@@ -974,7 +974,9 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
 
     @Override
     public void onSelectWorkoutInformation(int slot, RecordingInformation information) {
-        updateDescription();
+        String mode = WorkoutType.RecordingType.findById(activity.recordingType).id;
+        Instance.getInstance(this).userPreferences.setIdOfDisplayedInformation(mode, slot, information.getId());
+        this.updateDescription();
     }
 
     @Override

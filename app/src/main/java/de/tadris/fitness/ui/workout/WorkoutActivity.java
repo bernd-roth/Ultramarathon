@@ -54,6 +54,8 @@ import de.tadris.fitness.data.BaseWorkoutData;
 import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.IntervalSet;
+import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.recording.information.InformationDisplay;
 import de.tadris.fitness.ui.workout.diagram.SampleConverter;
 import de.tadris.fitness.util.WorkoutCalculator;
 import de.tadris.fitness.util.unit.DistanceUnitUtils;
