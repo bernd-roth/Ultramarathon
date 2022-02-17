@@ -262,7 +262,7 @@
     <string name="setPreferencesTitle">Tercihleri Ayarla</string>
     <string name="backup">Yedekle</string>
     <string name="restore">Geri yükle</string>
-    <string name="importBackupMessage">UYARI: Uygulamada bulunan tüm verileriniz silinecektir. Onları kaybetmek istemiyorsanız, önce başka bir yedek alın. Bu yedeği geri yüklemek istediğinizden emin misiniz\?</string>
+    <string name="importBackupMessage">Şu anki verilerinizi saklamak istiyorsanız şimdi yedekleyin. Önceki yedekleme şimdi geri yüklensin mi\?</string>
     <string name="chooseBackupFile">Yedekleme Dosyası Seç</string>
     <string name="loadingFile">Dosya yükleniyor</string>
     <string name="finished">Bitti</string>
