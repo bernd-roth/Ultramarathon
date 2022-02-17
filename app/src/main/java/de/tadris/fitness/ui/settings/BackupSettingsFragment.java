@@ -101,7 +101,7 @@ public class BackupSettingsFragment extends FitoTrackSettingFragment {
         dialogController.show();
         new Thread(() -> {
             try {
-                File file = new BackupExportSource().provideFile(requireContext(), (progress, action) -> mHandler.post(() -> dialogController.setProgress(progress, action)));
+                File file = new BackupExportSource(true).provideFile(requireContext(), (progress, action) -> mHandler.post(() -> dialogController.setProgress(progress, action)));
                 Uri uri = FileProvider.getUriForFile(requireContext(), BuildConfig.APPLICATION_ID + ".fileprovider", file);
                 mHandler.post(() -> {
                     dialogController.cancel();

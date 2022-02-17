@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -29,13 +29,19 @@ import de.tadris.fitness.util.DataManager;
 
 public class BackupExportSource implements ExportSource {
 
+    private final boolean includeTimestamp;
+
+    public BackupExportSource(boolean includeTimestamp) {
+        this.includeTimestamp = includeTimestamp;
+    }
+
     @Override
     public File provideFile(Context context) throws Exception {
         return provideFile(context, BackupController.ExportStatusListener.DUMMY);
     }
 
     public File provideFile(Context context, BackupController.ExportStatusListener listener) throws Exception {
-        String file = DataManager.getSharedDirectory(context) + "/backup" + System.currentTimeMillis() + ".ftb";
+        String file = DataManager.getSharedDirectory(context) + "/" + getFileName();
         File parent = new File(file).getParentFile();
         if (!parent.exists() && !parent.mkdirs()) {
             throw new IOException("Cannot write");
@@ -45,4 +51,13 @@ public class BackupExportSource implements ExportSource {
         backupController.exportData();
         return new File(file);
     }
+
+    private String getFileName() {
+        if (includeTimestamp) {
+            return "fitotrack-backup" + System.currentTimeMillis() + ".ftb";
+        } else {
+            return "fitotrack-backup.ftb";
+        }
+    }
+
 }

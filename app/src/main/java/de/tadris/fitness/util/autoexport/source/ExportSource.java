@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -61,7 +61,7 @@ public interface ExportSource {
     static ExportSource getExportSourceByName(String name, String data) {
         switch (name) {
             case EXPORT_SOURCE_BACKUP:
-                return new BackupExportSource();
+                return new BackupExportSource(false);
             case EXPORT_SOURCE_WORKOUT_GPX:
                 return new WorkoutGpxExportSource(Long.parseLong(data));
             default:
