@@ -18,8 +18,8 @@
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
   --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="restore">Przywróć</string>
-    <string name="importBackupMessage">OSTRZEŻENIE: Wszystkie Twoje istniejące dane w aplikacji zostaną wyczyszczone. Jeśli nie chcesz ich stracić, najpierw wykonaj kolejną kopię zapasową. Czy na pewno chcesz przywrócić tę kopię zapasową\?</string>
-    <string name="chooseBackupFile">Wybierz plik kopii</string>
+    <string name="importBackupMessage">Najpierw utwórz kopię zapasową swoich aktualnych danych, jeśli chcesz je zachować. Czy przywrócić poprzednią kopię zapasową\?</string>
+    <string name="chooseBackupFile">Wybierz plik kopii zapasowej</string>
     <string name="loadingFile">Ładowanie pliku</string>
     <string name="finished">Zakończone</string>
     <string name="converting">Konwersja</string>
