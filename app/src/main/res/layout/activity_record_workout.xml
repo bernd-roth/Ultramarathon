@@ -47,16 +47,6 @@
             android:layout_gravity="center"
             android:src="@drawable/location_marker" />
 
-        <ImageView
-            android:id="@+id/gpsFocus"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:alpha="20"
-            android:scaleX="1"
-            android:scaleY="1"
-            android:src="@drawable/ic_gps_no_fix"/>
-
         <TextView
             android:id="@+id/recordGpsStatus"
             android:layout_width="wrap_content"
@@ -76,6 +66,17 @@
             android:src="@drawable/ic_bluetooth"
             android:textStyle="bold"
             app:tint="@color/heartRateStateUnavailable" />
+
+        <ImageView
+            android:id="@+id/gpsFocus"
+            android:layout_width="40dp"
+            android:layout_height="42dp"
+            android:layout_gravity="center"
+            android:alpha="5"
+            android:scaleX="1"
+            android:scaleY="1"
+            android:src="@drawable/ic_gps_fixed"
+            app:tint="@color/colorGpsFix" />
 
         <TextView
             android:id="@+id/recordMapAttribution"
