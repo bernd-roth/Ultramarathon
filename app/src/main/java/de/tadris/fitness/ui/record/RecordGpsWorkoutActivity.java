@@ -337,7 +337,6 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity implements N
     @Override
     public void navigateToPosition(final LatLong navigateTo) {
         assert(navigateTo != null);
-        updateLine(recordedPositions);
         mapView.getModel().mapViewPosition.animateTo(navigateTo);
     }
 
