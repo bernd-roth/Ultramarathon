@@ -83,6 +83,17 @@ public class NavigationModeHandler implements View.OnTouchListener, View.OnClick
                 }
             }
             break;
+            case MotionEvent.ACTION_MOVE: {
+                if(prevNavigationMode == NavigationMode.Automatic){
+                    if (distanceThresholdExceeds())
+                    {
+                        navigationModeListener.onNavigationModeChanged(NavigationMode.Manual);
+                    } else {
+                        navigationModeListener.onNavigationModeChanged(NavigationMode.Automatic);
+                    }
+                }
+            }
+            break;
         }
 
         managePositioning();
