@@ -73,8 +73,6 @@ public class NavigationModeHandler implements View.OnTouchListener, View.OnClick
                 }
             }
             break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + event.getAction());
         }
 
         managePositioning();
