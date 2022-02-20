@@ -45,6 +45,7 @@ public class AutoExportPlanner {
     public void planAutoBackup() {
         for (ExportTargetConfiguration configuration : getConfigurations(ExportSource.EXPORT_SOURCE_BACKUP)) {
             planAutoBackupFor(configuration);
+            planOneTimeBackupFor(configuration);
         }
     }
 
@@ -61,6 +62,18 @@ public class AutoExportPlanner {
                 .setInputData(data)
                 .build();
         WorkManager.getInstance(context).enqueueUniquePeriodicWork(String.valueOf(configuration.id), ExistingPeriodicWorkPolicy.REPLACE, workRequest);
+    }
+
+    private void planOneTimeBackupFor(ExportTargetConfiguration configuration) {
+        Data data = new Data.Builder()
+                .putString(AutoExporter.DATA_SOURCE_TYPE, ExportSource.EXPORT_SOURCE_BACKUP)
+                .putLong(AutoExporter.DATA_TARGET_CONFIG_ID, configuration.id)
+                .build();
+        OneTimeWorkRequest workRequest = new OneTimeWorkRequest.Builder(AutoExporter.class)
+                .setConstraints(configuration.getTargetImplementation().getConstraints())
+                .setInputData(data)
+                .build();
+        WorkManager.getInstance(context).enqueue(workRequest);
     }
 
     public void onWorkoutRecorded(GpsWorkout workout) {
