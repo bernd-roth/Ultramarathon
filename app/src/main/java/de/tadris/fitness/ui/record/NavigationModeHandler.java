@@ -1,9 +1,11 @@
 package de.tadris.fitness.ui.record;
 
 import android.annotation.SuppressLint;
+import android.media.metrics.Event;
 import android.view.MotionEvent;
 import android.view.View;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.map.view.InputListener;
@@ -45,6 +47,14 @@ public class NavigationModeHandler implements View.OnTouchListener, View.OnClick
          */
         LatLong onGetCenter();
     };
+
+    void init() {
+        EventBus.getDefault().register(this);
+    }
+
+    void deinit() {
+        EventBus.getDefault().unregister(this);
+    }
 
     public void setNavigationModeListener(final NavigationModeListener listener) {
         assert(navigationModeListener == null);
