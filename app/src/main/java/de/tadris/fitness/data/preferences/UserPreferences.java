@@ -233,7 +233,7 @@ public class UserPreferences {
     }
 
     public boolean getShowWorkoutZoomControls() {
-        return preferences.getBoolean("showWorkoutZoomControls", false);
+        return preferences.getBoolean("showWorkoutZoomControls", true);
     }
 
     public String getOfflineMapDirectoryName() {

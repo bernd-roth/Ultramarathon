@@ -63,7 +63,7 @@
         android:title="@string/preferenceCurrentSpeedAverageTimeTitle" />
 
     <SwitchPreference
-        android:defaultValue="false"
+        android:defaultValue="true"
         android:key="showWorkoutZoomControls"
         android:summary="@string/showWorkoutZoomControlsSummary"
         android:title="@string/showWorkoutZoomControlsTitle" />
