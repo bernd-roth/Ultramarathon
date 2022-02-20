@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -51,6 +51,12 @@ public class DirectoryTarget implements ExportTarget {
         Uri targetFolder = Uri.parse(directoryUri);
 
         DocumentFile directoryFile = DocumentFile.fromTreeUri(context, targetFolder);
+
+        DocumentFile existingFile = directoryFile.findFile(file.getName());
+        if (existingFile != null) {
+            existingFile.delete();
+        }
+
         DocumentFile targetFile = directoryFile.createFile("application/*", file.getName());
 
         if (!targetFile.canWrite()) {
