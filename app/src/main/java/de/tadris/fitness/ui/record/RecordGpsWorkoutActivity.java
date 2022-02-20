@@ -64,7 +64,7 @@ import de.tadris.fitness.recording.event.WorkoutGPSStateChanged;
 import de.tadris.fitness.recording.gps.GpsRecorderService;
 import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
 
-public class RecordGpsWorkoutActivity extends RecordWorkoutActivity implements NavigationModeListener {
+public class RecordGpsWorkoutActivity extends RecordWorkoutActivity implements NavigationModeHandler.NavigationModeListener {
 
     public static final int REQUEST_CODE_LOCATION_PERMISSION = 10;
     public static final int REQUEST_CODE_BACKGROUND_LOCATION_PERMISSION = 11;
@@ -321,7 +321,7 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity implements N
    }
 
     @Override
-    public void onNavigationModeChanged(final NavigationMode mode) {
+    public void onNavigationModeChanged(final NavigationModeHandler.NavigationMode mode) {
         switch(mode){
             case Automatic:
                 focusGpsOverlay.setVisibility(View.GONE);
