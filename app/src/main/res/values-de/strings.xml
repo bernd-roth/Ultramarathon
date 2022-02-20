@@ -17,7 +17,9 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  -->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
     <string name="backup">Sichern</string>
     <string name="cancel">Abbrechen</string>
@@ -494,16 +496,11 @@
     <string name="autoExportBackupTitle">Automatische App-Backups</string>
     <string name="autoExportBackupSummary">Backups automatisch exportieren</string>
     <string name="autoExportBackupExplanation">Im gewählten Interval wird ein Backup hierher exportiert:</string>
-    <string name="autoExportBackupExplanation">I</string>
     <string name="autoExportWorkoutExplanation">Nachdem ein neues Workout aufgenommen wurde, wird ein GPS-export hierher exportiert:</string>
     <string name="exportIntervalTitle">Backup-Intervall</string>
-    <string name="exportIntervalTitle">B</string>
     <string name="takeBackups1">Jeden Tag</string>
-    <string name="takeBackups1">J</string>
     <string name="takeBackups2">Jeden zweiten Tag</string>
-    <string name="takeBackups2">J</string>
     <string name="takeBackups3">Jeden dritten Tag</string>
-    <string name="takeBackups3">J</string>
     <string name="takeBackups7">Jede Woche</string>
     <string name="takeBackups14">Jede zweite Woche</string>
 </resources>
