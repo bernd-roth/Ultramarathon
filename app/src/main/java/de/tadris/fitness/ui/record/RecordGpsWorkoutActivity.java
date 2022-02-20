@@ -82,6 +82,7 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity implements N
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
 
+        navigationModeHandler.init();
         navigationModeHandler.setNavigationModeListener(this);
 
         boolean wasAlreadyRunning = false;
@@ -313,10 +314,12 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity implements N
     @Subscribe
     public void onLocationChange(LocationChangeEvent e) {
         final LatLong latLongGps = GpsRecorderService.locationToLatLong(e.location);
+
         if (isWorkoutRunning()) {
             recordedPositions.add(latLongGps);
             updateLine(recordedPositions);
         }
+
         foundGPS();
    }
 
@@ -349,6 +352,7 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity implements N
     @Override
     protected void onDestroy() {
         navigationModeHandler.removeNavigationModeListener();
+        navigationModeHandler.deinit();
 
         // Clear map
         mapView.destroyAll();

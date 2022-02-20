@@ -15,8 +15,9 @@ import de.tadris.fitness.recording.gps.GpsRecorderService;
 
 public class NavigationModeHandler implements View.OnTouchListener, View.OnClickListener, InputListener {
     private boolean focusedInitially = false;
-    private NavigationMode navigationMode = null;
+    private NavigationMode navigationMode = NavigationMode.Automatic;
     private NavigationMode prevNavigationMode = null;
+    private boolean navigationModeUpdateReq = true;
     private NavigationModeListener navigationModeListener = null;
     private LatLong currentGpsPosition = null;
 
@@ -71,15 +72,14 @@ public class NavigationModeHandler implements View.OnTouchListener, View.OnClick
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN: {
                 prevNavigationMode = navigationMode;
-                navigationMode = NavigationMode.Manual;
+                updateMode(NavigationMode.Manual, false);
             }
             break;
             case MotionEvent.ACTION_UP: {
-                if(prevNavigationMode == NavigationMode.Automatic
-                        && distanceThresholdExceeds()){
-                    navigationMode = NavigationMode.Manual;
+                if(prevNavigationMode == NavigationMode.Automatic && distanceThresholdExceeds()){
+                    updateMode(NavigationMode.Manual, true);
                 } else {
-                    navigationMode = NavigationMode.Automatic;
+                    updateMode(prevNavigationMode, null);
                 }
             }
             break;
@@ -87,6 +87,17 @@ public class NavigationModeHandler implements View.OnTouchListener, View.OnClick
 
         managePositioning();
         return false;
+    }
+
+    private void updateMode(final NavigationMode mode, Boolean forceUpdate)
+    {
+        if (forceUpdate != null) {
+            navigationModeUpdateReq = forceUpdate;
+        } else {
+            navigationModeUpdateReq = navigationMode != mode;
+        }
+
+        navigationMode = mode;
     }
 
     @Override
@@ -100,7 +111,7 @@ public class NavigationModeHandler implements View.OnTouchListener, View.OnClick
 
     @Override
     public void onClick(View v) {
-        navigationMode = NavigationMode.Automatic;
+        updateMode(NavigationMode.Automatic, true);
         managePositioning();
     }
 
@@ -112,7 +123,8 @@ public class NavigationModeHandler implements View.OnTouchListener, View.OnClick
 
 
     private boolean shouldFocus() {
-        return !focusedInitially || navigationMode == NavigationMode.Automatic;
+        return  currentGpsPosition != null
+                && (!focusedInitially || navigationMode == NavigationMode.Automatic);
     }
 
     private boolean distanceThresholdExceeds() {
@@ -141,9 +153,8 @@ public class NavigationModeHandler implements View.OnTouchListener, View.OnClick
 
     private void announcePositionUpdate() {
         assert (navigationModeListener != null);
-        final boolean shouldFocus = shouldFocus();
 
-        if (shouldFocus && currentGpsPosition != null)
+        if (shouldFocus())
         {
             navigationModeListener.navigateToPosition(currentGpsPosition);
 
@@ -155,16 +166,10 @@ public class NavigationModeHandler implements View.OnTouchListener, View.OnClick
 
     private void announceNavigationMode() {
         assert (navigationModeListener != null);
-        final boolean isManualMode = navigationMode == NavigationMode.Manual
-                || (!shouldFocus() && distanceThresholdExceeds());
 
-        final NavigationMode mode = isManualMode ?
-                NavigationMode.Manual :
-                NavigationMode.Automatic;
-
-        if (navigationMode == null || navigationMode != mode) {
-            navigationMode = mode;
-            navigationModeListener.onNavigationModeChanged(mode);
+        if (navigationMode != null && navigationModeUpdateReq) {
+            navigationModeListener.onNavigationModeChanged(navigationMode);
+            navigationModeUpdateReq = false;
         }
     }
 }
