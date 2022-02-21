@@ -47,6 +47,7 @@ import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.layer.Layer;
 import org.mapsforge.map.layer.download.TileDownloadLayer;
+import org.mapsforge.map.layer.overlay.FixedPixelCircle;
 import org.mapsforge.map.layer.overlay.Polyline;
 
 import java.io.Serializable;
@@ -71,6 +72,7 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity implements N
 
     private MapView mapView;
     private Polyline polyline;
+    private FixedPixelCircle locationPoint;
     private TextView gpsStatusView;
     private ImageView focusGpsOverlay;
     private boolean gpsFound = false;
@@ -194,9 +196,15 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity implements N
     }
 
     private void updateLine(final List<LatLong> latLongs) {
+        if (latLongs.isEmpty()){
+            return;
+        }
+
         if (polyline != null) {
             mapView.getLayerManager().getLayers().remove(polyline);
         }
+
+
         Paint p = AndroidGraphicFactory.INSTANCE.createPaint();
         p.setColor(getThemePrimaryColor());
         p.setStrokeWidth(20);
@@ -204,6 +212,24 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity implements N
         polyline = new Polyline(p, AndroidGraphicFactory.INSTANCE);
         polyline.setPoints(latLongs);
         mapView.addLayer(polyline);
+
+    }
+
+    private void updateLocationPoint(final LatLong currentLocation) {
+        assert (currentLocation != null);
+
+        if (locationPoint != null){
+            mapView.getLayerManager().getLayers().remove(locationPoint);
+        }
+
+        Paint fill = AndroidGraphicFactory.INSTANCE.createPaint();
+        fill.setColor(getResources().getColor(R.color.locationCircle));
+        Paint stroke = AndroidGraphicFactory.INSTANCE.createPaint();
+        stroke.setColor(getResources().getColor(R.color.locationCircleStroke));
+        stroke.setStrokeWidth(3f);
+        locationPoint = new FixedPixelCircle(currentLocation, 20f, fill, stroke);
+
+        mapView.addLayer(locationPoint);
     }
 
     private void checkPermissions() {
@@ -320,6 +346,7 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity implements N
             updateLine(recordedPositions);
         }
 
+        updateLocationPoint(latLongGps);
         foundGPS();
    }
 
@@ -327,6 +354,7 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity implements N
     public void onNavigationModeChanged(final NavigationModeHandler.NavigationMode mode) {
         switch(mode){
             case Automatic:
+
                 focusGpsOverlay.setVisibility(View.GONE);
                 break;
             case Manual:
