@@ -16,48 +16,45 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package de.tadris.fitness.util.autoexport.source
 
-package de.tadris.fitness.util.autoexport.source;
+import android.content.Context
+import de.tadris.fitness.export.BackupController
+import de.tadris.fitness.export.BackupController.ExportStatusListener
+import de.tadris.fitness.util.DataManager
+import de.tadris.fitness.util.autoexport.source.ExportSource.ExportedFile
+import java.io.File
+import java.io.IOException
 
-import android.content.Context;
+class BackupExportSource(private val includeTimestamp: Boolean) : ExportSource {
 
-import java.io.File;
-import java.io.IOException;
-
-import de.tadris.fitness.export.BackupController;
-import de.tadris.fitness.util.DataManager;
-
-public class BackupExportSource implements ExportSource {
-
-    private final boolean includeTimestamp;
-
-    public BackupExportSource(boolean includeTimestamp) {
-        this.includeTimestamp = includeTimestamp;
+    @Throws(Exception::class)
+    override fun provideFile(context: Context): ExportedFile {
+        return ExportedFile(
+            provideFile(context, ExportStatusListener.DUMMY), mapOf(
+                "FitoTrack-Type" to ExportSource.EXPORT_SOURCE_BACKUP,
+                "FitoTrack-Timestamp" to System.currentTimeMillis().toString(),
+            )
+        )
     }
 
-    @Override
-    public File provideFile(Context context) throws Exception {
-        return provideFile(context, BackupController.ExportStatusListener.DUMMY);
-    }
-
-    public File provideFile(Context context, BackupController.ExportStatusListener listener) throws Exception {
-        String file = DataManager.getSharedDirectory(context) + "/" + getFileName();
-        File parent = new File(file).getParentFile();
-        if (!parent.exists() && !parent.mkdirs()) {
-            throw new IOException("Cannot write");
+    @Throws(Exception::class)
+    fun provideFile(context: Context?, listener: ExportStatusListener?): File {
+        val file = DataManager.getSharedDirectory(context) + "/" + fileName
+        File(file).parentFile?.let { parent ->
+            if (!parent.exists() && !parent.mkdirs()) {
+                throw IOException("Cannot write")
+            }
         }
-
-        BackupController backupController = new BackupController(context, new File(file), listener);
-        backupController.exportData();
-        return new File(file);
+        val backupController = BackupController(context, File(file), listener)
+        backupController.exportData()
+        return File(file)
     }
 
-    private String getFileName() {
-        if (includeTimestamp) {
-            return "fitotrack-backup" + System.currentTimeMillis() + ".ftb";
+    private val fileName: String
+        get() = if (includeTimestamp) {
+            "fitotrack-backup" + System.currentTimeMillis() + ".ftb"
         } else {
-            return "fitotrack-backup.ftb";
+            "fitotrack-backup.ftb"
         }
-    }
-
 }

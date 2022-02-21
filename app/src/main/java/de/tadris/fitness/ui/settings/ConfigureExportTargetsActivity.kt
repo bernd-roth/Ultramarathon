@@ -25,7 +25,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-import androidx.preference.Preference
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import de.tadris.fitness.Instance
@@ -34,12 +33,14 @@ import de.tadris.fitness.data.ExportTargetConfiguration
 import de.tadris.fitness.ui.FitoTrackActivity
 import de.tadris.fitness.ui.adapter.ExportTargetConfigurationAdapter
 import de.tadris.fitness.ui.adapter.ExportTargetConfigurationAdapter.ExportTargetAdapterListener
+import de.tadris.fitness.ui.dialog.ConfigureHttpPostDialog
 import de.tadris.fitness.ui.dialog.SelectExportTargetTypeDialog
 import de.tadris.fitness.ui.dialog.SelectExportTargetTypeDialog.ExportTargetTypeSelectListener
 import de.tadris.fitness.util.autoexport.AutoExportPlanner
 import de.tadris.fitness.util.autoexport.source.ExportSource
 import de.tadris.fitness.util.autoexport.target.DirectoryTarget
 import de.tadris.fitness.util.autoexport.target.ExportTarget
+import de.tadris.fitness.util.autoexport.target.HTTPPostTarget
 
 class ConfigureExportTargetsActivity : FitoTrackActivity(),
     ExportTargetAdapterListener, ExportTargetTypeSelectListener {
@@ -98,10 +99,14 @@ class ConfigureExportTargetsActivity : FitoTrackActivity(),
     override fun onTargetTypeSelect(target: ExportTarget) {
         if (target is DirectoryTarget) {
             showDirectoryPicker()
+        } else if (target is HTTPPostTarget) {
+            showHttpPostDialog()
         }
     }
 
-    private fun showDirectoryPicker(){
+    // DIRECTORY RELATED
+
+    private fun showDirectoryPicker() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
         startActivityForResult(intent, FILE_PICKER_CODE)
     }
@@ -117,14 +122,29 @@ class ConfigureExportTargetsActivity : FitoTrackActivity(),
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun saveDirectoryTarget(uri: Uri){
+    private fun saveDirectoryTarget(uri: Uri) {
         val configuration = ExportTargetConfiguration()
         configuration.source = exportSourceId
         configuration.type = ExportTarget.TARGET_TYPE_DIRECTORY
         configuration.data = uri.toString()
-        Instance.getInstance(this).db.exportTargetDao().insert(configuration)
-        loadData()
-        AutoExportPlanner(this).planAutoBackup()
+        configuration.insert()
+    }
+
+    // HTTP RELATED
+
+    private fun showHttpPostDialog() {
+        ConfigureHttpPostDialog(this) { url ->
+            val configuration = ExportTargetConfiguration()
+            configuration.source = exportSourceId
+            configuration.type = ExportTarget.TARGET_TYPE_HTTP_POST
+            configuration.data = url
+            configuration.insert()
+        }
+    }
+
+    private fun ExportTargetConfiguration.insert() {
+        Instance.getInstance(this@ConfigureExportTargetsActivity).db.exportTargetDao().insert(this)
+        onConfigurationChanged()
     }
 
     override fun onDelete(configuration: ExportTargetConfiguration) {
@@ -140,7 +160,14 @@ class ConfigureExportTargetsActivity : FitoTrackActivity(),
 
     private fun delete(configuration: ExportTargetConfiguration) {
         Instance.getInstance(this).db.exportTargetDao().delete(configuration)
-        AutoExportPlanner(this).planAutoBackup()
+        onConfigurationChanged()
+    }
+
+    private fun onConfigurationChanged() {
+        if (exportSourceId == ExportSource.EXPORT_SOURCE_BACKUP) {
+            AutoExportPlanner(this).planAutoBackup()
+        }
+        loadData()
     }
 
 }

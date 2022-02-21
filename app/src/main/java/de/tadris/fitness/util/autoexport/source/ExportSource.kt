@@ -16,57 +16,50 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package de.tadris.fitness.util.autoexport.source
 
-package de.tadris.fitness.util.autoexport.source;
+import android.content.Context
+import androidx.annotation.StringRes
+import de.tadris.fitness.R
+import java.io.File
 
-import android.content.Context;
+interface ExportSource {
 
-import androidx.annotation.StringRes;
+    @Throws(Exception::class)
+    fun provideFile(context: Context): ExportedFile
 
-import java.io.File;
+    class ExportedFile(val file: File, val meta: Map<String, String>)
 
-import de.tadris.fitness.R;
+    companion object {
 
-public interface ExportSource {
+        const val EXPORT_SOURCE_WORKOUT_GPX = "workout-gpx"
+        const val EXPORT_SOURCE_BACKUP = "backup"
 
-    String EXPORT_SOURCE_WORKOUT_GPX = "workout-gpx";
-    String EXPORT_SOURCE_BACKUP = "backup";
+        @StringRes
+        fun getTitle(name: String?): Int {
+            return when (name) {
+                EXPORT_SOURCE_BACKUP -> R.string.autoBackupTitle
+                EXPORT_SOURCE_WORKOUT_GPX -> R.string.workoutGPXExportTitle
+                else -> R.string.unknown
+            }
+        }
 
-    File provideFile(Context context) throws Exception;
+        @StringRes
+        fun getExplanation(name: String?): Int {
+            return when (name) {
+                EXPORT_SOURCE_BACKUP -> R.string.autoExportBackupExplanation
+                EXPORT_SOURCE_WORKOUT_GPX -> R.string.autoExportWorkoutExplanation
+                else -> R.string.unknown
+            }
+        }
 
-    @StringRes
-    static int getTitle(String name) {
-        switch (name) {
-            case EXPORT_SOURCE_BACKUP:
-                return R.string.autoBackupTitle;
-            case EXPORT_SOURCE_WORKOUT_GPX:
-                return R.string.workoutGPXExportTitle;
-            default:
-                return R.string.unknown;
+        @JvmStatic
+        fun getExportSourceByName(name: String?, data: String?): ExportSource? {
+            return when (name) {
+                EXPORT_SOURCE_BACKUP -> BackupExportSource(false)
+                EXPORT_SOURCE_WORKOUT_GPX -> WorkoutGpxExportSource(data!!.toLong())
+                else -> null
+            }
         }
     }
-
-    @StringRes
-    static int getExplanation(String name) {
-        switch (name) {
-            case EXPORT_SOURCE_BACKUP:
-                return R.string.autoExportBackupExplanation;
-            case EXPORT_SOURCE_WORKOUT_GPX:
-                return R.string.autoExportWorkoutExplanation;
-            default:
-                return R.string.unknown;
-        }
-    }
-
-    static ExportSource getExportSourceByName(String name, String data) {
-        switch (name) {
-            case EXPORT_SOURCE_BACKUP:
-                return new BackupExportSource(false);
-            case EXPORT_SOURCE_WORKOUT_GPX:
-                return new WorkoutGpxExportSource(Long.parseLong(data));
-            default:
-                return null;
-        }
-    }
-
 }

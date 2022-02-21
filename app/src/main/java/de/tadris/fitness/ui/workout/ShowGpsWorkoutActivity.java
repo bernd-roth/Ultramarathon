@@ -244,7 +244,7 @@ public class ShowGpsWorkoutActivity extends GpsWorkoutActivity implements Dialog
         dialogController.setIndeterminate(true);
         new Thread(() -> {
             try {
-                File file = new WorkoutGpxExportSource(workout.id).provideFile(this);
+                File file = new WorkoutGpxExportSource(workout.id).provideFile(this).getFile();
                 Uri uri = FileProvider.getUriForFile(getBaseContext(), BuildConfig.APPLICATION_ID + ".fileprovider", file);
                 IOHelper.GpxExporter.exportWorkout(getGpsWorkoutData(), file);
                 mHandler.post(() -> {

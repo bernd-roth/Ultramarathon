@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -35,7 +35,7 @@ public class SelectExportTargetTypeDialog {
     public SelectExportTargetTypeDialog(Activity context, ExportTargetTypeSelectListener listener) {
         this.context = context;
         this.listener = listener;
-        this.targetTypes = ExportTarget.exportTargetTypes;
+        this.targetTypes = ExportTarget.Companion.getExportTargetTypes();
     }
 
     public void show() {
@@ -46,7 +46,7 @@ public class SelectExportTargetTypeDialog {
             arrayAdapter.add(context.getString(targetType.getTitleRes()));
         }
 
-        builderSingle.setTitle(R.string.selectIntervalSet);
+        builderSingle.setTitle(R.string.selectExportTarget);
         builderSingle.setAdapter(arrayAdapter, (dialog, which) -> listener.onTargetTypeSelect(targetTypes[which]));
         builderSingle.show();
     }

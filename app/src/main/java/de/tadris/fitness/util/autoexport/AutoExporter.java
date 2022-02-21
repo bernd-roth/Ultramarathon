@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -26,8 +26,6 @@ import androidx.work.Data;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import java.io.File;
-
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.data.ExportTargetConfiguration;
 import de.tadris.fitness.util.autoexport.source.ExportSource;
@@ -51,7 +49,7 @@ public class AutoExporter extends Worker {
     public Result doWork() {
         readData();
         try {
-            File file = source.provideFile(getApplicationContext());
+            ExportSource.ExportedFile file = source.provideFile(getApplicationContext());
             target.exportFile(getApplicationContext(), file);
             return Result.success();
         } catch (Exception e) {

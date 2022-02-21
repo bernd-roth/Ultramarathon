@@ -16,45 +16,48 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.tadris.fitness.util.autoexport.target
 
 import android.content.Context
 import android.net.Uri
-import androidx.documentfile.provider.DocumentFile
+import androidx.work.Constraints
+import androidx.work.NetworkType
 import de.tadris.fitness.R
-import de.tadris.fitness.util.autoexport.source.ExportSource.ExportedFile
+import de.tadris.fitness.util.autoexport.source.ExportSource
 import org.apache.commons.io.IOUtils
 import java.io.IOException
+import java.net.HttpURLConnection
+import java.net.URL
 
-class DirectoryTarget(private val directoryUri: String) : ExportTarget {
+class HTTPPostTarget(private val url: String) : ExportTarget {
 
-    override val id get() = ExportTarget.TARGET_TYPE_DIRECTORY
+    override val id get() = ExportTarget.TARGET_TYPE_HTTP_POST
 
-    override val titleRes get() = R.string.exportTargetDirectory
+    override val titleRes get() = R.string.exportTargetHttpPost
 
-    override fun exportFile(context: Context, file: ExportedFile) {
+    override val constraints
+        get() = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+
+    override fun exportFile(context: Context, file: ExportSource.ExportedFile) {
         val input = context.contentResolver.openInputStream(Uri.fromFile(file.file))
             ?: throw IOException("Source file not found")
 
-        val targetFolder = Uri.parse(directoryUri)
-        val directoryFile = DocumentFile.fromTreeUri(context, targetFolder)
-
-        val existingFile = directoryFile!!.findFile(file.file.name)
-        existingFile?.delete()
-
-        val targetFile = directoryFile.createFile("application/*", file.file.name)
-            ?: throw IOException("Cannot create target file")
-        if (!targetFile.canWrite()) {
-            throw IOException("Cannot write to target file.")
+        val client = URL(url).openConnection() as HttpURLConnection
+        client.requestMethod = "POST"
+        file.meta.forEach {
+            client.setRequestProperty(it.key, it.value)
         }
-
-        val output = context.contentResolver.openOutputStream(targetFile.uri)
-            ?: throw IOException("Target file not found")
-
+        client.doOutput = true
+        val output = client.outputStream
         IOUtils.copy(input, output)
         input.close()
         output.flush()
         output.close()
-    }
 
+        client.content // Load response
+        client.disconnect()
+    }
 }

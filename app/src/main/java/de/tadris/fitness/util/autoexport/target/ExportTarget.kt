@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -16,45 +16,40 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package de.tadris.fitness.util.autoexport.target
 
-package de.tadris.fitness.util.autoexport.target;
+import android.content.Context
+import androidx.annotation.StringRes
+import androidx.work.Constraints
+import de.tadris.fitness.util.autoexport.source.ExportSource.ExportedFile
 
-import android.content.Context;
+interface ExportTarget {
 
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.work.Constraints;
+    @Throws(Exception::class)
+    fun exportFile(context: Context, file: ExportedFile)
 
-import java.io.File;
+    val id: String
 
-public interface ExportTarget {
+    @get:StringRes
+    val titleRes: Int
 
-    String TARGET_TYPE_DIRECTORY = "directory";
+    val constraints: Constraints
+        get() = Constraints.Builder().build()
 
-    void exportFile(Context context, File file) throws Exception;
-
-    String getId();
-
-    @StringRes
-    int getTitleRes();
-
-    default Constraints getConstraints() {
-        return new Constraints.Builder().build();
-    }
-
-    ExportTarget[] exportTargetTypes = new ExportTarget[]{
-            new DirectoryTarget(null),
-    };
-
-    @Nullable
-    static ExportTarget getExportTargetImplementation(String type, String data) {
-        // TODO: check null-safety for usages
-        switch (type) {
-            case TARGET_TYPE_DIRECTORY:
-                return new DirectoryTarget(data);
-            default:
-                return null;
+    companion object {
+        @JvmStatic
+        fun getExportTargetImplementation(type: String, data: String) = when (type) {
+            TARGET_TYPE_DIRECTORY -> DirectoryTarget(data)
+            TARGET_TYPE_HTTP_POST -> HTTPPostTarget(data)
+            else -> null
         }
-    }
 
+        const val TARGET_TYPE_DIRECTORY = "directory"
+        const val TARGET_TYPE_HTTP_POST = "http-post"
+
+        val exportTargetTypes = arrayOf(
+            DirectoryTarget(""),
+            HTTPPostTarget("")
+        )
+    }
 }
