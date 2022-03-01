@@ -1,7 +1,6 @@
 package de.tadris.fitness.ui.record;
 
 import android.annotation.SuppressLint;
-import android.media.metrics.Event;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -72,25 +71,23 @@ public class NavigationModeHandler implements View.OnTouchListener, View.OnClick
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN: {
                 prevNavigationMode = navigationMode;
-                updateMode(NavigationMode.Manual, false);
+                updateMode(NavigationMode.Manual, UpdateMode.ForceNoUpdate);
             }
             break;
             case MotionEvent.ACTION_UP: {
                 if(prevNavigationMode == NavigationMode.Automatic && distanceThresholdExceeds()){
-                    updateMode(NavigationMode.Manual, true);
+                    updateMode(NavigationMode.Manual, UpdateMode.ForceUpdate);
                 } else {
-                    updateMode(prevNavigationMode, null);
+                    updateMode(prevNavigationMode, UpdateMode.OnChange);
                 }
             }
             break;
             case MotionEvent.ACTION_MOVE: {
                 if(prevNavigationMode == NavigationMode.Automatic){
-                    if (distanceThresholdExceeds())
-                    {
-                        navigationModeListener.onNavigationModeChanged(NavigationMode.Manual);
-                    } else {
-                        navigationModeListener.onNavigationModeChanged(NavigationMode.Automatic);
-                    }
+                    final NavigationMode modeToSet =  distanceThresholdExceeds() ?
+                        NavigationMode.Manual :
+                        NavigationMode.Automatic;
+                    navigationModeListener.onNavigationModeChanged(modeToSet);
                 }
             }
             break;
@@ -100,12 +97,25 @@ public class NavigationModeHandler implements View.OnTouchListener, View.OnClick
         return false;
     }
 
-    private void updateMode(final NavigationMode mode, Boolean forceUpdate)
+    private enum UpdateMode {
+        ForceUpdate,
+        ForceNoUpdate,
+        OnChange
+    }
+
+    private void updateMode(final NavigationMode mode, final UpdateMode strategy)
     {
-        if (forceUpdate != null) {
-            navigationModeUpdateReq = forceUpdate;
-        } else {
-            navigationModeUpdateReq = navigationMode != mode;
+        switch (strategy)
+        {
+            case ForceNoUpdate: {
+                navigationModeUpdateReq = false;
+            } break;
+            case ForceUpdate: {
+                navigationModeUpdateReq = true;
+            } break;
+            case OnChange: {
+                navigationModeUpdateReq = navigationMode != mode;
+            }
         }
 
         navigationMode = mode;
@@ -122,7 +132,7 @@ public class NavigationModeHandler implements View.OnTouchListener, View.OnClick
 
     @Override
     public void onClick(View v) {
-        updateMode(NavigationMode.Automatic, true);
+        updateMode(NavigationMode.Automatic, UpdateMode.ForceUpdate);
         managePositioning();
     }
 
