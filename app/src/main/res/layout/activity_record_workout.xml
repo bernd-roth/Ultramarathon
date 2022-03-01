@@ -59,16 +59,14 @@
             android:textStyle="bold"
             app:tint="@color/heartRateStateUnavailable" />
 
-        <ImageView
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/gpsFocus"
-            android:layout_width="40dp"
-            android:layout_height="42dp"
-            android:layout_gravity="center"
-            android:alpha="5"
-            android:scaleX="1"
-            android:scaleY="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
             android:src="@drawable/ic_gps_fixed"
-            app:tint="@color/colorGpsFix" />
+            android:contentDescription="@string/gps"
+            android:layout_margin="16dp" />
 
         <TextView
             android:id="@+id/recordMapAttribution"

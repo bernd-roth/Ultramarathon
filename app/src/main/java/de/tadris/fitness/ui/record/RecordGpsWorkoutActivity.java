@@ -180,8 +180,6 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity implements N
     private void setupMap() {
         final boolean showZoomControls = instance.userPreferences.getShowWorkoutZoomControls();
         mapView = new MapManager(this).setupMap();
-
-        mapView.setBuiltInZoomControls(showZoomControls);
         mapView.setClickable(showZoomControls);
 
         if (showZoomControls) {
