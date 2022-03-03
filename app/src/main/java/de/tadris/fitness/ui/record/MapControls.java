@@ -93,26 +93,6 @@ public class MapControls implements NavigationModeHandler.NavigationModeListener
         btn.setVisibility(visibility);
     }
 
-
-
-    public void onMapViewTouchEvent(MotionEvent event) {
-        if (event.getPointerCount() > 1) {
-            // no multitouch
-            return;
-        }
-
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                showZoomControlsWithTimeout();
-                break;
-            case MotionEvent.ACTION_CANCEL:
-            case MotionEvent.ACTION_UP:
-                // showZoomControlsWithTimeout();
-                break;
-        }
-    }
-
-
     private void show() {
         final float startAlpha = zoomControlsShown ? 1.0f : 0.0f;
         zoomControlsShown = true;
