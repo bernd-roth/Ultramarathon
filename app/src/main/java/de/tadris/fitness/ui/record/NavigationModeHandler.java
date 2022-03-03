@@ -7,6 +7,7 @@ import android.view.View;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.mapsforge.core.model.LatLong;
+import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.view.InputListener;
 
 import de.tadris.fitness.recording.event.LocationChangeEvent;
@@ -15,14 +16,15 @@ import de.tadris.fitness.recording.gps.GpsRecorderService;
 public class NavigationModeHandler implements View.OnTouchListener, View.OnClickListener, InputListener {
     private boolean focusedInitially = false;
     private NavigationMode navigationMode = NavigationMode.Automatic;
-    private NavigationMode prevNavigationMode = null;
     private boolean navigationModeUpdateReq = true;
     private NavigationModeListener navigationModeListener = null;
     private LatLong currentGpsPosition = null;
+    private final MapView mapView;
 
     public enum NavigationMode {
         Automatic,
-        Manual
+        Manual,
+        ManualInScope
     }
 
     public interface NavigationModeListener {
@@ -37,16 +39,11 @@ public class NavigationModeHandler implements View.OnTouchListener, View.OnClick
          * @brief Notifies if navigation to a position is needed
          */
         void navigateToPosition(final LatLong navigateTo);
-
-        /**
-         * @brief This callback is needed to get details about the map view to calculate the
-         * to current location. Depending on that value, a threshold can be evaluated and
-         * eventually it can be notified whether to navigate to a specific position or to change
-         * navigation mode.
-         * @return current center of mapView
-         */
-        LatLong onGetCenter();
     };
+
+    NavigationModeHandler(final MapView mapView) {
+        this.mapView = mapView;
+    }
 
     void init() {
         EventBus.getDefault().register(this);
@@ -70,24 +67,20 @@ public class NavigationModeHandler implements View.OnTouchListener, View.OnClick
     public boolean onTouch(View v, MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN: {
-                prevNavigationMode = navigationMode;
-                updateMode(NavigationMode.Manual, UpdateMode.ForceNoUpdate);
+                updateMode(NavigationMode.ManualInScope, UpdateMode.OnChange);
             }
             break;
             case MotionEvent.ACTION_UP: {
-                if(prevNavigationMode == NavigationMode.Automatic && distanceThresholdExceeds()){
-                    updateMode(NavigationMode.Manual, UpdateMode.ForceUpdate);
+                if(distanceThresholdExceeds()){
+                    updateMode(NavigationMode.Manual, UpdateMode.OnChange);
                 } else {
-                    updateMode(prevNavigationMode, UpdateMode.OnChange);
+                    updateMode(NavigationMode.Automatic, UpdateMode.OnChange);
                 }
             }
             break;
             case MotionEvent.ACTION_MOVE: {
-                if(prevNavigationMode == NavigationMode.Automatic){
-                    final NavigationMode modeToSet =  distanceThresholdExceeds() ?
-                        NavigationMode.Manual :
-                        NavigationMode.Automatic;
-                    navigationModeListener.onNavigationModeChanged(modeToSet);
+                if (distanceThresholdExceeds()) {
+                    updateMode(NavigationMode.Manual, UpdateMode.OnChange);
                 }
             }
             break;
@@ -99,7 +92,6 @@ public class NavigationModeHandler implements View.OnTouchListener, View.OnClick
 
     private enum UpdateMode {
         ForceUpdate,
-        ForceNoUpdate,
         OnChange
     }
 
@@ -107,18 +99,18 @@ public class NavigationModeHandler implements View.OnTouchListener, View.OnClick
     {
         switch (strategy)
         {
-            case ForceNoUpdate: {
-                navigationModeUpdateReq = false;
-            } break;
             case ForceUpdate: {
                 navigationModeUpdateReq = true;
             } break;
             case OnChange: {
-                navigationModeUpdateReq = navigationMode != mode;
+                navigationModeUpdateReq = navigationMode != NavigationMode.Manual
+                        && navigationMode != mode;
             }
         }
 
-        navigationMode = mode;
+        if (navigationModeUpdateReq) {
+            navigationMode = mode;
+        }
     }
 
     @Override
@@ -155,7 +147,7 @@ public class NavigationModeHandler implements View.OnTouchListener, View.OnClick
             return false;
         }
 
-        final LatLong center = navigationModeListener.onGetCenter();
+        final LatLong center = mapView.getBoundingBox().getCenterPoint();
         final double distanceMeter = Math.abs(currentGpsPosition.sphericalDistance(center));
 
         return distanceMeter > 50;

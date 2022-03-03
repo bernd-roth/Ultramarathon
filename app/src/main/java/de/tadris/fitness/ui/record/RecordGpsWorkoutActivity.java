@@ -29,14 +29,18 @@ import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 import androidx.core.app.ActivityCompat;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -44,6 +48,7 @@ import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.graphics.Style;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
+import org.mapsforge.map.android.input.MapZoomControls;
 import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.layer.Layer;
 import org.mapsforge.map.layer.download.TileDownloadLayer;
@@ -65,7 +70,7 @@ import de.tadris.fitness.recording.event.WorkoutGPSStateChanged;
 import de.tadris.fitness.recording.gps.GpsRecorderService;
 import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
 
-public class RecordGpsWorkoutActivity extends RecordWorkoutActivity implements NavigationModeHandler.NavigationModeListener {
+public class RecordGpsWorkoutActivity extends RecordWorkoutActivity  {
 
     public static final int REQUEST_CODE_LOCATION_PERMISSION = 10;
     public static final int REQUEST_CODE_BACKGROUND_LOCATION_PERMISSION = 11;
@@ -74,18 +79,16 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity implements N
     private Polyline polyline;
     private FixedPixelCircle locationPoint;
     private TextView gpsStatusView;
-    private ImageView focusGpsOverlay;
     private boolean gpsFound = false;
-    private final NavigationModeHandler navigationModeHandler = new NavigationModeHandler();
     private final List<LatLong> recordedPositions = new ArrayList<>();
+    private MapControls mapControls;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
 
-        navigationModeHandler.init();
-        navigationModeHandler.setNavigationModeListener(this);
 
         boolean wasAlreadyRunning = false;
         if (!LAUNCH_ACTION.equals(intent.getAction())) {
@@ -122,16 +125,24 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity implements N
 
         setTitle(R.string.recordWorkout);
 
-        setupMap();
+        mapView = new MapManager(this).setupMap();
 
         ((ViewGroup) findViewById(R.id.recordMapViewerRoot)).addView(mapView);
         waitingForGPSOverlay = findViewById(R.id.recorderWaitingOverlay);
         waitingForGPSOverlay.setVisibility(View.VISIBLE);
         gpsStatusView = findViewById(R.id.recordGpsStatus);
 
-        focusGpsOverlay = findViewById(R.id.gpsFocus);
-        focusGpsOverlay.setVisibility(View.GONE);
-        focusGpsOverlay.setOnClickListener(navigationModeHandler);
+        mapView.setBuiltInZoomControls(false);
+
+        FloatingActionButton mapFocusGpsBtn = findViewById(R.id.gpsFocus);
+        FloatingActionButton mapZoomInBtn = findViewById(R.id.mapZoomIn);
+        FloatingActionButton mapZoomOutBtn = findViewById(R.id.mapZoomOut);
+
+        final boolean showZoomControls = instance.userPreferences.getShowWorkoutZoomControls();
+        if (showZoomControls) {
+            mapControls = new MapControls(mapView, mapFocusGpsBtn, mapZoomInBtn, mapZoomOutBtn);
+            mapControls.init();
+        }
 
         onGPSStateChanged(new WorkoutGPSStateChanged(GpsWorkoutRecorder.GpsState.SIGNAL_LOST, GpsWorkoutRecorder.GpsState.SIGNAL_LOST));
 
@@ -176,17 +187,6 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity implements N
         }).start();
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    private void setupMap() {
-        final boolean showZoomControls = instance.userPreferences.getShowWorkoutZoomControls();
-        mapView = new MapManager(this).setupMap();
-        mapView.setClickable(showZoomControls);
-
-        if (showZoomControls) {
-            mapView.addInputListener(navigationModeHandler);
-            mapView.setOnTouchListener(navigationModeHandler);
-        }
-    }
 
 
     private boolean isWorkoutRunning() {
@@ -348,37 +348,14 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity implements N
         foundGPS();
    }
 
-    @Override
-    public void onNavigationModeChanged(final NavigationModeHandler.NavigationMode mode) {
-        switch(mode){
-            case Automatic:
 
-                focusGpsOverlay.setVisibility(View.GONE);
-                break;
-            case Manual:
-                focusGpsOverlay.setVisibility(View.VISIBLE);
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + mode);
-        }
-    }
 
-    @Override
-    public void navigateToPosition(final LatLong navigateTo) {
-        assert(navigateTo != null);
-        mapView.getModel().mapViewPosition.animateTo(navigateTo);
-    }
-
-    @Override
-    public LatLong onGetCenter() {
-        final LatLong center = mapView.getBoundingBox().getCenterPoint();
-        return center;
-    }
 
     @Override
     protected void onDestroy() {
-        navigationModeHandler.removeNavigationModeListener();
-        navigationModeHandler.deinit();
+        if (mapControls != null) {
+            mapControls.deinit();
+        }
 
         // Clear map
         mapView.destroyAll();

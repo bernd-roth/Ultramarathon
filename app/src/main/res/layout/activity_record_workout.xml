@@ -59,14 +59,47 @@
             android:textStyle="bold"
             app:tint="@color/heartRateStateUnavailable" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/gpsFocus"
-            android:layout_width="wrap_content"
+        <FrameLayout
+            android:id="@+id/mapNavigationRoot"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
-            android:src="@drawable/ic_gps_fixed"
-            android:contentDescription="@string/gps"
-            android:layout_margin="16dp" />
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="end|bottom"
+                android:orientation="vertical">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/gpsFocus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|bottom"
+                    android:layout_marginRight="16dp"
+                    android:contentDescription="@string/gps"
+                    android:src="@drawable/ic_gps_fixed" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/mapZoomIn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|bottom"
+                    android:layout_marginRight="16dp"
+                    android:contentDescription="@string/gps"
+                    android:src="@drawable/ic_arrow_right" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/mapZoomOut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|bottom"
+                    android:layout_marginRight="16dp"
+                    android:contentDescription="@string/gps"
+                    android:src="@drawable/ic_arrow_left" />
+            </LinearLayout>
+        </FrameLayout>
 
         <TextView
             android:id="@+id/recordMapAttribution"
