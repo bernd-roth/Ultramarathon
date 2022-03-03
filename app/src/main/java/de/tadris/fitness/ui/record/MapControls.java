@@ -65,12 +65,14 @@ public class MapControls implements NavigationModeHandler.NavigationModeListener
         mapZoomInBtn.setOnClickListener((View v) -> {
             final byte currentZoomLevel = mapView.getModel().mapViewPosition.getZoomLevel();
             mapView.setZoomLevel((byte) (currentZoomLevel - 1));
+            showZoomControlsWithTimeout();
         });
 
         mapZoomOutBtn.setVisibility(View.GONE);
         mapZoomOutBtn.setOnClickListener((View v) -> {
             final byte currentZoomLevel = mapView.getModel().mapViewPosition.getZoomLevel();
             mapView.setZoomLevel((byte) (currentZoomLevel + 1));
+            showZoomControlsWithTimeout();
         });
 
         mapView.setClickable(true);
@@ -141,6 +143,7 @@ public class MapControls implements NavigationModeHandler.NavigationModeListener
 
     private void showZoomControlsWithTimeout() {
         showZoomControls();
+        this.zoomControlsHideHandler.removeMessages(MSG_ZOOM_CONTROLS_HIDE);
         boolean sent = this.zoomControlsHideHandler.sendEmptyMessageDelayed(MSG_ZOOM_CONTROLS_HIDE, ZOOM_CONTROLS_TIMEOUT);
         assert(sent);
     }
