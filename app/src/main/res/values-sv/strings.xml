@@ -429,4 +429,26 @@
         <item quantity="one">Importerade ett träningspass</item>
         <item quantity="other">Importerade %d träningspass</item>
     </plurals>
+    <string name="hidden">Dold</string>
+    <string name="identifiable_visibility">Identifierbar</string>
+    <string name="private_visibility">Privat</string>
+    <string name="kcal_unit">kcal</string>
+    <string name="joule_unit">Joule</string>
+    <string name="always_mode">Alltid</string>
+    <string name="only_on_headphones_mode">Bara i hörlurar</string>
+    <string name="mapnik_default_osm_mapstyle">Mapnik
+\nOSM:s standardkartstil</string>
+    <string name="always_track_style">Alltid</string>
+    <string name="never_track_style">Aldrig</string>
+    <string name="system_theme">System</string>
+    <string name="light_theme">Ljust</string>
+    <string name="dark_theme">Mörkt</string>
+    <string name="system_default">Systemstandard</string>
+    <string name="sunday">Söndag</string>
+    <string name="monday">Måndag</string>
+    <string name="tuesday">Tisdag</string>
+    <string name="wednesday">Onsdag</string>
+    <string name="thursday">Torsdag</string>
+    <string name="friday">Fredag</string>
+    <string name="saturday">Lördag</string>
 </resources>
