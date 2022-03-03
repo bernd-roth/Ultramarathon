@@ -25,7 +25,6 @@ public class MapControls implements NavigationModeHandler.NavigationModeListener
     private FloatingActionButton mapZoomInBtn;
     private FloatingActionButton mapZoomOutBtn;
     private NavigationModeHandler.NavigationMode navigationMode = NavigationModeHandler.NavigationMode.Automatic;
-    private NavigationModeHandler.NavigationMode prevNavigationMode;
 
     private final Handler zoomControlsHideHandler;
     private final NavigationModeHandler navigationModeHandler;
@@ -99,7 +98,9 @@ public class MapControls implements NavigationModeHandler.NavigationModeListener
         if (focusBtnNeeded) {
             fadeButton(mapFocusGpsBtn, View.VISIBLE, startAlpha, 1.0f);
         } else {
-            fadeButton(mapFocusGpsBtn, View.GONE, startAlpha, 0.0f);
+            if (mapFocusGpsBtn.getVisibility() == View.VISIBLE) {
+                fadeButton(mapFocusGpsBtn, View.GONE, 0.0f, 0.0f);
+            }
         }
 
         fadeButton(mapZoomInBtn, View.VISIBLE, startAlpha, 1.0f);
@@ -138,7 +139,6 @@ public class MapControls implements NavigationModeHandler.NavigationModeListener
 
     @Override
     public void onNavigationModeChanged(final NavigationModeHandler.NavigationMode mode) {
-        this.prevNavigationMode = this.navigationMode;
         this.navigationMode = mode;
 
         switch(mode){
