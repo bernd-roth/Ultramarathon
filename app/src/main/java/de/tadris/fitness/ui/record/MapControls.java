@@ -19,6 +19,8 @@ public class MapControls implements NavigationModeHandler.NavigationModeListener
 
     private final int MSG_ZOOM_CONTROLS_HIDE = 0;
     private final int ZOOM_CONTROLS_TIMEOUT = 2000;
+    private final byte MAX_ZOOM_LVL = 1;
+    private final byte MIN_ZOOM_LVL = 19;
 
     private MapView mapView;
     private FloatingActionButton mapFocusGpsBtn;
@@ -63,19 +65,59 @@ public class MapControls implements NavigationModeHandler.NavigationModeListener
         mapZoomInBtn.setVisibility(View.GONE);
         mapZoomInBtn.setOnClickListener((View v) -> {
             final byte currentZoomLevel = mapView.getModel().mapViewPosition.getZoomLevel();
-            mapView.setZoomLevel((byte) (currentZoomLevel + 1));
+            assert (currentZoomLevel < MIN_ZOOM_LVL);
+            final byte nextZoomLevel = (byte) (currentZoomLevel + 1);
+
+            if (nextZoomLevel == MIN_ZOOM_LVL)
+            {
+                mapZoomInBtn.setEnabled(false);
+            } else if (currentZoomLevel == MAX_ZOOM_LVL) {
+                mapZoomOutBtn.setEnabled(true);
+            }
+
+
+            mapView.setZoomLevel(nextZoomLevel);
             showZoomControlsWithTimeout();
         });
 
         mapZoomOutBtn.setVisibility(View.GONE);
         mapZoomOutBtn.setOnClickListener((View v) -> {
             final byte currentZoomLevel = mapView.getModel().mapViewPosition.getZoomLevel();
-            mapView.setZoomLevel((byte) (currentZoomLevel - 1));
+            assert (currentZoomLevel > MAX_ZOOM_LVL);
+            final byte nextZoomLevel = (byte) (currentZoomLevel - 1);
+
+            if (nextZoomLevel == MAX_ZOOM_LVL)
+            {
+                mapZoomOutBtn.setEnabled(false);
+            } else if (currentZoomLevel == MIN_ZOOM_LVL) {
+                mapZoomInBtn.setEnabled(true);
+            }
+
+
+            mapView.setZoomLevel(nextZoomLevel);
             showZoomControlsWithTimeout();
         });
 
         mapView.setClickable(true);
-        mapView.setOnTouchListener(navigationModeHandler);
+        mapView.setOnTouchListener((View v, MotionEvent event) -> {
+            if (event.getPointerCount() > 1) {
+                final byte zoomLevel = mapView.getModel().mapViewPosition.getZoomLevel();
+                if (zoomLevel >= MIN_ZOOM_LVL || zoomLevel <= MAX_ZOOM_LVL) {
+                    if (zoomLevel <= MAX_ZOOM_LVL) {
+                        mapView.setZoomLevel(MAX_ZOOM_LVL);
+                        mapZoomOutBtn.setEnabled(false);
+                        mapZoomInBtn.setEnabled(true);
+                    } else  if (zoomLevel >= MIN_ZOOM_LVL) {
+                        mapZoomInBtn.setEnabled(false);
+                        mapZoomOutBtn.setEnabled(true);
+                    }
+                } else {
+                    mapZoomInBtn.setEnabled(true);
+                    mapZoomOutBtn.setEnabled(true);
+                }
+            }
+            return navigationModeHandler.onTouch(v, event);
+        });
         mapView.addInputListener(navigationModeHandler);
     }
 
