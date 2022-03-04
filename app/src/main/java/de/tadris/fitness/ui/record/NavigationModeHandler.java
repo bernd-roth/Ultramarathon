@@ -130,7 +130,12 @@ public class NavigationModeHandler implements View.OnTouchListener, View.OnClick
 
     @Subscribe
     public void onLocationChange(LocationChangeEvent e) {
-        currentGpsPosition =  GpsRecorderService.locationToLatLong(e.location);
+        currentGpsPosition = GpsRecorderService.locationToLatLong(e.location);
+
+        if (navigationMode == NavigationMode.ManualInScope && distanceThresholdExceeds()) {
+            updateMode(NavigationMode.Manual, UpdateMode.OnChange);
+        }
+
         managePositioning();
     }
 
