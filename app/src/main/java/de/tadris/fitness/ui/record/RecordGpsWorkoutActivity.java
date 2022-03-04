@@ -26,6 +26,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -137,6 +138,9 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity  {
         FloatingActionButton mapFocusGpsBtn = findViewById(R.id.gpsFocus);
         FloatingActionButton mapZoomInBtn = findViewById(R.id.mapZoomIn);
         FloatingActionButton mapZoomOutBtn = findViewById(R.id.mapZoomOut);
+        mapFocusGpsBtn.setBackgroundTintList(ColorStateList.valueOf(getThemePrimaryColor()));
+        mapZoomInBtn.setBackgroundTintList(ColorStateList.valueOf(getThemePrimaryColor()));
+        mapZoomOutBtn.setBackgroundTintList(ColorStateList.valueOf(getThemePrimaryColor()));
 
         final boolean showZoomControls = instance.userPreferences.getShowWorkoutZoomControls();
         if (showZoomControls) {
