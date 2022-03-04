@@ -30,6 +30,7 @@ import android.content.res.ColorStateList;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -79,6 +80,7 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity  {
     private boolean gpsFound = false;
     private final List<LatLong> recordedPositions = new ArrayList<>();
     private MapControls mapControls;
+
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -165,6 +167,17 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity  {
         }
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+       if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+           mapControls.externalZoomInRequest();
+       } else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+           mapControls.externalZoomOutRequest();
+       }
+
+       return true;
+    }
+
     private void hideWaitOverlay() {
         waitingForGPSOverlay.clearAnimation();
         waitingForGPSOverlay.animate().alpha(0f).setDuration(1000).setListener(new Animator.AnimatorListener() {
@@ -186,8 +199,6 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity  {
             }
         }).start();
     }
-
-
 
     private boolean isWorkoutRunning() {
         return instance.recorder.getState() == GpsWorkoutRecorder.RecordingState.RUNNING;
@@ -348,9 +359,6 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity  {
         updateLocationPoint(latLongGps);
         foundGPS();
    }
-
-
-
 
     @Override
     protected void onDestroy() {

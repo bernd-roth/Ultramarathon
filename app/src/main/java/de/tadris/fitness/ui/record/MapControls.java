@@ -65,36 +65,38 @@ public class MapControls implements NavigationModeHandler.NavigationModeListener
         mapZoomInBtn.setVisibility(View.GONE);
         mapZoomInBtn.setOnClickListener((View v) -> {
             final byte currentZoomLevel = mapView.getModel().mapViewPosition.getZoomLevel();
-            assert (currentZoomLevel < MIN_ZOOM_LVL);
-            final byte nextZoomLevel = (byte) (currentZoomLevel + 1);
+            if (currentZoomLevel < MIN_ZOOM_LVL) {
+                final byte nextZoomLevel = (byte) (currentZoomLevel + 1);
 
-            if (nextZoomLevel == MIN_ZOOM_LVL)
-            {
-                mapZoomInBtn.setEnabled(false);
-            } else if (currentZoomLevel == MAX_ZOOM_LVL) {
-                mapZoomOutBtn.setEnabled(true);
+                if (nextZoomLevel == MIN_ZOOM_LVL) {
+                    mapZoomInBtn.setEnabled(false);
+                } else if (currentZoomLevel == MAX_ZOOM_LVL) {
+                    mapZoomOutBtn.setEnabled(true);
+                }
+
+
+                mapView.setZoomLevel(nextZoomLevel);
             }
 
-
-            mapView.setZoomLevel(nextZoomLevel);
             showZoomControlsWithTimeout();
         });
 
         mapZoomOutBtn.setVisibility(View.GONE);
         mapZoomOutBtn.setOnClickListener((View v) -> {
             final byte currentZoomLevel = mapView.getModel().mapViewPosition.getZoomLevel();
-            assert (currentZoomLevel > MAX_ZOOM_LVL);
-            final byte nextZoomLevel = (byte) (currentZoomLevel - 1);
+            if (currentZoomLevel > MAX_ZOOM_LVL) {
+                final byte nextZoomLevel = (byte) (currentZoomLevel - 1);
 
-            if (nextZoomLevel == MAX_ZOOM_LVL)
-            {
-                mapZoomOutBtn.setEnabled(false);
-            } else if (currentZoomLevel == MIN_ZOOM_LVL) {
-                mapZoomInBtn.setEnabled(true);
+                if (nextZoomLevel == MAX_ZOOM_LVL) {
+                    mapZoomOutBtn.setEnabled(false);
+                } else if (currentZoomLevel == MIN_ZOOM_LVL) {
+                    mapZoomInBtn.setEnabled(true);
+                }
+
+
+                mapView.setZoomLevel(nextZoomLevel);
             }
 
-
-            mapView.setZoomLevel(nextZoomLevel);
             showZoomControlsWithTimeout();
         });
 
@@ -201,4 +203,11 @@ public class MapControls implements NavigationModeHandler.NavigationModeListener
         }
     }
 
+    public void externalZoomInRequest() {
+        mapZoomInBtn.callOnClick();
+    }
+
+    public void externalZoomOutRequest() {
+        mapZoomOutBtn.callOnClick();
+    }
 }
