@@ -171,11 +171,13 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity  {
     public boolean onKeyDown(int keyCode, KeyEvent event){
        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
            mapControls.externalZoomInRequest();
+           return true;
        } else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
            mapControls.externalZoomOutRequest();
+           return true;
        }
 
-       return true;
+       return false;
     }
 
     private void hideWaitOverlay() {
