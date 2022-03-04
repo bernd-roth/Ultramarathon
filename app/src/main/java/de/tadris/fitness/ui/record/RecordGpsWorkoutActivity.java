@@ -30,11 +30,8 @@ import android.content.res.ColorStateList;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -45,13 +42,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.mapsforge.core.graphics.Cap;
-import org.mapsforge.core.graphics.Join;
 import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.graphics.Style;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
-import org.mapsforge.map.android.input.MapZoomControls;
 import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.layer.Layer;
 import org.mapsforge.map.layer.download.TileDownloadLayer;
@@ -137,7 +131,7 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity  {
 
         mapView.setBuiltInZoomControls(false);
 
-        FloatingActionButton mapFocusGpsBtn = findViewById(R.id.gpsFocus);
+        FloatingActionButton mapFocusGpsBtn = findViewById(R.id.mapGpsFocus);
         FloatingActionButton mapZoomInBtn = findViewById(R.id.mapZoomIn);
         FloatingActionButton mapZoomOutBtn = findViewById(R.id.mapZoomOut);
         mapFocusGpsBtn.setBackgroundTintList(ColorStateList.valueOf(getThemePrimaryColor()));

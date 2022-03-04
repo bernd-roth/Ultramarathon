@@ -63,14 +63,14 @@ public class MapControls implements NavigationModeHandler.NavigationModeListener
         mapZoomInBtn.setVisibility(View.GONE);
         mapZoomInBtn.setOnClickListener((View v) -> {
             final byte currentZoomLevel = mapView.getModel().mapViewPosition.getZoomLevel();
-            mapView.setZoomLevel((byte) (currentZoomLevel - 1));
+            mapView.setZoomLevel((byte) (currentZoomLevel + 1));
             showZoomControlsWithTimeout();
         });
 
         mapZoomOutBtn.setVisibility(View.GONE);
         mapZoomOutBtn.setOnClickListener((View v) -> {
             final byte currentZoomLevel = mapView.getModel().mapViewPosition.getZoomLevel();
-            mapView.setZoomLevel((byte) (currentZoomLevel + 1));
+            mapView.setZoomLevel((byte) (currentZoomLevel - 1));
             showZoomControlsWithTimeout();
         });
 
