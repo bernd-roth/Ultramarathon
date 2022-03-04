@@ -45,6 +45,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.mapsforge.core.graphics.Cap;
+import org.mapsforge.core.graphics.Join;
 import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.graphics.Style;
 import org.mapsforge.core.model.LatLong;
@@ -224,13 +226,14 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity  {
             mapView.getLayerManager().getLayers().remove(locationPoint);
         }
 
-        Paint fill = AndroidGraphicFactory.INSTANCE.createPaint();
-        fill.setColor(getResources().getColor(R.color.locationCircle));
         Paint stroke = AndroidGraphicFactory.INSTANCE.createPaint();
         stroke.setColor(getResources().getColor(R.color.locationCircleStroke));
-        stroke.setStrokeWidth(3f);
-        locationPoint = new FixedPixelCircle(currentLocation, 20f, fill, stroke);
-
+        stroke.setStyle(Style.STROKE);
+        stroke.setStrokeWidth(20f);
+        Paint fill = AndroidGraphicFactory.INSTANCE.createPaint();
+        fill.setStyle(Style.FILL);
+        fill.setColor(getResources().getColor(R.color.locationCircle));
+        locationPoint = new FixedPixelCircle(currentLocation, 15f, fill, stroke);
         mapView.addLayer(locationPoint);
     }
 
