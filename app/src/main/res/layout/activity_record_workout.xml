@@ -70,6 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="end|bottom"
+                android:layout_marginBottom="30dp"
                 android:orientation="vertical">
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -78,6 +79,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end|bottom"
                     android:layout_marginRight="16dp"
+                    android:layout_marginBottom="5dp"
                     android:contentDescription="@string/gps"
                     android:src="@drawable/ic_gps_fixed" />
 
@@ -87,6 +89,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end|bottom"
                     android:layout_marginRight="16dp"
+                    android:layout_marginBottom="5dp"
                     android:contentDescription="@string/gps"
                     android:src="@drawable/ic_arrow_right" />
 
@@ -96,6 +99,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end|bottom"
                     android:layout_marginRight="16dp"
+                    android:layout_marginBottom="5dp"
                     android:contentDescription="@string/gps"
                     android:src="@drawable/ic_arrow_left" />
             </LinearLayout>
