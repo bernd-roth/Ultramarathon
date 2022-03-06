@@ -55,6 +55,7 @@ public class MapControls implements NavigationModeHandler.NavigationModeListener
         });
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     void init() {
         navigationModeHandler.init();
         navigationModeHandler.setNavigationModeListener(this);

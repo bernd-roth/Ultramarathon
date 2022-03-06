@@ -115,7 +115,6 @@ public class NavigationModeHandler implements View.OnTouchListener, View.OnClick
 
     @Override
     public void onMoveEvent() {
-        managePositioning();
     }
 
     @Override
