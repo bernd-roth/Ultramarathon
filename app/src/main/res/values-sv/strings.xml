@@ -451,4 +451,6 @@
     <string name="thursday">Torsdag</string>
     <string name="friday">Fredag</string>
     <string name="saturday">Lördag</string>
+    <string name="in_the_diagram_screen_track_style">På diagramskärmen</string>
+    <string name="height_map">Höjdkarta</string>
 </resources>
