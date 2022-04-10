@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -50,10 +50,10 @@ import de.tadris.fitness.R;
 import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.recording.announcement.TTSController;
 import de.tadris.fitness.recording.announcement.VoiceAnnouncements;
-import de.tadris.fitness.recording.event.HeartRateChangeEvent;
-import de.tadris.fitness.recording.event.HeartRateConnectionChangeEvent;
 import de.tadris.fitness.recording.event.HRBatteryLevelChangeEvent;
 import de.tadris.fitness.recording.event.HRBatteryLevelConnectionEvent;
+import de.tadris.fitness.recording.event.HeartRateChangeEvent;
+import de.tadris.fitness.recording.event.HeartRateConnectionChangeEvent;
 import de.tadris.fitness.recording.gps.GpsRecorderService;
 import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
 import de.tadris.fitness.recording.sensors.HRBatteryManager;
@@ -282,7 +282,6 @@ public abstract class BaseRecorderService extends Service {
         }
 
         initializeHRManager();
-
         initializeHRBatteryManager();
 
         initializeTTS();

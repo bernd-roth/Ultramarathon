@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -18,6 +18,8 @@
  */
 package de.tadris.fitness.recording.sensors;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
@@ -26,7 +28,13 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Build;
+
+import androidx.core.app.ActivityCompat;
+
 import java.util.UUID;
+
 import de.tadris.fitness.recording.event.HRBatteryLevelChangeEvent;
 import de.tadris.fitness.util.BluetoothDevicePreferences;
 
@@ -49,10 +57,10 @@ public class HRBatteryManager {
         this.bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     }
 
+    @SuppressLint("MissingPermission")
     public void start() {
         if (isConnectionPossible()) {
             BluetoothDevice device = bluetoothAdapter.getRemoteDevice(getBluetoothAddress());
-
             gatt = device.connectGatt(context, true, new BluetoothGattCallback() {
                 @Override
                 public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
@@ -79,7 +87,7 @@ public class HRBatteryManager {
                 @Override
                 public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
                     super.onCharacteristicRead(gatt, characteristic, status);
-                    int batteryState = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8,0);
+                    int batteryState = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0);
 
                     callback.onHRBatteryMeasure(new HRBatteryLevelChangeEvent(
                             device,
@@ -89,7 +97,7 @@ public class HRBatteryManager {
                 @Override
                 public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
                     super.onCharacteristicChanged(gatt, characteristic);
-                    int batteryState = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8,0);
+                    int batteryState = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0);
 
                     callback.onHRBatteryMeasure(new HRBatteryLevelChangeEvent(
                             device,
@@ -99,15 +107,24 @@ public class HRBatteryManager {
         }
     }
 
+    @SuppressLint("MissingPermission")
     public void stop() {
-        if(gatt != null) {
+        if (gatt != null) {
             gatt.disconnect();
             gatt.close();
         }
     }
 
     public boolean isConnectionPossible() {
-        return isBluetoothAddressAvailable() && bluetoothAdapter != null && bluetoothAdapter.isEnabled();
+        return isBluetoothAddressAvailable() && bluetoothAdapter != null && bluetoothAdapter.isEnabled() && hasPermission();
+    }
+
+    public boolean hasPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            return ActivityCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED;
+        } else {
+            return true;
+        }
     }
 
     public String getBluetoothAddress() {
