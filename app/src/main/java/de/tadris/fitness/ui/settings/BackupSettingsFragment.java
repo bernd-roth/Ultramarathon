@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -30,17 +30,18 @@ import android.os.Handler;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
+import androidx.preference.Preference;
 
 import java.io.File;
-import java.io.IOException;
 
 import de.tadris.fitness.BuildConfig;
 import de.tadris.fitness.R;
-import de.tadris.fitness.export.BackupController;
 import de.tadris.fitness.export.RestoreController;
 import de.tadris.fitness.ui.ShareFileActivity;
 import de.tadris.fitness.ui.dialog.ProgressDialogController;
-import de.tadris.fitness.util.DataManager;
+import de.tadris.fitness.util.autoexport.AutoExportPlanner;
+import de.tadris.fitness.util.autoexport.source.BackupExportSource;
+import de.tadris.fitness.util.autoexport.source.ExportSource;
 
 public class BackupSettingsFragment extends FitoTrackSettingFragment {
 
@@ -58,6 +59,29 @@ public class BackupSettingsFragment extends FitoTrackSettingFragment {
             showExportDialog();
             return true;
         });
+        findPreference("autoExportWorkouts").setOnPreferenceClickListener(preference -> {
+            startExportTargetActivity(ExportSource.EXPORT_SOURCE_WORKOUT_GPX);
+            return true;
+        });
+        findPreference("autoExportBackup").setOnPreferenceClickListener(preference -> {
+            startExportTargetActivity(ExportSource.EXPORT_SOURCE_BACKUP);
+            return true;
+        });
+
+        Preference backupIntervalPreference = findPreference("autoBackupInterval");
+        backupIntervalPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+            sBindPreferenceSummaryToValueListener.onPreferenceChange(preference, newValue);
+            new AutoExportPlanner(getContext()).planAutoBackup();
+            return true;
+        });
+        triggerChangeListener(backupIntervalPreference);
+
+    }
+
+    private void startExportTargetActivity(String exportSource) {
+        Intent intent = new Intent(requireContext(), ConfigureExportTargetsActivity.class);
+        intent.putExtra(ConfigureExportTargetsActivity.EXTRA_SOURCE, exportSource);
+        startActivity(intent);
     }
 
     private void showExportDialog() {
@@ -77,16 +101,8 @@ public class BackupSettingsFragment extends FitoTrackSettingFragment {
         dialogController.show();
         new Thread(() -> {
             try {
-                String file = DataManager.getSharedDirectory(requireContext()) + "/backup" + System.currentTimeMillis() + ".ftb";
-                File parent = new File(file).getParentFile();
-                if (!parent.exists() && !parent.mkdirs()) {
-                    throw new IOException("Cannot write");
-                }
-                Uri uri = FileProvider.getUriForFile(requireContext(), BuildConfig.APPLICATION_ID + ".fileprovider", new File(file));
-
-                BackupController backupController = new BackupController(requireContext(), new File(file), (progress, action) -> mHandler.post(() -> dialogController.setProgress(progress, action)));
-                backupController.exportData();
-
+                File file = new BackupExportSource(true).provideFile(requireContext(), (progress, action) -> mHandler.post(() -> dialogController.setProgress(progress, action)));
+                Uri uri = FileProvider.getUriForFile(requireContext(), BuildConfig.APPLICATION_ID + ".fileprovider", file);
                 mHandler.post(() -> {
                     dialogController.cancel();
                     Intent intent = new Intent(getContext(), ShareFileActivity.class);

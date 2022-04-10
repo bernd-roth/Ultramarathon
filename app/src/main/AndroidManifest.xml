@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -65,6 +65,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity
@@ -84,6 +85,7 @@
                 <data android:mimeType="application/*" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.settings.ConfigureExportTargetsActivity"></activity>
         <activity android:name=".ui.settings.DownloadMapsActivity" />
         <activity android:name=".ui.record.RecordIndoorWorkoutActivity" />
         <activity android:name=".ui.settings.EditWorkoutTypeActivity" />

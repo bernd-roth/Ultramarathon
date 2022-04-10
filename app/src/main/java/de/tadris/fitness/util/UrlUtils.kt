@@ -17,19 +17,7 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.util.io.general;
+package de.tadris.fitness.util
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-
-import de.tadris.fitness.data.GpsWorkoutData;
-
-public interface IWorkoutExporter {
-    void exportWorkout(GpsWorkoutData data, OutputStream outputStream) throws IOException;
-
-    default void exportWorkout(GpsWorkoutData data, File file) throws IOException {
-        exportWorkout(data, new FileOutputStream(file));
-    }
-}
+fun String.isUrl() =
+    matches("https?://(www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)".toRegex())

@@ -236,6 +236,10 @@ public class UserPreferences {
         return preferences.getBoolean("showWorkoutZoomControls", true);
     }
 
+    public int getAutoBackupIntervalHours() {
+        return Integer.parseInt(preferences.getString("autoBackupInterval", "168"));
+    }
+
     public String getOfflineMapDirectoryName() {
         return preferences.getString("offlineMapDirectoryName", null);
     }
@@ -248,7 +252,7 @@ public class UserPreferences {
     public boolean getUseNfcStart() {
         return preferences.getBoolean(USE_NFC_START_VARIABLE, DEFAULT_USE_NFC_START);
     }
-    
+
     /**
      * Get the currently configured auto start delay
      * @return auto start delay in seconds

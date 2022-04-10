@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
-  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -16,7 +17,9 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  -->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
     <string name="backup">Sichern</string>
     <string name="cancel">Abbrechen</string>
@@ -78,7 +81,6 @@
     <string name="workoutTypeCycling">Fahrrad fahren</string>
     <string name="workoutTypeHiking">Wandern</string>
     <string name="workoutTypeRunning">Laufen</string>
-    <string name="unknown">Unbekannt</string>
     <string name="workoutTypeWalking">Gehen</string>
     <string name="enable">Aktivieren</string>
     <string name="height">Höhe</string>
@@ -344,6 +346,12 @@
     <string name="downloadFailed">Herunterladen fehlgeschlagen</string>
     <string name="downloadCanceled">Herunterladen abgebrochen</string>
     <string name="chooseMapHint">Bitte eine Kartendatei auswählen</string>
+    <string name="exportTargetDirectory">Verzeichnis</string>
+    <string name="autoBackupTitle">Automatische Sicherungen</string>
+    <string name="workoutGPXExportTitle">Workout GPX-Sicherungen</string>
+    <string name="unknown">Unbekannt</string>
+    <string name="hintConfigureExportTargets">Füge Ziele hinzu, wohin die Dateien exportiert werden sollen.</string>
+    <string name="deleteExportTargetConfirmation">Möchtest du dieses Export-Ziel wirklich entfernen?</string>
     <string name="intervalAutoStartDelayTraining">Workout Auto-Start Verzögerung</string>
     <string name="manageAutoStartDelaySummary">Wähle einen Countdown zum automatischen Starten deines Workouts</string>
     <string name="pref_auto_start_delay_title">Auto-Start Countdown</string>
@@ -458,4 +466,15 @@
         <item quantity="one">Ein Workout importiert</item>
         <item quantity="other">%d Workouts importiert</item>
     </plurals>
+    <string name="autoExportWorkoutsSummary">Neu aufgenommene Workouts exportieren</string>
+    <string name="autoExportBackupTitle">Automatische App-Backups</string>
+    <string name="autoExportBackupSummary">Backups automatisch exportieren</string>
+    <string name="autoExportBackupExplanation">Im gewählten Interval wird ein Backup hierher exportiert:</string>
+    <string name="autoExportWorkoutExplanation">Nachdem ein neues Workout aufgenommen wurde, wird ein GPS-export hierher exportiert:</string>
+    <string name="exportIntervalTitle">Backup-Intervall</string>
+    <string name="takeBackups1">Jeden Tag</string>
+    <string name="takeBackups2">Jeden zweiten Tag</string>
+    <string name="takeBackups3">Jeden dritten Tag</string>
+    <string name="takeBackups7">Jede Woche</string>
+    <string name="takeBackups14">Jede zweite Woche</string>
 </resources>

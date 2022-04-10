@@ -117,9 +117,14 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.2.0'
 
     // Android Room Database
-    def room_version = "2.3.0"
+    def room_version = "2.4.1"
     annotationProcessor "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-runtime:$room_version"
+
+    // Android Work Manager
+    def work_version = "2.7.1"
+    implementation "androidx.work:work-runtime:$work_version"
+    implementation "androidx.work:work-runtime-ktx:$work_version"
 
     // support for the new language APIs
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
