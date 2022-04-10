@@ -32,7 +32,7 @@
     <string name="pref_voice_announcements_summary">Sett opp stemmeinstruks som holder deg oppdatert i løpet av treningsøkten</string>
     <string name="errorWorkoutAddFuture">Treningen kan ikke være i fremtiden</string>
     <string name="setPreferencesMessage">Du kan stille inn foretrukket enhetssystem og vekt i innstillingene.</string>
-    <string name="importBackupMessage">Advarsel: Alle eksisterende data i programmet blir slettet. Hvis du ikke vil miste dem, må du først ta en annen sikkerhetskopi. Er du sikker på at du vil gjenopprette denne sikkerhetskopien\?</string>
+    <string name="importBackupMessage">Sikkerhetskopier din nåværende data hvis du vil beholde den. Gjenopprett tidligere sikkerhetskopi nå\?</string>
     <string name="unitFootSingular">Fot</string>
     <string name="noWorkoutStarted">Ingen treningsøkt i gang</string>
     <string name="unitFootPlural">Fot</string>
@@ -429,4 +429,23 @@
     <string name="preferenceUseAverageForCurrentSpeed">Bruk gjen.hastighet over gitt tid istedenfor siste hastighetsrekord for nåværende hastighetsutregning.</string>
     <string name="ttsMinuteCountdownAnnouncement"> <xliff:g example="12 minutes" id="mins">%1$s</xliff:g> til oppstart </string>
     <string name="editStartEndHelp">Velg en posisjon på kartet eller diagrammet. Klikk på en av pilene for å velge et nytt start- eller sluttpunkt. Når du er ferdig trykker du på lagringsikonet for å bruke endringene.</string>
+    <string name="always_mode">Alltid</string>
+    <string name="joule_unit">Joule</string>
+    <string name="saturday">Lørdag</string>
+    <string name="tuesday">Tirsdag</string>
+    <string name="wednesday">Onsdag</string>
+    <string name="thursday">Torsdag</string>
+    <string name="friday">Fredag</string>
+    <string name="trackable_visibility">Sporbar</string>
+    <string name="system_default">Systemforvalg</string>
+    <string name="monday">Mandag</string>
+    <string name="exportTargetDirectory">Mappe</string>
+    <string name="autoBackupTitle">Automatiske sikkerhetskopier</string>
+    <string name="takeBackups14">Annenhver uke</string>
+    <string name="httpUrl">Nettadresse</string>
+    <string name="sunday">Søndag</string>
+    <string name="private_visibility">Privat</string>
+    <string name="takeBackups3">Hver tredje dag</string>
+    <string name="enterValidUrl">Skriv inn en gyldig HTTP-nettadresse</string>
+    <string name="takeBackups7">Hver uke</string>
 </resources>
