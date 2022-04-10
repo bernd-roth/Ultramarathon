@@ -118,7 +118,12 @@ public class BackupController {
     }
 
     public interface ExportStatusListener {
+
+        ExportStatusListener DUMMY = (progress, action) -> {
+        };
+
         void onStatusChanged(int progress, String action);
+
     }
 
 }

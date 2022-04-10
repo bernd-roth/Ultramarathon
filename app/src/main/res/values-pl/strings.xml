@@ -18,8 +18,8 @@
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
   --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="restore">Przywróć</string>
-    <string name="importBackupMessage">OSTRZEŻENIE: Wszystkie Twoje istniejące dane w aplikacji zostaną wyczyszczone. Jeśli nie chcesz ich stracić, najpierw wykonaj kolejną kopię zapasową. Czy na pewno chcesz przywrócić tę kopię zapasową\?</string>
-    <string name="chooseBackupFile">Wybierz plik kopii</string>
+    <string name="importBackupMessage">Najpierw utwórz kopię zapasową swoich aktualnych danych, jeśli chcesz je zachować. Czy przywrócić poprzednią kopię zapasową\?</string>
+    <string name="chooseBackupFile">Wybierz plik kopii zapasowej</string>
     <string name="loadingFile">Ładowanie pliku</string>
     <string name="finished">Zakończone</string>
     <string name="converting">Konwersja</string>
@@ -86,7 +86,7 @@
     <string name="aboutVersion">Wersja</string>
     <string name="aboutTitle">O aplikacji</string>
     <string name="editWorkout">Edytuj trening</string>
-    <string name="cannotFindWorkout">Nie można znaleźć treningu</string>
+    <string name="cannotFindWorkout">Nie udało się znaleźć treningu</string>
     <string name="speedLastMinuteSpoken">Prędkość w ciągu ostatniej minuty</string>
     <string name="speedLastMinute">Śr. prędkość (ostatnia minuta)</string>
     <string name="sections">Odcinki</string>
@@ -213,7 +213,7 @@
     <string name="pref_announcements_config_summary">Wybierz czas i odległość między powiadomieniami głosowymi</string>
     <string name="pref_unit_system">Preferowany system jednostek</string>
     <string name="settings">Ustawienia</string>
-    <string name="pref_weight_summary">Twoja waga jest potrzebna do obliczenia spalonych kalorii</string>
+    <string name="pref_weight_summary">Twoja waga jest potrzebna do obliczania spalonych kalorii</string>
     <string name="pref_weight">Twoja waga</string>
     <string name="exportAsGpxFile">Eksportuj jako plik GPX</string>
     <string name="trackingInfoDescription">Informacje o uruchomionym śledzeniu</string>
@@ -307,7 +307,7 @@
     <string name="resumeWorkout">Wznów trening</string>
     <string name="inclination">Nachylenie</string>
     <string name="fileNotFound">Nie znaleziono pliku</string>
-    <string name="invalidNumberFormat">Nieprawidłowy format liczby.</string>
+    <string name="invalidNumberFormat">Nieprawidłowy format liczby</string>
     <string name="pref_announcements_pace_control_summary">Ostrzegaj, gdy jest poniżej lub powyżej określonej prędkości</string>
     <string name="pref_announcements_pace_control_title">Ostrzeżenia o kontroli tempa</string>
     <string name="noColoring">Bez kolorowania</string>
@@ -339,7 +339,7 @@
         <item quantity="many"><xliff:g example="12" id="secs">%1$d</xliff:g> sekund</item>
         <item quantity="other"><xliff:g example="12" id="secs">%1$d</xliff:g> sekund</item>
     </plurals>
-    <string name="launchError">Nie można uruchomić aplikacji</string>
+    <string name="launchError">Nie udało się uruchomić aplikacji</string>
     <string name="editStartEndHelp">Wybierz pozycję na mapie albo diagramie. Następnie naciśnij jedną ze strzałek, aby wybrać nowy punkt początkowy albo końcowy. Gdy skończysz, kliknij ikonę zapisu w celu zastosowania zmian.</string>
     <string name="actionApply">Zastosuj</string>
     <string name="moveEndOfWorkout">Wytnij koniec</string>
@@ -441,4 +441,43 @@
         <item quantity="many">Zaimportowano %d treningów</item>
         <item quantity="other">Zaimportowano %d treningów</item>
     </plurals>
+    <string name="hidden">Ukryte</string>
+    <string name="trackable_visibility">Możliwość śledzenia</string>
+    <string name="private_visibility">Prywatna</string>
+    <string name="identifiable_visibility">Identyfikowalna</string>
+    <string name="humanitarian_clean_map_but_sometimes_not_available">Humanitarian
+\nCzysta mapa, ale czasami niedostępna</string>
+    <string name="always_mode">Zawsze</string>
+    <string name="kcal_unit">Kilokaloria (kcal)</string>
+    <string name="only_on_headphones_mode">Tylko na słuchawkach</string>
+    <string name="always_track_style">Zawsze</string>
+    <string name="joule_unit">Dżul (J)</string>
+    <string name="mapnik_default_osm_mapstyle">Mapnik
+\nDomyślny styl mapy OSM</string>
+    <string name="in_the_diagram_screen_track_style">Na ekranie diagramu</string>
+    <string name="never_track_style">Nigdy</string>
+    <string name="offline_local_map_file_with_local_render_theme">Offline
+\nLokalny plik mapy z lokalnym motywem renderowania</string>
+    <string name="height_map">Mapa wysokości</string>
+    <string name="bright_night">Jasna noc</string>
+    <string name="purple_rain">Fioletowy deszcz</string>
+    <string name="pink_mist">Różowa mgiełka</string>
+    <string name="rainbow_warrior">Tęczowy wojownik</string>
+    <string name="dark_theme">Ciemny</string>
+    <string name="mondriaan">Mondrianowski</string>
+    <string name="system_theme">Systemowy</string>
+    <string name="light_theme">Jasny</string>
+    <string name="imperial_unit_system">Imperialny</string>
+    <string name="us_customary_unit_system">Zwyczajowy z USA</string>
+    <string name="friday">Piątek</string>
+    <string name="metric_with_m_s_unit_system">Metryczny z m/s</string>
+    <string name="imperial_with_meters_unit_system">Imperialny z metrami</string>
+    <string name="metric_unit_system">Metryczny</string>
+    <string name="sunday">Niedziela</string>
+    <string name="monday">Poniedziałek</string>
+    <string name="tuesday">Wtorek</string>
+    <string name="wednesday">Środa</string>
+    <string name="thursday">Czwartek</string>
+    <string name="system_default">Domyślny systemowy</string>
+    <string name="saturday">Sobota</string>
 </resources>

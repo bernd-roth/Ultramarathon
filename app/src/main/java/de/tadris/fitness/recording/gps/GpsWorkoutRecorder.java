@@ -39,7 +39,7 @@ import de.tadris.fitness.Instance;
 import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.GpsWorkout;
 import de.tadris.fitness.data.GpsWorkoutData;
-import de.tadris.fitness.data.UserPreferences;
+import de.tadris.fitness.data.preferences.UserPreferences;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.recording.BaseWorkoutRecorder;
 import de.tadris.fitness.recording.event.LocationChangeEvent;
@@ -239,6 +239,7 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
         synchronized (samples) {
             workoutSaver.finalizeWorkout();
         }
+        Instance.getInstance(context).planner.onWorkoutRecorded(workout);
         saved = true;
     }
 

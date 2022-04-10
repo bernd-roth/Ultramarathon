@@ -33,7 +33,7 @@
     <string name="stop">Deter</string>
     <string name="app_name">FitoTrack</string>
     <string name="pref_announcements_config_title">Activador do anuncio</string>
-    <string name="importBackupMessage">AVISO: Eliminaranse tódolos teus datos existentes na aplicación. Se non desexas perdelos, primeiro fai outra copia de apoio. Tes a certeza de querer restaurar esta copia de apoio\?</string>
+    <string name="importBackupMessage">Fai unha copia de apoio dos datos se queres conservalos. Restablecer unha copia anterior agora\?</string>
     <string name="recordingPermissionNotGrantedTitle">Permisos non concedidos</string>
     <string name="unitFootSingular">Pé</string>
     <string name="unitFootPlural">Pés</string>
@@ -429,4 +429,43 @@
         <item quantity="one">Importado un adestramento</item>
         <item quantity="other">Importados %d adestramentos</item>
     </plurals>
+    <string name="hidden">Agochado</string>
+    <string name="identifiable_visibility">Identificable</string>
+    <string name="trackable_visibility">Trazable</string>
+    <string name="private_visibility">Privado</string>
+    <string name="kcal_unit">kcal</string>
+    <string name="joule_unit">Xulio</string>
+    <string name="always_mode">Sempre</string>
+    <string name="only_on_headphones_mode">Só con auriculares</string>
+    <string name="mapnik_default_osm_mapstyle">Mapnik
+\nEstilo de mapas por defecto en OSM</string>
+    <string name="humanitarian_clean_map_but_sometimes_not_available">Humanitario
+\nMapa claro, pero non está sempre dispoñible</string>
+    <string name="offline_local_map_file_with_local_render_theme">Sen conexión
+\nFicheiro local de mapa con decorado local</string>
+    <string name="always_track_style">Sempre</string>
+    <string name="in_the_diagram_screen_track_style">Na pantalla de diagrama</string>
+    <string name="never_track_style">Nunca</string>
+    <string name="purple_rain">Chuvia Púrpura</string>
+    <string name="pink_mist">Néboa Rosa</string>
+    <string name="rainbow_warrior">Arco da Vella</string>
+    <string name="height_map">Altura do Mapa</string>
+    <string name="bright_night">Noite Brillante</string>
+    <string name="mondriaan">Mondriaan</string>
+    <string name="system_theme">Sistema</string>
+    <string name="light_theme">Claro</string>
+    <string name="dark_theme">Escuro</string>
+    <string name="metric_unit_system">Métrico</string>
+    <string name="metric_with_m_s_unit_system">Métrico con m/s</string>
+    <string name="imperial_unit_system">Imperial</string>
+    <string name="imperial_with_meters_unit_system">Imperial con metros</string>
+    <string name="us_customary_unit_system">Propio de USA</string>
+    <string name="system_default">Por defecto no sistema</string>
+    <string name="sunday">Domingo</string>
+    <string name="monday">Luns</string>
+    <string name="tuesday">Martes</string>
+    <string name="friday">Venres</string>
+    <string name="saturday">Sábado</string>
+    <string name="thursday">Xoves</string>
+    <string name="wednesday">Mércores</string>
 </resources>

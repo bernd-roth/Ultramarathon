@@ -31,7 +31,7 @@ import de.tadris.fitness.Instance;
 import de.tadris.fitness.data.BaseWorkout;
 import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.IntervalSet;
-import de.tadris.fitness.data.UserPreferences;
+import de.tadris.fitness.data.preferences.UserPreferences;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.recording.event.HRBatteryLevelChangeEvent;
 import de.tadris.fitness.recording.event.HRBatteryLevelConnectionEvent;

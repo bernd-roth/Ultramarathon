@@ -17,7 +17,7 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.data;
+package de.tadris.fitness.data.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -26,6 +26,7 @@ import android.preference.PreferenceManager;
 import java.util.Calendar;
 
 import de.tadris.fitness.BuildConfig;
+import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.model.AutoStartWorkout;
 
 public class UserPreferences {
@@ -108,9 +109,21 @@ public class UserPreferences {
 
 
     private final SharedPreferences preferences;
+    private final RecordingScreenInformationPreferences recordingScreenInformationPreferences;
+    private final SharingScreenInformationPreferences sharingScreenInformationPreferences;
 
     public UserPreferences(Context context) {
-        this.preferences= PreferenceManager.getDefaultSharedPreferences(context);
+        this.preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        this.recordingScreenInformationPreferences = new RecordingScreenInformationPreferences(this.preferences);
+        this.sharingScreenInformationPreferences = new SharingScreenInformationPreferences(this.preferences);
+    }
+
+    public RecordingScreenInformationPreferences getRecordingScreenInformationPreferences() {
+        return this.recordingScreenInformationPreferences;
+    }
+
+    public SharingScreenInformationPreferences getSharingScreenInformationPreferences() {
+        return this.sharingScreenInformationPreferences;
     }
 
     public int getUserWeight(){
@@ -145,6 +158,7 @@ public class UserPreferences {
         return preferences.getBoolean("intervalsIncludePause", true);
     }
 
+    @Deprecated()
     public String getIdOfDisplayedInformation(String mode, int slot) {
         String defValue = "";
         if (WorkoutType.RecordingType.INDOOR.id.equals(mode)) {
@@ -218,6 +232,14 @@ public class UserPreferences {
         return preferences.getBoolean("showOnLockScreen", false);
     }
 
+    public boolean getShowWorkoutZoomControls() {
+        return preferences.getBoolean("showWorkoutZoomControls", true);
+    }
+
+    public int getAutoBackupIntervalHours() {
+        return Integer.parseInt(preferences.getString("autoBackupInterval", "168"));
+    }
+
     public String getOfflineMapDirectoryName() {
         return preferences.getString("offlineMapDirectoryName", null);
     }
@@ -230,7 +252,7 @@ public class UserPreferences {
     public boolean getUseNfcStart() {
         return preferences.getBoolean(USE_NFC_START_VARIABLE, DEFAULT_USE_NFC_START);
     }
-    
+
     /**
      * Get the currently configured auto start delay
      * @return auto start delay in seconds

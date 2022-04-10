@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
-  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -16,7 +17,9 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  -->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
     <string name="backup">Sichern</string>
     <string name="cancel">Abbrechen</string>
@@ -39,7 +42,7 @@
     <string name="finished">Fertig</string>
     <string name="gps">GPS</string>
     <string name="importBackup">Datensicherung importieren</string>
-    <string name="importBackupMessage">WARNUNG: All deine aktuellen Daten in der App werden gelöscht. Wenn du diese nicht verlieren möchtest, mache vorher ein anderes Backup. Bist du dir sicher, dass du das Backup wiederherstellen möchtest?</string>
+    <string name="importBackupMessage">Sichere jetzt deine aktuellen Daten, wenn du sie behalten möchtest. Früheres Backup wiederherstellen\?</string>
     <string name="importBackupSummary">Sicherung wiederherstellen</string>
     <string name="initialising">Initialisieren</string>
     <string name="loadingFile">Datei laden</string>
@@ -73,12 +76,11 @@
     <string name="workoutSpeed">Geschwindigkeit</string>
     <string name="workoutStartTime">Startzeit</string>
     <string name="workoutTime">Zeit</string>
-    <string name="workoutTopSpeed">Max Geschw.</string>
+    <string name="workoutTopSpeed">Höchstgeschw.</string>
     <string name="workoutTotalEnergy">Gesamte Energie</string>
     <string name="workoutTypeCycling">Fahrrad fahren</string>
     <string name="workoutTypeHiking">Wandern</string>
     <string name="workoutTypeRunning">Laufen</string>
-    <string name="unknown">Unbekannt</string>
     <string name="workoutTypeWalking">Gehen</string>
     <string name="enable">Aktivieren</string>
     <string name="height">Höhe</string>
@@ -136,32 +138,22 @@
     <string name="hintRestart">Bitte die App neustarten, damit die Änderungen wirksam werden</string>
     <string name="noComment">Kein Kommentar</string>
     <string name="sections">Abschnitte</string>
-    <string-array name="pref_announcement_mode">
-        <item>Immer</item>
-        <item>Nur mit Kopfhörern</item>
-    </string-array>
-    <string-array name="pref_map_layers">
-        <item>Mapnik\nStandard OSM Kartenstil</item>
-        <item>Humanitarian\nSchöne Karte, aber manchmal nicht verfügbar</item>
-        <item>Offline\nLokale Kartendatei mit lokalem Renderthema</item>
-    </string-array>
-    <string-array name="osm_track_visibility">
-        <item>Identifizierbar</item>
-        <item>Verfolgbar</item>
-        <item>Privat</item>
-    </string-array>
-    <string-array name="pref_theme_setting">
-        <item>System</item>
-        <item>Hell</item>
-        <item>Dunkel</item>
-    </string-array>
-    <string-array name="pref_unit_systems">
-        <item>Metrisch</item>
-        <item>Physikalische Größen (m/s)</item>
-        <item>Imperial (UK)</item>
-        <item>Imperial mit Metern</item>
-        <item>Imperial (US Customary)</item>
-    </string-array>
+    <string name="always_mode">Immer</string>
+    <string name="only_on_headphones_mode">Nur mit Kopfhörern</string>
+    <string name="mapnik_default_osm_mapstyle">Mapnik\nStandard OSM Kartenstil</string>
+    <string name="humanitarian_clean_map_but_sometimes_not_available">Humanitarian\nSchöne Karte, aber manchmal nicht verfügbar</string>
+    <string name="offline_local_map_file_with_local_render_theme">Offline\nLokale Kartendatei mit lokalem Renderthema</string>
+    <string name="identifiable_visibility">Identifizierbar</string>
+    <string name="trackable_visibility">Verfolgbar</string>
+    <string name="private_visibility">Privat</string>
+    <string name="system_theme">System</string>
+    <string name="light_theme">Hell</string>
+    <string name="dark_theme">Dunkel</string>
+    <string name="metric_unit_system">Metrisch</string>
+    <string name="metric_with_m_s_unit_system">Physikalische Größen (m/s)</string>
+    <string name="imperial_unit_system">Imperial (UK)</string>
+    <string name="imperial_with_meters_unit_system">Imperial mit Metern</string>
+    <string name="us_customary_unit_system">Imperial (US Customary)</string>
     <string name="start">Starten</string>
     <string name="cannotStart">Starten unmöglich</string>
     <string name="add">Hinzufügen</string>
@@ -223,12 +215,12 @@
     <string name="unitKJoule">Kilojoule</string>
     <string name="pref_energy_unit">Energieeinheit</string>
     <string name="workoutTypeInlineSkating">Inlineskaten</string>
-    <string name="manageAutoTimeoutSummary">Einstellung zum automatisch Stoppen des Workouts</string>
+    <string name="manageAutoTimeoutSummary">Einstellung zum automatischen Stoppen des Workouts</string>
     <string name="intervalAutoTimeoutTraining">Workout Auto-Stop Timer</string>
     <string name="pref_auto_timeout_title">Zeitspanne bis Auto-Stop</string>
     <string name="currentTime">Aktuelle Uhrzeit</string>
     <string name="unlockPhoneStopWorkout">Bitte das Telefon entsperren, um die Aufnahme zu beenden</string>
-    <string name="workout_statistics">Workout Statistiken</string>
+    <string name="workout_statistics">Workout-Statistiken</string>
     <string name="workoutStatsHelpText">Dieser Screen zeigt Statistiken zu den Workouts. Um es zu verwenden, muss man zunächst die Trainingsart angeben, indem man darauf klickt. Dann stellt man die Information, über die man etwas wissen möchte, und die Zeitspanne ein.
 \n
 \nWenn man z. B. „Woche“ als Zeitspanne auswählt, werden alle Workouts jeder Woche in einem Datenpunkt zusammengefasst und entweder der Durchschnitt oder die Summe jeder Woche berechnet.</string>
@@ -236,25 +228,9 @@
     <string name="replace">Ersetzen</string>
     <string name="merge">Zusammenführen</string>
     <string name="announcementSuppressDuringCall">Während Anruf unterdrücken</string>
-    <string-array name="pref_energy_units">
-        <item>kcal</item>
-        <item>Joule</item>
-    </string-array>
-    <string-array name="pref_time_format">
-        <item>System-Vorgabe</item>
-        <item>12:08 PM</item>
-        <item>15:23</item>
-    </string-array>
-    <string-array name="pref_date_format">
-        <item>System-Vorgabe</item>
-        <item>2001-07-24</item>
-        <item>2001.07.24</item>
-        <item>2001/07/24</item>
-        <item>24-07-2001</item>
-        <item>24.07.2001</item>
-        <item>24/07/2001</item>
-        <item>07/24/2001</item>
-    </string-array>
+    <string name="kcal_unit">kcal</string>
+    <string name="joule_unit">Joule</string>
+    <string name="system_default">System-Vorgabe</string>
     <string name="no_workouts_recorded_for_this_activity">Keine Workouts dieser Aktivität</string>
     <string name="day">Tag</string>
     <string name="week">Woche</string>
@@ -313,8 +289,8 @@
     <string name="showIntervals">Intervalle zeigen</string>
     <string name="connectHeartRateDevice">Herzfrequenzmesser verbinden</string>
     <string name="selectBluetoothDevice">Bluetooth-Gerät auswählen</string>
-    <string name="workoutAvgHeartRate">⌀ Herzfrequenz</string>
-    <string name="workoutMaxHeartRate">Max Herzfrequenz</string>
+    <string name="workoutAvgHeartRate">⌀-Herzfrequenz</string>
+    <string name="workoutMaxHeartRate">Max. Herzfrequenz</string>
     <string name="workoutHeartRate">Herzfrequenz</string>
     <string name="heartRateSensorBattery">Pulssensor Akku</string>
     <string name="announcementWorkoutActions">Workout Aktionen (pausieren, fortsetzten, etc.)</string>
@@ -371,6 +347,12 @@
     <string name="downloadFailed">Herunterladen fehlgeschlagen</string>
     <string name="downloadCanceled">Herunterladen abgebrochen</string>
     <string name="chooseMapHint">Bitte eine Kartendatei auswählen</string>
+    <string name="exportTargetDirectory">Verzeichnis</string>
+    <string name="autoBackupTitle">Automatische Sicherungen</string>
+    <string name="workoutGPXExportTitle">Workout GPX-Sicherungen</string>
+    <string name="unknown">Unbekannt</string>
+    <string name="hintConfigureExportTargets">Füge Ziele hinzu, wohin die Dateien exportiert werden sollen.</string>
+    <string name="deleteExportTargetConfirmation">Möchtest du dieses Export-Ziel wirklich entfernen?</string>
     <string name="intervalAutoStartDelayTraining">Workout Auto-Start Verzögerung</string>
     <string name="manageAutoStartDelaySummary">Wähle einen Countdown zum automatischen Starten deines Workouts</string>
     <string name="pref_auto_start_delay_title">Auto-Start Countdown</string>
@@ -462,7 +444,7 @@
     <string name="workoutSets">Sätze</string>
     <string name="workoutFrequency">Frequenz</string>
     <string name="workoutAvgFrequencyShort">⌀-Frequenz</string>
-    <string name="workoutMaxFrequency">Max Frequenz</string>
+    <string name="workoutMaxFrequency">Max. Frequenz</string>
     <string name="workoutIntensity">Intensität</string>
     <string name="workoutAvgIntensityShort">⌀-Intensität</string>
     <string name="workoutMaxIntensity">Max Intensität</string>
@@ -475,8 +457,8 @@
     <string name="unitHeartBeatsPerMinute">bpm</string>
     <string name="preferenceFirstDayOfWeek">Anfang der Woche</string>
     <string name="fileNotFound">Datei nicht gefunden</string>
-    <string name="workoutRecordingTypeGps">GPS Workouts</string>
-    <string name="workoutRecordingTypeIndoor">Indoor Workouts</string>
+    <string name="workoutRecordingTypeGps">GPS-Workouts</string>
+    <string name="workoutRecordingTypeIndoor">Indoor-Workouts</string>
     <string name="workoutAvgFrequencyLong">Durchschnittliche Frequenz</string>
     <string name="workoutCurrentFrequency">Aktuelle Frequenz</string>
     <string name="unitHertzLong">Hertz</string>
@@ -485,4 +467,38 @@
         <item quantity="one">Ein Workout importiert</item>
         <item quantity="other">%d Workouts importiert</item>
     </plurals>
+    <string name="autoExportWorkoutsSummary">Neu aufgenommene Workouts exportieren</string>
+    <string name="autoExportBackupTitle">Automatische App-Backups</string>
+    <string name="autoExportBackupSummary">Backups automatisch exportieren</string>
+    <string name="autoExportBackupExplanation">Im gewählten Interval wird ein Backup hierher exportiert:</string>
+    <string name="autoExportWorkoutExplanation">Nachdem ein neues Workout aufgenommen wurde, wird ein GPS-export hierher exportiert:</string>
+    <string name="exportIntervalTitle">Backup-Intervall</string>
+    <string name="takeBackups1">Jeden Tag</string>
+    <string name="takeBackups2">Jeden zweiten Tag</string>
+    <string name="takeBackups3">Jeden dritten Tag</string>
+    <string name="takeBackups7">Jede Woche</string>
+    <string name="takeBackups14">Jede zweite Woche</string>
+    <string name="hidden">Versteckt</string>
+    <string name="always_track_style">Immer</string>
+    <string name="in_the_diagram_screen_track_style">Im Diagramm-Screen</string>
+    <string name="never_track_style">Niemals</string>
+    <string name="sunday">Sonntag</string>
+    <string name="monday">Montag</string>
+    <string name="tuesday">Dienstag</string>
+    <string name="wednesday">Mittwoch</string>
+    <string name="mondriaan">Mondriaan</string>
+    <string name="bright_night">Helle Nacht</string>
+    <string name="height_map">Topografisch</string>
+    <string name="pink_mist">Rosa Nebel</string>
+    <string name="purple_rain">Lila Regen</string>
+    <string name="thursday">Donnerstag</string>
+    <string name="friday">Freitag</string>
+    <string name="saturday">Samstag</string>
+    <string name="exportTargetHttpPost">HTTP POST Anfrage</string>
+    <string name="selectExportTarget">Export-Ziel auswählen</string>
+    <string name="configureHttpPostRequest">HTTP POST Anfrage konfigurieren</string>
+    <string name="httpUrl">URL</string>
+    <string name="enterValidUrl">Gib eine gültige HTTP-URL ein</string>
+    <string name="showWorkoutZoomControlsSummary">Zoomen und Verschieben der Karte beim Aufnehmen von GPS-Workouts aktivieren</string>
+    <string name="showWorkoutZoomControlsTitle">Zoomen und Verschieben</string>
 </resources>

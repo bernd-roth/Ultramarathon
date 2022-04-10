@@ -32,7 +32,7 @@ import java.util.List;
 import de.tadris.fitness.BuildConfig;
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
-import de.tadris.fitness.data.UserPreferences;
+import de.tadris.fitness.data.preferences.UserPreferences;
 import de.tadris.fitness.data.migration.Migration;
 import de.tadris.fitness.data.migration.Migration12IntervalSets;
 import de.tadris.fitness.data.migration.MigrationCleanData;

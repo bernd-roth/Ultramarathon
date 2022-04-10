@@ -42,7 +42,7 @@ import de.tadris.fitness.data.BaseWorkout;
 import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.GpsWorkout;
 import de.tadris.fitness.data.GpsWorkoutData;
-import de.tadris.fitness.data.UserPreferences;
+import de.tadris.fitness.data.preferences.UserPreferences;
 import de.tadris.fitness.map.ColoringStrategy;
 import de.tadris.fitness.map.GradientColoringStrategy;
 import de.tadris.fitness.map.MapManager;
