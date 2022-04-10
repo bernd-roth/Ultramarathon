@@ -76,7 +76,7 @@ dependencies {
     implementation "androidx.core:core-ktx:1.7.0"
 
     // Maps
-    def mapsforge_version = "0.16.0"
+    def mapsforge_version = "0.17.0"
     implementation "org.mapsforge:mapsforge-core:$mapsforge_version"
     implementation "org.mapsforge:mapsforge-map:$mapsforge_version"
     implementation "org.mapsforge:mapsforge-map-reader:$mapsforge_version"
