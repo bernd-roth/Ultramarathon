@@ -461,7 +461,8 @@
 \nDefault OSM mapstyle</string>
     <string name="humanitarian_clean_map_but_sometimes_not_available">Humanitarian
 \nClean map, but not always available</string>
-    <string name="offline_local_map_file_with_local_render_theme">Offline\nLocal map file with local render theme</string>
+    <string name="offline_local_map_file_with_local_render_theme">Offline
+\nLocal map file with locally rendered theme</string>
     <string name="always_track_style">Always</string>
     <string name="in_the_diagram_screen_track_style">In the diagram screen</string>
     <string name="never_track_style">Never</string>
