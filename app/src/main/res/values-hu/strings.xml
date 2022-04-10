@@ -135,20 +135,14 @@
     <string name="theme">Téma</string>
     <string name="hintRestart">Indítsa újra az alkalmazást a változtatások alkalmazásához</string>
     <string name="noComment">Nincs megjegyzés</string>
-    <string-array name="pref_announcement_mode">
-        <item>Mindig</item>
-        <item>Csak fülhallgatón</item>
-    </string-array>
-    <string-array name="pref_theme_setting">
-        <item>System</item>
-        <item>Világos</item>
-        <item>Sötét</item>
-    </string-array>
-    <string-array name="osm_track_visibility">
-        <item>Azonosítható</item>
-        <item>Követhető</item>
-        <item>Személyes</item>
-    </string-array>
+    <string name="always_mode">Mindig</string>
+    <string name="only_on_headphones_mode">Csak fülhallgatón</string>
+    <string name="system_theme">System</string>
+    <string name="light_theme">Világos</string>
+    <string name="dark_theme">Sötét</string>
+    <string name="identifiable_visibility">Azonosítható</string>
+    <string name="trackable_visibility">Követhető</string>
+    <string name="private_visibility">Személyes</string>
     <string name="intervalSet">Intervallumsorozat</string>
     <string name="singleWorkout">Önálló edzés</string>
     <string name="no_workouts_recorded">Nincsenek edzések rögzítve</string>

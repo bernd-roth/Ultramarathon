@@ -262,7 +262,7 @@
     <string name="setPreferencesTitle">Tercihleri Ayarla</string>
     <string name="backup">Yedekle</string>
     <string name="restore">Geri yükle</string>
-    <string name="importBackupMessage">UYARI: Uygulamada bulunan tüm verileriniz silinecektir. Onları kaybetmek istemiyorsanız, önce başka bir yedek alın. Bu yedeği geri yüklemek istediğinizden emin misiniz\?</string>
+    <string name="importBackupMessage">Şu anki verilerinizi saklamak istiyorsanız şimdi yedekleyin. Önceki yedekleme şimdi geri yüklensin mi\?</string>
     <string name="chooseBackupFile">Yedekleme Dosyası Seç</string>
     <string name="loadingFile">Dosya yükleniyor</string>
     <string name="finished">Bitti</string>
@@ -429,4 +429,43 @@
         <item quantity="one">Bir egzersiz içe aktarıldı</item>
         <item quantity="other">%d egzersiz içe aktarıldı</item>
     </plurals>
+    <string name="us_customary_unit_system">Amerikan Geleneksel</string>
+    <string name="humanitarian_clean_map_but_sometimes_not_available">Humanitarian
+\nTemiz harita ancak bazen kullanılamaz olur</string>
+    <string name="always_track_style">Her zaman</string>
+    <string name="pink_mist">Pembe Sis</string>
+    <string name="joule_unit">Joule</string>
+    <string name="hidden">Gizli</string>
+    <string name="identifiable_visibility">Tanımlanabilir</string>
+    <string name="trackable_visibility">Takip edilebilir</string>
+    <string name="kcal_unit">kcal</string>
+    <string name="only_on_headphones_mode">Yalnızca kulaklıklarda</string>
+    <string name="purple_rain">Mor Yağmur</string>
+    <string name="private_visibility">Özel</string>
+    <string name="always_mode">Her zaman</string>
+    <string name="mapnik_default_osm_mapstyle">Mapnik
+\nÖntanımlı OSM harita tarzı</string>
+    <string name="never_track_style">Hiçbir zaman</string>
+    <string name="rainbow_warrior">Gökkuşağı Savaşçısı</string>
+    <string name="height_map">Yükseklik Haritası</string>
+    <string name="bright_night">Parlak Gece</string>
+    <string name="system_theme">Sistem</string>
+    <string name="dark_theme">Koyu</string>
+    <string name="metric_unit_system">Metrik</string>
+    <string name="metric_with_m_s_unit_system">m/s ile metrik</string>
+    <string name="sunday">Pazar</string>
+    <string name="mondriaan">Mondriaan</string>
+    <string name="offline_local_map_file_with_local_render_theme">Çevrim dışı
+\nYerel oluşturma temalı yerel harita dosyası</string>
+    <string name="imperial_unit_system">İngiliz</string>
+    <string name="imperial_with_meters_unit_system">Metre ile İngiliz</string>
+    <string name="in_the_diagram_screen_track_style">Diyagram ekranında</string>
+    <string name="thursday">Perşembe</string>
+    <string name="saturday">Cumartesi</string>
+    <string name="light_theme">Açık</string>
+    <string name="system_default">Sistem öntanımlı ayarı</string>
+    <string name="monday">Pazartesi</string>
+    <string name="tuesday">Salı</string>
+    <string name="wednesday">Çarşamba</string>
+    <string name="friday">Cuma</string>
 </resources>

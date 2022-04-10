@@ -228,34 +228,14 @@
     <string name="speedLastMinuteSpoken">Hastighed indenfor det sidste minut</string>
     <string name="cannotFindWorkout">Kan ikke finde træning</string>
     <string name="editWorkout">Rediger Træning</string>
-    <string-array name="pref_energy_units">
-        <item>kcal</item>
-        <item>Joule</item>
-    </string-array>
-    <string-array name="pref_announcement_mode">
-        <item>Altid</item>
-        <item>Kun i hovedtelefoner</item>
-    </string-array>
-    <string-array name="pref_theme_setting">
-        <item>System</item>
-        <item>Lys</item>
-        <item>Mørk</item>
-    </string-array>
-    <string-array name="pref_time_format">
-        <item>System Standard</item>
-        <item>12:08 PM</item>
-        <item>15:23</item>
-    </string-array>
-    <string-array name="pref_date_format">
-        <item>System Standard</item>
-        <item>2001-07-24</item>
-        <item>2001.07.24</item>
-        <item>2001/07/24</item>
-        <item>24-07-2001</item>
-        <item>24.07.2001</item>
-        <item>24/07/2001</item>
-        <item>07/24/2001</item>
-    </string-array>
+    <string name="kcal_unit">kcal</string>
+    <string name="joule_unit">Joule</string>
+    <string name="always_mode">Altid</string>
+    <string name="only_on_headphones_mode">Kun i hovedtelefoner</string>
+    <string name="system_theme">System</string>
+    <string name="light_theme">Lys</string>
+    <string name="dark_theme">Mørk</string>
+    <string name="system_default">System Standard</string>
     <string name="aboutVersion">Version</string>
     <string name="importingFiles">Import af filer</string>
     <string name="importMultipleMessageSelectFolder">Vælg en mappe, der indeholder alle de GPX filer, du gerne vil importere.</string>

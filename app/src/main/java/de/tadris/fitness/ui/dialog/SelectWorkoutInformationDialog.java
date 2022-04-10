@@ -31,6 +31,9 @@ import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.recording.information.InformationManager;
 import de.tadris.fitness.recording.information.RecordingInformation;
 
+/**
+ * Creates a Dialog which lets the user set a new metric (like Distance, Avg Speed, etc) for a slot.
+ */
 public class SelectWorkoutInformationDialog {
 
     private final Activity context;
@@ -61,7 +64,6 @@ public class SelectWorkoutInformationDialog {
 
     private void onSelect(int which) {
         RecordingInformation information = informationList.get(which);
-        Instance.getInstance(context).userPreferences.setIdOfDisplayedInformation(mode.id, slot, information.getId());
         listener.onSelectWorkoutInformation(slot, information);
     }
 

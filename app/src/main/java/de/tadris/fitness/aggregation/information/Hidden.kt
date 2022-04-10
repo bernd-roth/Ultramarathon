@@ -17,33 +17,30 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.aggregation;
+package de.tadris.fitness.aggregation.information
 
-import androidx.annotation.StringRes;
+import android.content.Context
+import de.tadris.fitness.R
+import de.tadris.fitness.aggregation.AggregationType
+import de.tadris.fitness.data.GpsWorkout
 
-import de.tadris.fitness.data.BaseWorkout;
-import de.tadris.fitness.util.unit.UnitUtils;
-
-/**
- * general note: this could also be used to display the data in the ShowWorkoutActivity.
- */
-public interface WorkoutInformation {
-
-    @StringRes
-    int getTitleRes();
-
-    String getUnit();
-
-    String getId();
-
-    boolean isInformationAvailableFor(BaseWorkout workout);
-
-    double getValueFromWorkout(BaseWorkout workout);
-
-    AggregationType getAggregationType();
-
-    default String getFormattedValueFromWorkout(BaseWorkout workout) {
-        return UnitUtils.autoRound(getValueFromWorkout(workout)) + " " + getUnit();
+class Hidden(ctx: Context) : GpsWorkoutInformation(ctx) {
+    override fun getTitleRes(): Int {
+        return R.string.hidden
     }
 
+    override fun getUnit(): String {
+        return ""
+    }
+
+    override fun getId() = "hidden"
+
+    override fun getValueFromWorkout(workout: GpsWorkout?): Double {
+        return 0.0
+    }
+
+    override fun getAggregationType(): AggregationType {
+        // Hacky. But this should only be used when Sharing, so hopefully this doesn't matter.
+        return AggregationType.SUM
+    }
 }

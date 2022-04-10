@@ -22,13 +22,14 @@ package de.tadris.fitness.ui.record;
 import android.view.View;
 import android.widget.TextView;
 
-class InfoViewHolder {
+
+public class InfoViewHolder {
     private final int slot;
     private final InfoViewClickListener listener;
     private final TextView titleView;
     private final TextView valueView;
 
-    InfoViewHolder(int slot, InfoViewClickListener listener, TextView titleView, TextView valueView) {
+    public InfoViewHolder(int slot, InfoViewClickListener listener, TextView titleView, TextView valueView) {
         this.slot = slot;
         this.listener = listener;
         this.titleView = titleView;
@@ -36,7 +37,7 @@ class InfoViewHolder {
         setOnClickListeners();
     }
 
-    void setText(String title, String value) {
+    public void setText(String title, String value) {
         this.titleView.setText(title);
         this.valueView.setText(value);
     }
