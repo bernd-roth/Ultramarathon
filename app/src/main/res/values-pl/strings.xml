@@ -200,7 +200,7 @@
     <string name="cut">Wytnij pierwsze/ostatnie 300 m</string>
     <string name="actionUploadToOSM">Prześlij do OSM</string>
     <string name="waiting_gps">Oczekiwanie na GPS</string>
-    <string name="editWorkoutType">Edycja typu treningu</string>
+    <string name="editWorkoutType">Edytuj typ treningu</string>
     <string name="workoutTypeEditIcon">Ikona</string>
     <string name="prefTrackStyleUsageTitle">Używaj automatycznego kolorowania trasy</string>
     <string name="trackStyle">Styl trasy</string>
@@ -381,7 +381,7 @@
     <string name="downloadMapsSpecifyDirectory">Najpierw określ katalog dla map offline</string>
     <string name="downloadMapsTitle">Pobierz mapy</string>
     <string name="deleteWorkoutTypeConfirmation">Czy na pewno chcesz usunąć ten typ treningu\?</string>
-    <string name="deleteWorkoutType">Usuwanie typu treningu</string>
+    <string name="deleteWorkoutType">Usuń typ treningu</string>
     <string name="actionSave">Zapisz</string>
     <string name="runningMigrations">Migracja w toku</string>
     <string name="customWorkoutTypesTitle">Niestandardowe typy treningów</string>
