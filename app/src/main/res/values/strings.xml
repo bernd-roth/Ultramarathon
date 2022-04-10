@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -17,9 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
     <string name="stop">Stop</string>
     <string name="delete">Delete</string>
@@ -460,8 +457,10 @@
     <string name="joule_unit">Joule</string>
     <string name="always_mode">Always</string>
     <string name="only_on_headphones_mode">Only on headphones</string>
-    <string name="mapnik_default_osm_mapstyle">Mapnik\nDefault OSM Mapstyle</string>
-    <string name="humanitarian_clean_map_but_sometimes_not_available">Humanitarian\nClean map but sometimes not available</string>
+    <string name="mapnik_default_osm_mapstyle">Mapnik
+\nDefault OSM mapstyle</string>
+    <string name="humanitarian_clean_map_but_sometimes_not_available">Humanitarian
+\nClean map, but not always available</string>
     <string name="offline_local_map_file_with_local_render_theme">Offline\nLocal map file with local render theme</string>
     <string name="always_track_style">Always</string>
     <string name="in_the_diagram_screen_track_style">In the diagram screen</string>
@@ -488,19 +487,18 @@
     <string name="thursday">Thursday</string>
     <string name="friday">Friday</string>
     <string name="saturday">Saturday</string>
-
     <string name="downloading">Downloading…</string>
     <string name="exportTargetDirectory">Directory</string>
     <string name="exportTargetHttpPost">HTTP POST request</string>
     <string name="autoBackupTitle">Automatic backups</string>
     <string name="workoutGPXExportTitle">Workout GPX exports</string>
-    <string name="hintConfigureExportTargets">Add targets to which the files should be exported.</string>
-    <string name="deleteExportTargetConfirmation">Do you really want to delete this export target?</string>
+    <string name="hintConfigureExportTargets">Add targets files should be exported to.</string>
+    <string name="deleteExportTargetConfirmation">Delete this export target\?</string>
     <string name="autoExportWorkoutsSummary">Export newly recorded workouts</string>
     <string name="autoExportBackupTitle">Automatic app backups</string>
     <string name="autoExportBackupSummary">Export backups automatically</string>
-    <string name="autoExportBackupExplanation">In the specified interval a backup will be exported here:</string>
-    <string name="autoExportWorkoutExplanation">After a new workout was recorded, a GPX-export will be exported here:</string>
+    <string name="autoExportBackupExplanation">At the specified interval a backup will be exported here:</string>
+    <string name="autoExportWorkoutExplanation">After a new workout is recorded, a GPX-export will be saved here:</string>
     <string name="exportIntervalTitle">Backup interval</string>
     <string name="takeBackups1">Every day</string>
     <string name="takeBackups2">Every second day</string>
@@ -508,7 +506,7 @@
     <string name="takeBackups7">Every week</string>
     <string name="takeBackups14">Every second week</string>
     <string name="selectExportTarget">Select export target</string>
-    <string name="configureHttpPostRequest">Configure HTTP Post Request</string>
+    <string name="configureHttpPostRequest">Configure HTTP POST request</string>
     <string name="httpUrl">URL</string>
     <string name="enterValidUrl">Enter a valid HTTP URL</string>
 </resources>
