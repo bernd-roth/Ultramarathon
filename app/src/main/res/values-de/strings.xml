@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -17,9 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
     <string name="backup">Sichern</string>
     <string name="cancel">Abbrechen</string>
@@ -140,8 +137,10 @@
     <string name="sections">Abschnitte</string>
     <string name="always_mode">Immer</string>
     <string name="only_on_headphones_mode">Nur mit Kopfhörern</string>
-    <string name="mapnik_default_osm_mapstyle">Mapnik\nStandard OSM Kartenstil</string>
-    <string name="humanitarian_clean_map_but_sometimes_not_available">Humanitarian\nSchöne Karte, aber manchmal nicht verfügbar</string>
+    <string name="mapnik_default_osm_mapstyle">Mapnik
+\nStandard OSM Kartenstil</string>
+    <string name="humanitarian_clean_map_but_sometimes_not_available">Humanitarian
+\nSchöne Karte, aber nicht immer verfügbar</string>
     <string name="offline_local_map_file_with_local_render_theme">Offline\nLokale Kartendatei mit lokalem Renderthema</string>
     <string name="identifiable_visibility">Identifizierbar</string>
     <string name="trackable_visibility">Verfolgbar</string>
@@ -470,7 +469,7 @@
     <string name="autoExportWorkoutsSummary">Neu aufgenommene Workouts exportieren</string>
     <string name="autoExportBackupTitle">Automatische App-Backups</string>
     <string name="autoExportBackupSummary">Backups automatisch exportieren</string>
-    <string name="autoExportBackupExplanation">Im gewählten Interval wird ein Backup hierher exportiert:</string>
+    <string name="autoExportBackupExplanation">Im gewählten Intervall wird ein Backup hierher exportiert:</string>
     <string name="autoExportWorkoutExplanation">Nachdem ein neues Workout aufgenommen wurde, wird ein GPS-export hierher exportiert:</string>
     <string name="exportIntervalTitle">Backup-Intervall</string>
     <string name="takeBackups1">Jeden Tag</string>
@@ -501,4 +500,5 @@
     <string name="enterValidUrl">Gib eine gültige HTTP-URL ein</string>
     <string name="showWorkoutZoomControlsSummary">Zoomen und Verschieben der Karte beim Aufnehmen von GPS-Workouts aktivieren</string>
     <string name="showWorkoutZoomControlsTitle">Zoomen und Verschieben</string>
+    <string name="unitHeartRateSensorBattery">%</string>
 </resources>
