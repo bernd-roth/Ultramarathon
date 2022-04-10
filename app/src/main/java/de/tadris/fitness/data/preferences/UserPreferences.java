@@ -232,6 +232,10 @@ public class UserPreferences {
         return preferences.getBoolean("showOnLockScreen", false);
     }
 
+    public boolean getShowWorkoutZoomControls() {
+        return preferences.getBoolean("showWorkoutZoomControls", true);
+    }
+
     public String getOfflineMapDirectoryName() {
         return preferences.getString("offlineMapDirectoryName", null);
     }

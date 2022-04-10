@@ -21,13 +21,16 @@ package de.tadris.fitness.ui.record;
 
 import android.Manifest;
 import android.animation.Animator;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -35,6 +38,8 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 import androidx.core.app.ActivityCompat;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -45,6 +50,7 @@ import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.layer.Layer;
 import org.mapsforge.map.layer.download.TileDownloadLayer;
+import org.mapsforge.map.layer.overlay.FixedPixelCircle;
 import org.mapsforge.map.layer.overlay.Polyline;
 
 import java.io.Serializable;
@@ -62,21 +68,26 @@ import de.tadris.fitness.recording.event.WorkoutGPSStateChanged;
 import de.tadris.fitness.recording.gps.GpsRecorderService;
 import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
 
-public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
+public class RecordGpsWorkoutActivity extends RecordWorkoutActivity  {
 
     public static final int REQUEST_CODE_LOCATION_PERMISSION = 10;
     public static final int REQUEST_CODE_BACKGROUND_LOCATION_PERMISSION = 11;
 
     private MapView mapView;
     private Polyline polyline;
-    private final List<LatLong> latLongList = new ArrayList<>();
+    private FixedPixelCircle locationPoint;
     private TextView gpsStatusView;
     private boolean gpsFound = false;
+    private final List<LatLong> recordedPositions = new ArrayList<>();
+    private MapControls mapControls;
 
+
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
+
 
         boolean wasAlreadyRunning = false;
         if (!LAUNCH_ACTION.equals(intent.getAction())) {
@@ -88,7 +99,6 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
 
         if (wasAlreadyRunning) {
             activity = instance.recorder.getWorkout().getWorkoutType(this);
-            wasAlreadyRunning = true;
         } else {
             Serializable workoutType = intent.getSerializableExtra(WORKOUT_TYPE_EXTRA);
             if (workoutType instanceof WorkoutType) {
@@ -114,12 +124,27 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
 
         setTitle(R.string.recordWorkout);
 
-        setupMap();
+        mapView = new MapManager(this).setupMap();
 
         ((ViewGroup) findViewById(R.id.recordMapViewerRoot)).addView(mapView);
         waitingForGPSOverlay = findViewById(R.id.recorderWaitingOverlay);
         waitingForGPSOverlay.setVisibility(View.VISIBLE);
         gpsStatusView = findViewById(R.id.recordGpsStatus);
+
+        mapView.setBuiltInZoomControls(false);
+
+        FloatingActionButton mapFocusGpsBtn = findViewById(R.id.mapGpsFocus);
+        FloatingActionButton mapZoomInBtn = findViewById(R.id.mapZoomIn);
+        FloatingActionButton mapZoomOutBtn = findViewById(R.id.mapZoomOut);
+        mapFocusGpsBtn.setBackgroundTintList(ColorStateList.valueOf(getThemePrimaryColor()));
+        mapZoomInBtn.setBackgroundTintList(ColorStateList.valueOf(getThemePrimaryColor()));
+        mapZoomOutBtn.setBackgroundTintList(ColorStateList.valueOf(getThemePrimaryColor()));
+
+        final boolean showZoomControls = instance.userPreferences.getShowWorkoutZoomControls();
+        if (showZoomControls) {
+            mapControls = new MapControls(mapView, mapFocusGpsBtn, mapZoomInBtn, mapZoomOutBtn);
+            mapControls.init();
+        }
 
         onGPSStateChanged(new WorkoutGPSStateChanged(GpsWorkoutRecorder.GpsState.SIGNAL_LOST, GpsWorkoutRecorder.GpsState.SIGNAL_LOST));
 
@@ -130,16 +155,29 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
                 invalidateOptionsMenu();
             }
 
-            latLongList.clear();
+            recordedPositions.clear();
             List<GpsSample> samples = ((GpsWorkoutRecorder) instance.recorder).getSamples();
             for (GpsSample sample : samples) {
-                latLongList.add(sample.toLatLong());
+                recordedPositions.add(sample.toLatLong());
             }
-            updateLine();
+            updateLine(recordedPositions);
 
             GpsWorkoutRecorder.GpsState gpsState = ((GpsWorkoutRecorder) instance.recorder).getGpsState();
             onGPSStateChanged(new WorkoutGPSStateChanged(gpsState, gpsState));
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+       if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+           mapControls.externalZoomInRequest();
+           return true;
+       } else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+           mapControls.externalZoomOutRequest();
+           return true;
+       }
+
+       return false;
     }
 
     private void hideWaitOverlay() {
@@ -164,22 +202,46 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
         }).start();
     }
 
-    private void setupMap() {
-        mapView = new MapManager(this).setupMap();
-        mapView.setClickable(false);
+    private boolean isWorkoutRunning() {
+        return instance.recorder.getState() == GpsWorkoutRecorder.RecordingState.RUNNING;
     }
 
-    private void updateLine() {
+    private void updateLine(final List<LatLong> latLongs) {
+        if (latLongs.isEmpty()){
+            return;
+        }
+
         if (polyline != null) {
             mapView.getLayerManager().getLayers().remove(polyline);
         }
+
+
         Paint p = AndroidGraphicFactory.INSTANCE.createPaint();
         p.setColor(getThemePrimaryColor());
         p.setStrokeWidth(20);
         p.setStyle(Style.STROKE);
         polyline = new Polyline(p, AndroidGraphicFactory.INSTANCE);
-        polyline.setPoints(latLongList);
+        polyline.setPoints(latLongs);
         mapView.addLayer(polyline);
+
+    }
+
+    private void updateLocationPoint(final LatLong currentLocation) {
+        assert (currentLocation != null);
+
+        if (locationPoint != null){
+            mapView.getLayerManager().getLayers().remove(locationPoint);
+        }
+
+        Paint stroke = AndroidGraphicFactory.INSTANCE.createPaint();
+        stroke.setColor(getResources().getColor(R.color.locationCircleStroke));
+        stroke.setStyle(Style.STROKE);
+        stroke.setStrokeWidth(20f);
+        Paint fill = AndroidGraphicFactory.INSTANCE.createPaint();
+        fill.setStyle(Style.FILL);
+        fill.setColor(getResources().getColor(R.color.locationCircle));
+        locationPoint = new FixedPixelCircle(currentLocation, 15f, fill, stroke);
+        mapView.addLayer(locationPoint);
     }
 
     private void checkPermissions() {
@@ -289,19 +351,23 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
 
     @Subscribe
     public void onLocationChange(LocationChangeEvent e) {
-        LatLong latLong = GpsRecorderService.locationToLatLong(e.location);
-        mapView.getModel().mapViewPosition.animateTo(latLong);
+        final LatLong latLongGps = GpsRecorderService.locationToLatLong(e.location);
 
-        if (instance.recorder.getState() == GpsWorkoutRecorder.RecordingState.RUNNING) {
-            latLongList.add(latLong);
-            updateLine();
+        if (isWorkoutRunning()) {
+            recordedPositions.add(latLongGps);
+            updateLine(recordedPositions);
         }
 
+        updateLocationPoint(latLongGps);
         foundGPS();
-    }
+   }
 
     @Override
     protected void onDestroy() {
+        if (mapControls != null) {
+            mapControls.deinit();
+        }
+
         // Clear map
         mapView.destroyAll();
         AndroidGraphicFactory.clearResourceMemoryCache();
@@ -336,6 +402,7 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
 
         GpsWorkoutRecorder.GpsState state = e.newState;
         gpsStatusView.setTextColor(state.color);
+
 
         if (state != GpsWorkoutRecorder.GpsState.SIGNAL_LOST) {
             foundGPS();
