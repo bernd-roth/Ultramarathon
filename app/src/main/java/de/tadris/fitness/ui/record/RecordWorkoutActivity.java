@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -22,6 +22,7 @@ package de.tadris.fitness.ui.record;
 import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.KeyguardManager;
@@ -872,6 +873,8 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
         }
     }
 
+    @SuppressLint("MissingPermission")
+    // can be suppressed because method will only be called if the permission is granted
     private void askToActivateBluetooth() {
         Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
         startActivityForResult(enableBtIntent, REQUEST_CODE_ENABLE_BLUETOOTH);

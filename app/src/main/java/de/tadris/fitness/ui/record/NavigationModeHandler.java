@@ -1,8 +1,29 @@
+/*
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
+ *
+ * This file is part of FitoTrack
+ *
+ * FitoTrack is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     FitoTrack is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package de.tadris.fitness.ui.record;
 
 import android.annotation.SuppressLint;
 import android.view.MotionEvent;
 import android.view.View;
+
+import androidx.annotation.Nullable;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -17,6 +38,7 @@ public class NavigationModeHandler implements View.OnTouchListener, View.OnClick
     private boolean focusedInitially = false;
     private NavigationMode navigationMode = NavigationMode.Automatic;
     private boolean navigationModeUpdateReq = true;
+    @Nullable
     private NavigationModeListener navigationModeListener = null;
     private LatLong currentGpsPosition = null;
     private final MapView mapView;
@@ -29,16 +51,8 @@ public class NavigationModeHandler implements View.OnTouchListener, View.OnClick
 
     public interface NavigationModeListener {
 
-
-        /**
-         * @brief Notifies if mode of navigation changed
-         */
         void onNavigationModeChanged(final NavigationMode mode);
 
-        /**
-         * @brief Notifies if navigation to a position is needed
-         */
-        void navigateToPosition(final LatLong navigateTo);
     };
 
     NavigationModeHandler(final MapView mapView) {
@@ -47,6 +61,7 @@ public class NavigationModeHandler implements View.OnTouchListener, View.OnClick
 
     void init() {
         EventBus.getDefault().register(this);
+        mapView.addInputListener(this);
     }
 
     void deinit() {
@@ -54,7 +69,7 @@ public class NavigationModeHandler implements View.OnTouchListener, View.OnClick
     }
 
     public void setNavigationModeListener(final NavigationModeListener listener) {
-        assert(navigationModeListener == null);
+        removeNavigationModeListener();
         navigationModeListener = listener;
     }
 
@@ -95,13 +110,12 @@ public class NavigationModeHandler implements View.OnTouchListener, View.OnClick
         OnChange
     }
 
-    private void updateMode(final NavigationMode mode, final UpdateMode strategy)
-    {
-        switch (strategy)
-        {
+    private void updateMode(final NavigationMode mode, final UpdateMode strategy) {
+        switch (strategy) {
             case ForceUpdate: {
                 navigationModeUpdateReq = true;
-            } break;
+            }
+            break;
             case OnChange: {
                 navigationModeUpdateReq = navigationMode != NavigationMode.Manual
                         && navigationMode != mode;
@@ -140,7 +154,7 @@ public class NavigationModeHandler implements View.OnTouchListener, View.OnClick
 
 
     private boolean shouldFocus() {
-        return  currentGpsPosition != null
+        return currentGpsPosition != null
                 && (!focusedInitially || navigationMode == NavigationMode.Automatic);
     }
 
@@ -158,10 +172,6 @@ public class NavigationModeHandler implements View.OnTouchListener, View.OnClick
     }
 
     private void managePositioning() {
-        if (navigationModeListener == null) {
-            return;
-        }
-
         if (currentGpsPosition != null) {
             announcePositionUpdate();
             announceNavigationMode();
@@ -169,11 +179,8 @@ public class NavigationModeHandler implements View.OnTouchListener, View.OnClick
     }
 
     private void announcePositionUpdate() {
-        assert (navigationModeListener != null);
-
-        if (shouldFocus())
-        {
-            navigationModeListener.navigateToPosition(currentGpsPosition);
+        if (shouldFocus()) {
+            mapView.getModel().mapViewPosition.animateTo(currentGpsPosition);
 
             if (!focusedInitially) {
                 focusedInitially = true;
@@ -182,10 +189,10 @@ public class NavigationModeHandler implements View.OnTouchListener, View.OnClick
     }
 
     private void announceNavigationMode() {
-        assert (navigationModeListener != null);
-
         if (navigationMode != null && navigationModeUpdateReq) {
-            navigationModeListener.onNavigationModeChanged(navigationMode);
+            if (navigationModeListener != null) {
+                navigationModeListener.onNavigationModeChanged(navigationMode);
+            }
             navigationModeUpdateReq = false;
         }
     }

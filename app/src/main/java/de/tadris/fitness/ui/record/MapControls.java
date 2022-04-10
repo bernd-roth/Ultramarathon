@@ -1,26 +1,40 @@
+/*
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
+ *
+ * This file is part of FitoTrack
+ *
+ * FitoTrack is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     FitoTrack is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package de.tadris.fitness.ui.record;
 
+import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.os.Handler;
-import android.os.Message;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-
-import androidx.annotation.NonNull;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-
-import org.mapsforge.core.model.LatLong;
 import org.mapsforge.map.android.view.MapView;
+
+import de.tadris.fitness.util.AbstractAnimatorListener;
 
 public class MapControls implements NavigationModeHandler.NavigationModeListener {
 
     private final int MSG_ZOOM_CONTROLS_HIDE = 0;
     private final int ZOOM_CONTROLS_TIMEOUT = 2000;
-    private final byte MAX_ZOOM_LVL = 1;
-    private final byte MIN_ZOOM_LVL = 19;
 
     private MapView mapView;
     private FloatingActionButton mapFocusGpsBtn;
@@ -30,34 +44,27 @@ public class MapControls implements NavigationModeHandler.NavigationModeListener
 
     private final Handler zoomControlsHideHandler;
     private final NavigationModeHandler navigationModeHandler;
-    private boolean zoomControlsShown = false;
     private boolean focusBtnNeeded = false;
 
-    public MapControls(MapView mapview, FloatingActionButton mapFocusGpsBtn,
+    public MapControls(MapView mapview, NavigationModeHandler navigationModeHandler, FloatingActionButton mapFocusGpsBtn,
                        FloatingActionButton mapZoomInBtn,
                        FloatingActionButton mapZoomOutBtn) {
         this.mapView = mapview;
         this.mapFocusGpsBtn = mapFocusGpsBtn;
         this.mapZoomInBtn = mapZoomInBtn;
         this.mapZoomOutBtn = mapZoomOutBtn;
-        navigationModeHandler = new NavigationModeHandler(mapView);
+        this.navigationModeHandler = navigationModeHandler;
 
-        this.zoomControlsHideHandler = new Handler(new Handler.Callback() {
-            @Override
-            public boolean handleMessage(@NonNull Message msg) {
-                if (navigationMode == NavigationModeHandler.NavigationMode.Automatic)
-                {
-                    MapControls.this.hide();
-                }
-
-                return true;
+        this.zoomControlsHideHandler = new Handler(msg -> {
+            if (navigationMode == NavigationModeHandler.NavigationMode.Automatic) {
+                hide();
             }
+            return true;
         });
     }
 
     @SuppressLint("ClickableViewAccessibility")
     void init() {
-        navigationModeHandler.init();
         navigationModeHandler.setNavigationModeListener(this);
 
         mapFocusGpsBtn.setVisibility(View.GONE);
@@ -65,101 +72,67 @@ public class MapControls implements NavigationModeHandler.NavigationModeListener
 
         mapZoomInBtn.setVisibility(View.GONE);
         mapZoomInBtn.setOnClickListener((View v) -> {
-            final byte currentZoomLevel = mapView.getModel().mapViewPosition.getZoomLevel();
-            if (currentZoomLevel < MIN_ZOOM_LVL) {
-                final byte nextZoomLevel = (byte) (currentZoomLevel + 1);
-
-                if (nextZoomLevel == MIN_ZOOM_LVL) {
-                    mapZoomInBtn.setEnabled(false);
-                } else if (currentZoomLevel == MAX_ZOOM_LVL) {
-                    mapZoomOutBtn.setEnabled(true);
-                }
-
-
-                mapView.setZoomLevel(nextZoomLevel);
-            }
-
-            showZoomControlsWithTimeout();
+            zoom(1);
         });
 
         mapZoomOutBtn.setVisibility(View.GONE);
         mapZoomOutBtn.setOnClickListener((View v) -> {
-            final byte currentZoomLevel = mapView.getModel().mapViewPosition.getZoomLevel();
-            if (currentZoomLevel > MAX_ZOOM_LVL) {
-                final byte nextZoomLevel = (byte) (currentZoomLevel - 1);
-
-                if (nextZoomLevel == MAX_ZOOM_LVL) {
-                    mapZoomOutBtn.setEnabled(false);
-                } else if (currentZoomLevel == MIN_ZOOM_LVL) {
-                    mapZoomInBtn.setEnabled(true);
-                }
-
-
-                mapView.setZoomLevel(nextZoomLevel);
-            }
-
-            showZoomControlsWithTimeout();
+            zoom(-1);
         });
 
         mapView.setClickable(true);
         mapView.setOnTouchListener((View v, MotionEvent event) -> {
             if (event.getPointerCount() > 1) {
-                final byte zoomLevel = mapView.getModel().mapViewPosition.getZoomLevel();
-                if (zoomLevel >= MIN_ZOOM_LVL || zoomLevel <= MAX_ZOOM_LVL) {
-                    if (zoomLevel <= MAX_ZOOM_LVL) {
-                        mapView.setZoomLevel(MAX_ZOOM_LVL);
-                        mapZoomOutBtn.setEnabled(false);
-                        mapZoomInBtn.setEnabled(true);
-                    } else  if (zoomLevel >= MIN_ZOOM_LVL) {
-                        mapZoomInBtn.setEnabled(false);
-                        mapZoomOutBtn.setEnabled(true);
-                    }
-                } else {
-                    mapZoomInBtn.setEnabled(true);
-                    mapZoomOutBtn.setEnabled(true);
-                }
+                onZoomLevelUpdate();
             }
             return navigationModeHandler.onTouch(v, event);
         });
-        mapView.addInputListener(navigationModeHandler);
     }
 
-    void deinit(){
-        navigationModeHandler.removeNavigationModeListener();
-        navigationModeHandler.deinit();
+    private void zoom(int difference) {
+        mapView.getModel().mapViewPosition.zoom((byte) difference);
+        onZoomLevelUpdate();
+        showZoomControlsWithTimeout();
     }
 
-    private void fadeButton(FloatingActionButton btn, int visibility, float startAlpha, float endAlpha) {
-        AlphaAnimation anim = new AlphaAnimation(startAlpha, endAlpha);
-        anim.setDuration(500);
+    private void onZoomLevelUpdate() {
+        final byte zoomLevel = mapView.getModel().mapViewPosition.getZoomLevel();
+        if (zoomLevel >= getMaxZoomLevel() || zoomLevel <= getMinZoomLevel()) {
+            if (zoomLevel <= getMinZoomLevel()) {
+                mapView.setZoomLevel(getMinZoomLevel());
+                mapZoomOutBtn.setEnabled(false);
+                mapZoomInBtn.setEnabled(true);
+            } else if (zoomLevel >= getMaxZoomLevel()) {
+                mapView.setZoomLevel(getMaxZoomLevel());
+                mapZoomInBtn.setEnabled(false);
+                mapZoomOutBtn.setEnabled(true);
+            }
+        } else {
+            mapZoomInBtn.setEnabled(true);
+            mapZoomOutBtn.setEnabled(true);
+        }
+    }
 
-        btn.startAnimation(anim);
-        btn.setVisibility(visibility);
+    private void fadeButton(View view, int visibility) {
+        view.clearAnimation();
+        view.animate().alpha(visibility == View.VISIBLE ? 1f : 0f).setDuration(500).setListener(new AbstractAnimatorListener() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                view.setVisibility(visibility);
+            }
+        });
     }
 
     private void show() {
-        final float startAlpha = zoomControlsShown ? 1.0f : 0.0f;
-        zoomControlsShown = true;
-        if (focusBtnNeeded) {
-            fadeButton(mapFocusGpsBtn, View.VISIBLE, startAlpha, 1.0f);
-        } else {
-            if (mapFocusGpsBtn.getVisibility() == View.VISIBLE) {
-                fadeButton(mapFocusGpsBtn, View.GONE, 0.0f, 0.0f);
-            }
-        }
-
-        fadeButton(mapZoomInBtn, View.VISIBLE, startAlpha, 1.0f);
-        fadeButton(mapZoomOutBtn, View.VISIBLE, startAlpha, 1.0f);
+        fadeButton(mapFocusGpsBtn, focusBtnNeeded ? View.VISIBLE : View.GONE);
+        fadeButton(mapZoomInBtn, View.VISIBLE);
+        fadeButton(mapZoomOutBtn, View.VISIBLE);
     }
 
     private void hide() {
-        zoomControlsShown = false;
-
-        final float startAlpha = zoomControlsShown ? 1.0f : 0.0f;
-
-        fadeButton(mapFocusGpsBtn, View.GONE, startAlpha, 0.0f);
-        fadeButton(mapZoomInBtn, View.GONE, startAlpha, 0.0f);
-        fadeButton(mapZoomOutBtn, View.GONE, startAlpha, 0.0f);
+        fadeButton(mapFocusGpsBtn, View.GONE);
+        fadeButton(mapZoomInBtn, View.GONE);
+        fadeButton(mapZoomOutBtn, View.GONE);
     }
 
     private void showZoomControls() {
@@ -172,13 +145,6 @@ public class MapControls implements NavigationModeHandler.NavigationModeListener
         this.zoomControlsHideHandler.removeMessages(MSG_ZOOM_CONTROLS_HIDE);
         boolean sent = this.zoomControlsHideHandler.sendEmptyMessageDelayed(MSG_ZOOM_CONTROLS_HIDE, ZOOM_CONTROLS_TIMEOUT);
         assert(sent);
-    }
-
-
-    @Override
-    public void navigateToPosition(final LatLong navigateTo) {
-        assert(navigateTo != null);
-        mapView.getModel().mapViewPosition.animateTo(navigateTo);
     }
 
 
@@ -211,4 +177,13 @@ public class MapControls implements NavigationModeHandler.NavigationModeListener
     public void externalZoomOutRequest() {
         mapZoomOutBtn.callOnClick();
     }
+
+    private byte getMinZoomLevel() {
+        return mapView.getModel().mapViewPosition.getZoomLevelMin();
+    }
+
+    private byte getMaxZoomLevel() {
+        return mapView.getModel().mapViewPosition.getZoomLevelMax();
+    }
+
 }

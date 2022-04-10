@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -21,7 +21,6 @@ package de.tadris.fitness.ui.record;
 
 import android.Manifest;
 import android.animation.Animator;
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -35,6 +34,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 import androidx.core.app.ActivityCompat;
@@ -74,15 +74,16 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity  {
     public static final int REQUEST_CODE_BACKGROUND_LOCATION_PERMISSION = 11;
 
     private MapView mapView;
+    private NavigationModeHandler navigationModeHandler;
     private Polyline polyline;
     private FixedPixelCircle locationPoint;
     private TextView gpsStatusView;
     private boolean gpsFound = false;
     private final List<LatLong> recordedPositions = new ArrayList<>();
+
+    @Nullable
     private MapControls mapControls;
 
-
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,27 +125,14 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity  {
 
         setTitle(R.string.recordWorkout);
 
-        mapView = new MapManager(this).setupMap();
+        setupMap();
 
         ((ViewGroup) findViewById(R.id.recordMapViewerRoot)).addView(mapView);
         waitingForGPSOverlay = findViewById(R.id.recorderWaitingOverlay);
         waitingForGPSOverlay.setVisibility(View.VISIBLE);
         gpsStatusView = findViewById(R.id.recordGpsStatus);
 
-        mapView.setBuiltInZoomControls(false);
-
-        FloatingActionButton mapFocusGpsBtn = findViewById(R.id.mapGpsFocus);
-        FloatingActionButton mapZoomInBtn = findViewById(R.id.mapZoomIn);
-        FloatingActionButton mapZoomOutBtn = findViewById(R.id.mapZoomOut);
-        mapFocusGpsBtn.setBackgroundTintList(ColorStateList.valueOf(getThemePrimaryColor()));
-        mapZoomInBtn.setBackgroundTintList(ColorStateList.valueOf(getThemePrimaryColor()));
-        mapZoomOutBtn.setBackgroundTintList(ColorStateList.valueOf(getThemePrimaryColor()));
-
-        final boolean showZoomControls = instance.userPreferences.getShowWorkoutZoomControls();
-        if (showZoomControls) {
-            mapControls = new MapControls(mapView, mapFocusGpsBtn, mapZoomInBtn, mapZoomOutBtn);
-            mapControls.init();
-        }
+        setupMapControls();
 
         onGPSStateChanged(new WorkoutGPSStateChanged(GpsWorkoutRecorder.GpsState.SIGNAL_LOST, GpsWorkoutRecorder.GpsState.SIGNAL_LOST));
 
@@ -167,15 +155,43 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity  {
         }
     }
 
+    private void setupMap() {
+        mapView = new MapManager(this).setupMap();
+        mapView.setClickable(false); // might be set to true later by mapControls
+        navigationModeHandler = new NavigationModeHandler(mapView);
+        navigationModeHandler.init();
+    }
+
+    private void setupMapControls() {
+        mapView.setBuiltInZoomControls(false);
+
+        FloatingActionButton mapFocusGpsBtn = findViewById(R.id.mapGpsFocus);
+        FloatingActionButton mapZoomInBtn = findViewById(R.id.mapZoomIn);
+        FloatingActionButton mapZoomOutBtn = findViewById(R.id.mapZoomOut);
+        mapFocusGpsBtn.setBackgroundTintList(ColorStateList.valueOf(getThemePrimaryColor()));
+        mapZoomInBtn.setBackgroundTintList(ColorStateList.valueOf(getThemePrimaryColor()));
+        mapZoomOutBtn.setBackgroundTintList(ColorStateList.valueOf(getThemePrimaryColor()));
+
+        final boolean showZoomControls = instance.userPreferences.getShowWorkoutZoomControls();
+        if (showZoomControls) {
+            mapControls = new MapControls(mapView, navigationModeHandler, mapFocusGpsBtn, mapZoomInBtn, mapZoomOutBtn);
+            mapControls.init();
+        } else {
+            mapFocusGpsBtn.setVisibility(View.GONE);
+            mapZoomInBtn.setVisibility(View.GONE);
+            mapZoomOutBtn.setVisibility(View.GONE);
+        }
+    }
+
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event){
-       if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
-           mapControls.externalZoomInRequest();
-           return true;
-       } else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
-           mapControls.externalZoomOutRequest();
-           return true;
-       }
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP && mapControls != null) {
+            mapControls.externalZoomInRequest();
+            return true;
+        } else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN && mapControls != null) {
+            mapControls.externalZoomOutRequest();
+            return true;
+        }
 
        return false;
     }
@@ -364,9 +380,8 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity  {
 
     @Override
     protected void onDestroy() {
-        if (mapControls != null) {
-            mapControls.deinit();
-        }
+        navigationModeHandler.removeNavigationModeListener();
+        navigationModeHandler.deinit();
 
         // Clear map
         mapView.destroyAll();
