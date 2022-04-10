@@ -448,4 +448,49 @@
     <string name="takeBackups3">Hver tredje dag</string>
     <string name="enterValidUrl">Skriv inn en gyldig HTTP-nettadresse</string>
     <string name="takeBackups7">Hver uke</string>
+    <string name="hidden">Skjult</string>
+    <string name="kcal_unit">kcal</string>
+    <string name="mapnik_default_osm_mapstyle">Mapnik
+\nForvalgt OSM-kartstil</string>
+    <string name="only_on_headphones_mode">Kun med hodetelefoner</string>
+    <string name="always_track_style">Alltid</string>
+    <string name="pink_mist">Rosa tåke</string>
+    <string name="rainbow_warrior">Regnbuekriger</string>
+    <string name="dark_theme">Mørk</string>
+    <string name="metric_unit_system">Metrisk</string>
+    <string name="unitHeartRateSensorBattery">%</string>
+    <string name="showWorkoutZoomControlsSummary">Skru på forstørrelse og panoreringskontroller for kartet ved opptak av GPS-treningsøkter</string>
+    <string name="showWorkoutZoomControlsTitle">Forstørrelse og panorering</string>
+    <string name="identifiable_visibility">Identifiserbar</string>
+    <string name="humanitarian_clean_map_but_sometimes_not_available">Humanitært
+\nRent kart, men noen ganger utilgjengelig</string>
+    <string name="offline_local_map_file_with_local_render_theme">Frakoblet
+\nLokalt kartfil med lokal opptegningsdrakt</string>
+    <string name="never_track_style">Aldri</string>
+    <string name="height_map">Høydekart</string>
+    <string name="bright_night">Lys natt</string>
+    <string name="mondriaan">Mondrian</string>
+    <string name="system_theme">System</string>
+    <string name="light_theme">Lys</string>
+    <string name="in_the_diagram_screen_track_style">I skjemaskjermen</string>
+    <string name="imperial_unit_system">Britisk enhetssystem for mål og vekt</string>
+    <string name="imperial_with_meters_unit_system">Britisk enhetssystem for mål og vekt med meter</string>
+    <string name="us_customary_unit_system">Amerikansk enhetssystem for mål og vekt</string>
+    <string name="exportTargetHttpPost">HTTP-POST-forespørsel</string>
+    <string name="workoutGPXExportTitle">GPX-eksport av treningsøkter</string>
+    <string name="autoExportWorkoutsSummary">Eksporter nylig registrerte treningsøkter</string>
+    <string name="autoExportBackupTitle">Automatiske programsikkerhetskopier</string>
+    <string name="autoExportBackupSummary">Eksporter sikkerhetskopier automatisk</string>
+    <string name="autoExportBackupExplanation">Ved angitt intervall vil en sikkerhetskopi bli importert hit:</string>
+    <string name="hintConfigureExportTargets">Legg til mål filer skal eksporteres til.</string>
+    <string name="autoExportWorkoutExplanation">Etter at en ny treningsøkt er registrert, blir eb GPX-eksport lagret her:</string>
+    <string name="heartRateSensorBattery">Sensor-batteri</string>
+    <string name="purple_rain">Lilla regn</string>
+    <string name="takeBackups1">Hver dag</string>
+    <string name="metric_with_m_s_unit_system">Metrisk med m/s</string>
+    <string name="deleteExportTargetConfirmation">Slett dette eksportmålet\?</string>
+    <string name="takeBackups2">Annenhver dag</string>
+    <string name="selectExportTarget">Velg eksportmål</string>
+    <string name="exportIntervalTitle">Sikkerhetskopi-intervall</string>
+    <string name="configureHttpPostRequest">Sett opp HTTP-POST-forespørsel</string>
 </resources>
