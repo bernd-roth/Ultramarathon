@@ -22,7 +22,7 @@
     <string name="chooseBackupFile">Wybierz plik kopii zapasowej</string>
     <string name="loadingFile">Ładowanie pliku</string>
     <string name="finished">Zakończone</string>
-    <string name="converting">Konwersja</string>
+    <string name="converting">Konwertowanie</string>
     <string name="locationData">Dane o lokalizacji</string>
     <string name="initialising">Inicjalizacja</string>
     <string name="shareFile">Udostępnij plik</string>
@@ -56,7 +56,7 @@
     <string name="selectBluetoothDevice">Wybierz urządzenie Bluetooth</string>
     <string name="importWorkoutMultipleQuestion">Czy chcesz zaimportować jeden plik GPX, czy wiele\?</string>
     <string name="importMultipleMessageSelectFolder">Wybierz folder zawierający wszystkie pliki GPX, które chcesz zaimportować.</string>
-    <string name="importMultipleGpxFiles">Importowanie wielu plików GPX</string>
+    <string name="importMultipleGpxFiles">Importuj wiele plików GPX</string>
     <string name="recordingStateStopped">Zatrzymany</string>
     <string name="recordingStatePaused">Wstrzymany</string>
     <string name="recordingStateRunning">Działający</string>
@@ -169,7 +169,7 @@
     <string name="intervalSetSelected">Wybrano zestaw interwałów</string>
     <string name="selectIntervalSet">Wybierz zestaw interwałów</string>
     <string name="deleteIntervalSetMessage">Czy chcesz usunąć zestaw interwałów\?</string>
-    <string name="deleteIntervalSet">Usuwanie zestawu interwałów</string>
+    <string name="deleteIntervalSet">Usuń zestaw interwałów</string>
     <string name="enterName">Wprowadź nazwę</string>
     <string name="length_in_minutes">Czas trwania (minuty):</string>
     <string name="interval_name">Nazwa:</string>
@@ -226,10 +226,10 @@
     <string name="workoutDescent">Droga w dół</string>
     <string name="workoutAscent">Droga w górę</string>
     <string name="deleteWorkoutMessage">Czy na pewno chcesz usunąć trening\?</string>
-    <string name="deleteWorkout">Usuwanie treningu</string>
+    <string name="deleteWorkout">Usuń trening</string>
     <string name="continue_">Kontynuuj</string>
     <string name="stopRecordingQuestionMessage">Czy na pewno chcesz zatrzymać nagrywanie\?</string>
-    <string name="stopRecordingQuestion">Zatrzymać nagrywanie\?</string>
+    <string name="stopRecordingQuestion">Czy zatrzymać nagrywanie\?</string>
     <string name="enterComment">Wprowadź komentarz</string>
     <string name="comment">Komentarz</string>
     <string name="enable">Włącz</string>
@@ -255,7 +255,7 @@
     <string name="workoutTypeOther">Inny</string>
     <string name="uploadFailedOsmNotAuthorized">Brak autoryzacji, spróbuj ponownie</string>
     <string name="uploadFailed">Przesyłanie nie powiodło się</string>
-    <string name="uploadSuccessful">Wysyłanie zakończone</string>
+    <string name="uploadSuccessful">Przesyłanie powiodło się</string>
     <string name="upload">Prześlij</string>
     <string name="authenticationFailed">Uwierzytelnianie nie powiodło się.</string>
     <string name="enterVerificationCode">Wprowadź kod weryfikacyjny</string>
@@ -369,15 +369,15 @@
     <string name="abort">Anuluj</string>
     <string name="downloading">Pobieranie…</string>
     <string name="chooseMapHint">Wybierz plik mapy</string>
-    <string name="downloadCanceled">Pobieranie anulowane</string>
+    <string name="downloadCanceled">Anulowano pobieranie</string>
     <string name="downloadFailed">Pobieranie nie powiodło się</string>
     <string name="downloadSuccess">Pobrano</string>
     <string name="cancelDownloadConfirmation">Czy chcesz anulować aktualne pobieranie\?</string>
-    <string name="actionCancelDownload">Anulowanie pobierania</string>
+    <string name="actionCancelDownload">Anuluj pobieranie</string>
     <string name="alreadyDownloading">Plik jest już pobierany</string>
-    <string name="downloadMapConfirmation">Pobrać plik mapy „%s”\?</string>
-    <string name="actionDownloadMap">Pobieranie mapy</string>
-    <string name="overwriteMapConfirmation">Nadpisać istniejący plik mapy „%s”\?</string>
+    <string name="downloadMapConfirmation">Czy pobrać plik mapy „%s”\?</string>
+    <string name="actionDownloadMap">Pobierz mapę</string>
+    <string name="overwriteMapConfirmation">Czy nadpisać istniejący plik mapy „%s”\?</string>
     <string name="downloadMapsSpecifyDirectory">Najpierw określ katalog dla map offline</string>
     <string name="downloadMapsTitle">Pobierz mapy</string>
     <string name="deleteWorkoutTypeConfirmation">Czy na pewno chcesz usunąć ten typ treningu\?</string>
@@ -446,7 +446,7 @@
     <string name="private_visibility">Prywatna</string>
     <string name="identifiable_visibility">Identyfikowalna</string>
     <string name="humanitarian_clean_map_but_sometimes_not_available">Humanitarian
-\nCzysta mapa, ale czasami niedostępna</string>
+\nCzysta mapa, ale nie zawsze dostępna</string>
     <string name="always_mode">Zawsze</string>
     <string name="kcal_unit">Kilokaloria (kcal)</string>
     <string name="only_on_headphones_mode">Tylko na słuchawkach</string>
@@ -457,7 +457,7 @@
     <string name="in_the_diagram_screen_track_style">Na ekranie diagramu</string>
     <string name="never_track_style">Nigdy</string>
     <string name="offline_local_map_file_with_local_render_theme">Offline
-\nLokalny plik mapy z lokalnym motywem renderowania</string>
+\nLokalny plik mapy z lokalnie renderowanym motywem</string>
     <string name="height_map">Mapa wysokości</string>
     <string name="bright_night">Jasna noc</string>
     <string name="purple_rain">Fioletowy deszcz</string>
