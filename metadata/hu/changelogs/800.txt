@@ -7,4 +7,4 @@
 - Hibajavítások, stabilitási és UI/UX továbbfejlesztések
 - Dán fordítás hozzáadva, holland fordítás frissítve
 
-A további változtatásokért nézze meg a projekt tárolóját a Codebergen.
+A további változtatásokért nézze meg a projekt tárolóját a Codebergen

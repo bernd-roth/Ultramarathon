@@ -7,4 +7,4 @@
 
 - Edzéstípusok megfelelő importálása a biztonsági mentésekből
 
-A változtatások részletesebb listájáért nézze meg a projekt tárolóját a Codebergen.
+A változtatások részletesebb listájáért nézze meg a projekt tárolóját a Codebergen

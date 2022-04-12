@@ -4,4 +4,4 @@
 - A „rendszerműveletek” bejelentés mostantól letiltható
 - Fordítások frissítése
 
-A változtatások részletesebb listájáért nézze meg a projekt tárolóját a Codebergen.
+A változtatások részletesebb listájáért nézze meg a projekt tárolóját a Codebergen
