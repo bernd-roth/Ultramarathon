@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -17,9 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
     <string name="stop">Detener</string>
     <string name="delete">Borrar</string>
@@ -35,7 +32,7 @@
     <string name="finished">Terminado</string>
     <string name="loadingFile">Cargando archivo</string>
     <string name="chooseBackupFile">Elegir archivo de respaldo</string>
-    <string name="importBackupMessage">ADVERTENCIA: Se borrarán todos sus datos existentes en la aplicación. Si no desea perderlos, primero haga otra copia de seguridad. ¿Estás seguro de que quieres restaurar esta copia de seguridad?</string>
+    <string name="importBackupMessage">Resguarda los datos actuales ahora si desea mantenerlos. ¿Deseas recuperar de una copia anterior\?</string>
     <string name="restore">Restaurar</string>
     <string name="backup">Respaldo</string>
     <string name="setPreferencesTitle">Establecer preferencias</string>
@@ -114,7 +111,7 @@
     <string name="mapStyle">Estilo de mapa</string>
     <string name="waiting_gps">Esperando GPS</string>
     <string name="actionUploadToOSM">Subir a OSM</string>
-    <string name="cut">Corte los primeros/últimos 300 metros</string>
+    <string name="cut">Corte los primeros/últimos 300 mts</string>
     <string name="trackVisibilityPref">Visibilidad de la pista</string>
     <string name="description">Descripción</string>
     <string name="ttsNotAvailable">TextToSpeech no está disponible</string>
@@ -261,7 +258,7 @@
     <string name="recordingStateIdle">Ocioso</string>
     <string name="speechConfigNoSpeech">No se anuncia</string>
     <string name="aboutHelpTranslating">Ayuda para traducir</string>
-    <string name="aboutUnlistedContributors">Gracias a todos los contribuyentes no listados que ayudaron a traducir y extender FitoTrack!</string>
+    <string name="aboutUnlistedContributors">¡Gracias a todos los contribuyentes no listados que ayudaron a traducir y extender FitoTrack!</string>
     <string name="trackerWaitingMessage">Esperando para empezar a entrenar</string>
     <string name="metric_unit_system">Métrico</string>
     <string name="metric_with_m_s_unit_system">Métrico con m/s</string>
@@ -269,7 +266,7 @@
     <string name="imperial_with_meters_unit_system">Imperial con metros</string>
     <string name="us_customary_unit_system">Imperial (EEUU)</string>
     <string name="system_default">Predeterminado del sistema</string>
-    <string name="system_theme">System</string>
+    <string name="system_theme">Sistema</string>
     <string name="light_theme">Claro</string>
     <string name="dark_theme">Oscuro</string>
     <string name="importingFiles">Importar archivos</string>
@@ -296,8 +293,8 @@
     <string name="resumeWorkout">Reanudar el entrenamiento</string>
     <string name="heartRateNotAvailable">La frecuencia cardíaca no está disponible actualmente.</string>
     <string name="announcementWorkoutActions">Acciones de entrenamiento (pausa, reanudación, etc.)</string>
-    <string name="resumeWorkoutConfirmation">¿Realmente desea reanudar el entrenamiento\? Esto también agregará una pausa desde el momento en que el entrenamiento fue detenido.</string>
-    <string name="prefShowOnLockScreenSummary">Mostrar la información sobre el entrenamiento aún si el teléfono está bloqueado.</string>
+    <string name="resumeWorkoutConfirmation">¿Reanudar el entrenamiento\? Una pausa se agregará desde el momento en que el entrenamiento fue detenido.</string>
+    <string name="prefShowOnLockScreenSummary">Mostrar la info sobre el entrenamiento aún si el dispositivo está bloqueado.</string>
     <string name="prefShowOnLockScreenTitle">Visible en la pantalla de bloqueo</string>
     <string name="notimeout">Desactivado</string>
     <string name="workoutTypeEditMET">MET</string>
@@ -320,23 +317,23 @@
     <string name="actionImportMultiple">Importar múltiples</string>
     <string name="actionImport">Importar</string>
     <string name="importWorkoutMultipleQuestion">¿Desea importar un archivo GPX o múltiples archivos\?</string>
-    <string name="pref_auto_start_mode_unknown">Modo desconocido (no seleccionar)</string>
+    <string name="pref_auto_start_mode_unknown">Desconocido (no usar)</string>
     <string name="pref_auto_start_mode_on_move">Esperar a que comience a moverse</string>
     <string name="pref_auto_start_mode_wait_for_gps">Esperar una posición GPS precisa</string>
     <string name="pref_auto_start_mode_instant">Comenzar inmediatamente</string>
     <string name="pref_auto_start_mode_title">Modo de inicio automático</string>
     <string name="intervalAutoStartModeTraining">Modo de inicio automático del entrenamiento</string>
     <string name="manageAutoStartModeSummary">Cambiar el modo de inicio automático del entrenamiento</string>
-    <string name="ttsMinuteSecondCountdownAnnouncement"> <xliff:g id="mins" example="1 minute">%1$s</xliff:g> y <xliff:g id="secs" example="7 seconds">%2$s</xliff:g> para el inicio </string>
-    <string name="ttsMinuteCountdownAnnouncement"> <xliff:g id="mins" example="12 minutes">%1$s</xliff:g> para el inicio </string>
-    <string name="ttsLongSecondCountdownAnnouncement"> <xliff:g id="secs" example="5 seconds">%1$s</xliff:g> para el inicio </string>
+    <string name="ttsMinuteSecondCountdownAnnouncement"> <xliff:g example="1 minute" id="mins">%1$s</xliff:g> y <xliff:g example="7 seconds" id="secs">%2$s</xliff:g> \u0020para el inicio </string>
+    <string name="ttsMinuteCountdownAnnouncement"> <xliff:g example="12 minutes" id="mins">%1$s</xliff:g> para el inicio </string>
+    <string name="ttsLongSecondCountdownAnnouncement"> <xliff:g example="5 seconds" id="secs">%1$s</xliff:g> para el inicio </string>
     <plurals name="minutes">
-        <item quantity="one"><xliff:g id="mins" example="1">%1$d</xliff:g> minuto</item>
-        <item quantity="other"><xliff:g id="mins" example="5">%1$d</xliff:g> minutos</item>
+        <item quantity="one"><xliff:g example="1" id="mins">%1$d</xliff:g> minuto</item>
+        <item quantity="other"><xliff:g example="5" id="mins">%1$d</xliff:g> minutos</item>
     </plurals>
     <plurals name="seconds">
-        <item quantity="one"><xliff:g id="secs" example="1">%1$d</xliff:g> segundo</item>
-        <item quantity="other"><xliff:g id="secs" example="12">%1$d</xliff:g> segundos</item>
+        <item quantity="one"><xliff:g example="1" id="secs">%1$d</xliff:g> \u0020segundo</item>
+        <item quantity="other"><xliff:g example="12" id="secs">%1$d</xliff:g> segundos</item>
     </plurals>
     <string name="scanFailed">Escaneo fallido</string>
     <string name="scanning">Escaneando…</string>
@@ -370,16 +367,16 @@
     <string name="cancelDownloadConfirmation">¿Quiere cancelar la descarga actual\?</string>
     <string name="actionCancelDownload">Cancelar descarga</string>
     <string name="alreadyDownloading">Ya se está descargando un archivo</string>
-    <string name="downloadMapConfirmation">¿Quiere descargar el archivo de mapa %s\?</string>
+    <string name="downloadMapConfirmation">¿Descargar el archivo de mapa \\\"%s\\\"\?</string>
     <string name="actionDownloadMap">Descargar mapa</string>
-    <string name="overwriteMapConfirmation">¿Quiere sobrescribir el archivo de mapa existente %s\?</string>
+    <string name="overwriteMapConfirmation">¿Sobrescribir el archivo de mapa existente \\\"%s\\\"\?</string>
     <string name="downloadMapsSpecifyDirectory">Por favor, primero especifique un directorio para mapas sin conexión</string>
     <string name="downloadMapsTitle">Descargar mapas</string>
     <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack también recopila datos de ubicación en segundo plano para registrar el entrenamiento cuando la pantalla está apagada. Por lo tanto, permita que FitoTrack tenga acceso a su ubicación todo el tiempo.</string>
     <string name="recordingPermissionNotGrantedMessage">FitoTrack necesita permiso de ubicación para rastrear su movimiento durante su entrenamiento. FitoTrack también recopila datos de ubicación mientras la aplicación está en segundo plano o la pantalla está apagada para registrar sus entrenamientos. Los datos de ubicación siempre permanecen en su teléfono sin su claro consentimiento para compartirlos.</string>
     <string name="workoutTypeAll">Todos</string>
     <string name="invalidNumberFormat">Formato de número inválido.</string>
-    <string name="pref_announcements_pace_control_title">Advertencias de control de ritmo</string>
+    <string name="pref_announcements_pace_control_title">Advertencias de ritmo</string>
     <string name="pref_announcements_pace_control_summary">Advertir cuando se está por debajo o por encima de una velocidad especificada</string>
     <string name="ttsAboveTargetSpeed">Demasiado rápido</string>
     <string name="ttsBelowTargetSpeed">Demasiado lento</string>
@@ -406,4 +403,90 @@
     <string name="trackStyle">Estilo de pista</string>
     <string name="preferenceFirstDayOfWeek">Inicio de la semana</string>
     <string name="edit_interval">Editar intervalo</string>
+    <string name="showWorkoutZoomControlsSummary">Habilite los controles de zoom y panorámica en el mapa mientras graba entrenamientos GPS</string>
+    <string name="workoutTypeTreadmill">Caminadora</string>
+    <string name="pref_render_theme_style">Estilo de renderizado</string>
+    <string name="hidden">Oculto</string>
+    <string name="thursday">Jueves</string>
+    <string name="workoutRecordingTypeGps">Entrenamientos con GPS</string>
+    <string name="workoutRecordingTypeIndoor">Entrenamientos en interiores</string>
+    <string name="workoutSets">Conjuntos</string>
+    <string name="workoutRepetitions">Repeticiones</string>
+    <string name="workoutFrequency">Frecuencia</string>
+    <string name="workoutAvgFrequencyShort">Frecuencia promedio</string>
+    <string name="workoutAvgFrequencyLong">Frecuencia promedio</string>
+    <string name="workoutCurrentFrequency">Frecuencia actual</string>
+    <string name="workoutMaxFrequency">Frecuencia máx.</string>
+    <string name="workoutIntensity">Intensidad</string>
+    <string name="workoutAvgIntensityShort">Intensidad prom.</string>
+    <string name="workoutMaxIntensity">Intensidad máx.</string>
+    <plurals name="workoutStep">
+        <item quantity="one">Paso</item>
+        <item quantity="other">Pasos</item>
+    </plurals>
+    <string name="workoutTypeRopeSkipping">Saltar a la cuerda</string>
+    <string name="workoutTypePushUps">Flexiones</string>
+    <string name="currentTimeStructure">%s %s</string>
+    <string name="recordingActivityPermissionMessage">FitoTrack necesita permisos para rastrear su actividad física para registrar entrenamientos en interiores.</string>
+    <plurals name="importedWorkouts">
+        <item quantity="one">Un entrenamiento importado</item>
+        <item quantity="other">%d entrenamientos importados</item>
+    </plurals>
+    <string name="preferenceCategoryRenderThemeCategories">Categorías</string>
+    <string name="fileNotFound">Archivo no encontrado</string>
+    <string name="kcal_unit">kcal</string>
+    <string name="joule_unit">Julio</string>
+    <string name="offline_local_map_file_with_local_render_theme">Desconectado
+\nArchivo de mapa local con tema renderizado localmente</string>
+    <string name="always_track_style">Siempre</string>
+    <string name="in_the_diagram_screen_track_style">En la pantalla del diagrama</string>
+    <string name="never_track_style">Nunca</string>
+    <string name="purple_rain">Lluvia púrpura</string>
+    <string name="pink_mist">Niebla rosa</string>
+    <string name="rainbow_warrior">Guerrero arcoiris</string>
+    <string name="height_map">Mapa de altura</string>
+    <string name="sunday">Domingo</string>
+    <string name="monday">Lunes</string>
+    <string name="tuesday">Martes</string>
+    <plurals name="workoutPushUp">
+        <item quantity="one">Flexión</item>
+        <item quantity="other">Flexiones</item>
+    </plurals>
+    <string name="pref_map_directory">Directorio de mapas sin conexión</string>
+    <string name="heartRateSensorBattery">Sensor de batería</string>
+    <string name="workoutTypeTrampolineJumping">Salto de trampolín</string>
+    <string name="pref_step_length">Longitud del paso</string>
+    <string name="unitHeartRateSensorBattery">%</string>
+    <string name="unitHertzLong">Hercios</string>
+    <string name="showWorkoutZoomControlsTitle">Zoom y panorámica</string>
+    <string name="mapnik_default_osm_mapstyle">Mapnik
+\nPredeterminado de OSM</string>
+    <string name="bright_night">Noche brillante</string>
+    <string name="mondriaan">Mondriaan</string>
+    <string name="wednesday">Miércoles</string>
+    <string name="friday">Viernes</string>
+    <string name="saturday">Sábado</string>
+    <string name="humanitarian_clean_map_but_sometimes_not_available">Humanitario
+\nMapa limpio, pero no siempre disponible</string>
+    <string name="exportTargetDirectory">Directorio</string>
+    <string name="exportTargetHttpPost">Solicitud HTTP POST</string>
+    <string name="autoBackupTitle">Respaldos automáticos</string>
+    <string name="workoutGPXExportTitle">Exportaciones de entrenamientos en GPX</string>
+    <string name="autoExportWorkoutsSummary">Exportar entrenamientos recién grabados</string>
+    <string name="autoExportBackupSummary">Exportar copias de seguridad automáticamente</string>
+    <string name="autoExportBackupExplanation">En el intervalo especificado, se exportará una copia de seguridad aquí:</string>
+    <string name="autoExportWorkoutExplanation">Después de registrar un nuevo entrenamiento, se guardará aquí una exportación GPX:</string>
+    <string name="exportIntervalTitle">Intervalo de resguardo</string>
+    <string name="takeBackups1">Todos los días</string>
+    <string name="takeBackups2">Día por medio</string>
+    <string name="takeBackups3">Cada tres días</string>
+    <string name="takeBackups7">Cada semana</string>
+    <string name="takeBackups14">Quincenalmente</string>
+    <string name="httpUrl">URL</string>
+    <string name="enterValidUrl">Introduzca una URL HTTP válida</string>
+    <string name="configureHttpPostRequest">Configurar solicitud HTTP POST</string>
+    <plurals name="workoutJump">
+        <item quantity="one">Salto</item>
+        <item quantity="other">Saltos</item>
+    </plurals>
 </resources>
