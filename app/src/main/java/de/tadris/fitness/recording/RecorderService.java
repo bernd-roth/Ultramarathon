@@ -52,6 +52,7 @@ import de.tadris.fitness.recording.component.RecorderServiceComponent;
 import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
 import de.tadris.fitness.ui.record.RecordWorkoutActivity;
 import de.tadris.fitness.util.NotificationHelper;
+import de.tadris.fitness.util.WorkoutLogger;
 
 public class RecorderService extends Service {
 
@@ -82,7 +83,7 @@ public class RecorderService extends Service {
                 while (running) {
                     while (instance.recorder.handleWatchdog() && running) {
                         updateNotification();
-                        // TODO component.check()
+                        checkAllComponents();
                         Thread.sleep(WATCHDOG_INTERVAL);
                     }
                     Thread.sleep(WATCHDOG_INTERVAL); // Additional Retry Interval
@@ -104,7 +105,7 @@ public class RecorderService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i(TAG, "onStartCommand");
+        WorkoutLogger.log(TAG, "onStartCommand");
         super.onStartCommand(intent, flags, startId);
 
         serviceStartTime = new Date();
@@ -170,7 +171,10 @@ public class RecorderService extends Service {
 
     @Override
     public void onCreate() {
-        Log.i(TAG, "onCreate");
+        WorkoutLogger.log(TAG, "Service created");
+        WorkoutLogger.log(TAG, "Android: " + Build.VERSION.RELEASE + " Sdk: " + Build.VERSION.SDK_INT);
+        WorkoutLogger.log(TAG, "Device: " + Build.PRODUCT + " / " + Build.DEVICE + " / " + Build.MODEL);
+
         this.instance = Instance.getInstance(getBaseContext());
 
         if (sensorManager == null) {
@@ -184,7 +188,7 @@ public class RecorderService extends Service {
 
     @Override
     public void onDestroy() {
-        Log.i(TAG, "onDestroy");
+        WorkoutLogger.log(TAG, "onDestroy");
 
         stopAllComponents();
 
@@ -214,13 +218,19 @@ public class RecorderService extends Service {
     private void startComponent(RecorderServiceComponent component){
         component.register(this);
         components.add(component);
-        Log.i(TAG, "Started component " + component.getClass().getSimpleName());
+        WorkoutLogger.log(TAG, "Started component " + component.getClass().getSimpleName());
+    }
+
+    private void checkAllComponents(){
+        for(RecorderServiceComponent component : components){
+            component.check();
+        }
     }
 
     private void stopAllComponents(){
         for(RecorderServiceComponent component : components){
             component.unregister();
-            Log.i(TAG, "Stopped component " + component.getClass().getSimpleName());
+            WorkoutLogger.log(TAG, "Stopped component " + component.getClass().getSimpleName());
         }
         components.clear();
     }

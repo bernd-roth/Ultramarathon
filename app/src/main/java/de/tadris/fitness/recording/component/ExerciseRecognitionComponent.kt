@@ -27,6 +27,7 @@ import android.util.Log
 import de.tadris.fitness.Instance
 import de.tadris.fitness.recording.RecorderService
 import de.tadris.fitness.recording.indoor.exercise.ExerciseRecognizer
+import de.tadris.fitness.util.WorkoutLogger
 import org.greenrobot.eventbus.EventBus
 
 class ExerciseRecognitionComponent : RecorderServiceComponent, SensorEventListener {
@@ -38,13 +39,13 @@ class ExerciseRecognitionComponent : RecorderServiceComponent, SensorEventListen
         sensorManager = service.sensorManager
         exerciseRecognizer = ExerciseRecognizer.findByType(Instance.getInstance(service).recorder.workout.workoutTypeId)
         if (exerciseRecognizer != null) {
-            Log.d("RecoderService", "Using ${exerciseRecognizer!!.javaClass.simpleName} recognizer")
+            WorkoutLogger.log("RecoderService", "Using ${exerciseRecognizer!!.javaClass.simpleName} recognizer")
             exerciseRecognizer!!.start()
             exerciseRecognizer!!.getActivatedSensors().forEach {
                 activateSensor(it)
             }
         } else {
-            Log.w("RecoderService", "No recognizer found")
+            WorkoutLogger.log("RecoderService", "No recognizer found")
         }
     }
 
@@ -56,17 +57,13 @@ class ExerciseRecognitionComponent : RecorderServiceComponent, SensorEventListen
     private fun activateSensor(sensorOption: FitoTrackSensorOption) {
         val sensor = sensorManager?.getDefaultSensor(sensorOption.sensorType)
         if (sensor != null) {
-            Log.d("RecoderService", "Activating sensor ${sensorOption.name}")
+            WorkoutLogger.log("RecoderService", "Activating sensor ${sensorOption.name}")
             sensorManager?.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME)
         }
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
         if (event == null) return
-        Log.v(
-            "ExerciseRecognition",
-            "Sensorevent ${event.sensor.name} - ${event.values.contentToString()}"
-        )
         EventBus.getDefault().post(event)
     }
 

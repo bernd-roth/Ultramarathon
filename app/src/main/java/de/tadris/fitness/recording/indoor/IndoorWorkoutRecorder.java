@@ -39,6 +39,7 @@ import de.tadris.fitness.recording.indoor.exercise.ExerciseRecognizer;
 import de.tadris.fitness.ui.record.RecordIndoorWorkoutActivity;
 import de.tadris.fitness.ui.record.RecordWorkoutActivity;
 import de.tadris.fitness.util.CalorieCalculator;
+import de.tadris.fitness.util.WorkoutLogger;
 
 public class IndoorWorkoutRecorder extends BaseWorkoutRecorder {
 
@@ -95,7 +96,7 @@ public class IndoorWorkoutRecorder extends BaseWorkoutRecorder {
 
         boolean acceptSamples = useAutoPause ? isPausedOrResumed() : isResumed();
         if (acceptSamples && event.getTimestamp() > workout.start) {
-            Log.d("Recorder", "repetition recognized with intensity " + event.getIntensity());
+            WorkoutLogger.log("Recorder", "repetition recognized with intensity " + event.getIntensity());
             if (currentSample != null && currentSample.repetitions < type.minDistance && event.getTimestamp() - currentSample.absoluteTime < PAUSE_TIME) {
                 addToExistingSample(event);
             } else {

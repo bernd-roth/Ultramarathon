@@ -42,6 +42,7 @@ import de.tadris.fitness.recording.event.HeartRateConnectionChangeEvent;
 import de.tadris.fitness.recording.event.WorkoutAutoStopEvent;
 import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
 import de.tadris.fitness.ui.record.RecordWorkoutActivity;
+import de.tadris.fitness.util.WorkoutLogger;
 
 public abstract class BaseWorkoutRecorder {
 
@@ -71,6 +72,7 @@ public abstract class BaseWorkoutRecorder {
     protected long lastTriggeredInterval = -1;
 
     public BaseWorkoutRecorder(Context context) {
+        WorkoutLogger.log("WorkoutRecorder", "Creating workout recorder");
         this.context = context;
         this.state = RecordingState.IDLE;
 
@@ -82,7 +84,7 @@ public abstract class BaseWorkoutRecorder {
 
     public void start() {
         if (state == RecordingState.IDLE) {
-            Log.i("Recorder", "Start");
+            WorkoutLogger.log("Recorder", "Start");
             startTime = System.currentTimeMillis();
             onStart();
             resume();
@@ -128,7 +130,7 @@ public abstract class BaseWorkoutRecorder {
     }
 
     public void resume() {
-        Log.i("Recorder", "Resume");
+        WorkoutLogger.log("Recorder", "Resume");
         state = RecordingState.RUNNING;
         lastResume = System.currentTimeMillis();
         if (lastPause != 0) {
@@ -138,7 +140,7 @@ public abstract class BaseWorkoutRecorder {
 
     public void pause() {
         if (state == RecordingState.RUNNING) {
-            Log.i("Recorder", "Pause");
+            WorkoutLogger.log("Recorder", "Pause");
             state = RecordingState.PAUSED;
             time += System.currentTimeMillis() - lastResume;
             lastPause = System.currentTimeMillis();
@@ -146,7 +148,7 @@ public abstract class BaseWorkoutRecorder {
     }
 
     public void stop(String reason) {
-        Log.i("Recorder", "Stopping workout, reason: " + reason);
+        WorkoutLogger.log("Recorder", "Stopping workout, reason: " + reason);
         if (state == RecordingState.PAUSED) {
             resume();
         }

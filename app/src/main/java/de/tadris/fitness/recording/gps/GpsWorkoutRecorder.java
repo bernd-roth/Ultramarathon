@@ -50,6 +50,7 @@ import de.tadris.fitness.recording.event.WorkoutGPSStateChanged;
 import de.tadris.fitness.ui.record.RecordGpsWorkoutActivity;
 import de.tadris.fitness.ui.record.RecordWorkoutActivity;
 import de.tadris.fitness.util.CalorieCalculator;
+import de.tadris.fitness.util.WorkoutLogger;
 
 /**
  * This class is responsible for managing the workout data during a workout recording
@@ -116,6 +117,7 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
     }
 
     private void reconstructBySamples() {
+        WorkoutLogger.log("WorkoutRecorder", "Trying to reconstruct previously recorded workout");
         lastResume = workout.start;
         lastSampleTime = workout.start;
         LatLong prefLocation = null;
@@ -192,7 +194,7 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
     @Override
     protected void onWatchdog() {
         if (BuildConfig.DEBUG) {
-            Log.d("WorkoutRecorder", "handleWatchdog " + this.getState().toString() + " samples: " + samples.size() + " autoTout: " + autoTimeoutMs + " inst: " + this.toString());
+            WorkoutLogger.log("WorkoutRecorder", "handleWatchdog " + this.getState().toString() + " samples: " + samples.size() + " autoTout: " + autoTimeoutMs + " inst: " + this.toString());
         }
         checkSignalState();
     }
@@ -218,7 +220,7 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
         }
 
         if (state != gpsState) {
-            Log.d("Recorder", "GPS State: " + this.gpsState.name() + " -> " + state.name());
+            WorkoutLogger.log("Recorder", "GPS State: " + this.gpsState.name() + " -> " + state.name());
             EventBus.getDefault().post(new WorkoutGPSStateChanged(this.gpsState, state));
             gpsState = state;
         }
@@ -229,7 +231,7 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
         workout.end = System.currentTimeMillis();
         workout.duration = time;
         workout.pauseDuration = pauseTime;
-        Log.i("Recorder", "Stop with " + getSampleCount() + " Samples");
+        WorkoutLogger.log("Recorder", "Stop with " + getSampleCount() + " Samples");
     }
 
     @Override
@@ -237,7 +239,7 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
         if (state != RecordingState.STOPPED) {
             throw new IllegalStateException("Cannot save recording, recorder was not stopped. state = " + state);
         }
-        Log.i("Recorder", "Save");
+        WorkoutLogger.log("Recorder", "Save");
         synchronized (samples) {
             workoutSaver.finalizeWorkout();
         }
@@ -418,6 +420,7 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
 
     @Override
     public void discard() {
+        WorkoutLogger.log("WorkoutRecorder", "Discarding workout");
         workoutSaver.discardWorkout();
     }
 

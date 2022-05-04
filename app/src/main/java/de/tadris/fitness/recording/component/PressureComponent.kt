@@ -26,6 +26,7 @@ import android.hardware.SensorManager
 import android.util.Log
 import de.tadris.fitness.recording.RecorderService
 import de.tadris.fitness.recording.event.PressureChangeEvent
+import de.tadris.fitness.util.WorkoutLogger
 import org.greenrobot.eventbus.EventBus
 
 class PressureComponent : RecorderServiceComponent, SensorEventListener {
@@ -39,13 +40,12 @@ class PressureComponent : RecorderServiceComponent, SensorEventListener {
 
     override fun register(service: RecorderService) {
         this.service = service
-        Log.i(TAG, "initializePressureSensor")
         pressureSensor = service.sensorManager?.getDefaultSensor(Sensor.TYPE_PRESSURE)
         if(pressureSensor != null){
-            Log.i(TAG, "started Pressure Sensor")
+            WorkoutLogger.log(TAG, "started Pressure Sensor")
             service.sensorManager.registerListener(this, pressureSensor, SensorManager.SENSOR_DELAY_NORMAL)
         }else{
-            Log.i(TAG, "no Pressure Sensor Available")
+            WorkoutLogger.log(TAG, "no Pressure Sensor Available")
         }
     }
 

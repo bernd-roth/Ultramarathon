@@ -27,6 +27,7 @@ import android.speech.tts.UtteranceProgressListener
 import android.util.Log
 import de.tadris.fitness.recording.BaseWorkoutRecorder
 import de.tadris.fitness.recording.event.TTSReadyEvent
+import de.tadris.fitness.util.WorkoutLogger
 import org.greenrobot.eventbus.EventBus
 import java.util.*
 import kotlin.collections.HashSet
@@ -75,7 +76,7 @@ class TTSController(context: Context, val id: String = DEFAULT_TTS_CONTROLLER_ID
         if (!audioFocusManager.requestFocus()) {
             return
         }
-        Log.d("Recorder", "TTS speaks: $text")
+        WorkoutLogger.log("Recorder", "TTS speaks: $text")
 
         val utteranceId = "announcement" + ++speakId
         textToSpeech.speak(text, TextToSpeech.QUEUE_ADD, null, utteranceId)

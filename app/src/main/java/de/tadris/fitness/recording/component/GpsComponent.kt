@@ -27,6 +27,7 @@ import android.os.Bundle
 import android.util.Log
 import de.tadris.fitness.recording.RecorderService
 import de.tadris.fitness.recording.event.LocationChangeEvent
+import de.tadris.fitness.util.WorkoutLogger
 import org.greenrobot.eventbus.EventBus
 import org.mapsforge.core.model.LatLong
 
@@ -58,14 +59,14 @@ class GpsComponent : RecorderServiceComponent {
             locationManager?.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_INTERVAL, 0f, gpsListener)
             checkLastKnownLocation()
         } catch (ex: SecurityException) {
-            Log.i(TAG, "fail to request location update, ignore", ex)
+            WorkoutLogger.log(TAG, "fail to request location update, ignore (${ex.message})")
         } catch (ex: IllegalArgumentException) {
-            Log.d(TAG, "gps provider does not exist " + ex.message)
+            WorkoutLogger.log(TAG, "gps provider does not exist " + ex.message)
         }
     }
 
     private fun initializeLocationManager() {
-        Log.i(TAG, "initializeLocationManager")
+        WorkoutLogger.log(TAG, "initializeLocationManager")
         if (locationManager == null) {
             locationManager = service.applicationContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         }
@@ -87,25 +88,25 @@ class GpsComponent : RecorderServiceComponent {
         val mLastLocation: Location
 
         override fun onLocationChanged(location: Location) {
-            Log.i(TAG, "onLocationChanged: $location")
+            Log.i(TAG, "onLocationChanged: $location") // don't write user location into log file
             mLastLocation.set(location)
             EventBus.getDefault().postSticky(LocationChangeEvent(location))
         }
 
         override fun onProviderDisabled(provider: String) {
-            Log.i(TAG, "onProviderDisabled: $provider")
+            WorkoutLogger.log(TAG, "onProviderDisabled: $provider")
         }
 
         override fun onProviderEnabled(provider: String) {
-            Log.i(TAG, "onProviderEnabled: $provider")
+            WorkoutLogger.log(TAG, "onProviderEnabled: $provider")
         }
 
         override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {
-            Log.i(TAG, "onStatusChanged: $provider")
+            WorkoutLogger.log(TAG, "onStatusChanged: $provider")
         }
 
         init {
-            Log.i(TAG, "LocationListener $provider")
+            WorkoutLogger.log(TAG, "LocationListener $provider")
             mLastLocation = Location(provider)
         }
     }
