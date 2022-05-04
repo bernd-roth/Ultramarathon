@@ -31,8 +31,8 @@ import org.mapsforge.core.model.LatLong;
 import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.view.InputListener;
 
+import de.tadris.fitness.recording.component.GpsComponent;
 import de.tadris.fitness.recording.event.LocationChangeEvent;
-import de.tadris.fitness.recording.gps.GpsRecorderService;
 
 public class NavigationModeHandler implements View.OnTouchListener, View.OnClickListener, InputListener {
     private boolean focusedInitially = false;
@@ -143,7 +143,7 @@ public class NavigationModeHandler implements View.OnTouchListener, View.OnClick
 
     @Subscribe
     public void onLocationChange(LocationChangeEvent e) {
-        currentGpsPosition = GpsRecorderService.locationToLatLong(e.location);
+        currentGpsPosition = GpsComponent.locationToLatLong(e.location);
 
         if (navigationMode == NavigationMode.ManualInScope && distanceThresholdExceeds()) {
             updateMode(NavigationMode.Manual, UpdateMode.OnChange);

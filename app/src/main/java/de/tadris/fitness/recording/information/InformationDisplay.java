@@ -22,6 +22,7 @@ package de.tadris.fitness.recording.information;
 import android.content.Context;
 
 import de.tadris.fitness.Instance;
+import de.tadris.fitness.data.RecordingType;
 import de.tadris.fitness.data.preferences.RecordingScreenInformationPreferences;
 import de.tadris.fitness.data.preferences.UserPreferences;
 import de.tadris.fitness.data.WorkoutType;
@@ -29,11 +30,11 @@ import de.tadris.fitness.recording.BaseWorkoutRecorder;
 
 public class InformationDisplay {
 
-    private final WorkoutType.RecordingType mode;
+    private final RecordingType mode;
     private final UserPreferences preferences;
     private final InformationManager manager;
 
-    public InformationDisplay(WorkoutType.RecordingType mode, Context context) {
+    public InformationDisplay(RecordingType mode, Context context) {
         this.mode = mode;
         this.preferences = Instance.getInstance(context).userPreferences;
         this.manager = new InformationManager(mode, context);

@@ -31,14 +31,15 @@ import de.tadris.fitness.Instance;
 import de.tadris.fitness.data.BaseWorkout;
 import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.IntervalSet;
+import de.tadris.fitness.data.RecordingType;
 import de.tadris.fitness.data.preferences.UserPreferences;
 import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.recording.component.HeartRateComponent;
 import de.tadris.fitness.recording.event.HRBatteryLevelChangeEvent;
 import de.tadris.fitness.recording.event.HRBatteryLevelConnectionEvent;
 import de.tadris.fitness.recording.event.HeartRateChangeEvent;
 import de.tadris.fitness.recording.event.HeartRateConnectionChangeEvent;
 import de.tadris.fitness.recording.event.WorkoutAutoStopEvent;
-import de.tadris.fitness.recording.gps.GpsRecorderService;
 import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
 import de.tadris.fitness.ui.record.RecordWorkoutActivity;
 
@@ -185,7 +186,7 @@ public abstract class BaseWorkoutRecorder {
 
     public abstract Class<? extends RecordWorkoutActivity> getActivityClass();
 
-    public abstract WorkoutType.RecordingType getRecordingType();
+    public abstract RecordingType getRecordingType();
 
     public void onIntervalWasTriggered(Interval interval) {
         lastTriggeredInterval = interval.id;
@@ -222,7 +223,7 @@ public abstract class BaseWorkoutRecorder {
 
     @Subscribe
     public void onHeartRateConnectionChange(HeartRateConnectionChangeEvent event) {
-        if (event.state != GpsRecorderService.HeartRateConnectionState.CONNECTED) {
+        if (event.state != HeartRateComponent.HeartRateConnectionState.CONNECTED) {
             // If heart rate sensor currently not available
             lastHeartRate = -1;
         }
@@ -235,7 +236,7 @@ public abstract class BaseWorkoutRecorder {
 
     @Subscribe
     public void onHRBatteryConnectionChange(HRBatteryLevelConnectionEvent event) {
-        if (event.state != GpsRecorderService.HRBatteryConnectionState.CONNECTED) {
+        if (event.state != HeartRateComponent.HeartRateConnectionState.CONNECTED) {
             // If heart rate sensor currently not available
             lastHRBatteryLevel = -1;
         }

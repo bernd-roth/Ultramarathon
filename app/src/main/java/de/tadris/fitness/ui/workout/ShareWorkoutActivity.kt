@@ -37,7 +37,7 @@ import de.tadris.fitness.Instance
 import de.tadris.fitness.R
 import de.tadris.fitness.aggregation.WorkoutInformationManager
 import de.tadris.fitness.aggregation.information.Hidden
-import de.tadris.fitness.data.WorkoutType.RecordingType
+import de.tadris.fitness.data.RecordingType
 import de.tadris.fitness.ui.dialog.SelectShareInformationDialog
 import de.tadris.fitness.ui.record.InfoViewHolder
 import de.tadris.fitness.util.DataManager

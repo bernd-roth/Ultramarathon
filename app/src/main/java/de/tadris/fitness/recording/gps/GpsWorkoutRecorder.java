@@ -39,9 +39,11 @@ import de.tadris.fitness.Instance;
 import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.GpsWorkout;
 import de.tadris.fitness.data.GpsWorkoutData;
+import de.tadris.fitness.data.RecordingType;
 import de.tadris.fitness.data.preferences.UserPreferences;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.recording.BaseWorkoutRecorder;
+import de.tadris.fitness.recording.component.GpsComponent;
 import de.tadris.fitness.recording.event.LocationChangeEvent;
 import de.tadris.fitness.recording.event.PressureChangeEvent;
 import de.tadris.fitness.recording.event.WorkoutGPSStateChanged;
@@ -183,8 +185,8 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
     }
 
     @Override
-    public WorkoutType.RecordingType getRecordingType() {
-        return WorkoutType.RecordingType.GPS;
+    public RecordingType getRecordingType() {
+        return RecordingType.GPS;
     }
 
     @Override
@@ -264,7 +266,7 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
                 // and if the time difference to the last sample is too small
                 synchronized (samples) {
                     GpsSample lastSample = samples.get(samples.size() - 1);
-                    distance = Math.abs(GpsRecorderService.locationToLatLong(location).sphericalDistance(lastSample.toLatLong()));
+                    distance = Math.abs(GpsComponent.locationToLatLong(location).sphericalDistance(lastSample.toLatLong()));
                     long timediff = Math.abs(lastSample.absoluteTime - location.getTime());
                     if (distance < workout.getWorkoutType(context).minDistance || timediff < 500) {
                         return;

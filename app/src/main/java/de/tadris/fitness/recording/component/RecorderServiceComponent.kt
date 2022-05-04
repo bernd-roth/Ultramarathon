@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -17,23 +17,16 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.recording.indoor.exercise
+package de.tadris.fitness.recording.component
 
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import de.tadris.fitness.recording.component.FitoTrackSensorOption
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
+import de.tadris.fitness.recording.RecorderService
 
-class StepRecognizer : ExerciseRecognizer() {
+interface RecorderServiceComponent {
 
-    override fun getActivatedSensors() = listOf(FitoTrackSensorOption.STEPS)
+    fun register(service: RecorderService)
 
-    @Subscribe
-    fun onSensorEvent(event: SensorEvent) {
-        if (event.sensor.type == Sensor.TYPE_STEP_DETECTOR) {
-            EventBus.getDefault().post(RepetitionRecognizedEvent(System.currentTimeMillis()))
-        }
-    }
+    fun unregister()
+
+    fun check(){ }
 
 }

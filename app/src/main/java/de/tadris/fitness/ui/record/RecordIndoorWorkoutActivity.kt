@@ -37,9 +37,7 @@ import de.tadris.fitness.Instance
 import de.tadris.fitness.R
 import de.tadris.fitness.data.IndoorSample
 import de.tadris.fitness.data.WorkoutType
-import de.tadris.fitness.recording.BaseRecorderService
 import de.tadris.fitness.recording.BaseWorkoutRecorder
-import de.tadris.fitness.recording.indoor.IndoorRecorderService
 import de.tadris.fitness.recording.indoor.IndoorWorkoutRecorder
 import de.tadris.fitness.recording.indoor.exercise.ExerciseRecognizer
 import de.tadris.fitness.util.unit.UnitUtils
@@ -201,6 +199,8 @@ class RecordIndoorWorkoutActivity : RecordWorkoutActivity() {
         }
     }
 
+    override fun onListenerStart() { }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onRepetitionRecognized(event: ExerciseRecognizer.RepetitionRecognizedEvent) {
         refreshRepetitions()
@@ -268,9 +268,4 @@ class RecordIndoorWorkoutActivity : RecordWorkoutActivity() {
             resources.getQuantityString(activity.repeatingExerciseName, recorder.repetitionsTotal)
     }
 
-    public override fun getServiceClass(): Class<out BaseRecorderService?> {
-        return IndoorRecorderService::class.java
-    }
-
-    override fun onListenerStart() {}
 }

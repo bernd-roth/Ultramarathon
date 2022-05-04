@@ -32,6 +32,7 @@ import de.tadris.fitness.data.BaseWorkout;
 import de.tadris.fitness.data.IndoorSample;
 import de.tadris.fitness.data.IndoorWorkout;
 import de.tadris.fitness.data.IndoorWorkoutData;
+import de.tadris.fitness.data.RecordingType;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.recording.BaseWorkoutRecorder;
 import de.tadris.fitness.recording.indoor.exercise.ExerciseRecognizer;
@@ -196,7 +197,7 @@ public class IndoorWorkoutRecorder extends BaseWorkoutRecorder {
     }
 
     @Override
-    public WorkoutType.RecordingType getRecordingType() {
-        return WorkoutType.RecordingType.INDOOR;
+    public RecordingType getRecordingType() {
+        return RecordingType.INDOOR;
     }
 }

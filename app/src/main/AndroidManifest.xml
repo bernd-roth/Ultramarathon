@@ -85,7 +85,7 @@
                 <data android:mimeType="application/*" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.settings.ConfigureExportTargetsActivity"></activity>
+        <activity android:name=".ui.settings.ConfigureExportTargetsActivity" />
         <activity android:name=".ui.settings.DownloadMapsActivity" />
         <activity android:name=".ui.record.RecordIndoorWorkoutActivity" />
         <activity android:name=".ui.settings.EditWorkoutTypeActivity" />
@@ -141,10 +141,9 @@
         </provider>
 
         <service
-            android:name=".recording.gps.GpsRecorderService"
+            android:name=".recording.RecorderService"
             android:foregroundServiceType="location" />
 
-        <service android:name=".recording.indoor.IndoorRecorderService" />
     </application>
 
     <queries>

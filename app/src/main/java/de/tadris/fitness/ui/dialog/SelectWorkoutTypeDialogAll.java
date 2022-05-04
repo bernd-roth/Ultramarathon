@@ -21,6 +21,7 @@ package de.tadris.fitness.ui.dialog;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.WorkoutTypeFilter;
+import de.tadris.fitness.data.RecordingType;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.ui.FitoTrackActivity;
 
@@ -30,7 +31,7 @@ public class SelectWorkoutTypeDialogAll extends SelectWorkoutTypeDialog {
         super(context, listener);
         this.options.add(0, new WorkoutType(WorkoutTypeFilter.ID_ALL,
                 context.getString(R.string.workoutTypeAll), 0,
-                context.getThemePrimaryColor(), "list", 0, WorkoutType.RecordingType.GPS.id));
+                context.getThemePrimaryColor(), "list", 0, RecordingType.GPS.id));
     }
 
 }

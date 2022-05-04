@@ -26,6 +26,7 @@ import android.preference.PreferenceManager;
 import java.util.Calendar;
 
 import de.tadris.fitness.BuildConfig;
+import de.tadris.fitness.data.RecordingType;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.model.AutoStartWorkout;
 
@@ -161,7 +162,7 @@ public class UserPreferences {
     @Deprecated()
     public String getIdOfDisplayedInformation(String mode, int slot) {
         String defValue = "";
-        if (WorkoutType.RecordingType.INDOOR.id.equals(mode)) {
+        if (RecordingType.INDOOR.id.equals(mode)) {
             switch (slot) {
                 case 0:
                     defValue = "avg_frequency";

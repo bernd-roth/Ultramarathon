@@ -71,13 +71,15 @@ import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.IntervalSet;
+import de.tadris.fitness.data.RecordingType;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.model.AutoStartWorkout;
-import de.tadris.fitness.recording.BaseRecorderService;
+import de.tadris.fitness.recording.RecorderService;
 import de.tadris.fitness.recording.announcement.TTSController;
 import de.tadris.fitness.recording.autostart.AutoStartAnnouncements;
 import de.tadris.fitness.recording.autostart.AutoStartSoundFeedback;
 import de.tadris.fitness.recording.autostart.AutoStartVibratorFeedback;
+import de.tadris.fitness.recording.component.AnnouncementComponent;
 import de.tadris.fitness.recording.event.HeartRateConnectionChangeEvent;
 import de.tadris.fitness.recording.event.TTSReadyEvent;
 import de.tadris.fitness.recording.event.WorkoutAutoStopEvent;
@@ -221,7 +223,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
 
         updateStartButton(false, R.string.cannotStart, null);
 
-        informationDisplay = new InformationDisplay(WorkoutType.RecordingType.findById(activity.recordingType), this);
+        informationDisplay = new InformationDisplay(RecordingType.findById(activity.recordingType), this);
 
         infoViews[0] = new InfoViewHolder(0, this, findViewById(R.id.recordInfo1Title), findViewById(R.id.recordInfo1Value));
         infoViews[1] = new InfoViewHolder(1, this, findViewById(R.id.recordInfo2Title), findViewById(R.id.recordInfo2Value));
@@ -521,21 +523,20 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
         return false;
     }
 
-    abstract Class<? extends BaseRecorderService> getServiceClass();
-
     protected void restartListener() {
         stopListener();
         startListener();
     }
 
     protected void startListener() {
-        if (!isServiceRunning(getServiceClass())) {
-            Intent locationListener = new Intent(getApplicationContext(), getServiceClass());
+        if (!isServiceRunning(RecorderService.class)) {
+            Intent locationListener = new Intent(getApplicationContext(), RecorderService.class);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 startForegroundService(locationListener);
             } else {
                 startService(locationListener);
             }
+            onListenerStart();
         } else {
             Log.d(TAG, "Listener Already Running");
         }
@@ -544,16 +545,16 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
     protected abstract void onListenerStart();
 
     protected void stopListener() {
-        if (isServiceRunning(getServiceClass())) {
-            Intent locationListener = new Intent(getApplicationContext(), getServiceClass());
+        if (isServiceRunning(RecorderService.class)) {
+            Intent locationListener = new Intent(getApplicationContext(), RecorderService.class);
             stopService(locationListener);
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onHeartRateConnectionChange(HeartRateConnectionChangeEvent e) {
-        hrStatusView.setImageResource(e.state.iconRes);
-        hrStatusView.setColorFilter(getResources().getColor(e.state.colorRes));
+        hrStatusView.setImageResource(e.state.getIconRes());
+        hrStatusView.setColorFilter(getResources().getColor(e.state.getColorRes()));
     }
 
     @Override
@@ -952,7 +953,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
     @Subscribe
     public void onVoiceAnnouncementIsReady(TTSReadyEvent e) {
         // actually, we only care for the RecorderService's TTS controller here
-        if (e.id.equals(BaseRecorderService.TTS_CONTROLLER_ID)) {
+        if (e.id.equals(AnnouncementComponent.TTS_CONTROLLER_ID)) {
             this.voiceFeedbackAvailable = e.ttsAvailable;
             invalidateOptionsMenu();
         }
@@ -963,7 +964,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
         if (instance.recorder.getState() == GpsWorkoutRecorder.RecordingState.IDLE || isLongClick) {
             new SelectWorkoutInformationDialog(
                     this,
-                    WorkoutType.RecordingType.findById(activity.recordingType),
+                    RecordingType.findById(activity.recordingType),
                     slot,
                     this)
                     .show();
@@ -977,7 +978,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
 
     @Override
     public void onSelectWorkoutInformation(int slot, RecordingInformation information) {
-        String mode = WorkoutType.RecordingType.findById(activity.recordingType).id;
+        String mode = RecordingType.findById(activity.recordingType).id;
         Instance.getInstance(this).userPreferences.setIdOfDisplayedInformation(mode, slot, information.getId());
         this.updateDescription();
     }

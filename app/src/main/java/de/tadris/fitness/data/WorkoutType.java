@@ -38,12 +38,6 @@ import java.util.List;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
-import de.tadris.fitness.ui.record.RecordGpsWorkoutActivity;
-import de.tadris.fitness.ui.record.RecordIndoorWorkoutActivity;
-import de.tadris.fitness.ui.record.RecordWorkoutActivity;
-import de.tadris.fitness.ui.workout.ShowGpsWorkoutActivity;
-import de.tadris.fitness.ui.workout.ShowIndoorWorkoutActivity;
-import de.tadris.fitness.ui.workout.WorkoutActivity;
 import de.tadris.fitness.util.Icon;
 
 @Entity(tableName = "workout_type")
@@ -217,28 +211,4 @@ public class WorkoutType implements Serializable {
         };
     }
 
-    public enum RecordingType {
-
-        INDOOR("indoor", RecordIndoorWorkoutActivity.class, ShowIndoorWorkoutActivity.class),
-        GPS("gps", RecordGpsWorkoutActivity.class, ShowGpsWorkoutActivity.class);
-
-        public final String id;
-        public final Class<? extends RecordWorkoutActivity> recorderActivityClass;
-        public final Class<? extends WorkoutActivity> showDetailsActivityClass;
-
-        RecordingType(String id, Class<? extends RecordWorkoutActivity> recorderActivityClass, Class<? extends WorkoutActivity> showDetailsActivityClass) {
-            this.id = id;
-            this.recorderActivityClass = recorderActivityClass;
-            this.showDetailsActivityClass = showDetailsActivityClass;
-        }
-
-        public static RecordingType findById(String id) {
-            for (RecordingType type : values()) {
-                if (type.id.equals(id)) {
-                    return type;
-                }
-            }
-            return GPS;
-        }
-    }
 }

@@ -20,9 +20,9 @@
 package de.tadris.fitness.data.preferences
 
 import android.content.SharedPreferences
+import de.tadris.fitness.data.RecordingType
 import de.tadris.fitness.data.WorkoutType
 
-private const val TAG = "SharingScreenInfoPrefs"
 /**
  * Preferences within this class concern the Metrics (Information) shown on the Sharing
  * Activities
@@ -32,8 +32,8 @@ class SharingScreenInformationPreferences(private val prefs: SharedPreferences) 
     @Throws(UnknownModeException::class)
     fun getIdOfDisplayedInformation(mode: String, slot: Int): String {
         val defaultValueEnum = when (mode) {
-            WorkoutType.RecordingType.INDOOR.id -> this.getDefaultIndoorActivityId(slot)
-            WorkoutType.RecordingType.GPS.id -> this.getDefaultGpsActivityId(slot)
+            RecordingType.INDOOR.id -> this.getDefaultIndoorActivityId(slot)
+            RecordingType.GPS.id -> this.getDefaultGpsActivityId(slot)
             else -> throw UnknownModeException()
         }
 

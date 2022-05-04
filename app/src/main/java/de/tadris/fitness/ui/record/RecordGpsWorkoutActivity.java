@@ -61,11 +61,10 @@ import de.tadris.fitness.R;
 import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.map.MapManager;
-import de.tadris.fitness.recording.BaseRecorderService;
 import de.tadris.fitness.recording.BaseWorkoutRecorder;
+import de.tadris.fitness.recording.component.GpsComponent;
 import de.tadris.fitness.recording.event.LocationChangeEvent;
 import de.tadris.fitness.recording.event.WorkoutGPSStateChanged;
-import de.tadris.fitness.recording.gps.GpsRecorderService;
 import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
 
 public class RecordGpsWorkoutActivity extends RecordWorkoutActivity  {
@@ -338,11 +337,6 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity  {
     }
 
     @Override
-    Class<? extends BaseRecorderService> getServiceClass() {
-        return GpsRecorderService.class;
-    }
-
-    @Override
     protected void onListenerStart() {
         checkGpsStatus();
     }
@@ -367,7 +361,7 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity  {
 
     @Subscribe
     public void onLocationChange(LocationChangeEvent e) {
-        final LatLong latLongGps = GpsRecorderService.locationToLatLong(e.location);
+        final LatLong latLongGps = GpsComponent.locationToLatLong(e.location);
 
         if (isWorkoutRunning()) {
             recordedPositions.add(latLongGps);
