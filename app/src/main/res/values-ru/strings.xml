@@ -189,7 +189,7 @@
     <string name="ttsNotAvailable">Синтезатор речи недоступен</string>
     <string name="description">Описание</string>
     <string name="trackVisibilityPref">Видимость трека</string>
-    <string name="cut">Обрезать первые/последние 300 метров</string>
+    <string name="cut">Обрезать первые/последние 300 м</string>
     <string name="actionUploadToOSM">Загрузить в OSM</string>
     <string name="waiting_gps">Ожидание GPS</string>
     <string name="mapStyle">Стиль карты</string>
@@ -293,8 +293,8 @@
     <string name="workoutTypeEditId">Идентификатор</string>
     <string name="workoutTypeEditIdErrorCharacters">Допустимые символы: a–z, A–Z, 0–9, _, -</string>
     <string name="hintManageWorkoutTypes">Нажмите на плюс, чтобы добавить пользовательские типы тренировок.</string>
-    <string name="resumeWorkoutConfirmation">Вы действительно хотите возобновить эту тренировку\? Это также добавит паузу с момента остановки тренировки.</string>
-    <string name="prefShowOnLockScreenSummary">Показывать информацию о тренировке, даже если телефон заблокирован.</string>
+    <string name="resumeWorkoutConfirmation">Возобновить тренировку\? Будет добавлена пауза с того момента, когда тренировка была остановлена.</string>
+    <string name="prefShowOnLockScreenSummary">Показывать информацию о тренировке, даже если устройство заблокировано.</string>
     <string name="prefShowOnLockScreenTitle">Видимый на экране блокировки</string>
     <string name="notimeout">Нет тайм-аута</string>
     <string name="workoutTypeAdd">Добавить</string>
@@ -302,7 +302,7 @@
     <string name="ttsMinuteSecondCountdownAnnouncement"> <xliff:g example="1 minute" id="mins">%1$s</xliff:g> и <xliff:g example="7 seconds" id="secs">%2$s</xliff:g> до старта </string>
     <string name="nfcStartTitle">Сканирование для запуска</string>
     <string name="noAutoStartDelay">Нет</string>
-    <string name="overwriteMapConfirmation">Вы уверены что хотите перезаписать существующий файл карты %s\?</string>
+    <string name="overwriteMapConfirmation">Переписать существующий файл карты %s\?</string>
     <string name="pref_auto_start_mode_unknown">Неизвестный режим (пожалуйста, не выбирайте)</string>
     <string name="nfcStartSummary">Если функция активирована, вы сможете начинать и прекращать тренировки, сканируя метку NFC</string>
     <string name="manageAutoStartModeSummary">Изменить режим автоматического запуска тренировки</string>
@@ -355,7 +355,7 @@
     <string name="downloadSuccess">Скачано</string>
     <string name="cancelDownloadConfirmation">Вы хотите отменить текущее скачивание\?</string>
     <string name="actionCancelDownload">Отменить скачивание</string>
-    <string name="downloadMapConfirmation">Вы хотите скачать файл карты %s\?</string>
+    <string name="downloadMapConfirmation">Скачать файл карты %s\?</string>
     <string name="actionDownloadMap">Скачать карту</string>
     <string name="downloadMapsSpecifyDirectory">Пожалуйста, сначала укажите каталог для хранения автономных карт</string>
     <string name="downloadMapsTitle">Скачать карты</string>
@@ -436,9 +436,36 @@
     <string name="workoutSets">Наборы</string>
     <string name="workoutRecordingTypeGps">GPS тренировки</string>
     <plurals name="importedWorkouts">
-        <item quantity="one">Импортировано одна тренировка</item>
-        <item quantity="few">Импортировано %d тренировки</item>
+        <item quantity="one">Импортирована одна тренировка</item>
+        <item quantity="few">Импортированы %d тренировки</item>
         <item quantity="many">Импортировано %d тренировок</item>
         <item quantity="other">Импортировано %d тренировок</item>
     </plurals>
+    <string name="hidden">Скрытый</string>
+    <string name="identifiable_visibility">Идентифицируемый</string>
+    <string name="mapnik_default_osm_mapstyle">Mapnik
+\nСтиль карты OSM по умолчанию</string>
+    <string name="only_on_headphones_mode">Только в наушниках</string>
+    <string name="never_track_style">Никогда</string>
+    <string name="monday">Понедельник</string>
+    <string name="system_default">Системная по умолчанию</string>
+    <string name="sunday">Воскресенье</string>
+    <string name="thursday">Четверг</string>
+    <string name="wednesday">Среда</string>
+    <string name="friday">Пятница</string>
+    <string name="showWorkoutZoomControlsSummary">Включить управление масштабированием и панорамированием на карте во время записи GPS-тренировок</string>
+    <string name="showWorkoutZoomControlsTitle">Масштабирование и панорамирование</string>
+    <string name="trackable_visibility">Отслеживаемый</string>
+    <string name="private_visibility">Личный</string>
+    <string name="kcal_unit">ккал</string>
+    <string name="joule_unit">Джоуль</string>
+    <string name="always_mode">Всегда</string>
+    <string name="light_theme">Светлый</string>
+    <string name="dark_theme">Темный</string>
+    <string name="offline_local_map_file_with_local_render_theme">Офлайн
+\nФайл локальной карты с локально отображаемой темой</string>
+    <string name="tuesday">Вторник</string>
+    <string name="saturday">Суббота</string>
+    <string name="unitHeartRateSensorBattery">%</string>
+    <string name="always_track_style">Всегда</string>
 </resources>
