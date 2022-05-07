@@ -403,17 +403,22 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
             GpsSample firstSample = lastSample;
             for (int i = samples.size() - 1; i >= 0; i--) { // Go backwards
                 GpsSample currentSample = samples.get(i);
-                if (currentSample.relativeTime > minTime) {
-                    distance += currentSample.toLatLong().sphericalDistance(lastSample.toLatLong());
-                } else {
+                if (lastResume != 0 && currentSample.absoluteTime < lastResume) {
+                    break; // We're past the last time we resumed, avoid large jumps during pauses
+                } else if (currentSample.relativeTime <= minTime) {
                     break; // We can exit the loop now as every other sample was recorded earlier
                 }
+
+                distance += currentSample.toLatLong().sphericalDistance(lastSample.toLatLong());
                 lastSample = currentSample;
             }
             // Keep last speed even when losing GPS signal
             // long timeDiff = lastGpsTime - lastSample.absoluteTime;
             // long timeDiff = currentTime - lastSample.relativeTime;
             long timeDiff = firstSample.relativeTime - lastSample.relativeTime;
+            if (timeDiff == 0) {
+                return 0;
+            }
             return distance / (timeDiff / 1000d);
         }
     }
