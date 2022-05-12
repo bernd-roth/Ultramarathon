@@ -25,7 +25,12 @@ import android.util.Log;
 
 import androidx.core.content.FileProvider;
 
+import org.apache.commons.io.IOUtils;
+
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Objects;
 
 import de.tadris.fitness.BuildConfig;
@@ -59,6 +64,36 @@ public class DataManager {
 
     public static Uri provide(Context context, File file) {
         return FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".fileprovider", file);
+    }
+
+    public static void rotateFile(File oldFile, long bytes) throws IOException {
+        if (!oldFile.exists()) return; // no file to rotate
+        long cutoffBytes = oldFile.length() - bytes;
+        if (cutoffBytes <= 0) return; // no rotation needed
+
+        Log.d("DataManager", "Rotating log file, cutting off " + cutoffBytes + " bytes.");
+
+        // create tmp file
+        File newFile = new File(oldFile.getParentFile(), oldFile.getName() + ".rotated");
+        newFile.createNewFile();
+
+        FileInputStream input = new FileInputStream(oldFile);
+        FileOutputStream output = new FileOutputStream(newFile);
+
+        // skip cutoffBytes bytes
+        for (long l = 0; l < cutoffBytes; l++) {
+            input.read(); // skip bytes
+        }
+
+        // copy the rest into the new file
+        IOUtils.copy(input, output);
+        input.close();
+        output.close();
+
+        oldFile.delete();
+        newFile.renameTo(oldFile);
+
+        Log.d("DataManager", "Rotation successful.");
     }
 
 }
