@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -510,4 +511,9 @@
     <string name="configureHttpPostRequest">Configure HTTP POST request</string>
     <string name="httpUrl">URL</string>
     <string name="enterValidUrl">Enter a valid HTTP URL</string>
+    <plurals name="satelliteCount">
+        <item quantity="zero">No satellites</item>
+        <item quantity="one">One satellite</item>
+        <item quantity="other">%d satellites</item>
+    </plurals>
 </resources>

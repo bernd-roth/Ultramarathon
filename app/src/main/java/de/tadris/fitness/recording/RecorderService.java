@@ -28,7 +28,6 @@ import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
-import android.util.Log;
 
 import androidx.core.app.NotificationManagerCompat;
 
@@ -42,9 +41,9 @@ import de.tadris.fitness.BuildConfig;
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.RecordingType;
-import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.recording.component.AnnouncementComponent;
 import de.tadris.fitness.recording.component.ExerciseRecognitionComponent;
+import de.tadris.fitness.recording.component.GnssComponent;
 import de.tadris.fitness.recording.component.GpsComponent;
 import de.tadris.fitness.recording.component.HeartRateComponent;
 import de.tadris.fitness.recording.component.PressureComponent;
@@ -205,9 +204,12 @@ public class RecorderService extends Service {
 
     private void startRelevantComponents(){
         RecordingType type = instance.recorder.getRecordingType();
-        if(type == RecordingType.GPS){
+        if(type == RecordingType.GPS) {
             startComponent(new GpsComponent());
             startComponent(new PressureComponent());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                startComponent(new GnssComponent());
+            }
         }else{
             startComponent(new ExerciseRecognitionComponent());
         }

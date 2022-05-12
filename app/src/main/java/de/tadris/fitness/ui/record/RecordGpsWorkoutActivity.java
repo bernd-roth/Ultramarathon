@@ -66,17 +66,20 @@ import de.tadris.fitness.recording.component.GpsComponent;
 import de.tadris.fitness.recording.event.LocationChangeEvent;
 import de.tadris.fitness.recording.event.WorkoutGPSStateChanged;
 import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
+import de.tadris.fitness.recording.gps.SatelliteCountEvent;
 
-public class RecordGpsWorkoutActivity extends RecordWorkoutActivity  {
+public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
 
     public static final int REQUEST_CODE_LOCATION_PERMISSION = 10;
     public static final int REQUEST_CODE_BACKGROUND_LOCATION_PERMISSION = 11;
 
     private MapView mapView;
+    private TextView gpsStatusView;
+    private TextView waitingSatellitesText;
+
     private NavigationModeHandler navigationModeHandler;
     private Polyline polyline;
     private FixedPixelCircle locationPoint;
-    private TextView gpsStatusView;
     private boolean gpsFound = false;
     private final List<LatLong> recordedPositions = new ArrayList<>();
 
@@ -130,6 +133,7 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity  {
         waitingForGPSOverlay = findViewById(R.id.recorderWaitingOverlay);
         waitingForGPSOverlay.setVisibility(View.VISIBLE);
         gpsStatusView = findViewById(R.id.recordGpsStatus);
+        waitingSatellitesText = findViewById(R.id.recorderWaitingSatellites);
 
         setupMapControls();
 
@@ -432,4 +436,10 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity  {
             hideWaitOverlay();
         }
     }
+
+    @Subscribe
+    public void onSatelliteCountChanged(SatelliteCountEvent e) {
+        waitingSatellitesText.setText(getResources().getQuantityString(R.plurals.satelliteCount, e.getCount(), e.getCount()));
+    }
+
 }
