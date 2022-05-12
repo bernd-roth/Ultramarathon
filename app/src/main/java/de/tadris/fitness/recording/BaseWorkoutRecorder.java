@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -20,7 +20,6 @@
 package de.tadris.fitness.recording;
 
 import android.content.Context;
-import android.util.Log;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -33,7 +32,6 @@ import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.data.RecordingType;
 import de.tadris.fitness.data.preferences.UserPreferences;
-import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.recording.component.HeartRateComponent;
 import de.tadris.fitness.recording.event.HRBatteryLevelChangeEvent;
 import de.tadris.fitness.recording.event.HRBatteryLevelConnectionEvent;
@@ -102,6 +100,7 @@ public abstract class BaseWorkoutRecorder {
      */
     public boolean handleWatchdog() {
         if (isActive()) {
+            WorkoutLogger.log("WorkoutRecorder", "handleWatchdog " + this.getState().toString() + " samples: " + getSampleSize() + " autoTout: " + autoTimeoutMs + " inst: " + this);
             onWatchdog();
             if (hasRecordedSomething()) {
                 long timeDiff = System.currentTimeMillis() - lastSampleTime;
@@ -158,7 +157,11 @@ public abstract class BaseWorkoutRecorder {
         EventBus.getDefault().unregister(this);
     }
 
-    public abstract boolean hasRecordedSomething();
+    public boolean hasRecordedSomething() {
+        return getSampleSize() > 2;
+    }
+
+    public abstract int getSampleSize();
 
     protected abstract void onWatchdog();
 

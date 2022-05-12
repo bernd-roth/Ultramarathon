@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -20,7 +20,6 @@
 package de.tadris.fitness.recording.indoor;
 
 import android.content.Context;
-import android.util.Log;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -61,8 +60,8 @@ public class IndoorWorkoutRecorder extends BaseWorkoutRecorder {
     }
 
     @Override
-    public boolean hasRecordedSomething() {
-        return samples.size() > 2;
+    public int getSampleSize() {
+        return samples.size();
     }
 
     @Override

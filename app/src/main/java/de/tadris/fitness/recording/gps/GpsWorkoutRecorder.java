@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -24,7 +24,6 @@ import android.graphics.Color;
 import android.hardware.SensorManager;
 import android.location.Location;
 import android.os.SystemClock;
-import android.util.Log;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -34,14 +33,13 @@ import org.mapsforge.core.model.LatLong;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.tadris.fitness.BuildConfig;
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.GpsWorkout;
 import de.tadris.fitness.data.GpsWorkoutData;
 import de.tadris.fitness.data.RecordingType;
-import de.tadris.fitness.data.preferences.UserPreferences;
 import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.data.preferences.UserPreferences;
 import de.tadris.fitness.recording.BaseWorkoutRecorder;
 import de.tadris.fitness.recording.component.GpsComponent;
 import de.tadris.fitness.recording.event.LocationChangeEvent;
@@ -177,8 +175,8 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
     }
 
     @Override
-    public boolean hasRecordedSomething() {
-        return samples.size() > 2;
+    public int getSampleSize() {
+        return samples.size();
     }
 
     @Override
@@ -193,9 +191,6 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
 
     @Override
     protected void onWatchdog() {
-        if (BuildConfig.DEBUG) {
-            WorkoutLogger.log("WorkoutRecorder", "handleWatchdog " + this.getState().toString() + " samples: " + samples.size() + " autoTout: " + autoTimeoutMs + " inst: " + this.toString());
-        }
         checkSignalState();
     }
 

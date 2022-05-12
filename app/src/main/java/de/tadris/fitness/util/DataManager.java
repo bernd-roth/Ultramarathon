@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -20,10 +20,15 @@
 package de.tadris.fitness.util;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
+
+import androidx.core.content.FileProvider;
 
 import java.io.File;
 import java.util.Objects;
+
+import de.tadris.fitness.BuildConfig;
 
 public class DataManager {
 
@@ -50,6 +55,10 @@ public class DataManager {
 
     public static String getSharedDirectory(Context context) {
         return context.getFilesDir().getAbsolutePath() + "/shared";
+    }
+
+    public static Uri provide(Context context, File file) {
+        return FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".fileprovider", file);
     }
 
 }

@@ -29,16 +29,15 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.FileProvider;
 import androidx.preference.Preference;
 
 import java.io.File;
 
-import de.tadris.fitness.BuildConfig;
 import de.tadris.fitness.R;
 import de.tadris.fitness.export.RestoreController;
 import de.tadris.fitness.ui.ShareFileActivity;
 import de.tadris.fitness.ui.dialog.ProgressDialogController;
+import de.tadris.fitness.util.DataManager;
 import de.tadris.fitness.util.autoexport.AutoExportPlanner;
 import de.tadris.fitness.util.autoexport.source.BackupExportSource;
 import de.tadris.fitness.util.autoexport.source.ExportSource;
@@ -102,7 +101,7 @@ public class BackupSettingsFragment extends FitoTrackSettingFragment {
         new Thread(() -> {
             try {
                 File file = new BackupExportSource(true).provideFile(requireContext(), (progress, action) -> mHandler.post(() -> dialogController.setProgress(progress, action)));
-                Uri uri = FileProvider.getUriForFile(requireContext(), BuildConfig.APPLICATION_ID + ".fileprovider", file);
+                Uri uri = DataManager.provide(requireContext(), file);
                 mHandler.post(() -> {
                     dialogController.cancel();
                     Intent intent = new Intent(getContext(), ShareFileActivity.class);

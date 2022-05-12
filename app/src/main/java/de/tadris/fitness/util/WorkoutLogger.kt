@@ -47,7 +47,7 @@ class WorkoutLogger(context: Context) {
     private val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
     private val currentDate get() = formatter.format(Date())
 
-    private val file = File(context.filesDir, "recorder.log")
+    val file = File(context.filesDir, "recorder.log")
     private val writer = FileOutputStream(file, true).bufferedWriter()
 
     fun info(tag: String, message: String){

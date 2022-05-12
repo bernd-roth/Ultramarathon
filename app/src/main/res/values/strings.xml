@@ -17,7 +17,9 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  -->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
     <string name="stop">Stop</string>
     <string name="delete">Delete</string>
@@ -214,6 +216,7 @@
     <string name="preferencesUserInterfaceTitle">User Interface</string>
     <string name="preferencesUserInterfaceSummary">Personalize the app</string>
     <string name="preferencesRecordingTitle">Recording</string>
+    <string name="preferencesDebugTitle">Debug</string>
     <string name="preferencesRecordingSummary">Manage the workout recording</string>
     <string name="preferencesBackupTitle">Database</string>
     <string name="preferencesBackupSummary">Backup/Restore your workout data</string>
@@ -511,6 +514,8 @@
     <string name="configureHttpPostRequest">Configure HTTP POST request</string>
     <string name="httpUrl">URL</string>
     <string name="enterValidUrl">Enter a valid HTTP URL</string>
+    <string name="debugShareLogsTitle">Share logs</string>
+    <string name="debugShareLogsSummary">Share logs that contain useful data to find bugs in the workout recorder</string>
     <plurals name="satelliteCount">
         <item quantity="zero">No satellites</item>
         <item quantity="one">One satellite</item>
