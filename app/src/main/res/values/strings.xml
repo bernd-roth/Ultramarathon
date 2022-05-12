@@ -515,7 +515,7 @@
     <string name="httpUrl">URL</string>
     <string name="enterValidUrl">Enter a valid HTTP URL</string>
     <string name="debugShareLogsTitle">Share logs</string>
-    <string name="debugShareLogsSummary">Share logs that contain useful data to find bugs in the workout recorder</string>
+    <string name="debugShareLogsSummary">Share logs that contain useful data to find bugs in the workout recorder. Usually it does not contain location data.</string>
     <plurals name="satelliteCount">
         <item quantity="zero">No satellites</item>
         <item quantity="one">One satellite</item>

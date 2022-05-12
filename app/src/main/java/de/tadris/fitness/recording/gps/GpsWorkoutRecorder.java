@@ -210,7 +210,7 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
             state = GpsState.SIGNAL_BAD;
             // lastGpsTime = System.currentTimeMillis();
         } else {
-            state = GpsState.SIGNAL_OKAY;
+            state = GpsState.SIGNAL_GOOD;
             // lastGpsTime = System.currentTimeMillis();
         }
 
@@ -426,7 +426,7 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
 
     public enum GpsState {
         SIGNAL_LOST(Color.RED),
-        SIGNAL_OKAY(Color.GREEN),
+        SIGNAL_GOOD(Color.GREEN),
         SIGNAL_BAD(Color.YELLOW);
 
         public final int color;

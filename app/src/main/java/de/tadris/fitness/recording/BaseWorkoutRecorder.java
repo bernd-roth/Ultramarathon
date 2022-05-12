@@ -80,7 +80,8 @@ public abstract class BaseWorkoutRecorder {
         this.autoTimeoutMs = prefs.getAutoTimeout() * AUTO_TIMEOUT_MULTIPLIER;
     }
 
-    public void start() {
+    public void start(String reason) {
+        WorkoutLogger.log("Recorder", "Called start, reason: " + reason);
         if (state == RecordingState.IDLE) {
             WorkoutLogger.log("Recorder", "Start");
             startTime = System.currentTimeMillis();
@@ -100,12 +101,13 @@ public abstract class BaseWorkoutRecorder {
      */
     public boolean handleWatchdog() {
         if (isActive()) {
-            WorkoutLogger.log("WorkoutRecorder", "handleWatchdog " + this.getState().toString() + " samples: " + getSampleSize() + " autoTout: " + autoTimeoutMs + " inst: " + this);
+            WorkoutLogger.log("WorkoutRecorder", "handleWatchdog " + this.getState().toString() + " samples: " + getSampleSize() + " instance: " + this);
             onWatchdog();
             if (hasRecordedSomething()) {
                 long timeDiff = System.currentTimeMillis() - lastSampleTime;
                 if (autoTimeoutMs > 0 && timeDiff > autoTimeoutMs) {
                     if (isActive()) {
+                        WorkoutLogger.log("WorkoutRecorder", "Auto timeout was set to: " + autoTimeoutMs);
                         stop("Auto timeout, timediff: " + timeDiff);
                         save();
                         EventBus.getDefault().post(new WorkoutAutoStopEvent());

@@ -320,7 +320,7 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
         if (requestCode == REQUEST_CODE_LOCATION_PERMISSION) {
             if (hasPermission()) {
                 // Restart LocationListener so it can retry to register for location updates now that we got permission
-                restartListener();
+                restartService();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && !hasBackgroundPermission()) {
                     showBackgroundLocationPermissionConsent();
                 }
@@ -422,8 +422,8 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
         }
 
         if (instance.recorder.getState() == GpsWorkoutRecorder.RecordingState.IDLE) {
-            if (state == GpsWorkoutRecorder.GpsState.SIGNAL_OKAY) {
-                updateStartButton(true, R.string.start, v -> start());
+            if (state == GpsWorkoutRecorder.GpsState.SIGNAL_GOOD) {
+                updateStartButton(true, R.string.start, v -> start("Start-Button pressed"));
             } else {
                 updateStartButton(false, R.string.cannotStart, null);
             }
