@@ -44,6 +44,16 @@ class DebugSettingsFragment : FitoTrackSettingFragment() {
             true
         }
 
+        findPreference<Preference>("debugSensors")?.setOnPreferenceClickListener {
+            startActivity(Intent(requireContext(), SensorDebugActivity::class.java))
+            true
+        }
+
+        findPreference<Preference>("debugPressure")?.setOnPreferenceClickListener {
+            startActivity(Intent(requireContext(), DebugPressureActivity::class.java))
+            true
+        }
+
     }
 
     private fun copyLogs() {

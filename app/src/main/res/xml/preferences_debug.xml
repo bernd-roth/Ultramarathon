@@ -25,4 +25,13 @@
         android:title="@string/debugShareLogsTitle"
         android:summary="@string/debugShareLogsSummary" />
 
+    <Preference
+        android:key="debugSensors"
+        android:title="@string/debugSensorsTitle"
+        android:summary="@string/debugSensorsSummary" />
+
+    <Preference
+        android:key="debugPressure"
+        android:title="@string/debugPressureSensor" />
+
 </PreferenceScreen>

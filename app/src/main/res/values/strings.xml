@@ -515,7 +515,12 @@
     <string name="httpUrl">URL</string>
     <string name="enterValidUrl">Enter a valid HTTP URL</string>
     <string name="debugShareLogsTitle">Share logs</string>
-    <string name="debugShareLogsSummary">Share logs that contain useful data to find bugs in the workout recorder. Usually it does not contain location data.</string>
+    <string name="debugShareLogsSummary">Share logs that contain useful data to find bugs in the workout recorder. Usually they do not contain location data.</string>
+    <string name="debugSensorsTitle">Debug sensors</string>
+    <string name="debugSensorsSummary">Collect sensor data which is written into the log file</string>
+    <string name="debugPressureSensor">Debug pressure sensor</string>
+    <string name="calibrating">Calibrating</string>
+    <string name="noSensorAvailable">No sensor available</string>
     <plurals name="satelliteCount">
         <item quantity="zero">No satellites</item>
         <item quantity="one">One satellite</item>

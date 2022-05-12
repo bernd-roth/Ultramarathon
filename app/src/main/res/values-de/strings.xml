@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -501,4 +502,12 @@
     <string name="showWorkoutZoomControlsSummary">Zoomen und Verschieben der Karte beim Aufnehmen von GPS-Workouts aktivieren</string>
     <string name="showWorkoutZoomControlsTitle">Zoomen und Verschieben</string>
     <string name="unitHeartRateSensorBattery">%</string>
+    <string name="preferencesDebugTitle">Debuggen</string>
+    <string name="debugShareLogsTitle">Protokolle teilen</string>
+    <string name="debugShareLogsSummary">Protokolle teilen, die nützliche Daten enthalten, um Bugs in der Workoutaufzeichnung zu finden. Normalerweise enthalten diese keine Standortdaten.</string>
+    <string name="debugSensorsTitle">Sensoren debuggen</string>
+    <string name="debugSensorsSummary">Sensordaten aufnehmen, welche in die Protokoll-Datei geschrieben werden</string>
+    <string name="debugPressureSensor">Drucksensor debuggen</string>
+    <string name="calibrating">Kalibrieren</string>
+    <string name="noSensorAvailable">Kein sensor verfügbar</string>
 </resources>

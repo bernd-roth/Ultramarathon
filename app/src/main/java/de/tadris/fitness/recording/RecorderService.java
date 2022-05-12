@@ -22,9 +22,7 @@ package de.tadris.fitness.recording;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
-import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
@@ -64,7 +62,6 @@ public class RecorderService extends Service {
 
     protected PowerManager.WakeLock wakeLock;
 
-    public SensorManager sensorManager = null;
     public Instance instance = null;
 
     private final List<RecorderServiceComponent> components = new ArrayList<>();
@@ -175,10 +172,6 @@ public class RecorderService extends Service {
         WorkoutLogger.log(TAG, "Device: " + Build.PRODUCT + " / " + Build.DEVICE + " / " + Build.MODEL);
 
         this.instance = Instance.getInstance(getBaseContext());
-
-        if (sensorManager == null) {
-            sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        }
 
         startRelevantComponents();
 

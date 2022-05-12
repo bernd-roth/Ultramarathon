@@ -62,7 +62,7 @@ class WorkoutLogger(context: Context) {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-            FileOutputStream(file, true).bufferedWriter()
+            writer = FileOutputStream(file, true).bufferedWriter()
         }
     }
 
