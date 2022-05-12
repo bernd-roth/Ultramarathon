@@ -48,7 +48,8 @@ class DebugSettingsFragment : FitoTrackSettingFragment() {
 
     private fun copyLogs() {
         thread {
-            val destination = File(DataManager.getSharedDirectory(context) + "/logs.txt")
+            val destination =
+                File(DataManager.getSharedDirectory(context) + "/fitotrack-logs-${System.currentTimeMillis()}.txt")
             FileUtils.copyFile(instance.logger.file, destination)
             handler.post {
                 shareLogs(destination)
