@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -16,32 +16,24 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package de.tadris.fitness.util.gpx;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class GpxTpxExtension {
-
-    @JacksonXmlProperty(localName = "gpxtpx:hr")
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = PositiveIntegerFilter.class)
-    private int hr;
-
-    public GpxTpxExtension() {
+/**
+ * A filter object, that will exclude negative values during jackson serialization.
+ * <p>
+ * Adapted from https://stackoverflow.com/a/56493905
+ */
+public class PositiveIntegerFilter {
+    public PositiveIntegerFilter() {
     }
 
-    public GpxTpxExtension(int hr) {
-        this.hr = hr;
-    }
-
-    public int getHr() {
-        return hr;
-    }
-
-    public void setHr(int hr) {
-        this.hr = hr;
+    @Override
+    public boolean equals(final Object other) {
+        // Trick required to be compliant with the Jackson Custom attribute processing
+        if (other == null) {
+            return true;
+        }
+        int value = (Integer) other;
+        return value < 0;
     }
 }
