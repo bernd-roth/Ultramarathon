@@ -505,4 +505,18 @@
     <string name="takeBackups7">Co tydzień</string>
     <string name="autoExportWorkoutExplanation">Po nagraniu nowego treningu plik GPX zostanie wyeksportowany tutaj:</string>
     <string name="takeBackups14">Co drugi tydzień</string>
+    <string name="preferencesDebugTitle">Debugowanie</string>
+    <string name="debugSensorsTitle">Debuguj czujniki</string>
+    <string name="debugSensorsSummary">Zbierz dane z czujników, które są zapisywane w pliku z logami</string>
+    <string name="debugPressureSensor">Debuguj czujnik ciśnienia</string>
+    <string name="calibrating">Kalibrowanie</string>
+    <string name="noSensorAvailable">Brak dostępnego czujnika</string>
+    <plurals name="satelliteCount">
+        <item quantity="one">1 satelita</item>
+        <item quantity="few">%d satelity</item>
+        <item quantity="many">%d satelitów</item>
+        <item quantity="other">%d satelitów</item>
+    </plurals>
+    <string name="debugShareLogsTitle">Udostępnij logi</string>
+    <string name="debugShareLogsSummary">Udostępnij logi zawierające przydatne dane, aby znaleźć błędy w rejestratorze treningów. Zwykle nie zawierają danych o lokalizacji</string>
 </resources>
