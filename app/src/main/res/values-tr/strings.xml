@@ -493,4 +493,16 @@
     <string name="enterValidUrl">Geçerli bir HTTP URL\'si girin</string>
     <string name="takeBackups2">Her iki günde bir</string>
     <string name="httpUrl">URL</string>
+    <string name="debugShareLogsTitle">Günlükleri paylaş</string>
+    <string name="debugShareLogsSummary">Egzersiz kaydedicideki hataları bulmak için faydalı veriler içeren günlükleri paylaşın. Genellikle konum verileri içermezler.</string>
+    <string name="debugSensorsTitle">Sensörlerde hata ayıklama</string>
+    <string name="debugSensorsSummary">Günlük dosyasına yazılan sensör verilerini toplayın</string>
+    <string name="debugPressureSensor">Basınç sensöründe hata ayıklama</string>
+    <string name="calibrating">Kalibrasyon</string>
+    <plurals name="satelliteCount">
+        <item quantity="one">Uydu yok</item>
+        <item quantity="other">Bir uydu</item>
+    </plurals>
+    <string name="noSensorAvailable">Sensör yok</string>
+    <string name="preferencesDebugTitle">Hata ayıklama</string>
 </resources>
