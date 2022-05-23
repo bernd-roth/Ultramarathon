@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -45,6 +45,7 @@ public class WorkoutType implements Serializable {
 
     public static final String WORKOUT_TYPE_ID_OTHER = "other";
     public static final String WORKOUT_TYPE_ID_RUNNING = "running";
+    public static final String WORKOUT_TYPE_ID_WALKING = "walking";
 
     @PrimaryKey
     @NonNull
@@ -138,7 +139,7 @@ public class WorkoutType implements Serializable {
                         context.getResources().getColor(R.color.colorPrimaryRunning),
                         Icon.RUNNING.name,
                         -1, RecordingType.GPS.id),
-                new WorkoutType("walking",
+                new WorkoutType(WORKOUT_TYPE_ID_WALKING,
                         context.getString(R.string.workoutTypeWalking),
                         5,
                         context.getResources().getColor(R.color.colorPrimaryRunning),
