@@ -493,4 +493,12 @@
     <string name="autoExportWorkoutsSummary">Exportar adestramentos recentemente gravados</string>
     <string name="takeBackups7">Cada semana</string>
     <string name="selectExportTarget">Elexir obxectivo da exportación</string>
+    <string name="preferencesDebugTitle">Depurar</string>
+    <string name="debugShareLogsSummary">Comparte o rexistro onde se atopan datos útiles para solucinar problemas ao gravar. Normalmente non contén datos de localización.</string>
+    <string name="debugSensorsTitle">Depurar sensores</string>
+    <string name="debugSensorsSummary">Recoller datos dos sensores que aparecen no ficheiro de rexistro</string>
+    <string name="debugPressureSensor">Depurar sensor de presión</string>
+    <string name="calibrating">Calibrando</string>
+    <string name="noSensorAvailable">Non hai sensor</string>
+    <string name="debugShareLogsTitle">Compartir rexistro</string>
 </resources>
