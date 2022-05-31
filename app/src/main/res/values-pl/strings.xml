@@ -512,6 +512,7 @@
     <string name="calibrating">Kalibrowanie</string>
     <string name="noSensorAvailable">Brak dostępnego czujnika</string>
     <plurals name="satelliteCount">
+        <item quantity="zero">Brak satelitów</item>
         <item quantity="one">1 satelita</item>
         <item quantity="few">%d satelity</item>
         <item quantity="many">%d satelitów</item>
