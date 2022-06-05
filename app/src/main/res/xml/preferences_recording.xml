@@ -68,6 +68,12 @@
         android:summary="@string/showWorkoutZoomControlsSummary"
         android:title="@string/showWorkoutZoomControlsTitle" />
 
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="zoomWithVolumeButtons"
+        android:summary="@string/zoomWithVolumeButtonsSummary"
+        android:title="@string/zoomWithVolumeButtonsTitle" />
+
     <PreferenceCategory android:title="@string/preferenceCategoryVoiceFeedback">
 
         <Preference
