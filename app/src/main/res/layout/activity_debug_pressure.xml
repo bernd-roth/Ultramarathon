@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-            android:textColor="@color/textLighterBlack" />
+            android:textColor="?android:textColorPrimary" />
 
         <TextView
             android:id="@+id/debugPressureHeightDiff"
@@ -44,6 +44,6 @@
             android:textAlignment="center"
             android:text="@string/noSensorAvailable"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            android:textColor="@color/textLighterBlack" />
+            android:textColor="?android:textColorPrimary" />
     </LinearLayout>
 </FrameLayout>
