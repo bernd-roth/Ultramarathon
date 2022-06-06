@@ -237,6 +237,10 @@ public class UserPreferences {
         return preferences.getBoolean("showWorkoutZoomControls", true);
     }
 
+    public boolean getZoomWithVolumeButtons() {
+        return preferences.getBoolean("zoomWithVolumeButtons", true);
+    }
+
     public int getAutoBackupIntervalHours() {
         return Integer.parseInt(preferences.getString("autoBackupInterval", "168"));
     }
