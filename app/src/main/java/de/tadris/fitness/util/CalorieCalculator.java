@@ -172,6 +172,7 @@ public class CalorieCalculator {
 
     private void setupMETFunctions() {
         final SpeedToMET[] lookupWalking = new SpeedToMET[]{
+                new SpeedToMET(2.0, 2.8),
                 new SpeedToMET(2.5, 3.0),
                 new SpeedToMET(3.0, 3.5),
                 new SpeedToMET(3.5, 4.3),
