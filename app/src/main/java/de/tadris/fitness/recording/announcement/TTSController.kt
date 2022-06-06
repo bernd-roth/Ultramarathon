@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -18,21 +18,22 @@
  */
 package de.tadris.fitness.recording.announcement
 
+import android.Manifest
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothHeadset
 import android.content.Context
+import android.content.pm.PackageManager
 import android.media.AudioManager
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
-import android.util.Log
+import androidx.core.app.ActivityCompat
 import de.tadris.fitness.recording.BaseWorkoutRecorder
 import de.tadris.fitness.recording.event.TTSReadyEvent
 import de.tadris.fitness.util.WorkoutLogger
 import org.greenrobot.eventbus.EventBus
 import java.util.*
-import kotlin.collections.HashSet
 
-class TTSController(context: Context, val id: String = DEFAULT_TTS_CONTROLLER_ID) {
+class TTSController(private val context: Context, val id: String = DEFAULT_TTS_CONTROLLER_ID) {
 
     private val textToSpeech = TextToSpeech(context) { status: Int -> ttsReady(status) }
 
@@ -83,13 +84,19 @@ class TTSController(context: Context, val id: String = DEFAULT_TTS_CONTROLLER_ID
         queuedUtterances.add(utteranceId)
     }
 
-    private val isHeadsetOn: Boolean
-        get() {
+    private val isHeadsetOn get() = audioManager.isWiredHeadsetOn || bluetoothHeadsetConnected
+
+    private val bluetoothHeadsetConnected
+        get(): Boolean {
             val mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-            val bluetoothHeadsetConnected =
+            return if (ActivityCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.BLUETOOTH_CONNECT
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
                 (mBluetoothAdapter != null && mBluetoothAdapter.isEnabled
                         && mBluetoothAdapter.getProfileConnectionState(BluetoothHeadset.HEADSET) == BluetoothHeadset.STATE_CONNECTED)
-            return audioManager.isWiredHeadsetOn || bluetoothHeadsetConnected
+            } else false
         }
 
     /**
