@@ -511,7 +511,7 @@
     <string name="debugSensorsSummary">Sensordaten aufnehmen, welche in die Protokoll-Datei geschrieben werden</string>
     <string name="debugPressureSensor">Drucksensor debuggen</string>
     <string name="calibrating">Kalibrieren</string>
-    <string name="noSensorAvailable">Kein sensor verfügbar</string>
+    <string name="noSensorAvailable">Kein Sensor verfügbar</string>
     <string name="zoomWithVolumeButtonsSummary">Lautstärkeregler kontrollieren den Kartenzoom</string>
     <string name="zoomWithVolumeButtonsTitle">Mit Lautstärkeknöpfen zoomen</string>
 </resources>

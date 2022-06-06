@@ -25,16 +25,16 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import de.tadris.fitness.Instance
 import de.tadris.fitness.R
 import de.tadris.fitness.recording.component.ExerciseRecognitionComponent
 import de.tadris.fitness.recording.component.FitoTrackSensorOption
+import de.tadris.fitness.ui.FitoTrackActivity
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class SensorDebugActivity : AppCompatActivity() {
+class SensorDebugActivity : FitoTrackActivity() {
 
     private lateinit var spinner: Spinner
     private lateinit var startStopButton: Button
@@ -51,6 +51,8 @@ class SensorDebugActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sensor_debug)
         setTitle(R.string.debugSensorsTitle)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         spinner = findViewById(R.id.debugSensorsSelection)
         startStopButton = findViewById(R.id.debugSensorsStartButton)
