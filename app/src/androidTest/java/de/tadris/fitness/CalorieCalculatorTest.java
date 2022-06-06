@@ -41,7 +41,7 @@ public class CalorieCalculatorTest {
         workout.avgSpeed = 2.7d;
         workout.workoutTypeId = "running";
         workout.duration = 1000L * 60 * 10;
-        int calorie = CalorieCalculator.calculateCalories(context, workout);
+        int calorie = CalorieCalculator.instance().calculateCalories(context, workout);
         System.out.println("Calories: " + calorie);
         Assert.assertEquals(130, calorie, 50);
     }

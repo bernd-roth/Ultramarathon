@@ -98,7 +98,7 @@ class IndoorWorkoutSaver(private val context: Context, workoutData: IndoorWorkou
     }
 
     private fun setCalories() {
-        workout.calorie = CalorieCalculator.calculateCalories(context, workout)
+        workout.calorie = CalorieCalculator.instance().calculateCalories(context, workout)
     }
 
     private fun insertWorkoutAndSamples() {

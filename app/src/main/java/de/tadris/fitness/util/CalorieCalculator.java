@@ -28,13 +28,22 @@ import de.tadris.fitness.data.IndoorWorkout;
 
 public class CalorieCalculator {
 
+    static private final CalorieCalculator thisInstance = new CalorieCalculator();
+
+    private CalorieCalculator(){
+    }
+
+    public static CalorieCalculator instance() {
+        return CalorieCalculator.thisInstance;
+    }
+
     /**
      * workoutType, duration, ascent and avgSpeed of workout have to be set
      *
      * @param workout the workout
      * @return calories burned
      */
-    public static int calculateCalories(Context context, BaseWorkout workout) {
+    public int calculateCalories(Context context, BaseWorkout workout) {
         double weight = Instance.getInstance(context).userPreferences.getUserWeight();
         double mins = (double) (workout.duration / 1000) / 60;
         int ascent = 0;
@@ -58,7 +67,7 @@ public class CalorieCalculator {
      *
      * @return MET
      */
-    private static double getMET(Context context, BaseWorkout workout) {
+    private double getMET(Context context, BaseWorkout workout) {
         double speedInKmh = 0;
 
         if (workout instanceof GpsWorkout) {
