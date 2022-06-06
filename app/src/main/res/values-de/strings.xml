@@ -17,7 +17,9 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  -->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
     <string name="backup">Sichern</string>
     <string name="cancel">Abbrechen</string>
@@ -510,4 +512,7 @@
     <string name="debugPressureSensor">Drucksensor debuggen</string>
     <string name="calibrating">Kalibrieren</string>
     <string name="noSensorAvailable">Kein sensor verfügbar</string>
+    <string name="zoomWithVolumeButtonsSummary">Lautstärkeregler kontrollieren den Kartenzoom</string>
+    <string name="zoomWithVolumeButtonsSummary">L</string>
+    <string name="zoomWithVolumeButtonsTitle">Mit Lautstärkeknöpfen zoomen</string>
 </resources>
