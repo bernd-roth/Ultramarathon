@@ -190,7 +190,7 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         final boolean zoomWithVolume = instance.userPreferences.getZoomWithVolumeButtons();
         if (!zoomWithVolume) {
-            return false;
+            return super.onKeyDown(keyCode, event);
         }
 
         if (keyCode == KeyEvent.KEYCODE_VOLUME_UP && mapControls != null) {
