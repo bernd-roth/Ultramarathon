@@ -189,7 +189,6 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         final boolean zoomWithVolume = instance.userPreferences.getZoomWithVolumeButtons();
-
         if (!zoomWithVolume) {
             return false;
         }
@@ -202,7 +201,7 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
             return true;
         }
 
-       return false;
+        return super.onKeyDown(keyCode, event);
     }
 
     private void hideWaitOverlay() {
