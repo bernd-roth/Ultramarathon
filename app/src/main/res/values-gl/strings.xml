@@ -501,4 +501,8 @@
     <string name="calibrating">Calibrando</string>
     <string name="noSensorAvailable">Non hai sensor</string>
     <string name="debugShareLogsTitle">Compartir rexistro</string>
+    <plurals name="satelliteCount">
+        <item quantity="one">Sen satélites</item>
+        <item quantity="other">Un satélite</item>
+    </plurals>
 </resources>
