@@ -505,4 +505,6 @@
     </plurals>
     <string name="noSensorAvailable">Sensör yok</string>
     <string name="preferencesDebugTitle">Hata ayıklama</string>
+    <string name="zoomWithVolumeButtonsTitle">Ses düğmeleriyle yakınlaştır</string>
+    <string name="zoomWithVolumeButtonsSummary">Ses açma ve kısma denetimleri ile yakınlaştır ve uzaklaştır</string>
 </resources>
