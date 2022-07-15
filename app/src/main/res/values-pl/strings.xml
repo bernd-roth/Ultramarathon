@@ -340,7 +340,7 @@
         <item quantity="other"><xliff:g example="12" id="secs">%1$d</xliff:g> sekund</item>
     </plurals>
     <string name="launchError">Nie udało się uruchomić aplikacji</string>
-    <string name="editStartEndHelp">Wybierz pozycję na mapie albo diagramie. Następnie naciśnij jedną ze strzałek, aby wybrać nowy punkt początkowy albo końcowy. Gdy skończysz, kliknij ikonę zapisu w celu zastosowania zmian.</string>
+    <string name="editStartEndHelp">Wybierz pozycję na mapie albo diagramie. Następnie naciśnij jedną ze strzałek, aby wybrać nowy punkt początkowy albo końcowy. Gdy skończysz, naciśnij ikonę zapisu, aby zastosować zmiany.</string>
     <string name="actionApply">Zastosuj</string>
     <string name="moveEndOfWorkout">Wytnij koniec</string>
     <string name="moveStartOfWorkout">Wytnij początek</string>
@@ -520,4 +520,6 @@
     </plurals>
     <string name="debugShareLogsTitle">Udostępnij logi</string>
     <string name="debugShareLogsSummary">Udostępnij logi zawierające przydatne dane, aby znaleźć błędy w rejestratorze treningów. Zwykle nie zawierają danych o lokalizacji</string>
+    <string name="zoomWithVolumeButtonsSummary">Zwiększaj i zmniejszaj głośność, aby kontrolować powiększanie i pomniejszanie</string>
+    <string name="zoomWithVolumeButtonsTitle">Powiększanie za pomocą przycisków głośności</string>
 </resources>
