@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -17,9 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
     <string name="backup">Sichern</string>
     <string name="cancel">Abbrechen</string>
@@ -144,7 +141,8 @@
 \nStandard OSM Kartenstil</string>
     <string name="humanitarian_clean_map_but_sometimes_not_available">Humanitarian
 \nSchöne Karte, aber nicht immer verfügbar</string>
-    <string name="offline_local_map_file_with_local_render_theme">Offline\nLokale Kartendatei mit lokalem Renderthema</string>
+    <string name="offline_local_map_file_with_local_render_theme">Offline
+\nLokale Kartendatei mit lokalem Renderthema</string>
     <string name="identifiable_visibility">Identifizierbar</string>
     <string name="trackable_visibility">Verfolgbar</string>
     <string name="private_visibility">Privat</string>
@@ -354,7 +352,7 @@
     <string name="workoutGPXExportTitle">Workout GPX-Sicherungen</string>
     <string name="unknown">Unbekannt</string>
     <string name="hintConfigureExportTargets">Füge Ziele hinzu, wohin die Dateien exportiert werden sollen.</string>
-    <string name="deleteExportTargetConfirmation">Möchtest du dieses Export-Ziel wirklich entfernen?</string>
+    <string name="deleteExportTargetConfirmation">Dieses Export-Ziel wirklich entfernen\?</string>
     <string name="intervalAutoStartDelayTraining">Workout Auto-Start Verzögerung</string>
     <string name="manageAutoStartDelaySummary">Wähle einen Countdown zum automatischen Starten deines Workouts</string>
     <string name="pref_auto_start_delay_title">Auto-Start Countdown</string>
@@ -473,7 +471,7 @@
     <string name="autoExportBackupTitle">Automatische App-Backups</string>
     <string name="autoExportBackupSummary">Backups automatisch exportieren</string>
     <string name="autoExportBackupExplanation">Im gewählten Intervall wird ein Backup hierher exportiert:</string>
-    <string name="autoExportWorkoutExplanation">Nachdem ein neues Workout aufgenommen wurde, wird ein GPS-export hierher exportiert:</string>
+    <string name="autoExportWorkoutExplanation">Nachdem ein neues Workout aufgenommen wurde, wird ein GPS-Export hier gespeichert:</string>
     <string name="exportIntervalTitle">Backup-Intervall</string>
     <string name="takeBackups1">Jeden Tag</string>
     <string name="takeBackups2">Jeden zweiten Tag</string>
