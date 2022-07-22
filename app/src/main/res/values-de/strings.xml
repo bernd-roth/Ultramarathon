@@ -514,4 +514,9 @@
     <string name="noSensorAvailable">Kein Sensor verfügbar</string>
     <string name="zoomWithVolumeButtonsSummary">Lautstärkeregler kontrollieren den Kartenzoom</string>
     <string name="zoomWithVolumeButtonsTitle">Mit Lautstärkeknöpfen zoomen</string>
+    <plurals name="satelliteCount">
+        <item quantity="zero">Keine Satelliten</item>
+        <item quantity="one">Ein Satellit</item>
+        <item quantity="other">%d Satelliten</item>
+    </plurals>
 </resources>
