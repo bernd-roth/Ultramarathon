@@ -42,6 +42,15 @@ import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
 import de.tadris.fitness.ui.record.RecordWorkoutActivity;
 import de.tadris.fitness.util.WorkoutLogger;
 
+/**
+ * This class/subclasses is responsible for managing the workout data during a workout recording
+ * - receive new samples
+ * - save them to the database
+ * - provide useful data like current speed, distance, duration, etc
+ * - manage the workout state
+ * <p>
+ * It gets locations, pressure data, etc. from the RecorderService via the EventBus
+ */
 public abstract class BaseWorkoutRecorder {
 
     protected static final int PAUSE_TIME = 10_000; // 10 Seconds

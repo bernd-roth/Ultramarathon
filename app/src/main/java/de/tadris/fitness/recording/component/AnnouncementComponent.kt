@@ -29,6 +29,9 @@ import de.tadris.fitness.recording.information.GPSStatus
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
+/**
+ * Voice announcements and interval sets
+ */
 class AnnouncementComponent : RecorderServiceComponent {
 
     companion object {

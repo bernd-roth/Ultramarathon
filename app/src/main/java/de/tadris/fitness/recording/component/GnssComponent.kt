@@ -29,6 +29,9 @@ import de.tadris.fitness.recording.gps.SatelliteCountEvent
 import de.tadris.fitness.util.WorkoutLogger
 import org.greenrobot.eventbus.EventBus
 
+/**
+ * Reads and publishes GNSS data
+ */
 @RequiresApi(Build.VERSION_CODES.N)
 class GnssComponent : RecorderServiceComponent, GnssStatus.Callback() {
 

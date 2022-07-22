@@ -30,6 +30,9 @@ import de.tadris.fitness.recording.indoor.exercise.ExerciseRecognizer
 import de.tadris.fitness.util.WorkoutLogger
 import org.greenrobot.eventbus.EventBus
 
+/**
+ * Activity recognition for indoor workouts
+ */
 class ExerciseRecognitionComponent : RecorderServiceComponent, SensorEventListener {
 
     private var sensorManager: SensorManager? = null

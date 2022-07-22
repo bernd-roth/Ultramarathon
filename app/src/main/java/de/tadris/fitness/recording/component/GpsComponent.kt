@@ -31,6 +31,9 @@ import de.tadris.fitness.util.WorkoutLogger
 import org.greenrobot.eventbus.EventBus
 import org.mapsforge.core.model.LatLong
 
+/**
+ * Collects and publishes GPS Locations
+ */
 class GpsComponent : RecorderServiceComponent, LocationListener {
 
     companion object {

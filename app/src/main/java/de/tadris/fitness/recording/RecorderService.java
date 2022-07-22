@@ -51,6 +51,12 @@ import de.tadris.fitness.ui.record.RecordWorkoutActivity;
 import de.tadris.fitness.util.NotificationHelper;
 import de.tadris.fitness.util.WorkoutLogger;
 
+/**
+ * The RecorderService is responsible for collecting data and publishing it to other app parts like
+ * the WorkoutRecorder or RecorderActivity. Also it handles the notification and a watchdog.
+ * <p>
+ * It starts RecorderServiceComponents depending on the workout type.
+ */
 public class RecorderService extends Service {
 
     protected Date serviceStartTime;
