@@ -48,6 +48,7 @@ import de.tadris.fitness.recording.event.WorkoutGPSStateChanged;
 import de.tadris.fitness.ui.record.RecordGpsWorkoutActivity;
 import de.tadris.fitness.ui.record.RecordWorkoutActivity;
 import de.tadris.fitness.util.CalorieCalculator;
+import de.tadris.fitness.util.LocationUtils;
 import de.tadris.fitness.util.WorkoutLogger;
 
 /**
@@ -208,10 +209,8 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
             state = GpsState.SIGNAL_LOST;
         } else if (lastFix.getAccuracy() > SIGNAL_BAD_THRESHOLD) {
             state = GpsState.SIGNAL_BAD;
-            // lastGpsTime = System.currentTimeMillis();
         } else {
             state = GpsState.SIGNAL_GOOD;
-            // lastGpsTime = System.currentTimeMillis();
         }
 
         if (state != gpsState) {
@@ -264,14 +263,14 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
                 synchronized (samples) {
                     GpsSample lastSample = samples.get(samples.size() - 1);
                     distance = Math.abs(GpsComponent.locationToLatLong(location).sphericalDistance(lastSample.toLatLong()));
-                    long timediff = Math.abs(lastSample.absoluteTime - location.getTime());
+                    long timediff = Math.abs(lastSample.absoluteTime - LocationUtils.getTimeFor(location));
                     if (distance < workout.getWorkoutType(context).minDistance || timediff < 500) {
                         return;
                     }
                 }
             }
             lastSampleTime = System.currentTimeMillis();
-            if (state == RecordingState.RUNNING && location.getTime() > workout.start) {
+            if (state == RecordingState.RUNNING && LocationUtils.getTimeFor(location) > workout.start) {
                 this.distance += distance;
                 addToSamples(location);
             }
@@ -284,8 +283,8 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
         sample.lon = location.getLongitude();
         sample.elevation = location.getAltitude();
         sample.speed = location.getSpeed();
-        sample.relativeTime = location.getTime() - workout.start - getPauseDuration();
-        sample.absoluteTime = location.getTime();
+        sample.relativeTime = LocationUtils.getTimeFor(location) - workout.start - getPauseDuration();
+        sample.absoluteTime = LocationUtils.getTimeFor(location);
         sample.pressure = lastPressure;
         sample.heartRate = lastHeartRate;
         sample.intervalTriggered = lastTriggeredInterval;
