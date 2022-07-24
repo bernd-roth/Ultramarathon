@@ -120,6 +120,7 @@ public class ShowWorkoutMapDiagramActivity extends ShowWorkoutColoredMapActivity
     }
 
     private void updateChart() {
+        updateChartSelection(chart, converterManager.selectedConverters);
         updateChart(chart, converterManager.selectedConverters, showIntervals.isChecked());
         boolean first = true;
         StringBuilder sb = new StringBuilder();

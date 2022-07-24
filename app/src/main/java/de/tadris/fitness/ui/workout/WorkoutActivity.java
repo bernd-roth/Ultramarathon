@@ -56,6 +56,7 @@ import de.tadris.fitness.data.BaseWorkoutData;
 import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.IntervalSet;
+import de.tadris.fitness.data.StatsDataTypes;
 import de.tadris.fitness.ui.workout.diagram.SampleConverter;
 import de.tadris.fitness.util.WorkoutCalculator;
 import de.tadris.fitness.util.charts.ChartStyles;
@@ -169,14 +170,11 @@ public abstract class WorkoutActivity extends InformationActivity {
     protected void onChartSelectionChanged(BaseSample sample) {
     }
 
-    protected List<BaseSample> aggregatedSamples(int bins) {
-        long startTime = samples.get(0).relativeTime;
-        long endTime = samples.get(samples.size() - 1).relativeTime;
-
-        return aggregatedSamples((endTime - startTime) / bins);
+    protected List<BaseSample> aggregatedSamples(int bins, StatsDataTypes.TimeSpan viewFieldSpan) {
+        return aggregatedSamples(viewFieldSpan.length() / bins, viewFieldSpan) ;
     }
 
-    abstract List<BaseSample> aggregatedSamples(long aggregationLength);
+    abstract List<BaseSample> aggregatedSamples(long aggregationLength, StatsDataTypes.TimeSpan viewFieldSpan);
 
     protected void updateChart(CombinedChart chart, List<SampleConverter> converters, boolean showIntervalSets) {
         boolean hasMultipleConverters = converters.size() > 1;
@@ -220,7 +218,7 @@ public abstract class WorkoutActivity extends InformationActivity {
 
             @Override
             public void onChartTranslate(MotionEvent me, float dX, float dY) {
-
+                updateChart(chart, converters, showIntervalSets);
             }
         });
 
@@ -234,89 +232,93 @@ public abstract class WorkoutActivity extends InformationActivity {
         ChartStyles.setXAxisLabel(chart, xLabel);
         ChartStyles.setYAxisLabel(chart, yLabel);
 
-        double desiredTimeSpan = (chart.getHighestVisibleX() - chart.getLowestVisibleX())* 1000f*60f;
-        desiredTimeSpan /= NUMBER_OF_SAMPLES_IN_DIAGRAM;
-        long endTime = samples.get(samples.size() - 1).relativeTime;
-        long startTime = samples.get(0).relativeTime;
-        long duration = endTime-startTime;
 
-        if (desiredTimeSpan == 0) {
-            desiredTimeSpan = duration / NUMBER_OF_SAMPLES_IN_DIAGRAM;
+        // Generate a time span from the view field of the chart
+        StatsDataTypes.TimeSpan chartViewField = new StatsDataTypes.TimeSpan(Math.round(chart.getLowestVisibleX()*1000f*60f), Math.round(chart.getHighestVisibleX()*1000f*60f));
+        // In case the
+        if (chartViewField.startTime == 0) {
+            chartViewField.startTime = samples.get(0).relativeTime;
+            chartViewField.endTime = samples.get(samples.size() - 1).relativeTime;
+        } else {
+            chartViewField.startTime = Math.max(0, chartViewField.startTime);
+            chartViewField.endTime = Math.min(samples.get(samples.size() - 1).relativeTime, chartViewField.endTime);
         }
 
-        int currentlyDisplayed = 0;
-        if(chart.getLineData() != null)
-            currentlyDisplayed = chart.getLineData().getEntryCount();
-        long n = Math.round(Math.log(duration / desiredTimeSpan) / Math.log(2));
-        long bins = (long) Math.min(Math.pow(2, n), samples.size());
-        if(currentlyDisplayed != bins) {
-            long timeSpan = (long) (duration / bins);
-            LineData lineData = new LineData();
+        LineData lineData = new LineData();
 
-            int converterIndex = 0;
-            for (SampleConverter converter : converters) {
-                converter.onCreate(getBaseWorkoutData());
+        int converterIndex = 0;
+        for (SampleConverter converter : converters) {
+            converter.onCreate(getBaseWorkoutData());
 
-                List<Entry> entries = new ArrayList<>();
-                for (BaseSample sample : aggregatedSamples(timeSpan)) {
-                    // turn data into Entry objects
-                    Entry e = new Entry((float) (sample.relativeTime) / 1000f / 60f, converter.getValue(sample), sample);
-                    entries.add(e);
-                }
-                chart.getXAxis().setValueFormatter(converter.getXValueFormatter());
-
-                LineDataSet dataSet = new LineDataSet(entries, converter.getName()); // add entries to dataset
-                int color = hasMultipleConverters ? getResources().getColor(converter.getColor()) : getThemePrimaryColor();
-                dataSet.setColor(color);
-                dataSet.setDrawValues(false);
-                dataSet.setDrawCircles(false);
-                dataSet.setLineWidth(2);
-                dataSet.setHighlightLineWidth(2.5f);
-                dataSet.setMode(LineDataSet.Mode.LINEAR);
-                if (converters.size() == 2) {
-                    YAxis.AxisDependency axisDependency = converterIndex == 0 ? YAxis.AxisDependency.LEFT : YAxis.AxisDependency.RIGHT;
-                    dataSet.setAxisDependency(axisDependency);
-                    chart.getAxis(axisDependency).setValueFormatter(converter.getYValueFormatter());
-                    chart.getAxisRight().setEnabled(true);
-                    chart.setMarker(new DisplayValueMarker(this, new DefaultValueFormatter(1), ""));
-                    // TODO: Make marker for diagrams with plural datasets work better...
-                } else {
-                    chart.getAxisLeft().setValueFormatter(converter.getYValueFormatter());
-                    chart.getAxisRight().setValueFormatter(converter.getYValueFormatter());
-                    chart.getAxisRight().setEnabled(false);
-                    chart.setMarker(new DisplayValueMarker(this, converter.getYValueFormatter(), converter.getUnit()));
-                }
-                lineData.addDataSet(dataSet);
-                converterIndex++;
+            List<Entry> entries = new ArrayList<>();
+            for (BaseSample sample : aggregatedSamples(NUMBER_OF_SAMPLES_IN_DIAGRAM, chartViewField)) {
+                // turn data into Entry objects
+                Entry e = new Entry((float) (sample.relativeTime) / 1000f / 60f, converter.getValue(sample), sample);
+                entries.add(e);
             }
+            chart.getXAxis().setValueFormatter(converter.getXValueFormatter());
 
-            combinedData.setData(lineData);
-
-            float yMax = lineData.getDataSetByIndex(0).getYMax() * 1.05f;
-            if (showIntervalSets && intervals != null && intervals.length > 0) {
-                List<BarEntry> barEntries = new ArrayList<>();
-
-                for (long relativeTime : WorkoutCalculator.getIntervalSetTimesFromWorkout(getBaseWorkoutData())) {
-                    barEntries.add(new BarEntry((float) (relativeTime) / 1000f / 60f, yMax));
-                }
-
-                BarDataSet barDataSet = new BarDataSet(barEntries, getString(R.string.intervalSet));
-                barDataSet.setBarBorderWidth(3);
-                barDataSet.setBarBorderColor(getThemePrimaryColor());
-                barDataSet.setColor(getThemePrimaryColor());
-
-                BarData barData = new BarData(barDataSet);
-                barData.setBarWidth(0.01f);
-                barData.setDrawValues(false);
-
-                combinedData.setData(barData);
+            LineDataSet dataSet = new LineDataSet(entries, converter.getName()); // add entries to dataset
+            int color = hasMultipleConverters ? getResources().getColor(converter.getColor()) : getThemePrimaryColor();
+            dataSet.setColor(color);
+            dataSet.setDrawValues(false);
+            dataSet.setDrawCircles(false);
+            dataSet.setLineWidth(2);
+            dataSet.setHighlightLineWidth(2.5f);
+            dataSet.setMode(LineDataSet.Mode.LINEAR);
+            if (converters.size() == 2) {
+                YAxis.AxisDependency axisDependency = converterIndex == 0 ? YAxis.AxisDependency.LEFT : YAxis.AxisDependency.RIGHT;
+                dataSet.setAxisDependency(axisDependency);
+                chart.getAxis(axisDependency).setValueFormatter(converter.getYValueFormatter());
+                chart.getAxisRight().setEnabled(true);
+                chart.setMarker(new DisplayValueMarker(this, new DefaultValueFormatter(1), ""));
+                // TODO: Make marker for diagrams with plural datasets work better...
             } else {
-                combinedData.setData(new BarData()); // Empty bar data
+                chart.getAxisLeft().setValueFormatter(converter.getYValueFormatter());
+                chart.getAxisRight().setValueFormatter(converter.getYValueFormatter());
+                chart.getAxisRight().setEnabled(false);
+                chart.setMarker(new DisplayValueMarker(this, converter.getYValueFormatter(), converter.getUnit()));
+            }
+            lineData.addDataSet(dataSet);
+            converterIndex++;
+        }
+
+        combinedData.setData(lineData);
+
+        float yMax = lineData.getDataSetByIndex(0).getYMax() * 1.05f;
+        if (showIntervalSets && intervals != null && intervals.length > 0) {
+            List<BarEntry> barEntries = new ArrayList<>();
+
+            for (long relativeTime : WorkoutCalculator.getIntervalSetTimesFromWorkout(getBaseWorkoutData())) {
+                barEntries.add(new BarEntry((float) (relativeTime) / 1000f / 60f, yMax));
             }
 
-            chart.setData(combinedData);
-            chart.invalidate();
+            BarDataSet barDataSet = new BarDataSet(barEntries, getString(R.string.intervalSet));
+            barDataSet.setBarBorderWidth(3);
+            barDataSet.setBarBorderColor(getThemePrimaryColor());
+            barDataSet.setColor(getThemePrimaryColor());
+
+            BarData barData = new BarData(barDataSet);
+            barData.setBarWidth(0.01f);
+            barData.setDrawValues(false);
+
+            combinedData.setData(barData);
+        } else {
+            combinedData.setData(new BarData()); // Empty bar data
+        }
+
+        chart.setData(combinedData);
+        chart.invalidate();
     }
+
+    public void updateChartSelection(CombinedChart chart, List<SampleConverter> converters) {
+        // Fix Y-Axis scale
+        chart.getAxisLeft().setAxisMaximum(converters.get(0).getMaxValue(workout)*1.05f);
+        chart.getAxisLeft().setAxisMinimum(converters.get(0).getMinValue(workout)*0.95f);
+        if (converters.size() > 1) {
+            chart.getAxisRight().setAxisMaximum(converters.get(1).getMaxValue(workout)*1.05f);
+            chart.getAxisRight().setAxisMinimum(converters.get(1).getMinValue(workout)*0.95f);
+        }
     }
 
     private GpsSample findSample(Entry entry) {

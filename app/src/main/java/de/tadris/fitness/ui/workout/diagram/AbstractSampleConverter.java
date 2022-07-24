@@ -20,6 +20,7 @@
 package de.tadris.fitness.ui.workout.diagram;
 
 import android.content.Context;
+import android.content.Intent;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -37,7 +38,9 @@ import de.tadris.fitness.util.unit.EnergyUnitUtils;
 
 public abstract class AbstractSampleConverter implements SampleConverter {
 
-    private final Context context;
+    protected static final String WORKOUT_ID_EXTRA = "de.tadris.fitness.WorkoutActivity.WORKOUT_ID_EXTRA";
+
+    protected final Context context;
     protected final DistanceUnitUtils distanceUnitUtils;
     protected final EnergyUnitUtils energyUnitUtils;
 

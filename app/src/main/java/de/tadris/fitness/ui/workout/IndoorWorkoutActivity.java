@@ -59,7 +59,7 @@ public abstract class IndoorWorkoutActivity extends WorkoutActivity {
     }
 
     @Override
-    protected List<BaseSample> aggregatedSamples(long aggregationLength) {
+    protected List<BaseSample> aggregatedSamples(long aggregationLength,  StatsDataTypes.TimeSpan viewFieldSpan) {
         ArrayList<BaseSample> returnSamples = new ArrayList<>();
         for (BaseSample sample : samples) {
             returnSamples.add(sample);

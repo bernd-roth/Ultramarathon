@@ -35,6 +35,7 @@ import org.mapsforge.map.layer.overlay.FixedPixelCircle;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import de.tadris.fitness.Instance;
@@ -196,7 +197,6 @@ public abstract class GpsWorkoutActivity extends WorkoutActivity implements MapS
                 mapView.getModel().mapViewPosition.animateTo(selectedSample.toLatLong());
             }
         }
-        ;
     }
 
     @Override
@@ -236,38 +236,58 @@ public abstract class GpsWorkoutActivity extends WorkoutActivity implements MapS
     }
 
     @Override
-    protected List<BaseSample> aggregatedSamples(long aggregationLength) {
+    protected List<BaseSample> aggregatedSamples(long aggregationLength, StatsDataTypes.TimeSpan viewFieldSpan) {
         long endTime = samples.get(samples.size() - 1).relativeTime;
         long sampleTime = samples.get(0).relativeTime;
 
-        List<BaseSample> aggregatedSamples = new ArrayList<>();
-        // ArrayList<BaseSample> samplesList = new ArrayList<>(samples);
+        LinkedList<BaseSample> aggregatedSamples = new LinkedList<>();
+        LinkedList<BaseSample> viewFieldSamples = new LinkedList<>();
+
+        // Generating a list with all samples in the current view field
+        // Additionally one point before and after is added.
+        boolean foundSample = false;
+        for (BaseSample sample : samples) {
+            if (sample instanceof GpsSample) {
+                if (!viewFieldSpan.contains(sample.relativeTime) && !viewFieldSamples.isEmpty()) {
+                    if (!foundSample) {
+                        viewFieldSamples.removeLast();
+                    } else {
+                        viewFieldSamples.add(sample);
+                        break;
+                    }
+                } else if (!foundSample && viewFieldSpan.contains(sample.relativeTime)) {
+                    foundSample = true;
+                }
+
+                viewFieldSamples.add(sample);
+            }
+        }
+
+        // Also add the last and the first samples to the list
+        viewFieldSamples.add(samples.get(samples.size()-1));
+        viewFieldSamples.add(0, samples.get(0));
 
         while (sampleTime < endTime) {
             GpsSample combinedSample = new GpsSample();
             ArrayList<Double> lons = new ArrayList<>();
             ArrayList<Double> lats = new ArrayList<>();
 
-            long numberOfAggregations = 0;
-
             StatsDataTypes.TimeSpan span = new StatsDataTypes.TimeSpan(sampleTime, sampleTime + aggregationLength);
 
-            // Iterator<BaseSample> sampleIterator = samplesList.iterator();
-            // while (sampleIterator.hasNext()) {
-            int size = samples.size();
-            for(int i=0; i<size; i++) {
-                BaseSample sample = samples.get(i);
+            for (BaseSample sample : viewFieldSamples) {
                 if (sample instanceof GpsSample) {
                     if (span.contains(sample.relativeTime)) {
-                        combinedSample.speed += ((GpsSample) sample).speed;
-                        combinedSample.elevationMSL += ((GpsSample) sample).elevationMSL;
-                        combinedSample.tmpInclination += ((GpsSample) sample).tmpInclination;
-                        lons.add(((GpsSample) sample).lon);
-                        lats.add(((GpsSample) sample).lat);
-                        numberOfAggregations++;
+                        GpsSample gpsSample = (GpsSample) sample;
+                        combinedSample.speed += gpsSample.speed;
+                        combinedSample.elevationMSL += gpsSample.elevationMSL;
+                        combinedSample.tmpInclination += gpsSample.tmpInclination;
+                        lons.add(gpsSample.lon);
+                        lats.add(gpsSample.lat);
                     }
                 }
             }
+
+            long numberOfAggregations = lons.size();
 
             if (numberOfAggregations != 0) {
                 combinedSample.speed /= numberOfAggregations;

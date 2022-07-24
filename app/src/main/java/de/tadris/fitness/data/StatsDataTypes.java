@@ -50,6 +50,10 @@ public class StatsDataTypes {
             return startTime <= time && time <= endTime;
         }
 
+        public long length() {
+            return this.endTime - this.startTime;
+        }
+
         public enum Type {
             WEEK(0),
             MONTH(1),
