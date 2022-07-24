@@ -242,7 +242,7 @@ public abstract class GpsWorkoutActivity extends WorkoutActivity implements MapS
         long sampleTime = samples.get(0).relativeTime;
 
         List<BaseSample> aggregatedSamples = new ArrayList<>();
-        ArrayList<BaseSample> samplesList = new ArrayList<>(samples);
+        // ArrayList<BaseSample> samplesList = new ArrayList<>(samples);
 
         while (sampleTime < endTime) {
             GpsSample combinedSample = new GpsSample();
@@ -253,9 +253,11 @@ public abstract class GpsWorkoutActivity extends WorkoutActivity implements MapS
 
             StatsDataTypes.TimeSpan span = new StatsDataTypes.TimeSpan(sampleTime, sampleTime + aggregationLength);
 
-            Iterator<BaseSample> sampleIterator = samplesList.iterator();
-            while (sampleIterator.hasNext()) {
-                BaseSample sample = sampleIterator.next();
+            // Iterator<BaseSample> sampleIterator = samplesList.iterator();
+            // while (sampleIterator.hasNext()) {
+            int size = samples.size();
+            for(int i=0; i<size; i++) {
+                BaseSample sample = samples.get(i);
                 if (sample instanceof GpsSample) {
                     if (span.contains(sample.relativeTime)) {
                         combinedSample.speed += ((GpsSample) sample).speed;

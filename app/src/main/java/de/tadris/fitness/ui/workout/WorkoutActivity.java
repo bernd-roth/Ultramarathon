@@ -244,78 +244,79 @@ public abstract class WorkoutActivity extends InformationActivity {
             desiredTimeSpan = duration / NUMBER_OF_SAMPLES_IN_DIAGRAM;
         }
 
-        long n = Math.round(Math.log(duration/desiredTimeSpan)/Math.log(2));
-        long bins = (long) Math.min(Math.pow(2,n), samples.size());
-        long timeSpan = (long) (duration / bins);
+        int currentlyDisplayed = 0;
+        if(chart.getLineData() != null)
+            currentlyDisplayed = chart.getLineData().getEntryCount();
+        long n = Math.round(Math.log(duration / desiredTimeSpan) / Math.log(2));
+        long bins = (long) Math.min(Math.pow(2, n), samples.size());
+        if(currentlyDisplayed != bins) {
+            long timeSpan = (long) (duration / bins);
+            LineData lineData = new LineData();
 
+            int converterIndex = 0;
+            for (SampleConverter converter : converters) {
+                converter.onCreate(getBaseWorkoutData());
 
-        LineData lineData = new LineData();
+                List<Entry> entries = new ArrayList<>();
+                for (BaseSample sample : aggregatedSamples(timeSpan)) {
+                    // turn data into Entry objects
+                    Entry e = new Entry((float) (sample.relativeTime) / 1000f / 60f, converter.getValue(sample), sample);
+                    entries.add(e);
+                }
+                chart.getXAxis().setValueFormatter(converter.getXValueFormatter());
 
-        int converterIndex = 0;
-        for (SampleConverter converter : converters) {
-            converter.onCreate(getBaseWorkoutData());
-
-            List<Entry> entries = new ArrayList<>();
-            for (BaseSample sample : aggregatedSamples(timeSpan)) {
-                // turn data into Entry objects
-                Entry e = new Entry((float) (sample.relativeTime) / 1000f / 60f, converter.getValue(sample), sample);
-                entries.add(e);
-            }
-            chart.getXAxis().setValueFormatter(converter.getXValueFormatter());
-
-            LineDataSet dataSet = new LineDataSet(entries, converter.getName()); // add entries to dataset
-            int color = hasMultipleConverters ? getResources().getColor(converter.getColor()) : getThemePrimaryColor();
-            dataSet.setColor(color);
-            dataSet.setDrawValues(false);
-            dataSet.setDrawCircles(false);
-            dataSet.setLineWidth(2);
-            dataSet.setHighlightLineWidth(2.5f);
-            dataSet.setMode(LineDataSet.Mode.LINEAR);
-            if (converters.size() == 2) {
-                YAxis.AxisDependency axisDependency = converterIndex == 0 ? YAxis.AxisDependency.LEFT : YAxis.AxisDependency.RIGHT;
-                dataSet.setAxisDependency(axisDependency);
-                chart.getAxis(axisDependency).setValueFormatter(converter.getYValueFormatter());
-                chart.getAxisRight().setEnabled(true);
-                chart.setMarker(new DisplayValueMarker(this, new DefaultValueFormatter(1), ""));
-                // TODO: Make marker for diagrams with plural datasets work better...
-            }
-            else
-            {
-                chart.getAxisLeft().setValueFormatter(converter.getYValueFormatter());
-                chart.getAxisRight().setValueFormatter(converter.getYValueFormatter());
-                chart.getAxisRight().setEnabled(false);
-                chart.setMarker(new DisplayValueMarker(this, converter.getYValueFormatter(), converter.getUnit()));
-            }
-            lineData.addDataSet(dataSet);
-            converterIndex++;
-        }
-
-        combinedData.setData(lineData);
-
-        float yMax = lineData.getDataSetByIndex(0).getYMax() * 1.05f;
-        if (showIntervalSets && intervals != null && intervals.length > 0) {
-            List<BarEntry> barEntries = new ArrayList<>();
-
-            for (long relativeTime : WorkoutCalculator.getIntervalSetTimesFromWorkout(getBaseWorkoutData())) {
-                barEntries.add(new BarEntry((float) (relativeTime) / 1000f / 60f, yMax));
+                LineDataSet dataSet = new LineDataSet(entries, converter.getName()); // add entries to dataset
+                int color = hasMultipleConverters ? getResources().getColor(converter.getColor()) : getThemePrimaryColor();
+                dataSet.setColor(color);
+                dataSet.setDrawValues(false);
+                dataSet.setDrawCircles(false);
+                dataSet.setLineWidth(2);
+                dataSet.setHighlightLineWidth(2.5f);
+                dataSet.setMode(LineDataSet.Mode.LINEAR);
+                if (converters.size() == 2) {
+                    YAxis.AxisDependency axisDependency = converterIndex == 0 ? YAxis.AxisDependency.LEFT : YAxis.AxisDependency.RIGHT;
+                    dataSet.setAxisDependency(axisDependency);
+                    chart.getAxis(axisDependency).setValueFormatter(converter.getYValueFormatter());
+                    chart.getAxisRight().setEnabled(true);
+                    chart.setMarker(new DisplayValueMarker(this, new DefaultValueFormatter(1), ""));
+                    // TODO: Make marker for diagrams with plural datasets work better...
+                } else {
+                    chart.getAxisLeft().setValueFormatter(converter.getYValueFormatter());
+                    chart.getAxisRight().setValueFormatter(converter.getYValueFormatter());
+                    chart.getAxisRight().setEnabled(false);
+                    chart.setMarker(new DisplayValueMarker(this, converter.getYValueFormatter(), converter.getUnit()));
+                }
+                lineData.addDataSet(dataSet);
+                converterIndex++;
             }
 
-            BarDataSet barDataSet = new BarDataSet(barEntries, getString(R.string.intervalSet));
-            barDataSet.setBarBorderWidth(3);
-            barDataSet.setBarBorderColor(getThemePrimaryColor());
-            barDataSet.setColor(getThemePrimaryColor());
+            combinedData.setData(lineData);
 
-            BarData barData = new BarData(barDataSet);
-            barData.setBarWidth(0.01f);
-            barData.setDrawValues(false);
+            float yMax = lineData.getDataSetByIndex(0).getYMax() * 1.05f;
+            if (showIntervalSets && intervals != null && intervals.length > 0) {
+                List<BarEntry> barEntries = new ArrayList<>();
 
-            combinedData.setData(barData);
-        } else {
-            combinedData.setData(new BarData()); // Empty bar data
-        }
+                for (long relativeTime : WorkoutCalculator.getIntervalSetTimesFromWorkout(getBaseWorkoutData())) {
+                    barEntries.add(new BarEntry((float) (relativeTime) / 1000f / 60f, yMax));
+                }
 
-        chart.setData(combinedData);
-        chart.invalidate();
+                BarDataSet barDataSet = new BarDataSet(barEntries, getString(R.string.intervalSet));
+                barDataSet.setBarBorderWidth(3);
+                barDataSet.setBarBorderColor(getThemePrimaryColor());
+                barDataSet.setColor(getThemePrimaryColor());
+
+                BarData barData = new BarData(barDataSet);
+                barData.setBarWidth(0.01f);
+                barData.setDrawValues(false);
+
+                combinedData.setData(barData);
+            } else {
+                combinedData.setData(new BarData()); // Empty bar data
+            }
+
+            chart.setData(combinedData);
+            chart.invalidate();
+    }
     }
 
     private GpsSample findSample(Entry entry) {
