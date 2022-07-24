@@ -17,7 +17,7 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.data;
+package de.tadris.fitness.data.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -36,6 +36,9 @@ import java.util.Set;
 
 import de.tadris.fitness.BuildConfig;
 import de.tadris.fitness.aggregation.AggregationSpan;
+import de.tadris.fitness.data.RecordingType;
+import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.data.WorkoutTypeManager;
 import de.tadris.fitness.model.AutoStartWorkout;
 
 public class UserPreferences {
@@ -129,11 +132,23 @@ public class UserPreferences {
     private static final Set<String> DEFAULT_STATISTICS_SELECTED_TYPES = new ArraySet<>();
 
     private final SharedPreferences preferences;
+    private final RecordingScreenInformationPreferences recordingScreenInformationPreferences;
+    private final SharingScreenInformationPreferences sharingScreenInformationPreferences;
     private final Context ctx;
 
     public UserPreferences(Context context) {
-        this.preferences= PreferenceManager.getDefaultSharedPreferences(context);
+        this.preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        this.recordingScreenInformationPreferences = new RecordingScreenInformationPreferences(this.preferences);
+        this.sharingScreenInformationPreferences = new SharingScreenInformationPreferences(this.preferences);
         this.ctx = context;
+    }
+
+    public RecordingScreenInformationPreferences getRecordingScreenInformationPreferences() {
+        return this.recordingScreenInformationPreferences;
+    }
+
+    public SharingScreenInformationPreferences getSharingScreenInformationPreferences() {
+        return this.sharingScreenInformationPreferences;
     }
 
     public int getUserWeight(){
@@ -168,9 +183,10 @@ public class UserPreferences {
         return preferences.getBoolean("intervalsIncludePause", true);
     }
 
+    @Deprecated()
     public String getIdOfDisplayedInformation(String mode, int slot) {
         String defValue = "";
-        if (WorkoutType.RecordingType.INDOOR.id.equals(mode)) {
+        if (RecordingType.INDOOR.id.equals(mode)) {
             switch (slot) {
                 case 0:
                     defValue = "avg_frequency";
@@ -241,6 +257,18 @@ public class UserPreferences {
         return preferences.getBoolean("showOnLockScreen", false);
     }
 
+    public boolean getShowWorkoutZoomControls() {
+        return preferences.getBoolean("showWorkoutZoomControls", true);
+    }
+
+    public boolean getZoomWithVolumeButtons() {
+        return preferences.getBoolean("zoomWithVolumeButtons", true);
+    }
+
+    public int getAutoBackupIntervalHours() {
+        return Integer.parseInt(preferences.getString("autoBackupInterval", "168"));
+    }
+
     public String getOfflineMapDirectoryName() {
         return preferences.getString("offlineMapDirectoryName", null);
     }
@@ -253,7 +281,7 @@ public class UserPreferences {
     public boolean getUseNfcStart() {
         return preferences.getBoolean(USE_NFC_START_VARIABLE, DEFAULT_USE_NFC_START);
     }
-    
+
     /**
      * Get the currently configured auto start delay
      * @return auto start delay in seconds

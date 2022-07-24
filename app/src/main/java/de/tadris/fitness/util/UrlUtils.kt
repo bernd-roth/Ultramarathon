@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -17,13 +17,7 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.recording.indoor
+package de.tadris.fitness.util
 
-import android.hardware.Sensor
-
-enum class FitoTrackSensorOption(val sensorType: Int) {
-    ACCELERATION_WITHOUT_G(Sensor.TYPE_LINEAR_ACCELERATION),
-    ACCELERATION(Sensor.TYPE_ACCELEROMETER),
-    STEPS(Sensor.TYPE_STEP_DETECTOR),
-    PROXIMITY(Sensor.TYPE_PROXIMITY)
-}
+fun String.isUrl() =
+    matches("https?://(www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)".toRegex())

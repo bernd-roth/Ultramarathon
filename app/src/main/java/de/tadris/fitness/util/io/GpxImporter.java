@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -125,6 +125,7 @@ public class GpxImporter implements IWorkoutImporter {
             sample.relativeTime = sample.absoluteTime - startTime;
             TrackPointExtensions extensions = point.getExtensions();
             if (extensions != null) {
+                sample.speed = extensions.getSpeed();
                 if (extensions.getGpxTpxExtension() != null) {
                     sample.heartRate = extensions.getGpxTpxExtension().getHr();
                 }

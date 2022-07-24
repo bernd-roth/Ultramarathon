@@ -30,6 +30,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import de.tadris.fitness.R;
+import de.tadris.fitness.data.RecordingType;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.data.WorkoutTypeManager;
 import de.tadris.fitness.ui.FitoTrackActivity;
@@ -50,7 +51,7 @@ public class SelectWorkoutTypeDialog implements WorkoutTypeAdapter.WorkoutTypeAd
         this.context = context;
         this.listener = listener;
         this.options = WorkoutTypeManager.getInstance().getAllTypesSorted(context);
-        this.options.add(0, new WorkoutType(ID_ADD, context.getString(R.string.workoutTypeAdd), 0, context.getThemePrimaryColor(), Icon.ADD.name, 0, WorkoutType.RecordingType.GPS.id));
+        this.options.add(0, new WorkoutType(ID_ADD, context.getString(R.string.workoutTypeAdd), 0, context.getThemePrimaryColor(), Icon.ADD.name, 0, RecordingType.GPS.id));
     }
 
     public void show() {

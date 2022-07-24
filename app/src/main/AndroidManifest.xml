@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -57,6 +57,12 @@
         android:name="android.hardware.bluetooth_le"
         android:required="false" />
 
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.TTS_SERVICE" />
+        </intent>
+    </queries>
+
     <application
         android:allowBackup="true"
         android:appCategory="productivity"
@@ -65,25 +71,34 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-
+        <activity
+            android:name=".ui.settings.DebugPressureActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.settings.SensorDebugActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.ImportGpxActivity"
-            android:label="@string/importWorkout"
-            android:exported="true">
-
+            android:exported="true"
+            android:label="@string/importWorkout">
             <intent-filter tools:ignore="AppLinkUrlError">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="application/octet-stream" />
             </intent-filter>
-
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="application/*" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.settings.ConfigureExportTargetsActivity" />
         <activity android:name=".ui.settings.DownloadMapsActivity" />
         <activity android:name=".ui.record.RecordIndoorWorkoutActivity" />
         <activity android:name=".ui.settings.EditWorkoutTypeActivity" />
@@ -114,8 +129,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.LauncherActivity"
-            android:screenOrientation="portrait"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -148,16 +163,8 @@
         </provider>
 
         <service
-            android:name=".recording.gps.GpsRecorderService"
+            android:name=".recording.RecorderService"
             android:foregroundServiceType="location" />
-
-        <service android:name=".recording.indoor.IndoorRecorderService" />
     </application>
-
-    <queries>
-        <intent>
-            <action android:name="android.intent.action.TTS_SERVICE" />
-        </intent>
-    </queries>
 
 </manifest>

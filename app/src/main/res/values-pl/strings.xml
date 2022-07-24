@@ -18,11 +18,11 @@
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
   --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="restore">Przywróć</string>
-    <string name="importBackupMessage">OSTRZEŻENIE: Wszystkie Twoje istniejące dane w aplikacji zostaną wyczyszczone. Jeśli nie chcesz ich stracić, najpierw wykonaj kolejną kopię zapasową. Czy na pewno chcesz przywrócić tę kopię zapasową\?</string>
-    <string name="chooseBackupFile">Wybierz plik kopii</string>
+    <string name="importBackupMessage">Najpierw utwórz kopię zapasową swoich aktualnych danych, jeśli chcesz je zachować. Czy przywrócić poprzednią kopię zapasową\?</string>
+    <string name="chooseBackupFile">Wybierz plik kopii zapasowej</string>
     <string name="loadingFile">Ładowanie pliku</string>
     <string name="finished">Zakończone</string>
-    <string name="converting">Konwersja</string>
+    <string name="converting">Konwertowanie</string>
     <string name="locationData">Dane o lokalizacji</string>
     <string name="workouts">Treningi</string>
     <string name="initialising">Inicjalizacja</string>
@@ -57,7 +57,7 @@
     <string name="selectBluetoothDevice">Wybierz urządzenie Bluetooth</string>
     <string name="importWorkoutMultipleQuestion">Czy chcesz zaimportować jeden plik GPX, czy wiele\?</string>
     <string name="importMultipleMessageSelectFolder">Wybierz folder zawierający wszystkie pliki GPX, które chcesz zaimportować.</string>
-    <string name="importMultipleGpxFiles">Importowanie wielu plików GPX</string>
+    <string name="importMultipleGpxFiles">Importuj wiele plików GPX</string>
     <string name="recordingStateStopped">Zatrzymany</string>
     <string name="recordingStatePaused">Wstrzymany</string>
     <string name="recordingStateRunning">Działający</string>
@@ -87,7 +87,7 @@
     <string name="aboutVersion">Wersja</string>
     <string name="aboutTitle">O aplikacji</string>
     <string name="editWorkout">Edytuj trening</string>
-    <string name="cannotFindWorkout">Nie można znaleźć treningu</string>
+    <string name="cannotFindWorkout">Nie udało się znaleźć treningu</string>
     <string name="speedLastMinuteSpoken">Prędkość w ciągu ostatniej minuty</string>
     <string name="speedLastMinute">Śr. prędkość (ostatnia minuta)</string>
     <string name="sections">Odcinki</string>
@@ -170,7 +170,7 @@
     <string name="intervalSetSelected">Wybrano zestaw interwałów</string>
     <string name="selectIntervalSet">Wybierz zestaw interwałów</string>
     <string name="deleteIntervalSetMessage">Czy chcesz usunąć zestaw interwałów\?</string>
-    <string name="deleteIntervalSet">Usuwanie zestawu interwałów</string>
+    <string name="deleteIntervalSet">Usuń zestaw interwałów</string>
     <string name="enterName">Wprowadź nazwę</string>
     <string name="length_in_minutes">Czas trwania (minuty):</string>
     <string name="interval_name">Nazwa:</string>
@@ -201,7 +201,7 @@
     <string name="cut">Wytnij pierwsze/ostatnie 300 m</string>
     <string name="actionUploadToOSM">Prześlij do OSM</string>
     <string name="waiting_gps">Oczekiwanie na GPS</string>
-    <string name="editWorkoutType">Edycja typu treningu</string>
+    <string name="editWorkoutType">Edytuj typ treningu</string>
     <string name="workoutTypeEditIcon">Ikona</string>
     <string name="prefTrackStyleUsageTitle">Używaj automatycznego kolorowania trasy</string>
     <string name="trackStyle">Styl trasy</string>
@@ -227,10 +227,10 @@
     <string name="workoutDescent">Droga w dół</string>
     <string name="workoutAscent">Droga w górę</string>
     <string name="deleteWorkoutMessage">Czy na pewno chcesz usunąć trening\?</string>
-    <string name="deleteWorkout">Usuwanie treningu</string>
+    <string name="deleteWorkout">Usuń trening</string>
     <string name="continue_">Kontynuuj</string>
     <string name="stopRecordingQuestionMessage">Czy na pewno chcesz zatrzymać nagrywanie\?</string>
-    <string name="stopRecordingQuestion">Zatrzymać nagrywanie\?</string>
+    <string name="stopRecordingQuestion">Czy zatrzymać nagrywanie\?</string>
     <string name="enterComment">Wprowadź komentarz</string>
     <string name="comment">Komentarz</string>
     <string name="enable">Włącz</string>
@@ -256,7 +256,7 @@
     <string name="workoutTypeOther">Inny</string>
     <string name="uploadFailedOsmNotAuthorized">Brak autoryzacji, spróbuj ponownie</string>
     <string name="uploadFailed">Przesyłanie nie powiodło się</string>
-    <string name="uploadSuccessful">Wysyłanie zakończone</string>
+    <string name="uploadSuccessful">Przesyłanie powiodło się</string>
     <string name="upload">Prześlij</string>
     <string name="authenticationFailed">Uwierzytelnianie nie powiodło się.</string>
     <string name="enterVerificationCode">Wprowadź kod weryfikacyjny</string>
@@ -341,7 +341,7 @@
         <item quantity="other"><xliff:g example="12" id="secs">%1$d</xliff:g> sekund</item>
     </plurals>
     <string name="launchError">Nie udało się uruchomić aplikacji</string>
-    <string name="editStartEndHelp">Wybierz pozycję na mapie albo diagramie. Następnie naciśnij jedną ze strzałek, aby wybrać nowy punkt początkowy albo końcowy. Gdy skończysz, kliknij ikonę zapisu w celu zastosowania zmian.</string>
+    <string name="editStartEndHelp">Wybierz pozycję na mapie albo diagramie. Następnie naciśnij jedną ze strzałek, aby wybrać nowy punkt początkowy albo końcowy. Gdy skończysz, naciśnij ikonę zapisu, aby zastosować zmiany.</string>
     <string name="actionApply">Zastosuj</string>
     <string name="moveEndOfWorkout">Wytnij koniec</string>
     <string name="moveStartOfWorkout">Wytnij początek</string>
@@ -370,19 +370,19 @@
     <string name="abort">Anuluj</string>
     <string name="downloading">Pobieranie…</string>
     <string name="chooseMapHint">Wybierz plik mapy</string>
-    <string name="downloadCanceled">Pobieranie anulowane</string>
+    <string name="downloadCanceled">Anulowano pobieranie</string>
     <string name="downloadFailed">Pobieranie nie powiodło się</string>
     <string name="downloadSuccess">Pobrano</string>
     <string name="cancelDownloadConfirmation">Czy chcesz anulować aktualne pobieranie\?</string>
-    <string name="actionCancelDownload">Anulowanie pobierania</string>
+    <string name="actionCancelDownload">Anuluj pobieranie</string>
     <string name="alreadyDownloading">Plik jest już pobierany</string>
-    <string name="downloadMapConfirmation">Pobrać plik mapy „%s”\?</string>
-    <string name="actionDownloadMap">Pobieranie mapy</string>
-    <string name="overwriteMapConfirmation">Nadpisać istniejący plik mapy „%s”\?</string>
+    <string name="downloadMapConfirmation">Czy pobrać plik mapy „%s”\?</string>
+    <string name="actionDownloadMap">Pobierz mapę</string>
+    <string name="overwriteMapConfirmation">Czy nadpisać istniejący plik mapy „%s”\?</string>
     <string name="downloadMapsSpecifyDirectory">Najpierw określ katalog dla map offline</string>
     <string name="downloadMapsTitle">Pobierz mapy</string>
     <string name="deleteWorkoutTypeConfirmation">Czy na pewno chcesz usunąć ten typ treningu\?</string>
-    <string name="deleteWorkoutType">Usuwanie typu treningu</string>
+    <string name="deleteWorkoutType">Usuń typ treningu</string>
     <string name="actionSave">Zapisz</string>
     <string name="runningMigrations">Migracja w toku</string>
     <string name="customWorkoutTypesTitle">Niestandardowe typy treningów</string>
@@ -442,4 +442,85 @@
         <item quantity="many">Zaimportowano %d treningów</item>
         <item quantity="other">Zaimportowano %d treningów</item>
     </plurals>
+    <string name="hidden">Ukryte</string>
+    <string name="trackable_visibility">Możliwość śledzenia</string>
+    <string name="private_visibility">Prywatna</string>
+    <string name="identifiable_visibility">Identyfikowalna</string>
+    <string name="humanitarian_clean_map_but_sometimes_not_available">Humanitarian
+\nCzysta mapa, ale nie zawsze dostępna</string>
+    <string name="always_mode">Zawsze</string>
+    <string name="kcal_unit">Kilokaloria (kcal)</string>
+    <string name="only_on_headphones_mode">Tylko na słuchawkach</string>
+    <string name="always_track_style">Zawsze</string>
+    <string name="joule_unit">Dżul (J)</string>
+    <string name="mapnik_default_osm_mapstyle">Mapnik
+\nDomyślny styl mapy OSM</string>
+    <string name="in_the_diagram_screen_track_style">Na ekranie diagramu</string>
+    <string name="never_track_style">Nigdy</string>
+    <string name="offline_local_map_file_with_local_render_theme">Offline
+\nLokalny plik mapy z lokalnie renderowanym motywem</string>
+    <string name="height_map">Mapa wysokości</string>
+    <string name="bright_night">Jasna noc</string>
+    <string name="purple_rain">Fioletowy deszcz</string>
+    <string name="pink_mist">Różowa mgiełka</string>
+    <string name="rainbow_warrior">Tęczowy wojownik</string>
+    <string name="dark_theme">Ciemny</string>
+    <string name="mondriaan">Mondrianowski</string>
+    <string name="system_theme">Systemowy</string>
+    <string name="light_theme">Jasny</string>
+    <string name="imperial_unit_system">Imperialny</string>
+    <string name="us_customary_unit_system">Zwyczajowy z USA</string>
+    <string name="friday">Piątek</string>
+    <string name="metric_with_m_s_unit_system">Metryczny z m/s</string>
+    <string name="imperial_with_meters_unit_system">Imperialny z metrami</string>
+    <string name="metric_unit_system">Metryczny</string>
+    <string name="sunday">Niedziela</string>
+    <string name="monday">Poniedziałek</string>
+    <string name="tuesday">Wtorek</string>
+    <string name="wednesday">Środa</string>
+    <string name="thursday">Czwartek</string>
+    <string name="system_default">Domyślny systemowy</string>
+    <string name="saturday">Sobota</string>
+    <string name="unitHeartRateSensorBattery">%</string>
+    <string name="showWorkoutZoomControlsSummary">Włączaj sterowanie powiększaniem i przesuwaniem na mapie podczas nagrywania treningów z GPS-em</string>
+    <string name="showWorkoutZoomControlsTitle">Powiększanie i przesuwanie</string>
+    <string name="autoBackupTitle">Automatyczne kopie zapasowe</string>
+    <string name="workoutGPXExportTitle">Eksportowanie treningów GPX</string>
+    <string name="deleteExportTargetConfirmation">Czy na pewno chcesz usunąć to miejsce eksportu\?</string>
+    <string name="autoExportBackupTitle">Automatyczne kopie zapasowe aplikacji</string>
+    <string name="autoExportBackupExplanation">W określonym przedziale czasu kopia zapasowa zostanie wyeksportowana tutaj:</string>
+    <string name="exportIntervalTitle">Częstotliwość tworzenia kopii zapasowej</string>
+    <string name="takeBackups1">Codziennie</string>
+    <string name="takeBackups2">Co drugi dzień</string>
+    <string name="takeBackups3">Co trzeci dzień</string>
+    <string name="selectExportTarget">Wybierz miejsce eksportu</string>
+    <string name="configureHttpPostRequest">Skonfiguruj żądanie HTTP POST</string>
+    <string name="httpUrl">URL</string>
+    <string name="enterValidUrl">Wprowadź prawidłowy URL HTTP</string>
+    <string name="heartRateSensorBattery">Bateria czujnika</string>
+    <string name="exportTargetDirectory">Katalog</string>
+    <string name="exportTargetHttpPost">Żądanie HTTP POST</string>
+    <string name="autoExportWorkoutsSummary">Eksportuj nowo nagrane treningi</string>
+    <string name="hintConfigureExportTargets">Dodaj miejsca, do których mają zostać wyeksportowane pliki.</string>
+    <string name="autoExportBackupSummary">Automatycznie eksportuj kopie zapasowe</string>
+    <string name="takeBackups7">Co tydzień</string>
+    <string name="autoExportWorkoutExplanation">Po nagraniu nowego treningu plik GPX zostanie wyeksportowany tutaj:</string>
+    <string name="takeBackups14">Co drugi tydzień</string>
+    <string name="preferencesDebugTitle">Debugowanie</string>
+    <string name="debugSensorsTitle">Debuguj czujniki</string>
+    <string name="debugSensorsSummary">Zbierz dane z czujników, które są zapisywane w pliku z logami</string>
+    <string name="debugPressureSensor">Debuguj czujnik ciśnienia</string>
+    <string name="calibrating">Kalibrowanie</string>
+    <string name="noSensorAvailable">Brak dostępnego czujnika</string>
+    <plurals name="satelliteCount">
+        <item quantity="zero">Brak satelitów</item>
+        <item quantity="one">1 satelita</item>
+        <item quantity="few">%d satelity</item>
+        <item quantity="many">%d satelitów</item>
+        <item quantity="other">%d satelitów</item>
+    </plurals>
+    <string name="debugShareLogsTitle">Udostępnij logi</string>
+    <string name="debugShareLogsSummary">Udostępnij logi zawierające przydatne dane, aby znaleźć błędy w rejestratorze treningów. Zwykle nie zawierają danych o lokalizacji</string>
+    <string name="zoomWithVolumeButtonsSummary">Zwiększaj i zmniejszaj głośność, aby kontrolować powiększanie i pomniejszanie</string>
+    <string name="zoomWithVolumeButtonsTitle">Powiększanie za pomocą przycisków głośności</string>
 </resources>

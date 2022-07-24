@@ -228,34 +228,14 @@
     <string name="speedLastMinuteSpoken">Snelheid in de laatste minuut</string>
     <string name="cannotFindWorkout">Kan geen training vinden</string>
     <string name="editWorkout">Training aanpassen</string>
-    <string-array name="pref_energy_units">
-        <item>kcal</item>
-        <item>Joule</item>
-    </string-array>
-    <string-array name="pref_announcement_mode">
-        <item>Altijd</item>
-        <item>Alleen met koptelefoon</item>
-    </string-array>
-    <string-array name="pref_theme_setting">
-        <item>System</item>
-        <item>Licht</item>
-        <item>Donker</item>
-    </string-array>
-    <string-array name="pref_time_format">
-        <item>Systeemstandaard</item>
-        <item>12:08 PM</item>
-        <item>15:23</item>
-    </string-array>
-    <string-array name="pref_date_format">
-        <item>Systeemstandaard</item>
-        <item>2001-07-24</item>
-        <item>2001.07.24</item>
-        <item>2001/07/24</item>
-        <item>24-07-2001</item>
-        <item>24.07.2001</item>
-        <item>24/07/2001</item>
-        <item>07/24/2001</item>
-    </string-array>
+    <string name="kcal_unit">kcal</string>
+    <string name="joule_unit">Joule</string>
+    <string name="always_mode">Altijd</string>
+    <string name="only_on_headphones_mode">Alleen met koptelefoon</string>
+    <string name="system_theme">System</string>
+    <string name="light_theme">Licht</string>
+    <string name="dark_theme">Donker</string>
+    <string name="system_default">Systeemstandaard</string>
     <string name="aboutLinks">Links</string>
     <string name="aboutReportBug">Meld een bug</string>
     <string name="aboutOpenSourceLibraries">Open source bibliotheken</string>

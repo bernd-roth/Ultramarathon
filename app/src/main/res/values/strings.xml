@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
-  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -16,7 +17,9 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  -->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
     <string name="stop">Stop</string>
     <string name="delete">Delete</string>
@@ -33,7 +36,7 @@
     <string name="finished">Finished</string>
     <string name="loadingFile">Loading file</string>
     <string name="chooseBackupFile">Choose Backup-File</string>
-    <string name="importBackupMessage">WARNING: All your existing data in the app will be cleared. If you don\'t want to loose them, first take another backup. Are you sure, you want to restore this backup?</string>
+    <string name="importBackupMessage">Back up your current data now if you want to keep it. Restore prior backup now\?</string>
     <string name="restore">Restore</string>
     <string name="backup">Backup</string>
     <string name="setPreferencesTitle">Set Preferences</string>
@@ -91,6 +94,7 @@
     <string name="workoutTotalEnergy">Total Energy</string>
     <string name="workoutEnergyConsumption">Energy Consumption</string>
     <string name="workoutHeartRate">Heart Rate</string>
+    <string name="heartRateSensorBattery">Sensor Battery</string>
     <string name="workoutMaxHeartRate">Max Heart Rate</string>
     <string name="workoutAvgHeartRate">Avg. Heart Rate</string>
     <string name="workoutEdited">This workout has been edited.</string>
@@ -217,6 +221,7 @@
     <string name="preferencesUserInterfaceTitle">User Interface</string>
     <string name="preferencesUserInterfaceSummary">Personalize the app</string>
     <string name="preferencesRecordingTitle">Recording</string>
+    <string name="preferencesDebugTitle">Debug</string>
     <string name="preferencesRecordingSummary">Manage the workout recording</string>
     <string name="preferencesBackupTitle">Database</string>
     <string name="preferencesBackupSummary">Backup/Restore your workout data</string>
@@ -245,6 +250,7 @@
     <string name="unitKilometersPerHour">Kilometers per hour</string>
     <string name="unitMetersPerSecond">Meters per second</string>
     <string name="unitHeartBeatsPerMinute">bpm</string>
+    <string name="unitHeartRateSensorBattery">%</string>
     <string name="unitKcalLong">Calories</string>
     <string name="unitHertzLong">Hertz</string>
     <string name="unitKJoule">Kilojoule</string>
@@ -375,7 +381,6 @@
     <string name="downloadFailed">Download failed</string>
     <string name="downloadCanceled">Download canceled</string>
     <string name="chooseMapHint">Please choose a map file</string>
-    <string name="downloading">Downloading…</string>
     <string name="intervalAutoStartDelayTraining">Auto Start Workout Delay</string>
     <string name="manageAutoStartDelaySummary">Choose a default countdown for automatic workout start</string>
     <string name="pref_auto_start_delay_title">Auto Start Countdown</string>
@@ -384,7 +389,6 @@
     <string name="autoStartCountdownMsg">Starting workout in</string>
     <string name="autoStartCountdownMsgGps">Starting workout once GPS position is accurate enough</string>
     <string name="autoStartCountdownMsgMove">Starting workout once you start moving</string>
-    <string name="autoStartCountdownVal" translatable="false">%1$d%2$s</string>
     <string name="workoutAutoStarted">Workout started automatically</string>
     <string name="popup_auto_start_delay">With custom delay</string>
     <string name="popup_auto_start">With default delay</string>
@@ -452,7 +456,6 @@
     <string name="pref_announcements_pace_control_title">Pace-warnings</string>
     <string name="invalidNumberFormat">Invalid number format.</string>
     <string name="fileNotFound">File not found</string>
-    <string name="approxSymbol" translatable="false">≈</string>
     <string name="numberOfWorkouts">Workout number</string>
     <string name="energyExpended">Energy expended</string>
     <string name="caloriesBurned">Calories burned</string>
@@ -465,72 +468,82 @@
     <string name="monthYear">Month / Year</string>
     <string name="workoutAvgDistance">Average Distance</string>
     <string name="workoutDistanceSum">Distance sum</string>
-    <string-array name="osm_track_visibility">
-        <item>Identifiable</item>
-        <item>Trackable</item>
-        <item>Private</item>
-    </string-array>
-    <string-array name="pref_energy_units">
-        <item>kcal</item>
-        <item>Joule</item>
-    </string-array>
-    <string-array name="pref_announcement_mode">
-        <item>Always</item>
-        <item>Only on headphones</item>
-    </string-array>
-    <string-array name="pref_map_layers">
-        <item>Mapnik\nDefault OSM Mapstyle</item>
-        <item>Humanitarian\nClean map but sometimes not available</item>
-        <item>Offline\nLocal map file with local render theme</item>
-    </string-array>
-    <string-array name="pref_track_style_usage">
-        <item>Always</item>
-        <item>In the diagram screen</item>
-        <item>Never</item>
-    </string-array>
-    <string-array name="pref_track_style">
-        <item>Purple Rain</item>
-        <item>Pink Mist</item>
-        <item>Rainbow Warrior</item>
-        <item>Height Map</item>
-        <item>Bright Night</item>
-        <item>Mondriaan</item>
-    </string-array>
-    <string-array name="pref_theme_setting">
-        <item>System</item>
-        <item>Light</item>
-        <item>Dark</item>
-    </string-array>
-    <string-array name="pref_unit_systems">
-        <item>Metric</item>
-        <item>Metric with m/s</item>
-        <item>Imperial</item>
-        <item>Imperial with meters</item>
-        <item>US Customary</item>
-    </string-array>
-    <string-array name="pref_time_format">
-        <item>System Default</item>
-        <item>12:08 PM</item>
-        <item>15:23</item>
-    </string-array>
-    <string-array name="pref_date_format">
-        <item>System Default</item>
-        <item>2001-07-24</item>
-        <item>2001.07.24</item>
-        <item>2001/07/24</item>
-        <item>24-07-2001</item>
-        <item>24.07.2001</item>
-        <item>24/07/2001</item>
-        <item>07/24/2001</item>
-    </string-array>
-    <string-array name="pref_first_day_of_week">
-        <item>System Default</item>
-        <item>Sunday</item>
-        <item>Monday</item>
-        <item>Tuesday</item>
-        <item>Wednesday</item>
-        <item>Thursday</item>
-        <item>Friday</item>
-        <item>Saturday</item>
-    </string-array>
+    <string name="showWorkoutZoomControlsSummary">Enable zoom and pan controls in the map while recording GPS workouts</string>
+    <string name="showWorkoutZoomControlsTitle">Zooming and panning</string>
+    <string name="zoomWithVolumeButtonsSummary">Volume up and down controls zooming in and out</string>
+    <string name="zoomWithVolumeButtonsTitle">Zoom with volume buttons</string>
+    <string name="hidden">Hidden</string>
+    <!-- strings for string arrays -->
+    <string name="identifiable_visibility">Identifiable</string>
+    <string name="trackable_visibility">Trackable</string>
+    <string name="private_visibility">Private</string>
+    <string name="kcal_unit">kcal</string>
+    <string name="joule_unit">Joule</string>
+    <string name="always_mode">Always</string>
+    <string name="only_on_headphones_mode">Only on headphones</string>
+    <string name="mapnik_default_osm_mapstyle">Mapnik
+\nDefault OSM mapstyle</string>
+    <string name="humanitarian_clean_map_but_sometimes_not_available">Humanitarian
+\nClean map, but not always available</string>
+    <string name="offline_local_map_file_with_local_render_theme">Offline
+\nLocal map file with locally rendered theme</string>
+    <string name="always_track_style">Always</string>
+    <string name="in_the_diagram_screen_track_style">In the diagram screen</string>
+    <string name="never_track_style">Never</string>
+    <string name="purple_rain">Purple Rain</string>
+    <string name="pink_mist">Pink Mist</string>
+    <string name="rainbow_warrior">Rainbow Warrior</string>
+    <string name="height_map">Height Map</string>
+    <string name="bright_night">Bright Night</string>
+    <string name="mondriaan">Mondriaan</string>
+    <string name="system_theme">System</string>
+    <string name="light_theme">Light</string>
+    <string name="dark_theme">Dark</string>
+    <string name="metric_unit_system">Metric</string>
+    <string name="metric_with_m_s_unit_system">Metric with m/s</string>
+    <string name="imperial_unit_system">Imperial</string>
+    <string name="imperial_with_meters_unit_system">Imperial with meters</string>
+    <string name="us_customary_unit_system">US Customary</string>
+    <string name="system_default">System default</string>
+    <string name="sunday">Sunday</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="downloading">Downloading…</string>
+    <string name="exportTargetDirectory">Directory</string>
+    <string name="exportTargetHttpPost">HTTP POST request</string>
+    <string name="autoBackupTitle">Automatic backups</string>
+    <string name="workoutGPXExportTitle">Workout GPX exports</string>
+    <string name="hintConfigureExportTargets">Add targets files should be exported to.</string>
+    <string name="deleteExportTargetConfirmation">Delete this export target\?</string>
+    <string name="autoExportWorkoutsSummary">Export newly recorded workouts</string>
+    <string name="autoExportBackupTitle">Automatic app backups</string>
+    <string name="autoExportBackupSummary">Export backups automatically</string>
+    <string name="autoExportBackupExplanation">At the specified interval a backup will be exported here:</string>
+    <string name="autoExportWorkoutExplanation">After a new workout is recorded, a GPX-export will be saved here:</string>
+    <string name="exportIntervalTitle">Backup interval</string>
+    <string name="takeBackups1">Every day</string>
+    <string name="takeBackups2">Every second day</string>
+    <string name="takeBackups3">Every third day</string>
+    <string name="takeBackups7">Every week</string>
+    <string name="takeBackups14">Every second week</string>
+    <string name="selectExportTarget">Select export target</string>
+    <string name="configureHttpPostRequest">Configure HTTP POST request</string>
+    <string name="httpUrl">URL</string>
+    <string name="enterValidUrl">Enter a valid HTTP URL</string>
+    <string name="debugShareLogsTitle">Share logs</string>
+    <string name="debugShareLogsSummary">Share logs that contain useful data to find bugs in the workout recorder. Usually they do not contain location data.</string>
+    <string name="debugSensorsTitle">Debug sensors</string>
+    <string name="debugSensorsSummary">Collect sensor data which is written into the log file</string>
+    <string name="debugPressureSensor">Debug pressure sensor</string>
+    <string name="calibrating">Calibrating</string>
+    <string name="noSensorAvailable">No sensor available</string>
+    <plurals name="satelliteCount">
+        <item quantity="zero">No satellites</item>
+        <item quantity="one">One satellite</item>
+        <item quantity="other">%d satellites</item>
+    </plurals>
 </resources>

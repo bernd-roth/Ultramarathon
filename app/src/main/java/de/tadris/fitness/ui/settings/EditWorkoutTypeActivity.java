@@ -31,6 +31,7 @@ import java.util.regex.Pattern;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
+import de.tadris.fitness.data.RecordingType;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.data.WorkoutTypeManager;
 import de.tadris.fitness.ui.dialog.IconPickerDialog;
@@ -68,7 +69,7 @@ public class EditWorkoutTypeActivity extends InformationActivity implements Icon
         if (workoutTypeId.equals("")) {
             isNewType = true;
             // TODO indoor
-            type = new WorkoutType("", "", 5, getThemePrimaryColor(), Icon.RUNNING.name, 0, WorkoutType.RecordingType.GPS.id);
+            type = new WorkoutType("", "", 5, getThemePrimaryColor(), Icon.RUNNING.name, 0, RecordingType.GPS.id);
         } else {
             isNewType = false;
             type = Instance.getInstance(this).db.workoutTypeDao().findById(workoutTypeId);

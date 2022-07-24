@@ -2,10 +2,7 @@ package de.tadris.fitness.ui.statistics;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.service.autofill.OnClickAction;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,15 +10,12 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.WorkoutTypeFilter;
+import de.tadris.fitness.data.RecordingType;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.data.WorkoutTypeManager;
 import de.tadris.fitness.ui.FitoTrackActivity;
@@ -51,7 +45,7 @@ public class WorkoutTypeSelection extends LinearLayout {
         // The init
         typeAll = new WorkoutType(WorkoutTypeFilter.ID_ALL,
                 getContext().getString(R.string.workoutTypeAll), 0,
-                Color.WHITE, "list", 0, WorkoutType.RecordingType.GPS.id);
+                Color.WHITE, "list", 0, RecordingType.GPS.id);
         setSelectedWorkoutTypes(createWorkoutTypeList(context,typeAll));
     }
 

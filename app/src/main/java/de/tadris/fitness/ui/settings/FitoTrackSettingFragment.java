@@ -73,6 +73,10 @@ public abstract class FitoTrackSettingFragment extends PreferenceFragmentCompat 
 
         // Trigger the listener immediately with the preference's
         // current value.
+        triggerChangeListener(preference);
+    }
+
+    protected static void triggerChangeListener(Preference preference){
         sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
                 PreferenceManager
                         .getDefaultSharedPreferences(preference.getContext())

@@ -19,7 +19,7 @@
 
 package de.tadris.fitness.recording.indoor.exercise
 
-import de.tadris.fitness.recording.indoor.FitoTrackSensorOption
+import de.tadris.fitness.recording.component.FitoTrackSensorOption
 import org.greenrobot.eventbus.EventBus
 
 /**

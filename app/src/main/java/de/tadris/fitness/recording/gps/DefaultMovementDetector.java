@@ -27,6 +27,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import de.tadris.fitness.data.BaseWorkout;
+import de.tadris.fitness.recording.component.GpsComponent;
 import de.tadris.fitness.recording.event.LocationChangeEvent;
 
 /**
@@ -86,8 +87,8 @@ public class DefaultMovementDetector extends MovementDetector {
                 Log.d(TAG, "onLocationChange: last present");
                 // Checks whether the minimum distance to last sample was reached
                 // and if the time difference to the last sample is too small
-                distance = Math.abs(GpsRecorderService.locationToLatLong(lastLocation).
-                        sphericalDistance(GpsRecorderService.locationToLatLong(location)));
+                distance = Math.abs(GpsComponent.locationToLatLong(lastLocation).
+                        sphericalDistance(GpsComponent.locationToLatLong(location)));
                 long timeDiff = (location.getElapsedRealtimeNanos() -
                         lastLocation.getElapsedRealtimeNanos()) / 1_000_000L;
                 if (distance < workout.getWorkoutType(context).minDistance || timeDiff < 500) {

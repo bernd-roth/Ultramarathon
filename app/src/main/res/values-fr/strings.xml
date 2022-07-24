@@ -227,46 +227,22 @@
     <string name="announcementSuppressDuringCall">Supprimer durant l\'appel</string>
     <string name="no_workouts_recorded">Aucun entraînement enregistré</string>
     <string name="sections">Sections</string>
-    <string-array name="pref_energy_units">
-        <item>kcal</item>
-        <item>Joule</item>
-    </string-array>
-    <string-array name="pref_announcement_mode">
-        <item>Toujours</item>
-        <item>Seulement avec des écouteurs</item>
-    </string-array>
-    <string-array name="pref_theme_setting">
-        <item>System</item>
-        <item>Clair</item>
-        <item>Sombre</item>
-    </string-array>
-    <string-array name="pref_unit_systems">
-        <item>Métrique</item>
-        <item>Métrique en m/s</item>
-        <item>Impériale</item>
-        <item>Impériale en mètres</item>
-        <item>US Customary</item>
-    </string-array>
-    <string-array name="pref_time_format">
-        <item>Valeur par défaut</item>
-        <item>12:08 PM</item>
-        <item>15:23</item>
-    </string-array>
-    <string-array name="pref_date_format">
-        <item>Valeur par défaut</item>
-        <item>2001-07-24</item>
-        <item>2001.07.24</item>
-        <item>2001/07/24</item>
-        <item>24-07-2001</item>
-        <item>24.07.2001</item>
-        <item>24/07/2001</item>
-        <item>07/24/2001</item>
-    </string-array>
-    <string-array name="osm_track_visibility">
-        <item>Identifiable</item>
-        <item>Traçable</item>
-        <item>Privé</item>
-    </string-array>
+    <string name="kcal_unit">kcal</string>
+    <string name="joule_unit">Joule</string>
+    <string name="always_mode">Toujours</string>
+    <string name="only_on_headphones_mode">Seulement avec des écouteurs</string>
+    <string name="system_theme">System</string>
+    <string name="light_theme">Clair</string>
+    <string name="dark_theme">Sombre</string>
+    <string name="metric_unit_system">Métrique</string>
+    <string name="metric_with_m_s_unit_system">Métrique en m/s</string>
+    <string name="imperial_unit_system">Impériale</string>
+    <string name="imperial_with_meters_unit_system">Impériale en mètres</string>
+    <string name="us_customary_unit_system">US Customary</string>
+    <string name="system_default">Valeur par défaut</string>
+    <string name="identifiable_visibility">Identifiable</string>
+    <string name="trackable_visibility">Traçable</string>
+    <string name="private_visibility">Privé</string>
     <string name="trackerWaitingMessage">En attente du début de la séance</string>
     <string name="speedLastMinute">Vit. moy. (dernière minute)</string>
     <string name="speedLastMinuteSpoken">Vitesse durant la dernière minute</string>

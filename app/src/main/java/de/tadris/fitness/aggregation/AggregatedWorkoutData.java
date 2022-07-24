@@ -86,7 +86,7 @@ public class AggregatedWorkoutData {
         Calendar calendar = Calendar.getInstance();
 
         // attempt to get the Instance an use the app preferences
-        Instance i = Instance.getInstance(null);
+        Instance i = Instance.getInstance();
         if (i != null) {
             calendar = i.userDateTimeUtils.getCalendarInstance();
         }

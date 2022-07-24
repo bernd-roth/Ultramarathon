@@ -2,7 +2,6 @@ package de.tadris.fitness.ui.statistics;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
@@ -22,13 +21,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationSpan;
 import de.tadris.fitness.data.StatsDataProvider;
-import de.tadris.fitness.data.UserPreferences;
 import de.tadris.fitness.data.WorkoutTypeManager;
+import de.tadris.fitness.data.preferences.UserPreferences;
 import de.tadris.fitness.util.WorkoutProperty;
 import de.tadris.fitness.util.exceptions.NoDataException;
 import de.tadris.fitness.util.statistics.InstanceFormatter;

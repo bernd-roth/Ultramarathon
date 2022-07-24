@@ -84,6 +84,9 @@ class InformationAnnouncements(
                 return
             }
             val speed: Float = recorder.currentSpeed.toFloat()
+            if (speed == 0f) {
+                return;
+            }
             if (lowerTargetSpeedLimit != 0f && lowerTargetSpeedLimit > speed) {
                 TTSController.speak(context.getString(R.string.ttsBelowTargetSpeed) + ".")
                 TTSController.speak(CurrentSpeed(context).getSpokenText(recorder))

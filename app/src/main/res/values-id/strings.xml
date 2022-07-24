@@ -161,7 +161,7 @@
     <string name="gpsFound">Sinyal GPS ditemukan</string>
     <string name="enterWorkout">Masukkan Latihan</string>
     <string name="workoutTypeTrampolineJumping">Lompat Trampolin</string>
-    <string name="importBackupMessage">PERINGATAN: Semua data anda di aplikasi akan dihapus. Jika anda tidak ingin data itu hilang, harap lakukan pencadangan. Anda yakin untuk memulihkan cadangan ini\?</string>
+    <string name="importBackupMessage">Cadangkan data Anda saat ini jika Anda ingin menyimpannya. Pulihkan cadangan sebelumnya sekarang\?</string>
     <string name="pref_announcements_config_title">Pemicu Pengumuman</string>
     <string name="pref_announcements_config_summary">Pilih waktu dan jarak antara pengumuman suara</string>
     <string name="workoutPauseDuration">Durasi Jeda</string>
@@ -188,4 +188,30 @@
     <plurals name="workoutStep">
         <item quantity="other">Langkah</item>
     </plurals>
+    <string name="trackingInfoDescription">Info tentang pelacak lari</string>
+    <string name="cancel">Batal</string>
+    <string name="exportAsGpxFile">Ekspor sebagai file GPX</string>
+    <string name="pref_step_length">Panjang langkah</string>
+    <string name="exportDataSummary">Ini akan mencadangan semua latihan</string>
+    <string name="trackStyle">Gaya Track</string>
+    <string name="prefTrackStyleUsageTitle">Gunakan pewarnaan trek secara otomatis</string>
+    <string name="trackVisibilityPref">Visibilitas Trek</string>
+    <string name="pref_announcement_mode">Mode Pengumuman</string>
+    <string name="cannotStart">Tidak dapat memulai</string>
+    <string name="add_interval">Tambahkan Interval</string>
+    <string name="edit_interval">Ubah Interval</string>
+    <string name="manageIntervalSets">Atur Set Interval</string>
+    <string name="manageIntervalsSummary">Edit set interval yang dapat Anda gunakan selama latihan menggunakan umpan balik suara.</string>
+    <string name="createIntervalSet">Buat Set Interval Baru</string>
+    <string name="create">Buat</string>
+    <string name="hintManageIntervalSets">Tambahkan set interval untuk menggunakannya dalam latihan Anda.</string>
+    <string name="selectIntervalSet">Pilih Set Interval</string>
+    <string name="importBackup">Impor Cadangan Data</string>
+    <string name="importBackupSummary">Pulihkan cadangan sebelumnya</string>
+    <string name="deleteIntervalSet">Hapus Set Interval</string>
+    <string name="heartRateSensorBattery">Sensor Baterai</string>
+    <string name="cut">Potong 300 m pertama/terakhir</string>
+    <string name="hintEditIntervalSet">Tambahkan interval yang akan diucapkan.</string>
+    <string name="deleteIntervalSetMessage">Apakah Anda ingin menghapus set interval\?</string>
+    <string name="intervalSetSelected">Set Interval dipilih</string>
 </resources>

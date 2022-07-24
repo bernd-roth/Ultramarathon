@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -26,7 +26,7 @@ enum class AnnouncementMode {
 
     companion object {
 
-        fun getCurrentMode(context: Context?): AnnouncementMode {
+        fun getCurrentMode(context: Context): AnnouncementMode {
             return when (PreferenceManager.getDefaultSharedPreferences(context)
                 .getString("announcementMode", "headphones")!!) {
                 "always" -> ALWAYS

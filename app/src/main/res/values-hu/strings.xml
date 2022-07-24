@@ -32,7 +32,7 @@
     <string name="finished">Befejeződött</string>
     <string name="loadingFile">Fájl betöltése</string>
     <string name="chooseBackupFile">Biztonsági mentés fájl kiválasztása</string>
-    <string name="importBackupMessage">FIGYELMEZTETÉS: Az alkalmazásban található összes meglévő adat törölve lesz. Ha nem szeretné elveszíteni azokat, akkor először készítsen egy másik biztonsági mentést. Biztosan vissza szeretné állítani ezt a biztonsági mentést?</string>
+    <string name="importBackupMessage">Most készítsen biztonsági mentést a jelenlegi adatairól, ha meg szeretné tartani azokat. Visszaállítja most a biztonsági mentés előtt\?</string>
     <string name="restore">Visszaállítás</string>
     <string name="backup">Biztonsági mentés</string>
     <string name="setPreferencesTitle">Beállítások megadása</string>
@@ -135,20 +135,14 @@
     <string name="theme">Téma</string>
     <string name="hintRestart">Indítsa újra az alkalmazást a változtatások alkalmazásához</string>
     <string name="noComment">Nincs megjegyzés</string>
-    <string-array name="pref_announcement_mode">
-        <item>Mindig</item>
-        <item>Csak fülhallgatón</item>
-    </string-array>
-    <string-array name="pref_theme_setting">
-        <item>System</item>
-        <item>Világos</item>
-        <item>Sötét</item>
-    </string-array>
-    <string-array name="osm_track_visibility">
-        <item>Azonosítható</item>
-        <item>Követhető</item>
-        <item>Személyes</item>
-    </string-array>
+    <string name="always_mode">Mindig</string>
+    <string name="only_on_headphones_mode">Csak fülhallgatón</string>
+    <string name="system_theme">Rendszer</string>
+    <string name="light_theme">Világos</string>
+    <string name="dark_theme">Sötét</string>
+    <string name="identifiable_visibility">Azonosítható</string>
+    <string name="trackable_visibility">Követhető</string>
+    <string name="private_visibility">Személyes</string>
     <string name="intervalSet">Intervallumsorozat</string>
     <string name="singleWorkout">Önálló edzés</string>
     <string name="no_workouts_recorded">Nincsenek edzések rögzítve</string>
@@ -313,7 +307,7 @@
     <string name="workoutTypeEditId">Azonosító</string>
     <string name="hintManageWorkoutTypes">Kattintson a pluszra az egyéni edzéstípusok hozzáadásához.</string>
     <string name="workoutTypeAdd">Hozzáadás</string>
-    <string name="pref_auto_start_mode_unknown">Ismeretlen mód (ne válassza)</string>
+    <string name="pref_auto_start_mode_unknown">Ismeretlen (ne használja)</string>
     <string name="pref_auto_start_mode_on_move">Várakozás, amíg elkezd mozogni</string>
     <string name="pref_auto_start_mode_wait_for_gps">Várakozás pontos GPS-helyzetre</string>
     <string name="pref_auto_start_mode_instant">Indítás azonnal</string>
@@ -361,9 +355,9 @@
     <string name="cancelDownloadConfirmation">Meg szeretné szakítani a jelenlegi letöltést\?</string>
     <string name="actionCancelDownload">Letöltés megszakítása</string>
     <string name="alreadyDownloading">Egy fájl már letöltés alatt van</string>
-    <string name="downloadMapConfirmation">Le szeretné tölteni a(z) %s térképfájlt\?</string>
+    <string name="downloadMapConfirmation">Letölti a(z) „%s” térképfájlt\?</string>
     <string name="actionDownloadMap">Térkép letöltése</string>
-    <string name="overwriteMapConfirmation">Felül szeretné írni a meglévő %s térképfájlt\?</string>
+    <string name="overwriteMapConfirmation">Felülírja a meglévő „%s” térképfájlt\?</string>
     <string name="downloadMapsSpecifyDirectory">Először adjon meg egy könyvtárat a kapcsolat nélküli térképekhez</string>
     <string name="downloadMapsTitle">Térképek letöltése</string>
     <string name="actionImportMultiple">Több importálása</string>
@@ -429,7 +423,7 @@
     <string name="auto">Automatikus</string>
     <string name="noColoring">Nincs színezés</string>
     <string name="pref_announcements_pace_control_summary">Figyelmeztessen, ha egy megadott sebesség alatt vagy fölött van</string>
-    <string name="pref_announcements_pace_control_title">Tempószabályzási figyelmeztetések</string>
+    <string name="pref_announcements_pace_control_title">Tempófigyelmeztetések</string>
     <string name="workoutMaxHeight">Legnagyobb magasság</string>
     <string name="pref_step_length">Lépés hossza</string>
     <string name="edit_interval">Intervallum szerkesztése</string>
@@ -444,4 +438,60 @@
     <string name="recordingActivityPermissionMessage">A FitoTrack alkalmazásnak szüksége van a fizikai tevékenysége követésének engedélyére a beltéri edzések rögzítéséhez.</string>
     <string name="invalidNumberFormat">Érvénytelen számformátum.</string>
     <string name="fileNotFound">A fájl nem található</string>
+    <string name="offline_local_map_file_with_local_render_theme">Kapcsolat nélküli
+\nHelyi térképfájl helyileg megjelenített témával</string>
+    <string name="rainbow_warrior">Szivárványharcos</string>
+    <string name="metric_unit_system">Metrikus</string>
+    <string name="imperial_unit_system">Birodalmi</string>
+    <string name="us_customary_unit_system">Egyesült Államokban használt mértékegység</string>
+    <string name="sunday">Vasárnap</string>
+    <string name="wednesday">Szerda</string>
+    <string name="thursday">Csütörtök</string>
+    <string name="friday">Péntek</string>
+    <string name="heartRateSensorBattery">Érzékelő akkumulátora</string>
+    <string name="unitHeartRateSensorBattery">%</string>
+    <string name="showWorkoutZoomControlsSummary">Nagyítás és pásztázás vezérlők engedélyezése a térképen a GPS edzések rögzítése közben</string>
+    <string name="hidden">Rejtett</string>
+    <string name="autoExportBackupTitle">Automatikus alkalmazás biztonsági mentések</string>
+    <string name="configureHttpPostRequest">HTTP POST kérés beállítása</string>
+    <string name="showWorkoutZoomControlsTitle">Nagyítás és pásztázás</string>
+    <string name="kcal_unit">kcal</string>
+    <string name="joule_unit">Joule</string>
+    <string name="mapnik_default_osm_mapstyle">Mapnik
+\nAlapértelmezett OSM térképstílus</string>
+    <string name="humanitarian_clean_map_but_sometimes_not_available">Humanitárius
+\nLetisztult térkép, de nem mindig érhető el</string>
+    <string name="always_track_style">Mindig</string>
+    <string name="in_the_diagram_screen_track_style">A diagram képernyőn</string>
+    <string name="never_track_style">Soha</string>
+    <string name="purple_rain">Lila eső</string>
+    <string name="pink_mist">Rózsaszín köd</string>
+    <string name="height_map">Magasságtérkép</string>
+    <string name="bright_night">Fényes éjszaka</string>
+    <string name="mondriaan">Mondriaan</string>
+    <string name="metric_with_m_s_unit_system">Metrikus m/s mértékegységgel</string>
+    <string name="imperial_with_meters_unit_system">Birodalmi méterrel</string>
+    <string name="system_default">Rendszer alapértelmezettje</string>
+    <string name="monday">Hétfő</string>
+    <string name="tuesday">Kedd</string>
+    <string name="saturday">Szombat</string>
+    <string name="exportTargetDirectory">Könyvtár</string>
+    <string name="exportTargetHttpPost">HTTP POST kérés</string>
+    <string name="autoBackupTitle">Automatikus biztonsági mentések</string>
+    <string name="workoutGPXExportTitle">Edzés GPX exportálásai</string>
+    <string name="hintConfigureExportTargets">Célfájlok hozzáadása, amelyekbe exportálni kell.</string>
+    <string name="deleteExportTargetConfirmation">Törli ezt az exportálási célt\?</string>
+    <string name="autoExportWorkoutsSummary">Újonnan rögzített edzések exportálása</string>
+    <string name="autoExportBackupSummary">Biztonsági mentések automatikus exportálása</string>
+    <string name="autoExportBackupExplanation">A megadott időközönként egy biztonsági mentés ide lesz exportálva:</string>
+    <string name="autoExportWorkoutExplanation">Egy új edzés rögzítése után egy GPX-exportálás lesz ide elmentve:</string>
+    <string name="exportIntervalTitle">Biztonsági mentés készítésének időköze</string>
+    <string name="takeBackups1">Minden nap</string>
+    <string name="takeBackups2">Minden második nap</string>
+    <string name="takeBackups3">Minden harmadik nap</string>
+    <string name="takeBackups7">Minden héten</string>
+    <string name="takeBackups14">Minden második héten</string>
+    <string name="selectExportTarget">Exportálási cél kiválasztása</string>
+    <string name="httpUrl">URL</string>
+    <string name="enterValidUrl">Adjon meg egy érvényes HTTP URL-t</string>
 </resources>

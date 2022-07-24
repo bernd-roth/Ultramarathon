@@ -50,7 +50,7 @@
     <string name="per">per</string>
     <string name="timeSecondsPlural">Sekunder</string>
     <string name="timeSecondsSingular">Sekund</string>
-    <string name="preferenceFirstDayOfWeek">Veckans första dag</string>
+    <string name="preferenceFirstDayOfWeek">Veckans början</string>
     <string name="preferenceTimeFormat">Tidsformat</string>
     <string name="preferenceDateFormat">Datumformat</string>
     <string name="preferencesCategoryMap">Karta</string>
@@ -213,7 +213,7 @@
     <string name="autoStartCountdownMsgGps">Startar träningspasset så snart GPS-positionen är tillräckligt precis</string>
     <string name="downloading">Laddar ned…</string>
     <string name="alreadyDownloading">En fil håller redan på att laddas ned</string>
-    <string name="overwriteMapConfirmation">Vill du skriva över den existerande kartfilen %s\?</string>
+    <string name="overwriteMapConfirmation">Ska den existerande kartfilen \\\"%s\\\" skrivas över\?</string>
     <string name="downloadMapsTitle">Ladda ned kartor</string>
     <string name="heartRateNotAvailable">Puls är för närvarande inte tillgängligt.</string>
     <string name="workoutStopped">Träningspass stoppat</string>
@@ -240,7 +240,7 @@
     <string name="nfcStartTitle">Skanna för att starta</string>
     <string name="nfcStartSummary">Om det är aktiverat kommer du kunna starta och stoppa träningspass genom att skanna en NFC-tagg</string>
     <string name="dialog_nfc_disabled">För att kunna använda NFC-taggar för att starta och stoppa träningspass måste du först aktivera NFC i enhetens inställningar</string>
-    <string name="pref_announcements_pace_control_title">Varningar för tempokontroll</string>
+    <string name="pref_announcements_pace_control_title">Tempovarningar</string>
     <string name="autoStartCountdownMsg">Starta träningspasset om</string>
     <string name="customAutoStartDelay">Annan</string>
     <string name="noAutoStartDelay">Ingen</string>
@@ -297,7 +297,7 @@
     <string name="workoutResumed">Träningspass återupptaget</string>
     <string name="workoutPaused">Träningspass pausat</string>
     <string name="actionSave">Spara</string>
-    <string name="downloadMapConfirmation">Vill du ladda ned kartfilen %s\?</string>
+    <string name="downloadMapConfirmation">Ladda ned kartfilen \\\"%s\\\"\?</string>
     <string name="actionDownloadMap">Ladda ned karta</string>
     <string name="announcementSuppressDuringCall">Förhindra under telefonsamtal</string>
     <string name="invalidNumberFormat">Ogiltigt nummerformat.</string>
@@ -306,7 +306,7 @@
     <string name="pref_auto_start_mode_wait_for_gps">Vänta på noggrann GPS-position</string>
     <string name="selectColoring">Välj färgsättning</string>
     <string name="pref_auto_start_mode_on_move">Väntar på att du börjar röra dig</string>
-    <string name="cut">Klipp bort de första/sista 300 meterna</string>
+    <string name="cut">Klipp bort de första/sista 300 m</string>
     <string name="pref_announcement_mode">Meddelandeläge</string>
     <string name="exportDataSummary">Detta gör en säkerhetskopia av alla träningspass</string>
     <string name="trackingInfoDescription">Information om att spåraren är startad</string>
@@ -348,7 +348,7 @@
     <string name="preferenceUseAverageForCurrentSpeed">Använd snitthastigheten över en viss tid istället för den senaste hastighetsmätningen för beräkning av nuvarande hastighet.</string>
     <string name="importBackup">Importera säkerhetskopia</string>
     <string name="importBackupSummary">Återställ säkerhetskopierad data</string>
-    <string name="pref_auto_start_mode_unknown">Okänt läge (välj inte detta)</string>
+    <string name="pref_auto_start_mode_unknown">Okänt (använd inte detta)</string>
     <string name="unitMilesPlural">Engelska mil</string>
     <string name="preferenceCurrentSpeedTime">Tidsspann för beräkning av snitt</string>
     <string name="avgSpeedTotalShort">Snitthastighet (totalt)</string>
@@ -405,7 +405,7 @@
     <string name="recordingActivityPermissionMessage">FitoTrack behöver behörighet att mäta din fysiska aktivitet för att kunna spara träningspass inomhus.</string>
     <string name="recordingPermissionNotGrantedMessage">FitoTrack behöver tillgång till enhetens plats för att spåra din förflyttning under dina träningspass. FitoTrack samlar också in platsdata medan appen är i bakgrunden eller skärmen är avstängd, för att spela in dina träningspass. Platsdatan stannar alltid i din telefon så länge du inte ger ditt uttryckliga tillstånd att dela den.</string>
     <string name="manageIntervalsSummary">Redigera de intervallset du kommer att kunna använda under träningspass med hjälp av röståterkoppling.</string>
-    <string name="importBackupMessage">VARNING: Alla dina existerande data i appen kommer att raderas. Om du inte vill förlora dem, spara först en ny säkerhetskopia. Är du säker på att du vill återställa denna säkerhetskopia\?</string>
+    <string name="importBackupMessage">Säkerhetskopiera din nuvarande data nu om du vill behålla den. Ska tidigare säkerhetskopia återställas nu\?</string>
     <plurals name="workoutJump">
         <item quantity="one">Hopp</item>
         <item quantity="other">Hopp</item>
@@ -431,4 +431,28 @@
         <item quantity="one">Importerade ett träningspass</item>
         <item quantity="other">Importerade %d träningspass</item>
     </plurals>
+    <string name="hidden">Dold</string>
+    <string name="identifiable_visibility">Identifierbar</string>
+    <string name="private_visibility">Privat</string>
+    <string name="kcal_unit">kcal</string>
+    <string name="joule_unit">Joule</string>
+    <string name="always_mode">Alltid</string>
+    <string name="only_on_headphones_mode">Bara i hörlurar</string>
+    <string name="mapnik_default_osm_mapstyle">Mapnik
+\nOSM:s standardkartstil</string>
+    <string name="always_track_style">Alltid</string>
+    <string name="never_track_style">Aldrig</string>
+    <string name="system_theme">System</string>
+    <string name="light_theme">Ljust</string>
+    <string name="dark_theme">Mörkt</string>
+    <string name="system_default">Systemstandard</string>
+    <string name="sunday">Söndag</string>
+    <string name="monday">Måndag</string>
+    <string name="tuesday">Tisdag</string>
+    <string name="wednesday">Onsdag</string>
+    <string name="thursday">Torsdag</string>
+    <string name="friday">Fredag</string>
+    <string name="saturday">Lördag</string>
+    <string name="in_the_diagram_screen_track_style">På diagramskärmen</string>
+    <string name="height_map">Höjdkarta</string>
 </resources>

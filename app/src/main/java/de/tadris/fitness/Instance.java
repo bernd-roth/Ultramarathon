@@ -28,20 +28,27 @@ import java.util.List;
 import de.tadris.fitness.data.AppDatabase;
 import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.GpsWorkout;
-import de.tadris.fitness.data.UserPreferences;
-import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.data.WorkoutTypeManager;
+import de.tadris.fitness.data.preferences.UserPreferences;
 import de.tadris.fitness.recording.BaseWorkoutRecorder;
 import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
 import de.tadris.fitness.util.DataManager;
 import de.tadris.fitness.util.FitoTrackThemes;
 import de.tadris.fitness.util.UserDateTimeUtils;
+import de.tadris.fitness.util.WorkoutLogger;
+import de.tadris.fitness.util.autoexport.AutoExportPlanner;
 import de.tadris.fitness.util.unit.DistanceUnitUtils;
 import de.tadris.fitness.util.unit.EnergyUnitUtils;
 
 public class Instance {
 
     private static Instance instance;
+
+    @Deprecated
+    public static Instance getInstance(){
+        return getInstance(null);
+    }
+
     public static Instance getInstance(Context context){
         if (context == null) {
             Log.e("Instance", "no Context Provided");
@@ -59,6 +66,8 @@ public class Instance {
     public final UserDateTimeUtils userDateTimeUtils;
     public final DistanceUnitUtils distanceUnitUtils;
     public final EnergyUnitUtils energyUnitUtils;
+    public final AutoExportPlanner planner;
+    public final WorkoutLogger logger;
 
     private Instance(Context context) {
         instance = this;
@@ -68,6 +77,8 @@ public class Instance {
         distanceUnitUtils = new DistanceUnitUtils(context);
         energyUnitUtils = new EnergyUnitUtils(context);
         db = AppDatabase.provideDatabase(context);
+        planner = new AutoExportPlanner(context);
+        logger = new WorkoutLogger(context);
 
         recorder = restoreRecorder(context);
 
