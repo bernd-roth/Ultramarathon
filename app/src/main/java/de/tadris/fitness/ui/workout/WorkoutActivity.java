@@ -200,7 +200,7 @@ public abstract class WorkoutActivity extends InformationActivity {
 
             @Override
             public void onChartDoubleTapped(MotionEvent me) {
-
+                updateChart(chart, converters, showIntervalSets);
             }
 
             @Override

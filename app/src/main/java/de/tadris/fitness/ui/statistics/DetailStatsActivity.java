@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.BarLineChartBase;
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -109,7 +110,7 @@ public class DetailStatsActivity extends FitoTrackActivity {
 
             @Override
             public void onChartDoubleTapped(MotionEvent me) {
-
+                aggregateChart(chart);
             }
 
             @Override
@@ -124,11 +125,7 @@ public class DetailStatsActivity extends FitoTrackActivity {
 
             @Override
             public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
-                AggregationSpan newAggSpan = ChartStyles.statsAggregationSpan(chart);
-                if (aggregationSpan != newAggSpan) {
-                    aggregationSpan = newAggSpan;
-                    updateChart(workoutTypes);
-                }
+                aggregateChart(chart);
             }
 
             @Override
@@ -186,5 +183,17 @@ public class DetailStatsActivity extends FitoTrackActivity {
         } catch (NoDataException e) {
         }
         ChartStyles.updateCombinedChartToSpan(chart, combinedData, aggregationSpan, this);
+    }
+
+    /**
+     * Combines samples according to the zoom level.
+     * @param chart
+     */
+    private void aggregateChart(BarLineChartBase chart) {
+        AggregationSpan newAggSpan = ChartStyles.statsAggregationSpan(chart);
+        if (aggregationSpan != newAggSpan) {
+            aggregationSpan = newAggSpan;
+            updateChart(workoutTypes);
+        }
     }
 }

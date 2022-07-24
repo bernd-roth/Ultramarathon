@@ -101,6 +101,16 @@ public class StatsProvider {
         return dataSet;
     }
 
+    /**
+     * Uses a reduction method to calculate a single value from all entries in a specific time span
+     * for a given list of workout types and a given workout property.
+     * @param timeSpan All workouts done during this time span are respected.
+     * @param workoutTypes All workouts of a type present in this list are respected.
+     * @param property The property which should be used for the reduction.
+     * @param reduction The reduction method which should be used.
+     * @return A single value calculated by a reduction.
+     * @throws NoDataException in case there is no data fitting to the given parameters.
+     */
     public double getValue(StatsDataTypes.TimeSpan timeSpan, List<WorkoutType> workoutTypes, WorkoutProperty property, Reduction reduction) throws NoDataException
     {
         ArrayList<StatsDataTypes.DataPoint> values = dataProvider.getData(property, workoutTypes, timeSpan);
