@@ -35,13 +35,18 @@ import androidx.preference.Preference;
 import java.io.File;
 
 import de.tadris.fitness.BuildConfig;
+import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.export.RestoreController;
 import de.tadris.fitness.ui.ShareFileActivity;
 import de.tadris.fitness.ui.dialog.ProgressDialogController;
+import de.tadris.fitness.util.DataManager;
 import de.tadris.fitness.util.autoexport.AutoExportPlanner;
 import de.tadris.fitness.util.autoexport.source.BackupExportSource;
 import de.tadris.fitness.util.autoexport.source.ExportSource;
+import de.tadris.fitness.util.autoexport.source.WorkoutGpxExportSource;
+import de.tadris.fitness.util.io.GpxExporter;
+import de.tadris.fitness.util.io.MassExporter;
 
 public class BackupSettingsFragment extends FitoTrackSettingFragment {
 
@@ -57,6 +62,10 @@ public class BackupSettingsFragment extends FitoTrackSettingFragment {
         });
         findPreference("export").setOnPreferenceClickListener(preference -> {
             showExportDialog();
+            return true;
+        });
+        findPreference("massExportGPX").setOnPreferenceClickListener(preference -> {
+            massExportGpx();
             return true;
         });
         findPreference("autoExportWorkouts").setOnPreferenceClickListener(preference -> {
@@ -97,11 +106,33 @@ public class BackupSettingsFragment extends FitoTrackSettingFragment {
     }
 
     private void exportBackup() {
+        exportTask(progressDialog -> {
+            return new BackupExportSource(true).provideFile(
+                    requireContext(),
+                    (progress, action) -> mHandler.post(() -> dialogController.setProgress(progress, action))
+            );
+        });
+    }
+
+    private void massExportGpx() {
+        exportTask(progressDialog -> {
+            File file = DataManager.createSharableFile(BackupSettingsFragment.this, "workouts.gpx");
+            new MassExporter(
+                    Instance.getInstance(BackupSettingsFragment.this).db.gpsWorkoutDao(),
+                    new GpxExporter(),
+                    file,
+                    progress -> mHandler.post(() -> progressDialog.setProgress(progress))
+            ).export();
+            return file;
+        });
+    }
+
+    private void exportTask(BackupTask task){
         ProgressDialogController dialogController = new ProgressDialogController(requireActivity(), getString(R.string.backup));
         dialogController.show();
         new Thread(() -> {
             try {
-                File file = new BackupExportSource(true).provideFile(requireContext(), (progress, action) -> mHandler.post(() -> dialogController.setProgress(progress, action)));
+                File file = task.runAsyncTask(dialogController);
                 Uri uri = FileProvider.getUriForFile(requireContext(), BuildConfig.APPLICATION_ID + ".fileprovider", file);
                 mHandler.post(() -> {
                     dialogController.cancel();
@@ -213,4 +244,11 @@ public class BackupSettingsFragment extends FitoTrackSettingFragment {
     protected String getTitle() {
         return getString(R.string.preferencesBackupTitle);
     }
+
+    public interface BackupTask {
+
+        File runAsyncTask(ProgressDialogController progressDialog);
+
+    }
+
 }

@@ -40,15 +40,10 @@ class BackupExportSource(private val includeTimestamp: Boolean) : ExportSource {
 
     @Throws(Exception::class)
     fun provideFile(context: Context?, listener: ExportStatusListener?): File {
-        val file = DataManager.getSharedDirectory(context) + "/" + fileName
-        File(file).parentFile?.let { parent ->
-            if (!parent.exists() && !parent.mkdirs()) {
-                throw IOException("Cannot write")
-            }
-        }
-        val backupController = BackupController(context, File(file), listener)
+        val file = DataManager.createSharableFile(context, fileName)
+        val backupController = BackupController(context, file, listener)
         backupController.exportData()
-        return File(file)
+        return file
     }
 
     private val fileName: String

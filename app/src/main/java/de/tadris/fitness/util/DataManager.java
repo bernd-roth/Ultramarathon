@@ -23,6 +23,7 @@ import android.content.Context;
 import android.util.Log;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
 
 public class DataManager {
@@ -50,6 +51,18 @@ public class DataManager {
 
     public static String getSharedDirectory(Context context) {
         return context.getFilesDir().getAbsolutePath() + "/shared";
+    }
+
+    public static File createSharableFile(Context context, String filename) throws IOException {
+        String filePath = DataManager.getSharedDirectory(context) + "/" + filename;
+        File file = new File(filePath);
+        File parent = file.getParentFile();
+        if(parent != null){
+            if(!parent.exists() && !parent.mkdirs()){
+                throw new IOException("Cannot write to $file");
+            }
+        }
+        return file;
     }
 
 }

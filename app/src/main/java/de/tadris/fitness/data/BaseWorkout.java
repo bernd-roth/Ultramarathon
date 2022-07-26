@@ -44,6 +44,15 @@ public abstract class BaseWorkout {
     @ColumnInfo(name = "interval_set_used_id")
     public long intervalSetUsedId = 0;
 
+    // returns a file name string without suffix that can be used for exports
+    public String getExportFileName(){
+        if (!getSafeComment().isEmpty()) {
+            return String.format("workout-%s-%s", getSafeDateString(), getSafeComment());
+        } else {
+            return String.format("workout-%s", getSafeComment());
+        }
+    }
+
     @JsonIgnore
     public String getDateString() {
         return SimpleDateFormat.getDateTimeInstance().format(new Date(start));

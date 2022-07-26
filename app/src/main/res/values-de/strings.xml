@@ -501,4 +501,8 @@
     <string name="showWorkoutZoomControlsSummary">Zoomen und Verschieben der Karte beim Aufnehmen von GPS-Workouts aktivieren</string>
     <string name="showWorkoutZoomControlsTitle">Zoomen und Verschieben</string>
     <string name="unitHeartRateSensorBattery">%</string>
+    <string name="massExportGpxTitle">Alle Workouts als GPX exportieren</string>
+    <string name="massExportGpxTitle">A</string>
+    <string name="massExportGpxSummary">Erstellt eine ZIP-Datei, die alle Workouts als GPX-Dokument enthält</string>
+    <string name="massExportGpxSummary">E</string>
 </resources>
