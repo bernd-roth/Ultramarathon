@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -37,6 +37,7 @@ public class SpeedConverter extends AbstractSampleConverter {
 
     @Override
     public void onCreate(BaseWorkoutData data) {
+        WorkoutManager.recalculateSpeedValues(data.castToGpsData().getSamples());
         WorkoutManager.roundSpeedValues(data.castToGpsData().getSamples());
     }
 

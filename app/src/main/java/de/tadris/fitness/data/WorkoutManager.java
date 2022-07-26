@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -22,6 +22,20 @@ package de.tadris.fitness.data;
 import java.util.List;
 
 public class WorkoutManager {
+
+    public static void recalculateSpeedValues(List<GpsSample> samples) {
+        if (samples.isEmpty()) return;
+        samples.get(0).speed = 0.0;
+        for (int i = 1; i < samples.size(); i++) {
+            GpsSample last = samples.get(i - 1);
+            GpsSample current = samples.get(i);
+
+            double distanceDiff = current.toLatLong().sphericalDistance(last.toLatLong()); // meters
+            double timeDiff = (current.absoluteTime - last.absoluteTime) / 1000.0; // seconds
+
+            current.speed = distanceDiff / timeDiff; // m/s
+        }
+    }
 
     public static void roundSpeedValues(List<GpsSample> samples) {
         for (int i = 0; i < samples.size(); i++) {
