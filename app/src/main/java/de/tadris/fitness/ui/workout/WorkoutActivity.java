@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Handler;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
@@ -170,11 +171,7 @@ public abstract class WorkoutActivity extends InformationActivity {
     protected void onChartSelectionChanged(BaseSample sample) {
     }
 
-    protected List<BaseSample> aggregatedSamples(int bins, StatsDataTypes.TimeSpan viewFieldSpan) {
-        return aggregatedSamples(viewFieldSpan.length() / bins, viewFieldSpan) ;
-    }
-
-    abstract List<BaseSample> aggregatedSamples(long aggregationLength, StatsDataTypes.TimeSpan viewFieldSpan);
+    abstract List<BaseSample> aggregatedSamples(int aggregationLength, StatsDataTypes.TimeSpan viewFieldSpan);
 
     protected void updateChart(CombinedChart chart, List<SampleConverter> converters, boolean showIntervalSets) {
         boolean hasMultipleConverters = converters.size() > 1;
@@ -235,14 +232,23 @@ public abstract class WorkoutActivity extends InformationActivity {
 
         // Generate a time span from the view field of the chart
         StatsDataTypes.TimeSpan chartViewField = new StatsDataTypes.TimeSpan(Math.round(chart.getLowestVisibleX()*1000f*60f), Math.round(chart.getHighestVisibleX()*1000f*60f));
+
+        Log.d("charView", String.valueOf(chartViewField.startTime) + "   " + String.valueOf(chartViewField.endTime));
         // In case the
-        if (chartViewField.startTime == 0) {
+        /*long chartViewFieldDuration = chartViewField.endTime - chartViewField.startTime;
+        if (chartViewField.startTime < 0) {
+            chartViewField.startTime = 0;
+            chartViewField.endTime = chartViewFieldDuration;
+        }
+        if (chartViewField.endTime > samples.get(samples.size() - 1).relativeTime) {
+            chartViewField.endTime = samples.get(samples.size() - 1).relativeTime;
+            chartViewField.startTime = chartViewField.endTime - chartViewFieldDuration;
+        }*/
+        if (chartViewField.startTime == 0 && chartViewField.endTime == 0) {
             chartViewField.startTime = samples.get(0).relativeTime;
             chartViewField.endTime = samples.get(samples.size() - 1).relativeTime;
-        } else {
-            chartViewField.startTime = Math.max(0, chartViewField.startTime);
-            chartViewField.endTime = Math.min(samples.get(samples.size() - 1).relativeTime, chartViewField.endTime);
         }
+
 
         LineData lineData = new LineData();
 

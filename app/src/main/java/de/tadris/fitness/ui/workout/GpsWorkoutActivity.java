@@ -19,6 +19,11 @@
 
 package de.tadris.fitness.ui.workout;
 
+import static java.lang.Math.ceil;
+import static java.lang.Math.log;
+import static java.lang.Math.max;
+import static java.lang.Math.pow;
+
 import android.graphics.Color;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -37,6 +42,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.data.BaseSample;
@@ -153,7 +159,7 @@ public abstract class GpsWorkoutActivity extends WorkoutActivity implements MapS
             Paint pBlue = AndroidGraphicFactory.INSTANCE.createPaint();
             pBlue.setColor(Color.BLUE);
             for (WorkoutCalculator.Pause pause : WorkoutCalculator.getPausesFromWorkout(getBaseWorkoutData())) {
-                float radius = Math.min(10, Math.max(2, (float) Math.sqrt((float) pause.duration / 1000)));
+                float radius = Math.min(10, max(2, (float) Math.sqrt((float) pause.duration / 1000)));
                 mapView.addLayer(new FixedPixelCircle(pause.location, radius, pBlue, null));
             }
         }
@@ -236,70 +242,78 @@ public abstract class GpsWorkoutActivity extends WorkoutActivity implements MapS
     }
 
     @Override
-    protected List<BaseSample> aggregatedSamples(long aggregationLength, StatsDataTypes.TimeSpan viewFieldSpan) {
-        long endTime = samples.get(samples.size() - 1).relativeTime;
-        long sampleTime = samples.get(0).relativeTime;
+    protected List<BaseSample> aggregatedSamples(int maxSampleNumber, StatsDataTypes.TimeSpan viewFieldSpan) {
+
+        int firstViewFieldSampleOriginalIndex = 0;
 
         LinkedList<BaseSample> aggregatedSamples = new LinkedList<>();
         LinkedList<BaseSample> viewFieldSamples = new LinkedList<>();
 
         // Generating a list with all samples in the current view field
-        // Additionally one point before and after is added.
-        boolean foundSample = false;
         for (BaseSample sample : samples) {
             if (sample instanceof GpsSample) {
-                if (!viewFieldSpan.contains(sample.relativeTime) && !viewFieldSamples.isEmpty()) {
-                    if (!foundSample) {
-                        viewFieldSamples.removeLast();
-                    } else {
-                        viewFieldSamples.add(sample);
-                        break;
-                    }
-                } else if (!foundSample && viewFieldSpan.contains(sample.relativeTime)) {
-                    foundSample = true;
+                if (viewFieldSpan.contains(sample.relativeTime)) {
+                    viewFieldSamples.add(sample);
                 }
-
-                viewFieldSamples.add(sample);
+                if (viewFieldSamples.isEmpty()) {
+                    firstViewFieldSampleOriginalIndex++;
+                }
             }
         }
 
-        // Also add the last and the first samples to the list
-        viewFieldSamples.add(samples.get(samples.size()-1));
-        viewFieldSamples.add(0, samples.get(0));
-
-        while (sampleTime < endTime) {
-            GpsSample combinedSample = new GpsSample();
-            ArrayList<Double> lons = new ArrayList<>();
-            ArrayList<Double> lats = new ArrayList<>();
-
-            StatsDataTypes.TimeSpan span = new StatsDataTypes.TimeSpan(sampleTime, sampleTime + aggregationLength);
-
-            for (BaseSample sample : viewFieldSamples) {
-                if (sample instanceof GpsSample) {
-                    if (span.contains(sample.relativeTime)) {
-                        GpsSample gpsSample = (GpsSample) sample;
-                        combinedSample.speed += gpsSample.speed;
-                        combinedSample.elevationMSL += gpsSample.elevationMSL;
-                        combinedSample.tmpInclination += gpsSample.tmpInclination;
-                        lons.add(gpsSample.lon);
-                        lats.add(gpsSample.lat);
-                    }
-                }
-            }
-
-            long numberOfAggregations = lons.size();
-
-            if (numberOfAggregations != 0) {
-                combinedSample.speed /= numberOfAggregations;
-                combinedSample.elevationMSL /= numberOfAggregations;
-                combinedSample.tmpInclination /= numberOfAggregations;
-                combinedSample.relativeTime = sampleTime;
-                combinedSample.lon = lons.get(lons.size() / 2);
-                combinedSample.lat = lats.get(lats.size() / 2);
+        // Aggregate samples
+        int aggregationSize = viewFieldSamples.size() > maxSampleNumber ?
+                (int) (pow(2,ceil(log(viewFieldSamples.size()/3.0/maxSampleNumber))) * 3) :
+                1;
+        int firstGroupIndexInView = firstViewFieldSampleOriginalIndex / aggregationSize;
+        int currentGroupIndex = firstGroupIndexInView;
+        int aggregationGpsSampleNumber = 0; // We have to count separately since for the case
+        // where there is a list combining GpsSamples and other  BaseSample types
+        GpsSample combinedSample = new GpsSample();
+        for (ListIterator<BaseSample> i = viewFieldSamples.listIterator(); i.hasNext();) {
+            int originalIndex = i.nextIndex() + firstViewFieldSampleOriginalIndex;
+            int groupIndex = originalIndex / aggregationSize;
+            if (groupIndex != currentGroupIndex) {
+                combinedSample.speed /= aggregationGpsSampleNumber;
+                combinedSample.elevationMSL /= aggregationGpsSampleNumber;
+                combinedSample.tmpInclination /= aggregationGpsSampleNumber;
+                combinedSample.relativeTime /= aggregationGpsSampleNumber;
                 aggregatedSamples.add(combinedSample);
+
+                combinedSample = new GpsSample();
+                aggregationGpsSampleNumber = 0;
+                currentGroupIndex++;
             }
-            sampleTime += aggregationLength;
+
+            BaseSample sample = i.next();
+            if (sample instanceof GpsSample) {
+                GpsSample gpsSample = (GpsSample) sample;
+                combinedSample.speed += gpsSample.speed;
+                combinedSample.elevationMSL += gpsSample.elevationMSL;
+                combinedSample.tmpInclination += gpsSample.tmpInclination;
+                combinedSample.relativeTime += gpsSample.relativeTime;
+                aggregationGpsSampleNumber++;
+            }
         }
+
+        // Index of element directly behind the last shown group
+        int behindViewIndex = (currentGroupIndex + 1) * aggregationSize;
+        // Index of element directly in front of the first shown group
+        int beforeViewIndex = firstGroupIndexInView * aggregationSize - 1;
+
+        // Add those samples
+        int samplesSize = samples.size();
+        if (behindViewIndex < samplesSize) {
+            aggregatedSamples.add(samples.get(behindViewIndex));
+            // Also add the last sample to the list
+            aggregatedSamples.add(samples.get(samples.size()-1));
+        }
+        if (beforeViewIndex > 0) {
+            aggregatedSamples.add(0, samples.get(beforeViewIndex));
+            // Also add the first sample to the list
+            aggregatedSamples.add(0, samples.get(0));
+        }
+
         return aggregatedSamples;
     }
 }
