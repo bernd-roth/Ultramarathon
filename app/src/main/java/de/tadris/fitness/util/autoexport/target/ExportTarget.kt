@@ -41,15 +41,18 @@ interface ExportTarget {
         fun getExportTargetImplementation(type: String, data: String) = when (type) {
             TARGET_TYPE_DIRECTORY -> DirectoryTarget(data)
             TARGET_TYPE_HTTP_POST -> HTTPPostTarget(data)
+            TARGET_TYPE_FIT_TRACKEE -> FitTrackeeTarget(data)
             else -> null
         }
 
         const val TARGET_TYPE_DIRECTORY = "directory"
         const val TARGET_TYPE_HTTP_POST = "http-post"
+        const val TARGET_TYPE_FIT_TRACKEE = "fit-trackee"
 
         val exportTargetTypes = arrayOf(
             DirectoryTarget(""),
-            HTTPPostTarget("")
+            HTTPPostTarget(""),
+            FitTrackeeTarget("\n\n"),
         )
     }
 }

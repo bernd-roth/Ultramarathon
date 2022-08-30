@@ -76,7 +76,7 @@ public class AutoExportPlanner {
         WorkManager.getInstance(context).enqueue(workRequest);
     }
 
-    public void onWorkoutRecorded(GpsWorkout workout) {
+    public void planWorkoutExportFor(GpsWorkout workout) {
         for (ExportTargetConfiguration configuration : getConfigurations(ExportSource.EXPORT_SOURCE_WORKOUT_GPX)) {
             planWorkoutExportFor(workout, configuration);
         }

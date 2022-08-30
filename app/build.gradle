@@ -107,6 +107,9 @@ dependencies {
     // Upload to OSM
     implementation('de.westnordost:osmapi-traces:1.0')
 
+    // HTTP Requests
+    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+
     // Parsing date strings in GPX-files
     implementation 'com.github.sisyphsu:dateparser:1.0.4'
     annotationProcessor 'org.projectlombok:lombok:1.18.8'

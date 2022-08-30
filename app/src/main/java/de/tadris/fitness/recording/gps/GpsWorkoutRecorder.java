@@ -228,7 +228,7 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
         synchronized (samples) {
             workoutSaver.finalizeWorkout();
         }
-        Instance.getInstance(context).planner.onWorkoutRecorded(workout);
+        Instance.getInstance(context).planner.planWorkoutExportFor(workout);
         saved = true;
     }
 

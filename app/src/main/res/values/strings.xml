@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -94,6 +95,8 @@
     <string name="enterVerificationCode">Enter Verification Code</string>
     <string name="authenticationFailed">Authentication failed.</string>
     <string name="upload">Upload</string>
+    <string name="testExport">Test export</string>
+    <string name="exportingLastWorkout">Exporting the newest workout as GPX</string>
     <string name="uploadSuccessful">Upload Successful</string>
     <string name="uploadFailed">Upload Failed</string>
     <string name="uploadFailedOsmNotAuthorized">Not authorized, try again</string>
@@ -494,6 +497,7 @@
     <string name="downloading">Downloading…</string>
     <string name="exportTargetDirectory">Directory</string>
     <string name="exportTargetHttpPost">HTTP POST request</string>
+    <string name="exportTargetFitTrackee">FitTrackee Server</string>
     <string name="autoBackupTitle">Automatic backups</string>
     <string name="workoutGPXExportTitle">Workout GPX exports</string>
     <string name="hintConfigureExportTargets">Add targets files should be exported to.</string>
@@ -512,6 +516,10 @@
     <string name="selectExportTarget">Select export target</string>
     <string name="configureHttpPostRequest">Configure HTTP POST request</string>
     <string name="httpUrl">URL</string>
+    <string name="configureFitTrackeeConnection">Configure FitTrackee Connection</string>
+    <string name="email">E-Mail</string>
+    <string name="password">Password</string>
+    <string name="obtainingToken">Obtaining token</string>
     <string name="enterValidUrl">Enter a valid HTTP URL</string>
     <string name="debugShareLogsTitle">Share logs</string>
     <string name="debugShareLogsSummary">Share logs that contain useful data to find bugs in the workout recorder. Usually they do not contain location data.</string>

@@ -23,8 +23,11 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import de.tadris.fitness.Instance
@@ -33,6 +36,7 @@ import de.tadris.fitness.data.ExportTargetConfiguration
 import de.tadris.fitness.ui.FitoTrackActivity
 import de.tadris.fitness.ui.adapter.ExportTargetConfigurationAdapter
 import de.tadris.fitness.ui.adapter.ExportTargetConfigurationAdapter.ExportTargetAdapterListener
+import de.tadris.fitness.ui.dialog.ConfigureFitTrackeeDialog
 import de.tadris.fitness.ui.dialog.ConfigureHttpPostDialog
 import de.tadris.fitness.ui.dialog.SelectExportTargetTypeDialog
 import de.tadris.fitness.ui.dialog.SelectExportTargetTypeDialog.ExportTargetTypeSelectListener
@@ -40,6 +44,7 @@ import de.tadris.fitness.util.autoexport.AutoExportPlanner
 import de.tadris.fitness.util.autoexport.source.ExportSource
 import de.tadris.fitness.util.autoexport.target.DirectoryTarget
 import de.tadris.fitness.util.autoexport.target.ExportTarget
+import de.tadris.fitness.util.autoexport.target.FitTrackeeTarget
 import de.tadris.fitness.util.autoexport.target.HTTPPostTarget
 
 class ConfigureExportTargetsActivity : FitoTrackActivity(),
@@ -82,6 +87,22 @@ class ConfigureExportTargetsActivity : FitoTrackActivity(),
         loadData()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        if (exportSourceId == ExportSource.EXPORT_SOURCE_WORKOUT_GPX) {
+            menuInflater.inflate(R.menu.configure_export_targets_menu, menu)
+        }
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if (item.itemId == R.id.actionTestExport) {
+            testExport()
+            true
+        } else {
+            super.onOptionsItemSelected(item)
+        }
+    }
+
     private fun loadData() {
         val configurations =
             Instance.getInstance(this).db.exportTargetDao().findAllFor(exportSourceId)
@@ -97,10 +118,10 @@ class ConfigureExportTargetsActivity : FitoTrackActivity(),
     }
 
     override fun onTargetTypeSelect(target: ExportTarget) {
-        if (target is DirectoryTarget) {
-            showDirectoryPicker()
-        } else if (target is HTTPPostTarget) {
-            showHttpPostDialog()
+        when (target) {
+            is DirectoryTarget -> showDirectoryPicker()
+            is HTTPPostTarget -> showHttpPostDialog()
+            is FitTrackeeTarget -> showFitTrackeeDialog()
         }
     }
 
@@ -123,23 +144,31 @@ class ConfigureExportTargetsActivity : FitoTrackActivity(),
     }
 
     private fun saveDirectoryTarget(uri: Uri) {
-        val configuration = ExportTargetConfiguration()
-        configuration.source = exportSourceId
-        configuration.type = ExportTarget.TARGET_TYPE_DIRECTORY
-        configuration.data = uri.toString()
-        configuration.insert()
+        createAnsSaveConfiguration(ExportTarget.TARGET_TYPE_DIRECTORY, uri.toString())
     }
 
     // HTTP RELATED
 
     private fun showHttpPostDialog() {
         ConfigureHttpPostDialog(this) { url ->
-            val configuration = ExportTargetConfiguration()
-            configuration.source = exportSourceId
-            configuration.type = ExportTarget.TARGET_TYPE_HTTP_POST
-            configuration.data = url
-            configuration.insert()
+            createAnsSaveConfiguration(ExportTarget.TARGET_TYPE_HTTP_POST, url)
         }
+    }
+
+    // FitTrackee related
+
+    private fun showFitTrackeeDialog() {
+        ConfigureFitTrackeeDialog(this) { data ->
+            createAnsSaveConfiguration(ExportTarget.TARGET_TYPE_FIT_TRACKEE, data)
+        }
+    }
+
+    private fun createAnsSaveConfiguration(type: String, data: String) {
+        val configuration = ExportTargetConfiguration()
+        configuration.source = exportSourceId
+        configuration.type = type
+        configuration.data = data
+        configuration.insert()
     }
 
     private fun ExportTargetConfiguration.insert() {
@@ -168,6 +197,16 @@ class ConfigureExportTargetsActivity : FitoTrackActivity(),
             AutoExportPlanner(this).planAutoBackup()
         }
         loadData()
+    }
+
+    private fun testExport() {
+        val lastWorkout = Instance.getInstance(this).db.gpsWorkoutDao().lastWorkout
+        if (lastWorkout == null) {
+            Toast.makeText(this, R.string.no_workouts_recorded, Toast.LENGTH_LONG).show()
+            return
+        }
+        Toast.makeText(this, R.string.exportingLastWorkout, Toast.LENGTH_LONG).show()
+        AutoExportPlanner(this).planWorkoutExportFor(lastWorkout)
     }
 
 }
