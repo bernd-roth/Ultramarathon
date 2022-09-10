@@ -292,6 +292,8 @@ public abstract class GpsWorkoutActivity extends WorkoutActivity implements MapS
                 combinedSample.elevationMSL += gpsSample.elevationMSL;
                 combinedSample.tmpInclination += gpsSample.tmpInclination;
                 combinedSample.relativeTime += gpsSample.relativeTime;
+                combinedSample.lat = gpsSample.lat;
+                combinedSample.lon = gpsSample.lon;
                 aggregationGpsSampleNumber++;
             }
         }
