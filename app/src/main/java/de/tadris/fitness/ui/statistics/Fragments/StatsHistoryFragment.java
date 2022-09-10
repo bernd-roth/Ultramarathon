@@ -96,6 +96,7 @@ public class StatsHistoryFragment extends StatsFragment {
         // Setup switch functionality
         speedTitle = view.findViewById(R.id.stats_history_speed_title);
         speedChart = view.findViewById(R.id.stats_speed_chart);
+        speedChart.setDoubleTapToZoomEnabled(false);
         speedSwitch = view.findViewById(R.id.speed_switch);
         speedSwitch.setOnClickListener(view14 -> {
             if (speedSwitch.isChecked()) {
@@ -108,6 +109,7 @@ public class StatsHistoryFragment extends StatsFragment {
 
         distanceTitle = view.findViewById(R.id.stats_history_distance_title);
         distanceChart = view.findViewById(R.id.stats_history_distance_chart);
+        distanceChart.setDoubleTapToZoomEnabled(false);
         distanceSwitch = view.findViewById(R.id.distance_switch);
         distanceSwitch.setOnClickListener(view13 -> {
             if (distanceSwitch.isChecked()) {
@@ -120,6 +122,7 @@ public class StatsHistoryFragment extends StatsFragment {
 
         durationTitle = view.findViewById(R.id.stats_history_duration_title);
         durationChart = view.findViewById(R.id.stats_duration_chart);
+        durationChart.setDoubleTapToZoomEnabled(false);
         durationSwitch = view.findViewById(R.id.duration_switch);
         durationSwitch.setOnClickListener(view12 -> {
             if (durationSwitch.isChecked()) {
@@ -159,6 +162,7 @@ public class StatsHistoryFragment extends StatsFragment {
         });
 
         exploreChart = view.findViewById(R.id.stats_explore_chart);
+        exploreChart.setDoubleTapToZoomEnabled(false);
         exploreChartSwitch = view.findViewById(R.id.stats_explore_switch);
         exploreChartSwitch.setOnClickListener(view1 -> updateExploreChart(selection.getSelectedWorkoutTypes()));
 
@@ -244,11 +248,7 @@ public class StatsHistoryFragment extends StatsFragment {
 
                 @Override
                 public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
-                    AggregationSpan newAggSpan = ChartStyles.statsAggregationSpan(combinedChart);
-                    if (aggregationSpan != newAggSpan) {
-                        aggregationSpan = newAggSpan;
-                        updateCharts(selection.getSelectedWorkoutTypes());
-                    }
+                    scaleChart(combinedChart);
                 }
 
                 @Override
@@ -268,6 +268,15 @@ public class StatsHistoryFragment extends StatsFragment {
 
         displaySpan(preferences.getStatisticsAggregationSpan()); // set viewport according to other statistic views
         exploreTitle.setSelection(WorkoutProperty.PAUSE_DURATION.getId());
+    }
+
+    private void scaleChart(CombinedChart chart)
+    {
+        AggregationSpan newAggSpan = ChartStyles.statsAggregationSpan(chart);
+        if (aggregationSpan != newAggSpan) {
+            aggregationSpan = newAggSpan;
+            updateCharts(selection.getSelectedWorkoutTypes());
+        }
     }
 
     private void displaySpan(AggregationSpan span)
