@@ -173,7 +173,6 @@ public abstract class WorkoutActivity extends InformationActivity {
     abstract List<BaseSample> aggregatedSamples(int aggregationLength, StatsDataTypes.TimeSpan viewFieldSpan);
 
     protected void updateChart(CombinedChart chart, List<SampleConverter> converters, boolean showIntervalSets) {
-        Log.d("updatedChart", String.valueOf(converters.size()));
         boolean hasMultipleConverters = converters.size() > 1;
         CombinedData combinedData = new CombinedData();
 

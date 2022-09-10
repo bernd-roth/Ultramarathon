@@ -168,8 +168,8 @@ public class ShowWorkoutMapDiagramActivity extends ShowWorkoutColoredMapActivity
     }
 
     private void updateChart() {
-        updateChartSelection(chart, converterManager.selectedConverters);
         updateChart(chart, converterManager.selectedConverters, showIntervals.isChecked());
+        updateChartSelection(chart, converterManager.selectedConverters);
         boolean first = true;
         StringBuilder sb = new StringBuilder();
         for (SampleConverter converter : converterManager.selectedConverters) {

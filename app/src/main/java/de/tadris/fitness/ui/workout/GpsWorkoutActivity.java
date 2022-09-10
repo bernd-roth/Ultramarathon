@@ -276,6 +276,7 @@ public abstract class GpsWorkoutActivity extends WorkoutActivity implements MapS
             if (groupIndex != currentGroupIndex) {
                 combinedSample.speed /= aggregationGpsSampleNumber;
                 combinedSample.elevationMSL /= aggregationGpsSampleNumber;
+                combinedSample.elevation /= aggregationGpsSampleNumber;
                 combinedSample.tmpInclination /= aggregationGpsSampleNumber;
                 combinedSample.relativeTime /= aggregationGpsSampleNumber;
                 aggregatedSamples.add(combinedSample);
@@ -290,6 +291,7 @@ public abstract class GpsWorkoutActivity extends WorkoutActivity implements MapS
                 GpsSample gpsSample = (GpsSample) sample;
                 combinedSample.speed += gpsSample.speed;
                 combinedSample.elevationMSL += gpsSample.elevationMSL;
+                combinedSample.elevation += gpsSample.elevation;
                 combinedSample.tmpInclination += gpsSample.tmpInclination;
                 combinedSample.relativeTime += gpsSample.relativeTime;
                 combinedSample.lat = gpsSample.lat;
