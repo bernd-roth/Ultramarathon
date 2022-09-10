@@ -262,20 +262,21 @@ public abstract class WorkoutActivity extends InformationActivity {
             dataSet.setLineWidth(2);
             dataSet.setHighlightLineWidth(2.5f);
             dataSet.setMode(LineDataSet.Mode.LINEAR);
+            lineData.addDataSet(dataSet);
+
             if (converters.size() == 2) {
                 YAxis.AxisDependency axisDependency = converterIndex == 0 ? YAxis.AxisDependency.LEFT : YAxis.AxisDependency.RIGHT;
                 dataSet.setAxisDependency(axisDependency);
                 chart.getAxis(axisDependency).setValueFormatter(converter.getYValueFormatter());
                 chart.getAxisRight().setEnabled(true);
-                chart.setMarker(new DisplayValueMarker(this, new DefaultValueFormatter(1), ""));
-                // TODO: Make marker for diagrams with plural datasets work better...
+                chart.setMarker(new DisplayValueMarker(this, new DefaultValueFormatter(1), "", lineData));
+                // TODO: Make marker for diagrams with plural datasets (eg Height+Speed) work better... -> Show Unit
             } else {
                 chart.getAxisLeft().setValueFormatter(converter.getYValueFormatter());
                 chart.getAxisRight().setValueFormatter(converter.getYValueFormatter());
                 chart.getAxisRight().setEnabled(false);
-                chart.setMarker(new DisplayValueMarker(this, converter.getYValueFormatter(), converter.getUnit()));
+                chart.setMarker(new DisplayValueMarker(this, converter.getYValueFormatter(), converter.getUnit(), lineData));
             }
-            lineData.addDataSet(dataSet);
             converterIndex++;
         }
 

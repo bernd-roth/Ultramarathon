@@ -332,7 +332,7 @@ public class StatsHistoryFragment extends StatsFragment {
             LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);
             combinedData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(context, lineDataSet)));
 
-            ChartStyles.updateCombinedChartToSpan(speedChart, combinedData, aggregationSpan, getContext());
+            ChartStyles.updateStatsHistoryCombinedChartToSpan(speedChart, combinedData, aggregationSpan, getContext());
         } catch (NoDataException e) {
             speedChart.clear();
         }
@@ -360,7 +360,7 @@ public class StatsHistoryFragment extends StatsFragment {
             // Therefore the following two lines resets all renderers manually.
             distanceChart.clear();
             ((CombinedChartRenderer) distanceChart.getRenderer()).createRenderers();
-            ChartStyles.updateCombinedChartToSpan(distanceChart, combinedData, aggregationSpan, getContext());
+            ChartStyles.updateStatsHistoryCombinedChartToSpan(distanceChart, combinedData, aggregationSpan, getContext());
             ChartStyles.setYAxisLabel(distanceChart, WorkoutProperty.LENGTH.getUnit(context, combinedData.getYMax()));
         } catch (NoDataException e) {
             distanceChart.clear();
@@ -389,7 +389,7 @@ public class StatsHistoryFragment extends StatsFragment {
             // Therefore the following two lines resets all renderers manually.
             durationChart.clear();
             ((CombinedChartRenderer) durationChart.getRenderer()).createRenderers();
-            ChartStyles.updateCombinedChartToSpan(durationChart, combinedData, aggregationSpan, getContext());
+            ChartStyles.updateStatsHistoryCombinedChartToSpan(durationChart, combinedData, aggregationSpan, getContext());
             ChartStyles.setYAxisLabel(durationChart, WorkoutProperty.DURATION.getUnit(context, combinedData.getYMax()));
         } catch (NoDataException e) {
             durationChart.clear();
@@ -424,7 +424,7 @@ public class StatsHistoryFragment extends StatsFragment {
                 String unit = property.getUnit(getContext(), combinedData.getYMax() - combinedData.getYMin());
                 ChartStyles.setYAxisLabel(exploreChart, unit);
             }
-            ChartStyles.updateCombinedChartToSpan(exploreChart, combinedData, aggregationSpan, getContext());
+            ChartStyles.updateStatsHistoryCombinedChartToSpan(exploreChart, combinedData, aggregationSpan, getContext());
 
         } catch (NoDataException e) {
             exploreChart.clear();

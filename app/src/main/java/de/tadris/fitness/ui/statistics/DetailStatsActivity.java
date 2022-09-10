@@ -2,14 +2,10 @@ package de.tadris.fitness.ui.statistics;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.MotionEvent;
-import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarLineChartBase;
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.data.BarData;
@@ -26,7 +22,6 @@ import com.github.mikephil.charting.listener.OnChartGestureListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationSpan;
@@ -39,8 +34,6 @@ import de.tadris.fitness.ui.workout.ShowGpsWorkoutActivity;
 import de.tadris.fitness.util.WorkoutProperty;
 import de.tadris.fitness.util.charts.ChartStyles;
 import de.tadris.fitness.util.charts.DataSetStyles;
-import de.tadris.fitness.util.charts.formatter.FractionedDateFormatter;
-import de.tadris.fitness.util.charts.marker.DisplayValueMarker;
 import de.tadris.fitness.util.exceptions.NoDataException;
 
 public class DetailStatsActivity extends FitoTrackActivity {
@@ -182,7 +175,7 @@ public class DetailStatsActivity extends FitoTrackActivity {
             }
         } catch (NoDataException e) {
         }
-        ChartStyles.updateCombinedChartToSpan(chart, combinedData, aggregationSpan, this);
+        ChartStyles.updateStatsHistoryCombinedChartToSpan(chart, combinedData, aggregationSpan, this);
     }
 
     /**

@@ -49,7 +49,6 @@ public class ChartStyles {
         chart.getLegend().setEnabled(false);
         chart.getDescription().setEnabled(false);
         chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
-        chart.getDescription().setEnabled(false);
         chart.setPinchZoom(false);
         chart.setDrawGridBackground(false);
     }
@@ -135,10 +134,11 @@ public class ChartStyles {
 
         LegendEntry[] entries = chart.getLegend().getEntries();
         String unit = entries.length > 0 ? entries[0].label:"";
-        chart.setMarker(new DisplayValueMarker(ctx, chart.getAxisLeft().getValueFormatter()," "+unit));
+        chart.setMarker(new DisplayValueMarker(ctx, chart.getAxisLeft().getValueFormatter()," "+unit, chart.getBarData()));
     }
 
-    public static void updateCombinedChartToSpan(CombinedChart chart, CombinedData combinedData, AggregationSpan aggregationSpan, Context ctx) {
+    // Be careful to use this function outside StatsHistoryFragment
+    public static void updateStatsHistoryCombinedChartToSpan(CombinedChart chart, CombinedData combinedData, AggregationSpan aggregationSpan, Context ctx) {
         ChartStyles.setTextAppearance(combinedData);
         if(combinedData.getBarData() != null) {
             float barWidth = Math.max(aggregationSpan.spanInterval, AggregationSpan.DAY.spanInterval);
@@ -150,9 +150,9 @@ public class ChartStyles {
 
         if (chart.getLegend().getEntries().length > 0) {
             String yLabel = chart.getLegend().getEntries()[0].label;
-            chart.setMarker(new DisplayValueMarker(ctx, chart.getAxisLeft().getValueFormatter(), yLabel));
+            chart.setMarker(new DisplayValueMarker(ctx, chart.getAxisLeft().getValueFormatter(), yLabel, combinedData.getCandleData()));
         } else {
-            chart.setMarker(new DisplayValueMarker(ctx, chart.getAxisLeft().getValueFormatter(), ""));
+            chart.setMarker(new DisplayValueMarker(ctx, chart.getAxisLeft().getValueFormatter(), "", combinedData.getCandleData()));
         }
 
         chart.setData(combinedData);
