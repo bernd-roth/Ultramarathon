@@ -154,50 +154,6 @@ public abstract class WorkoutActivity extends InformationActivity {
             });
         }
 
-        Runnable update = () -> updateChart(chart, converters, showIntervalSets);
-        chart.setOnChartGestureListener(new OnChartGestureListener() {
-            @Override
-            public void onChartGestureStart(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
-
-            }
-
-            @Override
-            public void onChartGestureEnd(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
-
-            }
-
-            @Override
-            public void onChartLongPressed(MotionEvent me) {
-
-            }
-
-            @Override
-            public void onChartDoubleTapped(MotionEvent me) {
-                chart.getHandler().post(update);
-            }
-
-            @Override
-            public void onChartSingleTapped(MotionEvent me) {
-
-            }
-
-            @Override
-            public void onChartFling(MotionEvent me1, MotionEvent me2, float velocityX, float velocityY) {
-
-            }
-
-            @Override
-            public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
-                chart.getHandler().post(update);
-            }
-
-            @Override
-            public void onChartTranslate(MotionEvent me, float dX, float dY) {
-                chart.getHandler().post(update);
-            }
-        });
-        chart.invalidate();
-
         chart.setHighlightPerDragEnabled(diagramsInteractive);
         chart.setHighlightPerTapEnabled(diagramsInteractive);
 
@@ -217,13 +173,14 @@ public abstract class WorkoutActivity extends InformationActivity {
     abstract List<BaseSample> aggregatedSamples(int aggregationLength, StatsDataTypes.TimeSpan viewFieldSpan);
 
     protected void updateChart(CombinedChart chart, List<SampleConverter> converters, boolean showIntervalSets) {
+        Log.d("updatedChart", String.valueOf(converters.size()));
         boolean hasMultipleConverters = converters.size() > 1;
         CombinedData combinedData = new CombinedData();
 
         String xLabel="", yLabel="";
         if (hasMultipleConverters) {
             xLabel = converters.get(0).getXAxisLabel();
-        } else if (! (converters.size() == 0)){
+        } else {
             xLabel = converters.get(0).getXAxisLabel();
             yLabel = converters.get(0).getYAxisLabel();
         }
