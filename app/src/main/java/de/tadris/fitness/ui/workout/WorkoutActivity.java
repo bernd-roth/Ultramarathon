@@ -153,30 +153,8 @@ public abstract class WorkoutActivity extends InformationActivity {
                 }
             });
         }
-        chart.invalidate();
 
-        chart.setHighlightPerDragEnabled(diagramsInteractive);
-        chart.setHighlightPerTapEnabled(diagramsInteractive);
-
-        updateChart(chart, converters, showIntervalSets);
-
-        for (SampleConverter converter : converters) {
-            converter.afterAdd(chart);
-        }
-
-        ChartStyles.defaultLineChart(chart);
-        return chart;
-    }
-
-    protected void onChartSelectionChanged(BaseSample sample) {
-    }
-
-    abstract List<BaseSample> aggregatedSamples(int aggregationLength, StatsDataTypes.TimeSpan viewFieldSpan);
-
-    protected void updateChart(CombinedChart chart, List<SampleConverter> converters, boolean showIntervalSets) {
-        boolean hasMultipleConverters = converters.size() > 1;
-        CombinedData combinedData = new CombinedData();
-
+        Runnable update = () -> updateChart(chart, converters, showIntervalSets);
         chart.setOnChartGestureListener(new OnChartGestureListener() {
             @Override
             public void onChartGestureStart(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
@@ -210,14 +188,37 @@ public abstract class WorkoutActivity extends InformationActivity {
 
             @Override
             public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
-                updateChart(chart, converters, showIntervalSets);
+                chart.getHandler().post(update);
             }
 
             @Override
             public void onChartTranslate(MotionEvent me, float dX, float dY) {
-                updateChart(chart, converters, showIntervalSets);
+                chart.getHandler().post(update);
             }
         });
+        chart.invalidate();
+
+        chart.setHighlightPerDragEnabled(diagramsInteractive);
+        chart.setHighlightPerTapEnabled(diagramsInteractive);
+
+        updateChart(chart, converters, showIntervalSets);
+
+        for (SampleConverter converter : converters) {
+            converter.afterAdd(chart);
+        }
+
+        ChartStyles.defaultLineChart(chart);
+        return chart;
+    }
+
+    protected void onChartSelectionChanged(BaseSample sample) {
+    }
+
+    abstract List<BaseSample> aggregatedSamples(int aggregationLength, StatsDataTypes.TimeSpan viewFieldSpan);
+
+    protected void updateChart(CombinedChart chart, List<SampleConverter> converters, boolean showIntervalSets) {
+        boolean hasMultipleConverters = converters.size() > 1;
+        CombinedData combinedData = new CombinedData();
 
         String xLabel="", yLabel="";
         if (hasMultipleConverters) {
@@ -233,22 +234,11 @@ public abstract class WorkoutActivity extends InformationActivity {
         // Generate a time span from the view field of the chart
         StatsDataTypes.TimeSpan chartViewField = new StatsDataTypes.TimeSpan(Math.round(chart.getLowestVisibleX()*1000f*60f), Math.round(chart.getHighestVisibleX()*1000f*60f));
 
-        Log.d("charView", String.valueOf(chartViewField.startTime) + "   " + String.valueOf(chartViewField.endTime));
-        // In case the
-        /*long chartViewFieldDuration = chartViewField.endTime - chartViewField.startTime;
-        if (chartViewField.startTime < 0) {
-            chartViewField.startTime = 0;
-            chartViewField.endTime = chartViewFieldDuration;
-        }
-        if (chartViewField.endTime > samples.get(samples.size() - 1).relativeTime) {
-            chartViewField.endTime = samples.get(samples.size() - 1).relativeTime;
-            chartViewField.startTime = chartViewField.endTime - chartViewFieldDuration;
-        }*/
+        // At the Before zooming/scrolling in the chart the chartViewField starts and ends at 0
         if (chartViewField.startTime == 0 && chartViewField.endTime == 0) {
             chartViewField.startTime = samples.get(0).relativeTime;
             chartViewField.endTime = samples.get(samples.size() - 1).relativeTime;
         }
-
 
         LineData lineData = new LineData();
 
