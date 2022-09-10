@@ -127,7 +127,7 @@
     <string name="mapStyle">Style de la carte</string>
     <string name="waiting_gps">En attente du GPS</string>
     <string name="actionUploadToOSM">Téléversement sur OSM</string>
-    <string name="cut">Enlever les premiers/derniers 300 mètres</string>
+    <string name="cut">Enlever les premiers/derniers 300 m</string>
     <string name="trackVisibilityPref">Visibilité de la piste</string>
     <string name="description">Description</string>
     <string name="ttsNotAvailable">La synthèse vocale n\'est pas disponible</string>
@@ -270,7 +270,7 @@
     <string name="recordingStateIdle">Inactif</string>
     <string name="speechConfigNoSpeech">Pas d\'annonce</string>
     <string name="aboutHelpTranslating">Aide à la traduction</string>
-    <string name="aboutUnlistedContributors">Merci à tous les contributeurs non listés qui ont aidé à la traduction et à l\'extension de FitoTrack !</string>
+    <string name="aboutUnlistedContributors">Merci à tous les contributeurs non listés qui ont aidé à la traduction et à l\'extension de FitoTrack !</string>
     <string name="savedSuccessfully">Sauvegardé</string>
     <string name="workoutTypeRowing">Aviron</string>
     <string name="importingFiles">Importation de fichiers</string>
@@ -322,8 +322,8 @@
     <string name="actionImport">Importer</string>
     <string name="importWorkoutMultipleQuestion">Voulez-vous importer un ou plusieurs fichiers GPX \?</string>
     <string name="cancelDownloadConfirmation">Voulez-vous annuler le téléchargement en cours \?</string>
-    <string name="downloadMapConfirmation">Voulez-vous télécharger la carte %s \?</string>
-    <string name="overwriteMapConfirmation">Voulez-vous écraser le fichier de carte existant %s \?</string>
+    <string name="downloadMapConfirmation">Télécharger la carte \\\"%s\\\" \?</string>
+    <string name="overwriteMapConfirmation">Écraser le fichier de carte \\\"%s\\\" existant \?</string>
     <string name="workoutTypeAll">Tout</string>
     <string name="downloading">Téléchargement…</string>
     <string name="chooseMapHint">Veuillez choisir une carte</string>
@@ -344,7 +344,7 @@
     <string name="noColoring">Pas de coloration</string>
     <string name="auto">Auto</string>
     <string name="selectColoring">Sélectionner la coloration</string>
-    <string name="pref_auto_start_mode_unknown">Mode inconnu (ne pas sélectionner)</string>
+    <string name="pref_auto_start_mode_unknown">Inconnu (ne pas utiliser)</string>
     <string name="pref_auto_start_mode_on_move">En attendant que vous commenciez à vous déplacer</string>
     <string name="pref_auto_start_mode_wait_for_gps">En attente d\'une position GPS précise</string>
     <string name="pref_auto_start_mode_instant">Démarrer immédiatement</string>
@@ -449,4 +449,52 @@
         <item quantity="one">Un entraînement importé</item>
         <item quantity="other">%d entraînements importés</item>
     </plurals>
+    <string name="humanitarian_clean_map_but_sometimes_not_available">Humanitarian
+\nCarte épurée, mais pas toujours disponible</string>
+    <string name="offline_local_map_file_with_local_render_theme">Hors-ligne
+\nFichier carte local avec un thème rendu localement</string>
+    <string name="sunday">Dimanche</string>
+    <string name="unitHeartRateSensorBattery">%</string>
+    <string name="showWorkoutZoomControlsSummary">Activer le zoom et le déplacement de la carte lors de l\'enregistrement GPS des entrainements</string>
+    <string name="showWorkoutZoomControlsTitle">Zoom et déplacement</string>
+    <string name="thursday">Jeudi</string>
+    <string name="monday">Lundi</string>
+    <string name="tuesday">Mardi</string>
+    <string name="wednesday">Mercredi</string>
+    <string name="friday">Vendredi</string>
+    <string name="saturday">Samedi</string>
+    <string name="exportTargetDirectory">Dossier</string>
+    <string name="autoBackupTitle">Sauvegardes automatiques</string>
+    <string name="workoutGPXExportTitle">Export GPX des entrainements</string>
+    <string name="autoExportWorkoutsSummary">Exporter les entrainements enregistrés récemment</string>
+    <string name="autoExportBackupTitle">Sauvegardes automatiques de l\'application</string>
+    <string name="deleteExportTargetConfirmation">Supprimer cette cible d\'export \?</string>
+    <string name="zoomWithVolumeButtonsTitle">Contrôle du zoom avec les boutons de volume</string>
+    <string name="mapnik_default_osm_mapstyle">Mapnik
+\nStyle de carte OSM par défaut</string>
+    <string name="in_the_diagram_screen_track_style">Sur la page de courbes</string>
+    <string name="height_map">Carte topographique</string>
+    <string name="configureHttpPostRequest">Configurer les requêtes HTTP POST</string>
+    <string name="calibrating">Calibrage</string>
+    <string name="hidden">Caché</string>
+    <string name="autoExportWorkoutExplanation">Après qu\'un nouvel entrainement est enregistré, un export GPX sera enregistré ici :</string>
+    <string name="autoExportBackupSummary">Exporter des sauvegardes automatiquement</string>
+    <string name="autoExportBackupExplanation">À l\'intervalle spécifié, une sauvegarde sera exportée ici :</string>
+    <string name="takeBackups1">Tous les jours</string>
+    <string name="takeBackups2">Tous les deux jours</string>
+    <string name="takeBackups7">Toutes les semaines</string>
+    <string name="selectExportTarget">Sélectionnez une cible pour l\'export</string>
+    <string name="exportIntervalTitle">Intervalle de sauvegarde</string>
+    <string name="takeBackups3">Tous les trois jours</string>
+    <string name="takeBackups14">Toutes les deux semaines</string>
+    <string name="httpUrl">URL</string>
+    <string name="debugShareLogsTitle">Partager les historiques d\'évènements</string>
+    <string name="enterValidUrl">Entrez une URL HTTP valide</string>
+    <string name="debugShareLogsSummary">Partager les historiques d\'évènements qui contiennent des informations utiles pour trouver des bugs dans l\'enregistreur d\'entrainement. Ils ne contiennent généralement pas d\'information de localisation.</string>
+    <string name="debugSensorsSummary">Collecter des information des capteurs qui sont enregistrés dans les fichiers d\'historique</string>
+    <string name="zoomWithVolumeButtonsSummary">Les boutons de volume contrôlent le niveau de zoom</string>
+    <string name="always_track_style">Toujours</string>
+    <string name="never_track_style">Jamais</string>
+    <string name="exportTargetHttpPost">Requête HTTP POST</string>
+    <string name="noSensorAvailable">Aucun capteur disponible</string>
 </resources>

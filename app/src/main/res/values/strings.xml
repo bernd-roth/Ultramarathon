@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -17,9 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
     <string name="stop">Stop</string>
     <string name="delete">Delete</string>
@@ -96,7 +93,7 @@
     <string name="workoutHeartRate">Heart Rate</string>
     <string name="heartRateSensorBattery">Sensor Battery</string>
     <string name="workoutMaxHeartRate">Max Heart Rate</string>
-    <string name="workoutAvgHeartRate">Avg. Heart Rate</string>
+    <string name="workoutAvgHeartRate">Avg. heart rate</string>
     <string name="workoutEdited">This workout has been edited.</string>
     <string name="uploading">Uploading</string>
     <string name="enterVerificationCode">Enter Verification Code</string>
@@ -229,9 +226,9 @@
     <string name="preferencesCategoryMap">Map</string>
     <string name="preferenceDateFormat">Date Format</string>
     <string name="preferenceTimeFormat">Time Format</string>
-    <string name="preferenceCurrentSpeedTime">Time span for average calculation</string>
-    <string name="preferenceCurrentSpeedAverageTimeSummary">Replace the current speed calculation by an average calculation.</string>
-    <string name="preferenceCurrentSpeedAverageTimeTitle">Current Speed by Average</string>
+    <string name="preferenceCurrentSpeedTime">Averaged speed time-span</string>
+    <string name="preferenceCurrentSpeedAverageTimeSummary">Replace current speed by an average</string>
+    <string name="preferenceCurrentSpeedAverageTimeTitle">Averaged speed</string>
     <string name="preferenceUseAverageForCurrentSpeed">Use the average speed over a certain time instead of the last single speed record for the current speed calculation.</string>
     <string name="preferenceFirstDayOfWeek">Week start</string>
     <string name="workoutDiscarded">Workout discarded</string>
@@ -368,7 +365,7 @@
     <string name="pref_map_directory">Offline Map Directory</string>
     <string name="pref_render_theme_style">Render Style</string>
     <string name="preferenceCategoryRenderThemeCategories">Categories</string>
-    <string name="pref_render_theme_style_info">No render theme style menu available for selected render theme.</string>
+    <string name="pref_render_theme_style_info">No menu available for selected theme.</string>
     <string name="downloadMapsTitle">Download Maps</string>
     <string name="downloadMapsSpecifyDirectory">Please specify a directory for offline maps first</string>
     <string name="overwriteMapConfirmation">Overwrite the existing \\\"%s\\\" map file\?</string>
@@ -446,7 +443,7 @@
     <string name="intervalAutoStartModeTraining">Auto Start Workout Mode</string>
     <string name="pref_auto_start_mode_title">Auto-Start Mode</string>
     <string name="pref_auto_start_mode_instant">Start immediately</string>
-    <string name="pref_auto_start_mode_wait_for_gps">Wait for accurate GPS position</string>
+    <string name="pref_auto_start_mode_wait_for_gps">Wait for accurate position</string>
     <string name="pref_auto_start_mode_on_move">Wait for you to start moving</string>
     <string name="pref_auto_start_mode_unknown">Unknown (do not use)</string>
     <string name="selectColoring">Select coloring</string>

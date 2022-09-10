@@ -220,7 +220,7 @@
     <string name="enterVerificationCode">Doğrulama Kodunu Girin</string>
     <string name="uploading">Karşıya yükleniyor</string>
     <string name="workoutEdited">Bu egzersiz düzenlendi.</string>
-    <string name="workoutAvgHeartRate">Ort. Kalp Ritmi</string>
+    <string name="workoutAvgHeartRate">Ort. kalp ritmi</string>
     <string name="workoutAvgSpeedShort">Ort. Hız</string>
     <string name="workoutMaxHeartRate">En Yüksek Kalp Ritmi</string>
     <string name="workoutHeartRate">Kalp Ritmi</string>
@@ -323,7 +323,7 @@
     <string name="intervalAutoStartDelayTraining">Otomatik Egzersiz Başlatma Gecikmesi</string>
     <string name="pref_auto_start_mode_unknown">Bilinmiyor (kullanmayın)</string>
     <string name="pref_auto_start_mode_on_move">Hareket etmeye başlamayı bekle</string>
-    <string name="pref_auto_start_mode_wait_for_gps">Doğru GPS konumunu bekle</string>
+    <string name="pref_auto_start_mode_wait_for_gps">Doğru konumu bekle</string>
     <string name="pref_auto_start_mode_instant">Hemen başla</string>
     <string name="pref_auto_start_mode_title">Otomatik Başlatma Modu</string>
     <string name="manageAutoStartModeSummary">Otomatik egzersiz başlatma modunu değiştirin</string>
@@ -379,9 +379,9 @@
     <string name="runningMigrations">Taşıma işlemleri çalıştırma</string>
     <string name="editWorkoutStartEnd">Başlangıç/Bitişi Düzenle</string>
     <string name="preferenceUseAverageForCurrentSpeed">Geçerli hız hesaplaması için son tek hız kaydı yerine, belirli bir zamandaki ortalama hızı kullan.</string>
-    <string name="preferenceCurrentSpeedAverageTimeTitle">Ortalamaya Göre Geçerli Hız</string>
-    <string name="preferenceCurrentSpeedAverageTimeSummary">Geçerli hız hesaplamasını ortalama bir hesaplamayla değiştirin.</string>
-    <string name="preferenceCurrentSpeedTime">Ortalama hesaplama için zaman aralığı</string>
+    <string name="preferenceCurrentSpeedAverageTimeTitle">Ortalama hız</string>
+    <string name="preferenceCurrentSpeedAverageTimeSummary">Geçerli hızı ortalama bir değerle değiştirin</string>
+    <string name="preferenceCurrentSpeedTime">Ortalama hız zaman aralığı</string>
     <string name="preferencesCategoryMap">Harita</string>
     <string name="prefTrackStyleUsageTitle">Takip renklendirmeyi otomatik olarak kullan</string>
     <string name="trackStyle">Takip Etme Tarzı</string>
@@ -391,7 +391,7 @@
     <string name="preferenceFirstDayOfWeek">Hafta başlangıcı</string>
     <string name="edit_interval">Aralık Düzenle</string>
     <string name="fileNotFound">Dosya bulunamadı</string>
-    <string name="pref_render_theme_style_info">Seçilen oluşturma teması için oluşturma teması tarzı menüsü yok.</string>
+    <string name="pref_render_theme_style_info">Seçilen tema için menü yok.</string>
     <string name="preferenceCategoryRenderThemeCategories">Kategoriler</string>
     <string name="pref_render_theme_style">Oluşturma Tarzı</string>
     <string name="pref_map_directory">Çevrim Dışı Harita Dizini</string>

@@ -305,7 +305,7 @@
     <string name="nfcStartTitle">Сканирование для запуска</string>
     <string name="noAutoStartDelay">Нет</string>
     <string name="overwriteMapConfirmation">Переписать существующий файл карты %s\?</string>
-    <string name="pref_auto_start_mode_unknown">Неизвестный режим (пожалуйста, не выбирайте)</string>
+    <string name="pref_auto_start_mode_unknown">Неизвестный режим (не использовать)</string>
     <string name="nfcStartSummary">Если функция активирована, вы сможете начинать и прекращать тренировки, сканируя метку NFC</string>
     <string name="manageAutoStartModeSummary">Изменить режим автоматического запуска тренировки</string>
     <string name="popup_auto_start">С задержкой по умолчанию</string>
@@ -316,7 +316,7 @@
     <string name="pref_auto_start_mode_instant">Начинать немедленно</string>
     <string name="popup_auto_start_immediately">Начинать немедленно</string>
     <string name="pref_auto_start_mode_on_move">Дожидаться начала движения</string>
-    <string name="pref_auto_start_mode_wait_for_gps">Дожидаться определения точного GPS-положения</string>
+    <string name="pref_auto_start_mode_wait_for_gps">Дожидаться точного определения положения</string>
     <string name="customAutoStartDelay">Другое</string>
     <string name="manageAutoStartDelaySummary">Выберите обратный отсчет времени по умолчанию для автоматического начала тренировки</string>
     <string name="alreadyDownloading">Файл уже загружен</string>
@@ -388,9 +388,9 @@
     <string name="pref_announcements_pace_control_title">Предупреждения о контроле темпа</string>
     <string name="editWorkoutStartEnd">Редактировать начало/конец</string>
     <string name="preferenceUseAverageForCurrentSpeed">Для расчета текущей скорости используйте среднюю скорость за определенное время вместо последней единичной записи скорости.</string>
-    <string name="preferenceCurrentSpeedAverageTimeTitle">Текущая скорость по средней</string>
+    <string name="preferenceCurrentSpeedAverageTimeTitle">Средняя скорость</string>
     <string name="preferenceCurrentSpeedTime">Временной интервал для расчета среднего значения</string>
-    <string name="preferenceCurrentSpeedAverageTimeSummary">Заменить расчёт текущей скорости на расчёт средней.</string>
+    <string name="preferenceCurrentSpeedAverageTimeSummary">Заменить текущую скорость на среднюю</string>
     <string name="prefTrackStyleUsageTitle">Использовать автоматическую окраску трека</string>
     <string name="fileNotFound">Файл не найден</string>
     <string name="preferenceFirstDayOfWeek">Начало недели</string>
@@ -470,4 +470,18 @@
     <string name="saturday">Суббота</string>
     <string name="unitHeartRateSensorBattery">%</string>
     <string name="always_track_style">Всегда</string>
+    <string name="height_map">Карта высот</string>
+    <string name="metric_unit_system">Метрическая</string>
+    <string name="heartRateSensorBattery">Датчик батареи</string>
+    <string name="humanitarian_clean_map_but_sometimes_not_available">Гуманитарный
+\nЧистая карта, но не всегда доступна</string>
+    <string name="zoomWithVolumeButtonsTitle">Увеличение с помощью кнопки громкости</string>
+    <string name="metric_with_m_s_unit_system">Метрическая с м/с</string>
+    <string name="imperial_unit_system">Имперская</string>
+    <string name="system_theme">Системная</string>
+    <string name="purple_rain">Пурпурный дождь</string>
+    <string name="pink_mist">Розовый туман</string>
+    <string name="rainbow_warrior">Радужный воин</string>
+    <string name="bright_night">Светлая ночь</string>
+    <string name="zoomWithVolumeButtonsSummary">Кнопки увеличения и уменьшения громкости управляют увеличением и уменьшением масштаба</string>
 </resources>
