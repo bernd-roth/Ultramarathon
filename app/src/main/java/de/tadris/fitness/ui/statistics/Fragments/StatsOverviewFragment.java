@@ -1,12 +1,9 @@
 package de.tadris.fitness.ui.statistics.Fragments;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.NumberPicker;
-import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,12 +15,9 @@ import com.github.mikephil.charting.data.BarData;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
-import de.tadris.fitness.data.StatsDataProvider;
 import de.tadris.fitness.data.StatsDataTypes;
 import de.tadris.fitness.data.StatsProvider;
-import de.tadris.fitness.data.WorkoutTypeManager;
 import de.tadris.fitness.ui.statistics.TimeSpanSelection;
-import de.tadris.fitness.util.WorkoutProperty;
 import de.tadris.fitness.util.charts.ChartStyles;
 import de.tadris.fitness.util.exceptions.NoDataException;
 
@@ -78,7 +72,7 @@ public class StatsOverviewFragment extends StatsFragment {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void updateCharts() {
-        long start = timeSpanSelection.getSelectedInstance();
+        long start = timeSpanSelection.getSelectedDate();
         StatsDataTypes.TimeSpan span = new StatsDataTypes.TimeSpan(start, timeSpanSelection.getSelectedAggregationSpan().getAggregationEnd(start));
 
         try {

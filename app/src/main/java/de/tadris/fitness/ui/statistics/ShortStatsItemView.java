@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,11 +13,8 @@ import androidx.annotation.RequiresApi;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 
-import java.util.GregorianCalendar;
-
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
-import de.tadris.fitness.aggregation.AggregationSpan;
 import de.tadris.fitness.data.StatsDataProvider;
 import de.tadris.fitness.data.StatsDataTypes;
 import de.tadris.fitness.data.StatsProvider;
@@ -71,9 +66,7 @@ public class ShortStatsItemView extends LinearLayout {
         {
             return;
         }
-        timeSpanSelection.setLimits(firstWorkoutTime, lastWorkoutTime);
         timeSpanSelection.addOnTimeSpanSelectionListener((aggregationSpan, instance) -> updateChart());
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -81,7 +74,7 @@ public class ShortStatsItemView extends LinearLayout {
         BarData data;
 
         timeSpanSelection.loadAggregationSpanFromPreferences();
-        long start = timeSpanSelection.getSelectedInstance();
+        long start = timeSpanSelection.getSelectedDate();
         StatsDataTypes.TimeSpan span = new StatsDataTypes.TimeSpan(start,
                 start + timeSpanSelection.getSelectedAggregationSpan().spanInterval);
 

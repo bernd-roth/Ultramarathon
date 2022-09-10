@@ -1,5 +1,6 @@
 package de.tadris.fitness.ui.statistics;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
@@ -8,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.LinearLayout;
-import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -19,33 +20,40 @@ import androidx.annotation.RequiresApi;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationSpan;
-import de.tadris.fitness.data.StatsDataProvider;
-import de.tadris.fitness.data.WorkoutTypeManager;
 import de.tadris.fitness.data.preferences.UserPreferences;
-import de.tadris.fitness.util.WorkoutProperty;
-import de.tadris.fitness.util.exceptions.NoDataException;
-import de.tadris.fitness.util.statistics.InstanceFormatter;
+import de.tadris.fitness.util.statistics.DateFormatter;
 
+@RequiresApi(api = Build.VERSION_CODES.N)
 public class TimeSpanSelection extends LinearLayout {
     private Spinner aggregationSpanSpinner;
     private ArrayAdapter<String> aggregationSpanArrayAdapter;
+    private TextView timeSpanSelection;
 
-    private NumberPicker aggregationSpanInstancePicker;
+    DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+            selectedDate.set(year, month, day);
+            timeSpanSelection.setText(dateFormatter.format(selectedDate));
+            notifyListener();
+        }
+    };
 
-    long firstInstance;
-    long lastInstance;
-    long selectedInstance;
+    LocalDateTime now = LocalDateTime.now();
+    DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), dateSetListener, now.getYear(), now.getMonthValue()-1, now.getDayOfMonth());
+
+    GregorianCalendar selectedDate = new GregorianCalendar(now.getYear(), now.getMonthValue()-1, now.getDayOfMonth());
     AggregationSpan selectedAggregationSpan;
     boolean isInstanceSelectable;
     UserPreferences preferences;
     int foregroundColor = getResources().getColor(R.color.textLighterBlack);
 
-    private InstanceFormatter instanceFormatter;
+    private DateFormatter dateFormatter;
 
     private ArrayList<OnTimeSpanSelectionListener> listeners;
 
@@ -55,31 +63,24 @@ public class TimeSpanSelection extends LinearLayout {
         preferences = new UserPreferences(context);
 
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.TimeSpanSelection);
-        firstInstance = array.getInt(R.styleable.TimeSpanSelection_firstInstance, 0);
-        lastInstance = array.getInt(R.styleable.TimeSpanSelection_lastInstance, 0);
-        selectedInstance = array.getInt(R.styleable.TimeSpanSelection_firstInstance, 0);
         isInstanceSelectable = array.getBoolean(R.styleable.TimeSpanSelection_isInstanceSelectable, true);
         array.recycle();
 
-        if (lastInstance == 0) {
-            lastInstance = Long.MAX_VALUE;
-        }
-
         selectedAggregationSpan = preferences.getStatisticsAggregationSpan();
         listeners = new ArrayList<>();
-        instanceFormatter = new InstanceFormatter(selectedAggregationSpan);
+        dateFormatter = new DateFormatter(selectedAggregationSpan);
 
         inflate(context, R.layout.view_time_span_selection, this);
 
 
         // Load views
         aggregationSpanSpinner = findViewById(R.id.aggregationSpanSpinner);
-        aggregationSpanInstancePicker = findViewById(R.id.aggregationSpanInstancePicker);
+        timeSpanSelection = findViewById(R.id.timeSpanSelection);
         loadAggregationSpanEntries();
 
         if (!isInstanceSelectable) {
-            findViewById(R.id.aggregationSpanInstancePickerLayout).getLayoutParams().width = 0;
-            aggregationSpanInstancePicker.getLayoutParams().width = 0;
+            findViewById(R.id.timeSpanSelecionLayout).getLayoutParams().width = 0;
+            timeSpanSelection.getLayoutParams().width = 0;
         }
 
         setAggregationSpan(selectedAggregationSpan);
@@ -88,7 +89,6 @@ public class TimeSpanSelection extends LinearLayout {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 specifyAggregationSpan();
-                updateLimits();
             }
 
             @Override
@@ -97,29 +97,13 @@ public class TimeSpanSelection extends LinearLayout {
             }
         });
 
-        aggregationSpanInstancePicker.setFormatter(instanceFormatter);
-        aggregationSpanInstancePicker.setOnValueChangedListener((numberPicker, i, i1) -> specifyInstance());
-
-        aggregationSpanInstancePicker.setTextColor(this.foregroundColor);
-        initializeLimits();
-    }
-
-    public void initializeLimits()
-    {
-        StatsDataProvider statsDataProvider = new StatsDataProvider(getContext());
-        long firstWorkoutTime;
-        long lastWorkoutTime;
-        try {
-            firstWorkoutTime = statsDataProvider.getFirstData(WorkoutProperty.LENGTH, WorkoutTypeManager.getInstance().getAllTypes(getContext())).time;
-            //lastWorkoutTime = statsDataProvider.getLastData(WorkoutProperty.LENGTH, WorkoutTypeManager.getInstance().getAllTypes(getContext())).time;
-
-        }
-        catch (NoDataException e)
-        {
-            return;
-        }
-
-        setLimits(firstWorkoutTime, GregorianCalendar.getInstance().getTimeInMillis());
+        timeSpanSelection.setOnClickListener( (view) -> {
+            if (selectedAggregationSpan != AggregationSpan.ALL) {
+                datePickerDialog.show();
+            }
+        });
+        timeSpanSelection.setTextColor(this.foregroundColor);
+        timeSpanSelection.setText(dateFormatter.format(selectedDate));
     }
 
     private void loadAggregationSpanEntries() {
@@ -151,17 +135,14 @@ public class TimeSpanSelection extends LinearLayout {
         for (AggregationSpan aggregationSpan : AggregationSpan.values()) {
             if (selectedString.equals(getContext().getString(aggregationSpan.title))) {
                 selectedAggregationSpan = aggregationSpan;
-                instanceFormatter.aggregationSpan = aggregationSpan;
+                dateFormatter.setAggregationSpan(aggregationSpan);
                 preferences.setStatisticsAggregationSpan(aggregationSpan);
                 notifyListener();
                 break;
             }
         }
-    }
 
-    private void specifyInstance() {
-        selectedInstance = InstanceFormatter.mapIndexToInstance(aggregationSpanInstancePicker.getValue(), selectedAggregationSpan);
-        notifyListener();
+        timeSpanSelection.setText(dateFormatter.format(selectedDate));
     }
 
     public AggregationSpan getSelectedAggregationSpan() {
@@ -173,51 +154,34 @@ public class TimeSpanSelection extends LinearLayout {
         setAggregationSpan(preferences.getStatisticsAggregationSpan());
     }
 
-    public long getSelectedInstance() {
-        GregorianCalendar calendar = new GregorianCalendar();
-        calendar.setTimeInMillis(selectedInstance);
-        selectedAggregationSpan.setCalendarToAggregationStart(calendar);
+    public long getSelectedDate() {
+        GregorianCalendar calendar = (GregorianCalendar) selectedDate.clone();
+
+        switch (selectedAggregationSpan) {
+            case DAY:
+                selectedDate.getTimeInMillis();
+                break;
+            case WEEK:
+                calendar.set(GregorianCalendar.DAY_OF_WEEK, 1);
+                break;
+            case MONTH:
+                calendar.set(GregorianCalendar.DAY_OF_MONTH, 1);
+                break;
+            case YEAR:
+                calendar.set(GregorianCalendar.DAY_OF_YEAR, 1);
+                break;
+            case ALL:
+                calendar.set(GregorianCalendar.YEAR, 0);
+                break;
+        }
+
         return calendar.getTimeInMillis();
     }
 
     public void setAggregationSpan(@NotNull AggregationSpan aggregationSpan) {
         selectedAggregationSpan = aggregationSpan;
         aggregationSpanSpinner.setSelection(aggregationSpanArrayAdapter.getPosition(getContext().getString(aggregationSpan.title)), true);
-        instanceFormatter.aggregationSpan = aggregationSpan;
-        updateLimits();
-    }
-
-    public void setInstance(long instance) {
-        selectedInstance = instance;
-        aggregationSpanInstancePicker.setValue((int) InstanceFormatter.mapInstanceToIndex(instance, selectedAggregationSpan));
-    }
-
-    public void setLimits(long firstInstance, long lastInstance) {
-        this.firstInstance = firstInstance;
-        this.lastInstance = lastInstance;
-        updateLimits();
-    }
-
-    public long getFirstInstance() {
-        return this.firstInstance;
-    }
-
-    public long getLastInstance() {
-        return this.lastInstance;
-    }
-
-    private void updateLimits() {
-        int min = (int) InstanceFormatter.mapInstanceToIndex(firstInstance, selectedAggregationSpan);
-        min = (min >= 0) ? min : 0;
-        int max = (int) InstanceFormatter.mapInstanceToIndex(lastInstance, selectedAggregationSpan);
-        max = (max >= 0) ? max : Integer.MAX_VALUE; // Make values safe after cast
-        if (min != aggregationSpanInstancePicker.getMinValue()) {
-            aggregationSpanInstancePicker.setMinValue(min);
-        }
-        if (max != aggregationSpanInstancePicker.getMaxValue()) {
-            aggregationSpanInstancePicker.setMaxValue(max);
-        }
-        setInstance(lastInstance);
+        dateFormatter.setAggregationSpan(aggregationSpan);
     }
 
     public void addOnTimeSpanSelectionListener(OnTimeSpanSelectionListener listener) {
@@ -230,18 +194,17 @@ public class TimeSpanSelection extends LinearLayout {
 
     private void notifyListener() {
         for (OnTimeSpanSelectionListener listener : listeners) {
-            listener.onTimeSpanChanged(getSelectedAggregationSpan(), getSelectedInstance());
+            listener.onTimeSpanChanged(getSelectedAggregationSpan(), getSelectedDate());
         }
     }
 
     public interface OnTimeSpanSelectionListener {
-        void onTimeSpanChanged(AggregationSpan aggregationSpan, long instance);
+        void onTimeSpanChanged(AggregationSpan aggregationSpan, long selectedDate);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.Q)
     public void setForegroundColor(int foregroundColor){
         this.foregroundColor = foregroundColor;
-        aggregationSpanInstancePicker.setTextColor(foregroundColor);
+        timeSpanSelection.setTextColor(foregroundColor);
         ((TextView)aggregationSpanSpinner.getSelectedView()).setTextColor(foregroundColor);
     }
 }

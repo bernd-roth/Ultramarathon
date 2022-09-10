@@ -23,18 +23,18 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/aggregationSpanInstancePickerLayout"
+        android:id="@+id/timeSpanSelecionLayout"
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal" >
 
-        <NumberPicker
-            android:id="@+id/aggregationSpanInstancePicker"
-            android:layout_width="100dp"
+        <TextView
+            android:id="@+id/timeSpanSelection"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:descendantFocusability="blocksDescendants"
-            android:orientation="vertical" />
+            android:gravity="center_vertical"
+            android:textSize="16sp" />
     </LinearLayout>
 
 </LinearLayout>
