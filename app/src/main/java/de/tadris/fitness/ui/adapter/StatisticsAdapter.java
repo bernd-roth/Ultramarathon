@@ -12,10 +12,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import de.tadris.fitness.ui.statistics.Fragments.StatsExploreFragment;
 import de.tadris.fitness.ui.statistics.Fragments.StatsFragment;
 import de.tadris.fitness.ui.statistics.Fragments.StatsHistoryFragment;
-import de.tadris.fitness.ui.statistics.Fragments.StatsExperimentalFragment;
 import de.tadris.fitness.ui.statistics.Fragments.StatsOverviewFragment;
 
 public class StatisticsAdapter extends FragmentStateAdapter {
@@ -29,8 +27,7 @@ public class StatisticsAdapter extends FragmentStateAdapter {
         this.context = context;
         fragments = new ArrayList<>(Arrays.asList(
                 new StatsOverviewFragment(context),
-                new StatsHistoryFragment(context),
-                new StatsExploreFragment(context)));
+                new StatsHistoryFragment(context)));
     }
 
     @Override
