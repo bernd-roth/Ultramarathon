@@ -55,7 +55,7 @@ import de.tadris.fitness.ui.dialog.ThreadSafeProgressDialogController
 import de.tadris.fitness.ui.record.RecordWorkoutActivity
 import de.tadris.fitness.ui.settings.FitoTrackSettingsActivity
 import de.tadris.fitness.ui.statistics.ShortStatsView
-import de.tadris.fitness.ui.workout.AggregatedWorkoutStatisticsActivity
+import de.tadris.fitness.ui.statistics.StatisticsActivity
 import de.tadris.fitness.ui.workout.EnterWorkoutActivity
 import de.tadris.fitness.ui.workout.ShowGpsWorkoutActivity
 import de.tadris.fitness.util.DialogUtils
@@ -353,7 +353,8 @@ class ListWorkoutsActivity : FitoTrackActivity(), WorkoutAdapterListener {
             return true
         }
         if (id == R.id.actionOpenStatisticss) {
-            startActivity(Intent(this, AggregatedWorkoutStatisticsActivity::class.java))
+            //startActivity(Intent(this, AggregatedWorkoutStatisticsActivity::class.java))
+            startActivity(Intent(this, StatisticsActivity::class.java))
             return true
         }
         return super.onOptionsItemSelected(item)
