@@ -79,6 +79,7 @@ public abstract class WorkoutActivity extends InformationActivity {
 
     protected DistanceUnitUtils distanceUnitUtils;
     protected EnergyUnitUtils energyUnitUtils;
+    boolean diagramsInteractive = false;
 
     void initBeforeContent() {
         distanceUnitUtils = Instance.getInstance(this).distanceUnitUtils;
@@ -127,8 +128,6 @@ public abstract class WorkoutActivity extends InformationActivity {
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         return displayMetrics.widthPixels * 3 / 4;
     }
-
-    boolean diagramsInteractive = false;
 
     private CombinedChart getDiagram(SampleConverter converter) {
         return getDiagram(Collections.singletonList(converter), converter.isIntervalSetVisible());
