@@ -28,7 +28,7 @@ public abstract class BaseWorkout {
 
     @ColumnInfo(name = "workoutType")
     @JsonProperty(value = "workoutType")
-    public String workoutTypeId;
+    public String workoutTypeId = WorkoutTypeManager.WORKOUT_TYPE_ID_OTHER;
 
     @ColumnInfo(name = "avg_heart_rate")
     public int avgHeartRate = -1;
