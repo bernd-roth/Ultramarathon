@@ -19,6 +19,7 @@ import de.tadris.fitness.data.StatsDataProvider;
 import de.tadris.fitness.data.StatsDataTypes;
 import de.tadris.fitness.data.StatsProvider;
 import de.tadris.fitness.data.WorkoutTypeManager;
+import de.tadris.fitness.ui.FitoTrackActivity;
 import de.tadris.fitness.util.WorkoutProperty;
 import de.tadris.fitness.util.charts.ChartStyles;
 import de.tadris.fitness.util.exceptions.NoDataException;
@@ -72,6 +73,7 @@ public class ShortStatsItemView extends LinearLayout {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void updateChart() {
         BarData data;
+        FitoTrackActivity activity = (FitoTrackActivity)getContext();
 
         timeSpanSelection.loadAggregationSpanFromPreferences();
         long start = timeSpanSelection.getSelectedDate();
@@ -84,22 +86,22 @@ public class ShortStatsItemView extends LinearLayout {
                 case 0:
                     title.setText(getContext().getString(R.string.workoutDistance));
                     data = new BarData(statsProvider.totalDistances(span));
-                    ChartStyles.setXAxisLabel(chart, Instance.getInstance(getContext()).distanceUnitUtils.getDistanceUnitSystem().getLongDistanceUnit());
+                    ChartStyles.setXAxisLabel(chart, Instance.getInstance(getContext()).distanceUnitUtils.getDistanceUnitSystem().getLongDistanceUnit(), activity);
                     break;
                 case 1:
                     title.setText(getContext().getString(R.string.workoutDuration));
                     data = new BarData(statsProvider.totalDurations(span));
-                    ChartStyles.setXAxisLabel(chart, getContext().getString(R.string.timeHourShort));
+                    ChartStyles.setXAxisLabel(chart, getContext().getString(R.string.timeHourShort), activity);
                     break;
                 default:
                     title.setText(getContext().getString(R.string.numberOfWorkouts));
                     data = new BarData(statsProvider.numberOfActivities(span));
-                    ChartStyles.setXAxisLabel(chart, "");
+                    ChartStyles.setXAxisLabel(chart, "", activity);
                     break;
             }
             ChartStyles.barChartIconLabel(chart, data, getContext());
         } catch (NoDataException e) {
-            ChartStyles.barChartNoData(chart, getContext());
+            ChartStyles.barChartNoData(chart, activity);
         }
         chart.invalidate();
     }

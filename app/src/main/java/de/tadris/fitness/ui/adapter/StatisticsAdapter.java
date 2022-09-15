@@ -12,19 +12,17 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import de.tadris.fitness.ui.FitoTrackActivity;
 import de.tadris.fitness.ui.statistics.fragments.StatsFragment;
 import de.tadris.fitness.ui.statistics.fragments.StatsHistoryFragment;
 import de.tadris.fitness.ui.statistics.fragments.StatsOverviewFragment;
 
 public class StatisticsAdapter extends FragmentStateAdapter {
 
-    Context context;
-
     ArrayList<Fragment> fragments;
 
-    public StatisticsAdapter(FragmentManager fragmentManager, Lifecycle lifecycle, Context context) {
+    public StatisticsAdapter(FragmentManager fragmentManager, Lifecycle lifecycle, FitoTrackActivity context) {
         super(fragmentManager, lifecycle);
-        this.context = context;
         fragments = new ArrayList<>(Arrays.asList(
                 new StatsOverviewFragment(context),
                 new StatsHistoryFragment(context)));

@@ -190,8 +190,8 @@ public class ShowGpsWorkoutActivity extends GpsWorkoutActivity implements Dialog
         de.tadris.fitness.util.charts.formatter.TimeFormatter timeFormatter = new de.tadris.fitness.util.charts.formatter.TimeFormatter(TimeUnit.MILLISECONDS);
         SpeedFormatter speedFormatter = new SpeedFormatter(distanceUnitUtils);
         ChartStyles.defaultHistogram(chart, this, speedFormatter, timeFormatter);
-        ChartStyles.setXAxisLabel(chart, distanceUnitUtils.getSpeedUnit());
-        ChartStyles.setYAxisLabel(chart, getString(R.string.timeMinuteShort));
+        ChartStyles.setXAxisLabel(chart, distanceUnitUtils.getSpeedUnit(), this);
+        ChartStyles.setYAxisLabel(chart, getString(R.string.timeMinuteShort), this);
         chart.setMarker(new DisplayValueMarker(this, chart.getAxisLeft().getValueFormatter(), chart.getLegend().getEntries()[0].label, barData));
 
         root.addView(chart, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getMapHeight()/2));

@@ -30,6 +30,7 @@ import java.util.concurrent.TimeUnit;
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationSpan;
 import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.ui.FitoTrackActivity;
 import de.tadris.fitness.util.Icon;
 import de.tadris.fitness.util.charts.formatter.FractionedDateFormatter;
 import de.tadris.fitness.util.charts.marker.DisplayValueMarker;
@@ -64,23 +65,27 @@ public class ChartStyles {
         chart.setFitBars(true);
     }
 
-    public static void defaultLineChart(BarLineChartBase chart) {
+    public static void defaultLineChart(BarLineChartBase chart, FitoTrackActivity context) {
         defaultChart(chart);
         chart.getAxisRight().setEnabled(false);
         chart.getXAxis().setEnabled(true);
         chart.getXAxis().setDrawGridLines(true);
+        chart.getXAxis().setTextColor(context.getThemeTextColor());
+        chart.getAxisLeft().setTextColor(context.getThemeTextColor());
+        chart.getAxisRight().setTextColor(context.getThemeTextColor());
     }
 
-    public static void setXAxisLabel(Chart chart, String label)
+    public static void setXAxisLabel(Chart chart, String label, FitoTrackActivity context)
     {
         Description description = new Description();
         description.setText(label);
         description.setTextSize(10);
         description.setEnabled(true);
+        description.setTextColor(context.getThemeTextColor());
         chart.setDescription(description);
     }
 
-    public static void setYAxisLabel(Chart chart, String label)
+    public static void setYAxisLabel(Chart chart, String label, FitoTrackActivity context)
     {
         LegendEntry legend = new LegendEntry();
         legend.label = label;
@@ -91,6 +96,7 @@ public class ChartStyles {
         chart.getLegend().setFormSize(0);
         chart.getLegend().setFormToTextSpace(-16);
         chart.getLegend().setForm(Legend.LegendForm.NONE);
+        chart.getLegend().setTextColor(context.getThemeTextColor());
     }
 
     public static void defaultHistogram(BarChart chart, Context ctx, ValueFormatter xValueFormatter, ValueFormatter yValueFormatter)
@@ -138,8 +144,8 @@ public class ChartStyles {
     }
 
     // Be careful to use this function outside StatsHistoryFragment
-    public static void updateStatsHistoryCombinedChartToSpan(CombinedChart chart, CombinedData combinedData, AggregationSpan aggregationSpan, Context ctx) {
-        ChartStyles.setTextAppearance(combinedData);
+    public static void updateStatsHistoryCombinedChartToSpan(CombinedChart chart, CombinedData combinedData, AggregationSpan aggregationSpan, FitoTrackActivity ctx) {
+        ChartStyles.setTextAppearance(combinedData, ctx);
         if(combinedData.getBarData() != null) {
             float barWidth = Math.max(aggregationSpan.spanInterval, AggregationSpan.DAY.spanInterval);
             combinedData.getBarData().setBarWidth(barWidth * ChartStyles.BAR_WIDTH_FACTOR);
@@ -161,28 +167,29 @@ public class ChartStyles {
         chart.invalidate();
     }
 
-    public static void updateTimeAxisToZoom(Context ctx, Chart chart, AxisBase axis, AggregationSpan aggregationSpan)
+    public static void updateTimeAxisToZoom(FitoTrackActivity ctx, Chart chart, AxisBase axis, AggregationSpan aggregationSpan)
     {
         axis.setValueFormatter(new FractionedDateFormatter(ctx,aggregationSpan));
         axis.setGranularity((float)aggregationSpan.spanInterval);
         if(axis instanceof XAxis) {
-            ChartStyles.setXAxisLabel(chart, ctx.getString(aggregationSpan.axisLabel));
+            ChartStyles.setXAxisLabel(chart, ctx.getString(aggregationSpan.axisLabel), ctx);
         }
         else
         {
-            ChartStyles.setYAxisLabel(chart, ctx.getString(aggregationSpan.axisLabel));
+            ChartStyles.setYAxisLabel(chart, ctx.getString(aggregationSpan.axisLabel), ctx);
         }
     }
 
-    public static void setTextAppearance(ChartData data)
+    public static void setTextAppearance(ChartData data, FitoTrackActivity context)
     {
         data.setValueTextSize(10);
+        data.setValueTextColor(context.getThemeTextColor());
     }
 
 
     public static void barChartIconLabel(BarChart chart, BarData data, Context ctx)
     {
-        setTextAppearance(data);
+        setTextAppearance(data, (FitoTrackActivity)ctx);
 
         ArrayList<Bitmap> imageList = new ArrayList<>();
         for(int i = 0; i < data.getDataSets().get(0).getEntryCount(); i++)
@@ -208,18 +215,18 @@ public class ChartStyles {
         chart.getAxisLeft().setAxisMinimum(0);
     }
 
-    public static void barChartNoData(BarChart chart, Context ctx)
+    public static void barChartNoData(BarChart chart, FitoTrackActivity ctx)
     {
         chart.setDrawMarkers(false);
         chart.setData(new BarData()); // Needed in case there is nothing to clear...
         chart.clearValues();
         chart.setExtraOffsets(0, 0, 0, 0);
-        ChartStyles.setXAxisLabel(chart, ctx.getString(R.string.no_workouts_recorded));
+        ChartStyles.setXAxisLabel(chart, ctx.getString(R.string.no_workouts_recorded), ctx);
     }
 
     public static void horizontalBarChartIconLabel(HorizontalBarChart chart, BarData data, Context ctx)
     {
-        setTextAppearance(data);
+        setTextAppearance(data, (FitoTrackActivity)ctx);
 
         ArrayList<Bitmap> imageList = new ArrayList<>();
         for(int i = 0; i < data.getDataSets().get(0).getEntryCount(); i++)

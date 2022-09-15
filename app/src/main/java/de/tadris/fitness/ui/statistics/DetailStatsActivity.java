@@ -72,8 +72,8 @@ public class DetailStatsActivity extends FitoTrackActivity {
         xScale = getIntent().getFloatExtra("xScale", 0);
         xTrans = getIntent().getFloatExtra("xTrans", 0);
 
-        ChartStyles.defaultLineChart(chart);
-        ChartStyles.setYAxisLabel(chart,label);
+        ChartStyles.defaultLineChart(chart, this);
+        ChartStyles.setYAxisLabel(chart, label, this);
 
         // Direct adding of the types from the Intent results in black screen...
         workoutTypes = new ArrayList<>();

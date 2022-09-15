@@ -55,7 +55,7 @@ abstract public class FitoTrackActivity extends AppCompatActivity {
         return getThemeColor(android.R.attr.colorPrimaryDark);
     }
 
-    protected int getThemeTextColor() {
+    public int getThemeTextColor() {
         return getThemeColor(android.R.attr.textColorPrimary);
     }
 

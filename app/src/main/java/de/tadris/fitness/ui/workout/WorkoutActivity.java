@@ -162,7 +162,7 @@ public abstract class WorkoutActivity extends InformationActivity {
             converter.afterAdd(chart);
         }
 
-        ChartStyles.defaultLineChart(chart);
+        ChartStyles.defaultLineChart(chart, this);
         return chart;
     }
 
@@ -182,8 +182,8 @@ public abstract class WorkoutActivity extends InformationActivity {
             xLabel = converters.get(0).getXAxisLabel();
             yLabel = converters.get(0).getYAxisLabel();
         }
-        ChartStyles.setXAxisLabel(chart, xLabel);
-        ChartStyles.setYAxisLabel(chart, yLabel);
+        ChartStyles.setXAxisLabel(chart, xLabel, this);
+        ChartStyles.setYAxisLabel(chart, yLabel, this);
 
 
         // Generate a time span from the view field of the chart
