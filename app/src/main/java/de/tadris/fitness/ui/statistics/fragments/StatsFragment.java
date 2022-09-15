@@ -1,4 +1,4 @@
-package de.tadris.fitness.ui.statistics.Fragments;
+package de.tadris.fitness.ui.statistics.fragments;
 
 import android.content.Context;
 

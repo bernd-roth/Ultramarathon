@@ -138,18 +138,18 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.workout.AggregatedWorkoutStatisticsActivity" />
-        <activity android:name=".ui.statistics.StatisticsActivity"
-            android:screenOrientation="portrait"
+        <activity
+            android:name=".ui.statistics.StatisticsActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            />
-        <activity android:name=".ui.statistics.DetailStatsActivity"
-            android:screenOrientation="landscape"
-            android:exported="true"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.statistics.DetailStatsActivity"
+            android:exported="true"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".ui.workout.ShareWorkoutActivity"
-            android:screenOrientation="portrait"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            />
+            android:screenOrientation="portrait" />
         <activity android:name=".ui.workout.EditWorkoutStartEndActivity" />
 
         <provider

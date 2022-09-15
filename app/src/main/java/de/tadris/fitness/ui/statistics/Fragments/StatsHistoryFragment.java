@@ -1,7 +1,8 @@
-package de.tadris.fitness.ui.statistics.Fragments;
+package de.tadris.fitness.ui.statistics.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -39,6 +40,8 @@ import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.data.WorkoutTypeManager;
 import de.tadris.fitness.data.preferences.UserPreferences;
 import de.tadris.fitness.ui.statistics.DetailStatsActivity;
+import de.tadris.fitness.ui.statistics.IOnToggleListener;
+import de.tadris.fitness.ui.statistics.TextToggle;
 import de.tadris.fitness.ui.statistics.WorkoutTypeSelection;
 import de.tadris.fitness.util.WorkoutProperty;
 import de.tadris.fitness.util.charts.ChartStyles;
@@ -48,22 +51,18 @@ import de.tadris.fitness.util.statistics.ChartSynchronizer;
 import de.tadris.fitness.util.statistics.OnChartGestureMultiListener;
 
 public class StatsHistoryFragment extends StatsFragment {
-    TextView speedTitle;
-    Switch speedSwitch;
+    TextToggle speedTitle;
     CombinedChart speedChart;
 
-    TextView durationTitle;
-    Switch durationSwitch;
+    TextToggle distanceTitle;
+    CombinedChart distanceChart;
+
+    TextToggle durationTitle;
     CombinedChart durationChart;
 
     Spinner exploreTitle;
     Switch exploreChartSwitch;
     CombinedChart exploreChart;
-
-
-    TextView distanceTitle;
-    Switch distanceSwitch;
-    CombinedChart distanceChart;
 
     WorkoutTypeSelection selection;
 
@@ -94,44 +93,41 @@ public class StatsHistoryFragment extends StatsFragment {
         selection.addOnWorkoutTypeSelectListener(workoutType -> preferences.setStatisticsSelectedTypes(selection.getSelectedWorkoutTypes()));
 
         // Setup switch functionality
-        speedTitle = view.findViewById(R.id.stats_history_speed_title);
+        speedTitle = view.findViewById(R.id.stats_history_speed_toggle);
+        speedTitle.setOnToggleListener(new IOnToggleListener() {
+            @Override
+            public void onToggle(CharSequence current) {
+                updateSpeedChart(selection.getSelectedWorkoutTypes());
+            }
+        });
+
         speedChart = view.findViewById(R.id.stats_speed_chart);
         speedChart.setDoubleTapToZoomEnabled(false);
-        speedSwitch = view.findViewById(R.id.speed_switch);
-        speedSwitch.setOnClickListener(view14 -> {
-            if (speedSwitch.isChecked()) {
-                speedTitle.setText(R.string.workoutPace);
-            } else {
-                speedTitle.setText(R.string.workoutSpeed);
+
+
+        distanceTitle = view.findViewById(R.id.stats_history_distance_toggle);
+        distanceTitle.setOnToggleListener(new IOnToggleListener() {
+            @Override
+            public void onToggle(CharSequence current) {
+                updateDistanceChart(selection.getSelectedWorkoutTypes());
             }
-            updateSpeedChart(selection.getSelectedWorkoutTypes());
         });
 
-        distanceTitle = view.findViewById(R.id.stats_history_distance_title);
         distanceChart = view.findViewById(R.id.stats_history_distance_chart);
         distanceChart.setDoubleTapToZoomEnabled(false);
-        distanceSwitch = view.findViewById(R.id.distance_switch);
-        distanceSwitch.setOnClickListener(view13 -> {
-            if (distanceSwitch.isChecked()) {
-                distanceTitle.setText(R.string.workoutDistanceSum);
-            } else {
-                distanceTitle.setText(R.string.workoutAvgDistance);
+
+
+        durationTitle = view.findViewById(R.id.stats_history_duration_toggle);
+        durationTitle.setOnToggleListener(new IOnToggleListener() {
+            @Override
+            public void onToggle(CharSequence current) {
+                updateDurationChart(selection.getSelectedWorkoutTypes());
             }
-            updateDistanceChart(selection.getSelectedWorkoutTypes());
         });
 
-        durationTitle = view.findViewById(R.id.stats_history_duration_title);
         durationChart = view.findViewById(R.id.stats_duration_chart);
         durationChart.setDoubleTapToZoomEnabled(false);
-        durationSwitch = view.findViewById(R.id.duration_switch);
-        durationSwitch.setOnClickListener(view12 -> {
-            if (durationSwitch.isChecked()) {
-                durationTitle.setText(R.string.workoutDurationSum);
-            } else {
-                durationTitle.setText(R.string.workoutAvgDurationLong);
-            }
-            updateDurationChart(selection.getSelectedWorkoutTypes());
-        });
+
 
         exploreTitle = view.findViewById(R.id.stats_explore_title);
         // Register WorkoutType selection listeners
@@ -211,15 +207,17 @@ public class StatsHistoryFragment extends StatsFragment {
                     switch (combinedChartList.indexOf(combinedChart))
                     {
                         case 0:
-                            workoutProperty = speedSwitch.isChecked() ? WorkoutProperty.AVG_PACE : WorkoutProperty.AVG_SPEED;
+                            workoutProperty = speedTitle.isSwapped()?
+                                    WorkoutProperty.AVG_PACE :
+                                    WorkoutProperty.AVG_SPEED;
                             break;
                         case 1:
                             workoutProperty = WorkoutProperty.LENGTH;
-                            summed = distanceSwitch.isChecked();
+                            summed = distanceTitle.isSwapped();
                             break;
                         case 2:
                             workoutProperty = WorkoutProperty.DURATION;
-                            summed = durationSwitch.isChecked();
+                            summed = durationTitle.isSwapped();
                             break;
                         case 3:
                         default:
@@ -318,7 +316,10 @@ public class StatsHistoryFragment extends StatsFragment {
     private void updateSpeedChart(List<WorkoutType> workoutTypes) {
         CandleDataSet candleDataSet;
 
-        WorkoutProperty property = speedSwitch.isChecked() ? WorkoutProperty.AVG_PACE : WorkoutProperty.AVG_SPEED;
+        WorkoutProperty property = speedTitle.isSwapped() ?
+                WorkoutProperty.AVG_PACE :
+                WorkoutProperty.AVG_SPEED;
+
         try {
             // Retrieve candle data
             candleDataSet = statsProvider.getCandleData(aggregationSpan, workoutTypes, property);
@@ -343,7 +344,7 @@ public class StatsHistoryFragment extends StatsFragment {
         CombinedData combinedData = new CombinedData();
 
         try {
-            if (distanceSwitch.isChecked()) {
+            if (distanceTitle.isSwapped()) {
                 BarDataSet barDataSet = statsProvider.getSumData(aggregationSpan, workoutTypes, WorkoutProperty.LENGTH);
                 BarData barData = new BarData(barDataSet);
                 combinedData.setData(barData);
@@ -372,7 +373,7 @@ public class StatsHistoryFragment extends StatsFragment {
         CombinedData combinedData = new CombinedData();
 
         try {
-            if (durationSwitch.isChecked()) {
+            if (durationTitle.isSwapped()) {
                 BarDataSet barDataSet = statsProvider.getSumData(aggregationSpan, workoutTypes, WorkoutProperty.DURATION);
                 BarData barData = new BarData(barDataSet);
                 combinedData.setData(barData);

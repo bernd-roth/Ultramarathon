@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -20,70 +20,38 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
+            <de.tadris.fitness.ui.statistics.TextToggle
+                android:id="@+id/stats_history_speed_toggle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/stats_history_speed_title"
-                    style="@style/title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/workoutSpeed" />
-
-                <Switch
-                    android:id="@+id/speed_switch"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
+                custom:currentText="@string/workoutSpeed"
+                custom:swapText="@string/workoutPace"/>
 
             <com.github.mikephil.charting.charts.CombinedChart
                 android:id="@+id/stats_speed_chart"
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
 
-            <LinearLayout
+            <de.tadris.fitness.ui.statistics.TextToggle
+                android:id="@+id/stats_history_distance_toggle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/stats_history_distance_title"
-                    style="@style/title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/workoutAvgDistance" />
-
-                <Switch
-                    android:id="@+id/distance_switch"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
+                custom:currentText="@string/workoutDistance"
+                custom:swapText="@string/workoutDistanceSum" />
 
             <com.github.mikephil.charting.charts.CombinedChart
                 android:id="@+id/stats_history_distance_chart"
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="200dp" >
 
-            <LinearLayout
+            </com.github.mikephil.charting.charts.CombinedChart>
+
+            <de.tadris.fitness.ui.statistics.TextToggle
+                android:id="@+id/stats_history_duration_toggle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/stats_history_duration_title"
-                    style="@style/title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/workoutAvgDurationLong" />
-
-                <Switch
-                    android:id="@+id/duration_switch"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="" />
-            </LinearLayout>
+                custom:currentText="@string/workoutDuration"
+                custom:swapText="@string/workoutDurationSum" />
 
             <com.github.mikephil.charting.charts.CombinedChart
                 android:id="@+id/stats_duration_chart"
@@ -100,7 +68,7 @@
                 <Spinner
                     android:id="@+id/stats_explore_title"
                     style="@style/titleSpinnerStyle"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
@@ -109,7 +77,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:minWidth="48dp"
-                    android:minHeight="48dp" />
+                    android:minHeight="48dp"
+                    android:text="show sum"
+                    android:textColor="@color/textColorLight"
+                    android:textSize="16sp
+"/>
             </LinearLayout>
 
             <com.github.mikephil.charting.charts.CombinedChart
