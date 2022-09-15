@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.data.BarData;
@@ -39,6 +40,7 @@ import de.tadris.fitness.data.StatsProvider;
 import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.data.WorkoutTypeManager;
 import de.tadris.fitness.data.preferences.UserPreferences;
+import de.tadris.fitness.ui.FitoTrackActivity;
 import de.tadris.fitness.ui.statistics.DetailStatsActivity;
 import de.tadris.fitness.ui.statistics.IOnToggleListener;
 import de.tadris.fitness.ui.statistics.TextToggle;
@@ -51,6 +53,8 @@ import de.tadris.fitness.util.statistics.ChartSynchronizer;
 import de.tadris.fitness.util.statistics.OnChartGestureMultiListener;
 
 public class StatsHistoryFragment extends StatsFragment {
+    FitoTrackActivity activity;
+
     TextToggle speedTitle;
     CombinedChart speedChart;
 
@@ -75,13 +79,15 @@ public class StatsHistoryFragment extends StatsFragment {
 
     UserPreferences preferences;
 
-    public StatsHistoryFragment(Context ctx) {
+    public StatsHistoryFragment(FitoTrackActivity ctx) {
         super(R.layout.fragment_stats_history, ctx);
         synchronizer = new ChartSynchronizer();
         statsProvider = new StatsProvider(ctx);
         preferences = new UserPreferences(ctx);
+        activity = ctx;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -171,7 +177,7 @@ public class StatsHistoryFragment extends StatsFragment {
         for (CombinedChart combinedChart : combinedChartList) {
             ChartStyles.animateChart(combinedChart);
             ChartStyles.fixViewPortOffsets(combinedChart, 120);
-            ChartStyles.defaultLineChart(combinedChart);
+            ChartStyles.defaultLineChart(combinedChart, activity);
             statsProvider.setAxisLimits(combinedChart.getXAxis(), WorkoutProperty.TOP_SPEED);
             OnChartGestureMultiListener multiListener = new OnChartGestureMultiListener(new ArrayList<>());
             multiListener.listeners.add(synchronizer.addChart(combinedChart));
@@ -323,7 +329,7 @@ public class StatsHistoryFragment extends StatsFragment {
         try {
             // Retrieve candle data
             candleDataSet = statsProvider.getCandleData(aggregationSpan, workoutTypes, property);
-            ChartStyles.setYAxisLabel(speedChart, property.getUnit(context, candleDataSet.getYMax()));
+            ChartStyles.setYAxisLabel(speedChart, property.getUnit(context, candleDataSet.getYMax()), context);
 
             // Add candle data
             CombinedData combinedData = new CombinedData();
@@ -333,7 +339,7 @@ public class StatsHistoryFragment extends StatsFragment {
             LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(candleDataSet);
             combinedData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(context, lineDataSet)));
 
-            ChartStyles.updateStatsHistoryCombinedChartToSpan(speedChart, combinedData, aggregationSpan, getContext());
+            ChartStyles.updateStatsHistoryCombinedChartToSpan(speedChart, combinedData, aggregationSpan, activity);
         } catch (NoDataException e) {
             speedChart.clear();
         }
@@ -361,8 +367,8 @@ public class StatsHistoryFragment extends StatsFragment {
             // Therefore the following two lines resets all renderers manually.
             distanceChart.clear();
             ((CombinedChartRenderer) distanceChart.getRenderer()).createRenderers();
-            ChartStyles.updateStatsHistoryCombinedChartToSpan(distanceChart, combinedData, aggregationSpan, getContext());
-            ChartStyles.setYAxisLabel(distanceChart, WorkoutProperty.LENGTH.getUnit(context, combinedData.getYMax()));
+            ChartStyles.updateStatsHistoryCombinedChartToSpan(distanceChart, combinedData, aggregationSpan, activity);
+            ChartStyles.setYAxisLabel(distanceChart, WorkoutProperty.LENGTH.getUnit(context, combinedData.getYMax()), context);
         } catch (NoDataException e) {
             distanceChart.clear();
         }
@@ -390,8 +396,8 @@ public class StatsHistoryFragment extends StatsFragment {
             // Therefore the following two lines resets all renderers manually.
             durationChart.clear();
             ((CombinedChartRenderer) durationChart.getRenderer()).createRenderers();
-            ChartStyles.updateStatsHistoryCombinedChartToSpan(durationChart, combinedData, aggregationSpan, getContext());
-            ChartStyles.setYAxisLabel(durationChart, WorkoutProperty.DURATION.getUnit(context, combinedData.getYMax()));
+            ChartStyles.updateStatsHistoryCombinedChartToSpan(durationChart, combinedData, aggregationSpan, activity);
+            ChartStyles.setYAxisLabel(durationChart, WorkoutProperty.DURATION.getUnit(context, combinedData.getYMax()), context);
         } catch (NoDataException e) {
             durationChart.clear();
         }
@@ -423,9 +429,9 @@ public class StatsHistoryFragment extends StatsFragment {
             ((CombinedChartRenderer) exploreChart.getRenderer()).createRenderers();
             if(!(property == WorkoutProperty.START) && !(property == WorkoutProperty.END)) {
                 String unit = property.getUnit(getContext(), combinedData.getYMax() - combinedData.getYMin());
-                ChartStyles.setYAxisLabel(exploreChart, unit);
+                ChartStyles.setYAxisLabel(exploreChart, unit, context);
             }
-            ChartStyles.updateStatsHistoryCombinedChartToSpan(exploreChart, combinedData, aggregationSpan, getContext());
+            ChartStyles.updateStatsHistoryCombinedChartToSpan(exploreChart, combinedData, aggregationSpan, activity);
 
         } catch (NoDataException e) {
             exploreChart.clear();

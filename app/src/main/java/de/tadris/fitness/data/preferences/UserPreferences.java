@@ -21,11 +21,13 @@ package de.tadris.fitness.data.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.util.ArraySet;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -483,19 +485,16 @@ public class UserPreferences {
         preferences.edit().putInt("lastVersion", BuildConfig.VERSION_CODE).apply();
     }
 
-    public AggregationSpan getStatisticsAggregationSpan()
-    {
+    public AggregationSpan getStatisticsAggregationSpan() {
         int statsAggregation = preferences.getInt(STATISTICS_AGGREGATION_SPAN, DEFAULT_STATISTICS_SPAN);
         return AggregationSpan.fromInt(statsAggregation);
     }
 
-    public void setStatisticsAggregationSpan(AggregationSpan span)
-    {
+    public void setStatisticsAggregationSpan(AggregationSpan span) {
         preferences.edit().putInt(STATISTICS_AGGREGATION_SPAN, span.toInt()).apply();
     }
 
-    public List<WorkoutType> getStatisticsSelectedTypes()
-    {
+    public List<WorkoutType> getStatisticsSelectedTypes() {
         Set<String> typeIDs = preferences.getStringSet(STATISTICS_SELECTED_TYPES, DEFAULT_STATISTICS_SELECTED_TYPES);
         List<WorkoutType> types = new ArrayList<>();
 
@@ -506,8 +505,8 @@ public class UserPreferences {
         return types;
     }
 
-    public void setStatisticsSelectedTypes(List<WorkoutType> types)
-    {
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void setStatisticsSelectedTypes(List<WorkoutType> types) {
         Set<String> typeIDs = new ArraySet<>();
         for(WorkoutType type:types)
         {
