@@ -497,9 +497,7 @@ public class UserPreferences {
     public List<WorkoutType> getStatisticsSelectedTypes() {
         Set<String> typeIDs = preferences.getStringSet(STATISTICS_SELECTED_TYPES, DEFAULT_STATISTICS_SELECTED_TYPES);
         List<WorkoutType> types = new ArrayList<>();
-
-        for(String type:typeIDs)
-        {
+        for(String type:typeIDs) {
             types.add(WorkoutTypeManager.getInstance().getWorkoutTypeById(ctx, type));
         }
         return types;
@@ -508,8 +506,7 @@ public class UserPreferences {
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void setStatisticsSelectedTypes(List<WorkoutType> types) {
         Set<String> typeIDs = new ArraySet<>();
-        for(WorkoutType type:types)
-        {
+        for(WorkoutType type:types) {
             typeIDs.add(type.id);
         }
         preferences.edit().putStringSet(STATISTICS_SELECTED_TYPES, typeIDs).apply();

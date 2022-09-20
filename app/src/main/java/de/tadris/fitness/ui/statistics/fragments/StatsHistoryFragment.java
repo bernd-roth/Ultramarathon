@@ -189,60 +189,58 @@ public class StatsHistoryFragment extends StatsFragment {
 
                 @Override
                 public void onChartGestureEnd(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
+                    if(lastPerformedGesture == ChartTouchListener.ChartGesture.LONG_PRESS) {
+                        float[] viewPortValues = new float[9];
+                        combinedChart.getViewPortHandler().getMatrixTouch().getValues(viewPortValues);
 
+                        Intent i = new Intent(context, DetailStatsActivity.class);
+                        WorkoutProperty workoutProperty;
+                        boolean summed = false;
+                        switch (combinedChartList.indexOf(combinedChart)) {
+                            case 0:
+                                workoutProperty = speedTitle.isSwapped() ?
+                                        WorkoutProperty.AVG_PACE :
+                                        WorkoutProperty.AVG_SPEED;
+                                break;
+                            case 1:
+                                workoutProperty = WorkoutProperty.LENGTH;
+                                summed = distanceTitle.isSwapped();
+                                break;
+                            case 2:
+                                workoutProperty = WorkoutProperty.DURATION;
+                                summed = durationTitle.isSwapped();
+                                break;
+                            case 3:
+                            default:
+                                workoutProperty = WorkoutProperty.getById(exploreTitle.getSelectedItemPosition());
+                                summed = exploreChartSwitch.isChecked();
+                        }
+                        i.putExtra("property", (Serializable) workoutProperty);
+                        i.putExtra("summed", summed);
+                        i.putExtra("types", (Serializable) selection.getSelectedWorkoutTypes());
+                        i.putExtra("formatter", combinedChart.getAxisLeft().getValueFormatter().getClass());
+                        //i.putExtra("viewPort", viewPortValues);
+                        i.putExtra("xScale", combinedChart.getScaleX());
+                        i.putExtra("xTrans", combinedChart.getLowestVisibleX());
+                        i.putExtra("aggregationSpan", aggregationSpan);
+                        String label = "";
+                        if (combinedChart.getLegend().getEntries().length > 0)
+                            label = combinedChart.getLegend().getEntries()[0].label;
+                        i.putExtra("ylabel", label);
+                        context.startActivity(i);
+                    }
                 }
 
                 @Override
-                public void onChartLongPressed(MotionEvent me) {
-
+                public void onChartLongPressed(MotionEvent me) { // function implemented in onChartGestureListenerEnd to avoid call on zoom / pan etc
                 }
 
                 @Override
                 public void onChartDoubleTapped(MotionEvent me) {
-
                 }
 
                 @Override
                 public void onChartSingleTapped(MotionEvent me) {
-                    float[] viewPortValues = new float[9];
-                    combinedChart.getViewPortHandler().getMatrixTouch().getValues(viewPortValues);
-
-                    Intent i = new Intent(context, DetailStatsActivity.class);
-                    WorkoutProperty workoutProperty;
-                    boolean summed = false;
-                    switch (combinedChartList.indexOf(combinedChart))
-                    {
-                        case 0:
-                            workoutProperty = speedTitle.isSwapped()?
-                                    WorkoutProperty.AVG_PACE :
-                                    WorkoutProperty.AVG_SPEED;
-                            break;
-                        case 1:
-                            workoutProperty = WorkoutProperty.LENGTH;
-                            summed = distanceTitle.isSwapped();
-                            break;
-                        case 2:
-                            workoutProperty = WorkoutProperty.DURATION;
-                            summed = durationTitle.isSwapped();
-                            break;
-                        case 3:
-                        default:
-                            workoutProperty = WorkoutProperty.getById(exploreTitle.getSelectedItemPosition());
-                            summed = exploreChartSwitch.isChecked();
-                    }
-                    i.putExtra("property", (Serializable) workoutProperty);
-                    i.putExtra("summed", summed);
-                    i.putExtra("types", (Serializable) selection.getSelectedWorkoutTypes());
-                    i.putExtra("formatter", combinedChart.getAxisLeft().getValueFormatter().getClass());
-                    //i.putExtra("viewPort", viewPortValues);
-                    i.putExtra("xScale", combinedChart.getScaleX());
-                    i.putExtra("xTrans", combinedChart.getLowestVisibleX());
-                    i.putExtra("aggregationSpan", aggregationSpan);
-                    String label = "";
-                    if(combinedChart.getLegend().getEntries().length>0)
-                        label =combinedChart.getLegend().getEntries()[0].label;
-                    i.putExtra("ylabel", label);
-                    context.startActivity(i);
                 }
 
                 @Override
@@ -271,7 +269,10 @@ public class StatsHistoryFragment extends StatsFragment {
         selection.setSelectedWorkoutTypes(selected);
 
         displaySpan(preferences.getStatisticsAggregationSpan()); // set viewport according to other statistic views
+
         exploreTitle.setSelection(WorkoutProperty.PAUSE_DURATION.getId());
+        distanceTitle.toggle();
+        durationTitle.toggle();
     }
 
     private void scaleChart(CombinedChart chart)
