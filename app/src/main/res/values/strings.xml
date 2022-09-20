@@ -539,6 +539,7 @@
     <string name="calibrating">Calibrating</string>
     <string name="noSensorAvailable">No sensor available</string>
     <string name="time">time</string>
+    <string name="show_sum">Show sum</string>
     <plurals name="satelliteCount">
         <item quantity="zero">No satellites</item>
         <item quantity="one">One satellite</item>

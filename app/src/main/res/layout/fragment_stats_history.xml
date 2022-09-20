@@ -78,10 +78,9 @@
                     android:layout_height="wrap_content"
                     android:minWidth="48dp"
                     android:minHeight="48dp"
-                    android:text="show sum"
+                    android:text="@string/show_sum"
                     android:textColor="@color/textColorLight"
-                    android:textSize="16sp
-"/>
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <com.github.mikephil.charting.charts.CombinedChart
