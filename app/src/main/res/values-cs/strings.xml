@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -17,9 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="gps">GPS</string>
     <string name="app_name">FitoTrack</string>
     <string name="resumeWorkoutConfirmation">Opravdu chcete v tomto cvičení pokračovat\? To také přidá pauzu od okamžiku, kdy bylo cvičení zastaveno.</string>
@@ -364,4 +361,45 @@
     <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack také shromažďuje údaje o poloze na pozadí během záznamu tréninku, i když je obrazovka vypnutá. Proto prosím povolte FitoTracku přístup k vaší poloze.</string>
     <string name="recordingPermissionNotGrantedMessage">FitoTrack vyžaduje povolení přístupu k vaší poloze aby mohl sledovat váš pohyb během tréninku. FitoTrack také může sbírat údaje o vaší poloze při běhu aplikace na pozadí nebo když je obrazovka vypnutá během záznamu tréninku. Údaje o poloze vždy zůstávají na vašem zařízení pokud neudělíte souhlas s jejich sdílením.</string>
     <string name="workoutTypeAll">Vše</string>
+    <string name="workoutRecordingTypeGps">Tréninky s GPS</string>
+    <string name="workoutRecordingTypeIndoor">Tréninky uvnitř</string>
+    <string name="workoutRepetitions">Opakování</string>
+    <string name="workoutFrequency">Frekvence</string>
+    <string name="workoutIntensity">Intenzita</string>
+    <string name="workoutAvgFrequencyShort">Prům. frekvence</string>
+    <string name="workoutAvgFrequencyLong">Průměrná frekvence</string>
+    <string name="workoutCurrentFrequency">Aktuální frekvence</string>
+    <string name="workoutMaxFrequency">Max. frekvence</string>
+    <string name="workoutAvgIntensityShort">Prům. intenzita</string>
+    <string name="workoutMaxIntensity">Max. intenzita</string>
+    <string name="workoutMaxHeight">Max. výška</string>
+    <string name="workoutTypeRopeSkipping">Švihadlo</string>
+    <string name="workoutTypeTreadmill">Běhací pás</string>
+    <plurals name="workoutStep">
+        <item quantity="one">Krok</item>
+        <item quantity="few">Kroky</item>
+        <item quantity="other">Kroků</item>
+    </plurals>
+    <string name="workoutTypeTrampolineJumping">Trampolína</string>
+    <string name="preferenceCurrentSpeedAverageTimeTitle">Zprůměrovaná rychlost</string>
+    <plurals name="workoutJump">
+        <item quantity="one">Skok</item>
+        <item quantity="few">Skoky</item>
+        <item quantity="other">Skoků</item>
+    </plurals>
+    <string name="workoutSets">Setů</string>
+    <string name="heartRateSensorBattery">Baterie senzoru</string>
+    <string name="workoutTypePushUps">Kliky</string>
+    <plurals name="workoutPushUp">
+        <item quantity="one">Klik</item>
+        <item quantity="few">Kliky</item>
+        <item quantity="other">Kliků</item>
+    </plurals>
+    <string name="pref_step_length">Délka kroku</string>
+    <string name="prefTrackStyleUsageTitle">Automaticky zabarvovat trasu</string>
+    <string name="edit_interval">Upravit interval</string>
+    <string name="workoutMinHeight">Min. výška</string>
+    <string name="trackStyle">Styl trasy</string>
+    <string name="preferencesDebugTitle">Ladit</string>
+    <string name="preferencesCategoryMap">Mapa</string>
 </resources>
