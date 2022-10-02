@@ -332,8 +332,8 @@
         <item quantity="other"><xliff:g example="5" id="mins">%1$d</xliff:g> minutos</item>
     </plurals>
     <plurals name="seconds">
-        <item quantity="one"><xliff:g example="1" id="secs">%1$d</xliff:g> \u0020segundo</item>
-        <item quantity="many"><xliff:g example="12" id="secs">%1$d</xliff:g> \u0020segundos</item>
+        <item quantity="one"><xliff:g example="1" id="secs">%1$d</xliff:g> segundo</item>
+        <item quantity="many"><xliff:g example="12" id="secs">%1$d</xliff:g> segundos</item>
         <item quantity="other"></item>
     </plurals>
     <string name="scanFailed">Escaneo fallido</string>
@@ -507,7 +507,7 @@
     <plurals name="satelliteCount">
         <item quantity="one">No hay satélite</item>
         <item quantity="many">Varios satélites</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="noSensorAvailable">No hay sensor disponible</string>
 </resources>
