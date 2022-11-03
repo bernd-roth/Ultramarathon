@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -27,7 +27,6 @@ import java.util.Calendar;
 
 import de.tadris.fitness.BuildConfig;
 import de.tadris.fitness.data.RecordingType;
-import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.model.AutoStartWorkout;
 
 public class UserPreferences {
@@ -457,6 +456,13 @@ public class UserPreferences {
 
     public void updateLastVersionCode() {
         preferences.edit().putInt("lastVersion", BuildConfig.VERSION_CODE).apply();
+    }
+
+    public UserMeasurements getMeasurements() {
+        return new UserMeasurements(
+                getUserWeight(),
+                getStepLength()
+        );
     }
 
 }

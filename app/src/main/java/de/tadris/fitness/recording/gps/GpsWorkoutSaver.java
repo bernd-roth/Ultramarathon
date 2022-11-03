@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -33,9 +33,10 @@ import de.tadris.fitness.data.BaseWorkoutData;
 import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.GpsWorkout;
 import de.tadris.fitness.data.GpsWorkoutData;
+import de.tadris.fitness.data.preferences.UserMeasurements;
 import de.tadris.fitness.util.AltitudeCorrection;
-import de.tadris.fitness.util.CalorieCalculator;
 import de.tadris.fitness.util.WorkoutCalculator;
+import de.tadris.fitness.util.calorie.CalorieCalculator;
 
 /**
  * Calculates data for a workout+samples and saves everything to the database.
@@ -307,7 +308,7 @@ public class GpsWorkoutSaver {
 
     protected void setCalories() {
         // Ascent has to be set previously
-        workout.calorie = CalorieCalculator.instance().calculateCalories(context, workout);
+        workout.calorie = new CalorieCalculator(context).calculateCalories(UserMeasurements.from(context), workout);
     }
 
     protected GpsWorkoutData getWorkoutData() {
