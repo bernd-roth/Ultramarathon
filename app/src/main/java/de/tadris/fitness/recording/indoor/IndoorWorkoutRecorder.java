@@ -184,7 +184,7 @@ public class IndoorWorkoutRecorder extends BaseWorkoutRecorder {
     @Override
     public int getCalories() {
         workout.duration = getDuration();
-        return CalorieCalculator.calculateCalories(context, workout);
+        return CalorieCalculator.instance().calculateCalories(context, workout);
     }
 
     public List<IndoorSample> getSamples() {

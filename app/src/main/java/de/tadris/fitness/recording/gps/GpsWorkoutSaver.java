@@ -307,7 +307,7 @@ public class GpsWorkoutSaver {
 
     protected void setCalories() {
         // Ascent has to be set previously
-        workout.calorie = CalorieCalculator.calculateCalories(context, workout);
+        workout.calorie = CalorieCalculator.instance().calculateCalories(context, workout);
     }
 
     protected GpsWorkoutData getWorkoutData() {

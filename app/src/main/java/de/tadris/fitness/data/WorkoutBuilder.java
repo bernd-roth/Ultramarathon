@@ -81,7 +81,7 @@ public class WorkoutBuilder {
             workout.topSpeed = workout.avgSpeed;
         }
 
-        workout.calorie = CalorieCalculator.calculateCalories(context, workout);
+        workout.calorie = CalorieCalculator.instance().calculateCalories(context, workout);
         workout.comment = comment;
 
         workout.edited = wasEdited;
