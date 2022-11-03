@@ -27,9 +27,19 @@ import java.io.OutputStream;
 import de.tadris.fitness.data.GpsWorkoutData;
 
 public interface IWorkoutExporter {
+
+    /**
+     * Writes a GPS workout to an stream
+     *
+     * @param data         Exported data
+     * @param outputStream output, shouldn't be closed by the method
+     */
     void exportWorkout(GpsWorkoutData data, OutputStream outputStream) throws IOException;
 
     default void exportWorkout(GpsWorkoutData data, File file) throws IOException {
-        exportWorkout(data, new FileOutputStream(file));
+        FileOutputStream fileOut = new FileOutputStream(file);
+        exportWorkout(data, fileOut);
+        fileOut.close();
     }
+
 }

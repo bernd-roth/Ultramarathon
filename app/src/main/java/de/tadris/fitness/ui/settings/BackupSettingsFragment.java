@@ -111,7 +111,7 @@ public class BackupSettingsFragment extends FitoTrackSettingFragment {
 
     private void massExportGpx() {
         exportTask(progressDialog -> {
-            File file = DataManager.createSharableFile(getContext(), "workouts.gpx");
+            File file = DataManager.createSharableFile(getContext(), "workouts.zip");
             new MassExporter(
                     Instance.getInstance(getContext()).db.gpsWorkoutDao(),
                     new GpxExporter(),
