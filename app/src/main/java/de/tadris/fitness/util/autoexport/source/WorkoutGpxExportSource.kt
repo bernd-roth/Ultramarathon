@@ -38,7 +38,7 @@ class WorkoutGpxExportSource(private val workoutId: Long) : ExportSource {
             file, mapOf(
                 "FitoTrack-Type" to ExportSource.EXPORT_SOURCE_WORKOUT_GPX,
                 "FitoTrack-Timestamp" to workout.start.toString(),
-                "FitoTrack-Type" to workout.workoutTypeId,
+                "FitoTrack-Workout-Type" to workout.workoutTypeId,
                 "FitoTrack-Comment" to workout.safeComment,
             )
         )

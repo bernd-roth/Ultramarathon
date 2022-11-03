@@ -31,8 +31,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.core.content.FileProvider
-import de.tadris.fitness.BuildConfig
 import de.tadris.fitness.Instance
 import de.tadris.fitness.R
 import de.tadris.fitness.aggregation.WorkoutInformationManager
@@ -145,7 +143,7 @@ class ShareWorkoutActivity : ShowWorkoutColoredMapActivity() {
             val intent = Intent(Intent.ACTION_SEND)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                val imgURI = FileProvider.getUriForFile(applicationContext, BuildConfig.APPLICATION_ID + ".fileprovider", file)
+                val imgURI = DataManager.provide(this, file)
                 intent.setDataAndType(imgURI, "image/png")
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 intent.putExtra(Intent.EXTRA_STREAM, imgURI)

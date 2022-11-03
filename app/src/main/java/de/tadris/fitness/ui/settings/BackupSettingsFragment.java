@@ -29,7 +29,6 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.FileProvider;
 import androidx.preference.Preference;
 
 import java.io.File;
@@ -133,7 +132,7 @@ public class BackupSettingsFragment extends FitoTrackSettingFragment {
         new Thread(() -> {
             try {
                 File file = task.runAsyncTask(dialogController);
-                Uri uri = FileProvider.getUriForFile(requireContext(), BuildConfig.APPLICATION_ID + ".fileprovider", file);
+                Uri uri = DataManager.provide(requireContext(), file);
                 mHandler.post(() -> {
                     dialogController.cancel();
                     Intent intent = new Intent(getContext(), ShareFileActivity.class);

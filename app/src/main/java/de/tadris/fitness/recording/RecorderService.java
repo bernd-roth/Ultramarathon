@@ -22,13 +22,10 @@ package de.tadris.fitness.recording;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
-import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
-import android.util.Log;
 
 import androidx.core.app.NotificationManagerCompat;
 
@@ -42,9 +39,9 @@ import de.tadris.fitness.BuildConfig;
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.RecordingType;
-import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.recording.component.AnnouncementComponent;
 import de.tadris.fitness.recording.component.ExerciseRecognitionComponent;
+import de.tadris.fitness.recording.component.GnssComponent;
 import de.tadris.fitness.recording.component.GpsComponent;
 import de.tadris.fitness.recording.component.HeartRateComponent;
 import de.tadris.fitness.recording.component.PressureComponent;
@@ -54,6 +51,12 @@ import de.tadris.fitness.ui.record.RecordWorkoutActivity;
 import de.tadris.fitness.util.NotificationHelper;
 import de.tadris.fitness.util.WorkoutLogger;
 
+/**
+ * The RecorderService is responsible for collecting data and publishing it to other app parts like
+ * the WorkoutRecorder or RecorderActivity. Also it handles the notification and a watchdog.
+ * <p>
+ * It starts RecorderServiceComponents depending on the workout type.
+ */
 public class RecorderService extends Service {
 
     protected Date serviceStartTime;
@@ -65,7 +68,6 @@ public class RecorderService extends Service {
 
     protected PowerManager.WakeLock wakeLock;
 
-    public SensorManager sensorManager = null;
     public Instance instance = null;
 
     private final List<RecorderServiceComponent> components = new ArrayList<>();
@@ -177,10 +179,6 @@ public class RecorderService extends Service {
 
         this.instance = Instance.getInstance(getBaseContext());
 
-        if (sensorManager == null) {
-            sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        }
-
         startRelevantComponents();
 
         initializeWatchdog();
@@ -205,9 +203,12 @@ public class RecorderService extends Service {
 
     private void startRelevantComponents(){
         RecordingType type = instance.recorder.getRecordingType();
-        if(type == RecordingType.GPS){
+        if(type == RecordingType.GPS) {
             startComponent(new GpsComponent());
             startComponent(new PressureComponent());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                startComponent(new GnssComponent());
+            }
         }else{
             startComponent(new ExerciseRecognitionComponent());
         }

@@ -141,7 +141,8 @@
 \nStandard OSM Kartenstil</string>
     <string name="humanitarian_clean_map_but_sometimes_not_available">Humanitarian
 \nSchöne Karte, aber nicht immer verfügbar</string>
-    <string name="offline_local_map_file_with_local_render_theme">Offline\nLokale Kartendatei mit lokalem Renderthema</string>
+    <string name="offline_local_map_file_with_local_render_theme">Offline
+\nLokale Kartendatei mit lokalem Renderthema</string>
     <string name="identifiable_visibility">Identifizierbar</string>
     <string name="trackable_visibility">Verfolgbar</string>
     <string name="private_visibility">Privat</string>
@@ -351,7 +352,7 @@
     <string name="workoutGPXExportTitle">Workout GPX-Sicherungen</string>
     <string name="unknown">Unbekannt</string>
     <string name="hintConfigureExportTargets">Füge Ziele hinzu, wohin die Dateien exportiert werden sollen.</string>
-    <string name="deleteExportTargetConfirmation">Möchtest du dieses Export-Ziel wirklich entfernen?</string>
+    <string name="deleteExportTargetConfirmation">Dieses Export-Ziel wirklich entfernen\?</string>
     <string name="intervalAutoStartDelayTraining">Workout Auto-Start Verzögerung</string>
     <string name="manageAutoStartDelaySummary">Wähle einen Countdown zum automatischen Starten deines Workouts</string>
     <string name="pref_auto_start_delay_title">Auto-Start Countdown</string>
@@ -470,7 +471,7 @@
     <string name="autoExportBackupTitle">Automatische App-Backups</string>
     <string name="autoExportBackupSummary">Backups automatisch exportieren</string>
     <string name="autoExportBackupExplanation">Im gewählten Intervall wird ein Backup hierher exportiert:</string>
-    <string name="autoExportWorkoutExplanation">Nachdem ein neues Workout aufgenommen wurde, wird ein GPS-export hierher exportiert:</string>
+    <string name="autoExportWorkoutExplanation">Nachdem ein neues Workout aufgenommen wurde, wird ein GPS-Export hier gespeichert:</string>
     <string name="exportIntervalTitle">Backup-Intervall</string>
     <string name="takeBackups1">Jeden Tag</string>
     <string name="takeBackups2">Jeden zweiten Tag</string>
@@ -501,8 +502,21 @@
     <string name="showWorkoutZoomControlsSummary">Zoomen und Verschieben der Karte beim Aufnehmen von GPS-Workouts aktivieren</string>
     <string name="showWorkoutZoomControlsTitle">Zoomen und Verschieben</string>
     <string name="unitHeartRateSensorBattery">%</string>
+    <string name="preferencesDebugTitle">Debuggen</string>
+    <string name="debugShareLogsTitle">Protokolle teilen</string>
+    <string name="debugShareLogsSummary">Protokolle teilen, die nützliche Daten enthalten, um Bugs in der Workoutaufzeichnung zu finden. Normalerweise enthalten diese keine Standortdaten.</string>
+    <string name="debugSensorsTitle">Sensoren debuggen</string>
+    <string name="debugSensorsSummary">Sensordaten aufnehmen, welche in die Protokoll-Datei geschrieben werden</string>
+    <string name="debugPressureSensor">Drucksensor debuggen</string>
+    <string name="calibrating">Kalibrieren</string>
+    <string name="noSensorAvailable">Kein Sensor verfügbar</string>
+    <string name="zoomWithVolumeButtonsSummary">Lautstärkeregler kontrollieren den Kartenzoom</string>
+    <string name="zoomWithVolumeButtonsTitle">Mit Lautstärkeknöpfen zoomen</string>
+    <plurals name="satelliteCount">
+        <item quantity="zero">Keine Satelliten</item>
+        <item quantity="one">Ein Satellit</item>
+        <item quantity="other">%d Satelliten</item>
+    </plurals>
     <string name="massExportGpxTitle">Alle Workouts als GPX exportieren</string>
-    <string name="massExportGpxTitle">A</string>
     <string name="massExportGpxSummary">Erstellt eine ZIP-Datei, die alle Workouts als GPX-Dokument enthält</string>
-    <string name="massExportGpxSummary">E</string>
 </resources>

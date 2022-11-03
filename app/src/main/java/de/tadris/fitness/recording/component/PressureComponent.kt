@@ -19,11 +19,11 @@
 
 package de.tadris.fitness.recording.component
 
+import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.util.Log
 import de.tadris.fitness.recording.RecorderService
 import de.tadris.fitness.recording.event.PressureChangeEvent
 import de.tadris.fitness.util.WorkoutLogger
@@ -35,22 +35,27 @@ class PressureComponent : RecorderServiceComponent, SensorEventListener {
         const val TAG = "PressureComponent"
     }
 
-    private lateinit var service: RecorderService
+    private var sensorManager: SensorManager? = null
+
     private var pressureSensor: Sensor? = null
 
     override fun register(service: RecorderService) {
-        this.service = service
-        pressureSensor = service.sensorManager?.getDefaultSensor(Sensor.TYPE_PRESSURE)
-        if(pressureSensor != null){
+        register(service as Context)
+    }
+
+    fun register(context: Context) {
+        sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager?
+        pressureSensor = sensorManager?.getDefaultSensor(Sensor.TYPE_PRESSURE)
+        if (pressureSensor != null) {
             WorkoutLogger.log(TAG, "started Pressure Sensor")
-            service.sensorManager.registerListener(this, pressureSensor, SensorManager.SENSOR_DELAY_NORMAL)
-        }else{
+            sensorManager?.registerListener(this, pressureSensor, SensorManager.SENSOR_DELAY_NORMAL)
+        } else {
             WorkoutLogger.log(TAG, "no Pressure Sensor Available")
         }
     }
 
     override fun unregister() {
-        service.sensorManager?.unregisterListener(this)
+        sensorManager?.unregisterListener(this)
     }
 
     override fun onSensorChanged(event: SensorEvent) {

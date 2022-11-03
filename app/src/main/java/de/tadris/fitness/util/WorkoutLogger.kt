@@ -22,22 +22,26 @@ package de.tadris.fitness.util
 import android.content.Context
 import android.util.Log
 import de.tadris.fitness.Instance
+import java.io.BufferedWriter
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.concurrent.thread
 
 class WorkoutLogger(context: Context) {
 
     companion object {
 
+        private const val MAX_LOG_SIZE = 1000L * 1000 * 2 // 2 MB
+
         @JvmStatic
-        fun log(tag: String, message: String){
+        fun log(tag: String, message: String) {
             val instance = Instance.getInstance()
-            if(instance != null){
+            if (instance != null) {
                 instance.logger.info(tag, message)
-            }else{
-                Log.w("Logger", "Couldn't log output")
+            } else {
+                Log.w("Logger", "No instance, couldn't log output")
                 Log.i(tag, message)
             }
         }
@@ -47,18 +51,32 @@ class WorkoutLogger(context: Context) {
     private val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
     private val currentDate get() = formatter.format(Date())
 
-    private val file = File(context.filesDir, "recorder.log")
-    private val writer = FileOutputStream(file, true).bufferedWriter()
+    val file = File(context.filesDir, "recorder.log")
+    private var writer: BufferedWriter? = null
 
-    fun info(tag: String, message: String){
+    init {
+        // Async init log file
+        thread {
+            try {
+                DataManager.rotateFile(file, MAX_LOG_SIZE)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            writer = FileOutputStream(file, true).bufferedWriter()
+        }
+    }
+
+    fun info(tag: String, message: String) {
         appendLine("[$currentDate][$tag] $message")
         Log.i(tag, message)
     }
 
-    private fun appendLine(line: String){
-        writer.write(line)
-        writer.newLine()
-        writer.flush()
+    private fun appendLine(line: String) {
+        writer?.let { writer ->
+            writer.write(line)
+            writer.newLine()
+            writer.flush()
+        }
     }
 
 }

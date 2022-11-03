@@ -142,9 +142,9 @@
     <string name="workoutDiscarded">Trening odrzucony</string>
     <string name="preferenceFirstDayOfWeek">Początek tygodnia</string>
     <string name="preferenceUseAverageForCurrentSpeed">Używaj średniej prędkości z określonego czasu zamiast ostatniego zapisu prędkości do obliczania aktualnej prędkości</string>
-    <string name="preferenceCurrentSpeedAverageTimeTitle">Aktualna prędkość według średniej</string>
-    <string name="preferenceCurrentSpeedAverageTimeSummary">Zastąp obliczanie aktualnej prędkości obliczaniem średniej</string>
-    <string name="preferenceCurrentSpeedTime">Przedział czasu do obliczania średniej</string>
+    <string name="preferenceCurrentSpeedAverageTimeTitle">Uśredniona prędkość</string>
+    <string name="preferenceCurrentSpeedAverageTimeSummary">Zastąp aktualną prędkość średnią</string>
+    <string name="preferenceCurrentSpeedTime">Uśredniona prędkość przedziału czasu</string>
     <string name="preferenceTimeFormat">Format czasu</string>
     <string name="preferenceDateFormat">Format daty</string>
     <string name="preferencesCategoryMap">Mapa</string>
@@ -315,7 +315,7 @@
     <string name="selectColoring">Wybierz kolorowanie</string>
     <string name="pref_auto_start_mode_unknown">Nieznany (nie używać)</string>
     <string name="pref_auto_start_mode_on_move">Czekaj, aż zacznę się poruszać</string>
-    <string name="pref_auto_start_mode_wait_for_gps">Czekaj na dokładną pozycję GPS</string>
+    <string name="pref_auto_start_mode_wait_for_gps">Czekaj na dokładną pozycję</string>
     <string name="pref_auto_start_mode_instant">Rozpoczynaj natychmiast</string>
     <string name="pref_auto_start_mode_title">Tryb automatycznego rozpoczęcia</string>
     <string name="intervalAutoStartModeTraining">Tryb automatycznego rozpoczęcia treningu</string>
@@ -340,7 +340,7 @@
         <item quantity="other"><xliff:g example="12" id="secs">%1$d</xliff:g> sekund</item>
     </plurals>
     <string name="launchError">Nie udało się uruchomić aplikacji</string>
-    <string name="editStartEndHelp">Wybierz pozycję na mapie albo diagramie. Następnie naciśnij jedną ze strzałek, aby wybrać nowy punkt początkowy albo końcowy. Gdy skończysz, kliknij ikonę zapisu w celu zastosowania zmian.</string>
+    <string name="editStartEndHelp">Wybierz pozycję na mapie albo diagramie. Następnie naciśnij jedną ze strzałek, aby wybrać nowy punkt początkowy albo końcowy. Gdy skończysz, naciśnij ikonę zapisu, aby zastosować zmiany.</string>
     <string name="actionApply">Zastosuj</string>
     <string name="moveEndOfWorkout">Wytnij koniec</string>
     <string name="moveStartOfWorkout">Wytnij początek</string>
@@ -393,7 +393,7 @@
     <string name="workoutTypeEditIdErrorUnique">Istnieje już typ treningu używający tego ID</string>
     <string name="workoutTypeEditIdErrorEmpty">Wprowadź ID</string>
     <string name="workoutTypeEditIdErrorCharacters">Dozwolone znaki: a–z, A–Z, 0–9, _, -</string>
-    <string name="pref_render_theme_style_info">Brak dostępnego menu stylu motywu renderowania dla wybranego motywu renderowania.</string>
+    <string name="pref_render_theme_style_info">Brak dostępnego menu dla wybranego motywu</string>
     <string name="pref_map_directory">Katalog map offline</string>
     <string name="recordingActivityPermissionMessage">FitoTrack potrzebuje uprawnienia do śledzenia Twojej aktywności fizycznej, aby nagrywać treningi w pomieszczeniach.</string>
     <string name="pref_step_length">Długość kroku</string>
@@ -505,4 +505,21 @@
     <string name="takeBackups7">Co tydzień</string>
     <string name="autoExportWorkoutExplanation">Po nagraniu nowego treningu plik GPX zostanie wyeksportowany tutaj:</string>
     <string name="takeBackups14">Co drugi tydzień</string>
+    <string name="preferencesDebugTitle">Debugowanie</string>
+    <string name="debugSensorsTitle">Debuguj czujniki</string>
+    <string name="debugSensorsSummary">Zbierz dane z czujników, które są zapisywane w pliku z logami</string>
+    <string name="debugPressureSensor">Debuguj czujnik ciśnienia</string>
+    <string name="calibrating">Kalibrowanie</string>
+    <string name="noSensorAvailable">Brak dostępnego czujnika</string>
+    <plurals name="satelliteCount">
+        <item quantity="zero">Brak satelitów</item>
+        <item quantity="one">1 satelita</item>
+        <item quantity="few">%d satelity</item>
+        <item quantity="many">%d satelitów</item>
+        <item quantity="other">%d satelitów</item>
+    </plurals>
+    <string name="debugShareLogsTitle">Udostępnij logi</string>
+    <string name="debugShareLogsSummary">Udostępnij logi zawierające przydatne dane, aby znaleźć błędy w rejestratorze treningów. Zwykle nie zawierają danych o lokalizacji</string>
+    <string name="zoomWithVolumeButtonsSummary">Zwiększaj i zmniejszaj głośność, aby kontrolować powiększanie i pomniejszanie</string>
+    <string name="zoomWithVolumeButtonsTitle">Powiększanie za pomocą przycisków głośności</string>
 </resources>

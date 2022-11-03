@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -25,14 +25,25 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TrackPointExtensions {
 
+    private double speed;
+
     @JacksonXmlProperty(localName = "gpxtpx:TrackPointExtension")
     private GpxTpxExtension gpxTpxExtension;
 
     public TrackPointExtensions() {
     }
 
-    public TrackPointExtensions(GpxTpxExtension gpxTpxExtension) {
+    public TrackPointExtensions(double speed, GpxTpxExtension gpxTpxExtension) {
+        this.speed = speed;
         this.gpxTpxExtension = gpxTpxExtension;
+    }
+
+    public double getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
     }
 
     public GpxTpxExtension getGpxTpxExtension() {

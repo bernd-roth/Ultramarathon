@@ -263,7 +263,7 @@
     <string name="showIntervals">Amosar intervalos</string>
     <string name="connectHeartRateDevice">Conectar monitor ritmo cardíaco</string>
     <string name="selectBluetoothDevice">Selecciona dispositivo Bluetooth</string>
-    <string name="workoutAvgHeartRate">Ritmo card. promedio</string>
+    <string name="workoutAvgHeartRate">Pulso promedio</string>
     <string name="workoutMaxHeartRate">Ritmo cardíaco Máx</string>
     <string name="workoutHeartRate">Ritmo cardíaco</string>
     <string name="workoutStarted">Adestramento iniciado</string>
@@ -319,7 +319,7 @@
     <string name="workoutTypeAll">Todo</string>
     <string name="pref_auto_start_mode_unknown">Descoñecido (non usar)</string>
     <string name="pref_auto_start_mode_on_move">Agardar a que comeces a moverte</string>
-    <string name="pref_auto_start_mode_wait_for_gps">Agardar pola posición GPS precisa</string>
+    <string name="pref_auto_start_mode_wait_for_gps">Agardo por localización precisa</string>
     <string name="pref_auto_start_mode_instant">Comezar inmediatamente</string>
     <string name="pref_auto_start_mode_title">Modo Auto-Inicio</string>
     <string name="intervalAutoStartModeTraining">Modo de Adestramento de inicio automático</string>
@@ -377,9 +377,9 @@
     <string name="runningMigrations">Migración de carreiras</string>
     <string name="editWorkoutStartEnd">Editar Inicio/Fin</string>
     <string name="preferenceUseAverageForCurrentSpeed">Usar a velocidade media durante unha marxe de tempo no lugar da última velocidade rexistrada do cálculo actual de velocidade.</string>
-    <string name="preferenceCurrentSpeedAverageTimeTitle">Velocidade actual pola Media</string>
-    <string name="preferenceCurrentSpeedAverageTimeSummary">Substituír o cálculo actual de velocidade por un cálculo medio.</string>
-    <string name="preferenceCurrentSpeedTime">Ámbito temporal para calcular a media</string>
+    <string name="preferenceCurrentSpeedAverageTimeTitle">Velocidade media</string>
+    <string name="preferenceCurrentSpeedAverageTimeSummary">Substituír velocidade actual pola media</string>
+    <string name="preferenceCurrentSpeedTime">Período de tempo para a media</string>
     <string name="preferencesCategoryMap">Mapa</string>
     <string name="prefTrackStyleUsageTitle">Usar automáticamente cores para ruta</string>
     <string name="trackStyle">Estilo da ruta</string>
@@ -389,7 +389,7 @@
     <string name="preferenceFirstDayOfWeek">Comezo da semana</string>
     <string name="edit_interval">Editar intervalo</string>
     <string name="fileNotFound">Non se atopa o ficheiro</string>
-    <string name="pref_render_theme_style_info">Sen menú do estilo da aparencia para o decorado seleccionado.</string>
+    <string name="pref_render_theme_style_info">Sen menú dispoñible para o decorado seleccionado.</string>
     <string name="preferenceCategoryRenderThemeCategories">Categorías</string>
     <string name="pref_render_theme_style">Estilo de debuxado</string>
     <string name="pref_map_directory">Directorio de mapas sen conexión</string>
@@ -493,4 +493,18 @@
     <string name="autoExportWorkoutsSummary">Exportar adestramentos recentemente gravados</string>
     <string name="takeBackups7">Cada semana</string>
     <string name="selectExportTarget">Elexir obxectivo da exportación</string>
+    <string name="preferencesDebugTitle">Depurar</string>
+    <string name="debugShareLogsSummary">Comparte o rexistro onde se atopan datos útiles para solucinar problemas ao gravar. Normalmente non contén datos de localización.</string>
+    <string name="debugSensorsTitle">Depurar sensores</string>
+    <string name="debugSensorsSummary">Recoller datos dos sensores que aparecen no ficheiro de rexistro</string>
+    <string name="debugPressureSensor">Depurar sensor de presión</string>
+    <string name="calibrating">Calibrando</string>
+    <string name="noSensorAvailable">Non hai sensor</string>
+    <string name="debugShareLogsTitle">Compartir rexistro</string>
+    <plurals name="satelliteCount">
+        <item quantity="one">Sen satélites</item>
+        <item quantity="other">Un satélite</item>
+    </plurals>
+    <string name="zoomWithVolumeButtonsSummary">Os botóns de volume controlan o nivel de zoom</string>
+    <string name="zoomWithVolumeButtonsTitle">Zoom cos botóns de volume</string>
 </resources>

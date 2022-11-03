@@ -19,27 +19,32 @@
 
 package de.tadris.fitness.recording.component
 
+import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.util.Log
 import de.tadris.fitness.Instance
 import de.tadris.fitness.recording.RecorderService
 import de.tadris.fitness.recording.indoor.exercise.ExerciseRecognizer
 import de.tadris.fitness.util.WorkoutLogger
 import org.greenrobot.eventbus.EventBus
 
+/**
+ * Activity recognition for indoor workouts
+ */
 class ExerciseRecognitionComponent : RecorderServiceComponent, SensorEventListener {
 
     private var sensorManager: SensorManager? = null
     private var exerciseRecognizer: ExerciseRecognizer? = null
 
     override fun register(service: RecorderService) {
-        sensorManager = service.sensorManager
-        exerciseRecognizer = ExerciseRecognizer.findByType(Instance.getInstance(service).recorder.workout.workoutTypeId)
+        init(service as Context)
         if (exerciseRecognizer != null) {
-            WorkoutLogger.log("RecoderService", "Using ${exerciseRecognizer!!.javaClass.simpleName} recognizer")
+            WorkoutLogger.log(
+                "RecoderService",
+                "Using ${exerciseRecognizer!!.javaClass.simpleName} recognizer"
+            )
             exerciseRecognizer!!.start()
             exerciseRecognizer!!.getActivatedSensors().forEach {
                 activateSensor(it)
@@ -49,12 +54,18 @@ class ExerciseRecognitionComponent : RecorderServiceComponent, SensorEventListen
         }
     }
 
+    fun init(context: Context) {
+        sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        exerciseRecognizer =
+            ExerciseRecognizer.findByType(Instance.getInstance(context).recorder.workout.workoutTypeId)
+    }
+
     override fun unregister() {
         sensorManager?.unregisterListener(this)
         exerciseRecognizer?.stop()
     }
 
-    private fun activateSensor(sensorOption: FitoTrackSensorOption) {
+    fun activateSensor(sensorOption: FitoTrackSensorOption) {
         val sensor = sensorManager?.getDefaultSensor(sensorOption.sensorType)
         if (sensor != null) {
             WorkoutLogger.log("RecoderService", "Activating sensor ${sensorOption.name}")

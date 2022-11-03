@@ -31,7 +31,10 @@ import de.tadris.fitness.util.WorkoutLogger
 import org.greenrobot.eventbus.EventBus
 import org.mapsforge.core.model.LatLong
 
-class GpsComponent : RecorderServiceComponent {
+/**
+ * Collects and publishes GPS Locations
+ */
+class GpsComponent : RecorderServiceComponent, LocationListener {
 
     companion object {
 
@@ -47,7 +50,7 @@ class GpsComponent : RecorderServiceComponent {
 
     }
 
-    private val gpsListener = LocationChangedListener(LocationManager.GPS_PROVIDER)
+    private val lastLocation: Location = Location(LocationManager.GPS_PROVIDER)
 
     private lateinit var service: RecorderService
     private var locationManager: LocationManager? = null
@@ -56,7 +59,12 @@ class GpsComponent : RecorderServiceComponent {
         this.service = service
         initializeLocationManager()
         try {
-            locationManager?.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_INTERVAL, 0f, gpsListener)
+            locationManager?.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER,
+                LOCATION_INTERVAL,
+                0f,
+                this
+            )
             checkLastKnownLocation()
         } catch (ex: SecurityException) {
             WorkoutLogger.log(TAG, "fail to request location update, ignore (${ex.message})")
@@ -76,39 +84,31 @@ class GpsComponent : RecorderServiceComponent {
     private fun checkLastKnownLocation() {
         val location = locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
         if (location != null) {
-            gpsListener.onLocationChanged(location)
+            onLocationChanged(location)
         }
     }
 
     override fun unregister() {
-        locationManager?.removeUpdates(gpsListener)
+        locationManager?.removeUpdates(this)
     }
 
-    private class LocationChangedListener constructor(provider: String) : LocationListener {
-        val mLastLocation: Location
+    override fun onLocationChanged(location: Location) {
+        Log.i(TAG, "onLocationChanged: $location") // don't write user location into log file
+        lastLocation.set(location)
+        EventBus.getDefault().postSticky(LocationChangeEvent(Location(location)))
+    }
 
-        override fun onLocationChanged(location: Location) {
-            Log.i(TAG, "onLocationChanged: $location") // don't write user location into log file
-            mLastLocation.set(location)
-            EventBus.getDefault().postSticky(LocationChangeEvent(location))
-        }
+    override fun onProviderDisabled(provider: String) {
+        WorkoutLogger.log(TAG, "onProviderDisabled: $provider")
+    }
 
-        override fun onProviderDisabled(provider: String) {
-            WorkoutLogger.log(TAG, "onProviderDisabled: $provider")
-        }
+    override fun onProviderEnabled(provider: String) {
+        WorkoutLogger.log(TAG, "onProviderEnabled: $provider")
+    }
 
-        override fun onProviderEnabled(provider: String) {
-            WorkoutLogger.log(TAG, "onProviderEnabled: $provider")
-        }
-
-        override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {
-            WorkoutLogger.log(TAG, "onStatusChanged: $provider")
-        }
-
-        init {
-            WorkoutLogger.log(TAG, "LocationListener $provider")
-            mLastLocation = Location(provider)
-        }
+    // Must be overridden as long as minSDK < Android R
+    override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {
+        WorkoutLogger.log(TAG, "onStatusChanged: $provider -> status $status")
     }
 
 }

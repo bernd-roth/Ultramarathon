@@ -88,7 +88,7 @@
     <string name="workoutHeartRate">Heart Rate</string>
     <string name="heartRateSensorBattery">Sensor Battery</string>
     <string name="workoutMaxHeartRate">Max Heart Rate</string>
-    <string name="workoutAvgHeartRate">Avg. Heart Rate</string>
+    <string name="workoutAvgHeartRate">Avg. heart rate</string>
     <string name="workoutEdited">This workout has been edited.</string>
     <string name="uploading">Uploading</string>
     <string name="enterVerificationCode">Enter Verification Code</string>
@@ -213,6 +213,7 @@
     <string name="preferencesUserInterfaceTitle">User Interface</string>
     <string name="preferencesUserInterfaceSummary">Personalize the app</string>
     <string name="preferencesRecordingTitle">Recording</string>
+    <string name="preferencesDebugTitle">Debug</string>
     <string name="preferencesRecordingSummary">Manage the workout recording</string>
     <string name="preferencesBackupTitle">Database</string>
     <string name="preferencesBackupSummary">Backup/Restore your workout data</string>
@@ -220,9 +221,9 @@
     <string name="preferencesCategoryMap">Map</string>
     <string name="preferenceDateFormat">Date Format</string>
     <string name="preferenceTimeFormat">Time Format</string>
-    <string name="preferenceCurrentSpeedTime">Time span for average calculation</string>
-    <string name="preferenceCurrentSpeedAverageTimeSummary">Replace the current speed calculation by an average calculation.</string>
-    <string name="preferenceCurrentSpeedAverageTimeTitle">Current Speed by Average</string>
+    <string name="preferenceCurrentSpeedTime">Averaged speed time-span</string>
+    <string name="preferenceCurrentSpeedAverageTimeSummary">Replace current speed by an average</string>
+    <string name="preferenceCurrentSpeedAverageTimeTitle">Averaged speed</string>
     <string name="preferenceUseAverageForCurrentSpeed">Use the average speed over a certain time instead of the last single speed record for the current speed calculation.</string>
     <string name="preferenceFirstDayOfWeek">Week start</string>
     <string name="workoutDiscarded">Workout discarded</string>
@@ -359,7 +360,7 @@
     <string name="pref_map_directory">Offline Map Directory</string>
     <string name="pref_render_theme_style">Render Style</string>
     <string name="preferenceCategoryRenderThemeCategories">Categories</string>
-    <string name="pref_render_theme_style_info">No render theme style menu available for selected render theme.</string>
+    <string name="pref_render_theme_style_info">No menu available for selected theme.</string>
     <string name="downloadMapsTitle">Download Maps</string>
     <string name="downloadMapsSpecifyDirectory">Please specify a directory for offline maps first</string>
     <string name="overwriteMapConfirmation">Overwrite the existing \\\"%s\\\" map file\?</string>
@@ -436,7 +437,7 @@
     <string name="intervalAutoStartModeTraining">Auto Start Workout Mode</string>
     <string name="pref_auto_start_mode_title">Auto-Start Mode</string>
     <string name="pref_auto_start_mode_instant">Start immediately</string>
-    <string name="pref_auto_start_mode_wait_for_gps">Wait for accurate GPS position</string>
+    <string name="pref_auto_start_mode_wait_for_gps">Wait for accurate position</string>
     <string name="pref_auto_start_mode_on_move">Wait for you to start moving</string>
     <string name="pref_auto_start_mode_unknown">Unknown (do not use)</string>
     <string name="selectColoring">Select coloring</string>
@@ -448,6 +449,8 @@
     <string name="fileNotFound">File not found</string>
     <string name="showWorkoutZoomControlsSummary">Enable zoom and pan controls in the map while recording GPS workouts</string>
     <string name="showWorkoutZoomControlsTitle">Zooming and panning</string>
+    <string name="zoomWithVolumeButtonsSummary">Volume up and down controls zooming in and out</string>
+    <string name="zoomWithVolumeButtonsTitle">Zoom with volume buttons</string>
     <string name="hidden">Hidden</string>
     <!-- strings for string arrays -->
     <string name="identifiable_visibility">Identifiable</string>
@@ -512,4 +515,16 @@
     <string name="enterValidUrl">Enter a valid HTTP URL</string>
     <string name="massExportGpxTitle">Export all workouts as GPX</string>
     <string name="massExportGpxSummary">Creates a ZIP file containing all workouts as GPX documents</string>
+    <string name="debugShareLogsTitle">Share logs</string>
+    <string name="debugShareLogsSummary">Share logs that contain useful data to find bugs in the workout recorder. Usually they do not contain location data.</string>
+    <string name="debugSensorsTitle">Debug sensors</string>
+    <string name="debugSensorsSummary">Collect sensor data which is written into the log file</string>
+    <string name="debugPressureSensor">Debug pressure sensor</string>
+    <string name="calibrating">Calibrating</string>
+    <string name="noSensorAvailable">No sensor available</string>
+    <plurals name="satelliteCount">
+        <item quantity="zero">No satellites</item>
+        <item quantity="one">One satellite</item>
+        <item quantity="other">%d satellites</item>
+    </plurals>
 </resources>

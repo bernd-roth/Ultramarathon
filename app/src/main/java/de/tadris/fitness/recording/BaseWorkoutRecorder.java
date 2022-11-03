@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -20,7 +20,6 @@
 package de.tadris.fitness.recording;
 
 import android.content.Context;
-import android.util.Log;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -33,7 +32,6 @@ import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.data.RecordingType;
 import de.tadris.fitness.data.preferences.UserPreferences;
-import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.recording.component.HeartRateComponent;
 import de.tadris.fitness.recording.event.HRBatteryLevelChangeEvent;
 import de.tadris.fitness.recording.event.HRBatteryLevelConnectionEvent;
@@ -44,6 +42,15 @@ import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
 import de.tadris.fitness.ui.record.RecordWorkoutActivity;
 import de.tadris.fitness.util.WorkoutLogger;
 
+/**
+ * This class/subclasses is responsible for managing the workout data during a workout recording
+ * - receive new samples
+ * - save them to the database
+ * - provide useful data like current speed, distance, duration, etc
+ * - manage the workout state
+ * <p>
+ * It gets locations, pressure data, etc. from the RecorderService via the EventBus
+ */
 public abstract class BaseWorkoutRecorder {
 
     protected static final int PAUSE_TIME = 10_000; // 10 Seconds
@@ -82,7 +89,8 @@ public abstract class BaseWorkoutRecorder {
         this.autoTimeoutMs = prefs.getAutoTimeout() * AUTO_TIMEOUT_MULTIPLIER;
     }
 
-    public void start() {
+    public void start(String reason) {
+        WorkoutLogger.log("Recorder", "Called start, reason: " + reason);
         if (state == RecordingState.IDLE) {
             WorkoutLogger.log("Recorder", "Start");
             startTime = System.currentTimeMillis();
@@ -102,11 +110,13 @@ public abstract class BaseWorkoutRecorder {
      */
     public boolean handleWatchdog() {
         if (isActive()) {
+            WorkoutLogger.log("WorkoutRecorder", "handleWatchdog " + this.getState().toString() + " samples: " + getSampleSize() + " instance: " + this);
             onWatchdog();
             if (hasRecordedSomething()) {
                 long timeDiff = System.currentTimeMillis() - lastSampleTime;
                 if (autoTimeoutMs > 0 && timeDiff > autoTimeoutMs) {
                     if (isActive()) {
+                        WorkoutLogger.log("WorkoutRecorder", "Auto timeout was set to: " + autoTimeoutMs);
                         stop("Auto timeout, timediff: " + timeDiff);
                         save();
                         EventBus.getDefault().post(new WorkoutAutoStopEvent());
@@ -158,7 +168,11 @@ public abstract class BaseWorkoutRecorder {
         EventBus.getDefault().unregister(this);
     }
 
-    public abstract boolean hasRecordedSomething();
+    public boolean hasRecordedSomething() {
+        return getSampleSize() > 2;
+    }
+
+    public abstract int getSampleSize();
 
     protected abstract void onWatchdog();
 

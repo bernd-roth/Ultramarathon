@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -88,7 +88,7 @@ class RecordIndoorWorkoutActivity : RecordWorkoutActivity() {
 
         checkPermissions()
 
-        updateStartButton(true, R.string.start) { start() }
+        updateStartButton(true, R.string.start) { start("Start-Button pressed") }
 
         setTitle(R.string.recordWorkout)
 
@@ -194,7 +194,7 @@ class RecordIndoorWorkoutActivity : RecordWorkoutActivity() {
                     .setPositiveButton(R.string.settings) { _, _ -> openSystemSettings() }
                     .create().show()
             } else {
-                restartListener()
+                restartService()
             }
         }
     }

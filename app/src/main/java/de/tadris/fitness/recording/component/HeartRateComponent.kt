@@ -35,6 +35,9 @@ import de.tadris.fitness.recording.sensors.HRManager.HRManagerCallback
 import no.nordicsemi.android.ble.observer.ConnectionObserver
 import org.greenrobot.eventbus.EventBus
 
+/**
+ * Heart rate and sensor battery
+ */
 class HeartRateComponent : RecorderServiceComponent {
 
     private lateinit var hrManager: HRManager

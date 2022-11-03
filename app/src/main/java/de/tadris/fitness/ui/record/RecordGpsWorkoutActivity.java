@@ -66,17 +66,20 @@ import de.tadris.fitness.recording.component.GpsComponent;
 import de.tadris.fitness.recording.event.LocationChangeEvent;
 import de.tadris.fitness.recording.event.WorkoutGPSStateChanged;
 import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
+import de.tadris.fitness.recording.gps.SatelliteCountEvent;
 
-public class RecordGpsWorkoutActivity extends RecordWorkoutActivity  {
+public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
 
     public static final int REQUEST_CODE_LOCATION_PERMISSION = 10;
     public static final int REQUEST_CODE_BACKGROUND_LOCATION_PERMISSION = 11;
 
     private MapView mapView;
+    private TextView gpsStatusView;
+    private TextView waitingSatellitesText;
+
     private NavigationModeHandler navigationModeHandler;
     private Polyline polyline;
     private FixedPixelCircle locationPoint;
-    private TextView gpsStatusView;
     private boolean gpsFound = false;
     private final List<LatLong> recordedPositions = new ArrayList<>();
 
@@ -130,6 +133,7 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity  {
         waitingForGPSOverlay = findViewById(R.id.recorderWaitingOverlay);
         waitingForGPSOverlay.setVisibility(View.VISIBLE);
         gpsStatusView = findViewById(R.id.recordGpsStatus);
+        waitingSatellitesText = findViewById(R.id.recorderWaitingSatellites);
 
         setupMapControls();
 
@@ -184,6 +188,11 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity  {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        final boolean zoomWithVolume = instance.userPreferences.getZoomWithVolumeButtons();
+        if (!zoomWithVolume) {
+            return super.onKeyDown(keyCode, event);
+        }
+
         if (keyCode == KeyEvent.KEYCODE_VOLUME_UP && mapControls != null) {
             mapControls.externalZoomInRequest();
             return true;
@@ -192,7 +201,7 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity  {
             return true;
         }
 
-       return false;
+        return super.onKeyDown(keyCode, event);
     }
 
     private void hideWaitOverlay() {
@@ -316,7 +325,7 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity  {
         if (requestCode == REQUEST_CODE_LOCATION_PERMISSION) {
             if (hasPermission()) {
                 // Restart LocationListener so it can retry to register for location updates now that we got permission
-                restartListener();
+                restartService();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && !hasBackgroundPermission()) {
                     showBackgroundLocationPermissionConsent();
                 }
@@ -418,8 +427,8 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity  {
         }
 
         if (instance.recorder.getState() == GpsWorkoutRecorder.RecordingState.IDLE) {
-            if (state == GpsWorkoutRecorder.GpsState.SIGNAL_OKAY) {
-                updateStartButton(true, R.string.start, v -> start());
+            if (state == GpsWorkoutRecorder.GpsState.SIGNAL_GOOD) {
+                updateStartButton(true, R.string.start, v -> start("Start-Button pressed"));
             } else {
                 updateStartButton(false, R.string.cannotStart, null);
             }
@@ -432,4 +441,10 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity  {
             hideWaitOverlay();
         }
     }
+
+    @Subscribe
+    public void onSatelliteCountChanged(SatelliteCountEvent e) {
+        waitingSatellitesText.setText(getResources().getQuantityString(R.plurals.satelliteCount, e.getCount(), e.getCount()));
+    }
+
 }

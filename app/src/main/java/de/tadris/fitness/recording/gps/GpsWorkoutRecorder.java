@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -24,7 +24,6 @@ import android.graphics.Color;
 import android.hardware.SensorManager;
 import android.location.Location;
 import android.os.SystemClock;
-import android.util.Log;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -34,14 +33,13 @@ import org.mapsforge.core.model.LatLong;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.tadris.fitness.BuildConfig;
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.GpsWorkout;
 import de.tadris.fitness.data.GpsWorkoutData;
 import de.tadris.fitness.data.RecordingType;
-import de.tadris.fitness.data.preferences.UserPreferences;
 import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.data.preferences.UserPreferences;
 import de.tadris.fitness.recording.BaseWorkoutRecorder;
 import de.tadris.fitness.recording.component.GpsComponent;
 import de.tadris.fitness.recording.event.LocationChangeEvent;
@@ -50,17 +48,9 @@ import de.tadris.fitness.recording.event.WorkoutGPSStateChanged;
 import de.tadris.fitness.ui.record.RecordGpsWorkoutActivity;
 import de.tadris.fitness.ui.record.RecordWorkoutActivity;
 import de.tadris.fitness.util.CalorieCalculator;
+import de.tadris.fitness.util.LocationUtils;
 import de.tadris.fitness.util.WorkoutLogger;
 
-/**
- * This class is responsible for managing the workout data during a workout recording
- * - receive new samples
- * - save them to the database
- * - provide useful data like current speed, distance, duration, etc
- * - manage the workout state
- * <p>
- * It gets locations, pressure data, etc. from the RecorderService via the EventBus
- */
 public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
 
     private final GpsWorkout workout;
@@ -177,8 +167,8 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
     }
 
     @Override
-    public boolean hasRecordedSomething() {
-        return samples.size() > 2;
+    public int getSampleSize() {
+        return samples.size();
     }
 
     @Override
@@ -193,9 +183,6 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
 
     @Override
     protected void onWatchdog() {
-        if (BuildConfig.DEBUG) {
-            WorkoutLogger.log("WorkoutRecorder", "handleWatchdog " + this.getState().toString() + " samples: " + samples.size() + " autoTout: " + autoTimeoutMs + " inst: " + this.toString());
-        }
         checkSignalState();
     }
 
@@ -213,10 +200,8 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
             state = GpsState.SIGNAL_LOST;
         } else if (lastFix.getAccuracy() > SIGNAL_BAD_THRESHOLD) {
             state = GpsState.SIGNAL_BAD;
-            // lastGpsTime = System.currentTimeMillis();
         } else {
-            state = GpsState.SIGNAL_OKAY;
-            // lastGpsTime = System.currentTimeMillis();
+            state = GpsState.SIGNAL_GOOD;
         }
 
         if (state != gpsState) {
@@ -269,14 +254,14 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
                 synchronized (samples) {
                     GpsSample lastSample = samples.get(samples.size() - 1);
                     distance = Math.abs(GpsComponent.locationToLatLong(location).sphericalDistance(lastSample.toLatLong()));
-                    long timediff = Math.abs(lastSample.absoluteTime - location.getTime());
+                    long timediff = Math.abs(lastSample.absoluteTime - LocationUtils.getTimeFor(location));
                     if (distance < workout.getWorkoutType(context).minDistance || timediff < 500) {
                         return;
                     }
                 }
             }
             lastSampleTime = System.currentTimeMillis();
-            if (state == RecordingState.RUNNING && location.getTime() > workout.start) {
+            if (state == RecordingState.RUNNING && LocationUtils.getTimeFor(location) > workout.start) {
                 this.distance += distance;
                 addToSamples(location);
             }
@@ -289,8 +274,8 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
         sample.lon = location.getLongitude();
         sample.elevation = location.getAltitude();
         sample.speed = location.getSpeed();
-        sample.relativeTime = location.getTime() - workout.start - getPauseDuration();
-        sample.absoluteTime = location.getTime();
+        sample.relativeTime = LocationUtils.getTimeFor(location) - workout.start - getPauseDuration();
+        sample.absoluteTime = LocationUtils.getTimeFor(location);
         sample.pressure = lastPressure;
         sample.heartRate = lastHeartRate;
         sample.intervalTriggered = lastTriggeredInterval;
@@ -403,17 +388,22 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
             GpsSample firstSample = lastSample;
             for (int i = samples.size() - 1; i >= 0; i--) { // Go backwards
                 GpsSample currentSample = samples.get(i);
-                if (currentSample.relativeTime > minTime) {
-                    distance += currentSample.toLatLong().sphericalDistance(lastSample.toLatLong());
-                } else {
+                if (lastResume != 0 && currentSample.absoluteTime < lastResume) {
+                    break; // We're past the last time we resumed, avoid large jumps during pauses
+                } else if (currentSample.relativeTime <= minTime) {
                     break; // We can exit the loop now as every other sample was recorded earlier
                 }
+
+                distance += currentSample.toLatLong().sphericalDistance(lastSample.toLatLong());
                 lastSample = currentSample;
             }
             // Keep last speed even when losing GPS signal
             // long timeDiff = lastGpsTime - lastSample.absoluteTime;
             // long timeDiff = currentTime - lastSample.relativeTime;
             long timeDiff = firstSample.relativeTime - lastSample.relativeTime;
+            if (timeDiff == 0) {
+                return 0;
+            }
             return distance / (timeDiff / 1000d);
         }
     }
@@ -426,7 +416,7 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
 
     public enum GpsState {
         SIGNAL_LOST(Color.RED),
-        SIGNAL_OKAY(Color.GREEN),
+        SIGNAL_GOOD(Color.GREEN),
         SIGNAL_BAD(Color.YELLOW);
 
         public final int color;

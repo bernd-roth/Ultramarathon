@@ -100,6 +100,7 @@ import de.tadris.fitness.util.BluetoothDevicePreferences;
 import de.tadris.fitness.util.NfcAdapterHelper;
 import de.tadris.fitness.util.ToneGeneratorController;
 import de.tadris.fitness.util.VibratorController;
+import de.tadris.fitness.util.WorkoutLogger;
 
 public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
         SelectIntervalSetDialog.IntervalSetSelectListener,
@@ -176,6 +177,8 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
         this.autoStartMode = instance.userPreferences.getAutoStartMode();
         Log.d(TAG, "auto start enabled, auto start delay: " +
                 this.autoStartDelayMs + ", auto start mode: " + autoStartMode);
+
+        WorkoutLogger.log(TAG, "Activity created");
     }
 
     protected void initBeforeContent() {
@@ -238,7 +241,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
             EventBus.getDefault().register(this);
         }
 
-        startListener();
+        startService();
     }
 
     /**
@@ -252,10 +255,10 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
     }
 
     private void autoStart() {
-        Log.i(TAG, "Starting workout automatically");
+        WorkoutLogger.log(TAG, "Starting workout automatically");
 
         // start the workout
-        start();
+        start("Auto-Start");
         Toast.makeText(this, R.string.workoutAutoStarted, Toast.LENGTH_SHORT).show();
     }
 
@@ -413,7 +416,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
         startButton.setOnClickListener(listener);
     }
 
-    protected void start() {
+    protected void start(String reason) {
         // some nasty race conditions might occur between auto start and the user pressing the start
         // button, so better make sure we only start once
         // TODO is this really necessary or would the flag isStarted be enough
@@ -434,7 +437,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
         hideStartButton();
 
         // and start workout recorder
-        instance.recorder.start();
+        instance.recorder.start(reason);
         invalidateOptionsMenu();
     }
 
@@ -523,13 +526,14 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
         return false;
     }
 
-    protected void restartListener() {
-        stopListener();
-        startListener();
+    protected void restartService() {
+        stopService();
+        startService();
     }
 
-    protected void startListener() {
+    protected void startService() {
         if (!isServiceRunning(RecorderService.class)) {
+            WorkoutLogger.log(TAG, "Starting service");
             Intent locationListener = new Intent(getApplicationContext(), RecorderService.class);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 startForegroundService(locationListener);
@@ -544,8 +548,9 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
 
     protected abstract void onListenerStart();
 
-    protected void stopListener() {
+    protected void stopService() {
         if (isServiceRunning(RecorderService.class)) {
+            WorkoutLogger.log(TAG, "Stopping service");
             Intent locationListener = new Intent(getApplicationContext(), RecorderService.class);
             stopService(locationListener);
         }
@@ -559,6 +564,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
 
     @Override
     protected void onDestroy() {
+        WorkoutLogger.log(TAG, "Activity onDestroy");
         // abort any ongoing auto start procedure
         cancelAutoStart(true);
 
@@ -586,9 +592,10 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
         // Kill Service on Finished or not Started Recording
         if (instance.recorder.getState() == GpsWorkoutRecorder.RecordingState.STOPPED ||
                 instance.recorder.getState() == GpsWorkoutRecorder.RecordingState.IDLE) {
+            WorkoutLogger.log(TAG, "Recorder state is " + instance.recorder.getState() + ", stopping recording");
             //ONLY SAVE WHEN STOPPED
             saveIfNotSaved();
-            stopListener();
+            stopService();
             if (instance.recorder.getState() == GpsWorkoutRecorder.RecordingState.IDLE) {
                 // Inform the user
                 Toast.makeText(this, R.string.noWorkoutStarted, Toast.LENGTH_LONG).show();
@@ -600,6 +607,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
     @Override
     protected void onPause() {
         super.onPause();
+        WorkoutLogger.log(TAG, "Activity onPause");
 
         // stop intercepting NFC intents
         if (useNfcStart && NfcAdapterHelper.isNfcEnabled(this)) {
@@ -615,6 +623,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
     @Override
     protected void onResume() {
         super.onResume();
+        WorkoutLogger.log(TAG, "Activity onResume");
         finished = false;
         if (instance.userPreferences.getShowOnLockScreen()) {
             enableLockScreenVisibility();
@@ -654,7 +663,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
                 AutoStartWorkout.Config config = autoStartWorkout.getDefaultStartConfig();
                 beginAutoStart(config.countdownMs, config.mode);
             } else if (itemId == R.id.auto_start_immediately) {
-                start();
+                start("Immediate Start-Button pressed");
             } else if (itemId == R.id.auto_start_on_move) {
                 beginAutoStart(0, AutoStartWorkout.Mode.ON_MOVE);
             } else if (itemId == R.id.auto_start_wait_for_gps) {
@@ -700,7 +709,8 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
      * @param delayMs the delay in milliseconds after which the workout should be started
      * @param mode    the auto start mode with which the workout should be started
      */
-    public void beginAutoStart(long delayMs, AutoStartWorkout.Mode mode) {
+    public void beginAutoStart(long delayMs, @Nullable AutoStartWorkout.Mode mode) {
+        WorkoutLogger.log(TAG, "Begin autostart after " + delayMs + "ms, mode: " + mode);
         // show the countdown overlay (at least, if we're actually counting down)
         if (autoStartCountdownOverlay == null) {
             autoStartCountdownOverlay = findViewById(R.id.recorderAutoStartOverlay);
@@ -789,7 +799,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
                     stop("NFC-Tag triggered end");
                 } else {
                     Log.i(TAG, "onNewIntent: NFC tag triggered workout start");
-                    start();    // start immediately, don't care about signal quality or anything
+                    start("NFC-Tag triggered start"); // start immediately, don't care about signal quality or anything
                 }
             }
         }
@@ -986,7 +996,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
     @Override
     public void onSelectBluetoothDevice(BluetoothDevice device) {
         new BluetoothDevicePreferences(this).setAddress(BluetoothDevicePreferences.DEVICE_HEART_RATE, device.getAddress());
-        restartListener();
+        restartService();
     }
 
     private boolean isBluetoothSupported() {
