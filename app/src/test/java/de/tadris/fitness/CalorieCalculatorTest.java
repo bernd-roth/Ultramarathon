@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -19,30 +19,28 @@
 
 package de.tadris.fitness;
 
-import android.content.Context;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
-
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import java.util.Collections;
 
 import de.tadris.fitness.data.GpsWorkout;
-import de.tadris.fitness.util.CalorieCalculator;
+import de.tadris.fitness.data.preferences.UserMeasurements;
+import de.tadris.fitness.util.calorie.CalorieCalculator;
+import de.tadris.fitness.util.calorie.FallbackMETProvider;
 
-@RunWith(AndroidJUnit4.class)
 public class CalorieCalculatorTest {
 
     @Test
-    public void testCalculation() {
-        Context context = InstrumentationRegistry.getTargetContext();
+    public void testFallbackCalculation() {
+        UserMeasurements measurements = new UserMeasurements(80, 0.7f);
 
         GpsWorkout workout = new GpsWorkout();
         workout.avgSpeed = 2.7d;
         workout.workoutTypeId = "running";
         workout.duration = 1000L * 60 * 10;
-        int calorie = CalorieCalculator.instance().calculateCalories(context, workout);
-        System.out.println("Calories: " + calorie);
+
+        int calorie = new CalorieCalculator(Collections.singletonList(FallbackMETProvider.INSTANCE)).calculateCalories(measurements, workout);
         Assert.assertEquals(130, calorie, 50);
     }
 
