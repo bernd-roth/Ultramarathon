@@ -27,11 +27,11 @@ import org.junit.Test
 class METFunctionsProviderTest {
 
     @Test
-    fun testWalking() {
+    fun testRunning() {
         assertEquals(
             14.5,
-            METFunctionsProvider.calculateMET(UserMeasurements.DEFAULT, "walking", 16.0)!!,
-            3.0
+            METFunctionsProvider.calculateMET(UserMeasurements.DEFAULT, "running", 16.0)!!,
+            1.0
         )
     }
 
