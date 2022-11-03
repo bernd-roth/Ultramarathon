@@ -48,7 +48,6 @@ import de.tadris.fitness.recording.event.PressureChangeEvent;
 import de.tadris.fitness.recording.event.WorkoutGPSStateChanged;
 import de.tadris.fitness.ui.record.RecordGpsWorkoutActivity;
 import de.tadris.fitness.ui.record.RecordWorkoutActivity;
-import de.tadris.fitness.util.CalorieCalculator;
 import de.tadris.fitness.util.LocationUtils;
 import de.tadris.fitness.util.WorkoutLogger;
 import de.tadris.fitness.util.calorie.CalorieCalculator;
