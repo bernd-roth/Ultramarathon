@@ -31,21 +31,11 @@ class WorkoutGpxExportSource(private val workoutId: Long) : ExportSource {
     override fun provideFile(context: Context): ExportSource.ExportedFile {
         val workout = Instance.getInstance(context).db.gpsWorkoutDao().getWorkoutById(workoutId)
         val data = GpsWorkoutData.fromWorkout(context, workout)
-        val filename: String = if (workout.safeComment.isNotEmpty()) {
-            String.format("workout-%s-%s.gpx", workout.safeDateString, workout.safeComment)
-        } else {
-            String.format("workout-%s.gpx", workout.safeDateString)
-        }
-        val file = DataManager.getSharedDirectory(context) + "/" + filename
-        File(file).parentFile?.let { parent ->
-            if (!parent.exists() && !parent.mkdirs()) {
-                throw IOException("Cannot write to $file")
-            }
-        }
-        IOHelper.GpxExporter.exportWorkout(data, File(file))
+        val file = DataManager.createSharableFile(context, workout.exportFileName + ".gpx")
+        IOHelper.GpxExporter.exportWorkout(data, file)
 
         return ExportSource.ExportedFile(
-            File(file), mapOf(
+            file, mapOf(
                 "FitoTrack-Type" to ExportSource.EXPORT_SOURCE_WORKOUT_GPX,
                 "FitoTrack-Timestamp" to workout.start.toString(),
                 "FitoTrack-Workout-Type" to workout.workoutTypeId,

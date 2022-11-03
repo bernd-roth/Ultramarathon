@@ -513,6 +513,8 @@
     <string name="configureHttpPostRequest">Configure HTTP POST request</string>
     <string name="httpUrl">URL</string>
     <string name="enterValidUrl">Enter a valid HTTP URL</string>
+    <string name="massExportGpxTitle">Export all workouts as GPX</string>
+    <string name="massExportGpxSummary">Creates a ZIP file containing all workouts as GPX documents</string>
     <string name="debugShareLogsTitle">Share logs</string>
     <string name="debugShareLogsSummary">Share logs that contain useful data to find bugs in the workout recorder. Usually they do not contain location data.</string>
     <string name="debugSensorsTitle">Debug sensors</string>
