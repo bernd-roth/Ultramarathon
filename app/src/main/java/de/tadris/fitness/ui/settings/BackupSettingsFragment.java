@@ -33,7 +33,6 @@ import androidx.preference.Preference;
 
 import java.io.File;
 
-import de.tadris.fitness.BuildConfig;
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.export.RestoreController;
@@ -43,7 +42,6 @@ import de.tadris.fitness.util.DataManager;
 import de.tadris.fitness.util.autoexport.AutoExportPlanner;
 import de.tadris.fitness.util.autoexport.source.BackupExportSource;
 import de.tadris.fitness.util.autoexport.source.ExportSource;
-import de.tadris.fitness.util.autoexport.source.WorkoutGpxExportSource;
 import de.tadris.fitness.util.io.GpxExporter;
 import de.tadris.fitness.util.io.MassExporter;
 
@@ -105,19 +103,17 @@ public class BackupSettingsFragment extends FitoTrackSettingFragment {
     }
 
     private void exportBackup() {
-        exportTask(progressDialog -> {
-            return new BackupExportSource(true).provideFile(
-                    requireContext(),
-                    (progress, action) -> mHandler.post(() -> dialogController.setProgress(progress, action))
-            );
-        });
+        exportTask(progressDialog -> new BackupExportSource(true).provideFile(
+                requireContext(),
+                (progress, action) -> mHandler.post(() -> progressDialog.setProgress(progress, action))
+        ));
     }
 
     private void massExportGpx() {
         exportTask(progressDialog -> {
-            File file = DataManager.createSharableFile(BackupSettingsFragment.this, "workouts.gpx");
+            File file = DataManager.createSharableFile(getContext(), "workouts.gpx");
             new MassExporter(
-                    Instance.getInstance(BackupSettingsFragment.this).db.gpsWorkoutDao(),
+                    Instance.getInstance(getContext()).db.gpsWorkoutDao(),
                     new GpxExporter(),
                     file,
                     progress -> mHandler.post(() -> progressDialog.setProgress(progress))
@@ -246,7 +242,7 @@ public class BackupSettingsFragment extends FitoTrackSettingFragment {
 
     public interface BackupTask {
 
-        File runAsyncTask(ProgressDialogController progressDialog);
+        File runAsyncTask(ProgressDialogController progressDialog) throws Exception;
 
     }
 

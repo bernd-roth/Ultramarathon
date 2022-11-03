@@ -68,7 +68,7 @@ public class DataManager {
         File parent = file.getParentFile();
         if(parent != null){
             if(!parent.exists() && !parent.mkdirs()){
-                throw new IOException("Cannot write to $file");
+                throw new IOException("Cannot write to " + file);
             }
         }
         return file;
