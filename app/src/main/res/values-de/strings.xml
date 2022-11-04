@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
   ~
@@ -194,8 +193,8 @@
     <string name="preferencesCategoryAppearance">Erscheinungsbild</string>
     <string name="preferenceDateFormat">Datumsformat</string>
     <string name="preferenceTimeFormat">Zeitformat</string>
-    <string name="preferenceCurrentSpeedTime">Zeitraum über welchen der Durchschnitt berechnet wird</string>
-    <string name="preferenceCurrentSpeedAverageTimeSummary">Verwende den Durchschnitt über einen eingestellten Zeitraum um die aktuelle Geschwindigkeit zu berechnen.</string>
+    <string name="preferenceCurrentSpeedTime">Zeitraum über den der Durchschnitt berechnet wird</string>
+    <string name="preferenceCurrentSpeedAverageTimeSummary">Verwende den Durchschnitt über einen eingestellten Zeitraum, um die aktuelle Geschwindigkeit zu berechnen.</string>
     <string name="preferenceCurrentSpeedAverageTimeTitle">Durchschnitt als aktuelle Geschwindingkeit</string>
     <string name="preferenceUseAverageForCurrentSpeed">Verwende den Durchschnitt über einen Zeitraum anstatt der letzten, einzelnen Geschwindigkeitsmessung, um die aktuelle Geschwindigkeit zu berechnen.</string>
     <string name="workoutDiscarded">Workout verworfen</string>
@@ -335,7 +334,7 @@
     <string name="pref_map_directory">Lokales Kartenverzeichnis</string>
     <string name="pref_render_theme_style">Renderstil</string>
     <string name="preferenceCategoryRenderThemeCategories">Kategorien</string>
-    <string name="pref_render_theme_style_info">Keine Optionen für gewähltes Renderthema verfügbar.</string>
+    <string name="pref_render_theme_style_info">Keine Optionen für gewähltes Thema verfügbar.</string>
     <string name="downloadMapsTitle">Karten herunterladen</string>
     <string name="downloadMapsSpecifyDirectory">Bitte gebe erst ein Verzeichnis für die Karten an</string>
     <string name="overwriteMapConfirmation">Die bereits existierende Kartendatei \\\"%s\\\" überschreiben\?</string>
@@ -417,7 +416,7 @@
     <string name="intervalAutoStartModeTraining">Workout Auto-Start Modus</string>
     <string name="pref_auto_start_mode_title">Auto-Start Modus</string>
     <string name="pref_auto_start_mode_instant">Sofort starten</string>
-    <string name="pref_auto_start_mode_wait_for_gps">Auf exakte GPS-Position warten</string>
+    <string name="pref_auto_start_mode_wait_for_gps">Auf exakte Position warten</string>
     <string name="pref_auto_start_mode_on_move">Starten, sobald du dich bewegst</string>
     <string name="pref_auto_start_mode_unknown">Unbekannt (nicht benutzen)</string>
     <string name="pref_announcements_pace_control_summary">Warne wenn unter oder über einer bestimmten Geschwindigkeit</string>
@@ -520,4 +519,17 @@
     </plurals>
     <string name="massExportGpxTitle">Alle Workouts als GPX exportieren</string>
     <string name="massExportGpxSummary">Erstellt eine ZIP-Datei, die alle Workouts als GPX-Dokument enthält</string>
+    <string name="stats_overview_title">Überblick</string>
+    <string name="stats_explore_title">Erkunden</string>
+    <string name="stats_history_title">Verlauf</string>
+    <string name="histogram">Histogramm</string>
+    <string name="details">Details</string>
+    <string name="monthYear">Monat / Jahr</string>
+    <string name="workoutAvgDistance">Durchschnittl. Distanz</string>
+    <string name="workoutDistanceSum">Summe der Distanz</string>
+    <string name="workoutPauseDurationSum">Summe der Pausendauer</string>
+    <string name="workoutDurationSum">Summe der Dauer</string>
+    <string name="workoutAvgPauseDuration">Durchschnittl. Pausendauer</string>
+    <string name="statistics">Statistiken</string>
+    <string name="workoutAvgDurationLong">Durchschnittsdauer</string>
 </resources>
