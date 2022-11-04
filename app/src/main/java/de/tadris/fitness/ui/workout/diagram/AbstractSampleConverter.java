@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -20,7 +20,6 @@
 package de.tadris.fitness.ui.workout.diagram;
 
 import android.content.Context;
-import android.content.Intent;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -57,7 +56,7 @@ public abstract class AbstractSampleConverter implements SampleConverter {
 
     @Override
     public String getXAxisLabel(){
-        return context.getString(R.string.time);
+        return context.getString(R.string.workoutTime);
     }
 
     @Override

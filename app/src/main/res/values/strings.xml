@@ -90,7 +90,7 @@
     <string name="workoutAvgSpeedShort">Avg. Speed</string>
     <string name="workoutAvgSpeedLong">Average Speed</string>
     <string name="workoutTopSpeed">Top Speed</string>
-    <string name="workoutBurnedEnergy">Burned Energy</string>
+    <string name="workoutBurnedEnergy">Calories burned</string>
     <string name="workoutTotalEnergy">Total Energy</string>
     <string name="workoutEnergyConsumption">Energy Consumption</string>
     <string name="workoutHeartRate">Heart Rate</string>
@@ -455,9 +455,6 @@
     <string name="pref_announcements_pace_control_title">Pace-warnings</string>
     <string name="invalidNumberFormat">Invalid number format.</string>
     <string name="fileNotFound">File not found</string>
-    <string name="energyExpended">Energy expended</string>
-    <string name="caloriesBurned">Calories burned</string>
-    <string name="heartFrequency">Heart frequency</string>
     <string name="stats_explore_title">Explore</string>
     <string name="stats_history_title">History</string>
     <string name="stats_overview_title">Overview</string>
@@ -541,7 +538,6 @@
     <string name="debugPressureSensor">Debug pressure sensor</string>
     <string name="calibrating">Calibrating</string>
     <string name="noSensorAvailable">No sensor available</string>
-    <string name="time">time</string>
     <string name="show_sum">Show sum</string>
     <plurals name="satelliteCount">
         <item quantity="zero">No satellites</item>
