@@ -275,7 +275,7 @@
     <string name="workoutSpeed">Prędkość</string>
     <string name="workoutRoute">Trasa</string>
     <string name="workoutPace">Tempo</string>
-    <string name="workoutDistance">Dystans</string>
+    <string name="workoutDistance">Odległość</string>
     <string name="workoutEndTime">Czas zakończenia</string>
     <string name="workoutStartTime">Czas rozpoczęcia</string>
     <string name="workoutPauseDuration">Czas trwania wstrzymania</string>
@@ -484,7 +484,7 @@
     <string name="showWorkoutZoomControlsSummary">Włączaj sterowanie powiększaniem i przesuwaniem na mapie podczas nagrywania treningów z GPS-em</string>
     <string name="showWorkoutZoomControlsTitle">Powiększanie i przesuwanie</string>
     <string name="autoBackupTitle">Automatyczne kopie zapasowe</string>
-    <string name="workoutGPXExportTitle">Eksportowanie treningów GPX</string>
+    <string name="workoutGPXExportTitle">Eksportowanie treningów do GPX</string>
     <string name="deleteExportTargetConfirmation">Czy na pewno chcesz usunąć to miejsce eksportu\?</string>
     <string name="autoExportBackupTitle">Automatyczne kopie zapasowe aplikacji</string>
     <string name="autoExportBackupExplanation">W określonym przedziale czasu kopia zapasowa zostanie wyeksportowana tutaj:</string>
@@ -522,4 +522,21 @@
     <string name="debugShareLogsSummary">Udostępnij logi zawierające przydatne dane, aby znaleźć błędy w rejestratorze treningów. Zwykle nie zawierają danych o lokalizacji</string>
     <string name="zoomWithVolumeButtonsSummary">Zwiększaj i zmniejszaj głośność, aby kontrolować powiększanie i pomniejszanie</string>
     <string name="zoomWithVolumeButtonsTitle">Powiększanie za pomocą przycisków głośności</string>
+    <string name="histogram">Histogram</string>
+    <string name="monthYear">Miesiąc / Rok</string>
+    <string name="workoutAvgDistance">Średnia odległość</string>
+    <string name="workoutCount">Liczba treningów</string>
+    <string name="workoutAvgDurationLong">Średni czas trwania</string>
+    <string name="workoutDurationSum">Suma czasów trwania</string>
+    <string name="workoutAvgPauseDuration">Średni czas trwania wstrzymania</string>
+    <string name="stats_overview_title">Przegląd</string>
+    <string name="details">Szczegóły</string>
+    <string name="workoutDistanceSum">Suma odległości</string>
+    <string name="massExportGpxSummary">Tworzy plik ZIP zawierający wszystkie treningi jako pliki GPX</string>
+    <string name="massExportGpxTitle">Eksportuj wszystkie treningi jako GPX</string>
+    <string name="workoutPauseDurationSum">Suma czasów trwania wstrzymania</string>
+    <string name="statistics">Statystyki</string>
+    <string name="stats_history_title">Historia</string>
+    <string name="stats_explore_title">Eksploruj</string>
+    <string name="show_sum">Pokaż sumę</string>
 </resources>
