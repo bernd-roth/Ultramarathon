@@ -66,4 +66,7 @@ object METFunctionsProvider : METProvider {
 
     override fun calculateMET(measurements: UserMeasurements, typeId: String, speedInKmh: Double) =
         metFunctions[typeId]?.getMET(speedInKmh)
+
+    override fun toString() =
+        metFunctions.entries.joinToString(separator = "\n") { "- ${it.key}: ${it.value}" }
 }

@@ -35,4 +35,9 @@ class METFunctionsProviderTest {
         )
     }
 
+    @Test
+    fun testFunctions() {
+        println(METFunctionsProvider)
+    }
+
 }

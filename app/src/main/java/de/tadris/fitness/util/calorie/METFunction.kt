@@ -61,4 +61,6 @@ class METFunction internal constructor(lookup: Array<SpeedToMET>) {
         val speedInMph = speedInKmh * 0.621371
         return speedInMph * slope + yOffset
     }
+
+    override fun toString() = "${slope}x + $yOffset"
 }
