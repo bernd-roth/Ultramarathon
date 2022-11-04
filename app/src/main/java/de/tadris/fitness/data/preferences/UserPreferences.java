@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -43,6 +43,7 @@ import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.data.WorkoutTypeManager;
 import de.tadris.fitness.model.AutoStartWorkout;
 
+@RequiresApi(api = Build.VERSION_CODES.M)
 public class UserPreferences {
     private static final String USE_NFC_START_VARIABLE = "nfcStart";
     private static final String AUTO_START_DELAY_VARIABLE = "autoStartDelayPeriod";
@@ -511,4 +512,11 @@ public class UserPreferences {
         }
         preferences.edit().putStringSet(STATISTICS_SELECTED_TYPES, typeIDs).apply();
     }
+    public UserMeasurements getMeasurements() {
+        return new UserMeasurements(
+                getUserWeight(),
+                getStepLength()
+        );
+    }
+
 }

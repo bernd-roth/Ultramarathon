@@ -21,6 +21,7 @@ package de.tadris.fitness.util.io;
 
 import android.annotation.SuppressLint;
 
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
@@ -58,6 +59,7 @@ public class GpxExporter implements IWorkoutExporter {
         XmlMapper mapper = new XmlMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         mapper.enable(ToXmlGenerator.Feature.WRITE_XML_DECLARATION);
+        mapper.disable(JsonGenerator.Feature.AUTO_CLOSE_TARGET); // don't close output stream
         mapper.writeValue(fileStream, getGpxFromWorkout(data));
     }
 

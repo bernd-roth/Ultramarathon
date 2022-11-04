@@ -280,7 +280,7 @@
     <string name="showIntervals">Mostrar los intervalos</string>
     <string name="connectHeartRateDevice">Conectar el dispositivo de frecuencia cardíaca</string>
     <string name="selectBluetoothDevice">Seleccione el dispositivo Bluetooth</string>
-    <string name="workoutAvgHeartRate">Promedio. Ritmo cardíaco</string>
+    <string name="workoutAvgHeartRate">Frecuencia cardíaca media</string>
     <string name="workoutMaxHeartRate">Ritmo cardíaco máximo</string>
     <string name="workoutHeartRate">Ritmo cardíaco</string>
     <string name="workoutStarted">Entrenamiento iniciado</string>
@@ -320,12 +320,12 @@
     <string name="importWorkoutMultipleQuestion">¿Desea importar un archivo GPX o múltiples archivos\?</string>
     <string name="pref_auto_start_mode_unknown">Desconocido (no usar)</string>
     <string name="pref_auto_start_mode_on_move">Esperar a que comience a moverse</string>
-    <string name="pref_auto_start_mode_wait_for_gps">Esperar una posición GPS precisa</string>
+    <string name="pref_auto_start_mode_wait_for_gps">Espere por una posición precisa</string>
     <string name="pref_auto_start_mode_instant">Comenzar inmediatamente</string>
     <string name="pref_auto_start_mode_title">Modo de inicio automático</string>
     <string name="intervalAutoStartModeTraining">Modo de inicio automático del entrenamiento</string>
     <string name="manageAutoStartModeSummary">Cambiar el modo de inicio automático del entrenamiento</string>
-    <string name="ttsMinuteSecondCountdownAnnouncement"> <xliff:g example="1 minute" id="mins">%1$s</xliff:g> y <xliff:g example="7 seconds" id="secs">%2$s</xliff:g> \u0020para el inicio </string>
+    <string name="ttsMinuteSecondCountdownAnnouncement"> <xliff:g example="1 minute" id="mins">%1$s</xliff:g> y <xliff:g example="7 seconds" id="secs">%2$s</xliff:g>para el inicio </string>
     <string name="ttsMinuteCountdownAnnouncement"> <xliff:g example="12 minutes" id="mins">%1$s</xliff:g> para el inicio </string>
     <string name="ttsLongSecondCountdownAnnouncement"> <xliff:g example="5 seconds" id="secs">%1$s</xliff:g> para el inicio </string>
     <plurals name="minutes">
@@ -333,8 +333,9 @@
         <item quantity="other"><xliff:g example="5" id="mins">%1$d</xliff:g> minutos</item>
     </plurals>
     <plurals name="seconds">
-        <item quantity="one"><xliff:g example="1" id="secs">%1$d</xliff:g> \u0020segundo</item>
-        <item quantity="other"><xliff:g example="12" id="secs">%1$d</xliff:g> segundos</item>
+        <item quantity="one"><xliff:g example="1" id="secs">%1$d</xliff:g> segundo</item>
+        <item quantity="many"><xliff:g example="12" id="secs">%1$d</xliff:g> segundos</item>
+        <item quantity="other"></item>
     </plurals>
     <string name="scanFailed">Escaneo fallido</string>
     <string name="scanning">Escaneando…</string>
@@ -390,8 +391,8 @@
     <string name="moveStartOfWorkout">Cortar el inicio</string>
     <string name="editWorkoutStartEnd">Editar el inicio/fin</string>
     <string name="preferenceUseAverageForCurrentSpeed">Utilizar la velocidad media durante un tiempo determinado en lugar del último registro de velocidad para el cálculo de la velocidad actual.</string>
-    <string name="preferenceCurrentSpeedAverageTimeTitle">Velocidad actual por promedios</string>
-    <string name="preferenceCurrentSpeedAverageTimeSummary">Reemplazar el cálculo de velocidad actual por un cálculo promedio.</string>
+    <string name="preferenceCurrentSpeedAverageTimeTitle">Velocidad media</string>
+    <string name="preferenceCurrentSpeedAverageTimeSummary">Reemplazar la velocidad actual por un promedio</string>
     <string name="preferenceCurrentSpeedTime">Intervalo de tiempo para el cálculo del promedio</string>
     <string name="preferencesCategoryMap">Mapa</string>
     <string name="workoutMaxHeight">Altura máxima</string>
@@ -409,7 +410,7 @@
     <string name="pref_render_theme_style">Estilo de renderizado</string>
     <string name="hidden">Oculto</string>
     <string name="thursday">Jueves</string>
-    <string name="workoutRecordingTypeGps">Entrenamientos con GPS</string>
+    <string name="workoutRecordingTypeGps">Ejercicios con GPS</string>
     <string name="workoutRecordingTypeIndoor">Entrenamientos en interiores</string>
     <string name="workoutSets">Conjuntos</string>
     <string name="workoutRepetitions">Repeticiones</string>
@@ -417,10 +418,10 @@
     <string name="workoutAvgFrequencyShort">Frecuencia promedio</string>
     <string name="workoutAvgFrequencyLong">Frecuencia promedio</string>
     <string name="workoutCurrentFrequency">Frecuencia actual</string>
-    <string name="workoutMaxFrequency">Frecuencia máx.</string>
+    <string name="workoutMaxFrequency">Frecuencia máxima</string>
     <string name="workoutIntensity">Intensidad</string>
-    <string name="workoutAvgIntensityShort">Intensidad prom.</string>
-    <string name="workoutMaxIntensity">Intensidad máx.</string>
+    <string name="workoutAvgIntensityShort">Intensidad promedio</string>
+    <string name="workoutMaxIntensity">Intensidad máxima</string>
     <plurals name="workoutStep">
         <item quantity="one">Paso</item>
         <item quantity="other">Pasos</item>
@@ -435,7 +436,7 @@
     </plurals>
     <string name="preferenceCategoryRenderThemeCategories">Categorías</string>
     <string name="fileNotFound">Archivo no encontrado</string>
-    <string name="kcal_unit">kcal</string>
+    <string name="kcal_unit">kilocalorías</string>
     <string name="joule_unit">Julio</string>
     <string name="offline_local_map_file_with_local_render_theme">Desconectado
 \nArchivo de mapa local con tema renderizado localmente</string>
@@ -463,7 +464,7 @@
     <string name="mapnik_default_osm_mapstyle">Mapnik
 \nPredeterminado de OSM</string>
     <string name="bright_night">Noche brillante</string>
-    <string name="mondriaan">Mondriaan</string>
+    <string name="mondriaan">Mondriaan DC</string>
     <string name="wednesday">Miércoles</string>
     <string name="friday">Viernes</string>
     <string name="saturday">Sábado</string>
@@ -490,4 +491,24 @@
         <item quantity="one">Salto</item>
         <item quantity="other">Saltos</item>
     </plurals>
+    <string name="pref_render_theme_style_info">No hay menú disponible para el tema seleccionado.</string>
+    <string name="deleteExportTargetConfirmation">¿Borrar este objetivo de la exportación\?</string>
+    <string name="autoExportBackupTitle">Copias de seguridad automática de la aplicacion</string>
+    <string name="zoomWithVolumeButtonsSummary">Controlar subir y bajar el volumen acercando y alejando</string>
+    <string name="zoomWithVolumeButtonsTitle">Zoom con los botones de volumen</string>
+    <string name="hintConfigureExportTargets">Los archivos de destino de agregar deben exportarse a.</string>
+    <string name="debugShareLogsSummary">Comparte los registros que contienen datos útiles para encontrar fallos en el grabador de ejercicios. Normalmente no contienen datos de localización.</string>
+    <string name="debugSensorsTitle">Depuración de sensores</string>
+    <string name="debugSensorsSummary">Recopile datos del sensor que son escritos en el archivo de registro</string>
+    <string name="debugPressureSensor">Depurar sensor de presión</string>
+    <string name="calibrating">Calibrando</string>
+    <string name="preferencesDebugTitle">Depurar</string>
+    <string name="selectExportTarget">Seleccione el destino donde exportar</string>
+    <string name="debugShareLogsTitle">Compartir registros</string>
+    <plurals name="satelliteCount">
+        <item quantity="one">No hay satélite</item>
+        <item quantity="many">Varios satélites</item>
+        <item quantity="other"/>
+    </plurals>
+    <string name="noSensorAvailable">No hay sensor disponible</string>
 </resources>

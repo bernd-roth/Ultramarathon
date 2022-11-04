@@ -518,4 +518,6 @@
         <item quantity="one">Ein Satellit</item>
         <item quantity="other">%d Satelliten</item>
     </plurals>
+    <string name="massExportGpxTitle">Alle Workouts als GPX exportieren</string>
+    <string name="massExportGpxSummary">Erstellt eine ZIP-Datei, die alle Workouts als GPX-Dokument enthält</string>
 </resources>

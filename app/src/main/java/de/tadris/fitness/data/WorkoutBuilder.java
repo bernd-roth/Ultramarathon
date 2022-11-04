@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -24,7 +24,8 @@ import android.content.Context;
 import java.util.Calendar;
 
 import de.tadris.fitness.Instance;
-import de.tadris.fitness.util.CalorieCalculator;
+import de.tadris.fitness.data.preferences.UserMeasurements;
+import de.tadris.fitness.util.calorie.CalorieCalculator;
 
 public class WorkoutBuilder {
 
@@ -81,7 +82,7 @@ public class WorkoutBuilder {
             workout.topSpeed = workout.avgSpeed;
         }
 
-        workout.calorie = CalorieCalculator.calculateCalories(context, workout);
+        workout.calorie = new CalorieCalculator(context).calculateCalories(UserMeasurements.from(context), workout);
         workout.comment = comment;
 
         workout.edited = wasEdited;

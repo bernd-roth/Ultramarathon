@@ -62,6 +62,18 @@ public class DataManager {
         return context.getFilesDir().getAbsolutePath() + "/shared";
     }
 
+    public static File createSharableFile(Context context, String filename) throws IOException {
+        String filePath = DataManager.getSharedDirectory(context) + "/" + filename;
+        File file = new File(filePath);
+        File parent = file.getParentFile();
+        if(parent != null){
+            if(!parent.exists() && !parent.mkdirs()){
+                throw new IOException("Cannot write to " + file);
+            }
+        }
+        return file;
+    }
+
     public static Uri provide(Context context, File file) {
         return FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".fileprovider", file);
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -23,7 +23,7 @@ import de.tadris.fitness.Instance
 import de.tadris.fitness.data.IndoorSample
 import de.tadris.fitness.data.IndoorWorkout
 import de.tadris.fitness.data.IndoorWorkoutData
-import de.tadris.fitness.util.CalorieCalculator
+import de.tadris.fitness.util.calorie.CalorieCalculator
 
 class IndoorWorkoutSaver(private val context: Context, workoutData: IndoorWorkoutData) {
 
@@ -98,7 +98,8 @@ class IndoorWorkoutSaver(private val context: Context, workoutData: IndoorWorkou
     }
 
     private fun setCalories() {
-        workout.calorie = CalorieCalculator.calculateCalories(context, workout)
+        val measurements = Instance.getInstance(context).userPreferences.measurements
+        workout.calorie = CalorieCalculator(context).calculateCalories(measurements, workout)
     }
 
     private fun insertWorkoutAndSamples() {

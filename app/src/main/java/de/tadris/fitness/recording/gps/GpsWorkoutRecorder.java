@@ -39,6 +39,7 @@ import de.tadris.fitness.data.GpsWorkout;
 import de.tadris.fitness.data.GpsWorkoutData;
 import de.tadris.fitness.data.RecordingType;
 import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.data.preferences.UserMeasurements;
 import de.tadris.fitness.data.preferences.UserPreferences;
 import de.tadris.fitness.recording.BaseWorkoutRecorder;
 import de.tadris.fitness.recording.component.GpsComponent;
@@ -47,9 +48,9 @@ import de.tadris.fitness.recording.event.PressureChangeEvent;
 import de.tadris.fitness.recording.event.WorkoutGPSStateChanged;
 import de.tadris.fitness.ui.record.RecordGpsWorkoutActivity;
 import de.tadris.fitness.ui.record.RecordWorkoutActivity;
-import de.tadris.fitness.util.CalorieCalculator;
 import de.tadris.fitness.util.LocationUtils;
 import de.tadris.fitness.util.WorkoutLogger;
+import de.tadris.fitness.util.calorie.CalorieCalculator;
 
 public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
 
@@ -314,7 +315,7 @@ public class GpsWorkoutRecorder extends BaseWorkoutRecorder {
     public int getCalories() {
         workout.avgSpeed = getAvgSpeed();
         workout.duration = getDuration();
-        int calories = CalorieCalculator.calculateCalories(context, workout);
+        int calories = new CalorieCalculator(context).calculateCalories(UserMeasurements.from(context), workout);
         if (calories > maxCalories) {
             maxCalories = calories;
         }
