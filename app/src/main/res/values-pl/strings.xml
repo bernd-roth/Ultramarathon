@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -64,7 +64,6 @@
     <string name="recordingStateIdle">Bezczynny</string>
     <string name="speechConfigNoSpeech">Brak powiadom.</string>
     <string name="actionGrant">Przyznaj</string>
-    <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack również zbiera dane o lokalizacji w tle, aby nagrywać trening, gdy ekran jest wyłączony. W związku z tym należy pozwolić, aby FitoTrack miał dostęp do Twojej lokalizacji przez cały czas.</string>
     <string name="recordingPermissionNotGrantedMessage">FitoTrack potrzebuje uprawnień do lokalizacji, aby śledzić Twój ruch podczas treningu. FitoTrack zbiera również dane o lokalizacji, gdy aplikacja działa w tle lub ekran jest wyłączony, aby nagrywać treningi. Dane o lokalizacji zawsze pozostają w telefonie bez Twojej wyraźnej zgody na ich udostępnienie.</string>
     <string name="recordingPermissionNotGrantedTitle">Nie przyznano uprawnień</string>
     <string name="unitFootSingular">Stopa</string>

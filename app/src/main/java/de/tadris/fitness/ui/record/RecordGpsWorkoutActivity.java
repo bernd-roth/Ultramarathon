@@ -27,7 +27,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -35,7 +34,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 import androidx.core.app.ActivityCompat;
 
@@ -71,7 +69,6 @@ import de.tadris.fitness.recording.gps.SatelliteCountEvent;
 public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
 
     public static final int REQUEST_CODE_LOCATION_PERMISSION = 10;
-    public static final int REQUEST_CODE_BACKGROUND_LOCATION_PERMISSION = 11;
 
     private MapView mapView;
     private TextView gpsStatusView;
@@ -271,10 +268,6 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
     private void checkPermissions() {
         if (!hasPermission()) {
             showLocationPermissionConsent();
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
-                !hasBackgroundPermission()) {
-            // We cannot request location permission and background permission at the same time due to android 11+ behaviour
-            showBackgroundLocationPermissionConsent();
         }
     }
 
@@ -292,32 +285,9 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
                 Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_CODE_LOCATION_PERMISSION);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.Q)
-    private void showBackgroundLocationPermissionConsent() {
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.recordingPermissionNotGrantedTitle)
-                .setMessage(R.string.recordingBackgroundPermissionNotGrantedMessage)
-                .setPositiveButton(R.string.actionGrant, (dialog, which) -> requestBackgroundLocationPermission())
-                .setNegativeButton(R.string.cancel, (dialog, which) -> activityFinish())
-                .show();
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.Q)
-    private void requestBackgroundLocationPermission() {
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION}, REQUEST_CODE_BACKGROUND_LOCATION_PERMISSION);
-    }
-
     private boolean hasPermission() {
         return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-    }
-
-    private boolean hasBackgroundPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED;
-        } else {
-            return true;
-        }
     }
 
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -326,14 +296,9 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
             if (hasPermission()) {
                 // Restart LocationListener so it can retry to register for location updates now that we got permission
                 restartService();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && !hasBackgroundPermission()) {
-                    showBackgroundLocationPermissionConsent();
-                }
             } else {
                 showPermissionsNotGrantedDialog(R.string.recordingPermissionNotGrantedMessage);
             }
-        } else if (requestCode == REQUEST_CODE_BACKGROUND_LOCATION_PERMISSION && !hasBackgroundPermission()) {
-            showPermissionsNotGrantedDialog(R.string.recordingBackgroundPermissionNotGrantedMessage);
         }
     }
 

@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
+  ~
+  ~ This file is part of FitoTrack
+  ~
+  ~ FitoTrack is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     FitoTrack is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
 <resources>
     <string name="app_name">FitoTrack</string>
     <string name="stop">Stad</string>
@@ -63,7 +82,6 @@
 \nM.sh. má roghnaíonn tú \"Seachtain\" mar réise ama, beidh gach workouts de gach seachtain a chumasc i bpointe sonraí amháin ceachtar ríomh an meán nó suim gach seachtain.</string>
     <string name="recordingActivityPermissionMessage">FitoTrack riachtanais an cead a rianú do ghníomhaíocht fhisiciúil a thaifeadadh workouts faoi dhíon.</string>
     <string name="recordingPermissionNotGrantedMessage">FitoTrack riachtanais suíomh cead a rianú do ghluaiseacht le linn do workout. Bailíonn FitoTrack sonraí suímh freisin agus an aip sa chúlra nó múchtar an scáileán chun do chuid oibre a thaifeadadh. Tá sonraí suímh i gcónaí ar do ghuthán gan do thoiliú soiléir chun é a roinnt.</string>
-    <string name="recordingBackgroundPermissionNotGrantedMessage">Bailíonn FitoTrack freisin sonraí suíomh sa chúlra a thaifeadadh ar an workout nuair a bhíonn an scáileán casta as. Dá bhrí sin, cuir Ar chumas FitoTrack chun rochtain a fháil ar do shuíomh an t-am ar fad.</string>
     <string name="recordingStatePaused">Moillithe</string>
     <string name="importingFiles">Comhaid á n-iompórtáil</string>
     <string name="workoutRecordingTypeGps">Cleachtaí GPS</string>

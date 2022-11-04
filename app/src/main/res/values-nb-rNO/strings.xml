@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -303,7 +303,6 @@
     <string name="actionImport">Importer</string>
     <string name="importWorkoutMultipleQuestion">Ønsker du å importere én eller flere GPX-filer\?</string>
     <string name="recordingPermissionNotGrantedMessage">Innvilg posisjonstilgang for å spore dine bevegelser under treningsøkter, når skjermen er av, og i bakgrunnen. Den forblir på enheten din uten din klare tilgang til å dele den.</string>
-    <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack samler også posisjonsdata i bakgrunnen for å ta opp din treningsøkt når skjermen er av. Derfor må du innvilge kontinuerlig tilgang.</string>
     <string name="overwriteMapConfirmation">Ønsker du å overskrive den eksisterende kartfilen «%s»\?</string>
     <string name="downloadMapsSpecifyDirectory">Angi en mappe for frakoblede kart først</string>
     <string name="alreadyDownloading">En fil lastes ned allerede</string>

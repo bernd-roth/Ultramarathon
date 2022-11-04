@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -335,7 +335,6 @@
     <string name="actionDownloadMap">Télécharger la carte</string>
     <string name="downloadMapsSpecifyDirectory">Veuillez d\'abord spécifier un répertoire pour les cartes hors ligne</string>
     <string name="downloadMapsTitle">Télécharger des cartes</string>
-    <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack collecte également des données de localisation en arrière-plan pour enregistrer l\'entraînement lorsque l\'écran est éteint. Par conséquent, veuillez autoriser FitoTrack à accéder à votre position à tout moment.</string>
     <string name="recordingPermissionNotGrantedMessage">FitoTrack a besoin d\'une autorisation de localisation pour suivre vos mouvements pendant votre entraînement. FitoTrack collecte également des données de localisation lorsque l\'application est en arrière-plan ou que l\'écran est éteint pour enregistrer vos entraînements. Les données de localisation restent toujours sur votre téléphone sans votre consentement clair pour les partager.</string>
     <string name="workoutAutoStartAborted">Démarrage automatique annulé</string>
     <string name="invalidNumberFormat">Format de numéro non valide.</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -17,7 +17,6 @@
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
   --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="recordingBackgroundPermissionNotGrantedMessage">屏幕关闭时，FitoTrack 也会在后台收集位置数据，以便记录您的运动。因此，请允许 FitoTrack 随时访问位置信息。</string>
     <string name="recordingPermissionNotGrantedMessage">为了追踪锻炼期间您的运行，FitoTrack 需要位置权限。 FitoTrack 也会在后台运行，或屏幕关闭时收集位置数据，以便记录您的锻炼。除非您明确同意分享，否则位置数据只会储存在手机上。</string>
     <string name="editDisplayedInformationHint">只要锻炼未开始，您就可以点击四个区域之一，来编辑显示值。</string>
     <string name="workoutStatsHelpText">此屏幕显示的是您锻炼的历史统计数据。查看统计数据，请先点击选择锻炼类型，然后设置您想了解的信息和时间跨段。

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -368,7 +368,6 @@
     <string name="workoutTypeEditNameError">Var god ange ett namn</string>
     <string name="workoutTypeEditIdErrorEmpty">Vänligen ange ett ID</string>
     <string name="importMultipleMessageSelectFolder">Var god välj en mapp som innehåller alla de GPX-filer du vill importera.</string>
-    <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack samlar också in platsdata i bakgrunden för att kunna spela in träningspasset medan skärmen är avstängd. Var därför vänlig och ge FitoTrack tillgång till din plats hela tiden.</string>
     <string name="importWorkoutMultipleQuestion">Vill du importera en GPX-fil eller flera\?</string>
     <string name="actionImportMultiple">Importera flera</string>
     <string name="notimeout">Ingen tidsgräns</string>

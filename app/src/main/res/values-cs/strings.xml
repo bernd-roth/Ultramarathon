@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -359,7 +359,6 @@
     <string name="actionImportMultiple">Importovat více</string>
     <string name="actionImport">Importovat</string>
     <string name="importWorkoutMultipleQuestion">Chcete importovat jeden soubor GPX nebo více souborů\?</string>
-    <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack také shromažďuje údaje o poloze na pozadí během záznamu tréninku, i když je obrazovka vypnutá. Proto prosím povolte FitoTracku přístup k vaší poloze.</string>
     <string name="recordingPermissionNotGrantedMessage">FitoTrack vyžaduje povolení přístupu k vaší poloze aby mohl sledovat váš pohyb během tréninku. FitoTrack také může sbírat údaje o vaší poloze při běhu aplikace na pozadí nebo když je obrazovka vypnutá během záznamu tréninku. Údaje o poloze vždy zůstávají na vašem zařízení pokud neudělíte souhlas s jejich sdílením.</string>
     <string name="workoutTypeAll">Vše</string>
     <string name="workoutRecordingTypeGps">Tréninky s GPS</string>

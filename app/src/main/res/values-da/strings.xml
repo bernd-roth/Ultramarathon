@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -384,7 +384,6 @@
     <string name="downloadMapsTitle">Download Kort</string>
     <string name="runningMigrations">Kørende migrationer</string>
     <string name="importWorkoutMultipleQuestion">Vil du importere en eller flere GPX filer\?</string>
-    <string name="recordingBackgroundPermissionNotGrantedMessage">Fitotrack indsamler lokationsoplysninger i baggrunden for at spore din træning når skærmen er slukket. Derfor, venligst giv FitoTrack tilladelse til din lokation hele tiden.</string>
     <string name="editWorkoutStartEnd">Rediger Start/Slut</string>
     <string name="unitHeartBeatsPerMinute">spm</string>
     <string name="preferenceFirstDayOfWeek">Start på ugen</string>

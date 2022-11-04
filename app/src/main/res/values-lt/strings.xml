@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -321,7 +321,6 @@
     <string name="recordingStateIdle">Laukia</string>
     <string name="actionGrant">Suteikti</string>
     <string name="recordingActivityPermissionMessage">FitoTrack reikia leidimo sekti jūsų fizinį aktyvumą, kad būtų galima įrašyti treniruotes patalpose.</string>
-    <string name="recordingBackgroundPermissionNotGrantedMessage">FitoTrack taip pat renka vietos duomenis fone, kad galėtų įrašyti treniruotę, kai ekranas išjungtas. Todėl leiskite FitoTrack nuolat gauti prieigą prie jūsų buvimo vietos.</string>
     <string name="recordingPermissionNotGrantedMessage">FitoTrack reikia vietos nustatymo leidimo, kad būtų galima sekti jūsų judėjimą treniruotės metu. FitoTrack taip pat renka buvimo vietos duomenis, kai programėlė veikia fone arba kai ekranas išjungtas, kad būtų galima įrašyti treniruotes. Buvimo vietos duomenys visada lieka jūsų telefone be jūsų aiškaus sutikimo jais dalytis.</string>
     <string name="recordingPermissionNotGrantedTitle">Leidimai nesuteikti</string>
     <string name="unitFootSingular">Pėda</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -363,7 +363,6 @@
     <string name="actionImportMultiple">Több importálása</string>
     <string name="actionImport">Importálás</string>
     <string name="importWorkoutMultipleQuestion">Szeretne egy vagy több GPX-fájlt importálni\?</string>
-    <string name="recordingBackgroundPermissionNotGrantedMessage">A FitoTrack helyadatokat is gyűjt a háttérben az edzés rögzítéséhez, ha a képernyő ki van kapcsolva. Emiatt engedélyezze a FitoTrack számára, hogy mindig hozzáférése legyen a helyzetéhez.</string>
     <string name="recordingPermissionNotGrantedMessage">A FitoTrack alkalmazásnak szüksége van a helyengedélyére az edzés közbeni mozgás követéséhez. A FitoTrack helyadatokat is gyűjt, miközben az alkalmazás a háttérben van vagy a képernyő ki van kapcsolva, hogy rögzítse az edzéseit. A helyadatok mindig a telefonján maradnak, és csak akkor lesznek megosztva, ha egyértelműen beleegyezik.</string>
     <string name="workoutTypeAll">Összes</string>
     <string name="workoutRecordingTypeGps">GPS edzések</string>
