@@ -1,13 +1,29 @@
+/*
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
+ *
+ * This file is part of FitoTrack
+ *
+ * FitoTrack is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     FitoTrack is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package de.tadris.fitness.ui.statistics.fragments;
 
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
@@ -36,7 +52,6 @@ public class StatsOverviewFragment extends StatsFragment {
         statsProvider = new StatsProvider(ctx);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -44,7 +59,7 @@ public class StatsOverviewFragment extends StatsFragment {
         activity = (FitoTrackActivity)getContext();
 
         timeSpanSelection = view.findViewById(R.id.time_span_selection);
-        timeSpanSelection.setForegroundColor(getContext().getColor(R.color.textDarkerWhite));
+        timeSpanSelection.setForegroundColor(getResources().getColor(R.color.textDarkerWhite));
 
         numberOfActivitiesChart = view.findViewById(R.id.stats_number_of_workout_chart);
         distanceChart = view.findViewById(R.id.stats_distances_chart);
@@ -74,7 +89,6 @@ public class StatsOverviewFragment extends StatsFragment {
         chart.animateY(500, Easing.EaseInExpo);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void updateCharts() {
         long start = timeSpanSelection.getSelectedDate();
         StatsDataTypes.TimeSpan span = new StatsDataTypes.TimeSpan(start, timeSpanSelection.getSelectedAggregationSpan().getAggregationEnd(start));

@@ -21,10 +21,8 @@ package de.tadris.fitness.data.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.preference.PreferenceManager;
 
-import androidx.annotation.RequiresApi;
 import androidx.collection.ArraySet;
 
 import java.util.ArrayList;
@@ -499,7 +497,6 @@ public class UserPreferences {
         return types;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     public void setStatisticsSelectedTypes(List<WorkoutType> types) {
         Set<String> typeIDs = new ArraySet<>();
         for(WorkoutType type:types) {
