@@ -32,6 +32,7 @@ import java.util.List;
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.RecordingType;
 import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.data.WorkoutTypeManager;
 import de.tadris.fitness.ui.FitoTrackActivity;
 import de.tadris.fitness.ui.adapter.WorkoutTypeAdapter;
 import de.tadris.fitness.ui.settings.EditWorkoutTypeActivity;
@@ -39,7 +40,7 @@ import de.tadris.fitness.util.Icon;
 
 public class SelectWorkoutTypeDialog implements WorkoutTypeAdapter.WorkoutTypeAdapterListener {
 
-    private static final String ID_ADD = "_add";
+    protected static final String ID_ADD = "_add";
 
     private Activity context;
     private WorkoutTypeSelectListener listener;
@@ -49,7 +50,7 @@ public class SelectWorkoutTypeDialog implements WorkoutTypeAdapter.WorkoutTypeAd
     public SelectWorkoutTypeDialog(FitoTrackActivity context, WorkoutTypeSelectListener listener) {
         this.context = context;
         this.listener = listener;
-        this.options = WorkoutType.getAllTypesSorted(context);
+        this.options = WorkoutTypeManager.getInstance().getAllTypesSorted(context);
         this.options.add(0, new WorkoutType(ID_ADD, context.getString(R.string.workoutTypeAdd), 0, context.getThemePrimaryColor(), Icon.ADD.name, 0, RecordingType.GPS.id));
     }
 

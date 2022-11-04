@@ -16,7 +16,8 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  -->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="stop">Durdur</string>
     <string name="workoutStarted">Egzersiz başlatıldı</string>
     <string name="workoutStopped">Egzersiz durduruldu</string>
@@ -268,6 +269,7 @@
     <string name="finished">Bitti</string>
     <string name="converting">Dönüştürülüyor</string>
     <string name="locationData">Konum verileri</string>
+    <string name="workouts">Egzersiz</string>
     <string name="exporting">Dışa aktarılıyor</string>
     <string name="initialising">Başlatılıyor</string>
     <string name="shareFile">Dosya paylaş</string>

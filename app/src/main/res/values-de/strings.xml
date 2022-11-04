@@ -79,6 +79,7 @@
     <string name="workoutTypeHiking">Wandern</string>
     <string name="workoutTypeRunning">Laufen</string>
     <string name="workoutTypeWalking">Gehen</string>
+    <string name="workouts">Workouts</string>
     <string name="enable">Aktivieren</string>
     <string name="height">Höhe</string>
     <string name="noGpsTitle">GPS deaktiviert</string>

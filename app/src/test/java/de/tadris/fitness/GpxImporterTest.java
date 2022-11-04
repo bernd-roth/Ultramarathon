@@ -27,6 +27,7 @@ import java.io.IOException;
 
 import de.tadris.fitness.data.GpsWorkoutData;
 import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.data.WorkoutTypeManager;
 import de.tadris.fitness.util.io.GpxImporter;
 import de.tadris.fitness.util.io.general.IWorkoutImporter;
 
@@ -45,7 +46,7 @@ public class GpxImporterTest {
 
         // Main test is that above method runs without error, additionally perform some checks:
         Assert.assertEquals("Comment", workoutData.getWorkout().comment);
-        Assert.assertEquals(WorkoutType.WORKOUT_TYPE_ID_WALKING, workoutData.getWorkout().workoutTypeId);
+        Assert.assertEquals(WorkoutTypeManager.WORKOUT_TYPE_ID_WALKING, workoutData.getWorkout().workoutTypeId);
         Assert.assertEquals(9, workoutData.getSamples().size());
         Assert.assertEquals(748.058296766, workoutData.getSamples().get(0).elevation, 0.001);
         Assert.assertEquals(0.72999995946, workoutData.getSamples().get(6).speed, 0.001);

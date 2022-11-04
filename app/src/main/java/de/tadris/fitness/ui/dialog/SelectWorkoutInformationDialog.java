@@ -25,10 +25,8 @@ import android.widget.ArrayAdapter;
 
 import java.util.List;
 
-import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.RecordingType;
-import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.recording.information.InformationManager;
 import de.tadris.fitness.recording.information.RecordingInformation;
 

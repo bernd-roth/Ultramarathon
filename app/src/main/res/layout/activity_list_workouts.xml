@@ -24,13 +24,38 @@
     android:layout_height="match_parent"
     tools:context=".ui.ListWorkoutsActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/workoutList"
-        android:scrollbars="vertical"
+    <LinearLayout
+        android:id="@+id/main_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <de.tadris.fitness.ui.statistics.ShortStatsView
+            android:id="@+id/short_stats_view"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_marginTop="0dp"/>
+
+        <TextView
+            style="@style/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="0dp"
+            android:text="@string/workouts" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/colorPrimary"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/workoutList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/hintAddWorkout"
@@ -47,7 +72,7 @@
         android:id="@+id/workoutListMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
+        android:layout_gravity="bottom|end"
         android:layout_margin="10dp"
         app:menu_animationDelayPerItem="50"
         app:menu_colorNormal="@color/colorPrimary"

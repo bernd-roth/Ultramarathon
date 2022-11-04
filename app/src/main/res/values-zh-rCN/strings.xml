@@ -286,6 +286,7 @@
     <string name="finished">完成</string>
     <string name="converting">正在转换</string>
     <string name="locationData">位置数据</string>
+    <string name="workouts">锻炼</string>
     <string name="initialising">正在初始化</string>
     <string name="shareFile">分享文件</string>
     <string name="errorImportFailed">数据导入失败。</string>

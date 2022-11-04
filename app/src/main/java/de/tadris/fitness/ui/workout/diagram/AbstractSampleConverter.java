@@ -20,19 +20,28 @@
 package de.tadris.fitness.ui.workout.diagram;
 
 import android.content.Context;
+import android.content.Intent;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
 import com.github.mikephil.charting.charts.CombinedChart;
+import com.github.mikephil.charting.formatter.DefaultValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+
+import java.util.concurrent.TimeUnit;
 
 import de.tadris.fitness.Instance;
+import de.tadris.fitness.R;
+import de.tadris.fitness.util.charts.formatter.TimeFormatter;
 import de.tadris.fitness.util.unit.DistanceUnitUtils;
 import de.tadris.fitness.util.unit.EnergyUnitUtils;
 
 public abstract class AbstractSampleConverter implements SampleConverter {
 
-    private final Context context;
+    protected static final String WORKOUT_ID_EXTRA = "de.tadris.fitness.WorkoutActivity.WORKOUT_ID_EXTRA";
+
+    protected final Context context;
     protected final DistanceUnitUtils distanceUnitUtils;
     protected final EnergyUnitUtils energyUnitUtils;
 
@@ -47,13 +56,28 @@ public abstract class AbstractSampleConverter implements SampleConverter {
     }
 
     @Override
-    public void afterAdd(CombinedChart chart) {
-    } // Mostly not needed
+    public String getXAxisLabel(){
+        return context.getString(R.string.time);
+    }
 
     @Override
-    public String getDescription() {
-        return "min - " + getUnit();
+    public ValueFormatter getXValueFormatter() {
+        return new TimeFormatter(TimeUnit.MINUTES);
     }
+
+    @Override
+    public String getYAxisLabel(){
+        return getUnit();
+    }
+
+    @Override
+    public ValueFormatter getYValueFormatter() {
+        return new DefaultValueFormatter(1);
+    }
+
+    @Override
+    public void afterAdd(CombinedChart chart) {
+    } // Mostly not needed
 
     @Override
     public boolean isIntervalSetVisible() {

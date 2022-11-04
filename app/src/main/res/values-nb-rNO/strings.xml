@@ -232,6 +232,7 @@
     <string name="finished">Fullført</string>
     <string name="converting">Konverterer</string>
     <string name="locationData">Posisjonsdata</string>
+    <string name="workouts">Treningsøkter</string>
     <string name="initialising">Igangsetter</string>
     <string name="shareFile">Del fil</string>
     <string name="errorImportFailed">Dataimporten mislyktes.</string>

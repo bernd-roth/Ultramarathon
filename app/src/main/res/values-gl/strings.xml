@@ -16,12 +16,14 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  -->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="chooseBackupFile">Ficheiro de copia de apoio</string>
     <string name="loadingFile">Cargando arquivo</string>
     <string name="finished">Rematado</string>
     <string name="converting">Converter</string>
     <string name="locationData">Datos da localización</string>
+    <string name="workouts">Adestramentos</string>
     <string name="initialising">Inicializando</string>
     <string name="shareFile">Compartir arquivo</string>
     <string name="errorImportFailed">A importación de datos fallou.</string>

@@ -272,6 +272,7 @@
     <string name="finished">Hotovo</string>
     <string name="converting">Převádím</string>
     <string name="locationData">Údaje o poloze</string>
+    <string name="workouts">Cvičení</string>
     <string name="initialising">Inicializace</string>
     <string name="shareFile">Sdílet soubor</string>
     <string name="errorImportFailed">Import dat se nezdařil.</string>

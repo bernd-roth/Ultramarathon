@@ -93,15 +93,15 @@ class RecordingSettingsFragment : FitoTrackSettingFragment(), AutoStartModeSelec
                 true
             }
         findPreference<Preference>("autoTimeoutConfig")!!.onPreferenceClickListener =
-            Preference.OnPreferenceClickListener {
-                showAutoTimeoutConfig()
-                true
-            }
+                Preference.OnPreferenceClickListener {
+                    showAutoTimeoutConfig()
+                    true
+                }
         findPreference<Preference>("currentSpeedAverageTimeConfig")!!.onPreferenceClickListener =
-            Preference.OnPreferenceClickListener {
-                showCurrentSpeedAverageTimePicker()
-                true
-            }
+                Preference.OnPreferenceClickListener {
+                    showCurrentSpeedAverageTimePicker()
+                    true
+                }
     }
 
     override fun getTitle() = getString(R.string.preferencesRecordingTitle)

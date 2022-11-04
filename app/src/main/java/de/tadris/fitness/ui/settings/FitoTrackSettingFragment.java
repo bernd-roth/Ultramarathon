@@ -23,7 +23,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 
 import androidx.annotation.StringRes;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -92,9 +91,9 @@ public abstract class FitoTrackSettingFragment extends PreferenceFragmentCompat 
 
     protected abstract String getTitle();
 
-    protected void setTitle(String s){
+    protected void setTitle(String s) {
         Activity activity = getActivity();
-        if(activity != null){
+        if (activity != null) {
             activity.setTitle(s);
         }
     }

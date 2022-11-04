@@ -100,6 +100,7 @@
     <string name="backup">גיבוי</string>
     <string name="restore">שחזור</string>
     <string name="locationData">נתוני מיקומים</string>
+    <string name="workouts">אימונים</string>
     <string name="shareFile">שיתוף קובץ</string>
     <string name="errorImportFailed">ייבוא הנתונים כשל.</string>
     <string name="errorExportFailed">ייצוא הנתונים כשל.</string>
