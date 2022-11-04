@@ -16,8 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="stop">Durdur</string>
     <string name="workoutStarted">Egzersiz başlatıldı</string>
     <string name="workoutStopped">Egzersiz durduruldu</string>
@@ -226,7 +225,7 @@
     <string name="workoutHeartRate">Kalp Ritmi</string>
     <string name="workoutEnergyConsumption">Enerji Tüketimi</string>
     <string name="workoutTotalEnergy">Toplam Enerji</string>
-    <string name="workoutBurnedEnergy">Harcanan Enerji</string>
+    <string name="workoutBurnedEnergy">Harcanan kalori</string>
     <string name="workoutTopSpeed">En Yüksek Hız</string>
     <string name="workoutAvgSpeedLong">Ortalama Hız</string>
     <string name="workoutSpeed">Hız</string>
@@ -501,11 +500,28 @@
     <string name="debugPressureSensor">Basınç sensöründe hata ayıklama</string>
     <string name="calibrating">Kalibrasyon</string>
     <plurals name="satelliteCount">
-        <item quantity="one">Uydu yok</item>
-        <item quantity="other">Bir uydu</item>
+        <item quantity="one">Bir uydu</item>
+        <item quantity="other">%d uydu</item>
     </plurals>
     <string name="noSensorAvailable">Sensör yok</string>
     <string name="preferencesDebugTitle">Hata ayıklama</string>
     <string name="zoomWithVolumeButtonsTitle">Ses düğmeleriyle yakınlaştır</string>
     <string name="zoomWithVolumeButtonsSummary">Ses açma ve kısma denetimleri ile yakınlaştır ve uzaklaştır</string>
+    <string name="workoutDurationSum">Süre toplamı</string>
+    <string name="workoutCount">Egzersiz sayısı</string>
+    <string name="workoutAvgDistance">Ortalama Mesafe</string>
+    <string name="massExportGpxTitle">Tüm egzersizleri GPX olarak dışa aktar</string>
+    <string name="workoutAvgDurationLong">Ortalama Süre</string>
+    <string name="workoutPauseDurationSum">Duraklatma süresi toplamı</string>
+    <string name="histogram">Histogram</string>
+    <string name="monthYear">Ay / Yıl</string>
+    <string name="workoutDistanceSum">Mesafe toplamı</string>
+    <string name="massExportGpxSummary">Tüm egzersizleri GPX belgeleri olarak içeren bir ZIP dosyası oluşturur</string>
+    <string name="show_sum">Toplamı göster</string>
+    <string name="stats_overview_title">Genel bakış</string>
+    <string name="workoutAvgPauseDuration">Ortalama Duraklatma Süresi</string>
+    <string name="statistics">İstatistikler</string>
+    <string name="stats_history_title">Geçmiş</string>
+    <string name="stats_explore_title">Keşfet</string>
+    <string name="details">Ayrıntılar</string>
 </resources>
