@@ -99,7 +99,7 @@ public class ChartStyles {
         chart.getLegend().setTextColor(context.getThemeTextColor());
     }
 
-    public static void defaultHistogram(BarChart chart, Context ctx, ValueFormatter xValueFormatter, ValueFormatter yValueFormatter)
+    public static void defaultHistogram(BarChart chart, FitoTrackActivity context, ValueFormatter xValueFormatter, ValueFormatter yValueFormatter)
     {
         float min = chart.getBarData().getDataSets().get(0).getEntryForIndex(0).getX();
         int nBins = chart.getBarData().getDataSets().get(0).getEntryCount();
@@ -137,10 +137,13 @@ public class ChartStyles {
         chart.getXAxis().setAxisMinimum(-0.5f);
         chart.getXAxis().setAxisMaximum(nBins+0.5f);
         chart.getAxisLeft().setValueFormatter(yValueFormatter);
+        chart.getXAxis().setTextColor(context.getThemeTextColor());
+        chart.getAxisLeft().setTextColor(context.getThemeTextColor());
+        chart.getAxisRight().setTextColor(context.getThemeTextColor());
 
         LegendEntry[] entries = chart.getLegend().getEntries();
         String unit = entries.length > 0 ? entries[0].label:"";
-        chart.setMarker(new DisplayValueMarker(ctx, chart.getAxisLeft().getValueFormatter()," "+unit, chart.getBarData()));
+        chart.setMarker(new DisplayValueMarker(context, chart.getAxisLeft().getValueFormatter()," "+unit, chart.getBarData()));
     }
 
     // Be careful to use this function outside StatsHistoryFragment

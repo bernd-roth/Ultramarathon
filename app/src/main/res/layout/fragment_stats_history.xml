@@ -79,7 +79,7 @@
                     android:minWidth="48dp"
                     android:minHeight="48dp"
                     android:text="@string/show_sum"
-                    android:textColor="@color/textColorLight"
+                    android:textColor="?android:attr/textColorTertiary"
                     android:textSize="16sp" />
             </LinearLayout>
 
