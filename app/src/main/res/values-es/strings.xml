@@ -64,7 +64,7 @@
     <string name="workoutAvgSpeedShort">Vel. Promedio</string>
     <string name="workoutAvgSpeedLong">Velocidad promedio</string>
     <string name="workoutTopSpeed">Velocidad máxima</string>
-    <string name="workoutBurnedEnergy">Energía quemada</string>
+    <string name="workoutBurnedEnergy">Calorías quemadas</string>
     <string name="workoutTotalEnergy">Energía total</string>
     <string name="workoutEnergyConsumption">Consumo de energía</string>
     <string name="uploading">Subiendo</string>
@@ -330,12 +330,13 @@
     <string name="ttsLongSecondCountdownAnnouncement"> <xliff:g example="5 seconds" id="secs">%1$s</xliff:g> para el inicio </string>
     <plurals name="minutes">
         <item quantity="one"><xliff:g example="1" id="mins">%1$d</xliff:g> minuto</item>
+        <item quantity="many"><xliff:g example="5" id="mins">%1$d</xliff:g> minutos</item>
         <item quantity="other"><xliff:g example="5" id="mins">%1$d</xliff:g> minutos</item>
     </plurals>
     <plurals name="seconds">
         <item quantity="one"><xliff:g example="1" id="secs">%1$d</xliff:g> segundo</item>
         <item quantity="many"><xliff:g example="12" id="secs">%1$d</xliff:g> segundos</item>
-        <item quantity="other"></item>
+        <item quantity="other"><xliff:g example="12" id="secs">%1$d</xliff:g> segundos</item>
     </plurals>
     <string name="scanFailed">Escaneo fallido</string>
     <string name="scanning">Escaneando…</string>
@@ -423,6 +424,7 @@
     <string name="workoutMaxIntensity">Intensidad máxima</string>
     <plurals name="workoutStep">
         <item quantity="one">Paso</item>
+        <item quantity="many">Pasos</item>
         <item quantity="other">Pasos</item>
     </plurals>
     <string name="workoutTypeRopeSkipping">Saltar a la cuerda</string>
@@ -431,6 +433,7 @@
     <string name="recordingActivityPermissionMessage">FitoTrack necesita permisos para rastrear su actividad física para registrar entrenamientos en interiores.</string>
     <plurals name="importedWorkouts">
         <item quantity="one">Un entrenamiento importado</item>
+        <item quantity="many">%d entrenamientos importados</item>
         <item quantity="other">%d entrenamientos importados</item>
     </plurals>
     <string name="preferenceCategoryRenderThemeCategories">Categorías</string>
@@ -451,6 +454,7 @@
     <string name="tuesday">Martes</string>
     <plurals name="workoutPushUp">
         <item quantity="one">Flexión</item>
+        <item quantity="many">Flexiones</item>
         <item quantity="other">Flexiones</item>
     </plurals>
     <string name="pref_map_directory">Directorio de mapas sin conexión</string>
@@ -488,6 +492,7 @@
     <string name="configureHttpPostRequest">Configurar solicitud HTTP POST</string>
     <plurals name="workoutJump">
         <item quantity="one">Salto</item>
+        <item quantity="many">Saltos</item>
         <item quantity="other">Saltos</item>
     </plurals>
     <string name="pref_render_theme_style_info">No hay menú disponible para el tema seleccionado.</string>
@@ -506,8 +511,18 @@
     <string name="debugShareLogsTitle">Compartir registros</string>
     <plurals name="satelliteCount">
         <item quantity="one">No hay satélite</item>
-        <item quantity="many">Varios satélites</item>
-        <item quantity="other"/>
+        <item quantity="many">%d satélites</item>
+        <item quantity="other">%d satélites</item>
     </plurals>
     <string name="noSensorAvailable">No hay sensor disponible</string>
+    <string name="workoutAvgDistance">Distancia promedio</string>
+    <string name="stats_explore_title">Explorar</string>
+    <string name="monthYear">Mes / Año</string>
+    <string name="massExportGpxTitle">Exportar todos los ejercicios como GPX</string>
+    <string name="massExportGpxSummary">Crea un archivo ZIP conteniendo todos los ejercicios como documentos GPX</string>
+    <string name="workoutAvgDurationLong">Duración promedio</string>
+    <string name="workoutAvgPauseDuration">Duración promedio de la pausa</string>
+    <string name="statistics">Estadísticas</string>
+    <string name="histogram">Histograma</string>
+    <string name="details">Detalles</string>
 </resources>
