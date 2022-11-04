@@ -17,19 +17,19 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.ui.statistics.fragments;
+package de.tadris.fitness.util;
 
-import androidx.fragment.app.Fragment;
+import android.content.Context;
+import android.util.TypedValue;
 
-import de.tadris.fitness.ui.FitoTrackActivity;
+import androidx.annotation.AttrRes;
 
-public abstract class StatsFragment extends Fragment {
-    protected FitoTrackActivity context;
+public class ThemeUtils {
 
-    protected StatsFragment(int layoutID, FitoTrackActivity ctx) {
-        super(layoutID);
-        this.context = ctx;
+    public static int resolveThemeColor(Context context, @AttrRes int attrRes) {
+        final TypedValue value = new TypedValue();
+        context.getTheme().resolveAttribute(attrRes, value, true);
+        return value.data;
     }
 
-    public abstract String getTitle();
 }

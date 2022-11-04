@@ -77,9 +77,7 @@ public class ShortStatsItemView extends LinearLayout {
             firstWorkoutTime = statsDataProvider.getFirstData(WorkoutProperty.LENGTH, WorkoutTypeManager.getInstance().getAllTypes(context)).time;
             lastWorkoutTime = statsDataProvider.getLastData(WorkoutProperty.LENGTH, WorkoutTypeManager.getInstance().getAllTypes(context)).time;
 
-        }
-        catch (NoDataException e)
-        {
+        } catch (NoDataException e) {
             return;
         }
         timeSpanSelection.addOnTimeSpanSelectionListener((aggregationSpan, instance) -> updateChart());

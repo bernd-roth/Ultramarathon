@@ -58,7 +58,6 @@ import de.tadris.fitness.data.WorkoutTypeManager;
 import de.tadris.fitness.data.preferences.UserPreferences;
 import de.tadris.fitness.ui.FitoTrackActivity;
 import de.tadris.fitness.ui.statistics.DetailStatsActivity;
-import de.tadris.fitness.ui.statistics.IOnToggleListener;
 import de.tadris.fitness.ui.statistics.TextToggle;
 import de.tadris.fitness.ui.statistics.WorkoutTypeSelection;
 import de.tadris.fitness.util.WorkoutProperty;
@@ -115,36 +114,21 @@ public class StatsHistoryFragment extends StatsFragment {
 
         // Setup switch functionality
         speedTitle = view.findViewById(R.id.stats_history_speed_toggle);
-        speedTitle.setOnToggleListener(new IOnToggleListener() {
-            @Override
-            public void onToggle(CharSequence current) {
-                updateSpeedChart(selection.getSelectedWorkoutTypes());
-            }
-        });
+        speedTitle.setOnToggleListener(current -> updateSpeedChart(selection.getSelectedWorkoutTypes()));
 
         speedChart = view.findViewById(R.id.stats_speed_chart);
         speedChart.setDoubleTapToZoomEnabled(false);
 
 
         distanceTitle = view.findViewById(R.id.stats_history_distance_toggle);
-        distanceTitle.setOnToggleListener(new IOnToggleListener() {
-            @Override
-            public void onToggle(CharSequence current) {
-                updateDistanceChart(selection.getSelectedWorkoutTypes());
-            }
-        });
+        distanceTitle.setOnToggleListener(current -> updateDistanceChart(selection.getSelectedWorkoutTypes()));
 
         distanceChart = view.findViewById(R.id.stats_history_distance_chart);
         distanceChart.setDoubleTapToZoomEnabled(false);
 
 
         durationTitle = view.findViewById(R.id.stats_history_duration_toggle);
-        durationTitle.setOnToggleListener(new IOnToggleListener() {
-            @Override
-            public void onToggle(CharSequence current) {
-                updateDurationChart(selection.getSelectedWorkoutTypes());
-            }
-        });
+        durationTitle.setOnToggleListener(current -> updateDurationChart(selection.getSelectedWorkoutTypes()));
 
         durationChart = view.findViewById(R.id.stats_duration_chart);
         durationChart.setDoubleTapToZoomEnabled(false);
@@ -274,7 +258,7 @@ public class StatsHistoryFragment extends StatsFragment {
         }
 
         List<WorkoutType> selected = preferences.getStatisticsSelectedTypes();
-        if (selected.size()==0 || selected.get(0) == null) {
+        if (selected.size() == 0 || selected.get(0) == null) {
             selected.clear();
             selected.addAll(WorkoutTypeManager.getInstance().getAllTypes(context));
         }

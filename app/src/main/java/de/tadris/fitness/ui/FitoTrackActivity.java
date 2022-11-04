@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -24,7 +24,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -38,6 +37,7 @@ import androidx.core.app.ActivityCompat;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
+import de.tadris.fitness.util.ThemeUtils;
 
 abstract public class FitoTrackActivity extends AppCompatActivity {
 
@@ -64,9 +64,7 @@ abstract public class FitoTrackActivity extends AppCompatActivity {
     }
 
     protected int getThemeColor(@AttrRes int colorRes) {
-        final TypedValue value = new TypedValue();
-        getTheme().resolveAttribute(colorRes, value, true);
-        return value.data;
+        return ThemeUtils.resolveThemeColor(this, colorRes);
     }
 
     protected void showErrorDialog(Exception e, @StringRes int title, @StringRes int message) {

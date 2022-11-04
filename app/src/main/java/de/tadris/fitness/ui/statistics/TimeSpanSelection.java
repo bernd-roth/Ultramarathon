@@ -44,6 +44,7 @@ import java.util.GregorianCalendar;
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationSpan;
 import de.tadris.fitness.data.preferences.UserPreferences;
+import de.tadris.fitness.util.ThemeUtils;
 import de.tadris.fitness.util.statistics.DateFormatter;
 
 public class TimeSpanSelection extends LinearLayout {
@@ -67,7 +68,7 @@ public class TimeSpanSelection extends LinearLayout {
     AggregationSpan selectedAggregationSpan;
     boolean isInstanceSelectable;
     UserPreferences preferences;
-    int foregroundColor = getResources().getColor(R.color.textLighterBlack);
+    int foregroundColor = ThemeUtils.resolveThemeColor(getContext(), android.R.attr.textColorPrimary);
 
     private DateFormatter dateFormatter;
 
@@ -131,13 +132,12 @@ public class TimeSpanSelection extends LinearLayout {
         }
 
         aggregationSpanArrayAdapter = new ArrayAdapter<String>(getContext(),
-                R.layout.support_simple_spinner_dropdown_item, aggregationSpanStrings)
-        {
+                R.layout.support_simple_spinner_dropdown_item, aggregationSpanStrings) {
             @NonNull
             @Override
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
-                ((TextView)view).setTextColor(foregroundColor);
+                ((TextView) view).setTextColor(foregroundColor);
                 return view;
             }
         };
