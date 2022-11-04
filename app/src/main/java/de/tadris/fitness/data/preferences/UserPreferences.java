@@ -54,6 +54,8 @@ public class UserPreferences {
     public static final String STEP_LENGTH = "stepLength";
     public static final String STATISTICS_AGGREGATION_SPAN = "statisticsAggregationSpan";
     public static final String STATISTICS_SELECTED_TYPES = "statisticsSelectedTypes";
+    public static final String VOICE_ANNOUNCEMENTS_INTERVAL_TIME = "spokenUpdateTimePeriod";
+    public static final String VOICE_ANNOUNCEMENTS_INTERVAL_DISTANCE = "spokenUpdateDistancePeriod2";
 
     /**
      * Default NFC start enable state if no other has been chosen
@@ -147,16 +149,19 @@ public class UserPreferences {
         return this.sharingScreenInformationPreferences;
     }
 
-    public int getUserWeight(){
+    public int getUserWeight() {
         return preferences.getInt("weight", 80);
     }
 
-    public int getSpokenUpdateTimePeriod(){
-        return preferences.getInt("spokenUpdateTimePeriod", 0);
+    public int getSpokenUpdateTimePeriod() {
+        return preferences.getInt(VOICE_ANNOUNCEMENTS_INTERVAL_TIME, 0);
     }
 
-    public int getSpokenUpdateDistancePeriod(){
-        return preferences.getInt("spokenUpdateDistancePeriod", 0);
+    /**
+     * @return Distance interval for voice announcements in custom long distance unit (e.g. km or miles)
+     */
+    public float getSpokenUpdateDistancePeriod() {
+        return preferences.getFloat(VOICE_ANNOUNCEMENTS_INTERVAL_DISTANCE, 0);
     }
 
     public String getMapStyle() {

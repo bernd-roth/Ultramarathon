@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -34,6 +34,7 @@ import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.migration.Migration;
 import de.tadris.fitness.data.migration.Migration12IntervalSets;
+import de.tadris.fitness.data.migration.Migration15DistancePeriod;
 import de.tadris.fitness.data.migration.MigrationCleanData;
 import de.tadris.fitness.data.preferences.UserPreferences;
 import de.tadris.fitness.map.MapManager;
@@ -84,6 +85,9 @@ public class LauncherActivity extends Activity implements Migration.MigrationLis
         }
         if (preferences.getLastVersionCode() < 1300) {
             migrations.add(new MigrationCleanData(this, this));
+        }
+        if (preferences.getLastVersionCode() < 1500) {
+            migrations.add(new Migration15DistancePeriod(this, this));
         }
         progressDialog = new ProgressDialogController(this, getString(R.string.runningMigrations));
         progressDialog.show();

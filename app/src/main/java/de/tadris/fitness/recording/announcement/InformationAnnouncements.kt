@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -40,7 +40,8 @@ class InformationAnnouncements(
     private var upperTargetSpeedLimit = 0f
 
     private val preferences = Instance.getInstance(context).userPreferences
-    private val intervalTime = (60 * 1000 * preferences.spokenUpdateTimePeriod).toLong()
+    private val intervalTime =
+        (60 * 1000 * preferences.spokenUpdateTimePeriod).toLong() // in millis
     private val intervalInMeters =
         (1000.0 / Instance.getInstance(context).distanceUnitUtils.distanceUnitSystem.getDistanceFromKilometers(
             1.0
