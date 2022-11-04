@@ -106,7 +106,7 @@ public class ShortStatsItemView extends LinearLayout {
                     ChartStyles.setXAxisLabel(chart, getContext().getString(R.string.timeHourShort), activity);
                     break;
                 default:
-                    title.setText(getContext().getString(R.string.numberOfWorkouts));
+                    title.setText(getContext().getString(R.string.workoutCount));
                     data = new BarData(statsProvider.numberOfActivities(span));
                     ChartStyles.setXAxisLabel(chart, "", activity);
                     break;

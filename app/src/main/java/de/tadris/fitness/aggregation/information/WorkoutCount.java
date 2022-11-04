@@ -35,7 +35,7 @@ public class WorkoutCount extends AbstractWorkoutInformation {
     @Override
     @StringRes
     public int getTitleRes() {
-        return R.string.workoutNumber;
+        return R.string.workoutCount;
     }
 
     @Override

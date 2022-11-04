@@ -17,7 +17,9 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  -->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
     <string name="stop">Stop</string>
     <string name="delete">Delete</string>
@@ -270,7 +272,7 @@
     <string name="max">Max</string>
     <string name="avg">Avg</string>
     <string name="sum">Sum</string>
-    <string name="workoutNumber">Workout number</string>
+    <string name="workoutCount">Workout count</string>
     <string name="statsFilter">Filter:</string>
     <string name="help">Help</string>
     <string name="calendarWeekYear">Calendar Week / Year</string>
@@ -453,7 +455,6 @@
     <string name="pref_announcements_pace_control_title">Pace-warnings</string>
     <string name="invalidNumberFormat">Invalid number format.</string>
     <string name="fileNotFound">File not found</string>
-    <string name="numberOfWorkouts">Workout number</string>
     <string name="energyExpended">Energy expended</string>
     <string name="caloriesBurned">Calories burned</string>
     <string name="heartFrequency">Heart frequency</string>
