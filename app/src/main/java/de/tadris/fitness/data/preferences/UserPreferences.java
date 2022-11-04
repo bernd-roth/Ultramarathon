@@ -21,14 +21,29 @@ package de.tadris.fitness.data.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.preference.PreferenceManager;
+import android.util.ArraySet;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 import de.tadris.fitness.BuildConfig;
+import de.tadris.fitness.aggregation.AggregationSpan;
 import de.tadris.fitness.data.RecordingType;
+import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.data.WorkoutTypeManager;
 import de.tadris.fitness.model.AutoStartWorkout;
 
+@RequiresApi(api = Build.VERSION_CODES.M)
 public class UserPreferences {
     private static final String USE_NFC_START_VARIABLE = "nfcStart";
     private static final String AUTO_START_DELAY_VARIABLE = "autoStartDelayPeriod";
@@ -44,6 +59,8 @@ public class UserPreferences {
     private static final String HAS_UPPER_TARGET_SPEED_LIMIT = "hasUpperTargetSpeedLimit";
     private static final String UPPER_TARGET_SPEED_LIMIT = "upperTargetSpeedLimit";
     public static final String STEP_LENGTH = "stepLength";
+    public static final String STATISTICS_AGGREGATION_SPAN = "statisticsAggregationSpan";
+    public static final String STATISTICS_SELECTED_TYPES = "statisticsSelectedTypes";
 
     /**
      * Default NFC start enable state if no other has been chosen
@@ -107,15 +124,26 @@ public class UserPreferences {
      */
     private static final float DEFAULT_UPPER_TARGET_SPEED_LIMIT = 3;
 
+    /**
+     * Default timespan to show in statistics (ShortStats View etc) value of 2 represents months
+     */
+    private static final int DEFAULT_STATISTICS_SPAN = AggregationSpan.MONTH.toInt();
+
+    /**
+     * Default selection of WorkoutType in statistics in means of typeID
+     */
+    private static final Set<String> DEFAULT_STATISTICS_SELECTED_TYPES = new ArraySet<>();
 
     private final SharedPreferences preferences;
     private final RecordingScreenInformationPreferences recordingScreenInformationPreferences;
     private final SharingScreenInformationPreferences sharingScreenInformationPreferences;
+    private final Context ctx;
 
     public UserPreferences(Context context) {
         this.preferences = PreferenceManager.getDefaultSharedPreferences(context);
         this.recordingScreenInformationPreferences = new RecordingScreenInformationPreferences(this.preferences);
         this.sharingScreenInformationPreferences = new SharingScreenInformationPreferences(this.preferences);
+        this.ctx = context;
     }
 
     public RecordingScreenInformationPreferences getRecordingScreenInformationPreferences() {
@@ -458,6 +486,32 @@ public class UserPreferences {
         preferences.edit().putInt("lastVersion", BuildConfig.VERSION_CODE).apply();
     }
 
+    public AggregationSpan getStatisticsAggregationSpan() {
+        int statsAggregation = preferences.getInt(STATISTICS_AGGREGATION_SPAN, DEFAULT_STATISTICS_SPAN);
+        return AggregationSpan.fromInt(statsAggregation);
+    }
+
+    public void setStatisticsAggregationSpan(AggregationSpan span) {
+        preferences.edit().putInt(STATISTICS_AGGREGATION_SPAN, span.toInt()).apply();
+    }
+
+    public List<WorkoutType> getStatisticsSelectedTypes() {
+        Set<String> typeIDs = preferences.getStringSet(STATISTICS_SELECTED_TYPES, DEFAULT_STATISTICS_SELECTED_TYPES);
+        List<WorkoutType> types = new ArrayList<>();
+        for(String type:typeIDs) {
+            types.add(WorkoutTypeManager.getInstance().getWorkoutTypeById(ctx, type));
+        }
+        return types;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void setStatisticsSelectedTypes(List<WorkoutType> types) {
+        Set<String> typeIDs = new ArraySet<>();
+        for(WorkoutType type:types) {
+            typeIDs.add(type.id);
+        }
+        preferences.edit().putStringSet(STATISTICS_SELECTED_TYPES, typeIDs).apply();
+    }
     public UserMeasurements getMeasurements() {
         return new UserMeasurements(
                 getUserWeight(),

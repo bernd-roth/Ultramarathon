@@ -97,7 +97,10 @@ public class GpxImporter implements IWorkoutImporter {
         String lastTime = firstSegment.getTrkpt().get(index - 1).getTime();
         workout.end = parseDate(lastTime).getTime();
         workout.duration = workout.end - workout.start;
-        workout.workoutTypeId = getTypeIdById(gpx.getTrk().get(0).getType());
+        String extractedWorkoutTypeId = getTypeIdById(gpx.getTrk().get(0).getType());
+        if (!extractedWorkoutTypeId.isEmpty()) {
+            workout.workoutTypeId = extractedWorkoutTypeId;
+        }
 
         List<GpsSample> samples = getSamplesFromTrack(workout.start, gpx.getTrk().get(0));
 

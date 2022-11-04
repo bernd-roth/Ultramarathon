@@ -134,6 +134,7 @@
     <string name="finished">Završeno</string>
     <string name="converting">Konverzija</string>
     <string name="locationData">Podaci o lokaciji</string>
+    <string name="workouts">Vježbe</string>
     <string name="initialising">Inicijaliziranje</string>
     <string name="shareFile">Podijeli datoteku</string>
     <string name="errorImportFailed">Uvoz podataka nije uspio.</string>

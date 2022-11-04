@@ -73,6 +73,7 @@ import de.tadris.fitness.data.Interval;
 import de.tadris.fitness.data.IntervalSet;
 import de.tadris.fitness.data.RecordingType;
 import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.data.WorkoutTypeManager;
 import de.tadris.fitness.model.AutoStartWorkout;
 import de.tadris.fitness.recording.RecorderService;
 import de.tadris.fitness.recording.announcement.TTSController;
@@ -166,7 +167,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         instance = Instance.getInstance(this);
-        activity = WorkoutType.getWorkoutTypeById(this, WorkoutType.WORKOUT_TYPE_ID_OTHER);
+        activity = WorkoutTypeManager.getInstance().getWorkoutTypeById(this, WorkoutTypeManager.WORKOUT_TYPE_ID_OTHER);
 
         // only use NFC when it's enabled in settings AND supported by the device
         this.useNfcStart = instance.userPreferences.getUseNfcStart() &&

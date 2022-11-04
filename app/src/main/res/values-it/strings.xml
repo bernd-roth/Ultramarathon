@@ -16,7 +16,8 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  -->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
     <string name="stop">Ferma</string>
     <string name="delete">Elimina</string>
@@ -27,6 +28,7 @@
     <string name="errorImportFailed">Importazione dati fallita.</string>
     <string name="shareFile">Condividi file</string>
     <string name="initialising">Inizializzazione</string>
+    <string name="workouts">Allenamenti</string>
     <string name="locationData">Dati relativi alla posizione</string>
     <string name="converting">Conversione</string>
     <string name="finished">Concluso</string>

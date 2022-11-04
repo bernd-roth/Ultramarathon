@@ -27,6 +27,7 @@
     <string name="errorImportFailed">La importación de datos ha fallado.</string>
     <string name="shareFile">Compartir archivo</string>
     <string name="initialising">Inicializando</string>
+    <string name="workouts">Entrenamientos</string>
     <string name="locationData">Datos de localización</string>
     <string name="converting">Convertir</string>
     <string name="finished">Terminado</string>

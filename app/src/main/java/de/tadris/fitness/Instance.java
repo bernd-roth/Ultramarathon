@@ -28,7 +28,7 @@ import java.util.List;
 import de.tadris.fitness.data.AppDatabase;
 import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.GpsWorkout;
-import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.data.WorkoutTypeManager;
 import de.tadris.fitness.data.preferences.UserPreferences;
 import de.tadris.fitness.recording.BaseWorkoutRecorder;
 import de.tadris.fitness.recording.gps.GpsWorkoutRecorder;
@@ -94,7 +94,7 @@ public class Instance {
         if (lastWorkout != null && lastWorkout.end == -1) {
             return restoreRecorder(context, lastWorkout);
         }
-        return new GpsWorkoutRecorder(context, WorkoutType.getWorkoutTypeById(context, WorkoutType.WORKOUT_TYPE_ID_OTHER));
+        return new GpsWorkoutRecorder(context, WorkoutTypeManager.getInstance().getWorkoutTypeById(context, WorkoutTypeManager.WORKOUT_TYPE_ID_OTHER));
     }
 
     private GpsWorkoutRecorder restoreRecorder(Context context, GpsWorkout workout) {

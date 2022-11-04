@@ -1,0 +1,210 @@
+package de.tadris.fitness.ui.statistics;
+
+import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.res.TypedArray;
+import android.os.Build;
+import android.util.AttributeSet;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+
+import de.tadris.fitness.R;
+import de.tadris.fitness.aggregation.AggregationSpan;
+import de.tadris.fitness.data.preferences.UserPreferences;
+import de.tadris.fitness.util.statistics.DateFormatter;
+
+@RequiresApi(api = Build.VERSION_CODES.N)
+public class TimeSpanSelection extends LinearLayout {
+    private Spinner aggregationSpanSpinner;
+    private ArrayAdapter<String> aggregationSpanArrayAdapter;
+    private TextView timeSpanSelection;
+
+    DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+            selectedDate.set(year, month, day);
+            timeSpanSelection.setText(dateFormatter.format(selectedDate));
+            notifyListener();
+        }
+    };
+
+    LocalDateTime now = LocalDateTime.now();
+    DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), dateSetListener, now.getYear(), now.getMonthValue()-1, now.getDayOfMonth());
+
+    GregorianCalendar selectedDate = new GregorianCalendar(now.getYear(), now.getMonthValue()-1, now.getDayOfMonth());
+    AggregationSpan selectedAggregationSpan;
+    boolean isInstanceSelectable;
+    UserPreferences preferences;
+    int foregroundColor = getResources().getColor(R.color.textLighterBlack);
+
+    private DateFormatter dateFormatter;
+
+    private ArrayList<OnTimeSpanSelectionListener> listeners;
+
+    public TimeSpanSelection(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+
+        preferences = new UserPreferences(context);
+
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.TimeSpanSelection);
+        isInstanceSelectable = array.getBoolean(R.styleable.TimeSpanSelection_isInstanceSelectable, true);
+        array.recycle();
+
+        selectedAggregationSpan = preferences.getStatisticsAggregationSpan();
+        listeners = new ArrayList<>();
+        dateFormatter = new DateFormatter(selectedAggregationSpan);
+
+        inflate(context, R.layout.view_time_span_selection, this);
+
+
+        // Load views
+        aggregationSpanSpinner = findViewById(R.id.aggregationSpanSpinner);
+        timeSpanSelection = findViewById(R.id.timeSpanSelection);
+        loadAggregationSpanEntries();
+
+        if (!isInstanceSelectable) {
+            findViewById(R.id.timeSpanSelecionLayout).getLayoutParams().width = 0;
+            timeSpanSelection.getLayoutParams().width = 0;
+        }
+
+        setAggregationSpan(selectedAggregationSpan);
+
+        aggregationSpanSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                specifyAggregationSpan();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        timeSpanSelection.setOnClickListener( (view) -> {
+            if (selectedAggregationSpan != AggregationSpan.ALL) {
+                datePickerDialog.show();
+            }
+        });
+        timeSpanSelection.setTextColor(this.foregroundColor);
+        timeSpanSelection.setText(dateFormatter.format(selectedDate));
+    }
+
+    private void loadAggregationSpanEntries() {
+        ArrayList<String> aggregationSpanStrings = new ArrayList<>();
+        for (AggregationSpan aggregationSpan : AggregationSpan.values()) {
+            if (aggregationSpan != AggregationSpan.SINGLE) {
+                aggregationSpanStrings.add(getContext().getString(aggregationSpan.title));
+            }
+        }
+
+        aggregationSpanArrayAdapter = new ArrayAdapter<String>(getContext(),
+                R.layout.support_simple_spinner_dropdown_item, aggregationSpanStrings)
+        {
+            @NonNull
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                ((TextView)view).setTextColor(foregroundColor);
+                return view;
+            }
+        };
+
+        aggregationSpanSpinner.setAdapter(aggregationSpanArrayAdapter);
+    }
+
+    private void specifyAggregationSpan() {
+        String selectedString = aggregationSpanArrayAdapter.getItem(aggregationSpanSpinner.getSelectedItemPosition());
+
+        for (AggregationSpan aggregationSpan : AggregationSpan.values()) {
+            if (selectedString.equals(getContext().getString(aggregationSpan.title))) {
+                selectedAggregationSpan = aggregationSpan;
+                dateFormatter.setAggregationSpan(aggregationSpan);
+                preferences.setStatisticsAggregationSpan(aggregationSpan);
+                notifyListener();
+                break;
+            }
+        }
+
+        timeSpanSelection.setText(dateFormatter.format(selectedDate));
+    }
+
+    public AggregationSpan getSelectedAggregationSpan() {
+        return selectedAggregationSpan;
+    }
+
+    public void loadAggregationSpanFromPreferences()
+    {
+        setAggregationSpan(preferences.getStatisticsAggregationSpan());
+    }
+
+    public long getSelectedDate() {
+        GregorianCalendar calendar = (GregorianCalendar) selectedDate.clone();
+
+        switch (selectedAggregationSpan) {
+            case DAY:
+                selectedDate.getTimeInMillis();
+                break;
+            case WEEK:
+                calendar.set(GregorianCalendar.DAY_OF_WEEK, 1);
+                break;
+            case MONTH:
+                calendar.set(GregorianCalendar.DAY_OF_MONTH, 1);
+                break;
+            case YEAR:
+                calendar.set(GregorianCalendar.DAY_OF_YEAR, 1);
+                break;
+            case ALL:
+                calendar.set(GregorianCalendar.YEAR, 0);
+                break;
+        }
+
+        return calendar.getTimeInMillis();
+    }
+
+    public void setAggregationSpan(@NotNull AggregationSpan aggregationSpan) {
+        selectedAggregationSpan = aggregationSpan;
+        aggregationSpanSpinner.setSelection(aggregationSpanArrayAdapter.getPosition(getContext().getString(aggregationSpan.title)), true);
+        dateFormatter.setAggregationSpan(aggregationSpan);
+    }
+
+    public void addOnTimeSpanSelectionListener(OnTimeSpanSelectionListener listener) {
+        listeners.add(listener);
+    }
+
+    public void removeOnTimeSpanSelectionListener(OnTimeSpanSelectionListener listener) {
+        listeners.remove(listener);
+    }
+
+    private void notifyListener() {
+        for (OnTimeSpanSelectionListener listener : listeners) {
+            listener.onTimeSpanChanged(getSelectedAggregationSpan(), getSelectedDate());
+        }
+    }
+
+    public interface OnTimeSpanSelectionListener {
+        void onTimeSpanChanged(AggregationSpan aggregationSpan, long selectedDate);
+    }
+
+    public void setForegroundColor(int foregroundColor){
+        this.foregroundColor = foregroundColor;
+        timeSpanSelection.setTextColor(foregroundColor);
+        ((TextView)aggregationSpanSpinner.getSelectedView()).setTextColor(foregroundColor);
+    }
+}

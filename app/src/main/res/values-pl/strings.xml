@@ -24,6 +24,7 @@
     <string name="finished">Zakończone</string>
     <string name="converting">Konwertowanie</string>
     <string name="locationData">Dane o lokalizacji</string>
+    <string name="workouts">Treningi</string>
     <string name="initialising">Inicjalizacja</string>
     <string name="shareFile">Udostępnij plik</string>
     <string name="errorImportFailed">Importowanie danych nie powiodło się.</string>

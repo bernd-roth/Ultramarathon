@@ -257,6 +257,7 @@
     <string name="finished">Terminado</string>
     <string name="converting">Convertendo</string>
     <string name="locationData">Dados de Localização</string>
+    <string name="workouts">Exercícios</string>
     <string name="initialising">Inicializando</string>
     <string name="shareFile">Partilhar ficheiro</string>
     <string name="errorImportFailed">A importação de dados falhou.</string>

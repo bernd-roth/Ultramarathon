@@ -27,6 +27,7 @@
     <string name="errorImportFailed">Dataimport er mislykkedes.</string>
     <string name="shareFile">Del fil</string>
     <string name="initialising">Initialiserer</string>
+    <string name="workouts">Træning</string>
     <string name="locationData">Lokations data</string>
     <string name="converting">Konverterer</string>
     <string name="finished">Færdig</string>

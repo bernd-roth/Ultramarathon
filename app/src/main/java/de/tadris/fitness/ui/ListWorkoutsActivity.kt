@@ -33,6 +33,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.View.OnLongClickListener
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -53,7 +54,8 @@ import de.tadris.fitness.ui.dialog.SelectWorkoutTypeDialog
 import de.tadris.fitness.ui.dialog.ThreadSafeProgressDialogController
 import de.tadris.fitness.ui.record.RecordWorkoutActivity
 import de.tadris.fitness.ui.settings.FitoTrackSettingsActivity
-import de.tadris.fitness.ui.workout.AggregatedWorkoutStatisticsActivity
+import de.tadris.fitness.ui.statistics.ShortStatsView
+import de.tadris.fitness.ui.statistics.StatisticsActivity
 import de.tadris.fitness.ui.workout.EnterWorkoutActivity
 import de.tadris.fitness.ui.workout.ShowGpsWorkoutActivity
 import de.tadris.fitness.util.DialogUtils
@@ -61,7 +63,9 @@ import de.tadris.fitness.util.Icon
 import de.tadris.fitness.util.io.general.IOHelper
 
 class ListWorkoutsActivity : FitoTrackActivity(), WorkoutAdapterListener {
+    private lateinit var main_layout: LinearLayout
     private lateinit var listView: RecyclerView
+    private lateinit var shortStatsView: ShortStatsView
     private lateinit var adapter: WorkoutAdapter
     private lateinit var layoutManager: RecyclerView.LayoutManager
     private lateinit var menu: FloatingActionMenu
@@ -82,6 +86,7 @@ class ListWorkoutsActivity : FitoTrackActivity(), WorkoutAdapterListener {
         listView.layoutManager = layoutManager
         adapter = WorkoutAdapter(workouts, this)
         listView.adapter = adapter
+        shortStatsView = findViewById(R.id.short_stats_view)
 
         menu = findViewById(R.id.workoutListMenu)
         menu.setOnMenuButtonLongClickListener(OnLongClickListener {
@@ -217,9 +222,9 @@ class ListWorkoutsActivity : FitoTrackActivity(), WorkoutAdapterListener {
                 mHandler.post {
                     dialog.cancel()
                     Toast.makeText(
-                        this,
-                        resources.getQuantityString(R.plurals.importedWorkouts, imported, imported),
-                        Toast.LENGTH_LONG
+                            this,
+                            resources.getQuantityString(R.plurals.importedWorkouts, imported, imported),
+                            Toast.LENGTH_LONG
                     ).show()
                     refresh()
                 }
@@ -299,6 +304,7 @@ class ListWorkoutsActivity : FitoTrackActivity(), WorkoutAdapterListener {
     }
 
     private fun refresh() {
+        shortStatsView.refresh()
         loadData()
         if (workouts.size > lastClickedIndex) {
             adapter.notifyItemChanged(lastClickedIndex, workouts[lastClickedIndex])
@@ -347,7 +353,8 @@ class ListWorkoutsActivity : FitoTrackActivity(), WorkoutAdapterListener {
             return true
         }
         if (id == R.id.actionOpenStatisticss) {
-            startActivity(Intent(this, AggregatedWorkoutStatisticsActivity::class.java))
+            //startActivity(Intent(this, AggregatedWorkoutStatisticsActivity::class.java))
+            startActivity(Intent(this, StatisticsActivity::class.java))
             return true
         }
         return super.onOptionsItemSelected(item)

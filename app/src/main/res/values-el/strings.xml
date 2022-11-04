@@ -176,6 +176,7 @@
     <string name="finished">Τερματισμός</string>
     <string name="converting">μετατροπή</string>
     <string name="locationData">Δεδομένα τοποθεσίας</string>
+    <string name="workouts">Προπονήσεις</string>
     <string name="initialising">αρχικοποίηση</string>
     <string name="shareFile">Διαμοιρασμός αρχείου</string>
     <string name="errorImportFailed">Η εισαγωγή Δεδομένων απέτυχε.</string>

@@ -33,6 +33,7 @@ import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.RecordingType;
 import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.data.WorkoutTypeManager;
 import de.tadris.fitness.ui.dialog.IconPickerDialog;
 import de.tadris.fitness.ui.workout.InformationActivity;
 import de.tadris.fitness.util.Icon;
@@ -160,8 +161,8 @@ public class EditWorkoutTypeActivity extends InformationActivity implements Icon
             showError(idText, getString(R.string.workoutTypeEditIdErrorCharacters));
             return;
         }
-        WorkoutType otherType = WorkoutType.getWorkoutTypeById(this, type.id);
-        if (isNewType && otherType != null && !otherType.id.equals(WorkoutType.WORKOUT_TYPE_ID_OTHER)) {
+        WorkoutType otherType = WorkoutTypeManager.getInstance().getWorkoutTypeById(this, type.id);
+        if (isNewType && otherType != null && !otherType.id.equals(WorkoutTypeManager.WORKOUT_TYPE_ID_OTHER)) {
             showError(idText, getString(R.string.workoutTypeEditIdErrorUnique));
             return;
         }

@@ -16,7 +16,8 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources>
+  -->
+<resources>
     <string name="timeHourShort">h</string>
     <string name="timeHourPlural">Hores</string>
     <string name="timeHourSingular">Hora</string>
@@ -73,6 +74,7 @@
     <string name="finished">Acabat</string>
     <string name="converting">Conversió</string>
     <string name="locationData">Dades d’ubicació</string>
+    <string name="workouts">Entrenaments</string>
     <string name="workoutTime">Temps</string>
     <string name="workoutDate">Data</string>
     <string name="workoutDistance">Distància</string>

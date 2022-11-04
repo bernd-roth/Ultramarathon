@@ -27,6 +27,7 @@
     <string name="errorImportFailed">The data import has failed.</string>
     <string name="shareFile">Share file</string>
     <string name="initialising">Initialising</string>
+    <string name="workouts">Workouts</string>
     <string name="locationData">Location data</string>
     <string name="converting">Converting</string>
     <string name="finished">Finished</string>
@@ -62,7 +63,11 @@
     <string name="workoutTime">Time</string>
     <string name="workoutDate">Date</string>
     <string name="workoutDuration">Duration</string>
+    <string name="workoutAvgDurationLong">Average Duration</string>
+    <string name="workoutDurationSum">Duration sum</string>
     <string name="workoutPauseDuration">Pause Duration</string>
+    <string name="workoutAvgPauseDuration">Average Pause Duration</string>
+    <string name="workoutPauseDurationSum">Pause Duration sum</string>
     <string name="workoutStartTime">Start Time</string>
     <string name="workoutEndTime">End Time</string>
     <string name="workoutDistance">Distance</string>
@@ -264,7 +269,7 @@
     <string name="max">Max</string>
     <string name="avg">Avg</string>
     <string name="sum">Sum</string>
-    <string name="workoutNumber">Number of workouts</string>
+    <string name="workoutNumber">Workout number</string>
     <string name="statsFilter">Filter:</string>
     <string name="help">Help</string>
     <string name="calendarWeekYear">Calendar Week / Year</string>
@@ -402,6 +407,7 @@
     <string name="actionApply">Apply</string>
     <string name="launchError">Could not launch application</string>
     <string name="editStartEndHelp">Select a position on the map or the diagram. Then click on one of the arrows to select a new starting or ending point. When you\'re done, click on the save icon to apply the changes.</string>
+    <string name="statistics">Statistics</string>
     <!-- used for countdown voice announcements -->
     <plurals name="seconds">
         <item quantity="one"><xliff:g example="1" id="secs">%1$d</xliff:g> second</item>
@@ -447,6 +453,18 @@
     <string name="pref_announcements_pace_control_title">Pace-warnings</string>
     <string name="invalidNumberFormat">Invalid number format.</string>
     <string name="fileNotFound">File not found</string>
+    <string name="numberOfWorkouts">Workout number</string>
+    <string name="energyExpended">Energy expended</string>
+    <string name="caloriesBurned">Calories burned</string>
+    <string name="heartFrequency">Heart frequency</string>
+    <string name="stats_explore_title">Explore</string>
+    <string name="stats_history_title">History</string>
+    <string name="stats_overview_title">Overview</string>
+    <string name="histogram">Histogram</string>
+    <string name="details">Details</string>
+    <string name="monthYear">Month / Year</string>
+    <string name="workoutAvgDistance">Average Distance</string>
+    <string name="workoutDistanceSum">Distance sum</string>
     <string name="showWorkoutZoomControlsSummary">Enable zoom and pan controls in the map while recording GPS workouts</string>
     <string name="showWorkoutZoomControlsTitle">Zooming and panning</string>
     <string name="zoomWithVolumeButtonsSummary">Volume up and down controls zooming in and out</string>
@@ -522,6 +540,8 @@
     <string name="debugPressureSensor">Debug pressure sensor</string>
     <string name="calibrating">Calibrating</string>
     <string name="noSensorAvailable">No sensor available</string>
+    <string name="time">time</string>
+    <string name="show_sum">Show sum</string>
     <plurals name="satelliteCount">
         <item quantity="zero">No satellites</item>
         <item quantity="one">One satellite</item>

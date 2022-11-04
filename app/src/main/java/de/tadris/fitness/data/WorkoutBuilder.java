@@ -44,7 +44,7 @@ public class WorkoutBuilder {
     private boolean wasEdited = false;
 
     public WorkoutBuilder(Context context) {
-        workoutType = WorkoutType.getWorkoutTypeById(context, WorkoutType.WORKOUT_TYPE_ID_RUNNING);
+        workoutType = WorkoutTypeManager.getInstance().getWorkoutTypeById(context, WorkoutTypeManager.WORKOUT_TYPE_ID_RUNNING);
         start = Calendar.getInstance();
         duration = 1000L * 60 * 10;
         length = 500;

@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.tadris.fitness.data.RecordingType;
-import de.tadris.fitness.data.WorkoutType;
 
 public class InformationManager {
 

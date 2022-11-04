@@ -16,7 +16,8 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  -->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="merge">Slå samman</string>
     <string name="replace">Ersätt</string>
     <string name="dayInMonth">Dag i månaden</string>
@@ -164,6 +165,7 @@
     <string name="backup">Säkerhetskopiera</string>
     <string name="restore">Återställ</string>
     <string name="finished">Avslutades</string>
+    <string name="workouts">Träningspass</string>
     <string name="errorImportFailed">Data-importering har misslyckats.</string>
     <string name="loadingFile">Laddar fil</string>
     <string name="converting">Konverterar</string>

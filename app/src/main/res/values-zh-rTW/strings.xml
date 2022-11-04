@@ -257,6 +257,7 @@
     <string name="actionCancelDownload">取消下載</string>
     <string name="downloadFailed">下載失敗</string>
     <string name="workoutTypeAll">全部</string>
+    <string name="workouts">健身項目</string>
     <string name="workoutTypeRowing">划船</string>
     <string name="workoutTypeSkateboarding">滑板</string>
     <string name="workoutTypeCycling">單車</string>

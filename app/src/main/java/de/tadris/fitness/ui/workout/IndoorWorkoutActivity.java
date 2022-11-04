@@ -19,15 +19,18 @@
 
 package de.tadris.fitness.ui.workout;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.data.BaseSample;
 import de.tadris.fitness.data.BaseWorkout;
+import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.IndoorSample;
 import de.tadris.fitness.data.IndoorWorkout;
 import de.tadris.fitness.data.IndoorWorkoutData;
+import de.tadris.fitness.data.StatsDataTypes;
 
 public abstract class IndoorWorkoutActivity extends WorkoutActivity {
 
@@ -53,6 +56,15 @@ public abstract class IndoorWorkoutActivity extends WorkoutActivity {
 
     protected IndoorWorkoutData getIndoorWorkoutData() {
         return new IndoorWorkoutData(workout, samples);
+    }
+
+    @Override
+    protected List<BaseSample> aggregatedSamples(int aggregationLength,  StatsDataTypes.TimeSpan viewFieldSpan) {
+        ArrayList<BaseSample> returnSamples = new ArrayList<>();
+        for (BaseSample sample : samples) {
+            returnSamples.add(sample);
+        }
+        return returnSamples;
     }
 
 }

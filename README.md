@@ -21,33 +21,35 @@ FitoTrack is a mobile app for logging and viewing your workouts. Whether you're 
 
 ## Screenshots
 
-<img src="https://codeberg.org/jannis/FitoTrack/raw/branch/master/doc/screenshots/screenshot1.png" width="300"/>
-<img src="https://codeberg.org/jannis/FitoTrack/raw/branch/master/doc/screenshots/screenshot2.png" width="300"/>
-<img src="https://codeberg.org/jannis/FitoTrack/raw/branch/master/doc/screenshots/screenshot3.png" width="300"/>
-<img src="https://codeberg.org/jannis/FitoTrack/raw/branch/master/doc/screenshots/screenshot4.png" width="300"/>
+<img src="./doc/screenshots/screenshot1.png" width="300"/>
+<img src="./doc/screenshots/screenshot2.png" width="300"/>
+<img src="./doc/screenshots/screenshot3.png" width="300"/>
+<img src="./doc/screenshots/screenshot7.png" width="300"/>
+<img src="./doc/screenshots/screenshot8.png" width="300"/>
+<img src="./doc/screenshots/screenshot4.png" width="300"/>
 
 ## Features
 
 - **Track workouts.** Choose the type of sport you would like to track and just start running, cycling or hiking, for example. You can see the general information right below the map on the tracking screen.
 - **View your workouts.** View general information such as date, time, duration, distance, speed and pace. See your route on a map. Work out your level of performance from the speed diagram.
-- **Open-Source.** There is neither advertisement nor tracking, and the source code is open and licensed under the GPLv3.
+- **Open-Source.** There is neither advertisement nor tracking, and the source code is open and licensed under GPLv3.
 
-Detailed list of [Features](https://codeberg.org/jannis/FitoTrack/wiki/Features).
+A detailed list of features can be found [here](https://codeberg.org/jannis/FitoTrack/wiki/Features).
 
-Please see the [Userguide](https://codeberg.org/jannis/FitoTrack/wiki/How-to-use) if you have any problems.
+Please see the [user guide](https://codeberg.org/jannis/FitoTrack/wiki/How-to-use) if you have any problems.
 
 ## Contributing
 
-You find the app useful and want to contribute to make it even better? Here are some ways you can help:
+Do you find the app useful and want to contribute to make it even better? Here are some ways you can help:
 
 * **Report issues.** A very simple way of contributing to the project is to report crashes and bugs, as well as suggest possible new features. You can join the [Telegram Group](https://t.me/fitotrack)/[Matrix Room](https://matrix.to/#/#fitotrack:matrix.org?via=matrix.org) and share your ideas regarding the app.
-* **Share the app.** Tell your friends, family, colleagues about the app, in real life and online. You could, for example, write a post about FitoTrack on your favorite social media networks.
+* **Share the app.** Tell your friends, family, and colleagues about the app, in real life and online. You could, for example, write a post about FitoTrack on your favorite social media networks.
 * **Translate.** You can [translate](https://codeberg.org/jannis/FitoTrack/wiki/Translation) FitoTrack on [Weblate](https://hosted.weblate.org/engage/fitotrack/) without writing a single line of code.
 * **Write code.** If you're able to write code for Android or just want to help with translations, please refer to the [Contribution](https://codeberg.org/jannis/FitoTrack/wiki/Contributing) site in the project wiki.
 
 ### Donate
 
-When I started programming this app I decided that it should be completely free and open-source. This also means that there will be no income for me from ads or paid features. So if you enjoy the app and want to support my work you are able to do so:
+When I started programming this app I decided that it should be completely free and open-source. This also means that there will be no income for me from ads or paid features. So if you enjoy the app and want to support my work you can do so:
 
 <a href="https://liberapay.com/jannis/donate">
     <img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg">
