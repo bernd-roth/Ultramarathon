@@ -20,12 +20,12 @@
 package de.tadris.fitness.util.calorie
 
 import android.content.Context
-import de.tadris.fitness.data.WorkoutType
+import de.tadris.fitness.data.WorkoutTypeManager
 import de.tadris.fitness.data.preferences.UserMeasurements
 
 class WorkoutTypeMETProvider(val context: Context) : METProvider {
 
     override fun calculateMET(measurements: UserMeasurements, typeId: String, speedInKmh: Double) =
-        WorkoutType.getWorkoutTypeById(context, typeId).MET.toDouble()
+        WorkoutTypeManager.getInstance().getWorkoutTypeById(context, typeId).MET.toDouble()
 
 }

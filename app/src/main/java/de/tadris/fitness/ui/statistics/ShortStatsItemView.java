@@ -1,14 +1,31 @@
+/*
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
+ *
+ * This file is part of FitoTrack
+ *
+ * FitoTrack is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     FitoTrack is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package de.tadris.fitness.ui.statistics;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
@@ -33,12 +50,10 @@ public class ShortStatsItemView extends LinearLayout {
 
     public int chartType;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public ShortStatsItemView(Context context) {
         this(context, null);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public ShortStatsItemView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         inflate(context, R.layout.short_stats_item, this);
@@ -62,15 +77,12 @@ public class ShortStatsItemView extends LinearLayout {
             firstWorkoutTime = statsDataProvider.getFirstData(WorkoutProperty.LENGTH, WorkoutTypeManager.getInstance().getAllTypes(context)).time;
             lastWorkoutTime = statsDataProvider.getLastData(WorkoutProperty.LENGTH, WorkoutTypeManager.getInstance().getAllTypes(context)).time;
 
-        }
-        catch (NoDataException e)
-        {
+        } catch (NoDataException e) {
             return;
         }
         timeSpanSelection.addOnTimeSpanSelectionListener((aggregationSpan, instance) -> updateChart());
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void updateChart() {
         BarData data;
         FitoTrackActivity activity = (FitoTrackActivity)getContext();

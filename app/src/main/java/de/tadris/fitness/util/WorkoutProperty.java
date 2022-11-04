@@ -1,8 +1,25 @@
+/*
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
+ *
+ * This file is part of FitoTrack
+ *
+ * FitoTrack is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     FitoTrack is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package de.tadris.fitness.util;
 
 import android.content.Context;
-
-import androidx.annotation.Nullable;
 
 import com.github.mikephil.charting.formatter.DefaultValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
@@ -14,59 +31,62 @@ import java.util.concurrent.TimeUnit;
 
 import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
-import de.tadris.fitness.aggregation.AggregationSpan;
 import de.tadris.fitness.data.StatsProvider;
 import de.tadris.fitness.util.charts.ChartStyles;
 import de.tadris.fitness.util.charts.formatter.DistanceFormatter;
 import de.tadris.fitness.util.charts.formatter.FractionedDateFormatter;
 import de.tadris.fitness.util.charts.formatter.SpeedFormatter;
 import de.tadris.fitness.util.charts.formatter.TimeFormatter;
-import de.tadris.fitness.util.unit.DistanceUnitUtils;
 
 public enum WorkoutProperty {
-    START(0),
-    END(1),
-    DURATION(2),
-    PAUSE_DURATION(3),
-    AVG_HEART_RATE(4),
-    MAX_HEART_RATE(5),
-    CALORIE(6),
+    NUMBER(0, WorkoutPropertyType.BASE),
+    START(1, WorkoutPropertyType.BASE),
+    END(2, WorkoutPropertyType.BASE),
+    DURATION(3, WorkoutPropertyType.BASE),
+    PAUSE_DURATION(4, WorkoutPropertyType.BASE),
+    AVG_HEART_RATE(5, WorkoutPropertyType.BASE),
+    MAX_HEART_RATE(6, WorkoutPropertyType.BASE),
+    CALORIE(7, WorkoutPropertyType.BASE),
 
     // GPS Workout
-    LENGTH(7),
-    AVG_SPEED(8),
-    TOP_SPEED(9),
-    AVG_PACE(10),
-    ASCENT(11),
-    DESCENT(12),
+    LENGTH(8, WorkoutPropertyType.GPS),
+    AVG_SPEED(9, WorkoutPropertyType.GPS),
+    TOP_SPEED(10, WorkoutPropertyType.GPS),
+    AVG_PACE(11, WorkoutPropertyType.GPS),
+    ASCENT(12, WorkoutPropertyType.GPS),
+    DESCENT(13, WorkoutPropertyType.GPS),
 
     // Indoor Workout
-    AVG_FREQUENCY(13),
-    MAX_FREQUENCY(14),
-    MAX_INTENSITY(15),
-    AVG_INTENSITY(16);
+    AVG_FREQUENCY(14, WorkoutPropertyType.INDOOR),
+    MAX_FREQUENCY(15, WorkoutPropertyType.INDOOR),
+    MAX_INTENSITY(16, WorkoutPropertyType.INDOOR),
+    AVG_INTENSITY(17, WorkoutPropertyType.INDOOR);
 
-    private int id;
+    private final int id;
+    private final WorkoutPropertyType type;
 
-    WorkoutProperty(int id) {
+    WorkoutProperty(int id, WorkoutPropertyType type) {
         this.id = id;
+        this.type = type;
     }
 
     public int getId() {
         return id;
     }
 
-    public static WorkoutProperty getById(int id)
-    {
+    public WorkoutPropertyType getType() {
+        return type;
+    }
+
+    public static WorkoutProperty getById(int id) {
         return WorkoutProperty.values()[id];
     }
 
     private static final List<WorkoutProperty> summable = Arrays.asList(DURATION, PAUSE_DURATION, CALORIE, LENGTH, ASCENT, DESCENT);
-    public boolean summable() {return summable.contains(this);}
 
-    public boolean isBaseProperty() { return id <=CALORIE.getId(); }
-    public boolean isGPSProperty() { return CALORIE.getId() < id && id <= DESCENT.getId(); }
-    public boolean isIndoorProperty() { return DESCENT.getId() < id && id <=CALORIE.getId(); }
+    public boolean summable() {
+        return summable.contains(this);
+    }
 
     public String getStringRepresentation(Context ctx) {
         return getStringRepresentations(ctx).get(id);
@@ -98,24 +118,24 @@ public enum WorkoutProperty {
         return criteria;
     }
 
-    public String getFormattedValue(Context ctx, float value)
-    {
+    public String getFormattedValue(Context ctx, float value) {
         return getFormattedValue(ctx, value, true);
     }
 
-    public String getFormattedValue(Context ctx, float value, boolean unit)
-    {
+    public String getFormattedValue(Context ctx, float value, boolean unit) {
         String formatted = getValueFormatter(ctx, value).getFormattedValue(value);
-        if(unit)
+        if (unit)
             formatted += " " + getUnit(ctx, value);
         return formatted;
     }
 
     public ValueFormatter getValueFormatter(Context ctx, float value) {
         switch (this) {
+            case NUMBER:
+                return new DefaultValueFormatter(0);
             case START:
             case END:
-                return new FractionedDateFormatter(ctx, ChartStyles.statsAggregationSpan((long)value));
+                return new FractionedDateFormatter(ctx, ChartStyles.statsAggregationSpan((long) value));
             case DURATION:
             case PAUSE_DURATION:
                 return StatsProvider.getCorrectTimeFormatter(TimeUnit.MILLISECONDS, (long) value);
@@ -144,15 +164,15 @@ public enum WorkoutProperty {
                 return new DefaultValueFormatter(2);
         }
     }
-    public String getUnit(Context ctx, float value)
-    {
+
+    public String getUnit(Context ctx, float value) {
         switch (this) {
             case START:
             case END:
-                return ctx.getString(((FractionedDateFormatter)getValueFormatter(ctx, value)).getSpan().axisLabel);
+                return ctx.getString(((FractionedDateFormatter) getValueFormatter(ctx, value)).getSpan().axisLabel);
             case DURATION:
             case PAUSE_DURATION:
-                return ((TimeFormatter)getValueFormatter(ctx, value)).getUnit(ctx);
+                return ((TimeFormatter) getValueFormatter(ctx, value)).getUnit(ctx);
             case AVG_PACE:
                 return Instance.getInstance(ctx).distanceUnitUtils.getPaceUnit();
 
@@ -168,6 +188,7 @@ public enum WorkoutProperty {
                 else
                     return Instance.getInstance(ctx).distanceUnitUtils.getDistanceUnitSystem().getShortDistanceUnit();
 
+            case NUMBER:
             case CALORIE:
             case AVG_INTENSITY:
             case MAX_INTENSITY:

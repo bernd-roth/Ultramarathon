@@ -1,3 +1,22 @@
+/*
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
+ *
+ * This file is part of FitoTrack
+ *
+ * FitoTrack is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     FitoTrack is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package de.tadris.fitness.data;
 
 import android.content.Context;
@@ -29,9 +48,11 @@ public class WorkoutTypeManager {
 
     private List<WorkoutType> allWorkoutTypes = new ArrayList<>();
 
-    private WorkoutTypeManager() {}
     public String str;
     private static WorkoutTypeManager instance;
+
+    private WorkoutTypeManager() {
+    }
 
     public static WorkoutTypeManager getInstance() {
         if (instance == null)
@@ -75,8 +96,7 @@ public class WorkoutTypeManager {
         return new ArrayList<>(allWorkoutTypes); // Return clone to avoid tampering from outside...
     }
 
-    private List<WorkoutType> checkForNewTypes(Context context)
-    {
+    private List<WorkoutType> checkForNewTypes(Context context) {
         WorkoutType[] fromDatabase = Instance.getInstance(context).db.workoutTypeDao().findAll();
         List<String> existingIDs = new ArrayList<>();
         for (WorkoutType existingType : allWorkoutTypes) {
@@ -84,7 +104,7 @@ public class WorkoutTypeManager {
         }
 
         List<WorkoutType> newTypes = new ArrayList<>();
-        for (WorkoutType typeFromDb:fromDatabase) {
+        for (WorkoutType typeFromDb : fromDatabase) {
             if (!existingIDs.contains(typeFromDb.id)) {
                 newTypes.add(typeFromDb);
             }

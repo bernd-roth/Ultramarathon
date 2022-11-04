@@ -21,18 +21,12 @@ package de.tadris.fitness.data.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.preference.PreferenceManager;
-import android.util.ArraySet;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
+import androidx.collection.ArraySet;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -43,7 +37,6 @@ import de.tadris.fitness.data.WorkoutType;
 import de.tadris.fitness.data.WorkoutTypeManager;
 import de.tadris.fitness.model.AutoStartWorkout;
 
-@RequiresApi(api = Build.VERSION_CODES.M)
 public class UserPreferences {
     private static final String USE_NFC_START_VARIABLE = "nfcStart";
     private static final String AUTO_START_DELAY_VARIABLE = "autoStartDelayPeriod";
@@ -504,7 +497,6 @@ public class UserPreferences {
         return types;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     public void setStatisticsSelectedTypes(List<WorkoutType> types) {
         Set<String> typeIDs = new ArraySet<>();
         for(WorkoutType type:types) {

@@ -22,7 +22,6 @@ package de.tadris.fitness.ui.workout;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.Menu;
@@ -33,8 +32,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import androidx.annotation.RequiresApi;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
@@ -76,7 +73,6 @@ public class ShowGpsWorkoutActivity extends GpsWorkoutActivity implements Dialog
 
     TextView commentView;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -157,7 +153,6 @@ public class ShowGpsWorkoutActivity extends GpsWorkoutActivity implements Dialog
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void addSpeedHistogram(){
         BarChart chart = new BarChart(this);
         List<Double> data = new ArrayList<>();

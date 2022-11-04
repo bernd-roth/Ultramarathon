@@ -1,9 +1,27 @@
+/*
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
+ *
+ * This file is part of FitoTrack
+ *
+ * FitoTrack is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     FitoTrack is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package de.tadris.fitness.ui.statistics;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +34,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -27,9 +44,9 @@ import java.util.GregorianCalendar;
 import de.tadris.fitness.R;
 import de.tadris.fitness.aggregation.AggregationSpan;
 import de.tadris.fitness.data.preferences.UserPreferences;
+import de.tadris.fitness.util.ThemeUtils;
 import de.tadris.fitness.util.statistics.DateFormatter;
 
-@RequiresApi(api = Build.VERSION_CODES.N)
 public class TimeSpanSelection extends LinearLayout {
     private Spinner aggregationSpanSpinner;
     private ArrayAdapter<String> aggregationSpanArrayAdapter;
@@ -51,7 +68,7 @@ public class TimeSpanSelection extends LinearLayout {
     AggregationSpan selectedAggregationSpan;
     boolean isInstanceSelectable;
     UserPreferences preferences;
-    int foregroundColor = getResources().getColor(R.color.textLighterBlack);
+    int foregroundColor = ThemeUtils.resolveThemeColor(getContext(), android.R.attr.textColorPrimary);
 
     private DateFormatter dateFormatter;
 
@@ -115,13 +132,12 @@ public class TimeSpanSelection extends LinearLayout {
         }
 
         aggregationSpanArrayAdapter = new ArrayAdapter<String>(getContext(),
-                R.layout.support_simple_spinner_dropdown_item, aggregationSpanStrings)
-        {
+                R.layout.support_simple_spinner_dropdown_item, aggregationSpanStrings) {
             @NonNull
             @Override
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
-                ((TextView)view).setTextColor(foregroundColor);
+                ((TextView) view).setTextColor(foregroundColor);
                 return view;
             }
         };

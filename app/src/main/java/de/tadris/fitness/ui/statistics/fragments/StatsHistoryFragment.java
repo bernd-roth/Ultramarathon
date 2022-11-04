@@ -1,8 +1,25 @@
+/*
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
+ *
+ * This file is part of FitoTrack
+ *
+ * FitoTrack is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     FitoTrack is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package de.tadris.fitness.ui.statistics.fragments;
 
-import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,7 +31,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.data.BarData;
@@ -42,7 +58,6 @@ import de.tadris.fitness.data.WorkoutTypeManager;
 import de.tadris.fitness.data.preferences.UserPreferences;
 import de.tadris.fitness.ui.FitoTrackActivity;
 import de.tadris.fitness.ui.statistics.DetailStatsActivity;
-import de.tadris.fitness.ui.statistics.IOnToggleListener;
 import de.tadris.fitness.ui.statistics.TextToggle;
 import de.tadris.fitness.ui.statistics.WorkoutTypeSelection;
 import de.tadris.fitness.util.WorkoutProperty;
@@ -87,49 +102,33 @@ public class StatsHistoryFragment extends StatsFragment {
         activity = ctx;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         // Register WorkoutType selection listeners
         selection = view.findViewById(R.id.stats_history_workout_type_selector);
-        ((TextView)selection.findViewById(R.id.view_workout_type_selection_text)).setTextColor(getContext().getColor(R.color.textDarkerWhite));
+        ((TextView) selection.findViewById(R.id.view_workout_type_selection_text)).setTextColor(getResources().getColor(R.color.textDarkerWhite));
         selection.addOnWorkoutTypeSelectListener(workoutType -> updateCharts(selection.getSelectedWorkoutTypes()));
         selection.addOnWorkoutTypeSelectListener(workoutType -> preferences.setStatisticsSelectedTypes(selection.getSelectedWorkoutTypes()));
 
         // Setup switch functionality
         speedTitle = view.findViewById(R.id.stats_history_speed_toggle);
-        speedTitle.setOnToggleListener(new IOnToggleListener() {
-            @Override
-            public void onToggle(CharSequence current) {
-                updateSpeedChart(selection.getSelectedWorkoutTypes());
-            }
-        });
+        speedTitle.setOnToggleListener(current -> updateSpeedChart(selection.getSelectedWorkoutTypes()));
 
         speedChart = view.findViewById(R.id.stats_speed_chart);
         speedChart.setDoubleTapToZoomEnabled(false);
 
 
         distanceTitle = view.findViewById(R.id.stats_history_distance_toggle);
-        distanceTitle.setOnToggleListener(new IOnToggleListener() {
-            @Override
-            public void onToggle(CharSequence current) {
-                updateDistanceChart(selection.getSelectedWorkoutTypes());
-            }
-        });
+        distanceTitle.setOnToggleListener(current -> updateDistanceChart(selection.getSelectedWorkoutTypes()));
 
         distanceChart = view.findViewById(R.id.stats_history_distance_chart);
         distanceChart.setDoubleTapToZoomEnabled(false);
 
 
         durationTitle = view.findViewById(R.id.stats_history_duration_toggle);
-        durationTitle.setOnToggleListener(new IOnToggleListener() {
-            @Override
-            public void onToggle(CharSequence current) {
-                updateDurationChart(selection.getSelectedWorkoutTypes());
-            }
-        });
+        durationTitle.setOnToggleListener(current -> updateDurationChart(selection.getSelectedWorkoutTypes()));
 
         durationChart = view.findViewById(R.id.stats_duration_chart);
         durationChart.setDoubleTapToZoomEnabled(false);
@@ -144,14 +143,11 @@ public class StatsHistoryFragment extends StatsFragment {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 WorkoutProperty property = WorkoutProperty.getById(exploreTitle.getSelectedItemPosition());
-                if(!property.summable())
-                {
+                if (!property.summable()) {
                     exploreChartSwitch.setChecked(false);
                     exploreChartSwitch.setEnabled(false);
                     exploreChartSwitch.setVisibility(View.GONE);
-                }
-                else
-                {
+                } else {
                     exploreChartSwitch.setEnabled(true);
                     exploreChartSwitch.setVisibility(View.VISIBLE);
                 }
@@ -262,7 +258,7 @@ public class StatsHistoryFragment extends StatsFragment {
         }
 
         List<WorkoutType> selected = preferences.getStatisticsSelectedTypes();
-        if (selected.size()==0 || selected.get(0) == null) {
+        if (selected.size() == 0 || selected.get(0) == null) {
             selected.clear();
             selected.addAll(WorkoutTypeManager.getInstance().getAllTypes(context));
         }
@@ -275,8 +271,7 @@ public class StatsHistoryFragment extends StatsFragment {
         durationTitle.toggle();
     }
 
-    private void scaleChart(CombinedChart chart)
-    {
+    private void scaleChart(CombinedChart chart) {
         AggregationSpan newAggSpan = ChartStyles.statsAggregationSpan(chart);
         if (aggregationSpan != newAggSpan) {
             aggregationSpan = newAggSpan;
@@ -284,16 +279,15 @@ public class StatsHistoryFragment extends StatsFragment {
         }
     }
 
-    private void displaySpan(AggregationSpan span)
-    {
+    private void displaySpan(AggregationSpan span) {
         // set span for aggregation -> one smaller
-        if(span == AggregationSpan.ALL){
+        if (span == AggregationSpan.ALL) {
             aggregationSpan = AggregationSpan.YEAR;
-        } else if(span == AggregationSpan.YEAR){
+        } else if (span == AggregationSpan.YEAR) {
             aggregationSpan = AggregationSpan.MONTH;
-        } else if(span == AggregationSpan.MONTH){
+        } else if (span == AggregationSpan.MONTH) {
             aggregationSpan = AggregationSpan.WEEK;
-        } else if(span == AggregationSpan.WEEK){
+        } else if (span == AggregationSpan.WEEK) {
             aggregationSpan = AggregationSpan.SINGLE;
         }
         updateCharts(selection.getSelectedWorkoutTypes());
@@ -408,7 +402,6 @@ public class StatsHistoryFragment extends StatsFragment {
     private void updateExploreChart(List<WorkoutType> workoutTypes) {
         WorkoutProperty property = WorkoutProperty.getById(exploreTitle.getSelectedItemPosition());
         CombinedData combinedData = new CombinedData();
-        String lowest, highest;
 
         try {
             if (exploreChartSwitch.isChecked()) {

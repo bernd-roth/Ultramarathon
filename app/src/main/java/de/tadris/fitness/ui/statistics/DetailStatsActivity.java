@@ -1,3 +1,22 @@
+/*
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
+ *
+ * This file is part of FitoTrack
+ *
+ * FitoTrack is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     FitoTrack is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package de.tadris.fitness.ui.statistics;
 
 import android.content.Intent;
@@ -77,8 +96,7 @@ public class DetailStatsActivity extends FitoTrackActivity {
 
         // Direct adding of the types from the Intent results in black screen...
         workoutTypes = new ArrayList<>();
-        for(WorkoutType workoutType : types)
-        {
+        for (WorkoutType workoutType : types) {
             workoutTypes.add(WorkoutTypeManager.getInstance().getWorkoutTypeById(this, workoutType.id));
         }
 
@@ -151,9 +169,8 @@ public class DetailStatsActivity extends FitoTrackActivity {
         CombinedData combinedData = new CombinedData();
 
         String additionalTitle=" - ";
-        for(WorkoutType type : workoutTypes)
-        {
-            additionalTitle += type.title +", ";
+        for (WorkoutType type : workoutTypes) {
+            additionalTitle += type.title + ", ";
         }
         additionalTitle = additionalTitle.substring(0, additionalTitle.length()-2);
 

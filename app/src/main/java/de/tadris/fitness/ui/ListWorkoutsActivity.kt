@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -33,7 +33,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.View.OnLongClickListener
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -63,7 +62,7 @@ import de.tadris.fitness.util.Icon
 import de.tadris.fitness.util.io.general.IOHelper
 
 class ListWorkoutsActivity : FitoTrackActivity(), WorkoutAdapterListener {
-    private lateinit var main_layout: LinearLayout
+
     private lateinit var listView: RecyclerView
     private lateinit var shortStatsView: ShortStatsView
     private lateinit var adapter: WorkoutAdapter
