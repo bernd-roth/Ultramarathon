@@ -1,6 +1,24 @@
+/*
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
+ *
+ * This file is part of FitoTrack
+ *
+ * FitoTrack is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     FitoTrack is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package de.tadris.fitness.ui.statistics.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -144,14 +162,11 @@ public class StatsHistoryFragment extends StatsFragment {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 WorkoutProperty property = WorkoutProperty.getById(exploreTitle.getSelectedItemPosition());
-                if(!property.summable())
-                {
+                if (!property.summable()) {
                     exploreChartSwitch.setChecked(false);
                     exploreChartSwitch.setEnabled(false);
                     exploreChartSwitch.setVisibility(View.GONE);
-                }
-                else
-                {
+                } else {
                     exploreChartSwitch.setEnabled(true);
                     exploreChartSwitch.setVisibility(View.VISIBLE);
                 }
@@ -275,8 +290,7 @@ public class StatsHistoryFragment extends StatsFragment {
         durationTitle.toggle();
     }
 
-    private void scaleChart(CombinedChart chart)
-    {
+    private void scaleChart(CombinedChart chart) {
         AggregationSpan newAggSpan = ChartStyles.statsAggregationSpan(chart);
         if (aggregationSpan != newAggSpan) {
             aggregationSpan = newAggSpan;
@@ -284,16 +298,15 @@ public class StatsHistoryFragment extends StatsFragment {
         }
     }
 
-    private void displaySpan(AggregationSpan span)
-    {
+    private void displaySpan(AggregationSpan span) {
         // set span for aggregation -> one smaller
-        if(span == AggregationSpan.ALL){
+        if (span == AggregationSpan.ALL) {
             aggregationSpan = AggregationSpan.YEAR;
-        } else if(span == AggregationSpan.YEAR){
+        } else if (span == AggregationSpan.YEAR) {
             aggregationSpan = AggregationSpan.MONTH;
-        } else if(span == AggregationSpan.MONTH){
+        } else if (span == AggregationSpan.MONTH) {
             aggregationSpan = AggregationSpan.WEEK;
-        } else if(span == AggregationSpan.WEEK){
+        } else if (span == AggregationSpan.WEEK) {
             aggregationSpan = AggregationSpan.SINGLE;
         }
         updateCharts(selection.getSelectedWorkoutTypes());
@@ -408,7 +421,6 @@ public class StatsHistoryFragment extends StatsFragment {
     private void updateExploreChart(List<WorkoutType> workoutTypes) {
         WorkoutProperty property = WorkoutProperty.getById(exploreTitle.getSelectedItemPosition());
         CombinedData combinedData = new CombinedData();
-        String lowest, highest;
 
         try {
             if (exploreChartSwitch.isChecked()) {

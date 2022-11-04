@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -123,10 +123,8 @@ public enum AggregationSpan {
         return calendar.getTimeInMillis();
     }
 
-    public int toInt()
-    {
-        switch (this)
-        {
+    public int toInt() {
+        switch (this) {
             case SINGLE:
                 return 0;
             case DAY:
@@ -144,10 +142,8 @@ public enum AggregationSpan {
         }
     }
 
-    public static AggregationSpan fromInt(int statsAggregation)
-    {
-        switch (statsAggregation)
-        {
+    public static AggregationSpan fromInt(int statsAggregation) {
+        switch (statsAggregation) {
             case 0:
                 return SINGLE;
             case 1:

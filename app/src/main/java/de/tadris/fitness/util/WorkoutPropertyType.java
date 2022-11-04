@@ -17,15 +17,34 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.tadris.fitness.util.calorie
+package de.tadris.fitness.util;
 
-import android.content.Context
-import de.tadris.fitness.data.WorkoutTypeManager
-import de.tadris.fitness.data.preferences.UserMeasurements
+import de.tadris.fitness.data.BaseWorkout;
+import de.tadris.fitness.data.GpsWorkout;
+import de.tadris.fitness.data.IndoorWorkout;
 
-class WorkoutTypeMETProvider(val context: Context) : METProvider {
+public enum WorkoutPropertyType {
+    BASE {
+        @Override
+        public boolean canBeApplied(BaseWorkout workout) {
+            return true;
+        }
+    }, // Applies to all workouts
+    GPS {
+        @Override
+        public boolean canBeApplied(BaseWorkout workout) {
+            return workout instanceof GpsWorkout;
+        }
+    },
+    INDOOR {
+        @Override
+        public boolean canBeApplied(BaseWorkout workout) {
+            return workout instanceof IndoorWorkout;
+        }
+    },
 
-    override fun calculateMET(measurements: UserMeasurements, typeId: String, speedInKmh: Double) =
-        WorkoutTypeManager.getInstance().getWorkoutTypeById(context, typeId).MET.toDouble()
+    ;
+
+    public abstract boolean canBeApplied(BaseWorkout workout);
 
 }
