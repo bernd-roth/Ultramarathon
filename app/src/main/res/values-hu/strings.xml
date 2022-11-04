@@ -69,7 +69,7 @@
     <string name="workoutAvgSpeedShort">Átlagsebesség</string>
     <string name="workoutAvgSpeedLong">Átlagsebesség</string>
     <string name="workoutTopSpeed">Legnagyobb sebesség</string>
-    <string name="workoutBurnedEnergy">Elégetett energia</string>
+    <string name="workoutBurnedEnergy">Elégetett kalóriák</string>
     <string name="workoutTotalEnergy">Összes energia</string>
     <string name="workoutEnergyConsumption">Energiafogyasztás</string>
     <string name="workoutEdited">Ez az edzés szerkesztve lett.</string>
@@ -309,7 +309,7 @@
     <string name="workoutTypeAdd">Hozzáadás</string>
     <string name="pref_auto_start_mode_unknown">Ismeretlen (ne használja)</string>
     <string name="pref_auto_start_mode_on_move">Várakozás, amíg elkezd mozogni</string>
-    <string name="pref_auto_start_mode_wait_for_gps">Várakozás pontos GPS-helyzetre</string>
+    <string name="pref_auto_start_mode_wait_for_gps">Várakozás a pontos helyzetre</string>
     <string name="pref_auto_start_mode_instant">Indítás azonnal</string>
     <string name="pref_auto_start_mode_title">Automatikus indítás módja</string>
     <string name="intervalAutoStartModeTraining">Automatikusan indított edzés módja</string>
@@ -394,7 +394,7 @@
     </plurals>
     <string name="trackStyle">Nyomvonal stílusa</string>
     <string name="preferencesCategoryMap">Térkép</string>
-    <string name="preferenceCurrentSpeedAverageTimeSummary">A jelenlegi sebesség számításának cseréje egy átlagos számítással.</string>
+    <string name="preferenceCurrentSpeedAverageTimeSummary">Jelenlegi sebesség cseréje egy átlaggal</string>
     <string name="unitHeartBeatsPerMinute">bpm</string>
     <string name="unitHertzLong">Hertz</string>
     <string name="currentTimeStructure">%s %s</string>
@@ -406,7 +406,7 @@
     <string name="pref_map_directory">Kapcsolat nélküli térképkönyvtár</string>
     <string name="pref_render_theme_style">Megjelenítő stílusa</string>
     <string name="preferenceCategoryRenderThemeCategories">Kategóriák</string>
-    <string name="pref_render_theme_style_info">Nem érhető el megjelenítőtémastílus-menü a kijelölt megjelenítő témához.</string>
+    <string name="pref_render_theme_style_info">Nem érhető el menü a kiválasztott témához.</string>
     <string name="scanning">Beolvasás…</string>
     <string name="scanFailed">A beolvasás sikertelen</string>
     <string name="moveStartOfWorkout">Vágás kezdete</string>
@@ -426,8 +426,8 @@
     <string name="workoutMaxHeight">Legnagyobb magasság</string>
     <string name="pref_step_length">Lépés hossza</string>
     <string name="edit_interval">Intervallum szerkesztése</string>
-    <string name="preferenceCurrentSpeedTime">Átlagos számítás időtartama</string>
-    <string name="preferenceCurrentSpeedAverageTimeTitle">Jelenlegi sebesség átlagosan</string>
+    <string name="preferenceCurrentSpeedTime">Átlagolt sebesség időtartama</string>
+    <string name="preferenceCurrentSpeedAverageTimeTitle">Átlagolt sebesség</string>
     <string name="preferenceFirstDayOfWeek">A hét kezdete</string>
     <string name="runningMigrations">Futó költöztetések</string>
     <string name="workoutFrequency">Gyakoriság</string>
@@ -493,4 +493,36 @@
     <string name="selectExportTarget">Exportálási cél kiválasztása</string>
     <string name="httpUrl">URL</string>
     <string name="enterValidUrl">Adjon meg egy érvényes HTTP URL-t</string>
+    <string name="workoutDurationSum">Időtartam összesen</string>
+    <string name="workoutAvgPauseDuration">Átlagos szünetidőtartam</string>
+    <string name="workoutAvgDurationLong">Átlagos időtartam</string>
+    <string name="workoutPauseDurationSum">Szünetidőtartam összesen</string>
+    <string name="workoutCount">Edzésszám</string>
+    <string name="stats_history_title">Előzmények</string>
+    <string name="stats_overview_title">Áttekintés</string>
+    <string name="histogram">Hisztogram</string>
+    <string name="details">Részletek</string>
+    <string name="monthYear">Hónap / év</string>
+    <string name="workoutAvgDistance">Átlagos távolság</string>
+    <string name="workoutDistanceSum">Távolság összesen</string>
+    <string name="massExportGpxSummary">Egy ZIP-fájlt hoz létre, amely tartalmazza az összes edzést GPX-dokumentumokként</string>
+    <string name="show_sum">Összeg megjelenítése</string>
+    <string name="massExportGpxTitle">Összes edzés exportálása GPX-ként</string>
+    <string name="zoomWithVolumeButtonsSummary">A hangerő növelése és csökkentése vezérli a nagyítást és kicsinyítést</string>
+    <string name="zoomWithVolumeButtonsTitle">Nagyítás a hangerőgombokkal</string>
+    <string name="debugShareLogsTitle">Naplók megosztása</string>
+    <string name="debugSensorsSummary">Az érzékelő adatainak begyűjtése, amelyek a naplófájlba kerülnek kiírásra</string>
+    <string name="debugPressureSensor">Nyomásérzékelő hibakeresése</string>
+    <string name="calibrating">Kalibrálás</string>
+    <string name="noSensorAvailable">Nem érhető el érzékelő</string>
+    <plurals name="satelliteCount">
+        <item quantity="one">Egy műhold</item>
+        <item quantity="other">%d műhold</item>
+    </plurals>
+    <string name="debugSensorsTitle">Érzékelők hibakeresése</string>
+    <string name="debugShareLogsSummary">Naplók megosztása, amelyek hasznos adatokat tartalmaznak az edzés rögzítőjében lévő hibák megtalálásához. Általában nem tartalmaznak helyadatokat.</string>
+    <string name="workouts">Edzések</string>
+    <string name="preferencesDebugTitle">Hibakeresés</string>
+    <string name="statistics">Statisztikák</string>
+    <string name="stats_explore_title">Felfedezés</string>
 </resources>
