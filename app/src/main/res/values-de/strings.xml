@@ -195,7 +195,7 @@
     <string name="preferenceTimeFormat">Zeitformat</string>
     <string name="preferenceCurrentSpeedTime">Zeitraum über den der Durchschnitt berechnet wird</string>
     <string name="preferenceCurrentSpeedAverageTimeSummary">Verwende den Durchschnitt über einen eingestellten Zeitraum, um die aktuelle Geschwindigkeit zu berechnen.</string>
-    <string name="preferenceCurrentSpeedAverageTimeTitle">Durchschnitt als aktuelle Geschwindingkeit</string>
+    <string name="preferenceCurrentSpeedAverageTimeTitle">Gemittelte Geschw.</string>
     <string name="preferenceUseAverageForCurrentSpeed">Verwende den Durchschnitt über einen Zeitraum anstatt der letzten, einzelnen Geschwindigkeitsmessung, um die aktuelle Geschwindigkeit zu berechnen.</string>
     <string name="workoutDiscarded">Workout verworfen</string>
     <string name="timeSecondsSingular">Sekunde</string>
@@ -532,4 +532,6 @@
     <string name="workoutAvgPauseDuration">Durchschnittl. Pausendauer</string>
     <string name="statistics">Statistiken</string>
     <string name="workoutAvgDurationLong">Durchschnittsdauer</string>
+    <string name="workoutCount">Anzahl der Workouts</string>
+    <string name="show_sum">Summe</string>
 </resources>
