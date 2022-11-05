@@ -173,11 +173,11 @@ public class RecorderService extends Service {
 
     @Override
     public void onCreate() {
+        this.instance = Instance.getInstance(getBaseContext());
+
         WorkoutLogger.log(TAG, "Service created");
         WorkoutLogger.log(TAG, "Android: " + Build.VERSION.RELEASE + " Sdk: " + Build.VERSION.SDK_INT);
         WorkoutLogger.log(TAG, "Device: " + Build.PRODUCT + " / " + Build.DEVICE + " / " + Build.MODEL);
-
-        this.instance = Instance.getInstance(getBaseContext());
 
         startRelevantComponents();
 

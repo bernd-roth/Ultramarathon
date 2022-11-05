@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -21,6 +21,8 @@ package de.tadris.fitness;
 
 import android.content.Context;
 import android.util.Log;
+
+import androidx.annotation.Nullable;
 
 import java.util.Arrays;
 import java.util.List;
@@ -44,16 +46,20 @@ public class Instance {
 
     private static Instance instance;
 
+    /**
+     * Please use getInstance with context. Without context could return null if no Instance was created
+     */
+    @Nullable
     @Deprecated
-    public static Instance getInstance(){
+    public static Instance getInstance() {
         return getInstance(null);
     }
 
-    public static Instance getInstance(Context context){
+    public static Instance getInstance(Context context) {
         if (context == null) {
             Log.e("Instance", "no Context Provided");
         }
-        if(instance == null){
+        if (instance == null && context != null) {
             instance = new Instance(context);
         }
         return instance;
