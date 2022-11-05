@@ -163,7 +163,7 @@ public class WorkoutTypeManager {
                         4,
                         context.getResources().getColor(R.color.colorPrimaryWaterSports),
                         Icon.POOL.name,
-                        -1, RecordingType.GPS.id),
+                        8, RecordingType.GPS.id),
                 new WorkoutType(WORKOUT_TYPE_ID_OTHER,
                         context.getString(R.string.workoutTypeOther),
                         7,
