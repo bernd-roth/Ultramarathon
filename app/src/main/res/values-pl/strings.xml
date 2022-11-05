@@ -264,7 +264,7 @@
     <string name="workoutAvgHeartRate">Śr. tętno</string>
     <string name="workoutMaxHeartRate">Maks. tętno</string>
     <string name="workoutTotalEnergy">Całkowita energia</string>
-    <string name="workoutTopSpeed">Maksymalna prędkość</string>
+    <string name="workoutTopSpeed">Maks. prędkość</string>
     <string name="workoutHeartRate">Tętno</string>
     <string name="workoutEnergyConsumption">Zużycie energii</string>
     <string name="workoutBurnedEnergy">Spalone kalorie</string>
