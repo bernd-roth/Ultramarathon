@@ -31,7 +31,7 @@ object METFunctionsProvider : METProvider {
     private val metFunctions: MutableMap<String, METFunction> = HashMap()
 
     init {
-        metFunctions[WorkoutTypeManager.WORKOUT_TYPE_ID_WALKING] = METFunction(
+        METFunction(
             arrayOf(
                 SpeedToMET(2.0, 2.8),
                 SpeedToMET(2.5, 3.0),
@@ -40,7 +40,10 @@ object METFunctionsProvider : METProvider {
                 SpeedToMET(4.0, 5.0),
                 SpeedToMET(5.0, 8.3)
             )
-        )
+        ).let {
+            metFunctions[WorkoutTypeManager.WORKOUT_TYPE_ID_HIKING] = it
+            metFunctions[WorkoutTypeManager.WORKOUT_TYPE_ID_WALKING] = it
+        }
         metFunctions[WorkoutTypeManager.WORKOUT_TYPE_ID_RUNNING] = METFunction(
             arrayOf(
                 SpeedToMET(4.0, 6.0),
