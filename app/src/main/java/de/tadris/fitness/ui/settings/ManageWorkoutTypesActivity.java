@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -28,11 +28,11 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.Arrays;
+import java.util.List;
 
-import de.tadris.fitness.Instance;
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.data.WorkoutTypeManager;
 import de.tadris.fitness.ui.FitoTrackActivity;
 import de.tadris.fitness.ui.adapter.WorkoutTypeAdapter;
 
@@ -66,10 +66,10 @@ public class ManageWorkoutTypesActivity extends FitoTrackActivity implements Wor
     }
 
     private void refresh() {
-        WorkoutType[] types = Instance.getInstance(this).db.workoutTypeDao().findAll();
-        WorkoutTypeAdapter adapter = new WorkoutTypeAdapter(Arrays.asList(types), this);
+        List<WorkoutType> types = WorkoutTypeManager.getInstance().getAllTypes(this);
+        WorkoutTypeAdapter adapter = new WorkoutTypeAdapter(types, this);
         recyclerView.setAdapter(adapter);
-        hint.setVisibility(types.length == 0 ? View.VISIBLE : View.INVISIBLE);
+        hint.setVisibility(types.isEmpty() ? View.VISIBLE : View.INVISIBLE);
     }
 
     @Override

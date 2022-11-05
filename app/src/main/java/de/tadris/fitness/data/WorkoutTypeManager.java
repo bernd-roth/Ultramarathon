@@ -32,7 +32,6 @@ import de.tadris.fitness.util.Icon;
 
 public class WorkoutTypeManager {
 
-
     public static final String WORKOUT_TYPE_ID_OTHER = "other";
     public static final String WORKOUT_TYPE_ID_RUNNING = "running";
     public static final String WORKOUT_TYPE_ID_WALKING = "walking";
@@ -47,7 +46,8 @@ public class WorkoutTypeManager {
     public static final String WORKOUT_TYPE_ID_TRAMPOLINE_JUMPING = "trampoline_jumping";
     public static final String WORKOUT_TYPE_ID_PUSH_UPS = "push-ups";
 
-    private List<WorkoutType> allWorkoutTypes = new ArrayList<>();
+    private final List<WorkoutType> presets = new ArrayList<>();
+    private final List<WorkoutType> allWorkoutTypes = new ArrayList<>();
 
     public String str;
     private static WorkoutTypeManager instance;
@@ -97,31 +97,30 @@ public class WorkoutTypeManager {
         return new ArrayList<>(allWorkoutTypes); // Return clone to avoid tampering from outside...
     }
 
+    public void notifyWorkoutTypeChanged() {
+        allWorkoutTypes.clear();
+    }
+
     private List<WorkoutType> checkForNewTypes(Context context) {
         WorkoutType[] fromDatabase = Instance.getInstance(context).db.workoutTypeDao().findAll();
-        List<String> existingIDs = new ArrayList<>();
-        for (WorkoutType existingType : allWorkoutTypes) {
-            existingIDs.add(existingType.id);
-        }
 
-        List<WorkoutType> newTypes = new ArrayList<>();
-        for (WorkoutType typeFromDb : fromDatabase) {
-            if (!existingIDs.contains(typeFromDb.id)) {
-                newTypes.add(typeFromDb);
-            }
-        }
-        allWorkoutTypes.addAll(newTypes);
-        return newTypes;
+        allWorkoutTypes.clear();
+
+        // user defined types first
+        allWorkoutTypes.addAll(Arrays.asList(fromDatabase));
+        allWorkoutTypes.addAll(presets);
+
+        return allWorkoutTypes;
     }
 
     private void buildPresets(Context context) {
-        if (allWorkoutTypes.size() > 0) return; // Don't build a second time
-        allWorkoutTypes.addAll(Arrays.asList(new WorkoutType(WORKOUT_TYPE_ID_RUNNING,
-                context.getString(R.string.workoutTypeRunning),
-                5,
-                context.getResources().getColor(R.color.colorPrimaryRunning),
-                Icon.RUNNING.name,
-                -1, RecordingType.GPS.id),
+        if (presets.size() > 0) return; // Don't build a second time
+        presets.addAll(Arrays.asList(new WorkoutType(WORKOUT_TYPE_ID_RUNNING,
+                        context.getString(R.string.workoutTypeRunning),
+                        5,
+                        context.getResources().getColor(R.color.colorPrimaryRunning),
+                        Icon.RUNNING.name,
+                        -1, RecordingType.GPS.id),
                 new WorkoutType(WORKOUT_TYPE_ID_WALKING,
                         context.getString(R.string.workoutTypeWalking),
                         5,
@@ -198,5 +197,6 @@ public class WorkoutTypeManager {
                         Icon.PUSH_UPS.name,
                         6, RecordingType.INDOOR.id,
                         R.plurals.workoutPushUp)));
+        allWorkoutTypes.addAll(presets);
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -72,7 +72,7 @@ public class EditWorkoutTypeActivity extends InformationActivity implements Icon
             type = new WorkoutType("", "", 5, getThemePrimaryColor(), Icon.RUNNING.name, 0, RecordingType.GPS.id);
         } else {
             isNewType = false;
-            type = Instance.getInstance(this).db.workoutTypeDao().findById(workoutTypeId);
+            type = WorkoutTypeManager.getInstance().getWorkoutTypeById(this, workoutTypeId);
         }
         idText = addEditTextLine(getString(R.string.workoutTypeEditId));
         idText.setText(type.id);
@@ -202,6 +202,7 @@ public class EditWorkoutTypeActivity extends InformationActivity implements Icon
         } else {
             Instance.getInstance(this).db.workoutTypeDao().update(type);
         }
+        WorkoutTypeManager.getInstance().notifyWorkoutTypeChanged();
         finish();
     }
 
