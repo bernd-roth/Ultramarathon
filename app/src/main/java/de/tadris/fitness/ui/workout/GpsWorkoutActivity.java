@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -38,7 +38,6 @@ import org.mapsforge.map.layer.Layer;
 import org.mapsforge.map.layer.download.TileDownloadLayer;
 import org.mapsforge.map.layer.overlay.FixedPixelCircle;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -274,11 +273,7 @@ public abstract class GpsWorkoutActivity extends WorkoutActivity implements MapS
             int originalIndex = i.nextIndex() + firstViewFieldSampleOriginalIndex;
             int groupIndex = originalIndex / aggregationSize;
             if (groupIndex != currentGroupIndex) {
-                combinedSample.speed /= aggregationGpsSampleNumber;
-                combinedSample.elevationMSL /= aggregationGpsSampleNumber;
-                combinedSample.elevation /= aggregationGpsSampleNumber;
-                combinedSample.tmpInclination /= aggregationGpsSampleNumber;
-                combinedSample.relativeTime /= aggregationGpsSampleNumber;
+                combinedSample.divide(aggregationGpsSampleNumber);
                 aggregatedSamples.add(combinedSample);
 
                 combinedSample = new GpsSample();
@@ -289,13 +284,7 @@ public abstract class GpsWorkoutActivity extends WorkoutActivity implements MapS
             BaseSample sample = i.next();
             if (sample instanceof GpsSample) {
                 GpsSample gpsSample = (GpsSample) sample;
-                combinedSample.speed += gpsSample.speed;
-                combinedSample.elevationMSL += gpsSample.elevationMSL;
-                combinedSample.elevation += gpsSample.elevation;
-                combinedSample.tmpInclination += gpsSample.tmpInclination;
-                combinedSample.relativeTime += gpsSample.relativeTime;
-                combinedSample.lat = gpsSample.lat;
-                combinedSample.lon = gpsSample.lon;
+                combinedSample.add(gpsSample);
                 aggregationGpsSampleNumber++;
             }
         }
