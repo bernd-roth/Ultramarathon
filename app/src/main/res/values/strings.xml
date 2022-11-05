@@ -117,6 +117,7 @@
     <string name="workoutTypeSkateboarding">Skateboarding</string>
     <string name="workoutTypeInlineSkating">Inline Skating</string>
     <string name="workoutTypeRowing">Rowing</string>
+    <string name="workoutTypeSwimming">Swimming</string>
     <string name="workoutTypeOther">Other</string>
     <string name="workoutTypeTreadmill">Treadmill</string>
     <plurals name="workoutStep">

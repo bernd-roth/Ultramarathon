@@ -41,6 +41,7 @@ public class WorkoutTypeManager {
     public static final String WORKOUT_TYPE_ID_INLINE_SKATING = "inline_skating";
     public static final String WORKOUT_TYPE_ID_SKATEBOARDING = "skateboarding";
     public static final String WORKOUT_TYPE_ID_ROWING = "rowing";
+    public static final String WORKOUT_TYPE_ID_SWIMMING = "swimming";
     public static final String WORKOUT_TYPE_ID_TREADMILL = "treadmill";
     public static final String WORKOUT_TYPE_ID_ROPE_SKIPPING = "rope_skipping";
     public static final String WORKOUT_TYPE_ID_TRAMPOLINE_JUMPING = "trampoline_jumping";
@@ -154,8 +155,14 @@ public class WorkoutTypeManager {
                 new WorkoutType(WORKOUT_TYPE_ID_ROWING,
                         context.getString(R.string.workoutTypeRowing),
                         7,
-                        context.getResources().getColor(R.color.colorPrimaryRowing),
+                        context.getResources().getColor(R.color.colorPrimaryWaterSports),
                         Icon.ROWING.name,
+                        -1, RecordingType.GPS.id),
+                new WorkoutType(WORKOUT_TYPE_ID_SWIMMING,
+                        context.getString(R.string.workoutTypeSwimming),
+                        4,
+                        context.getResources().getColor(R.color.colorPrimaryWaterSports),
+                        Icon.POOL.name,
                         -1, RecordingType.GPS.id),
                 new WorkoutType(WORKOUT_TYPE_ID_OTHER,
                         context.getString(R.string.workoutTypeOther),
