@@ -214,7 +214,7 @@ public class StatsProvider {
         ArrayList<CandleEntry> candleEntries = getCombinedCandleData(span, workoutTypes, workoutProperty);
 
         CandleDataSet dataSet = DataSetStyles.applyDefaultCandleStyle(ctx, new CandleDataSet(candleEntries,
-                workoutProperty.getStringRepresentation(ctx)));
+                ctx.getString(workoutProperty.getTitleRes())));
         if (workoutProperty == WorkoutProperty.START || workoutProperty == WorkoutProperty.END) {
             dataSet.setValueFormatter(new DayTimeFormatter(ctx));
         } else {
@@ -226,7 +226,7 @@ public class StatsProvider {
     public BarDataSet getSumData(AggregationSpan span, List<WorkoutType> workoutTypes, WorkoutProperty workoutProperty) throws NoDataException {
         ArrayList<BarEntry> barEntries = getCombinedSumData(span, workoutTypes, workoutProperty);
         BarDataSet dataSet = DataSetStyles.applyDefaultBarStyle(ctx, new BarDataSet(barEntries,
-                workoutProperty.getStringRepresentation(ctx)));
+                ctx.getString(workoutProperty.getTitleRes())));
         dataSet.setValueFormatter(workoutProperty.getValueFormatter(ctx, dataSet.getYMax()-dataSet.getYMin()));
         return dataSet;
     }

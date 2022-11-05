@@ -21,6 +21,8 @@ package de.tadris.fitness.util;
 
 import android.content.Context;
 
+import androidx.annotation.StringRes;
+
 import com.github.mikephil.charting.formatter.DefaultValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 
@@ -39,35 +41,40 @@ import de.tadris.fitness.util.charts.formatter.SpeedFormatter;
 import de.tadris.fitness.util.charts.formatter.TimeFormatter;
 
 public enum WorkoutProperty {
-    NUMBER(0, WorkoutPropertyType.BASE),
-    START(1, WorkoutPropertyType.BASE),
-    END(2, WorkoutPropertyType.BASE),
-    DURATION(3, WorkoutPropertyType.BASE),
-    PAUSE_DURATION(4, WorkoutPropertyType.BASE),
-    AVG_HEART_RATE(5, WorkoutPropertyType.BASE),
-    MAX_HEART_RATE(6, WorkoutPropertyType.BASE),
-    CALORIE(7, WorkoutPropertyType.BASE),
+    NUMBER(0, WorkoutPropertyType.BASE, R.string.workoutCount),
+    START(1, WorkoutPropertyType.BASE, R.string.workoutStartTime),
+    END(2, WorkoutPropertyType.BASE, R.string.workoutEndTime),
+    DURATION(3, WorkoutPropertyType.BASE, R.string.workoutDuration),
+    PAUSE_DURATION(4, WorkoutPropertyType.BASE, R.string.workoutPauseDuration),
+    AVG_HEART_RATE(5, WorkoutPropertyType.BASE, R.string.workoutAvgHeartRate),
+    MAX_HEART_RATE(6, WorkoutPropertyType.BASE, R.string.workoutMaxHeartRate),
+    CALORIE(7, WorkoutPropertyType.BASE, R.string.workoutBurnedEnergy),
 
     // GPS Workout
-    LENGTH(8, WorkoutPropertyType.GPS),
-    AVG_SPEED(9, WorkoutPropertyType.GPS),
-    TOP_SPEED(10, WorkoutPropertyType.GPS),
-    AVG_PACE(11, WorkoutPropertyType.GPS),
-    ASCENT(12, WorkoutPropertyType.GPS),
-    DESCENT(13, WorkoutPropertyType.GPS),
+    LENGTH(8, WorkoutPropertyType.GPS, R.string.workoutDistance),
+    AVG_SPEED(9, WorkoutPropertyType.GPS, R.string.workoutAvgSpeedShort),
+    TOP_SPEED(10, WorkoutPropertyType.GPS, R.string.workoutTopSpeed),
+    AVG_PACE(11, WorkoutPropertyType.GPS, R.string.workoutPace),
+    ASCENT(12, WorkoutPropertyType.GPS, R.string.workoutAscent),
+    DESCENT(13, WorkoutPropertyType.GPS, R.string.workoutDescent),
 
     // Indoor Workout
-    AVG_FREQUENCY(14, WorkoutPropertyType.INDOOR),
-    MAX_FREQUENCY(15, WorkoutPropertyType.INDOOR),
-    MAX_INTENSITY(16, WorkoutPropertyType.INDOOR),
-    AVG_INTENSITY(17, WorkoutPropertyType.INDOOR);
+    AVG_FREQUENCY(14, WorkoutPropertyType.INDOOR, R.string.workoutFrequency),
+    MAX_FREQUENCY(15, WorkoutPropertyType.INDOOR, R.string.workoutMaxFrequency),
+    MAX_INTENSITY(16, WorkoutPropertyType.INDOOR, R.string.workoutIntensity),
+    AVG_INTENSITY(17, WorkoutPropertyType.INDOOR, R.string.workoutMaxIntensity);
 
     private final int id;
+
     private final WorkoutPropertyType type;
 
-    WorkoutProperty(int id, WorkoutPropertyType type) {
+    @StringRes
+    private final int titleRes;
+
+    WorkoutProperty(int id, WorkoutPropertyType type, int titleRes) {
         this.id = id;
         this.type = type;
+        this.titleRes = titleRes;
     }
 
     public int getId() {
@@ -78,45 +85,31 @@ public enum WorkoutProperty {
         return type;
     }
 
-    public static WorkoutProperty getById(int id) {
-        return WorkoutProperty.values()[id];
+    public int getTitleRes() {
+        return titleRes;
     }
 
-    private static final List<WorkoutProperty> summable = Arrays.asList(DURATION, PAUSE_DURATION, CALORIE, LENGTH, ASCENT, DESCENT);
+    public static WorkoutProperty getById(int id) {
+        for (WorkoutProperty property : values()) {
+            if (property.id == id) return property;
+        }
+        throw new IllegalArgumentException("Cannot find WorkoutProperty with id " + id);
+    }
+
+    private static final List<WorkoutProperty> summable = Arrays.asList(NUMBER, DURATION, PAUSE_DURATION, CALORIE, LENGTH, ASCENT, DESCENT);
 
     public boolean summable() {
         return summable.contains(this);
     }
 
-    public String getStringRepresentation(Context ctx) {
-        return getStringRepresentations(ctx).get(id);
-    }
-
     public static List<String> getStringRepresentations(Context context) {
         List<String> criteria = new ArrayList<>();
-        criteria.add(context.getString(R.string.workoutStartTime));
-        criteria.add(context.getString(R.string.workoutEndTime));
-        criteria.add(context.getString(R.string.workoutDuration));
-        criteria.add(context.getString(R.string.workoutPauseDuration));
-        criteria.add(context.getString(R.string.workoutAvgHeartRate));
-        criteria.add(context.getString(R.string.workoutMaxHeartRate));
-        criteria.add(context.getString(R.string.workoutBurnedEnergy));
-
-        // GPS Workout
-        criteria.add(context.getString(R.string.workoutDistance));
-        criteria.add(context.getString(R.string.workoutAvgSpeedShort));
-        criteria.add(context.getString(R.string.workoutTopSpeed));
-        criteria.add(context.getString(R.string.workoutPace));
-        criteria.add(context.getString(R.string.workoutAscent));
-        criteria.add(context.getString(R.string.workoutDescent));
-
-        // Indoor Workout
-        criteria.add(context.getString(R.string.workoutFrequency));
-        criteria.add(context.getString(R.string.workoutMaxFrequency));
-        criteria.add(context.getString(R.string.workoutIntensity));
-        criteria.add(context.getString(R.string.workoutMaxIntensity));
+        for (WorkoutProperty property : values()) {
+            criteria.add(context.getString(property.getTitleRes()));
+        }
         return criteria;
     }
+
 
     public String getFormattedValue(Context ctx, float value) {
         return getFormattedValue(ctx, value, true);
