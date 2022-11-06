@@ -525,4 +525,5 @@
     <string name="preferencesDebugTitle">Hibakeresés</string>
     <string name="statistics">Statisztikák</string>
     <string name="stats_explore_title">Felfedezés</string>
+    <string name="workoutTypeSwimming">Úszás</string>
 </resources>
