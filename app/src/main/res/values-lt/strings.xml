@@ -16,8 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <plurals name="minutes">
         <item quantity="one"><xliff:g example="1" id="mins">%1$d</xliff:g> minutė</item>
         <item quantity="few"><xliff:g example="5" id="mins">%1$d</xliff:g> minutės</item>
@@ -421,7 +420,7 @@
     <string name="exporting">Eksportavimas</string>
     <string name="workoutEnergyConsumption">Energijos suvartojimas</string>
     <string name="workoutTotalEnergy">Viso energijos</string>
-    <string name="workoutBurnedEnergy">Sudeginta energija</string>
+    <string name="workoutBurnedEnergy">Sudegintos kalorijos</string>
     <string name="cannotStart">Nėra galimybės pradėti</string>
     <string name="pref_announcement_mode">Pranešimų rėžimas</string>
     <string name="ttsNotAvailable">Garsinis teksto atkūrimas neprieinamas</string>
@@ -497,9 +496,9 @@
     <string name="debugSensorsSummary">Rinkti jutiklio duomenis, kurie įrašomi į žurnalo failą</string>
     <string name="debugPressureSensor">Derinti slėgio jutiklį</string>
     <plurals name="satelliteCount">
-        <item quantity="one">Nėra palydovo</item>
-        <item quantity="few">Vienas palydovas</item>
-        <item quantity="other">%d palydovai</item>
+        <item quantity="one">Vienas palydovas</item>
+        <item quantity="few">%d palydovai</item>
+        <item quantity="other">%d palydovų</item>
     </plurals>
     <string name="noSensorAvailable">Nėra jokio jutiklio</string>
     <string name="unitHeartRateSensorBattery">%</string>
@@ -514,4 +513,23 @@
     <string name="takeBackups3">Kas trečią dieną</string>
     <string name="zoomWithVolumeButtonsTitle">Priartinimas su garso mygtukais</string>
     <string name="showWorkoutZoomControlsTitle">Priartinimas ir slinkimas</string>
+    <string name="workoutCount">Treniruočių skaičius</string>
+    <string name="massExportGpxTitle">Eksportuoti visas treniruotes kaip GPX</string>
+    <string name="stats_explore_title">Naršyti</string>
+    <string name="massExportGpxSummary">Sukuria ZIP failą, kuriame visos treniruotės yra GPX dokumentai</string>
+    <string name="workoutTypeSwimming">Plaukimas</string>
+    <string name="stats_history_title">Istorija</string>
+    <string name="stats_overview_title">Apžvalga</string>
+    <string name="workouts">Treniruotės</string>
+    <string name="workoutAvgDurationLong">Vidutinė trukmė</string>
+    <string name="workoutDurationSum">Bendra trukmė</string>
+    <string name="workoutAvgPauseDuration">Vidutinė pauzės trukmė</string>
+    <string name="workoutPauseDurationSum">Bendra pauzių trukmė</string>
+    <string name="statistics">Statistika</string>
+    <string name="workoutDistanceSum">Bendras atstumas</string>
+    <string name="histogram">Histograma</string>
+    <string name="details">Išsamesnė informacija</string>
+    <string name="monthYear">Mėnuo / metai</string>
+    <string name="workoutAvgDistance">Vidutinis atstumas</string>
+    <string name="show_sum">Rodyti bendrą trukmę</string>
 </resources>
