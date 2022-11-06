@@ -524,4 +524,5 @@
     <string name="stats_history_title">Geçmiş</string>
     <string name="stats_explore_title">Keşfet</string>
     <string name="details">Ayrıntılar</string>
+    <string name="workoutTypeSwimming">Yüzme</string>
 </resources>
