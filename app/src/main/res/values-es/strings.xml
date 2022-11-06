@@ -525,4 +525,12 @@
     <string name="statistics">Estadísticas</string>
     <string name="histogram">Histograma</string>
     <string name="details">Detalles</string>
+    <string name="workoutTypeSwimming">Natación</string>
+    <string name="stats_history_title">Historia</string>
+    <string name="show_sum">Mostrar la suma</string>
+    <string name="workoutCount">Recuento de ejercicios</string>
+    <string name="workoutDistanceSum">Suma de las distancias</string>
+    <string name="workoutDurationSum">Suma de la duración</string>
+    <string name="workoutPauseDurationSum">Suma de la duración de la pausa</string>
+    <string name="stats_overview_title">Resumen</string>
 </resources>
