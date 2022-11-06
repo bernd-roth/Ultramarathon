@@ -96,9 +96,9 @@
     <string name="merge">Połącz</string>
     <string name="replace">Zamień</string>
     <string name="replaceOrMergeMessage">Zamienić czy połączyć bazę danych z plikiem kopii zapasowej\?</string>
-    <string name="workoutStatsHelpText">Ten ekran pokazuje historyczne statystyki treningów. Aby z niego skorzystać, najpierw potrzebujesz określić typ treningu przez naciśnięcie go. Następnie ustaw informacje, o których chcesz wiedzieć, i przedział czasu.
+    <string name="workoutStatsHelpText">Ten ekran pokazuje historyczne statystyki treningów. Aby z niego skorzystać, musisz najpierw określić typ treningu przez jego naciśnięcie. Następnie ustaw informacje, o których chcesz wiedzieć, i przedział czasu.
 \n
-\nPrzykładowo, jeśli wybierzesz „Tydzień” jako przedział czasu, wszystkie treningi z każdego tygodnia zostaną połączone w jeden punkt danych, obliczając średnią albo sumę z każdego tygodnia.</string>
+\nNp. jeśli wybierzesz „Tydzień” jako przedział czasu, wszystkie treningi z każdego tygodnia zostaną połączone w jeden punkt danych, obliczając średnią albo sumę z każdego tygodnia.</string>
     <string name="singleWorkout">Pojedynczy trening</string>
     <string name="dayInMonth">Dzień w miesiącu</string>
     <string name="calendarWeekYear">Tydzień / Rok kalendarzowy</string>
@@ -348,7 +348,7 @@
     <string name="scanning">Skanowanie…</string>
     <string name="announcementCountdown">Akcje automatycznego rozpoczęcia (odliczanie, stan itd.)</string>
     <string name="action_nfc_settings">Przejdź do ustawień NFC</string>
-    <string name="dialog_nfc_disabled">Aby używać tagów NFC do rozpoczęcia i zakończenia treningów, najpierw potrzebujesz włączyć NFC w ustawieniach urządzenia</string>
+    <string name="dialog_nfc_disabled">Aby używać tagów NFC do rozpoczynania i zatrzymywania treningów, musisz najpierw włączyć NFC w ustawieniach urządzenia.</string>
     <string name="dialog_nfc_disabled_title">NFC jest obecnie wyłączone</string>
     <string name="nfcStartSummary">Jeśli włączone, będziesz w stanie rozpoczynać i zatrzymywać treningi, skanując tag NFC</string>
     <string name="nfcStartTitle">Skanuj, aby rozpocząć</string>
@@ -365,7 +365,7 @@
     <string name="pref_auto_start_delay_title">Odliczanie do automatycznego rozpoczęcia</string>
     <string name="manageAutoStartDelaySummary">Wybierz domyślne odliczanie do automatycznego rozpoczęcia treningu</string>
     <string name="intervalAutoStartDelayTraining">Opóźnienie automatycznego rozpoczęcia treningu</string>
-    <string name="workoutAutoStartAborted">Przerwano automatyczne uruchamianie</string>
+    <string name="workoutAutoStartAborted">Przerwano automatyczne rozpoczęcie</string>
     <string name="abort">Anuluj</string>
     <string name="downloading">Pobieranie…</string>
     <string name="chooseMapHint">Wybierz plik mapy</string>
@@ -539,4 +539,5 @@
     <string name="stats_history_title">Historia</string>
     <string name="stats_explore_title">Eksploruj</string>
     <string name="show_sum">Pokaż sumę</string>
+    <string name="workoutTypeSwimming">Pływanie</string>
 </resources>
