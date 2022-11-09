@@ -16,8 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="chooseBackupFile">Ficheiro de copia de apoio</string>
     <string name="loadingFile">Cargando arquivo</string>
     <string name="finished">Rematado</string>
@@ -212,7 +211,7 @@
     <string name="workoutEdited">Este adestramento foi editado.</string>
     <string name="workoutEnergyConsumption">Consumo de enerxía</string>
     <string name="workoutTotalEnergy">Enerxía total</string>
-    <string name="workoutBurnedEnergy">Enerxía queimada</string>
+    <string name="workoutBurnedEnergy">Calorías queimadas</string>
     <string name="workoutTopSpeed">Velocidade máxima</string>
     <string name="workoutAvgSpeedLong">Velocidade promedio</string>
     <string name="workoutAvgSpeedShort">Vel. Promedio</string>
@@ -280,7 +279,7 @@
     <string name="heartRateNotAvailable">Non está dispoñible o ritmo cardíaco.</string>
     <string name="announcementWorkoutActions">Accións do adestramento (pausar, retomar, etc.)</string>
     <string name="resumeWorkoutConfirmation">Continuar co adestramento\? Esto engadirá unha pausa desde o momento en que o adestramento se detivo.</string>
-    <string name="prefShowOnLockScreenSummary">Mostrar info do adestramento incluso estando bloqueado.</string>
+    <string name="prefShowOnLockScreenSummary">Amosala información do adestramento aínda que o dispositivo atopese bloqueado.</string>
     <string name="prefShowOnLockScreenTitle">Visible na pantalla de bloqueo</string>
     <string name="notimeout">Sen caducidade</string>
     <string name="editWorkoutType">Edita tipo de adestramento</string>
@@ -397,10 +396,10 @@
     <string name="recordingActivityPermissionMessage">FitoTrack require o permiso para rexistrar a túa actividade física e gravar adestramentos en interior.</string>
     <string name="pref_step_length">Lonx. da zancada</string>
     <plurals name="workoutPushUp">
-        <item quantity="one">Push up</item>
-        <item quantity="other">Push ups</item>
+        <item quantity="one">flexión</item>
+        <item quantity="other">Flexións</item>
     </plurals>
-    <string name="workoutTypePushUps">Push ups</string>
+    <string name="workoutTypePushUps">Flexións</string>
     <plurals name="workoutJump">
         <item quantity="one">Salto</item>
         <item quantity="other">Saltos</item>
@@ -434,7 +433,7 @@
     <string name="identifiable_visibility">Identificable</string>
     <string name="trackable_visibility">Trazable</string>
     <string name="private_visibility">Privado</string>
-    <string name="kcal_unit">kcal</string>
+    <string name="kcal_unit">quilocaloría (kcal)</string>
     <string name="joule_unit">Xulio</string>
     <string name="always_mode">Sempre</string>
     <string name="only_on_headphones_mode">Só con auriculares</string>
@@ -452,7 +451,7 @@
     <string name="rainbow_warrior">Arco da Vella</string>
     <string name="height_map">Altura do Mapa</string>
     <string name="bright_night">Noite Brillante</string>
-    <string name="mondriaan">Mondriaan</string>
+    <string name="mondriaan">Mondriaan DC</string>
     <string name="system_theme">Sistema</string>
     <string name="light_theme">Claro</string>
     <string name="dark_theme">Escuro</string>
@@ -503,9 +502,27 @@
     <string name="noSensorAvailable">Non hai sensor</string>
     <string name="debugShareLogsTitle">Compartir rexistro</string>
     <plurals name="satelliteCount">
-        <item quantity="one">Sen satélites</item>
-        <item quantity="other">Un satélite</item>
+        <item quantity="one">Un satélite</item>
+        <item quantity="other">%d satélites</item>
     </plurals>
     <string name="zoomWithVolumeButtonsSummary">Os botóns de volume controlan o nivel de zoom</string>
     <string name="zoomWithVolumeButtonsTitle">Zoom cos botóns de volume</string>
+    <string name="workoutTypeSwimming">Natación</string>
+    <string name="workoutCount">Contalos adestramentos</string>
+    <string name="statistics">Estatísticas</string>
+    <string name="stats_overview_title">Visión xeral</string>
+    <string name="histogram">Histograma</string>
+    <string name="details">Pormenores</string>
+    <string name="monthYear">Mes/Ano</string>
+    <string name="workoutAvgDistance">Distancia media</string>
+    <string name="workoutDistanceSum">Suma da distancia</string>
+    <string name="massExportGpxSummary">Crea un ficheiro ZIP que contén todolos adestramentos como documentos GPX</string>
+    <string name="show_sum">Amosala suma</string>
+    <string name="massExportGpxTitle">Exporta todolos adestramentos como GPX</string>
+    <string name="workoutAvgDurationLong">Duración media</string>
+    <string name="workoutAvgPauseDuration">Duración media da pausa</string>
+    <string name="workoutPauseDurationSum">Suma da duración da pausa</string>
+    <string name="workoutDurationSum">Duración da suma</string>
+    <string name="stats_explore_title">Explora</string>
+    <string name="stats_history_title">Historia</string>
 </resources>
