@@ -241,7 +241,7 @@
     <string name="workoutHeartRate">心率</string>
     <string name="workoutEnergyConsumption">总能量消耗</string>
     <string name="workoutTotalEnergy">总能量</string>
-    <string name="workoutBurnedEnergy">能量消耗</string>
+    <string name="workoutBurnedEnergy">消耗的卡路里</string>
     <string name="workoutTopSpeed">最快速度</string>
     <string name="workoutAvgSpeedLong">平均速度</string>
     <string name="workoutAvgSpeedShort">平均速度</string>
