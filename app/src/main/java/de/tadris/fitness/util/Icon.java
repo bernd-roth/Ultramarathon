@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -36,6 +36,7 @@ public enum Icon {
     E_BIKE("e-bike", R.drawable.ic_e_bike),
     E_SCOOTER("e-scooter", R.drawable.ic_e_scooter),
     FOLLOW_SIGN("follow-sign", R.drawable.ic_follow_sign),
+    HIKING("hiking", R.drawable.ic_hiking),
     MOPED("moped", R.drawable.ic_moped),
     POOL("pool", R.drawable.ic_pool),
     BALL("ball", R.drawable.ic_ball),
@@ -51,6 +52,8 @@ public enum Icon {
     ROPE_SKIPPING("rope_skipping", R.drawable.ic_rope_skipping),
     PUSH_UPS("push_ups", R.drawable.ic_push_ups),
     TRAMPOLINE_JUMPING("trampoline_jumping", R.drawable.ic_trampoline_jumping),
+    WHEELCHAIR("wheelchair", R.drawable.ic_wheelchair),
+    WHEELCHAIR_FAST("wheelchair_fast", R.drawable.ic_wheelchair_fast),
     OTHER("other", R.drawable.ic_other);
 
     public final String name;

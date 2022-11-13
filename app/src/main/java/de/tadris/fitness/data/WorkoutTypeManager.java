@@ -132,7 +132,7 @@ public class WorkoutTypeManager {
                         context.getString(R.string.workoutTypeHiking),
                         5,
                         context.getResources().getColor(R.color.colorPrimaryHiking),
-                        Icon.WALKING.name,
+                        Icon.HIKING.name,
                         -1, RecordingType.GPS.id),
                 new WorkoutType(WORKOUT_TYPE_ID_CYCLING,
                         context.getString(R.string.workoutTypeCycling),
