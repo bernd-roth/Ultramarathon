@@ -181,7 +181,7 @@ public abstract class GpsWorkoutActivity extends WorkoutActivity implements MapS
     }
 
     @Override
-    protected void onChartSelectionChanged(BaseSample sample) {
+    protected void onChartSelectionChanged(BaseSample clickedSample) {
         //remove any previous layer
         if (selectedSample != null) {
             if (highlightingCircle != null) {
@@ -189,7 +189,15 @@ public abstract class GpsWorkoutActivity extends WorkoutActivity implements MapS
             }
         }
 
-        selectedSample = (GpsSample) sample;
+        selectedSample = null;
+
+        // Find real sample with same id as the clicked one
+        GpsSample diagramSample = (GpsSample) clickedSample;
+        for (GpsSample realSample : samples) {
+            if (diagramSample.id == realSample.id) {
+                selectedSample = realSample;
+            }
+        }
 
         // if a sample was selected show it on the map
         if (selectedSample != null) {
@@ -285,6 +293,7 @@ public abstract class GpsWorkoutActivity extends WorkoutActivity implements MapS
             if (sample instanceof GpsSample) {
                 GpsSample gpsSample = (GpsSample) sample;
                 combinedSample.add(gpsSample);
+                combinedSample.id = gpsSample.id;
                 aggregationGpsSampleNumber++;
             }
         }
