@@ -81,6 +81,10 @@ public class WorkoutTypeManager {
             }
         }
 
+        if (retType == null && !WORKOUT_TYPE_ID_OTHER.equals(id)) {
+            retType = getWorkoutTypeById(context, WORKOUT_TYPE_ID_OTHER); // Default to 'Other' type
+        }
+
         return retType;
     }
 
