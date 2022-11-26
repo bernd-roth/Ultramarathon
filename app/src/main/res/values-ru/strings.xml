@@ -16,8 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
     <string name="stop">Остановить</string>
     <string name="delete">Удалить</string>
@@ -46,7 +45,7 @@
     <string name="workoutSpeed">Скорость</string>
     <string name="workoutAvgSpeedLong">Средняя скорость</string>
     <string name="workoutTopSpeed">Максимальная скорость</string>
-    <string name="workoutBurnedEnergy">Сожженная энергия</string>
+    <string name="workoutBurnedEnergy">Сожжённые калории</string>
     <string name="workoutTotalEnergy">Общая энергия</string>
     <string name="enterVerificationCode">Введите код подтверждения</string>
     <string name="height">Высота</string>
@@ -245,7 +244,8 @@
     <string name="timeMinuteSingular">Минута</string>
     <string name="setPreferencesMessage">Вы можете выставить предпочитаемую систему измерений и ваш вес в настройках.</string>
     <string name="setPreferencesTitle">Установка параметров</string>
-    <string name="importBackupMessage">ВНИМАНИЕ: Все данные приложения будут очищены. Если вы не хотите потерять их, сначала сделайте резервную копию. Вы уверены, что хотите восстановить эту резервную копию\?</string>
+    <string name="importBackupMessage">Перед применением предыдущей резервной копии, рекомендуется создать резервную копию текущих данных, поскольку при восстановлении из предыдущей резервной копии, текущие данные будут безвозвратно перезаписаны, тем самым восстановление не представляется возможным.
+\nВы действительно хотите восстановить предыдущую резервную копию\?</string>
     <string name="chooseBackupFile">Выберите файл резервной копии</string>
     <string name="exporting">Экспорт</string>
     <string name="finished">Завершено</string>
@@ -265,7 +265,7 @@
     <string name="showIntervals">Показать интервалы</string>
     <string name="connectHeartRateDevice">Подключите устройство для измерения частоты сердечных сокращений</string>
     <string name="selectBluetoothDevice">Выберите устройство Bluetooth</string>
-    <string name="workoutAvgHeartRate">Средняя частота сердечных сокращений</string>
+    <string name="workoutAvgHeartRate">Средняя частота пульса</string>
     <string name="workoutMaxHeartRate">Максимальная частота сердечных сокращений</string>
     <string name="workoutHeartRate">Частота сердцебиения</string>
     <string name="workoutStarted">Тренировка началась</string>
@@ -384,17 +384,17 @@
     <string name="ttsBelowTargetSpeed">Очень медленно</string>
     <string name="ttsAboveTargetSpeed">Очень быстро</string>
     <string name="selectColoring">Выберите окраску</string>
-    <string name="pref_announcements_pace_control_title">Предупреждения о контроле темпа</string>
+    <string name="pref_announcements_pace_control_title">Предупреждения о темпе</string>
     <string name="editWorkoutStartEnd">Редактировать начало/конец</string>
     <string name="preferenceUseAverageForCurrentSpeed">Для расчета текущей скорости используйте среднюю скорость за определенное время вместо последней единичной записи скорости.</string>
     <string name="preferenceCurrentSpeedAverageTimeTitle">Средняя скорость</string>
-    <string name="preferenceCurrentSpeedTime">Временной интервал для расчета среднего значения</string>
+    <string name="preferenceCurrentSpeedTime">Средний временной интервал скорости</string>
     <string name="preferenceCurrentSpeedAverageTimeSummary">Заменить текущую скорость на среднюю</string>
     <string name="prefTrackStyleUsageTitle">Использовать автоматическую окраску трека</string>
     <string name="fileNotFound">Файл не найден</string>
     <string name="preferenceFirstDayOfWeek">Начало недели</string>
     <string name="edit_interval">Изменить промежуток</string>
-    <string name="pref_render_theme_style_info">Отсутствует меню стилей темы рендеринга для выбранной темы рендеринга.</string>
+    <string name="pref_render_theme_style_info">Для выбранной темы меню недоступно.</string>
     <string name="preferenceCategoryRenderThemeCategories">Категории</string>
     <string name="pref_render_theme_style">Стиль рендеринга</string>
     <string name="pref_map_directory">Каталог автономных карт</string>
@@ -483,4 +483,49 @@
     <string name="rainbow_warrior">Радужный воин</string>
     <string name="bright_night">Светлая ночь</string>
     <string name="zoomWithVolumeButtonsSummary">Кнопки увеличения и уменьшения громкости управляют увеличением и уменьшением масштаба</string>
+    <string name="workoutTypeSwimming">Плавание</string>
+    <string name="imperial_with_meters_unit_system">Империальная с метрами</string>
+    <string name="autoExportBackupSummary">Автоматический экспорт резервных копий</string>
+    <string name="takeBackups3">Каждый 3-й день</string>
+    <string name="massExportGpxTitle">Экспорт всех тренировок в формате GPX</string>
+    <string name="debugPressureSensor">Отладка датчика давления</string>
+    <string name="workoutCount">Количество тренировок</string>
+    <string name="autoExportBackupTitle">Автоматическое резервное копирование приложений</string>
+    <string name="massExportGpxSummary">Создаётся ZIP-файл, содержащий все тренировки в виде документов GPX</string>
+    <string name="debugShareLogsSummary">Делитесь журналами, которые содержат полезные данные для поиска ошибок при регистрации тренировок. Обычно они не содержат данные о местоположении.</string>
+    <string name="autoExportWorkoutsSummary">Экспорт только что записанных тренировок</string>
+    <string name="takeBackups14">Каждую 2-ю неделю</string>
+    <string name="configureHttpPostRequest">Настройка HTTP POST-запроса</string>
+    <string name="enterValidUrl">Введите действующий HTTP URL</string>
+    <string name="preferencesDebugTitle">Отладка</string>
+    <string name="in_the_diagram_screen_track_style">На экране диаграмм</string>
+    <string name="exportTargetDirectory">Каталог</string>
+    <string name="us_customary_unit_system">Американский стандарт</string>
+    <string name="exportTargetHttpPost">HTTP POST запрос</string>
+    <string name="autoBackupTitle">Автоматическое резервное копирование</string>
+    <string name="autoExportBackupExplanation">Через указанный интервал резервная копия будет экспортирована сюда:</string>
+    <string name="workoutGPXExportTitle">Экспорт тренировок в GPX</string>
+    <string name="takeBackups1">Ежедневно</string>
+    <string name="takeBackups2">Каждый 2-й день</string>
+    <string name="debugSensorsSummary">Сбор данных датчика, которые записываются в файл журнала</string>
+    <string name="debugShareLogsTitle">Поделиться журналом</string>
+    <string name="takeBackups7">Еженедельно</string>
+    <string name="debugSensorsTitle">Отладка датчиков</string>
+    <string name="calibrating">Калибровка</string>
+    <plurals name="satelliteCount">
+        <item quantity="one">Один спутник</item>
+        <item quantity="few">%d спутника</item>
+        <item quantity="many">%d спутников</item>
+        <item quantity="other">%d спутников</item>
+    </plurals>
+    <string name="workoutAvgDurationLong">Средняя продолжительность</string>
+    <string name="workoutAvgPauseDuration">Средняя продолжительность паузы</string>
+    <string name="noSensorAvailable">Нет доступного датчика</string>
+    <string name="statistics">Статистика</string>
+    <string name="stats_history_title">История</string>
+    <string name="stats_overview_title">Обзор</string>
+    <string name="histogram">Гистограмма</string>
+    <string name="details">Подробности</string>
+    <string name="monthYear">Месяц / Год</string>
+    <string name="workoutAvgDistance">Среднее расстояние</string>
 </resources>
