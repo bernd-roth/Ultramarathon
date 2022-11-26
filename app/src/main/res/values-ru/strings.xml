@@ -528,4 +528,8 @@
     <string name="details">Подробности</string>
     <string name="monthYear">Месяц / Год</string>
     <string name="workoutAvgDistance">Среднее расстояние</string>
+    <string name="hintConfigureExportTargets">Добавить целевые файлы, в которые следует экспортировать.</string>
+    <string name="autoExportWorkoutExplanation">После записи новой тренировки экспорт GPX будет сохранен сюда:</string>
+    <string name="selectExportTarget">Выберите объект экспорта</string>
+    <string name="deleteExportTargetConfirmation">Удалить эту цель экспорта\?</string>
 </resources>
