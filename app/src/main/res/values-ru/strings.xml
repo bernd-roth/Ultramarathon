@@ -532,4 +532,5 @@
     <string name="autoExportWorkoutExplanation">После записи новой тренировки экспорт GPX будет сохранен сюда:</string>
     <string name="selectExportTarget">Выберите объект экспорта</string>
     <string name="deleteExportTargetConfirmation">Удалить эту цель экспорта\?</string>
+    <string name="exportIntervalTitle">Интервал резервного копирования</string>
 </resources>
