@@ -1,10 +1,10 @@
-- Siga los entrenamientos en interiores
-  - actualmente soporta: Cinta de correr, flexiones, salto a la cuerda y salto al trampolín
-- Soporta temas de renderizado Zip para el mapa offline / personalizado
+- Seguimiento de entrenamientos en interiores
+  - compatible actualmente: cinta de correr, flexiones, salto de cuerda y salto de trampolín
+- Admite temas de renderizado Zip para mapas / personalización fuera de línea
 
-- Acepta archivos: ahora puedes compartir y abrir archivos GPX de otras aplicaciones para importarlos
-- Ordenar los tipos de entrenamiento por el último uso
-- Inicia ya entrenamientos mientras "esperas al GPS"
-- más mejoras y correcciones...
+- Aceptar intentos de archivo: ahora puede compartir y abrir archivos GPX desde otras aplicaciones para importarlos
+- Ordenar tipos de entrenamiento por último uso
+- Ya comience los entrenamientos mientras "espera el GPS"
+- más mejoras y correcciones de errores...
 
-Por favor, consulta el repositorio del proyecto en Codeberg para más detalles de los cambios
+consulte el repositorio del proyecto en Codeberg para obtener una lista más detallada de los cambios
