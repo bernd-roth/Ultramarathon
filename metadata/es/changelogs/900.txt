@@ -1,8 +1,8 @@
-- Añadir medición de la frecuencia cardíaca
-- Importar/exportar frecuencias cardíacas desde/a archivos GPX
+- Añadida medición de la frecuencia cardíaca
+- Importar/exportar frecuencias cardíacas desde archivos GPX
 - Reanudar los entrenamientos detenidos
 - Desactivar la pausa automática y utilizar la opción de pausa manual
-- Nuevo anuncio: cambios de estado del entrenamiento como inicio, pausa, reanudación
+- Nuevo anuncio: cambios de los estados del entrenamiento como inicio, pausa, reanudación
 
 - Pantalla de gráficos mejorada
 - Escala del mapa según el tamaño de la pantalla
