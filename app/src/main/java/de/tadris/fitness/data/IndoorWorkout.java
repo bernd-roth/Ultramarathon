@@ -32,14 +32,23 @@ public class IndoorWorkout extends BaseWorkout {
     public int repetitions;
 
     /**
-     * Average frequency in hertz
+     * Average repetition frequency in Hz
      */
     public double avgFrequency;
 
+    /**
+     * Max repetition frequency in Hz
+     */
     public double maxFrequency;
 
+    /**
+     * Maximum intensity
+     */
     public double maxIntensity;
 
+    /**
+     * Average intensity
+     */
     public double avgIntensity;
 
     public boolean hasIntensityValues() {

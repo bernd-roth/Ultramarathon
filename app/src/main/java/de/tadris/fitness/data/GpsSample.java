@@ -43,8 +43,14 @@ public class GpsSample extends BaseSample {
     @ColumnInfo(name = "workout_id", index = true)
     public long workoutId;
 
+    /**
+     * Latitude
+     */
     public double lat;
 
+    /**
+     * Longitude
+     */
     public double lon;
 
     /**
@@ -59,8 +65,14 @@ public class GpsSample extends BaseSample {
     @ColumnInfo(name = "elevation_msl")
     public double elevationMSL = 0;
 
+    /**
+     * Speed in m/s
+     */
     public double speed;
 
+    /**
+     * Pressure in hPa
+     */
     public float pressure;
 
     @JsonIgnore

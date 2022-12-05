@@ -31,40 +31,87 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * Model class representing a workout
+ */
 public abstract class BaseWorkout {
 
+    /**
+     * Unique ID
+     */
     @PrimaryKey
     public long id;
 
+    /**
+     * Timestamp of start
+     */
     public long start;
+
+    /**
+     * Timestamp of end
+     */
     public long end;
 
+    /**
+     * Duration in ms
+     */
     public long duration;
 
+    /**
+     * Summed duration of pauses in ms
+     */
     public long pauseDuration;
 
+    /**
+     * User-defined comment
+     */
     public String comment;
 
+    /**
+     * Type of workout
+     *
+     * @see WorkoutType
+     * @see WorkoutTypeManager
+     */
     @ColumnInfo(name = "workoutType")
     @JsonProperty(value = "workoutType")
     public String workoutTypeId = WorkoutTypeManager.WORKOUT_TYPE_ID_OTHER;
 
+    /**
+     * Average heart rate bpm
+     * -1 if not available
+     */
     @ColumnInfo(name = "avg_heart_rate")
     public int avgHeartRate = -1;
 
+    /**
+     * Maximum heart rate in bpm
+     * -1 if not available
+     */
     @ColumnInfo(name = "max_heart_rate")
     public int maxHeartRate = -1;
 
+    /**
+     * Burned calories in kcal
+     */
     public int calorie;
 
+    /**
+     * Stores if distance/duration/... have been manually edited and can differ from the calculated
+     * values.
+     */
     public boolean edited;
 
-    // No foreign key is intended
+    /**
+     * Used interval set
+     * -1 or 0 if none was chosen
+     */
+    // No usage of an SQL foreign key is intended
     @ColumnInfo(name = "interval_set_used_id")
     public long intervalSetUsedId = 0;
 
     // returns a file name string without suffix that can be used for exports
-    public String getExportFileName(){
+    public String getExportFileName() {
         if (!getSafeComment().isEmpty()) {
             return String.format("workout-%s-%s", getSafeDateString(), getSafeComment());
         } else {

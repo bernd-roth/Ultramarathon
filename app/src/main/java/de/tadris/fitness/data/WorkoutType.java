@@ -33,29 +33,57 @@ import java.io.Serializable;
 @Entity(tableName = "workout_type")
 public class WorkoutType implements Serializable {
 
+    /**
+     * String-ID
+     *
+     * @see BaseWorkout#workoutTypeId
+     */
     @PrimaryKey
     @NonNull
     public String id;
 
+    /**
+     * Display name of the activity type
+     */
     public String title;
 
+    /**
+     * Minimum distance between 2 samples when used in GPS-workouts
+     */
     @ColumnInfo(name = "min_distance")
     public int minDistance;
 
+    /**
+     * Color int
+     */
     public int color;
 
+    /**
+     * Icon id of the workout type
+     *
+     * @see de.tadris.fitness.util.Icon
+     */
     public String icon;
 
+    /**
+     * Metabolic equivalent of task:
+     * This is a measure for how much energy is burned while doing an activity.
+     */
     @ColumnInfo(name = "met")
     public int MET;
 
+    /**
+     * @see RecordingType
+     */
     @ColumnInfo(name = "type")
     public String recordingType;
 
+    /**
+     * Specified the plural resource ID for the unit measured (only for indoor workouts)
+     * treadmill -> "steps"
+     */
     @Ignore
     @PluralsRes
-    // Only for indoor workouts
-    // treadmill -> "steps"
     public int repeatingExerciseName;
 
     @Ignore
