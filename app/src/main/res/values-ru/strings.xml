@@ -57,7 +57,7 @@
     <string name="enable">Включить</string>
     <string name="comment">Комментарий</string>
     <string name="enterComment">Введите комментарий</string>
-    <string name="okay">ОК</string>
+    <string name="okay">Применить</string>
     <string name="continue_">Продолжить</string>
     <string name="deleteWorkout">Удалить тренировку</string>
     <string name="trackerWaitingMessage">Ожидание начала тренировки</string>
@@ -100,9 +100,9 @@
     <string name="merge">Объединить</string>
     <string name="replace">Заменить</string>
     <string name="replaceOrMergeMessage">Заменить или объединить базу данных с резервной копией\?</string>
-    <string name="workoutStatsHelpText">Этот экран показывать историческую статистику тренировок. Для использования необходимо сначала выбрать тип тренировки, нажав на нее. После выбрать информацию, которую хотите узнать, и период времени.
+    <string name="workoutStatsHelpText">На этом экране отображается историческая статистика тренировок. Чтобы воспользоваться, сначала нужно указать тип тренировки, щелкнув на неё. Затем установите информацию, о которой вы хотите узнать, и временной интервал.
 \n
-\nТ.е. если вы выберете \"Неделя\" в периоде времени, все тренировки каждой недели будут объединены в одну точку данных либо в виде среднего значения, либо суммы за каждую неделю.</string>
+\nНапример, если в качестве временного интервала выбрать \"Неделя\", то все тренировки каждой недели будут объединены в одну точку данных с расчетом среднего значения или суммы за каждую неделю.</string>
     <string name="singleWorkout">Одиночная тренировка</string>
     <string name="dayInMonth">День в месяце</string>
     <string name="calendarWeekYear">Календарная неделя / год</string>
@@ -320,15 +320,15 @@
     <string name="customAutoStartDelay">Другое</string>
     <string name="manageAutoStartDelaySummary">Выберите обратный отсчет времени по умолчанию для автоматического начала тренировки</string>
     <string name="alreadyDownloading">Файл уже загружен</string>
-    <string name="recordingPermissionNotGrantedMessage">Для того, чтобы во время тренеровок была возможность отслеживать ваше движение, FitoTrack требуется предоставить разрешение на определение местоположения. Также приложение FitoTrack собирает данные о местоположении, записывает действия ваших тренировок в фоновом режиме или когда экран выключен. Данные о местоположении всегда остаются в вашем телефоне без вашего явного согласия на их передачу.</string>
+    <string name="recordingPermissionNotGrantedMessage">Для того, чтобы во время тренировок была возможность отслеживать ваше движение, FitoTrack требуется предоставить разрешение на определение местоположения. Также приложение FitoTrack собирает данные о местоположении, записывает действия ваших тренировок в фоновом режиме или когда экран выключен. Данные о местоположении всегда остаются в вашем телефоне без вашего явного согласия на их передачу.</string>
     <string name="workoutTypeAll">Все</string>
     <string name="pref_auto_start_mode_title">Режим автозапуска</string>
     <string name="ttsLongSecondCountdownAnnouncement"> <xliff:g example="5 seconds" id="secs">%1$s</xliff:g> до начала </string>
     <plurals name="minutes">
-        <item quantity="one"><xliff:g id="mins" example="1">%1$d</xliff:g> минута</item>
-        <item quantity="few"><xliff:g id="mins" example="2">%1$d</xliff:g> минуты</item>
-        <item quantity="many"><xliff:g id="mins" example="5">%1$d</xliff:g> минут</item>
-        <item quantity="other"><xliff:g id="mins" example="5">%1$d</xliff:g> минут</item>
+        <item quantity="one"><xliff:g example="1" id="mins">%1$d</xliff:g> минута</item>
+        <item quantity="few"><xliff:g example="2" id="mins">%1$d</xliff:g> минуты</item>
+        <item quantity="many"><xliff:g example="5" id="mins">%1$d</xliff:g> минут</item>
+        <item quantity="other"><xliff:g example="5" id="mins">%1$d</xliff:g> минут</item>
     </plurals>
     <plurals name="seconds">
         <item quantity="one"><xliff:g example="1" id="secs">%1$d</xliff:g> секунда</item>
@@ -344,7 +344,7 @@
     <string name="dialog_nfc_disabled_title">В настоящее время NFC отключен</string>
     <string name="workoutAutoStartAborted">Автоматический запуск прерван</string>
     <string name="abort">Отмена</string>
-    <string name="popup_auto_start_wait_for_gps">Когда местоположение GPS точное</string>
+    <string name="popup_auto_start_wait_for_gps">При точном определении местоположения по GPS</string>
     <string name="popup_auto_start_on_move">Когда я начинаю движение</string>
     <string name="workoutAutoStarted">Автоматический запуск тренировки</string>
     <string name="autoStartCountdownMsgMove">Как только вы начнете движение, тренировка будет запущена</string>
@@ -385,7 +385,7 @@
     <string name="ttsAboveTargetSpeed">Очень быстро</string>
     <string name="selectColoring">Выберите окраску</string>
     <string name="pref_announcements_pace_control_title">Предупреждения о темпе</string>
-    <string name="editWorkoutStartEnd">Редактировать начало/конец</string>
+    <string name="editWorkoutStartEnd">Изменить начало/конец</string>
     <string name="preferenceUseAverageForCurrentSpeed">Для расчета текущей скорости используйте среднюю скорость за определенное время вместо последней единичной записи скорости.</string>
     <string name="preferenceCurrentSpeedAverageTimeTitle">Средняя скорость</string>
     <string name="preferenceCurrentSpeedTime">Средний временной интервал скорости</string>
