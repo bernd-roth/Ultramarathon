@@ -52,7 +52,7 @@
     <string name="unitFootSingular">Pé</string>
     <string name="unitFootPlural">Pés</string>
     <string name="noWorkoutStarted">Nenhum Exercício Começado</string>
-    <string name="editDisplayedInformationHint">Desde que o exercício ainda não tenha começado, pode-se editar os valores apresentados ao clicar num dos quatro campos.</string>
+    <string name="editDisplayedInformationHint">Enquanto o exercício ainda não tenha começado, pode-se editar os valores apresentados ao clicar em um dos quatro campos.</string>
     <string name="editDisplayedInformation">Editar informação apresentada</string>
     <string name="aboutPrivacyPolicy">Política de Privacidade</string>
     <string name="aboutHelpTranslating">Ajudar a traduzir</string>
