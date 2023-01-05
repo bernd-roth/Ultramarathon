@@ -92,7 +92,7 @@
     <string name="month">Mês</string>
     <string name="week">Semana</string>
     <string name="day">Dia</string>
-    <string name="workout_statistics">Estatísticas de exercício</string>
+    <string name="workout_statistics">Estatísticas de Exercícios</string>
     <string name="no_workouts_recorded_for_this_activity">Nenhum exercício para esta modalidade</string>
     <string name="unlockPhoneStopWorkout">Desbloqueie o seu telemóvel para terminar o rastreamento, por favor</string>
     <string name="currentTime">Tempo</string>
