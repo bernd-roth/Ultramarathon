@@ -76,9 +76,9 @@
     <string name="merge">Agregar</string>
     <string name="replace">Substituir</string>
     <string name="replaceOrMergeMessage">Substituir ou fundir a base de dados com um ficheiro de cópia de segurança\?</string>
-    <string name="workoutStatsHelpText">Este ecrã mostra estatísticas históricas dos treinos. Para usá-lo, primeiro precisa especificar o tipo de exercício, por clicar nele. Em seguida, defina a informação que quer saber sobre e o período.
+    <string name="workoutStatsHelpText">Esta secção apresenta estatísticas relativas ao historial dos exercícios. Para usá-la, necessecita primeiro de especificar o tipo de exercício ao clicar na respetiva modalidade. De seguida, defina a informação que deseja saber e em que intervalo de tempo.
 \n
-\nPor exemplo, se selecionar \"semana\" como período, todos os exercícios de cada semana serão fundidos num ponto de dados ou calculando a média, ou a soma de cada semana.</string>
+\nE.g. se selecionar \"Semana\" como intervalo, todos os exercícios de cada semana serão aglomerados num só conjunto de dados calculando assim quer a média semanal quer a soma de cada semana.</string>
     <string name="singleWorkout">Exercício Único</string>
     <string name="calendarWeekYear">Calendário Semana / Ano</string>
     <string name="help">Ajuda</string>
@@ -95,7 +95,7 @@
     <string name="workout_statistics">Estatísticas de exercício</string>
     <string name="no_workouts_recorded_for_this_activity">Nenhum exercício para esta modalidade</string>
     <string name="unlockPhoneStopWorkout">Desbloqueie o seu telemóvel para terminar o rastreamento, por favor</string>
-    <string name="currentTime">momento</string>
+    <string name="currentTime">Tempo</string>
     <string name="pref_auto_timeout_title">Período para Paragem Automática</string>
     <string name="intervalAutoTimeoutTraining">Paragem Automática de Exercício</string>
     <string name="manageAutoTimeoutSummary">Configurar o intervalo para paragem automática do exercício</string>
@@ -282,8 +282,8 @@
     <string name="speechConfigNoSpeech">Sem Anúncio</string>
     <string name="aboutChangelog">Alteracao</string>
     <string name="announcementSuppressDuringCall">Suprimir durante a chamada</string>
-    <string name="dayInMonth">Dia do mês</string>
-    <string name="preferencesBackupSummary">Backup/restaurar os seus dados de treino</string>
+    <string name="dayInMonth">Dia no Mês</string>
+    <string name="preferencesBackupSummary">Backup/Restaurar dados de exercícios</string>
     <string name="intervalSets">Conjuntos De Intervalos</string>
     <string name="intervalSet">Intervalo Definido</string>
     <string name="intervalSetSelected">Intervalo seleccionado</string>
@@ -293,7 +293,7 @@
     <string name="manageIntervalsSummary">Edite os conjuntos de intervalo que você será capaz de usar durante o treino usando o feedback de voz.</string>
     <string name="pref_announcement_mode">Modo De Anúncio</string>
     <string name="ttsNotAvailable">TextToSpeech não está disponível</string>
-    <string name="trackerRunning">O localizador está em execução</string>
+    <string name="trackerRunning">Rastreamento em funcionamento</string>
     <string name="pref_announcements_content">Conteúdo dos anúncios</string>
     <string name="pref_announcements_config_title">Margem De Variação Do Anúncio</string>
     <string name="voiceAnnouncementsTitle">Anúncios De Voz</string>
