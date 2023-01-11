@@ -285,7 +285,7 @@
     <string name="ttsBelowTargetSpeed">Liian hidas</string>
     <string name="ttsAboveTargetSpeed">Liian nopea</string>
     <string name="pref_auto_start_mode_instant">Aloita välittömästi</string>
-    <string name="pref_auto_start_mode_wait_for_gps">Odota tarkkaa GPS-sijaintia</string>
+    <string name="pref_auto_start_mode_wait_for_gps">Odota tarkkaa sijaintia</string>
     <string name="pref_auto_start_mode_on_move">Odota kunnes alat liikkua</string>
     <string name="errorGpxExportFailed">GPX-vienti epäonnistui.</string>
     <string name="loadingFile">Ladataan tiedostoa</string>
@@ -311,7 +311,7 @@
     <string name="pref_announcements_config_summary">Valitse aika ja etäisyys ääni-ilmoitusten välillä</string>
     <string name="pref_announcements_content">Ilmoitusten sisältö</string>
     <string name="workoutMaxFrequency">Suurin frekvenssi</string>
-    <string name="workoutBurnedEnergy">Käytetty energia</string>
+    <string name="workoutBurnedEnergy">Kaloreja poltettu</string>
     <string name="recordWorkout">Nauhoita treeni</string>
     <string name="noGpsMessage">Ota GPS käyttöön, jotta treeniäsi on mahdollista seurata.</string>
     <string name="workoutRepetitions">Toistot</string>
@@ -361,10 +361,74 @@
         <item quantity="one"><xliff:g example="1" id="mins">%1$d</xliff:g> minuutti</item>
         <item quantity="other"><xliff:g example="5" id="mins">%1$d</xliff:g> minuuttia</item>
     </plurals>
-    <string name="importBackupMessage">VAROITUS: Kaikki sovelluksessa olemassa olevat tiedot tyhjennetään. Jos et halua menettää tietoja, ota ensin toinen varmuuskopio. Haluatko varmasti palauttaa tämän varmuuskopion\?</string>
+    <string name="importBackupMessage">Varmuuskopioi kaikki nykyiset tiedot, jos haluat säilyttää ne. Haluatko varmasti palauttaa aiemman varmuuskopion\?</string>
     <string name="aboutUnlistedContributors">Kiitos kaikille listaamattomille ihmisille, jotka auttoivat kääntämään ja laajentamaan FitoTrackia!</string>
     <string name="unitFootSingular">Jalka</string>
     <string name="unitFootPlural">Jalat</string>
     <string name="editDisplayedInformationHint">Jos treeni ei ole vielä alkanut, voit muokata näytettäviä arvoja napauttamalla jotain neljästä kentästä.</string>
     <string name="notimeout">Ei aikakatkaisua</string>
+    <string name="workoutTypeSwimming">Uinti</string>
+    <string name="pref_render_theme_style_info">Valitulle teemalle ei ole valikkoa.</string>
+    <string name="statistics">Tilastot</string>
+    <string name="private_visibility">Yksityinen</string>
+    <string name="only_on_headphones_mode">Vain kuulokkeissa</string>
+    <string name="always_track_style">Aina</string>
+    <string name="never_track_style">Ei koskaan</string>
+    <string name="dark_theme">Tumma</string>
+    <string name="metric_with_m_s_unit_system">Metrinen ja m/s</string>
+    <string name="system_default">Järjestelmän oletus</string>
+    <string name="wednesday">Keskiviikko</string>
+    <string name="thursday">Torstai</string>
+    <string name="massExportGpxTitle">Vie kaikki treenit GPX-muodossa</string>
+    <string name="massExportGpxSummary">Luo ZIP-tiedoston sisältäen kaikki treenit GPX-tiedostoina</string>
+    <string name="show_sum">Näytä summa</string>
+    <string name="hidden">Piilotettu</string>
+    <string name="friday">Perjantai</string>
+    <string name="saturday">Lauantai</string>
+    <string name="always_mode">Aina</string>
+    <string name="sunday">Sunnuntai</string>
+    <string name="monday">Maanantai</string>
+    <string name="tuesday">Tiistai</string>
+    <string name="autoBackupTitle">Automaattiset varmuuskopiot</string>
+    <string name="workoutGPXExportTitle">Treenien GPX-viennit</string>
+    <string name="autoExportBackupTitle">Automaattiset sovelluksen varmuuskopiot</string>
+    <string name="mapnik_default_osm_mapstyle">Mapnik
+\nOSM:n oletusarvoinen karttatyyli</string>
+    <string name="workoutCount">Treenien määrä</string>
+    <string name="humanitarian_clean_map_but_sometimes_not_available">Humanitaarinen
+\nSelkeä kartta, mutta ei aina saatavilla</string>
+    <string name="exportTargetHttpPost">HTTP POST -pyyntö</string>
+    <string name="system_theme">Järjestelmä</string>
+    <string name="metric_unit_system">Metrinen</string>
+    <string name="exportTargetDirectory">Hakemisto</string>
+    <string name="autoExportWorkoutsSummary">Vie uudet tallennetut treenit</string>
+    <string name="pref_auto_start_delay_title">Automaattisen käynnistyksen laskuri</string>
+    <string name="offline_local_map_file_with_local_render_theme">Yhteydetön
+\nPaikallinen karttatiedosto paikallisesti renderöidyllä teemalla</string>
+    <string name="light_theme">Vaalea</string>
+    <string name="takeBackups1">Päivittäin</string>
+    <string name="takeBackups2">Joka toinen päivä</string>
+    <string name="takeBackups3">Joka kolmas päivä</string>
+    <string name="autoExportBackupSummary">Vie varmuuskopiot automaattisesti</string>
+    <string name="preferencesDebugTitle">Vianjäljitys</string>
+    <string name="singleWorkout">Yksittäinen treeni</string>
+    <string name="autoExportWorkoutExplanation">Kun uusi treeni on tallennettu, GPX-vienti tallennetaan tänne:</string>
+    <string name="exportIntervalTitle">Varmuuskopioiden aikaväli</string>
+    <string name="enterValidUrl">Kirjoita kelvollinen HTTP-osoite</string>
+    <string name="takeBackups7">Joka viikko</string>
+    <string name="takeBackups14">Joka toinen viikko</string>
+    <string name="configureHttpPostRequest">Määritä HTTP POST -pyyntö</string>
+    <string name="httpUrl">URL-osoite</string>
+    <string name="debugShareLogsTitle">Jaa lokit</string>
+    <plurals name="satelliteCount">
+        <item quantity="one">Yksi satelliitti</item>
+        <item quantity="other">%d satelliittia</item>
+    </plurals>
+    <string name="resumeWorkoutConfirmation">Jatketaanko tätä treeniä\? Keskeytysaika ajankohdasta, kun treeni pysäytettiin, lisätään kokonaisaikaan.</string>
+    <string name="intervalAutoStartDelayTraining">Treenin automaattisen käynnistyksen viive</string>
+    <string name="workouts">Treenit</string>
+    <string name="workoutAvgDurationLong">Keskimääräinen kesto</string>
+    <string name="details">Tiedot</string>
+    <string name="stats_history_title">Historia</string>
+    <string name="stats_overview_title">Yleisnäkymä</string>
 </resources>
