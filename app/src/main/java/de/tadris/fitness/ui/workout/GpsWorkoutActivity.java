@@ -191,6 +191,11 @@ public abstract class GpsWorkoutActivity extends WorkoutActivity implements MapS
 
         selectedSample = null;
 
+        // If no sample was selected return now. This can happen onNothingSelected
+        if (clickedSample == null){
+            return;
+        }
+
         // Find real sample with same id as the clicked one
         GpsSample diagramSample = (GpsSample) clickedSample;
         for (GpsSample realSample : samples) {
