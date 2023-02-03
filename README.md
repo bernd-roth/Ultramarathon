@@ -58,6 +58,7 @@ When I started programming this app I decided that it should be completely free 
 * [Liberapay](https://liberapay.com/jannis/donate) (via PayPal)
 * [Paypal](https://www.paypal.com/donate/?hosted_button_id=TACE5TRSC29WE)
 * BTC: 3BSbGRbJaiSxVg3D6nVRK5C1SZEezhjtK5
+* Monero: 8BZg7sSRBQEFo5pPKRMAzChShivWy5JvXApXLpBinkBsWbYFqHVNEXeUGWqFTcGiiN7B6TW8qwssgATePGiCrJhTQg5hEw8
 
 You can also [email](mailto:jannis@tadris.de) me or join the [Telegram Group](https://t.me/fitotrack)/[Matrix Room](https://matrix.to/#/#fitotrack:matrix.org?via=matrix.org) to get in touch with me.
 
