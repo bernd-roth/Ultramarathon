@@ -493,4 +493,36 @@
     <string name="selectExportTarget">Velg eksportmål</string>
     <string name="exportIntervalTitle">Sikkerhetskopi-intervall</string>
     <string name="configureHttpPostRequest">Sett opp HTTP-POST-forespørsel</string>
+    <string name="workoutTypeSwimming">Svømming</string>
+    <string name="workoutCount">Treningsøkt-antall</string>
+    <string name="statistics">Statistikk</string>
+    <string name="stats_history_title">Historikk</string>
+    <string name="stats_overview_title">Oversikt</string>
+    <string name="histogram">Histogram</string>
+    <string name="details">Detaljer</string>
+    <string name="monthYear">Måned/år</string>
+    <string name="workoutAvgDistance">Gjen. avstand</string>
+    <string name="massExportGpxTitle">Eksporter alle treningsøkter som GPX</string>
+    <string name="debugSensorsTitle">Avlus sensorer</string>
+    <string name="massExportGpxSummary">Oppretter en ZIP-fil som inneholder alle treningsøkter som GPX-dokumenter</string>
+    <string name="debugShareLogsSummary">Del logger som inneholder nyttig data for å finne feil i treningsøktopptakeren. Vanligvis inneholder de ikke posisjonsdata.</string>
+    <string name="debugSensorsSummary">Samle sensordata som skrives til loggfilen</string>
+    <string name="show_sum">Vis sum</string>
+    <string name="workoutDistanceSum">Avstandssum</string>
+    <string name="preferencesDebugTitle">Feilsøk</string>
+    <string name="debugShareLogsTitle">Del loggføring</string>
+    <plurals name="satelliteCount">
+        <item quantity="one">Én satellitt</item>
+        <item quantity="other">%d satellitter</item>
+    </plurals>
+    <string name="debugPressureSensor">Avlus trykksensor</string>
+    <string name="calibrating">Kalibrerer</string>
+    <string name="noSensorAvailable">Ingen sensorer tilgjengelig</string>
+    <string name="workoutAvgDurationLong">Gjen. varighet</string>
+    <string name="workoutDurationSum">Varighetssum</string>
+    <string name="workoutAvgPauseDuration">Gjen. pausevarighet</string>
+    <string name="workoutPauseDurationSum">Pausevarighetssum</string>
+    <string name="stats_explore_title">Utforsk</string>
+    <string name="zoomWithVolumeButtonsSummary">Lydstyrke opp og ned kontrollerer forstørrelse</string>
+    <string name="zoomWithVolumeButtonsTitle">Forstørr med lydstyrkeknapper</string>
 </resources>
