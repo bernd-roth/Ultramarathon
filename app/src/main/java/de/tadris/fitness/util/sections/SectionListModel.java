@@ -198,7 +198,7 @@ public class SectionListModel {
         boolean worst = false;
 
         public double getPace() {
-            return TimeUnit.MILLISECONDS.toSeconds((long)time) / dist;
+            return time / 1000 / dist;
         }
 
         public double getDist(){
@@ -207,7 +207,7 @@ public class SectionListModel {
 
         public double getTime(){ return getTime(false);}
 
-        public double getTime(boolean millis){ return millis ? time:TimeUnit.MILLISECONDS.toSeconds((long) time);}
+        public double getTime(boolean millis){ return millis ? time: time / 1000;}
 
         public Section copy() {
             Section section = new Section();

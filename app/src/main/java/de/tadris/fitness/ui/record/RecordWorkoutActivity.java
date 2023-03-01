@@ -506,11 +506,11 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
         }).setView(editText).setOnCancelListener(dialog -> saveAndClose()).create().show();
     }
 
-    private void showAreYouSureToStopDialog() {
+    private void showAreYouSureToStopDialog(String reasonContext) {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.stopRecordingQuestion)
                 .setMessage(R.string.stopRecordingQuestionMessage)
-                .setPositiveButton(R.string.stop, (dialog, which) -> stop("User requested"))
+                .setPositiveButton(R.string.stop, (dialog, which) -> stop(String.format("User requested: %s", reasonContext)))
                 .setNegativeButton(R.string.continue_, null)
                 .create().show();
     }
@@ -905,7 +905,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
         if (isRestrictedInput()) {
             Toast.makeText(this, R.string.unlockPhoneStopWorkout, Toast.LENGTH_LONG).show();
         } else {
-            stop("Stop button pressed");
+            showAreYouSureToStopDialog("Stop button pressed");
         }
     }
 
@@ -930,7 +930,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
         cancelAutoStart(true);
         if (instance.recorder.isActive() && instance.recorder.getState() != GpsWorkoutRecorder.RecordingState.IDLE) {
             // Still Running Workout
-            showAreYouSureToStopDialog();
+            showAreYouSureToStopDialog("Back button clicked");
         } else {
             // Stopped or Idle Workout
             activityFinish();
