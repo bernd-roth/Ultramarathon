@@ -36,7 +36,7 @@ public class NotificationHelper {
     public static final String CHANNEL_WORKOUT = "workout";
 
     public static void requestNotificationPermissionIfNecessary(Activity activity) {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU &&
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
                 ContextCompat.checkSelfPermission(activity, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
             activity.requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, 0);
         }
