@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2023 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -99,6 +99,7 @@ import de.tadris.fitness.ui.dialog.SelectIntervalSetDialog;
 import de.tadris.fitness.ui.dialog.SelectWorkoutInformationDialog;
 import de.tadris.fitness.util.BluetoothDevicePreferences;
 import de.tadris.fitness.util.NfcAdapterHelper;
+import de.tadris.fitness.util.NotificationHelper;
 import de.tadris.fitness.util.ToneGeneratorController;
 import de.tadris.fitness.util.VibratorController;
 import de.tadris.fitness.util.WorkoutLogger;
@@ -536,6 +537,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
         if (!isServiceRunning(RecorderService.class)) {
             WorkoutLogger.log(TAG, "Starting service");
             Intent locationListener = new Intent(getApplicationContext(), RecorderService.class);
+            NotificationHelper.requestNotificationPermissionIfNecessary(this);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 startForegroundService(locationListener);
             } else {
