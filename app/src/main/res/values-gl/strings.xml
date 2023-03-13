@@ -55,14 +55,14 @@
     <string name="cannotFindWorkout">Non se atopa o adestramento</string>
     <string name="speedLastMinuteSpoken">Velocidade no último minuto</string>
     <string name="speedLastMinute">Velocidade prom. (último minuto)</string>
-    <string name="sections">Seccións</string>
+    <string name="sections">Tramos</string>
     <string name="no_workouts_recorded">Non se gravaron adestramentos</string>
     <string name="announcementSuppressDuringCall">Suprimir durante unha chamada</string>
     <string name="workoutImported">Adestramento importado con éxito</string>
     <string name="merge">Combinar</string>
     <string name="replace">Reemplazar</string>
     <string name="replaceOrMergeMessage">Reemplazar ou combinar a base de datos co arquivo de respaldo\?</string>
-    <string name="workoutStatsHelpText">Esta pantalla mostra as estatísticas históricas dos adestramentos. Para usalo, primeiro debes indicar o tipo de adestramento facendo clic nel. Após, configura a información que desexas coñecer e o período de tempo.
+    <string name="workoutStatsHelpText">Esta pantalla mostra as estatísticas históricas dos adestramentos. Para usalas, primeiro debes indicar o tipo de adestramento premendo nel. Após, configura a información que desexas coñecer e o período de tempo.
 \n
 \nEx. Se escolles \"Semana\" como período de tempo, todos os adestramentos de cada semana fusionaranse nun punto de datos, xa sexa calculando o promedio ou a suma de cada semana.</string>
     <string name="singleWorkout">Adestramento único</string>
@@ -79,7 +79,7 @@
     <string name="month">Mes</string>
     <string name="week">Semana</string>
     <string name="day">Día</string>
-    <string name="workout_statistics">Estatísticas de adestramento</string>
+    <string name="workout_statistics">Estatísticas</string>
     <string name="no_workouts_recorded_for_this_activity">Non existen adestramentos para esta actividade</string>
     <string name="unlockPhoneStopWorkout">Por favor desbloquea o teléfono para deter a gravación</string>
     <string name="currentTime">Tempo actual</string>
@@ -129,7 +129,7 @@
     <string name="deleteIntervalSetMessage">Desexas eliminar o conxunto de intervalos\?</string>
     <string name="deleteIntervalSet">Eliminar conxunto de intervalos</string>
     <string name="enterName">Dalle un nome</string>
-    <string name="length_in_minutes">Duración (minutos):</string>
+    <string name="length_in_minutes">Tempo (minutos):</string>
     <string name="interval_name">Nome:</string>
     <string name="hintEditIntervalSet">Engade intervalos que se falarán.</string>
     <string name="hintManageIntervalSets">Engade un conxunto de intervalos para usalo nos teus adestramentos.</string>
@@ -198,7 +198,7 @@
     <string name="workoutTypeCycling">Ciclismo</string>
     <string name="workoutTypeWalking">Camiñar</string>
     <string name="workoutTypeRunning">Correr</string>
-    <string name="height">Altura</string>
+    <string name="height">Altitude</string>
     <string name="workoutDescent">Descenso</string>
     <string name="workoutAscent">Ascenso</string>
     <string name="uploadFailedOsmNotAuthorized">Non autorizado, inténtao novamente</string>
@@ -221,8 +221,8 @@
     <string name="workoutDistance">Distancia</string>
     <string name="workoutEndTime">Hora de remate</string>
     <string name="workoutStartTime">Hora de inicio</string>
-    <string name="workoutPauseDuration">Duración da pausa</string>
-    <string name="workoutDuration">Duración</string>
+    <string name="workoutPauseDuration">En pausa</string>
+    <string name="workoutDuration">Tempo</string>
     <string name="workoutDate">Data</string>
     <string name="workoutTime">Hora</string>
     <string name="gpsFound">Sinal GPS atopado</string>
@@ -261,12 +261,12 @@
     <string name="aboutUnlistedContributors">Grazas a todas as colaboradoras non mencionadas que axudaron a traducir e mellorar FitoTrack!</string>
     <string name="inclination">Inclinación</string>
     <string name="nothingSelected">Nada seleccionado</string>
-    <string name="showIntervals">Amosar intervalos</string>
-    <string name="connectHeartRateDevice">Conectar monitor ritmo cardíaco</string>
+    <string name="showIntervals">Mostrar intervalos</string>
+    <string name="connectHeartRateDevice">Conectar monitor pulso cardíaco</string>
     <string name="selectBluetoothDevice">Selecciona dispositivo Bluetooth</string>
     <string name="workoutAvgHeartRate">Pulso promedio</string>
-    <string name="workoutMaxHeartRate">Ritmo cardíaco Máx</string>
-    <string name="workoutHeartRate">Ritmo cardíaco</string>
+    <string name="workoutMaxHeartRate">Pulso Máximo</string>
+    <string name="workoutHeartRate">Pulso cardíaco</string>
     <string name="workoutStarted">Adestramento iniciado</string>
     <string name="workoutStopped">Adestramento detido</string>
     <string name="workoutResumed">Adestramento retomado</string>
@@ -276,10 +276,10 @@
     <string name="autoPauseSummary">Deter automáticamente e retomar o adestramento</string>
     <string name="autoPauseTitle">Pausa automática</string>
     <string name="resumeWorkout">Retomar adestramento</string>
-    <string name="heartRateNotAvailable">Non está dispoñible o ritmo cardíaco.</string>
+    <string name="heartRateNotAvailable">O pulso cardíaco non está dispoñible.</string>
     <string name="announcementWorkoutActions">Accións do adestramento (pausar, retomar, etc.)</string>
     <string name="resumeWorkoutConfirmation">Continuar co adestramento\? Esto engadirá unha pausa desde o momento en que o adestramento se detivo.</string>
-    <string name="prefShowOnLockScreenSummary">Amosala información do adestramento aínda que o dispositivo atopese bloqueado.</string>
+    <string name="prefShowOnLockScreenSummary">Mostrar información do adestramento aínda que o dispositivo esté bloqueado.</string>
     <string name="prefShowOnLockScreenTitle">Visible na pantalla de bloqueo</string>
     <string name="notimeout">Sen caducidade</string>
     <string name="editWorkoutType">Edita tipo de adestramento</string>
@@ -383,8 +383,8 @@
     <string name="preferencesCategoryMap">Mapa</string>
     <string name="prefTrackStyleUsageTitle">Usar automáticamente cores para ruta</string>
     <string name="trackStyle">Estilo da ruta</string>
-    <string name="workoutMaxHeight">Altura máx</string>
-    <string name="workoutMinHeight">Altura min</string>
+    <string name="workoutMaxHeight">Altitude máx.</string>
+    <string name="workoutMinHeight">Altitude min.</string>
     <string name="unitHeartBeatsPerMinute">ppm</string>
     <string name="preferenceFirstDayOfWeek">Comezo da semana</string>
     <string name="edit_interval">Editar intervalo</string>
@@ -449,7 +449,7 @@
     <string name="purple_rain">Chuvia Púrpura</string>
     <string name="pink_mist">Néboa Rosa</string>
     <string name="rainbow_warrior">Arco da Vella</string>
-    <string name="height_map">Altura do Mapa</string>
+    <string name="height_map">Mapa de altitude</string>
     <string name="bright_night">Noite Brillante</string>
     <string name="mondriaan">Mondriaan DC</string>
     <string name="system_theme">Sistema</string>
@@ -508,7 +508,7 @@
     <string name="zoomWithVolumeButtonsSummary">Os botóns de volume controlan o nivel de zoom</string>
     <string name="zoomWithVolumeButtonsTitle">Zoom cos botóns de volume</string>
     <string name="workoutTypeSwimming">Natación</string>
-    <string name="workoutCount">Contalos adestramentos</string>
+    <string name="workoutCount">Número de adestramentos</string>
     <string name="statistics">Estatísticas</string>
     <string name="stats_overview_title">Visión xeral</string>
     <string name="histogram">Histograma</string>
@@ -517,12 +517,12 @@
     <string name="workoutAvgDistance">Distancia media</string>
     <string name="workoutDistanceSum">Suma da distancia</string>
     <string name="massExportGpxSummary">Crea un ficheiro ZIP que contén todolos adestramentos como documentos GPX</string>
-    <string name="show_sum">Amosala suma</string>
+    <string name="show_sum">Mostrar suma</string>
     <string name="massExportGpxTitle">Exporta todolos adestramentos como GPX</string>
     <string name="workoutAvgDurationLong">Duración media</string>
     <string name="workoutAvgPauseDuration">Duración media da pausa</string>
-    <string name="workoutPauseDurationSum">Suma da duración da pausa</string>
-    <string name="workoutDurationSum">Duración da suma</string>
+    <string name="workoutPauseDurationSum">Tempo total en pausa</string>
+    <string name="workoutDurationSum">Suma de tempo</string>
     <string name="stats_explore_title">Explora</string>
     <string name="stats_history_title">Historia</string>
 </resources>
