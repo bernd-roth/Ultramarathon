@@ -172,7 +172,7 @@
     <string name="trackingInfoDescription">Información sobre o rastrexador en execución</string>
     <string name="trackingInfo">Información seguimento</string>
     <string name="trackerWaitingMessage">Agardando para comezar o adestramento</string>
-    <string name="trackerRunning">O rastrexador está traballando</string>
+    <string name="trackerRunning">O rastrexador está gravando</string>
     <string name="deleteWorkoutMessage">Realmente queres eliminar o adestramento\?</string>
     <string name="deleteWorkout">Eliminar adestramento</string>
     <string name="continue_">Continuar</string>
