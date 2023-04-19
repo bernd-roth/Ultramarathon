@@ -30,6 +30,7 @@ allprojects {
 }
 
 android {
+    namespace 'de.tadris.fitness'
     compileSdkVersion 33
     defaultConfig {
         applicationId "de.tadris.fitness"
@@ -121,7 +122,7 @@ dependencies {
     implementation 'no.nordicsemi.android:ble:2.2.4'
     implementation 'no.nordicsemi.android:ble-common:2.2.4'
 
-    implementation 'org.greenrobot:eventbus:3.2.0'
+    implementation 'org.greenrobot:eventbus:3.3.1'
 
     // Android Room Database
     def room_version = "2.5.0"
