@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2023 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -23,7 +23,6 @@ import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -59,6 +58,7 @@ import de.tadris.fitness.ui.workout.EnterWorkoutActivity
 import de.tadris.fitness.ui.workout.ShowGpsWorkoutActivity
 import de.tadris.fitness.util.DialogUtils
 import de.tadris.fitness.util.Icon
+import de.tadris.fitness.util.PermissionUtils
 import de.tadris.fitness.util.io.general.IOHelper
 
 class ListWorkoutsActivity : FitoTrackActivity(), WorkoutAdapterListener {
@@ -110,10 +110,7 @@ class ListWorkoutsActivity : FitoTrackActivity(), WorkoutAdapterListener {
     private val mHandler = Handler()
 
     private fun hasPermission(): Boolean {
-        return ActivityCompat.checkSelfPermission(
-            this,
-            Manifest.permission.READ_EXTERNAL_STORAGE
-        ) == PackageManager.PERMISSION_GRANTED
+        return PermissionUtils.checkStoragePermissions(this, false)
     }
 
     private fun requestPermissions() {
