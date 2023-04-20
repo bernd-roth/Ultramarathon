@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2023 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -176,17 +176,16 @@ public class DetailStatsActivity extends FitoTrackActivity {
 
         // Draw candle charts
         try {
-            if (summed != true) {
+            if (!summed) {
                 currentCandleDataSet = statsProvider.getCandleData(aggregationSpan, workoutTypes, property);
-                setTitle(currentCandleDataSet.getLabel()+additionalTitle);
+                setTitle(currentCandleDataSet.getLabel() + additionalTitle);
                 combinedData.setData(new CandleData(currentCandleDataSet));
                 // Create background line data
                 LineDataSet lineDataSet = StatsProvider.convertCandleToMeanLineData(currentCandleDataSet);
                 combinedData.setData(new LineData(DataSetStyles.applyBackgroundLineStyle(this, lineDataSet)));
-            }
-            else {
+            } else {
                 currentBarDataSet = statsProvider.getSumData(aggregationSpan, workoutTypes, property);
-                setTitle(this.getString(R.string.workoutDistanceSum)+additionalTitle);
+                setTitle(this.getString(R.string.workoutDistanceSum) + additionalTitle);
                 BarData barData = new BarData(currentBarDataSet);
                 combinedData.setData(barData);
             }

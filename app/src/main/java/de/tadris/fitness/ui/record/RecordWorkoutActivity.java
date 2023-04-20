@@ -54,6 +54,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
@@ -100,6 +101,7 @@ import de.tadris.fitness.ui.dialog.SelectWorkoutInformationDialog;
 import de.tadris.fitness.util.BluetoothDevicePreferences;
 import de.tadris.fitness.util.NfcAdapterHelper;
 import de.tadris.fitness.util.NotificationHelper;
+import de.tadris.fitness.util.PermissionUtils;
 import de.tadris.fitness.util.ToneGeneratorController;
 import de.tadris.fitness.util.VibratorController;
 import de.tadris.fitness.util.WorkoutLogger;
@@ -876,7 +878,7 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
     }
 
     private void chooseHRDevice() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && (!checkPermission(Manifest.permission.BLUETOOTH_CONNECT) || !checkPermission(Manifest.permission.BLUETOOTH_SCAN))) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && !hasBluetoothPermissions()) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.BLUETOOTH_CONNECT, Manifest.permission.BLUETOOTH_SCAN}, REQUEST_CODE_BLUETOOTH_PERMISSION);
             return;
         }
@@ -885,6 +887,12 @@ public abstract class RecordWorkoutActivity extends FitoTrackActivity implements
         } catch (ChooseBluetoothDeviceDialog.BluetoothNotAvailableException ignored) {
             askToActivateBluetooth();
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.S)
+    private boolean hasBluetoothPermissions() {
+        return PermissionUtils.checkPermission(this, Manifest.permission.BLUETOOTH_CONNECT)
+                && PermissionUtils.checkPermission(this, Manifest.permission.BLUETOOTH_SCAN);
     }
 
     @SuppressLint("MissingPermission")

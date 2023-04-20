@@ -40,7 +40,8 @@ object PermissionUtils {
             ))
         }
 
-    private fun checkPermission(context: Context, permission: String) =
+    @JvmStatic
+    fun checkPermission(context: Context, permission: String) =
         ActivityCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
 
 }

@@ -171,7 +171,7 @@ public class BackupSettingsFragment extends FitoTrackSettingFragment {
     }
 
     private boolean hasPermission() {
-        return PermissionUtils.checkStoragePermissions(requireContext());
+        return PermissionUtils.checkStoragePermissions(requireContext(), true);
     }
 
     private static final int FILE_REPLACE_SELECT_CODE = 21;
