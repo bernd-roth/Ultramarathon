@@ -58,6 +58,7 @@ import java.util.List;
 import de.tadris.fitness.R;
 import de.tadris.fitness.data.GpsSample;
 import de.tadris.fitness.data.WorkoutType;
+import de.tadris.fitness.data.WorkoutTypeManager;
 import de.tadris.fitness.map.MapManager;
 import de.tadris.fitness.recording.BaseWorkoutRecorder;
 import de.tadris.fitness.recording.component.GpsComponent;
@@ -103,17 +104,19 @@ public class RecordGpsWorkoutActivity extends RecordWorkoutActivity {
             Serializable workoutType = intent.getSerializableExtra(WORKOUT_TYPE_EXTRA);
             if (workoutType instanceof WorkoutType) {
                 activity = (WorkoutType) workoutType;
-                // Create New Recorder when new is Launched
-
-                // Save Possibly Running Recorder...
-                // TODO Add Dialog, prefere Resume or Delete
-                if (instance.recorder != null &&
-                        instance.recorder.getState() != BaseWorkoutRecorder.RecordingState.IDLE) {
-                    instance.recorder.stop("New activity will be started");
-                    saveIfNotSaved();
-                }
-                instance.recorder = new GpsWorkoutRecorder(getApplicationContext(), activity);
+            } else {
+                String workoutTypeId = intent.getStringExtra(WORKOUT_TYPE_EXTRA);
+                activity = WorkoutTypeManager.getInstance().getWorkoutTypeById(this, workoutTypeId);
             }
+
+            // TODO Add Dialog, prefere Resume or Delete
+            if (instance.recorder != null &&
+                instance.recorder.getState() !=
+                    BaseWorkoutRecorder.RecordingState.IDLE) {
+              instance.recorder.stop("New activity will be started");
+              saveIfNotSaved();
+            }
+            instance.recorder = new GpsWorkoutRecorder(getApplicationContext(), activity);
         }
 
         initBeforeContent();
