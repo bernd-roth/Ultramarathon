@@ -21,6 +21,8 @@ package de.tadris.fitness.data;
 
 import android.content.Context;
 
+import androidx.core.content.ContextCompat;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -92,6 +94,7 @@ public class WorkoutTypeManager {
         List<WorkoutType> list = getAllTypes(context);
         AppDatabase db = Instance.getInstance(context).db;
         Collections.sort(list, (o1, o2) -> -Long.compare(db.getLastWorkoutTimeByType(o1.id), db.getLastWorkoutTimeByType(o2.id)));
+
         return list;
     }
 
@@ -203,4 +206,5 @@ public class WorkoutTypeManager {
                         6, RecordingType.INDOOR.id,
                         R.plurals.workoutPushUp)));
     }
+
 }

@@ -41,6 +41,7 @@ import de.tadris.fitness.util.WorkoutLogger;
 import de.tadris.fitness.util.autoexport.AutoExportPlanner;
 import de.tadris.fitness.util.unit.DistanceUnitUtils;
 import de.tadris.fitness.util.unit.EnergyUnitUtils;
+import de.tadris.fitness.util.ShortcutsUtils;
 
 public class Instance {
 
@@ -74,6 +75,7 @@ public class Instance {
     public final EnergyUnitUtils energyUnitUtils;
     public final AutoExportPlanner planner;
     public final WorkoutLogger logger;
+    public final ShortcutsUtils shortcuts;
 
     private Instance(Context context) {
         instance = this;
@@ -85,6 +87,7 @@ public class Instance {
         db = AppDatabase.provideDatabase(context);
         planner = new AutoExportPlanner(context);
         logger = new WorkoutLogger(context);
+        shortcuts = new ShortcutsUtils(context);
 
         recorder = restoreRecorder(context);
 

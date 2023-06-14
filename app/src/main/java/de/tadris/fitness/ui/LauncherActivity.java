@@ -66,6 +66,7 @@ public class LauncherActivity extends Activity implements Migration.MigrationLis
                 runMigrations();
             } else {
                 Instance.getInstance(this).userPreferences.updateLastVersionCode();
+                Instance.getInstance(this).shortcuts.init();
                 MapManager.initMapProvider(this);
                 start();
             }

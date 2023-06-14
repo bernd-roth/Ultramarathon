@@ -38,6 +38,7 @@ import de.tadris.fitness.R
 import de.tadris.fitness.data.IndoorSample
 import de.tadris.fitness.data.WorkoutType
 import de.tadris.fitness.recording.BaseWorkoutRecorder
+import de.tadris.fitness.data.WorkoutTypeManager
 import de.tadris.fitness.recording.indoor.IndoorWorkoutRecorder
 import de.tadris.fitness.recording.indoor.exercise.ExerciseRecognizer
 import de.tadris.fitness.util.unit.UnitUtils
@@ -73,8 +74,11 @@ class RecordIndoorWorkoutActivity : RecordWorkoutActivity() {
             val workoutType = intent.getSerializableExtra(WORKOUT_TYPE_EXTRA)
             if (workoutType is WorkoutType) {
                 activity = workoutType
-                instance.recorder = IndoorWorkoutRecorder(applicationContext, activity)
+            } else {
+                val workoutTypeId = intent.getStringExtra(WORKOUT_TYPE_EXTRA)
+                activity = WorkoutTypeManager.getInstance().getWorkoutTypeById(this, workoutTypeId)
             }
+            instance.recorder = IndoorWorkoutRecorder(applicationContext, activity)
         }
 
         initBeforeContent()

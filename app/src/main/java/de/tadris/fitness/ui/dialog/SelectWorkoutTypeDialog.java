@@ -51,6 +51,7 @@ public class SelectWorkoutTypeDialog implements WorkoutTypeAdapter.WorkoutTypeAd
         this.context = context;
         this.listener = listener;
         this.options = WorkoutTypeManager.getInstance().getAllTypesSorted(context);
+
         this.options.add(0, new WorkoutType(ID_ADD, context.getString(R.string.workoutTypeAdd), 0, context.getThemePrimaryColor(), Icon.ADD.name, 0, RecordingType.GPS.id));
     }
 
