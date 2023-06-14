@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2023 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -101,6 +101,7 @@ public class GpsWorkoutSaver {
     }
 
     protected void calculateData(boolean calculateElevation) {
+        calculateDurations(); // set start and end time
         setLength();
         setTopSpeed();
 
@@ -290,19 +291,13 @@ public class GpsWorkoutSaver {
         }
     }
 
-    // Should only be called when durations aren't there (e.g. when importing or cutting) but not on normal recorder save
-    protected void calculateDurations() {
+    private void calculateDurations() {
         if (samples.size() == 0) {
             return;
         }
         workout.start = samples.get(0).absoluteTime;
         workout.end = samples.get(samples.size() - 1).absoluteTime;
-
-        long pauseDuration = 0;
-        for (WorkoutCalculator.Pause pause : WorkoutCalculator.getPausesFromWorkout(getBaseWorkoutData())) {
-            pauseDuration += pause.duration;
-        }
-        workout.pauseDuration = pauseDuration;
+        workout.pauseDuration = WorkoutCalculator.calculatePauseDuration(getBaseWorkoutData());
         workout.duration = workout.end - workout.start - workout.pauseDuration;
     }
 
