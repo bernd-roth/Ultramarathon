@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2023 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -20,8 +20,6 @@
 package de.tadris.fitness.data;
 
 import android.content.Context;
-
-import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,6 +46,7 @@ public class WorkoutTypeManager {
     public static final String WORKOUT_TYPE_ID_ROPE_SKIPPING = "rope_skipping";
     public static final String WORKOUT_TYPE_ID_TRAMPOLINE_JUMPING = "trampoline_jumping";
     public static final String WORKOUT_TYPE_ID_PUSH_UPS = "push-ups";
+    public static final String WORKOUT_TYPE_ID_PULL_UPS = "pull-ups";
 
     private List<WorkoutType> allWorkoutTypes = new ArrayList<>();
 
@@ -204,7 +203,14 @@ public class WorkoutTypeManager {
                         context.getResources().getColor(R.color.colorPrimary),
                         Icon.PUSH_UPS.name,
                         6, RecordingType.INDOOR.id,
-                        R.plurals.workoutPushUp)));
+                        R.plurals.workoutPushUp),
+                new WorkoutType(WORKOUT_TYPE_ID_PULL_UPS,
+                        context.getString(R.string.workoutTypePullUps),
+                        1,
+                        context.getResources().getColor(R.color.colorPrimary),
+                        Icon.PULL_UPS.name,
+                        6, RecordingType.INDOOR.id,
+                        R.plurals.workoutPullUp)));
     }
 
 }

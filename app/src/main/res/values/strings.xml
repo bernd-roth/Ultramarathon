@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!--
-  ~ Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2023 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -134,6 +134,11 @@
     <plurals name="workoutPushUp">
         <item quantity="one">Push up</item>
         <item quantity="other">Push ups</item>
+    </plurals>
+    <string name="workoutTypePullUps">Pull ups</string>
+    <plurals name="workoutPullUp">
+        <item quantity="one">Pull up</item>
+        <item quantity="other">Pull ups</item>
     </plurals>
     <string name="unknown">Unknown</string>
     <string name="workoutTypeAdd">Add</string>

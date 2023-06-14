@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
+  ~ Copyright (c) 2023 Jannis Scheibe <jannis@tadris.de>
   ~
   ~ This file is part of FitoTrack
   ~
@@ -536,4 +536,9 @@
     <string name="show_sum">Summe</string>
     <string name="workoutTypeSwimming">Schwimmen</string>
     <string name="rainbow_warrior">Regenbogenkrieger</string>
+    <plurals name="workoutPullUp">
+        <item quantity="one">Klimmzug</item>
+        <item quantity="other">Klimmzüge</item>
+    </plurals>
+    <string name="workoutTypePullUps">Klimmzüge</string>
 </resources>

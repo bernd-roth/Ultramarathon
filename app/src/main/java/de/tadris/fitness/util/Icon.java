@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Jannis Scheibe <jannis@tadris.de>
+ * Copyright (c) 2023 Jannis Scheibe <jannis@tadris.de>
  *
  * This file is part of FitoTrack
  *
@@ -51,6 +51,7 @@ public enum Icon {
     CROSS_COUNTRY_SKI("cross_country_ski", R.drawable.ic_cross_country_ski),
     ROPE_SKIPPING("rope_skipping", R.drawable.ic_rope_skipping),
     PUSH_UPS("push_ups", R.drawable.ic_push_ups),
+    PULL_UPS("pull_ups", R.drawable.ic_pull_ups),
     TRAMPOLINE_JUMPING("trampoline_jumping", R.drawable.ic_trampoline_jumping),
     WHEELCHAIR("wheelchair", R.drawable.ic_wheelchair),
     WHEELCHAIR_FAST("wheelchair_fast", R.drawable.ic_wheelchair_fast),
