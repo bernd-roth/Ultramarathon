@@ -526,4 +526,9 @@
     <string name="statistics">Statisztikák</string>
     <string name="stats_explore_title">Felfedezés</string>
     <string name="workoutTypeSwimming">Úszás</string>
+    <string name="workoutTypePullUps">Húzódzkodások</string>
+    <plurals name="workoutPullUp">
+        <item quantity="one">Húzódzkodás</item>
+        <item quantity="other">Húzódzkodások</item>
+    </plurals>
 </resources>
