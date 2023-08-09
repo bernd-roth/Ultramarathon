@@ -517,7 +517,7 @@
     <string name="workoutTypePullUps">Zdvihy nahor</string>
     <plurals name="workoutPullUp">
         <item quantity="one">Vytiahnuť</item>
-        <item quantity="few">Vytiahnuť</item>
-        <item quantity="other">Vytiahnuť</item>
+        <item quantity="few">Vytiahnutia</item>
+        <item quantity="other">Vytiahnutí</item>
     </plurals>
 </resources>
