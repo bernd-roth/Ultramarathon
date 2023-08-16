@@ -16,8 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="merge">Slå samman</string>
     <string name="replace">Ersätt</string>
     <string name="dayInMonth">Dag i månaden</string>
@@ -134,7 +133,7 @@
     <string name="workoutHeartRate">Puls</string>
     <string name="workoutEnergyConsumption">Energiförbrukning</string>
     <string name="workoutTotalEnergy">Total energi</string>
-    <string name="workoutBurnedEnergy">Förbränd energi</string>
+    <string name="workoutBurnedEnergy">Kalorier som förbränts</string>
     <string name="workoutTopSpeed">Topphastighet</string>
     <string name="workoutAvgSpeedLong">Snitthastighet</string>
     <string name="workoutAvgSpeedShort">Snitthastighet</string>
@@ -454,4 +453,16 @@
     <string name="saturday">Lördag</string>
     <string name="in_the_diagram_screen_track_style">På diagramskärmen</string>
     <string name="height_map">Höjdkarta</string>
+    <string name="workoutAvgDurationLong">Genomsnittlig varaktighet</string>
+    <string name="workoutDurationSum">Sammanlagd varaktighet</string>
+    <string name="preferencesDebugTitle">Felsök</string>
+    <string name="workoutAvgDistance">Genomsnittlig distans</string>
+    <string name="workoutDistanceSum">Sammanlagd distans</string>
+    <string name="stats_overview_title">Översikt</string>
+    <string name="stats_history_title">Historik</string>
+    <string name="stats_explore_title">Utforska</string>
+    <string name="details">Detaljer</string>
+    <string name="histogram">Histogram</string>
+    <string name="monthYear">Månad / år</string>
+    <string name="zoomWithVolumeButtonsTitle">Zooma med volymknapparna</string>
 </resources>
