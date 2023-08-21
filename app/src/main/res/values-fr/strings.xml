@@ -16,8 +16,7 @@
   ~
   ~     You should have received a copy of the GNU General Public License
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FitoTrack</string>
     <string name="stop">Arrêter</string>
     <string name="delete">Supprimer</string>
@@ -34,7 +33,7 @@
     <string name="finished">Terminé</string>
     <string name="loadingFile">Chargement du fichier</string>
     <string name="chooseBackupFile">Choisir le fichier de sauvegarde</string>
-    <string name="importBackupMessage">ATTENTION : Les données existantes de l\'application seront effacées. Pensez à faire une sauvegarde si vous ne voulez pas les perdre. Êtes-vous sûr·e de vouloir restaurer cette sauvegarde \?</string>
+    <string name="importBackupMessage">Sauvegardez vos données actuelles si vous souhaitez les conserver. Restaurer la sauvegarde précédente maintenant\?</string>
     <string name="restore">Restaurer</string>
     <string name="backup">Sauvegarder</string>
     <string name="setPreferencesTitle">Définir les préférences</string>
@@ -71,7 +70,7 @@
     <string name="workoutAvgSpeedShort">Vitesse moy.</string>
     <string name="workoutAvgSpeedLong">Vitesse moyenne</string>
     <string name="workoutTopSpeed">Vitesse maximale</string>
-    <string name="workoutBurnedEnergy">Énergie consommée</string>
+    <string name="workoutBurnedEnergy">Calories brûlées</string>
     <string name="workoutTotalEnergy">Énergie totale</string>
     <string name="workoutEnergyConsumption">Consommation d\'énergie</string>
     <string name="workoutEdited">L\'entraînement a été modifié.</string>
@@ -398,7 +397,7 @@
     <string name="unitHeartBeatsPerMinute">bpm</string>
     <string name="preferenceUseAverageForCurrentSpeed">Utilisez la vitesse moyenne sur une certaine période au lieu du dernier enregistrement de vitesse unique pour le calcul de la vitesse actuelle.</string>
     <string name="preferenceCurrentSpeedAverageTimeTitle">Vitesse actuelle par moyenne</string>
-    <string name="preferenceCurrentSpeedAverageTimeSummary">Remplacer le calcul de la vitesse actuelle par un calcul de la moyenne.</string>
+    <string name="preferenceCurrentSpeedAverageTimeSummary">Remplacer la vitesse actuelle par une moyenne</string>
     <string name="preferenceCurrentSpeedTime">Durée du calcul de la moyenne</string>
     <string name="preferencesCategoryMap">Carte</string>
     <string name="prefTrackStyleUsageTitle">Utiliser automatiquement la coloration des parcours</string>
@@ -496,4 +495,10 @@
     <string name="never_track_style">Jamais</string>
     <string name="exportTargetHttpPost">Requête HTTP POST</string>
     <string name="noSensorAvailable">Aucun capteur disponible</string>
+    <string name="workoutTypeSwimming">Natation</string>
+    <string name="workoutAvgDurationLong">Durée Moyenne</string>
+    <string name="preferencesDebugTitle">Déboguer</string>
+    <string name="workoutDurationSum">Somme de la durée</string>
+    <string name="workoutAvgPauseDuration">Durée Moyenne de la Pause</string>
+    <string name="workoutPauseDurationSum">Somme de la durée des pauses</string>
 </resources>
